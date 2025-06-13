@@ -1,0 +1,30 @@
+{
+    "name": "webkul/chatter",
+    "description": "",
+    "authors": [
+        {
+            "name": "Aureus ERP",
+            "email": "support@aureuserp.in"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Chatter\\Providers\\ChatterServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Chatter\\": "src/",
+            "Webkul\\Chatter\\Database\\Factories\\": "database/factories/",
+            "Webkul\\Chatter\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webkul\\Chatter\\Tests\\": "tests/"
+        }
+    }
+}

@@ -1,0 +1,57 @@
+
+@startuml Query Architecture Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles for classes
+skinparam class {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam interface {
+    BackgroundColor #34495e
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+
+    class Query {
+
+        +validate()
+        +rules()
+    
+}
+    
+    class QueryHandler {
+
+        +handle(Query query)
+    
+}
+    
+    class ReadModel {
+
+        +id
+        +attributes
+        +find()
+        +findAll()
+    
+}
+    
+    class QueryResult {
+
+        +data
+        +meta
+    
+}
+    
+    Query --> QueryHandler: processed by
+    QueryHandler --> ReadModel: retrieves from
+    ReadModel --> QueryResult: transformed to
+@enduml

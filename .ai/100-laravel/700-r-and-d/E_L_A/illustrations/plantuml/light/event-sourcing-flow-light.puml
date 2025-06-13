@@ -1,0 +1,69 @@
+@startuml Event Sourcing Flow (Light Mode)
+
+' Light mode theme
+!theme plain
+skinparam backgroundColor white
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+skinparam DefaultBackgroundColor #FEFEFE
+skinparam DefaultBorderColor #999999
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #FEFEFE
+    BorderColor #999999
+}
+
+skinparam database {
+    BackgroundColor #E3F2FD
+    BorderColor #2196F3
+}
+
+' Components
+rectangle "Domain Event" as A
+database "Event Store" as B
+rectangle "Event Stream" as C
+rectangle "Projector" as D
+rectangle "Read Model" as E
+rectangle "Reactor" as F
+rectangle "Side Effects" as G
+rectangle "Aggregate" as H
+rectangle "Command" as I
+
+' Connections
+A -down-> B
+B -down-> C
+C -down-> D
+D -down-> E
+A -right-> F
+F -down-> G
+H -up-> A : "Applies"
+I -right-> H : "Handled by"
+
+' Add notes
+note right of A
+  Immutable record of something 
+  that happened in the domain
+end note
+
+note right of B
+  Persistent storage for all events
+end note
+
+note right of H
+  Domain objects that handle 
+  commands and apply events
+end note
+
+note right of D
+  Build and maintain read models 
+  based on events
+end note
+
+note right of F
+  Execute side effects when 
+  specific events occur
+end note
+
+@enduml

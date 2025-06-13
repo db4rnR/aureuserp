@@ -1,0 +1,14 @@
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+graph TD
+    A[User Action] --> B[Command]
+    B --> C[Command Handler]
+    C --> D[Aggregate]
+    D --> E[Event]
+    E --> F[Event Store]
+    E --> G[Projector]
+    G --> H[Read Model]
+    E --> I[Process Manager]
+    I --> J[New Command]
+    J --> C
+    E --> K[Reactor]
+    K --> L[Side Effect]

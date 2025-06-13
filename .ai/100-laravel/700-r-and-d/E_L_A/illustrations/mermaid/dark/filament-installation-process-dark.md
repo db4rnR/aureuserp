@@ -1,0 +1,15 @@
+# Filament Installation Process (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+flowchart TD
+    A[Start] --> B[Install Core Packages]
+    B --> C[Configure Admin Panel]
+    C --> D[Set Up Authentication]
+    D --> E[Configure Themes]
+    E --> F[Set Up Navigation]
+    F --> G[Configure Plugins]
+    G --> H[Configure Shield]
+    H --> I[Verify Installation]
+    I --> J[End]
+```

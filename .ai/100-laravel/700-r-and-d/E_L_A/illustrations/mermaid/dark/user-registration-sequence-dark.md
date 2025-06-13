@@ -1,0 +1,27 @@
+# User Registration Sequence (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+sequenceDiagram
+    participant User as User
+    participant RegistrationForm as Registration Form
+    participant FortifyController as Fortify Controller
+    participant UserRepository as User Repository
+    participant EmailVerification as Email Verification
+    participant Database as Database
+
+    User->>RegistrationForm: Fill registration form
+    RegistrationForm->>FortifyController: Submit registration data
+    FortifyController->>FortifyController: Validate input
+    FortifyController->>UserRepository: Create user
+    UserRepository->>UserRepository: Generate snowflake ID
+    UserRepository->>UserRepository: Generate slug
+    UserRepository->>UserRepository: Hash password
+    UserRepository->>Database: Save user
+    Database-->>UserRepository: Confirm save
+    UserRepository-->>FortifyController: Return user
+    FortifyController->>EmailVerification: Send verification email
+    EmailVerification-->>User: Email with verification link
+    FortifyController-->>RegistrationForm: Registration successful
+    RegistrationForm-->>User: Show success message
+```

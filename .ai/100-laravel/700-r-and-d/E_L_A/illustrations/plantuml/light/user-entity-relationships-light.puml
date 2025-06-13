@@ -1,0 +1,99 @@
+@startuml
+!theme light
+skinparam backgroundColor #ffffff
+skinparam classFontColor #333333
+skinparam classBorderColor #cccccc
+skinparam classBorderThickness 1
+skinparam classBackgroundColor #f5f5f5
+skinparam arrowColor #666666
+
+entity "USER" as user {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * email : string
+  email_verified_at : timestamp
+  * password : string
+  remember_token : string
+  type : string
+  status : string
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "ROLE" as role {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * guard_name : string
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "PERMISSION" as permission {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * guard_name : string
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "STATUS" as status {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  reason : string
+  metadata : json
+  * model_id : uuid
+  * model_type : string
+  * created_at : timestamp
+}
+
+entity "PROFILE" as profile {
+  * id : uuid <<PK>>
+  --
+  * user_id : uuid <<FK>>
+  avatar : string
+  bio : string
+  preferences : json
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "TEAM_USER" as team_user {
+  * id : uuid <<PK>>
+  --
+  * team_id : uuid <<FK>>
+  * user_id : uuid <<FK>>
+  role : string
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "TEAM" as team {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  description : text
+  parent_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+user "1" -- "0..*" status : has
+user "1" -- "0..*" role : has
+role "0..*" -- "0..*" permission : has
+user "1" -- "1" profile : has
+user "1" -- "0..*" team_user : has
+team "1" -- "0..*" team_user : has
+
+@enduml

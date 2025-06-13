@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Post Aggregate States Diagram - ELA Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        
+        .diagram-container {
+            margin: 30px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #eee;
+            border-radius: 5px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .info-panel {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-left: 5px solid #3498db;
+            display: none;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+            max-width: 300px;
+            display: none;
+        }
+        
+        .highlight-state .node-draft rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-state .node-pending-review rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-state .node-published rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-state .node-scheduled rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-state .node-archived rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-state .node-deleted rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .dark-mode {
+            background-color: #282c34;
+            color: #ecf0f1;
+        }
+        
+        .dark-mode .diagram-container {
+            background-color: #2c3e50;
+            border-color: #34495e;
+        }
+        
+        .dark-mode .controls {
+            background-color: #34495e;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #ecf0f1;
+        }
+        
+        .dark-mode .info-panel {
+            background-color: #34495e;
+            border-left-color: #3498db;
+        }
+        
+        .dark-mode button {
+            background-color: #3498db;
+        }
+        
+        .dark-mode button:hover {
+            background-color: #2980b9;
+        }
+
+        .accessibility-controls {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #28a745;
+        }
+
+        .dark-mode .accessibility-controls {
+            background-color: #343a40;
+            border-left-color: #28a745;
+        }
+
+        .static-link {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #ffc107;
+        }
+
+        .dark-mode .static-link {
+            background-color: #343a40;
+            border-left-color: #ffc107;
+        }
+
+        .keyboard-shortcuts {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .dark-mode .keyboard-shortcuts {
+            background-color: #343a40;
+        }
+
+        .keyboard-shortcut {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 0 5px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .dark-mode .keyboard-shortcut {
+            background-color: #495057;
+        }
+
+        .transition-controls {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #6f42c1;
+        }
+
+        .dark-mode .transition-controls {
+            background-color: #343a40;
+            border-left-color: #6f42c1;
+        }
+
+        .state-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .state-table th, .state-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .state-table th {
+            background-color: #f2f2f2;
+        }
+
+        .dark-mode .state-table th {
+            background-color: #343a40;
+        }
+
+        .dark-mode .state-table th, .dark-mode .state-table td {
+            border-color: #495057;
+        }
+
+        .color-box {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border: 1px solid #333;
+        }
+
+        .dark-mode .color-box {
+            border-color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Post Aggregate States Diagram</h1>
+    <p>This interactive diagram illustrates the possible states of a Post aggregate and the transitions between these states. Use the controls below to explore the different states and transitions.</p>
+    
+    <div class="controls">
+        <h3>Highlight States:</h3>
+        <button id="highlight-draft" aria-label="Highlight Draft State">Draft</button>
+        <button id="highlight-pending-review" aria-label="Highlight Pending Review State">Pending Review</button>
+        <button id="highlight-published" aria-label="Highlight Published State">Published</button>
+        <button id="highlight-scheduled" aria-label="Highlight Scheduled State">Scheduled</button>
+        <button id="highlight-archived" aria-label="Highlight Archived State">Archived</button>
+        <button id="highlight-deleted" aria-label="Highlight Deleted State">Deleted</button>
+        <button id="reset-highlights" aria-label="Reset All Highlights">Reset</button>
+        <button id="toggle-theme" aria-label="Toggle Dark/Light Mode">Toggle Dark/Light Mode</button>
+    </div>
+    
+    <div class="transition-controls">
+        <h3>Show Transitions:</h3>
+        <button id="show-all-transitions" aria-label="Show All Transitions">All Transitions</button>
+        <button id="show-from-draft" aria-label="Show Transitions from Draft">From Draft</button>
+        <button id="show-from-pending-review" aria-label="Show Transitions from Pending Review">From Pending Review</button>
+        <button id="show-from-published" aria-label="Show Transitions from Published">From Published</button>
+        <button id="show-from-scheduled" aria-label="Show Transitions from Scheduled">From Scheduled</button>
+        <button id="show-from-archived" aria-label="Show Transitions from Archived">From Archived</button>
+    </div>
+    
+    <div class="diagram-container">
+        <div class="mermaid" id="post-states-diagram">
+            stateDiagram-v2
+                [*] --> Draft: PostCreatedEvent
+                Draft --> PendingReview: PostSubmittedForReviewEvent
+                Draft --> Published: PostPublishedEvent
+                Draft --> Scheduled: PostScheduledEvent
+                PendingReview --> Draft: PostReturnedToDraftEvent
+                PendingReview --> Published: PostPublishedEvent
+                PendingReview --> Scheduled: PostScheduledEvent
+                Published --> Archived: PostArchivedEvent
+                Scheduled --> Published: PostPublishedEvent
+                Scheduled --> Draft: PostReturnedToDraftEvent
+                Archived --> Published: PostRestoredEvent
+                Draft --> Deleted: PostDeletedEvent
+                PendingReview --> Deleted: PostDeletedEvent
+                Published --> Deleted: PostDeletedEvent
+                Scheduled --> Deleted: PostDeletedEvent
+                Archived --> Deleted: PostDeletedEvent
+                
+                %% State styling with classes
+                classDef draftState fill:#F39C12,stroke:#333,color:white
+                classDef pendingReviewState fill:#3498DB,stroke:#333,color:white
+                classDef publishedState fill:#27AE60,stroke:#333,color:white
+                classDef scheduledState fill:#9B59B6,stroke:#333,color:white
+                classDef archivedState fill:#7F8C8D,stroke:#333,color:white
+                classDef deletedState fill:#C0392B,stroke:#333,color:white
+                
+                class Draft draftState
+                class PendingReview pendingReviewState
+                class Published publishedState
+                class Scheduled scheduledState
+                class Archived archivedState
+                class Deleted deletedState
+                
+                %% Add node IDs for JavaScript interaction
+                class Draft node-draft
+                class PendingReview node-pending-review
+                class Published node-published
+                class Scheduled node-scheduled
+                class Archived node-archived
+                class Deleted node-deleted
+        </div>
+    </div>
+    
+    <div class="info-panel" id="info-panel">
+        <h3 id="info-title">State Information</h3>
+        <p id="info-description">Click on a state to see more information.</p>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+
+    <table class="state-table">
+        <thead>
+            <tr>
+                <th>State</th>
+                <th>Description</th>
+                <th>Color</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Draft</td>
+                <td>Post is being edited and is not visible to readers</td>
+                <td><span class="color-box" style="background-color:#F39C12;"></span> Orange</td>
+            </tr>
+            <tr>
+                <td>Pending Review</td>
+                <td>Post has been submitted for review before publishing</td>
+                <td><span class="color-box" style="background-color:#3498DB;"></span> Blue</td>
+            </tr>
+            <tr>
+                <td>Published</td>
+                <td>Post is live and visible to readers</td>
+                <td><span class="color-box" style="background-color:#27AE60;"></span> Green</td>
+            </tr>
+            <tr>
+                <td>Scheduled</td>
+                <td>Post is scheduled to be published at a future date</td>
+                <td><span class="color-box" style="background-color:#9B59B6;"></span> Purple</td>
+            </tr>
+            <tr>
+                <td>Archived</td>
+                <td>Post is no longer active but still accessible in archives</td>
+                <td><span class="color-box" style="background-color:#7F8C8D;"></span> Gray</td>
+            </tr>
+            <tr>
+                <td>Deleted</td>
+                <td>Post has been permanently deleted</td>
+                <td><span class="color-box" style="background-color:#C0392B;"></span> Red</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="accessibility-controls">
+        <h3>Accessibility Options</h3>
+        <button id="increase-font" aria-label="Increase Font Size">Increase Font Size</button>
+        <button id="decrease-font" aria-label="Decrease Font Size">Decrease Font Size</button>
+        <button id="high-contrast" aria-label="Toggle High Contrast Mode">Toggle High Contrast</button>
+    </div>
+
+    <div class="keyboard-shortcuts">
+        <h3>Keyboard Shortcuts</h3>
+        <p>
+            <span class="keyboard-shortcut">D</span> Highlight Draft
+            <span class="keyboard-shortcut">R</span> Highlight Pending Review
+            <span class="keyboard-shortcut">P</span> Highlight Published
+            <span class="keyboard-shortcut">S</span> Highlight Scheduled
+            <span class="keyboard-shortcut">A</span> Highlight Archived
+            <span class="keyboard-shortcut">X</span> Highlight Deleted
+            <span class="keyboard-shortcut">Esc</span> Reset Highlights
+            <span class="keyboard-shortcut">T</span> Toggle Dark/Light Mode
+        </p>
+    </div>
+
+    <div class="static-link">
+        <h3>Static Diagram Versions</h3>
+        <p>If you prefer to view static versions of this diagram:</p>
+        <ul>
+            <li><a href="../mermaid/light/post-aggregate-states-light.md">Light Mode Static Diagram</a></li>
+            <li><a href="../mermaid/dark/post-aggregate-states-dark.md">Dark Mode Static Diagram</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+        
+        // Wait for Mermaid to render
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners after Mermaid has rendered
+            setTimeout(setupInteractivity, 1000);
+        });
+        
+        function setupInteractivity() {
+            // Get elements
+            const diagramContainer = document.querySelector('.diagram-container');
+            const infoPanel = document.getElementById('info-panel');
+            const infoTitle = document.getElementById('info-title');
+            const infoDescription = document.getElementById('info-description');
+            const tooltip = document.getElementById('tooltip');
+            
+            // Highlight buttons
+            document.getElementById('highlight-draft').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Draft');
+                showStateInfo('Draft', 'Post is being edited and is not visible to readers. Authors can make changes freely.');
+            });
+            
+            document.getElementById('highlight-pending-review').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('PendingReview');
+                showStateInfo('Pending Review', 'Post has been submitted for review before publishing. Editors can approve or return to draft.');
+            });
+            
+            document.getElementById('highlight-published').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Published');
+                showStateInfo('Published', 'Post is live and visible to readers. It can be archived when no longer relevant.');
+            });
+            
+            document.getElementById('highlight-scheduled').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Scheduled');
+                showStateInfo('Scheduled', 'Post is scheduled to be published at a future date. It will automatically transition to Published.');
+            });
+            
+            document.getElementById('highlight-archived').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Archived');
+                showStateInfo('Archived', 'Post is no longer active but still accessible in archives. It can be restored if needed.');
+            });
+            
+            document.getElementById('highlight-deleted').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Deleted');
+                showStateInfo('Deleted', 'Post has been permanently deleted. Cannot be recovered. All associated data is soft-deleted.');
+            });
+            
+            document.getElementById('reset-highlights').addEventListener('click', function() {
+                resetHighlights();
+                infoPanel.style.display = 'none';
+            });
+            
+            // Transition buttons
+            document.getElementById('show-all-transitions').addEventListener('click', function() {
+                resetHighlights();
+                showStateInfo('All Transitions', 'Showing all possible state transitions for the Post aggregate.');
+            });
+            
+            document.getElementById('show-from-draft').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Draft');
+                showStateInfo('Transitions from Draft', 'From Draft, a post can transition to: Pending Review, Published, Scheduled, or Deleted.');
+            });
+            
+            document.getElementById('show-from-pending-review').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('PendingReview');
+                showStateInfo('Transitions from Pending Review', 'From Pending Review, a post can transition to: Draft, Published, Scheduled, or Deleted.');
+            });
+            
+            document.getElementById('show-from-published').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Published');
+                showStateInfo('Transitions from Published', 'From Published, a post can transition to: Archived or Deleted.');
+            });
+            
+            document.getElementById('show-from-scheduled').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Scheduled');
+                showStateInfo('Transitions from Scheduled', 'From Scheduled, a post can transition to: Published, Draft, or Deleted.');
+            });
+            
+            document.getElementById('show-from-archived').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Archived');
+                showStateInfo('Transitions from Archived', 'From Archived, a post can transition to: Published or Deleted.');
+            });
+            
+            document.getElementById('toggle-theme').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                // Update Mermaid theme
+                if (document.body.classList.contains('dark-mode')) {
+                    mermaid.initialize({
+                        theme: 'dark'
+                    });
+                } else {
+                    mermaid.initialize({
+                        theme: 'default'
+                    });
+                }
+                
+                // Re-render the diagram
+                const diagramDiv = document.getElementById('post-states-diagram');
+                const diagramSource = diagramDiv.textContent;
+                diagramDiv.innerHTML = diagramSource;
+                mermaid.init(undefined, diagramDiv);
+                
+                // Re-setup interactivity after re-rendering
+                setTimeout(setupInteractivity, 1000);
+            });
+
+            // Accessibility controls
+            document.getElementById('increase-font').addEventListener('click', function() {
+                const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                document.body.style.fontSize = (currentSize + 2) + 'px';
+            });
+
+            document.getElementById('decrease-font').addEventListener('click', function() {
+                const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                document.body.style.fontSize = (currentSize - 2) + 'px';
+            });
+
+            document.getElementById('high-contrast').addEventListener('click', function() {
+                document.body.classList.toggle('high-contrast');
+            });
+            
+            // Setup tooltips for diagram nodes
+            const nodes = document.querySelectorAll('.stateNode');
+            nodes.forEach(node => {
+                node.addEventListener('mouseover', function(e) {
+                    const nodeId = this.id;
+                    const tooltipText = getTooltipText(nodeId);
+                    
+                    if (tooltipText) {
+                        tooltip.textContent = tooltipText;
+                        tooltip.style.display = 'block';
+                        tooltip.style.left = (e.pageX + 10) + 'px';
+                        tooltip.style.top = (e.pageY + 10) + 'px';
+                    }
+                });
+                
+                node.addEventListener('mousemove', function(e) {
+                    tooltip.style.left = (e.pageX + 10) + 'px';
+                    tooltip.style.top = (e.pageY + 10) + 'px';
+                });
+                
+                node.addEventListener('mouseout', function() {
+                    tooltip.style.display = 'none';
+                });
+
+                node.addEventListener('click', function() {
+                    const nodeId = this.id;
+                    const stateName = getStateName(nodeId);
+                    
+                    if (stateName === 'Draft') {
+                        document.getElementById('highlight-draft').click();
+                    } else if (stateName === 'PendingReview') {
+                        document.getElementById('highlight-pending-review').click();
+                    } else if (stateName === 'Published') {
+                        document.getElementById('highlight-published').click();
+                    } else if (stateName === 'Scheduled') {
+                        document.getElementById('highlight-scheduled').click();
+                    } else if (stateName === 'Archived') {
+                        document.getElementById('highlight-archived').click();
+                    } else if (stateName === 'Deleted') {
+                        document.getElementById('highlight-deleted').click();
+                    }
+                });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                switch(e.key.toLowerCase()) {
+                    case 'd':
+                        document.getElementById('highlight-draft').click();
+                        break;
+                    case 'r':
+                        document.getElementById('highlight-pending-review').click();
+                        break;
+                    case 'p':
+                        document.getElementById('highlight-published').click();
+                        break;
+                    case 's':
+                        document.getElementById('highlight-scheduled').click();
+                        break;
+                    case 'a':
+                        document.getElementById('highlight-archived').click();
+                        break;
+                    case 'x':
+                        document.getElementById('highlight-deleted').click();
+                        break;
+                    case 'escape':
+                        document.getElementById('reset-highlights').click();
+                        break;
+                    case 't':
+                        document.getElementById('toggle-theme').click();
+                        break;
+                }
+            });
+        }
+        
+        // Function to highlight a state
+        function highlightState(state) {
+            const diagramContainer = document.querySelector('.diagram-container');
+            diagramContainer.classList.add('highlight-state');
+            
+            // Add specific class for the state
+            const stateNode = document.querySelector(`.node-${state.toLowerCase()}`);
+            if (stateNode) {
+                stateNode.classList.add('highlight');
+            }
+        }
+        
+        // Function to show state information
+        function showStateInfo(state, description) {
+            const infoPanel = document.getElementById('info-panel');
+            const infoTitle = document.getElementById('info-title');
+            const infoDescription = document.getElementById('info-description');
+            
+            infoTitle.textContent = state;
+            infoDescription.textContent = description;
+            infoPanel.style.display = 'block';
+        }
+        
+        // Function to reset highlights
+        function resetHighlights() {
+            const diagramContainer = document.querySelector('.diagram-container');
+            diagramContainer.classList.remove('highlight-state');
+            
+            // Remove highlight class from all state nodes
+            const stateNodes = document.querySelectorAll('.stateNode');
+            stateNodes.forEach(node => {
+                node.classList.remove('highlight');
+            });
+        }
+        
+        // Function to get tooltip text based on node ID
+        function getTooltipText(nodeId) {
+            if (nodeId.includes('Draft')) {
+                return 'Draft: Post is being edited';
+            } else if (nodeId.includes('PendingReview')) {
+                return 'Pending Review: Post awaiting approval';
+            } else if (nodeId.includes('Published')) {
+                return 'Published: Post is live';
+            } else if (nodeId.includes('Scheduled')) {
+                return 'Scheduled: Post will be published later';
+            } else if (nodeId.includes('Archived')) {
+                return 'Archived: Post is in archive';
+            } else if (nodeId.includes('Deleted')) {
+                return 'Deleted: Post is permanently removed';
+            }
+            
+            return null;
+        }
+        
+        // Function to get state name from node ID
+        function getStateName(nodeId) {
+            if (nodeId.includes('Draft')) {
+                return 'Draft';
+            } else if (nodeId.includes('PendingReview')) {
+                return 'PendingReview';
+            } else if (nodeId.includes('Published')) {
+                return 'Published';
+            } else if (nodeId.includes('Scheduled')) {
+                return 'Scheduled';
+            } else if (nodeId.includes('Archived')) {
+                return 'Archived';
+            } else if (nodeId.includes('Deleted')) {
+                return 'Deleted';
+            }
+            
+            return null;
+        }
+    </script>
+</body>
+</html>

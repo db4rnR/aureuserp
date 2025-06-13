@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="200" fill="#f8f9fa" rx="5" ry="5" />
+
+  <!-- Title -->
+  <text x="150" y="30" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333">Project Overview</text>
+
+  <!-- Component Diagram Elements -->
+  <rect x="60" y="60" width="80" height="50" fill="#0077cc" fill-opacity="0.8" rx="3" ry="3" />
+  <text x="100" y="90" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#fff">Component 1</text>
+
+  <rect x="160" y="60" width="80" height="50" fill="#0077cc" fill-opacity="0.8" rx="3" ry="3" />
+  <text x="200" y="90" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#fff">Component 2</text>
+
+  <rect x="60" y="130" width="80" height="50" fill="#0077cc" fill-opacity="0.8" rx="3" ry="3" />
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#fff">Component 3</text>
+
+  <rect x="160" y="130" width="80" height="50" fill="#0077cc" fill-opacity="0.8" rx="3" ry="3" />
+  <text x="200" y="160" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#fff">Component 4</text>
+
+  <line x1="140" y1="85" x2="160" y2="85" stroke="#333" stroke-width="1.5" />
+  <line x1="100" y1="110" x2="100" y2="130" stroke="#333" stroke-width="1.5" />
+  <line x1="200" y1="110" x2="200" y2="130" stroke="#333" stroke-width="1.5" />
+  <line x1="140" y1="155" x2="160" y2="155" stroke="#333" stroke-width="1.5" />
+</svg>

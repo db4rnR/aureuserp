@@ -1,0 +1,88 @@
+/* Custom styles for interactive tutorials */
+
+/* General link styling for readability */
+a {
+    color: #0047a0; /* Darker blue for higher contrast (WCAG AA compliant) */
+    text-decoration: underline;
+    font-weight: 500; /* Medium weight for better visibility */
+}
+
+a:hover {
+    color: #003366; /* Even darker blue on hover */
+    text-decoration: underline;
+}
+
+/* Ensure links within divs with custom backgrounds also maintain contrast */
+/* This targets links directly within a div, or within a paragraph in a div */
+div a, div p a {
+    color: #0047a0; /* Darker blue for higher contrast (WCAG AA compliant) */
+    font-weight: 500; /* Medium weight for better visibility */
+}
+
+div a:hover, div p a:hover {
+    color: #003366; /* Even darker blue on hover */
+}
+
+.interactive-question {
+    border: 1px solid #ccc; /* Slightly darker border */
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f8f9fa; /* Light, neutral background */
+    color: #212529; /* Dark text color for general content */
+}
+
+.interactive-question p {
+    color: #212529; /* Ensure paragraph text is dark */
+}
+
+.interactive-question textarea,
+.interactive-question input[type="text"] {
+    border: 1px solid #ced4da;
+    color: #495057;
+    background-color: #fff;
+}
+
+.interactive-question .check-answer-btn {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.interactive-question .check-answer-btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.feedback {
+    margin-top: 10px;
+    padding: 12px; /* Slightly more padding */
+    border-radius: 4px; /* Consistent border-radius */
+    font-weight: bold;
+}
+
+.feedback.correct {
+    background-color: #d4edda; /* Lighter green background */
+    border: 1px solid #c3e6cb; /* Green border */
+    color: #155724; /* Darker green text */
+}
+
+.feedback.incorrect {
+    background-color: #f8d7da; /* Lighter red background */
+    border: 1px solid #f5c6cb; /* Red border */
+    color: #721c24; /* Darker red text */
+}
+
+/* Ensure links within interactive questions are also clearly visible if any are added */
+.interactive-question a {
+    color: #0047a0; /* Darker blue for higher contrast (WCAG AA compliant) */
+    font-weight: 500; /* Medium weight for better visibility */
+}
+
+.interactive-question a:hover {
+    color: #003366; /* Even darker blue on hover */
+}

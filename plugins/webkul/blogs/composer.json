@@ -1,0 +1,30 @@
+{
+    "name": "webkul/blogs",
+    "description": "",
+    "authors": [
+        {
+            "name": "Aureus ERP",
+            "email": "support@aureuserp.in"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Blog\\Providers\\BlogServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Blog\\": "src/",
+            "Webkul\\Blog\\Database\\Factories\\": "database/factories/",
+            "Webkul\\Blog\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webkul\\Blog\\Tests\\": "tests/"
+        }
+    }
+}

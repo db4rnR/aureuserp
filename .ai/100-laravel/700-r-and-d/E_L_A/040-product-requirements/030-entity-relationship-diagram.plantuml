@@ -1,0 +1,148 @@
+@startuml
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define FK(x) <color:green>x</color>
+!define PK(x) <color:red>x</color>
+!define IX(x) <color:blue><&key>x</color>
+
+hide methods
+hide stereotypes
+
+skinparam linetype ortho
+skinparam class {
+    BackgroundColor White
+    BorderColor #6C8EBF
+    ArrowColor #6C8EBF
+}
+
+Table(USER, "USER") {
+    PK(bigint id)
+    IX(bigint snowflake_id) UNIQUE
+    IX(string type)
+    string email UNIQUE
+    string password
+    timestamp email_verified_at NULLABLE
+    IX(string status)
+    FK(bigint created_by) NULLABLE INDEX
+    FK(bigint updated_by) NULLABLE INDEX
+    FK(bigint deleted_by) NULLABLE INDEX
+    IX(timestamp deleted_at) NULLABLE
+}
+
+Table(TEAM, "TEAM") {
+    PK(bigint id)
+    IX(bigint snowflake_id) UNIQUE
+    string name
+    IX(string slug) UNIQUE
+    FK(bigint parent_id) NULLABLE INDEX
+    IX(string path)
+    IX(int depth)
+    IX(string status)
+    FK(bigint created_by) NULLABLE INDEX
+    FK(bigint updated_by) NULLABLE INDEX
+    FK(bigint deleted_by) NULLABLE INDEX
+    IX(timestamp deleted_at) NULLABLE
+}
+
+Table(CATEGORY, "CATEGORY") {
+    PK(bigint id)
+    IX(bigint snowflake_id) UNIQUE
+    FK(bigint team_id) NOT NULL INDEX
+    string name
+    IX(string slug) UNIQUE(team_id, slug)
+    FK(bigint parent_id) NULLABLE INDEX
+    IX(string path)
+    IX(int depth)
+    FK(bigint created_by) NULLABLE INDEX
+    FK(bigint updated_by) NULLABLE INDEX
+    FK(bigint deleted_by) NULLABLE INDEX
+    IX(timestamp deleted_at) NULLABLE
+}
+
+Table(POST, "POST") {
+    PK(bigint id)
+    IX(bigint snowflake_id) UNIQUE
+    FK(bigint user_id) NOT NULL INDEX
+    string title
+    IX(string slug) UNIQUE
+    text content
+    text excerpt NULLABLE
+    IX(string status)
+    IX(timestamp published_at) NULLABLE
+    timestamp scheduled_for NULLABLE
+    FK(bigint created_by) NULLABLE INDEX
+    FK(bigint updated_by) NULLABLE INDEX
+    FK(bigint deleted_by) NULLABLE INDEX
+    IX(timestamp deleted_at) NULLABLE
+}
+
+Table(TODO, "TODO") {
+    PK(bigint id)
+    IX(bigint snowflake_id) UNIQUE
+    string title
+    IX(string slug) UNIQUE
+    text description NULLABLE
+    FK(bigint user_id) NULLABLE INDEX
+    FK(bigint team_id) NULLABLE INDEX
+    FK(bigint parent_id) NULLABLE INDEX
+    IX(string path)
+    IX(int depth)
+    IX(string status)
+    timestamp due_date NULLABLE
+    timestamp completed_at NULLABLE
+    FK(bigint created_by) NULLABLE INDEX
+    FK(bigint updated_by) NULLABLE INDEX
+    FK(bigint deleted_by) NULLABLE INDEX
+    IX(timestamp deleted_at) NULLABLE
+}
+
+Table(COMMAND_LOG, "COMMAND_LOG") {
+    PK(bigint id)
+    IX(uuid command_id) UNIQUE
+    IX(string name)
+    text payload
+    text results NULLABLE
+    IX(timestamp handled_at)
+    string status
+}
+
+Table(SNAPSHOT, "SNAPSHOT") {
+    PK(bigint id)
+    FK(uuid command_id) INDEX
+    IX(string subject_type)
+    IX(string subject_id)
+    IX(int version)
+    text data
+    IX(timestamp created_at)
+}
+
+' Relationships
+USER "1" --o{ "many" TEAM : "Membership via Pivot"
+USER "1" --o{ "many" POST : "authors"
+USER "1" --o{ "many" TODO : "assigned to"
+USER "1" --o{ "many" COMMENT : "comments as commenter"
+USER "1" --o{ "many" ACTIVITY_LOG : "causes activity"
+USER "many" }--{ "many" ROLE : "has (model_has_roles)"
+USER "many" }--{ "many" CONVERSATION : "participates in (conversation_user)"
+
+TEAM "1" --o{ "many" TEAM : "is parent of (parent_id)"
+TEAM "1" --o{ "many" CATEGORY : "scopes"
+TEAM "1" --o{ "many" TODO : "associated with (optional)"
+
+CATEGORY "1" --o{ "many" CATEGORY : "is parent of (parent_id)"
+
+POST "many" }--{ "many" CATEGORY : "categorized as (categorizable)"
+POST "many" }--{ "many" TAGS : "tagged with (taggables)"
+POST "many" }--{ "many" MEDIA : "has attached (media)"
+POST "many" }--{ "many" COMMENTS : "is commented on (commentable)"
+
+TODO "many" }--{ "many" CATEGORY : "categorized as (categorizable)"
+TODO "many" }--{ "many" TAGS : "tagged with (taggables)"
+TODO "many" }--{ "many" MEDIA : "has attached (media)"
+TODO "many" }--{ "many" COMMENTS : "is commented on (commentable)"
+
+CONVERSATION "1" --o{ "many" MESSAGE : "contains"
+
+ROLE "many" }--{ "many" PERMISSION : "has (role_has_permissions)"
+
+COMMAND_LOG "1" --o{ "many" SNAPSHOT : "may generate"
+@enduml

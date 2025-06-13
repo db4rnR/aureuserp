@@ -1,0 +1,110 @@
+@startuml CQRS Flow (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles for different components
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam database {
+    BackgroundColor #1a237e
+    BorderColor #3949ab
+}
+
+skinparam rectangle<<CommandSide>> {
+    BackgroundColor #e65100
+    BorderColor #f57c00
+}
+
+skinparam rectangle<<ReadSide>> {
+    BackgroundColor #1b5e20
+    BorderColor #388e3c
+}
+
+skinparam rectangle<<SideEffects>> {
+    BackgroundColor #4a148c
+    BorderColor #7b1fa2
+}
+
+' Main flow
+rectangle "Request / User Action" as A
+rectangle "Controller / Livewire Component" as B
+
+' Write Side - CQRS
+rectangle "Write Side - CQRS - Core Logic via hirethunk/verbs" <<CommandSide>> {
+    rectangle "Controller / Livewire Component" as B_CMD
+    rectangle "Command Bus\n(hirethunk/verbs)" as C
+    rectangle "Verb Command Handler" as D
+    rectangle "Domain Services / Models" as E
+    rectangle "Validation Logic" as F
+    database "Database: Persists State" as G
+    rectangle "Command History (verbs)" as H
+    database "Database: Stores History" as G_HIST
+    rectangle "Event Bus (Laravel)" as I
+}
+
+' Write Side - Simple CRUD
+rectangle "Write Side - Simple CRUD - Optional" <<CommandSide>> {
+    rectangle "Controller / Livewire Component" as B_SCRUD
+    rectangle "Domain Services / Models" as E_SCRUD
+    database "Database: Persists State" as G_SCRUD
+}
+
+' Read Side
+rectangle "Read Side" <<ReadSide>> {
+    rectangle "Controller / Livewire Component" as B_QUERY
+    rectangle "Query Service / Eloquent Scopes" as J
+    database "Database: Reads State" as G_READ
+    rectangle "Response Data / View Model" as K
+}
+
+' Side Effects
+rectangle "Side Effects - Async Preferred" <<SideEffects>> {
+    rectangle "Event Bus (Laravel)" as I_SE
+    rectangle "Listeners / Subscribers (Queued)" as L
+    rectangle "Notifications" as M
+    rectangle "Search Indexing" as N
+    rectangle "Cache Updates" as O
+    rectangle "..." as P
+}
+
+' Connections
+A -down-> B
+
+B -down-> B_CMD
+B -down-> B_SCRUD
+B -down-> B_QUERY
+
+B_CMD -right-> C : "Sends Verbs Command Object"
+C -down-> D
+D -down-> E
+D -down-> F
+E -down-> G
+D -down-> H
+H -down-> G_HIST
+D -down-> I
+
+B_SCRUD -down-> E_SCRUD
+E_SCRUD -down-> G_SCRUD
+
+B_QUERY -right-> J : "Query Parameters"
+J -down-> G_READ
+J -right-> K
+B_QUERY -down-> K : "Response Data / View Model"
+
+I -down-> I_SE
+I_SE -down-> L
+L -down-> M
+L -down-> N
+L -down-> O
+L -down-> P
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+!theme light
+skinparam backgroundColor #ffffff
+skinparam arrowColor #666666
+skinparam nodeFontColor #333333
+skinparam nodeBorderColor #cccccc
+skinparam nodeBorderThickness 1
+skinparam nodeBackgroundColor #f5f5f5
+
+node "Client" as client
+node "API Controller" as controller
+node "Command Bus" as commandBus
+node "Query Bus" as queryBus
+node "Command Handler" as commandHandler
+node "Query Handler" as queryHandler
+node "Domain Model" as domainModel
+node "Write Database" as writeDb
+node "Read Model" as readModel
+node "Read Database" as readDb
+node "Event Bus" as eventBus
+node "Event Handlers" as eventHandlers
+
+client --> controller
+controller --> commandBus : Command
+controller --> queryBus : Query
+
+commandBus --> commandHandler
+queryBus --> queryHandler
+
+commandHandler --> domainModel
+domainModel --> writeDb
+
+queryHandler --> readModel
+readModel --> readDb
+
+domainModel ..> eventBus : Publish Events
+eventBus ..> eventHandlers : Process Events
+eventHandlers ..> readModel : Update
+
+@enduml

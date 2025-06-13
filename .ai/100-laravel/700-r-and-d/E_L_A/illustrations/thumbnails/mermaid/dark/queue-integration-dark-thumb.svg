@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80" height="60" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+  <rect width="80" height="60" fill="#2a2a2a" />
+  <line x1="10" y1="5" x2="10" y2="55" stroke="#ffffff" stroke-width="1" />
+  <line x1="25" y1="5" x2="25" y2="55" stroke="#ffffff" stroke-width="1" />
+  <line x1="40" y1="5" x2="40" y2="55" stroke="#ffffff" stroke-width="1" />
+  <line x1="55" y1="5" x2="55" y2="55" stroke="#ffffff" stroke-width="1" />
+  <line x1="70" y1="5" x2="70" y2="55" stroke="#ffffff" stroke-width="1" />
+  <line x1="10" y1="15" x2="25" y2="20" stroke="#999999" stroke-width="1" stroke-dasharray="2" />
+  <line x1="25" y1="25" x2="40" y2="30" stroke="#999999" stroke-width="1" stroke-dasharray="2" />
+  <line x1="40" y1="35" x2="55" y2="40" stroke="#999999" stroke-width="1" stroke-dasharray="2" />
+  <line x1="55" y1="45" x2="70" y2="50" stroke="#999999" stroke-width="1" stroke-dasharray="2" />
+  <text x="10" y="10" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Aggregate</text>
+  <text x="25" y="10" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Event Store</text>
+  <text x="40" y="10" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Reactor</text>
+  <text x="55" y="10" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Queue</text>
+  <text x="70" y="10" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Side Effect</text>
+</svg>

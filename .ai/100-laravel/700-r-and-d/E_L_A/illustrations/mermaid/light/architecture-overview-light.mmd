@@ -1,0 +1,73 @@
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+flowchart TB
+    subgraph Client ["Client Layer"]
+        Browser["Web Browser"]
+        MobileApp["Mobile App"]
+        API["API Clients"]
+    end
+
+    subgraph Web ["Web Layer"]
+        FrankenPHP["FrankenPHP"]
+        Laravel["Laravel 12"]
+        Livewire["Livewire/Volt"]
+        Filament["Filament Admin"]
+    end
+
+    subgraph Application ["Application Layer"]
+        Controllers["Controllers"]
+        Commands["Commands"]
+        Queries["Queries"]
+        Events["Events"]
+        Jobs["Jobs"]
+    end
+
+    subgraph Domain ["Domain Layer"]
+        Models["Models"]
+        Services["Services"]
+        Repositories["Repositories"]
+        Policies["Policies"]
+    end
+
+    subgraph Infrastructure ["Infrastructure Layer"]
+        Database["PostgreSQL"]
+        Cache["Redis Cache"]
+        Queue["Redis Queue"]
+        Storage["S3 Storage"]
+        Search["Meilisearch"]
+    end
+
+    Browser --> FrankenPHP
+    MobileApp --> FrankenPHP
+    API --> FrankenPHP
+    
+    FrankenPHP --> Laravel
+    Laravel --> Livewire
+    Laravel --> Filament
+    
+    Livewire --> Controllers
+    Filament --> Controllers
+    
+    Controllers --> Commands
+    Controllers --> Queries
+    
+    Commands --> Events
+    Commands --> Models
+    Commands --> Services
+    
+    Queries --> Models
+    Queries --> Repositories
+    
+    Services --> Models
+    Services --> Repositories
+    Services --> Policies
+    
+    Models --> Database
+    Repositories --> Database
+    
+    Events --> Jobs
+    Jobs --> Services
+    
+    Services --> Cache
+    Services --> Queue
+    Services --> Storage
+    Services --> Search

@@ -1,0 +1,8 @@
+# Documentation Style Guide (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+flowchart TD
+    A[Component A] --> B[Component B]
+    B --> C[Component C]
+```

@@ -1,0 +1,30 @@
+{
+    "name": "webkul/purchases",
+    "description": "",
+    "authors": [
+        {
+            "name": "Aureus ERP",
+            "email": "support@aureuserp.in"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Purchase\\Providers\\PurchaseServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Purchase\\": "src/",
+            "Webkul\\Purchase\\Database\\Factories\\": "database/factories/",
+            "Webkul\\Purchase\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webkul\\Purchase\\Tests\\": "tests/"
+        }
+    }
+}

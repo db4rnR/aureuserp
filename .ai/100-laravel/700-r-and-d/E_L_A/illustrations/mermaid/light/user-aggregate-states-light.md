@@ -1,0 +1,58 @@
+# User Aggregate States (Light Mode)
+
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+stateDiagram-v2
+    [*] --> Invited: UserInvitedEvent
+    Invited --> PendingActivation: UserRegisteredEvent
+    [*] --> PendingActivation: UserRegisteredEvent
+    PendingActivation --> Active: UserActivatedEvent
+    Active --> Suspended: UserSuspendedEvent
+    Suspended --> Active: UserUnsuspendedEvent
+    Active --> Deactivated: UserDeactivatedEvent
+    Deactivated --> Active: UserReactivatedEvent
+    Active --> Archived: UserArchivedEvent
+    Suspended --> Archived: UserArchivedEvent
+    Deactivated --> Archived: UserArchivedEvent
+
+    %% State styling with classes
+    classDef invitedState fill:#7F8C8D,stroke:#333,color:white
+    classDef pendingState fill:#F39C12,stroke:#333,color:white
+    classDef activeState fill:#27AE60,stroke:#333,color:white
+    classDef suspendedState fill:#D35400,stroke:#333,color:white
+    classDef deactivatedState fill:#7F8C8D,stroke:#333,color:white
+    classDef archivedState fill:#34495E,stroke:#333,color:white
+
+    class Invited invitedState
+    class PendingActivation pendingState
+    class Active activeState
+    class Suspended suspendedState
+    class Deactivated deactivatedState
+    class Archived archivedState
+
+    %% Notes
+    note right of Invited
+        User has been invited but has not registered
+    end note
+
+    note right of PendingActivation
+        User has registered but not activated their account
+    end note
+
+    note right of Active
+        User has an active account and can access all features
+    end note
+
+    note right of Suspended
+        User account has been temporarily suspended
+        by an administrator
+    end note
+
+    note right of Deactivated
+        User has voluntarily deactivated their account
+    end note
+
+    note right of Archived
+        User account has been archived (soft deleted)
+    end note
+```

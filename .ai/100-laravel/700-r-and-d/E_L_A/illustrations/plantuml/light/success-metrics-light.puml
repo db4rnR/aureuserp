@@ -1,0 +1,54 @@
+@startuml Success Metrics (Light Mode)
+
+' Light mode theme
+!theme cerulean
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+' Main components
+rectangle "Success Metrics" as A
+
+' Main categories
+rectangle "Technical Metrics" as B
+rectangle "Business Metrics" as C
+
+' Technical metrics
+rectangle "90%+ code coverage" as B1
+rectangle "<100ms average database query time" as B2
+rectangle "<1s average page load time" as B3
+rectangle "Zero critical security vulnerabilities" as B4
+rectangle "99.9% uptime in production" as B5
+
+' Business metrics
+rectangle "30% reduction in team coordination time" as C1
+rectangle "25% improvement in project delivery timelines" as C2
+rectangle "40% reduction in communication tools costs" as C3
+rectangle "90% user satisfaction rating" as C4
+rectangle "50% reduction in onboarding time" as C5
+
+' Connections
+A -down-> B
+A -down-> C
+
+B -down-> B1
+B -down-> B2
+B -down-> B3
+B -down-> B4
+B -down-> B5
+
+C -down-> C1
+C -down-> C2
+C -down-> C3
+C -down-> C4
+C -down-> C5
+
+@enduml

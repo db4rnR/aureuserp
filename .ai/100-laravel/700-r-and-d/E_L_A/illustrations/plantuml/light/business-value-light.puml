@@ -1,0 +1,73 @@
+@startuml Business Value (Light Mode)
+
+' Light mode theme
+!theme cerulean
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+' Main components
+rectangle "Business Value" as A
+
+' Main categories
+rectangle "Improved Team Collaboration" as B
+rectangle "Streamlined Content Management" as C
+rectangle "Enhanced Task Management" as D
+rectangle "Secure Communication" as E
+rectangle "Comprehensive Audit Trail" as F
+rectangle "Scalable Architecture" as G
+
+' Metrics for each category
+rectangle "30% reduction in coordination time" as B1
+rectangle "50% reduction in onboarding time" as B2
+
+rectangle "25% improvement in content delivery" as C1
+rectangle "40% reduction in publishing errors" as C2
+
+rectangle "25% improvement in project delivery" as D1
+rectangle "35% increase in task completion rate" as D2
+
+rectangle "40% reduction in communication tools costs" as E1
+rectangle "90% user satisfaction rating" as E2
+
+rectangle "100% compliance with audit requirements" as F1
+rectangle "60% reduction in compliance reporting time" as F2
+
+rectangle "Supports growth from 10 to 10,000+ users" as G1
+rectangle "99.9% uptime in production" as G2
+
+' Connections
+A -down-> B
+A -down-> C
+A -down-> D
+A -down-> E
+A -down-> F
+A -down-> G
+
+B -down-> B1
+B -down-> B2
+
+C -down-> C1
+C -down-> C2
+
+D -down-> D1
+D -down-> D2
+
+E -down-> E1
+E -down-> E2
+
+F -down-> F1
+F -down-> F2
+
+G -down-> G1
+G -down-> G2
+
+@enduml

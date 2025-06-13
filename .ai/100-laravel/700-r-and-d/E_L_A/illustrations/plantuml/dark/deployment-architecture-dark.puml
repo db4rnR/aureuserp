@@ -1,0 +1,155 @@
+@startuml Deployment Architecture (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles for different components
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam database {
+    BackgroundColor #1a237e
+    BorderColor #3949ab
+}
+
+skinparam rectangle<<Client>> {
+    BackgroundColor #1a237e
+    BorderColor #3949ab
+}
+
+skinparam rectangle<<LoadBalancing>> {
+    BackgroundColor #e65100
+    BorderColor #f57c00
+}
+
+skinparam rectangle<<Application>> {
+    BackgroundColor #1b5e20
+    BorderColor #388e3c
+}
+
+skinparam rectangle<<Queue>> {
+    BackgroundColor #4a148c
+    BorderColor #7b1fa2
+}
+
+skinparam rectangle<<RealTime>> {
+    BackgroundColor #b71c1c
+    BorderColor #d32f2f
+}
+
+skinparam rectangle<<Data>> {
+    BackgroundColor #006064
+    BorderColor #0097a7
+}
+
+skinparam rectangle<<Storage>> {
+    BackgroundColor #f57f17
+    BorderColor #ffa000
+}
+
+' Client Layer
+rectangle "Client Layer" <<Client>> {
+    rectangle "Web Browser" as Browser
+    rectangle "Mobile App" as MobileApp
+    rectangle "External API Clients" as ExternalAPI
+}
+
+' Load Balancing
+rectangle "Load Balancing" <<LoadBalancing>> {
+    rectangle "Load Balancer" as LB
+}
+
+' Application Layer
+rectangle "Application Layer" <<Application>> {
+    rectangle "Web Server 1\nFrankenPHP + Laravel Octane" as WebServer1
+    rectangle "Web Server 2\nFrankenPHP + Laravel Octane" as WebServer2
+    rectangle "Web Server 3\nFrankenPHP + Laravel Octane" as WebServer3
+}
+
+' Queue Processing
+rectangle "Queue Processing" <<Queue>> {
+    rectangle "Horizon Worker 1" as HorizonWorker1
+    rectangle "Horizon Worker 2" as HorizonWorker2
+}
+
+' Real-time Layer
+rectangle "Real-time Layer" <<RealTime>> {
+    rectangle "Reverb Server 1" as ReverbServer1
+    rectangle "Reverb Server 2" as ReverbServer2
+}
+
+' Data Layer
+rectangle "Data Layer" <<Data>> {
+    database "Primary Database\nPostgreSQL" as PrimaryDB
+    database "Read Replica\nPostgreSQL" as ReadReplica
+    database "Redis\nCache + Queue" as Redis
+    rectangle "Typesense\nSearch Engine" as Typesense
+}
+
+' Storage Layer
+rectangle "Storage Layer" <<Storage>> {
+    rectangle "Object Storage\nMedia Files" as ObjectStorage
+}
+
+' Connections
+Browser -down-> LB
+MobileApp -down-> LB
+ExternalAPI -down-> LB
+
+LB -down-> WebServer1
+LB -down-> WebServer2
+LB -down-> WebServer3
+
+WebServer1 -down-> PrimaryDB
+WebServer1 -down-> ReadReplica
+WebServer1 -down-> Redis
+WebServer1 -down-> Typesense
+WebServer1 -down-> ObjectStorage
+
+WebServer2 -down-> PrimaryDB
+WebServer2 -down-> ReadReplica
+WebServer2 -down-> Redis
+WebServer2 -down-> Typesense
+WebServer2 -down-> ObjectStorage
+
+WebServer3 -down-> PrimaryDB
+WebServer3 -down-> ReadReplica
+WebServer3 -down-> Redis
+WebServer3 -down-> Typesense
+WebServer3 -down-> ObjectStorage
+
+Redis -down-> HorizonWorker1
+Redis -down-> HorizonWorker2
+
+HorizonWorker1 -down-> PrimaryDB
+HorizonWorker1 -down-> Typesense
+HorizonWorker1 -down-> ObjectStorage
+
+HorizonWorker2 -down-> PrimaryDB
+HorizonWorker2 -down-> Typesense
+HorizonWorker2 -down-> ObjectStorage
+
+WebServer1 -down-> ReverbServer1
+WebServer2 -down-> ReverbServer1
+WebServer3 -down-> ReverbServer1
+
+WebServer1 -down-> ReverbServer2
+WebServer2 -down-> ReverbServer2
+WebServer3 -down-> ReverbServer2
+
+ReverbServer1 -down-> Redis
+ReverbServer2 -down-> Redis
+
+Browser -down-> ReverbServer1
+Browser -down-> ReverbServer2
+MobileApp -down-> ReverbServer1
+MobileApp -down-> ReverbServer2
+
+@enduml

@@ -1,0 +1,39 @@
+
+@startuml Role Hierarchy Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam database {
+    BackgroundColor #1a237e
+    BorderColor #3949ab
+}
+
+
+    rectangle "Super Administrator" as SuperAdmin --> rectangle "Administrator" as Admin
+    Admin --> rectangle "User" as User
+    
+    rectangle "Team Owner" as TeamOwner --> rectangle "Team Administrator" as TeamAdmin
+    TeamAdmin --> rectangle "Team Member" as TeamMember
+    
+    SuperAdmin -.-> TeamOwner
+    Admin -.-> TeamAdmin
+    User -.-> TeamMember
+    
+    classDef global fill:#333333,stroke:#ffffff,stroke-width:1px
+    classDef team fill:#1a3a4a,stroke:#ffffff,stroke-width:1px
+    
+    class SuperAdmin,Admin,User global
+    class TeamOwner,TeamAdmin,TeamMember team
+@enduml

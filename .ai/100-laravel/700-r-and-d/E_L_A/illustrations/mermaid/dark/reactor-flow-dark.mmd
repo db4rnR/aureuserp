@@ -1,0 +1,10 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2a2a2a', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#555555', 'lineColor': '#999999', 'secondaryColor': '#252525', 'tertiaryColor': '#333333' }}}%%
+flowchart LR
+    A[Event Store] --> B[Reactor]
+    B --> C{Event Type?}
+    C -->|UserRegistered| D[Send Welcome Email]
+    C -->|TeamCreated| E[Send Team Notification]
+    C -->|PostPublished| F[Send Social Media Update]
+    D --> G[Email Service]
+    E --> H[Notification Service]
+    F --> I[Social Media API]

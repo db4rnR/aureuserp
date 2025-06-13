@@ -1,0 +1,43 @@
+
+@startuml Integration Testing Flow Light (Light Mode)
+
+' Dark mode theme
+!theme cerulean
+skinparam backgroundColor #ffffff
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam participant {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+skinparam actor {
+    BackgroundColor #e6f7ff
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+
+    participant Test as Test Case
+    participant Command as Command
+    participant Aggregate as Aggregate
+    participant Event as Event Store
+    participant Projector as Projector
+    participant ReadModel as Read Model
+    participant Query as Query
+    
+    Test -> Command: Dispatch Command
+    Command -> Aggregate: Handle Command
+    Aggregate -> Event: Record Events
+    Event -> Projector: Process Events
+    Projector -> ReadModel: Update Read Model
+    Test -> Query: Execute Query
+    Query -> ReadModel: Retrieve Data
+    ReadModel -> Query: Return Data
+    Query -> Test: Return Result
+    Test -> Test: Assert Result
+@enduml

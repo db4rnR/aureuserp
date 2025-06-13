@@ -1,0 +1,65 @@
+
+@startuml Team Aggregate States Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam state {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam note {
+    BackgroundColor #4a148c
+    BorderColor #7b1fa2
+    FontColor #FFFFFF
+}
+
+
+    [*] --> Forming: TeamCreatedEvent
+    Forming --> Active : TeamActivatedEvent
+    Active --> Archived : TeamArchivedEvent
+    Archived --> Active : TeamRestoredEvent
+    Active --> Deleted : TeamDeletedEvent
+    Archived --> Deleted : TeamDeletedEvent
+    
+    %% State styling with classes
+    classDef formingState fill:#F39C12,stroke:#ecf0f1,color:black
+    classDef activeState fill:#27AE60,stroke:#ecf0f1,color:black
+    classDef archivedState fill:#7F8C8D,stroke:#ecf0f1,color:white
+    classDef deletedState fill:#C0392B,stroke:#ecf0f1,color:white
+    
+    class Forming formingState
+    class Active activeState
+    class Archived archivedState
+    class Deleted deletedState
+    
+    %% Notes
+    note right of Forming
+        Team is being set up
+        Members can be added but team is not fully operational
+    end note
+    
+    note right of Active
+        Team is active and can be used by members
+        Members can create content and collaborate
+    end note
+    
+    note right of Archived
+        Team is archived and read-only
+        No new content can be created
+        Can be restored at any time
+    end note
+    
+    note right of Deleted
+        Team has been permanently deleted
+        Cannot be recovered
+        All associated data is soft-deleted
+    end note
+@enduml

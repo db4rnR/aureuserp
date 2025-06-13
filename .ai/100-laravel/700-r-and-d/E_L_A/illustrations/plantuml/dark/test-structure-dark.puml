@@ -1,0 +1,67 @@
+
+@startuml Test Structure Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles for classes
+skinparam class {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam interface {
+    BackgroundColor #34495e
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+
+    class TestCase {
+
+        +setUp()
+        +tearDown()
+    
+}
+    
+    class AggregateTest {
+
+        +it_can_execute_command()
+        +it_cannot_execute_invalid_command()
+        +it_applies_event_correctly()
+    
+}
+    
+    class ProjectorTest {
+
+        +it_creates_read_model_from_event()
+        +it_updates_read_model_from_event()
+        +it_deletes_read_model_from_event()
+    
+}
+    
+    class ReactorTest {
+
+        +it_triggers_side_effect_from_event()
+        +it_handles_external_service_failure()
+    
+}
+    
+    class QueryTest {
+
+        +it_returns_correct_data()
+        +it_validates_input_correctly()
+        +it_handles_empty_results()
+    
+}
+    
+    TestCase <|-- AggregateTest
+    TestCase <|-- ProjectorTest
+    TestCase <|-- ReactorTest
+    TestCase <|-- QueryTest
+@enduml

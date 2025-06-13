@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80" height="60" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+  <rect width="80" height="60" fill="#f5f5f5" />
+  <polygon points="40,5 10,55 70,55" fill="#ffffff" stroke="#333333" />
+  <line x1="20" y1="40" x2="60" y2="40" stroke="#333333" stroke-width="1" />
+  <line x1="30" y1="25" x2="50" y2="25" stroke="#333333" stroke-width="1" />
+  <text x="40" y="50" font-family="Arial" font-size="4" text-anchor="middle" fill="#333333">Unit Tests</text>
+  <text x="40" y="35" font-family="Arial" font-size="4" text-anchor="middle" fill="#333333">Integration Tests</text>
+  <text x="40" y="20" font-family="Arial" font-size="4" text-anchor="middle" fill="#333333">E2E Tests</text>
+</svg>

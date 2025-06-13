@@ -1,0 +1,24 @@
+# Event Sourcing Permissions (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2a2a2a', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#555555', 'lineColor': '#999999', 'secondaryColor': '#252525', 'tertiaryColor': '#333333' }}}%%
+sequenceDiagram
+    participant User
+    participant Command
+    participant CommandHandler
+    participant PermissionChecker
+    participant Aggregate
+    participant EventStore
+    
+    User->>Command: Dispatch Command
+    Command->>CommandHandler: Handle Command
+    CommandHandler->>PermissionChecker: Check Permission
+    alt Has Permission
+        PermissionChecker->>CommandHandler: Permission Granted
+        CommandHandler->>Aggregate: Execute Command
+        Aggregate->>EventStore: Record Events
+    else No Permission
+        PermissionChecker->>CommandHandler: Permission Denied
+        CommandHandler->>User: Unauthorized Exception
+    end
+```

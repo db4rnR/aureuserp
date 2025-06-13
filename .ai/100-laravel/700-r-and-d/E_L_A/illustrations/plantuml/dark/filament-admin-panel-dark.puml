@@ -1,0 +1,101 @@
+@startuml Filament Admin Panel (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+' Main components
+rectangle "Filament Admin Panel" as A
+
+' Main categories
+rectangle "Dashboard" as B
+rectangle "Resources" as C
+rectangle "Pages" as D
+rectangle "Widgets" as E
+rectangle "Plugins" as F
+
+' Dashboard components
+rectangle "Overview Stats" as B1
+rectangle "Recent Activity" as B2
+rectangle "System Health" as B3
+
+' Resources
+rectangle "User Resource" as C1
+rectangle "Team Resource" as C2
+rectangle "Post Resource" as C3
+rectangle "Todo Resource" as C4
+rectangle "Category Resource" as C5
+rectangle "Tag Resource" as C6
+rectangle "Media Resource" as C7
+rectangle "Comment Resource" as C8
+rectangle "Conversation Resource" as C9
+rectangle "Message Resource" as C10
+
+' Pages
+rectangle "Settings" as D1
+rectangle "Audit Log" as D2
+rectangle "System Information" as D3
+rectangle "User Profile" as D4
+
+' Widgets
+rectangle "Stats Overview" as E1
+rectangle "Latest Posts" as E2
+rectangle "Active Users" as E3
+rectangle "Team Activity" as E4
+
+' Plugins
+rectangle "Shield (Permissions)" as F1
+rectangle "Spatie Backup" as F2
+rectangle "Activity Log" as F3
+rectangle "Health Checks" as F4
+rectangle "Schedule Monitor" as F5
+
+' Connections
+A --> B
+A --> C
+A --> D
+A --> E
+A --> F
+
+B --> B1
+B --> B2
+B --> B3
+
+C --> C1
+C --> C2
+C --> C3
+C --> C4
+C --> C5
+C --> C6
+C --> C7
+C --> C8
+C --> C9
+C --> C10
+
+D --> D1
+D --> D2
+D --> D3
+D --> D4
+
+E --> E1
+E --> E2
+E --> E3
+E --> E4
+
+F --> F1
+F --> F2
+F --> F3
+F --> F4
+F --> F5
+
+@enduml

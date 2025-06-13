@@ -1,0 +1,100 @@
+@startuml Resource Allocation Timeline (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Project start date
+project starts 2025-01-01
+
+' Display settings
+printscale daily
+scale 1.0
+
+' Saturday and Sunday are closed
+closed days saturday sunday
+
+' Define styles
+skinparam ganttDiagram {
+    BackgroundColor #282c34
+    FontColor #FFFFFF
+    ArrowColor #ecf0f1
+    BarColor #4CAF50
+    BarBackgroundColor #1b5e20
+    MilestoneBackgroundColor #e65100
+    MilestoneColor #FF9800
+}
+
+' Planning & Architecture Phase
+[Planning & Architecture] as [PA] lasts 35 days
+[Technical Architecture Document] as [TAD] lasts 14 days
+[UI/UX Design] as [UID] lasts 21 days
+[UID] starts after [TAD]'s end
+[Technical Spikes] as [TS] lasts 28 days
+[TS] starts after [TAD]'s end
+
+' Core Development Phase
+[Core Development] as [CD] lasts 56 days
+[CD] starts after [PA]'s end
+[Database Schema Implementation] as [DSI] lasts 14 days
+[DSI] starts after [TAD]'s end
+[Authentication & Authorization] as [AA] lasts 14 days
+[AA] starts after [DSI]'s end
+[User & Team Management] as [UTM] lasts 21 days
+[UTM] starts after [AA]'s end
+[Category Management] as [CM] lasts 14 days
+[CM] starts after [UTM]'s end
+[Todo Management] as [TM] lasts 14 days
+[TM] starts after [CM]'s end
+[Admin Portal (Filament)] as [AP] lasts 28 days
+[AP] starts after [AA]'s end
+
+' Advanced Features Phase
+[Advanced Features] as [AF] lasts 84 days
+[AF] starts after [CD]'s end
+[Post Management] as [PM] lasts 21 days
+[PM] starts after [CD]'s end
+[Media Management] as [MM] lasts 14 days
+[MM] starts after [PM]'s end
+[Search Implementation] as [SI] lasts 21 days
+[SI] starts after [MM]'s end
+[Real-time Chat] as [RTC] lasts 28 days
+[RTC] starts after [SI]'s end
+[API Development] as [API] lasts 35 days
+[API] starts after [PM]'s end
+
+' Testing & Refinement Phase
+[Testing & Refinement] as [TR] lasts 42 days
+[TR] starts after [AF]'s end
+[Unit & Feature Tests] as [UFT] lasts 21 days
+[UFT] starts after [AF]'s end
+[Performance Optimization] as [PO] lasts 14 days
+[PO] starts after [UFT]'s end
+[Security Audit] as [SA] lasts 14 days
+[SA] starts after [PO]'s end
+[Bug Fixes & Refinements] as [BFR] lasts 21 days
+[BFR] starts after [UFT]'s end
+
+' Deployment & Training Phase
+[Deployment & Training] as [DT] lasts 42 days
+[DT] starts after [TR]'s end
+[Staging Deployment] as [SD] lasts 14 days
+[SD] starts after [TR]'s end
+[User Documentation] as [UD] lasts 21 days
+[UD] starts after [SD]'s end
+[Training Materials] as [TRM] lasts 21 days
+[TRM] starts after [SD]'s end
+[Production Deployment] as [PD] lasts 7 days
+[PD] starts after [UD]'s end and [TRM]'s end
+
+' Milestones
+[Architecture Complete] as [MAC] happens at [PA]'s end
+[MVP Release] as [MVP] happens at [CD]'s end
+[Feature Complete] as [FC] happens at [AF]'s end
+[Quality Assurance Complete] as [QAC] happens at [TR]'s end
+[Project Launch] as [PL] happens at [DT]'s end
+
+@enduml

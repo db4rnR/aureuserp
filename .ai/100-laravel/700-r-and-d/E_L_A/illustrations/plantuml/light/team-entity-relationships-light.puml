@@ -1,0 +1,88 @@
+@startuml
+!theme light
+skinparam backgroundColor #ffffff
+skinparam classFontColor #333333
+skinparam classBorderColor #cccccc
+skinparam classBorderThickness 1
+skinparam classBackgroundColor #f5f5f5
+skinparam arrowColor #666666
+
+entity "TEAM" as team {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  slug : string
+  description : text
+  parent_id : uuid <<FK>>
+  status : string
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "TEAM_USER" as team_user {
+  * id : uuid <<PK>>
+  --
+  * team_id : uuid <<FK>>
+  * user_id : uuid <<FK>>
+  role : string
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "CATEGORY" as category {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  description : text
+  * team_id : uuid <<FK>>
+  parent_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "STATUS" as status {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  reason : string
+  metadata : json
+  * model_id : uuid
+  * model_type : string
+  * created_at : timestamp
+}
+
+entity "USER" as user {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * email : string
+}
+
+entity "TODO" as todo {
+  * id : uuid <<PK>>
+  --
+  * title : string
+  description : text
+  * status : string
+  due_date : timestamp
+  * user_id : uuid <<FK>>
+  team_id : uuid <<FK>>
+}
+
+team "1" -- "0..*" team : parent of
+team "1" -- "0..*" category : has
+team "1" -- "0..*" todo : related to
+team "1" -- "0..*" team_user : has
+team "1" -- "0..*" status : has
+team_user "0..*" -- "1" user : belongs to
+category "1" -- "0..*" category : parent of
+
+@enduml

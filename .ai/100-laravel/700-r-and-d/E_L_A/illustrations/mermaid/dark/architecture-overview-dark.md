@@ -1,0 +1,78 @@
+# Architecture Overview (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+flowchart TB
+    subgraph Client ["Client Layer"]
+        Browser["Web Browser"]
+        MobileApp["Mobile App"]
+        API["API Clients"]
+    end
+
+    subgraph Web ["Web Layer"]
+        FrankenPHP["FrankenPHP"]
+        Laravel["Laravel 12"]
+        Livewire["Livewire/Volt"]
+        Filament["Filament Admin"]
+    end
+
+    subgraph Application ["Application Layer"]
+        Controllers["Controllers"]
+        Commands["Commands"]
+        Queries["Queries"]
+        Events["Events"]
+        Jobs["Jobs"]
+    end
+
+    subgraph Domain ["Domain Layer"]
+        Models["Models"]
+        Services["Services"]
+        Repositories["Repositories"]
+        Policies["Policies"]
+    end
+
+    subgraph Infrastructure ["Infrastructure Layer"]
+        Database["PostgreSQL"]
+        Cache["Redis Cache"]
+        Queue["Redis Queue"]
+        Storage["S3 Storage"]
+        Search["Meilisearch"]
+    end
+
+    Browser --> FrankenPHP
+    MobileApp --> FrankenPHP
+    API --> FrankenPHP
+    
+    FrankenPHP --> Laravel
+    Laravel --> Livewire
+    Laravel --> Filament
+    
+    Livewire --> Controllers
+    Filament --> Controllers
+    
+    Controllers --> Commands
+    Controllers --> Queries
+    
+    Commands --> Events
+    Commands --> Models
+    Commands --> Services
+    
+    Queries --> Models
+    Queries --> Repositories
+    
+    Services --> Models
+    Services --> Repositories
+    Services --> Policies
+    
+    Models --> Database
+    Repositories --> Database
+    
+    Events --> Jobs
+    Jobs --> Services
+    
+    Services --> Cache
+    Services --> Queue
+    Services --> Storage
+    Services --> Search
+
+```

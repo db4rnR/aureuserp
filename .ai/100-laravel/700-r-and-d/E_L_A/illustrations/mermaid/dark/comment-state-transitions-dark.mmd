@@ -1,0 +1,34 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+stateDiagram-v2
+    [*] --> Pending: Create Comment
+
+    Pending --> Approved: Approve
+    Pending --> Rejected: Reject
+    Pending --> Deleted: Delete
+
+    Approved --> Deleted: Delete
+    Rejected --> Deleted: Delete
+
+    Deleted --> [*]
+
+    state Pending {
+        [*] --> AwaitingModeration
+        AwaitingModeration --> [*]
+    }
+
+    state Approved {
+        [*] --> Visible
+        Visible --> Edited: Update
+        Edited --> Visible
+    }
+
+    state Rejected {
+        [*] --> Hidden
+        Hidden --> WithReason: Add Rejection Reason
+        WithReason --> [*]
+    }
+
+    note right of Pending: Comments start in Pending state<br>and await moderation
+    note right of Approved: Approved comments are visible<br>and can be edited
+    note right of Rejected: Rejected comments are hidden<br>with optional rejection reason
+    note right of Deleted: Deleted comments are<br>permanently removed

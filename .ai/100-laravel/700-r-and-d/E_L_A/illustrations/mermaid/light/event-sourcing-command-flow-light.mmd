@@ -1,0 +1,93 @@
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+flowchart TD
+    subgraph "Command Handling"
+        C1[RegisterUserCommand] --> |handled by| CH1[CommandHandler]
+        C2[CreateTeamCommand] --> |handled by| CH2[CommandHandler]
+        C3[CreatePostCommand] --> |handled by| CH3[CommandHandler]
+        C4[CreateTodoCommand] --> |handled by| CH4[CommandHandler]
+        
+        CH1 --> |retrieves| UA[UserAggregate]
+        CH2 --> |retrieves| TA[TeamAggregate]
+        CH3 --> |retrieves| PA[PostAggregate]
+        CH4 --> |retrieves| TOA[TodoAggregate]
+    end
+    
+    subgraph "Event Generation"
+        UA --> |records| E1[UserRegisteredEvent]
+        TA --> |records| E2[TeamCreatedEvent]
+        PA --> |records| E3[PostCreatedEvent]
+        TOA --> |records| E4[TodoCreatedEvent]
+        
+        E1 --> |stored in| ES[Event Store]
+        E2 --> |stored in| ES
+        E3 --> |stored in| ES
+        E4 --> |stored in| ES
+    end
+    
+    subgraph "Event Processing"
+        ES --> |processed by| P1[UserProjector]
+        ES --> |processed by| P2[TeamProjector]
+        ES --> |processed by| P3[PostProjector]
+        ES --> |processed by| P4[TodoProjector]
+        
+        ES --> |processed by| R1[UserReactor]
+        ES --> |processed by| R2[TeamReactor]
+        ES --> |processed by| R3[PostReactor]
+        ES --> |processed by| R4[TodoReactor]
+    end
+    
+    subgraph "Read Models"
+        P1 --> |updates| RM1[User Model]
+        P2 --> |updates| RM2[Team Model]
+        P3 --> |updates| RM3[Post Model]
+        P4 --> |updates| RM4[Todo Model]
+    end
+    
+    subgraph "Side Effects"
+        R1 --> |executes| SE1[Send Welcome Email]
+        R2 --> |executes| SE2[Notify Team Members]
+        R3 --> |executes| SE3[Update Search Index]
+        R4 --> |executes| SE4[Send Due Date Reminder]
+    end
+    
+    style C1 fill:#F44336,stroke:#D32F2F,color:white
+    style C2 fill:#F44336,stroke:#D32F2F,color:white
+    style C3 fill:#F44336,stroke:#D32F2F,color:white
+    style C4 fill:#F44336,stroke:#D32F2F,color:white
+    
+    style CH1 fill:#F44336,stroke:#D32F2F,color:white,stroke-dasharray: 5 5
+    style CH2 fill:#F44336,stroke:#D32F2F,color:white,stroke-dasharray: 5 5
+    style CH3 fill:#F44336,stroke:#D32F2F,color:white,stroke-dasharray: 5 5
+    style CH4 fill:#F44336,stroke:#D32F2F,color:white,stroke-dasharray: 5 5
+    
+    style UA fill:#F44336,stroke:#D32F2F,color:white
+    style TA fill:#F44336,stroke:#D32F2F,color:white
+    style PA fill:#F44336,stroke:#D32F2F,color:white
+    style TOA fill:#F44336,stroke:#D32F2F,color:white
+    
+    style E1 fill:#4CAF50,stroke:#388E3C,color:white
+    style E2 fill:#4CAF50,stroke:#388E3C,color:white
+    style E3 fill:#4CAF50,stroke:#388E3C,color:white
+    style E4 fill:#4CAF50,stroke:#388E3C,color:white
+    
+    style ES fill:#2196F3,stroke:#1976D2,color:white
+    
+    style P1 fill:#9C27B0,stroke:#7B1FA2,color:white
+    style P2 fill:#9C27B0,stroke:#7B1FA2,color:white
+    style P3 fill:#9C27B0,stroke:#7B1FA2,color:white
+    style P4 fill:#9C27B0,stroke:#7B1FA2,color:white
+    
+    style R1 fill:#FF9800,stroke:#F57C00,color:white
+    style R2 fill:#FF9800,stroke:#F57C00,color:white
+    style R3 fill:#FF9800,stroke:#F57C00,color:white
+    style R4 fill:#FF9800,stroke:#F57C00,color:white
+    
+    style RM1 fill:#9C27B0,stroke:#7B1FA2,color:white,stroke-dasharray: 5 5
+    style RM2 fill:#9C27B0,stroke:#7B1FA2,color:white,stroke-dasharray: 5 5
+    style RM3 fill:#9C27B0,stroke:#7B1FA2,color:white,stroke-dasharray: 5 5
+    style RM4 fill:#9C27B0,stroke:#7B1FA2,color:white,stroke-dasharray: 5 5
+    
+    style SE1 fill:#FF9800,stroke:#F57C00,color:white,stroke-dasharray: 5 5
+    style SE2 fill:#FF9800,stroke:#F57C00,color:white,stroke-dasharray: 5 5
+    style SE3 fill:#FF9800,stroke:#F57C00,color:white,stroke-dasharray: 5 5
+    style SE4 fill:#FF9800,stroke:#F57C00,color:white,stroke-dasharray: 5 5

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80" height="60" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+  <rect width="80" height="60" fill="#2a2a2a" />
+  <rect x="5" y="5" width="20" height="10" rx="2" fill="#333333" stroke="#ffffff" />
+  <rect x="30" y="5" width="20" height="10" rx="2" fill="#333333" stroke="#ffffff" />
+  <rect x="30" y="25" width="20" height="10" rx="2" fill="#333333" stroke="#ffffff" />
+  <rect x="10" y="45" width="15" height="10" rx="2" fill="#333333" stroke="#ffffff" />
+  <rect x="30" y="45" width="15" height="10" rx="2" fill="#333333" stroke="#ffffff" />
+  <rect x="50" y="45" width="15" height="10" rx="2" fill="#333333" stroke="#ffffff" />
+  <line x1="25" y1="10" x2="30" y2="10" stroke="#999999" stroke-width="1" />
+  <line x1="40" y1="15" x2="40" y2="25" stroke="#999999" stroke-width="1" />
+  <line x1="30" y1="30" x2="17.5" y2="45" stroke="#999999" stroke-width="1" />
+  <line x1="40" y1="35" x2="40" y2="45" stroke="#999999" stroke-width="1" />
+  <line x1="50" y1="30" x2="57.5" y2="45" stroke="#999999" stroke-width="1" />
+  <text x="15" y="10" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Event Store</text>
+  <text x="40" y="10" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Projector</text>
+  <text x="40" y="30" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Read Model</text>
+  <text x="17.5" y="50" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Indexed</text>
+  <text x="37.5" y="50" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Denormalized</text>
+  <text x="57.5" y="50" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">Cached</text>
+</svg>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Event Sourcing Flow Diagram - ELA Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        
+        .diagram-container {
+            margin: 30px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #eee;
+            border-radius: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .step-indicator {
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        
+        .dark-mode {
+            background-color: #282c34;
+            color: #ecf0f1;
+        }
+        
+        .dark-mode .diagram-container {
+            background-color: #2c3e50;
+            border-color: #34495e;
+        }
+        
+        .dark-mode .controls {
+            background-color: #34495e;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #ecf0f1;
+        }
+        
+        .dark-mode button {
+            background-color: #3498db;
+        }
+        
+        .dark-mode button:hover {
+            background-color: #2980b9;
+        }
+        
+        .dark-mode button:disabled {
+            background-color: #7f8c8d;
+        }
+        
+        .step-description {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-left: 5px solid #3498db;
+        }
+        
+        .dark-mode .step-description {
+            background-color: #34495e;
+            border-left-color: #3498db;
+        }
+        
+        /* Animation styles */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes flowPath {
+            from { stroke-dashoffset: 100; }
+            to { stroke-dashoffset: 0; }
+        }
+        
+        /* Hide all nodes and edges initially */
+        .node, .edgePath {
+            opacity: 0;
+        }
+        
+        /* Animation classes for nodes */
+        .animate-node {
+            animation: slideDown 0.5s ease-in-out forwards;
+        }
+        
+        /* Animation classes for edges */
+        .animate-edge {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        
+        /* Animation classes for paths */
+        .animate-path path {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: flowPath 1s ease-in-out forwards;
+        }
+
+        .accessibility-controls {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #28a745;
+        }
+
+        .dark-mode .accessibility-controls {
+            background-color: #343a40;
+            border-left-color: #28a745;
+        }
+
+        .static-link {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #ffc107;
+        }
+
+        .dark-mode .static-link {
+            background-color: #343a40;
+            border-left-color: #ffc107;
+        }
+
+        .keyboard-shortcuts {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .dark-mode .keyboard-shortcuts {
+            background-color: #343a40;
+        }
+
+        .keyboard-shortcut {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 0 5px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .dark-mode .keyboard-shortcut {
+            background-color: #495057;
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .animate-node, .animate-edge, .animate-path path {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                stroke-dashoffset: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Animated Event Sourcing Flow Diagram</h1>
+    <p>This animated diagram illustrates the flow of events through an event-sourced system. Use the controls below to play, pause, and step through the animation.</p>
+    
+    <div class="controls">
+        <button id="play-button" aria-label="Play Animation">Play Animation</button>
+        <button id="pause-button" disabled aria-label="Pause Animation">Pause</button>
+        <button id="reset-button" aria-label="Reset Animation">Reset</button>
+        <button id="step-button" aria-label="Step Forward">Step Forward</button>
+        <button id="toggle-theme" aria-label="Toggle Dark/Light Mode">Toggle Dark/Light Mode</button>
+        <span class="step-indicator">Step: <span id="step-counter">0</span> / 9</span>
+    </div>
+    
+    <div class="step-description" id="step-description">
+        <h3>Animation Steps</h3>
+        <p>Click "Play Animation" to start the animation or "Step Forward" to go through the steps manually.</p>
+    </div>
+    
+    <div class="diagram-container">
+        <div class="mermaid" id="event-sourcing-diagram">
+            graph TD
+                subgraph "Write Side"
+                    A[User Action] --> B[Command]
+                    B --> C[Command Handler]
+                    C --> D[Aggregate]
+                    D --> E[Event]
+                end
+                
+                subgraph "Storage"
+                    E --> F[Event Store]
+                end
+                
+                subgraph "Read Side"
+                    E --> G[Projector]
+                    G --> H[Read Model]
+                end
+                
+                subgraph "Process Management"
+                    E --> I[Process Manager]
+                    I --> J[New Command]
+                    J --> C
+                end
+                
+                subgraph "Side Effects"
+                    E --> K[Reactor]
+                    K --> L[Side Effect]
+                end
+                
+                %% Component styling
+                classDef command fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+                classDef commandHandler fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+                classDef aggregate fill:#8E44AD,stroke:#6C3483,color:white,stroke-width:2px
+                classDef event fill:#27AE60,stroke:#1E8449,color:white,stroke-width:2px
+                classDef eventStore fill:#7F8C8D,stroke:#616A6B,color:white,stroke-width:2px
+                classDef projector fill:#D35400,stroke:#A04000,color:white,stroke-width:2px
+                classDef readModel fill:#F39C12,stroke:#B67B0B,color:white,stroke-width:2px
+                classDef processManager fill:#8E44AD,stroke:#6C3483,color:white,stroke-width:2px
+                classDef newCommand fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+                classDef reactor fill:#C0392B,stroke:#922B21,color:white,stroke-width:2px
+                classDef sideEffect fill:#C0392B,stroke:#922B21,color:white,stroke-width:2px
+                
+                %% Apply classes
+                class B command
+                class C commandHandler
+                class D aggregate
+                class E event
+                class F eventStore
+                class G projector
+                class H readModel
+                class I processManager
+                class J newCommand
+                class K reactor
+                class L sideEffect
+        </div>
+    </div>
+
+    <div class="accessibility-controls">
+        <h3>Accessibility Options</h3>
+        <button id="increase-font" aria-label="Increase Font Size">Increase Font Size</button>
+        <button id="decrease-font" aria-label="Decrease Font Size">Decrease Font Size</button>
+        <button id="disable-animations" aria-label="Disable Animations">Disable Animations</button>
+        <button id="enable-animations" aria-label="Enable Animations">Enable Animations</button>
+    </div>
+
+    <div class="keyboard-shortcuts">
+        <h3>Keyboard Shortcuts</h3>
+        <p>
+            <span class="keyboard-shortcut">Space</span> Play/Pause Animation
+            <span class="keyboard-shortcut">R</span> Reset Animation
+            <span class="keyboard-shortcut">→</span> Step Forward
+            <span class="keyboard-shortcut">T</span> Toggle Dark/Light Mode
+            <span class="keyboard-shortcut">A</span> Toggle Animations On/Off
+        </p>
+    </div>
+
+    <div class="static-link">
+        <h3>Static Diagram Versions</h3>
+        <p>If you prefer to view static versions of this diagram:</p>
+        <ul>
+            <li><a href="../mermaid/light/event-sourcing-flow-enhanced-light.md">Light Mode Static Diagram</a></li>
+            <li><a href="../mermaid/dark/event-sourcing-flow-enhanced-dark.md">Dark Mode Static Diagram</a></li>
+            <li><a href="../interactive/event-sourcing-flow-interactive.html">Interactive Diagram</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+        
+        // Wait for Mermaid to render
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners after Mermaid has rendered
+            setTimeout(setupAnimation, 1000);
+        });
+        
+        function setupAnimation() {
+            // Get elements
+            const playButton = document.getElementById('play-button');
+            const pauseButton = document.getElementById('pause-button');
+            const resetButton = document.getElementById('reset-button');
+            const stepButton = document.getElementById('step-button');
+            const toggleThemeButton = document.getElementById('toggle-theme');
+            const stepCounter = document.getElementById('step-counter');
+            const stepDescription = document.getElementById('step-description');
+            const increaseFontButton = document.getElementById('increase-font');
+            const decreaseFontButton = document.getElementById('decrease-font');
+            const disableAnimationsButton = document.getElementById('disable-animations');
+            const enableAnimationsButton = document.getElementById('enable-animations');
+            
+            // Animation state
+            let currentStep = 0;
+            const totalSteps = 9;
+            let animationInterval;
+            let isPlaying = false;
+            let animationsDisabled = false;
+            
+            // Animation steps
+            const steps = [
+                {
+                    elements: ['#flowchart-A-', '#flowchart-A---B-'],
+                    description: 'Step 1: User Action triggers a Command. The command represents the user\'s intent to change the system state.'
+                },
+                {
+                    elements: ['#flowchart-B-', '#flowchart-B---C-'],
+                    description: 'Step 2: Command is sent to the Command Handler. The command handler validates the command and routes it to the appropriate aggregate.'
+                },
+                {
+                    elements: ['#flowchart-C-', '#flowchart-C---D-'],
+                    description: 'Step 3: Command Handler updates the Aggregate. The aggregate applies business rules and generates events.'
+                },
+                {
+                    elements: ['#flowchart-D-', '#flowchart-D---E-'],
+                    description: 'Step 4: Aggregate generates an Event. The event represents what happened in the domain.'
+                },
+                {
+                    elements: ['#flowchart-E-', '#flowchart-E---F-'],
+                    description: 'Step 5: Event is stored in the Event Store. The event store is the system\'s source of truth.'
+                },
+                {
+                    elements: ['#flowchart-E---G-', '#flowchart-G-', '#flowchart-G---H-', '#flowchart-H-'],
+                    description: 'Step 6: Event is processed by Projectors to update Read Models. Read models are optimized for queries.'
+                },
+                {
+                    elements: ['#flowchart-E---I-', '#flowchart-I-', '#flowchart-I---J-', '#flowchart-J-'],
+                    description: 'Step 7: Event is processed by Process Managers to coordinate workflows. Process managers can issue new commands.'
+                },
+                {
+                    elements: ['#flowchart-J---C-'],
+                    description: 'Step 8: New Command is sent back to the Command Handler, continuing the flow.'
+                },
+                {
+                    elements: ['#flowchart-E---K-', '#flowchart-K-', '#flowchart-K---L-', '#flowchart-L-'],
+                    description: 'Step 9: Event is processed by Reactors to execute Side Effects. Side effects include sending notifications or updating external systems.'
+                }
+            ];
+            
+            // Play animation
+            playButton.addEventListener('click', function() {
+                if (currentStep >= totalSteps) {
+                    resetAnimation();
+                }
+                
+                isPlaying = true;
+                playButton.disabled = true;
+                pauseButton.disabled = false;
+                stepButton.disabled = true;
+                
+                animationInterval = setInterval(function() {
+                    if (currentStep < totalSteps) {
+                        animateStep(currentStep);
+                        currentStep++;
+                        stepCounter.textContent = currentStep;
+                        
+                        if (currentStep >= totalSteps) {
+                            clearInterval(animationInterval);
+                            isPlaying = false;
+                            playButton.disabled = false;
+                            pauseButton.disabled = true;
+                            stepButton.disabled = false;
+                        }
+                    } else {
+                        clearInterval(animationInterval);
+                        isPlaying = false;
+                        playButton.disabled = false;
+                        pauseButton.disabled = true;
+                        stepButton.disabled = false;
+                    }
+                }, 1500);
+            });
+            
+            // Pause animation
+            pauseButton.addEventListener('click', function() {
+                clearInterval(animationInterval);
+                isPlaying = false;
+                playButton.disabled = false;
+                pauseButton.disabled = true;
+                stepButton.disabled = false;
+            });
+            
+            // Reset animation
+            resetButton.addEventListener('click', function() {
+                clearInterval(animationInterval);
+                resetAnimation();
+                isPlaying = false;
+                playButton.disabled = false;
+                pauseButton.disabled = true;
+                stepButton.disabled = false;
+            });
+            
+            // Step through animation
+            stepButton.addEventListener('click', function() {
+                if (currentStep < totalSteps) {
+                    animateStep(currentStep);
+                    currentStep++;
+                    stepCounter.textContent = currentStep;
+                    
+                    if (currentStep >= totalSteps) {
+                        stepButton.disabled = true;
+                    }
+                }
+            });
+            
+            // Toggle theme
+            toggleThemeButton.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                // Update Mermaid theme
+                if (document.body.classList.contains('dark-mode')) {
+                    mermaid.initialize({
+                        theme: 'dark'
+                    });
+                } else {
+                    mermaid.initialize({
+                        theme: 'default'
+                    });
+                }
+                
+                // Re-render the diagram
+                const diagramDiv = document.getElementById('event-sourcing-diagram');
+                const diagramSource = diagramDiv.textContent;
+                diagramDiv.innerHTML = diagramSource;
+                mermaid.init(undefined, diagramDiv);
+                
+                // Re-setup animation after re-rendering
+                setTimeout(function() {
+                    setupAnimation();
+                    
+                    // Replay animation up to current step
+                    for (let i = 0; i < currentStep; i++) {
+                        animateStep(i, true);
+                    }
+                }, 1000);
+            });
+
+            // Increase font size
+            increaseFontButton.addEventListener('click', function() {
+                const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                document.body.style.fontSize = (currentSize + 2) + 'px';
+            });
+
+            // Decrease font size
+            decreaseFontButton.addEventListener('click', function() {
+                const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                document.body.style.fontSize = (currentSize - 2) + 'px';
+            });
+
+            // Disable animations
+            disableAnimationsButton.addEventListener('click', function() {
+                document.body.classList.add('prefers-reduced-motion');
+                animationsDisabled = true;
+            });
+
+            // Enable animations
+            enableAnimationsButton.addEventListener('click', function() {
+                document.body.classList.remove('prefers-reduced-motion');
+                animationsDisabled = false;
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                switch(e.key) {
+                    case ' ':
+                        if (isPlaying) {
+                            pauseButton.click();
+                        } else {
+                            playButton.click();
+                        }
+                        break;
+                    case 'r':
+                    case 'R':
+                        resetButton.click();
+                        break;
+                    case 'ArrowRight':
+                        if (!isPlaying) {
+                            stepButton.click();
+                        }
+                        break;
+                    case 't':
+                    case 'T':
+                        toggleThemeButton.click();
+                        break;
+                    case 'a':
+                    case 'A':
+                        if (animationsDisabled) {
+                            enableAnimationsButton.click();
+                        } else {
+                            disableAnimationsButton.click();
+                        }
+                        break;
+                }
+            });
+            
+            // Animate a specific step
+            function animateStep(step, immediate = false) {
+                const stepData = steps[step];
+                
+                // Update step description
+                stepDescription.innerHTML = `<h3>Step ${step + 1} of ${totalSteps}</h3><p>${stepData.description}</p>`;
+                
+                // Animate elements
+                stepData.elements.forEach(selector => {
+                    try {
+                        const elements = document.querySelectorAll(selector);
+                        elements.forEach(element => {
+                            if (element.classList.contains('node')) {
+                                element.classList.add('animate-node');
+                                if (immediate || animationsDisabled) {
+                                    element.style.opacity = 1;
+                                    element.style.transform = 'translateY(0)';
+                                }
+                            } else if (element.classList.contains('edgePath')) {
+                                element.classList.add('animate-edge');
+                                element.classList.add('animate-path');
+                                if (immediate || animationsDisabled) {
+                                    element.style.opacity = 1;
+                                    const path = element.querySelector('path');
+                                    if (path) {
+                                        path.style.strokeDashoffset = 0;
+                                    }
+                                }
+                            }
+                        });
+                    } catch (e) {
+                        console.error(`Error animating ${selector}:`, e);
+                    }
+                });
+            }
+            
+            // Reset animation
+            function resetAnimation() {
+                // Reset animation state
+                currentStep = 0;
+                stepCounter.textContent = currentStep;
+                
+                // Reset step description
+                stepDescription.innerHTML = '<h3>Animation Steps</h3><p>Click "Play Animation" to start the animation or "Step Forward" to go through the steps manually.</p>';
+                
+                // Reset all animated elements
+                const animatedNodes = document.querySelectorAll('.animate-node');
+                const animatedEdges = document.querySelectorAll('.animate-edge');
+                const animatedPaths = document.querySelectorAll('.animate-path');
+                
+                animatedNodes.forEach(element => {
+                    element.classList.remove('animate-node');
+                    element.style.opacity = 0;
+                    element.style.transform = 'translateY(-20px)';
+                });
+                
+                animatedEdges.forEach(element => {
+                    element.classList.remove('animate-edge');
+                    element.style.opacity = 0;
+                });
+                
+                animatedPaths.forEach(element => {
+                    element.classList.remove('animate-path');
+                    const path = element.querySelector('path');
+                    if (path) {
+                        path.style.strokeDasharray = 100;
+                        path.style.strokeDashoffset = 100;
+                    }
+                });
+                
+                // Enable step button
+                stepButton.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

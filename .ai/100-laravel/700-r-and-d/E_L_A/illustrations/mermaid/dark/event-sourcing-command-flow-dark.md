@@ -1,0 +1,119 @@
+# Event Sourcing Command Flow (Dark Mode)
+
+**Type:** Flowchart
+**Created:** 2025-06-10
+**Updated:** 2025-06-10
+**Author:** AI Assistant
+
+## Description
+
+This diagram illustrates the command flow in an event sourcing architecture, showing how commands are processed through aggregates, events, projectors, and reactors.
+
+## Diagram Source
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+flowchart TD
+    subgraph "Command Handling"
+        C1[RegisterUserCommand] --> |handled by| CH1[CommandHandler]
+        C2[CreateTeamCommand] --> |handled by| CH2[CommandHandler]
+        C3[CreatePostCommand] --> |handled by| CH3[CommandHandler]
+        C4[CreateTodoCommand] --> |handled by| CH4[CommandHandler]
+        
+        CH1 --> |retrieves| UA[UserAggregate]
+        CH2 --> |retrieves| TA[TeamAggregate]
+        CH3 --> |retrieves| PA[PostAggregate]
+        CH4 --> |retrieves| TOA[TodoAggregate]
+    end
+    
+    subgraph "Event Generation"
+        UA --> |records| E1[UserRegisteredEvent]
+        TA --> |records| E2[TeamCreatedEvent]
+        PA --> |records| E3[PostCreatedEvent]
+        TOA --> |records| E4[TodoCreatedEvent]
+        
+        E1 --> |stored in| ES[Event Store]
+        E2 --> |stored in| ES
+        E3 --> |stored in| ES
+        E4 --> |stored in| ES
+    end
+    
+    subgraph "Event Processing"
+        ES --> |processed by| P1[UserProjector]
+        ES --> |processed by| P2[TeamProjector]
+        ES --> |processed by| P3[PostProjector]
+        ES --> |processed by| P4[TodoProjector]
+        
+        ES --> |processed by| R1[UserReactor]
+        ES --> |processed by| R2[TeamReactor]
+        ES --> |processed by| R3[PostReactor]
+        ES --> |processed by| R4[TodoReactor]
+    end
+    
+    subgraph "Read Models"
+        P1 --> |updates| RM1[User Model]
+        P2 --> |updates| RM2[Team Model]
+        P3 --> |updates| RM3[Post Model]
+        P4 --> |updates| RM4[Todo Model]
+    end
+    
+    subgraph "Side Effects"
+        R1 --> |executes| SE1[Send Welcome Email]
+        R2 --> |executes| SE2[Notify Team Members]
+        R3 --> |executes| SE3[Update Search Index]
+        R4 --> |executes| SE4[Send Due Date Reminder]
+    end
+    
+    style C1 fill:#F44336,stroke:#E57373,color:white
+    style C2 fill:#F44336,stroke:#E57373,color:white
+    style C3 fill:#F44336,stroke:#E57373,color:white
+    style C4 fill:#F44336,stroke:#E57373,color:white
+    
+    style CH1 fill:#F44336,stroke:#E57373,color:white,stroke-dasharray: 5 5
+    style CH2 fill:#F44336,stroke:#E57373,color:white,stroke-dasharray: 5 5
+    style CH3 fill:#F44336,stroke:#E57373,color:white,stroke-dasharray: 5 5
+    style CH4 fill:#F44336,stroke:#E57373,color:white,stroke-dasharray: 5 5
+    
+    style UA fill:#F44336,stroke:#E57373,color:white
+    style TA fill:#F44336,stroke:#E57373,color:white
+    style PA fill:#F44336,stroke:#E57373,color:white
+    style TOA fill:#F44336,stroke:#E57373,color:white
+    
+    style E1 fill:#4CAF50,stroke:#81C784,color:white
+    style E2 fill:#4CAF50,stroke:#81C784,color:white
+    style E3 fill:#4CAF50,stroke:#81C784,color:white
+    style E4 fill:#4CAF50,stroke:#81C784,color:white
+    
+    style ES fill:#2196F3,stroke:#64B5F6,color:white
+    
+    style P1 fill:#9C27B0,stroke:#BA68C8,color:white
+    style P2 fill:#9C27B0,stroke:#BA68C8,color:white
+    style P3 fill:#9C27B0,stroke:#BA68C8,color:white
+    style P4 fill:#9C27B0,stroke:#BA68C8,color:white
+    
+    style R1 fill:#FF9800,stroke:#FFB74D,color:white
+    style R2 fill:#FF9800,stroke:#FFB74D,color:white
+    style R3 fill:#FF9800,stroke:#FFB74D,color:white
+    style R4 fill:#FF9800,stroke:#FFB74D,color:white
+    
+    style RM1 fill:#9C27B0,stroke:#BA68C8,color:white,stroke-dasharray: 5 5
+    style RM2 fill:#9C27B0,stroke:#BA68C8,color:white,stroke-dasharray: 5 5
+    style RM3 fill:#9C27B0,stroke:#BA68C8,color:white,stroke-dasharray: 5 5
+    style RM4 fill:#9C27B0,stroke:#BA68C8,color:white,stroke-dasharray: 5 5
+    
+    style SE1 fill:#FF9800,stroke:#FFB74D,color:white,stroke-dasharray: 5 5
+    style SE2 fill:#FF9800,stroke:#FFB74D,color:white,stroke-dasharray: 5 5
+    style SE3 fill:#FF9800,stroke:#FFB74D,color:white,stroke-dasharray: 5 5
+    style SE4 fill:#FF9800,stroke:#FFB74D,color:white,stroke-dasharray: 5 5
+```
+
+## Related Documents
+
+- [event-sourcing-guide.md](../../event-sourcing-guide.md)
+- [100-350-event-sourcing-implementation.md](../../100-implementation-plan/100-350-event-sourcing-implementation.md)
+
+## Version History
+
+| Version | Date | Changes | Author |
+|---------|------|---------|--------|
+| 1.0.0 | 2025-06-10 | Initial version | AI Assistant |

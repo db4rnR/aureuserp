@@ -1,0 +1,213 @@
+@startuml
+!theme light
+skinparam backgroundColor #ffffff
+skinparam classFontColor #333333
+skinparam classBorderColor #cccccc
+skinparam classBorderThickness 1
+skinparam classBackgroundColor #f5f5f5
+skinparam arrowColor #666666
+
+entity "USER" as user {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * email : string
+  email_verified_at : timestamp
+  * password : string
+  remember_token : string
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "TEAM" as team {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  description : text
+  parent_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "CATEGORY" as category {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  description : text
+  team_id : uuid <<FK>>
+  parent_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "POST" as post {
+  * id : uuid <<PK>>
+  --
+  * title : string
+  * content : text
+  * status : string
+  * user_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "TODO" as todo {
+  * id : uuid <<PK>>
+  --
+  * title : string
+  description : text
+  * status : string
+  due_date : timestamp
+  * user_id : uuid <<FK>>
+  team_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "CONVERSATION" as conversation {
+  * id : uuid <<PK>>
+  --
+  title : string
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "MESSAGE" as message {
+  * id : uuid <<PK>>
+  --
+  * content : text
+  * conversation_id : uuid <<FK>>
+  * user_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "COMMENTS" as comments {
+  * id : uuid <<PK>>
+  --
+  * content : text
+  * commentable_id : uuid
+  * commentable_type : string
+  * user_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "ROLE" as role {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * guard_name : string
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "PERMISSION" as permission {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * guard_name : string
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "TAGS" as tags {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "MEDIA" as media {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * file_name : string
+  * mime_type : string
+  * disk : string
+  * size : integer
+  * mediable_id : uuid
+  * mediable_type : string
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "ACTIVITY_LOG" as activity_log {
+  * id : uuid <<PK>>
+  --
+  log_name : string
+  * description : text
+  * subject_type : string
+  subject_id : uuid
+  * causer_type : string
+  causer_id : uuid
+  * properties : json
+  * created_at : timestamp
+}
+
+user "1" -- "0..*" post : authors
+user "1" -- "0..*" todo : assigned to
+user "1" -- "0..*" message : sends
+user "1" -- "0..*" comments : comments
+user "1" -- "0..*" activity_log : causer
+user "0..*" -- "0..*" conversation : participates in
+user "0..*" -- "0..*" role : has
+
+team "1" -- "0..*" team : parent of
+team "1" -- "0..*" category : has
+team "1" -- "0..*" todo : related to
+
+category "1" -- "0..*" category : parent of
+
+post "0..*" -- "0..*" category : categorized as
+post "0..*" -- "0..*" tags : tagged with
+post "0..*" -- "0..*" media : has media
+post "0..*" -- "0..*" comments : has comments
+
+todo "0..*" -- "0..*" category : categorized as
+todo "0..*" -- "0..*" tags : tagged with
+todo "0..*" -- "0..*" media : has media
+todo "0..*" -- "0..*" comments : has comments
+
+conversation "1" -- "0..*" message : contains
+
+role "0..*" -- "0..*" permission : has
+
+@enduml

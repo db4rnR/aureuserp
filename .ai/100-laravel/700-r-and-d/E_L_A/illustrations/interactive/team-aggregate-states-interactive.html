@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Team Aggregate States Diagram - ELA Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        
+        .diagram-container {
+            margin: 30px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #eee;
+            border-radius: 5px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .info-panel {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-left: 5px solid #3498db;
+            display: none;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+            max-width: 300px;
+            display: none;
+        }
+        
+        .highlight-state .node-forming rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-state .node-active rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-state .node-archived rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-state .node-deleted rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .dark-mode {
+            background-color: #282c34;
+            color: #ecf0f1;
+        }
+        
+        .dark-mode .diagram-container {
+            background-color: #2c3e50;
+            border-color: #34495e;
+        }
+        
+        .dark-mode .controls {
+            background-color: #34495e;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #ecf0f1;
+        }
+        
+        .dark-mode .info-panel {
+            background-color: #34495e;
+            border-left-color: #3498db;
+        }
+        
+        .dark-mode button {
+            background-color: #3498db;
+        }
+        
+        .dark-mode button:hover {
+            background-color: #2980b9;
+        }
+
+        .accessibility-controls {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #28a745;
+        }
+
+        .dark-mode .accessibility-controls {
+            background-color: #343a40;
+            border-left-color: #28a745;
+        }
+
+        .static-link {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #ffc107;
+        }
+
+        .dark-mode .static-link {
+            background-color: #343a40;
+            border-left-color: #ffc107;
+        }
+
+        .keyboard-shortcuts {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .dark-mode .keyboard-shortcuts {
+            background-color: #343a40;
+        }
+
+        .keyboard-shortcut {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 0 5px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .dark-mode .keyboard-shortcut {
+            background-color: #495057;
+        }
+
+        .transition-controls {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #6f42c1;
+        }
+
+        .dark-mode .transition-controls {
+            background-color: #343a40;
+            border-left-color: #6f42c1;
+        }
+
+        .state-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .state-table th, .state-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .state-table th {
+            background-color: #f2f2f2;
+        }
+
+        .dark-mode .state-table th {
+            background-color: #343a40;
+        }
+
+        .dark-mode .state-table th, .dark-mode .state-table td {
+            border-color: #495057;
+        }
+
+        .color-box {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border: 1px solid #333;
+        }
+
+        .dark-mode .color-box {
+            border-color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Team Aggregate States Diagram</h1>
+    <p>This interactive diagram illustrates the possible states of a Team aggregate and the transitions between these states. Use the controls below to explore the different states and transitions.</p>
+    
+    <div class="controls">
+        <h3>Highlight States:</h3>
+        <button id="highlight-forming" aria-label="Highlight Forming State">Forming</button>
+        <button id="highlight-active" aria-label="Highlight Active State">Active</button>
+        <button id="highlight-archived" aria-label="Highlight Archived State">Archived</button>
+        <button id="highlight-deleted" aria-label="Highlight Deleted State">Deleted</button>
+        <button id="reset-highlights" aria-label="Reset All Highlights">Reset</button>
+        <button id="toggle-theme" aria-label="Toggle Dark/Light Mode">Toggle Dark/Light Mode</button>
+    </div>
+    
+    <div class="transition-controls">
+        <h3>Show Transitions:</h3>
+        <button id="show-all-transitions" aria-label="Show All Transitions">All Transitions</button>
+        <button id="show-from-forming" aria-label="Show Transitions from Forming">From Forming</button>
+        <button id="show-from-active" aria-label="Show Transitions from Active">From Active</button>
+        <button id="show-from-archived" aria-label="Show Transitions from Archived">From Archived</button>
+    </div>
+    
+    <div class="diagram-container">
+        <div class="mermaid" id="team-states-diagram">
+            stateDiagram-v2
+                [*] --> Forming: TeamCreatedEvent
+                Forming --> Active: TeamActivatedEvent
+                Active --> Archived: TeamArchivedEvent
+                Archived --> Active: TeamRestoredEvent
+                Active --> Deleted: TeamDeletedEvent
+                Archived --> Deleted: TeamDeletedEvent
+                
+                %% State styling with classes
+                classDef formingState fill:#F39C12,stroke:#333,color:white
+                classDef activeState fill:#27AE60,stroke:#333,color:white
+                classDef archivedState fill:#7F8C8D,stroke:#333,color:white
+                classDef deletedState fill:#C0392B,stroke:#333,color:white
+                
+                class Forming formingState
+                class Active activeState
+                class Archived archivedState
+                class Deleted deletedState
+                
+                %% Add node IDs for JavaScript interaction
+                class Forming node-forming
+                class Active node-active
+                class Archived node-archived
+                class Deleted node-deleted
+        </div>
+    </div>
+    
+    <div class="info-panel" id="info-panel">
+        <h3 id="info-title">State Information</h3>
+        <p id="info-description">Click on a state to see more information.</p>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+
+    <table class="state-table">
+        <thead>
+            <tr>
+                <th>State</th>
+                <th>Description</th>
+                <th>Color</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Forming</td>
+                <td>Team is being set up, members can be added but team is not fully operational</td>
+                <td><span class="color-box" style="background-color:#F39C12;"></span> Orange</td>
+            </tr>
+            <tr>
+                <td>Active</td>
+                <td>Team is active and can be used by members for collaboration</td>
+                <td><span class="color-box" style="background-color:#27AE60;"></span> Green</td>
+            </tr>
+            <tr>
+                <td>Archived</td>
+                <td>Team is archived and read-only, no new content can be created</td>
+                <td><span class="color-box" style="background-color:#7F8C8D;"></span> Gray</td>
+            </tr>
+            <tr>
+                <td>Deleted</td>
+                <td>Team has been permanently deleted and cannot be recovered</td>
+                <td><span class="color-box" style="background-color:#C0392B;"></span> Red</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="accessibility-controls">
+        <h3>Accessibility Options</h3>
+        <button id="increase-font" aria-label="Increase Font Size">Increase Font Size</button>
+        <button id="decrease-font" aria-label="Decrease Font Size">Decrease Font Size</button>
+        <button id="high-contrast" aria-label="Toggle High Contrast Mode">Toggle High Contrast</button>
+    </div>
+
+    <div class="keyboard-shortcuts">
+        <h3>Keyboard Shortcuts</h3>
+        <p>
+            <span class="keyboard-shortcut">F</span> Highlight Forming
+            <span class="keyboard-shortcut">A</span> Highlight Active
+            <span class="keyboard-shortcut">R</span> Highlight Archived
+            <span class="keyboard-shortcut">D</span> Highlight Deleted
+            <span class="keyboard-shortcut">Esc</span> Reset Highlights
+            <span class="keyboard-shortcut">T</span> Toggle Dark/Light Mode
+        </p>
+    </div>
+
+    <div class="static-link">
+        <h3>Static Diagram Versions</h3>
+        <p>If you prefer to view static versions of this diagram:</p>
+        <ul>
+            <li><a href="../mermaid/light/team-aggregate-states-light.md">Light Mode Static Diagram</a></li>
+            <li><a href="../mermaid/dark/team-aggregate-states-dark.md">Dark Mode Static Diagram</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+        
+        // Wait for Mermaid to render
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners after Mermaid has rendered
+            setTimeout(setupInteractivity, 1000);
+        });
+        
+        function setupInteractivity() {
+            // Get elements
+            const diagramContainer = document.querySelector('.diagram-container');
+            const infoPanel = document.getElementById('info-panel');
+            const infoTitle = document.getElementById('info-title');
+            const infoDescription = document.getElementById('info-description');
+            const tooltip = document.getElementById('tooltip');
+            
+            // Highlight buttons
+            document.getElementById('highlight-forming').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Forming');
+                showStateInfo('Forming', 'Team is being set up. Members can be added but team is not fully operational.');
+            });
+            
+            document.getElementById('highlight-active').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Active');
+                showStateInfo('Active', 'Team is active and can be used by members. Members can create content and collaborate.');
+            });
+            
+            document.getElementById('highlight-archived').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Archived');
+                showStateInfo('Archived', 'Team is archived and read-only. No new content can be created. Can be restored at any time.');
+            });
+            
+            document.getElementById('highlight-deleted').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Deleted');
+                showStateInfo('Deleted', 'Team has been permanently deleted. Cannot be recovered. All associated data is soft-deleted.');
+            });
+            
+            document.getElementById('reset-highlights').addEventListener('click', function() {
+                resetHighlights();
+                infoPanel.style.display = 'none';
+            });
+            
+            // Transition buttons
+            document.getElementById('show-all-transitions').addEventListener('click', function() {
+                resetHighlights();
+                showStateInfo('All Transitions', 'Showing all possible state transitions for the Team aggregate.');
+            });
+            
+            document.getElementById('show-from-forming').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Forming');
+                showStateInfo('Transitions from Forming', 'From Forming, a team can transition to Active via the TeamActivatedEvent.');
+            });
+            
+            document.getElementById('show-from-active').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Active');
+                showStateInfo('Transitions from Active', 'From Active, a team can transition to Archived via the TeamArchivedEvent or to Deleted via the TeamDeletedEvent.');
+            });
+            
+            document.getElementById('show-from-archived').addEventListener('click', function() {
+                resetHighlights();
+                highlightState('Archived');
+                showStateInfo('Transitions from Archived', 'From Archived, a team can transition to Active via the TeamRestoredEvent or to Deleted via the TeamDeletedEvent.');
+            });
+            
+            document.getElementById('toggle-theme').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                // Update Mermaid theme
+                if (document.body.classList.contains('dark-mode')) {
+                    mermaid.initialize({
+                        theme: 'dark'
+                    });
+                } else {
+                    mermaid.initialize({
+                        theme: 'default'
+                    });
+                }
+                
+                // Re-render the diagram
+                const diagramDiv = document.getElementById('team-states-diagram');
+                const diagramSource = diagramDiv.textContent;
+                diagramDiv.innerHTML = diagramSource;
+                mermaid.init(undefined, diagramDiv);
+                
+                // Re-setup interactivity after re-rendering
+                setTimeout(setupInteractivity, 1000);
+            });
+
+            // Accessibility controls
+            document.getElementById('increase-font').addEventListener('click', function() {
+                const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                document.body.style.fontSize = (currentSize + 2) + 'px';
+            });
+
+            document.getElementById('decrease-font').addEventListener('click', function() {
+                const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                document.body.style.fontSize = (currentSize - 2) + 'px';
+            });
+
+            document.getElementById('high-contrast').addEventListener('click', function() {
+                document.body.classList.toggle('high-contrast');
+            });
+            
+            // Setup tooltips for diagram nodes
+            const nodes = document.querySelectorAll('.stateNode');
+            nodes.forEach(node => {
+                node.addEventListener('mouseover', function(e) {
+                    const nodeId = this.id;
+                    const tooltipText = getTooltipText(nodeId);
+                    
+                    if (tooltipText) {
+                        tooltip.textContent = tooltipText;
+                        tooltip.style.display = 'block';
+                        tooltip.style.left = (e.pageX + 10) + 'px';
+                        tooltip.style.top = (e.pageY + 10) + 'px';
+                    }
+                });
+                
+                node.addEventListener('mousemove', function(e) {
+                    tooltip.style.left = (e.pageX + 10) + 'px';
+                    tooltip.style.top = (e.pageY + 10) + 'px';
+                });
+                
+                node.addEventListener('mouseout', function() {
+                    tooltip.style.display = 'none';
+                });
+
+                node.addEventListener('click', function() {
+                    const nodeId = this.id;
+                    const stateName = getStateName(nodeId);
+                    
+                    if (stateName === 'Forming') {
+                        document.getElementById('highlight-forming').click();
+                    } else if (stateName === 'Active') {
+                        document.getElementById('highlight-active').click();
+                    } else if (stateName === 'Archived') {
+                        document.getElementById('highlight-archived').click();
+                    } else if (stateName === 'Deleted') {
+                        document.getElementById('highlight-deleted').click();
+                    }
+                });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                switch(e.key.toLowerCase()) {
+                    case 'f':
+                        document.getElementById('highlight-forming').click();
+                        break;
+                    case 'a':
+                        document.getElementById('highlight-active').click();
+                        break;
+                    case 'r':
+                        document.getElementById('highlight-archived').click();
+                        break;
+                    case 'd':
+                        document.getElementById('highlight-deleted').click();
+                        break;
+                    case 'escape':
+                        document.getElementById('reset-highlights').click();
+                        break;
+                    case 't':
+                        document.getElementById('toggle-theme').click();
+                        break;
+                }
+            });
+        }
+        
+        // Function to highlight a state
+        function highlightState(state) {
+            const diagramContainer = document.querySelector('.diagram-container');
+            diagramContainer.classList.add('highlight-state');
+            
+            // Add specific class for the state
+            const stateNode = document.querySelector(`.node-${state.toLowerCase()}`);
+            if (stateNode) {
+                stateNode.classList.add('highlight');
+            }
+        }
+        
+        // Function to show state information
+        function showStateInfo(state, description) {
+            const infoPanel = document.getElementById('info-panel');
+            const infoTitle = document.getElementById('info-title');
+            const infoDescription = document.getElementById('info-description');
+            
+            infoTitle.textContent = state;
+            infoDescription.textContent = description;
+            infoPanel.style.display = 'block';
+        }
+        
+        // Function to reset highlights
+        function resetHighlights() {
+            const diagramContainer = document.querySelector('.diagram-container');
+            diagramContainer.classList.remove('highlight-state');
+            
+            // Remove highlight class from all state nodes
+            const stateNodes = document.querySelectorAll('.stateNode');
+            stateNodes.forEach(node => {
+                node.classList.remove('highlight');
+            });
+        }
+        
+        // Function to get tooltip text based on node ID
+        function getTooltipText(nodeId) {
+            if (nodeId.includes('Forming')) {
+                return 'Forming: Team is being set up';
+            } else if (nodeId.includes('Active')) {
+                return 'Active: Team is operational';
+            } else if (nodeId.includes('Archived')) {
+                return 'Archived: Team is read-only';
+            } else if (nodeId.includes('Deleted')) {
+                return 'Deleted: Team is permanently removed';
+            }
+            
+            return null;
+        }
+        
+        // Function to get state name from node ID
+        function getStateName(nodeId) {
+            if (nodeId.includes('Forming')) {
+                return 'Forming';
+            } else if (nodeId.includes('Active')) {
+                return 'Active';
+            } else if (nodeId.includes('Archived')) {
+                return 'Archived';
+            } else if (nodeId.includes('Deleted')) {
+                return 'Deleted';
+            }
+            
+            return null;
+        }
+    </script>
+</body>
+</html>

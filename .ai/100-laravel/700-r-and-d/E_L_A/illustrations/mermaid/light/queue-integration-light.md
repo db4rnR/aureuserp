@@ -1,0 +1,25 @@
+# Queue Integration (Light Mode)
+
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+sequenceDiagram
+    participant A as Aggregate
+    participant E as Event Store
+    participant R as Reactor
+    participant Q as Queue
+    participant W as Queue Worker
+    participant S as Side Effect
+    
+    A->>E: Store Event
+    E->>R: Dispatch Event
+    R->>Q: Push Job
+    Q->>W: Process Job
+    W->>S: Execute Side Effect
+    alt Success
+        S->>W: Return Success
+        W->>Q: Mark Job as Completed
+    else Failure
+        S->>W: Return Failure
+        W->>Q: Retry Job
+    end
+```

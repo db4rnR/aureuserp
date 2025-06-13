@@ -1,0 +1,67 @@
+
+@startuml Permission Structure Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles for classes
+skinparam class {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam interface {
+    BackgroundColor #34495e
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+
+    class Permission {
+
+        +string name
+        +string guard_name
+        +int team_id
+    
+}
+    
+    class Role {
+
+        +string name
+        +string guard_name
+        +int team_id
+        +givePermissionTo(Permission)
+        +revokePermissionTo(Permission)
+        +syncPermissions(Permission[])
+    
+}
+    
+    class User {
+
+        +assignRole(Role)
+        +removeRole(Role)
+        +syncRoles(Role[])
+        +hasRole(Role)
+        +hasPermissionTo(Permission)
+        +hasPermissionViaRole(Permission)
+    
+}
+    
+    class Team {
+
+        +int id
+        +string name
+    
+}
+    
+    Role "many" -- "many" Permission : has
+    User "many" -- "many" Role : has
+    User "many" -- "many" Permission : has
+    Team "1" -- "many" Role : has
+    Team "1" -- "many" Permission : has
+@enduml

@@ -1,0 +1,59 @@
+
+@startuml Todo State Transitions Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam state {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam note {
+    BackgroundColor #4a148c
+    BorderColor #7b1fa2
+    FontColor #FFFFFF
+}
+
+
+    [*] --> Pending: TodoCreated
+    Pending --> InProgress : TodoStarted
+    Pending --> Cancelled : TodoCancelled
+    InProgress --> Completed : TodoCompleted
+    InProgress --> Cancelled : TodoCancelled
+    Completed --> InProgress : TodoReopened
+    Cancelled --> Pending : TodoReopened
+    
+    state Pending {
+        [*] --> NoDueDate
+        NoDueDate --> DueDate : TodoDueDateSet
+        DueDate --> Overdue : DueDatePassed
+        DueDate --> NoDueDate : TodoDueDateRemoved
+    }
+    
+    state InProgress {
+        [*] --> LowPriority
+        LowPriority --> MediumPriority : TodoPriorityChanged
+        LowPriority --> HighPriority : TodoPriorityChanged
+        MediumPriority --> LowPriority : TodoPriorityChanged
+        MediumPriority --> HighPriority : TodoPriorityChanged
+        HighPriority --> LowPriority : TodoPriorityChanged
+        HighPriority --> MediumPriority : TodoPriorityChanged
+    }
+    
+    classDef pending fill:#FFC107,stroke:#FFD54F,color:black
+    classDef inprogress fill:#2196F3,stroke:#64B5F6,color:white
+    classDef completed fill:#4CAF50,stroke:#81C784,color:white
+    classDef cancelled fill:#9E9E9E,stroke:#E0E0E0,color:white
+    
+    class Pending pending
+    class InProgress inprogress
+    class Completed completed
+    class Cancelled cancelled
+@enduml

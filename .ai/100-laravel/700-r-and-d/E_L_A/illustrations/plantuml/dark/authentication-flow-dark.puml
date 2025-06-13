@@ -1,0 +1,75 @@
+@startuml Authentication Flow (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam sequence {
+    ArrowColor #ecf0f1
+    LifeLineBorderColor #7f8c8d
+    LifeLineBackgroundColor #2c3e50
+    ParticipantBorderColor #7f8c8d
+    ParticipantBackgroundColor #2c3e50
+    ActorBorderColor #7f8c8d
+    ActorBackgroundColor #2c3e50
+    BoxBorderColor #7f8c8d
+    BoxBackgroundColor #34495e
+}
+
+skinparam note {
+    BackgroundColor #4a148c
+    BorderColor #7b1fa2
+    FontColor #FFFFFF
+}
+
+' Participants
+actor User
+participant "Client" as Client
+participant "Server" as Server
+database "Database" as Database
+
+' Authentication flow
+User -> Client: Enter credentials
+Client -> Server: Send credentials
+Server -> Database: Validate credentials
+Database --> Server: Return user data
+alt Credentials valid
+    Server -> Server: Generate JWT token
+    Server --> Client: Return JWT token
+    Client --> User: Show dashboard
+else Credentials invalid
+    Server --> Client: Return error
+    Client --> User: Show error message
+end
+
+' Two-factor authentication flow
+note over User, Database: Two-factor authentication flow
+User -> Client: Request login
+Client -> Server: Send credentials
+Server -> Database: Validate credentials
+Database --> Server: Return user data
+alt 2FA enabled
+    Server --> Client: Request 2FA code
+    Client --> User: Show 2FA input
+    User -> Client: Enter 2FA code
+    Client -> Server: Send 2FA code
+    Server -> Server: Validate 2FA code
+    alt 2FA code valid
+        Server -> Server: Generate JWT token
+        Server --> Client: Return JWT token
+        Client --> User: Show dashboard
+    else 2FA code invalid
+        Server --> Client: Return error
+        Client --> User: Show error message
+    end
+else 2FA disabled
+    Server -> Server: Generate JWT token
+    Server --> Client: Return JWT token
+    Client --> User: Show dashboard
+end
+
+@enduml

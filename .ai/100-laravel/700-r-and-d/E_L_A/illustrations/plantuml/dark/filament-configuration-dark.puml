@@ -1,0 +1,35 @@
+@startuml
+!theme dark
+skinparam backgroundColor #222222
+skinparam arrowColor #cccccc
+skinparam nodeFontColor #ffffff
+skinparam nodeBorderColor #555555
+skinparam nodeBorderThickness 1
+skinparam nodeBackgroundColor #333333
+
+node "Filament Configuration" as A
+node "Admin Panel" as B
+node "Resources" as C
+node "Plugins" as D
+node "Dashboard" as E
+node "Navigation" as F
+node "User Resource" as G
+node "Team Resource" as H
+node "Content Resource" as I
+node "Shield" as J
+node "Backup" as K
+node "ActivityLog" as L
+
+A --> B
+A --> C
+A --> D
+B --> E
+B --> F
+C --> G
+C --> H
+C --> I
+D --> J
+D --> K
+D --> L
+
+@enduml

@@ -1,0 +1,24 @@
+# Integration Testing Flow (Light Mode)
+
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+sequenceDiagram
+    participant Test as Test Case
+    participant Command as Command
+    participant Aggregate as Aggregate
+    participant Event as Event Store
+    participant Projector as Projector
+    participant ReadModel as Read Model
+    participant Query as Query
+    
+    Test->>Command: Dispatch Command
+    Command->>Aggregate: Handle Command
+    Aggregate->>Event: Record Events
+    Event->>Projector: Process Events
+    Projector->>ReadModel: Update Read Model
+    Test->>Query: Execute Query
+    Query->>ReadModel: Retrieve Data
+    ReadModel->>Query: Return Data
+    Query->>Test: Return Result
+    Test->>Test: Assert Result
+```

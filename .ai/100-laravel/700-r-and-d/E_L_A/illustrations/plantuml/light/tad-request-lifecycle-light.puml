@@ -1,0 +1,71 @@
+@startuml TAD Request Lifecycle (Light Mode)
+
+' Light mode theme
+!theme cerulean
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam participant {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+skinparam note {
+    BackgroundColor #e8f5e9
+    BorderColor #a5d6a7
+    FontColor #333333
+}
+
+' Participants
+participant Client
+participant Server as "FrankenPHP Server"
+participant Middleware as "Laravel Middleware Stack"
+participant Router as "Laravel Router"
+participant Controller
+participant Service
+participant Model
+participant DB as "Database"
+
+' Sequence
+Client -> Server: HTTP Request
+Server -> Middleware: Pass Request
+
+Middleware -> Middleware: Global Middleware
+note over Middleware
+  TrustProxies, HandleCors, 
+  PreventRequestsDuringMaintenance, 
+  TrimStrings, ConvertEmptyStringsToNull
+end note
+
+Middleware -> Middleware: Route Middleware
+note over Middleware
+  Authenticate, Authorize, 
+  ValidateSignature, ThrottleRequests, etc.
+end note
+
+Middleware -> Router: Route Resolution
+Router -> Controller: Dispatch to Controller Action
+
+alt API Request
+    Controller -> Service: Call Service Method
+    Service -> Model: Interact with Model
+    Model -> DB: Query Database
+    DB --> Model: Return Data
+    Model --> Service: Return Model/Collection
+    Service --> Controller: Return Response Data
+    Controller --> Client: JSON Response
+else Web Request
+    Controller -> Service: Call Service Method
+    Service -> Model: Interact with Model
+    Model -> DB: Query Database
+    DB --> Model: Return Data
+    Model --> Service: Return Model/Collection
+    Service --> Controller: Return Response Data
+    Controller --> Client: HTML Response (View)
+end
+
+@enduml

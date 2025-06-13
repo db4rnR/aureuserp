@@ -1,0 +1,85 @@
+@startuml Project Roadmap (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Project start date
+project starts 2025-01-01
+
+' Display settings
+printscale daily
+scale 1.0
+
+' Saturday and Sunday are closed
+closed days saturday sunday
+
+' Define styles
+skinparam ganttDiagram {
+    BackgroundColor #282c34
+    FontColor #FFFFFF
+    ArrowColor #ecf0f1
+    BarColor #4CAF50
+    BarBackgroundColor #1b5e20
+    MilestoneBackgroundColor #e65100
+    MilestoneColor #FF9800
+}
+
+' Planning & Architecture
+[Planning & Architecture] as [PA] lasts 35 days
+[Technical Architecture Document] as [TAD] lasts 14 days
+[UI/UX Design] as [UID] lasts 21 days
+[Technical Spikes] as [TS] lasts 28 days
+[UID] starts after [TAD]'s end
+[TS] starts after [TAD]'s end
+
+' Core Development
+[Core Development] as [CD] lasts 91 days
+[Database Schema Implementation] as [DSI] lasts 14 days
+[Authentication & Authorization] as [AA] lasts 14 days
+[User & Team Management] as [UTM] lasts 21 days
+[Category Management] as [CM] lasts 14 days
+[Todo Management] as [TM] lasts 14 days
+[Admin Portal (Filament)] as [AP] lasts 28 days
+[DSI] starts after [TAD]'s end
+[AA] starts after [DSI]'s end
+[UTM] starts after [AA]'s end
+[CM] starts after [UTM]'s end
+[TM] starts after [CM]'s end
+[AP] starts after [AA]'s end
+
+' Advanced Features
+[Advanced Features] as [AF] lasts 105 days
+[Advanced Team & Category Management] as [ATCM] lasts 14 days
+[Blogging Feature] as [BF] lasts 21 days
+[Basic Chat Functionality] as [BCF] lasts 21 days
+[Advanced Chat Features] as [ACF] lasts 28 days
+[Public API] as [API] lasts 21 days
+[Advanced Reporting] as [AR] lasts 21 days
+[ATCM] starts after [CM]'s end
+[BF] starts after [TM]'s end
+[BCF] starts after [UTM]'s end
+[ACF] starts after [BCF]'s end
+[API] starts after [BF]'s end
+[AR] starts after [API]'s end
+
+' Testing & Refinement
+[Testing & Refinement] as [TR] lasts 42 days
+[Performance Optimization] as [PO] lasts 14 days
+[Security Testing] as [ST] lasts 14 days
+[User Acceptance Testing] as [UAT] lasts 14 days
+[PO] starts after [ACF]'s end
+[ST] starts after [API]'s end
+[UAT] starts after [PO]'s end
+
+' Deployment & Training
+[Deployment & Training] as [DT] lasts 21 days
+[Production Deployment] as [PD] lasts 7 days
+[User Training] as [UT] lasts 14 days
+[PD] starts after [UAT]'s end
+[UT] starts after [PD]'s end
+
+@enduml

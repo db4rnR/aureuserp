@@ -1,0 +1,32 @@
+
+@startuml Reactor Flow Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam database {
+    BackgroundColor #1a237e
+    BorderColor #3949ab
+}
+
+
+    rectangle "Event Store" as A --> rectangle "Reactor" as B
+    B --> C{Event Type?}
+    C --> rectangle : "UserRegistered" "S} Welcome Email" as D
+    C --> rectangle : "TeamCreated" "S} Team Notification" as E
+    C --> rectangle : "PostPublished" "S} Social Media Update" as F
+    D --> rectangle "Email Service" as G
+    E --> rectangle "Notification Service" as H
+    F --> rectangle "Social Media API" as I
+@enduml

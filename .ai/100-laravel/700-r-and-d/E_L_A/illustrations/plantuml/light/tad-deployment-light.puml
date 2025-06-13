@@ -1,0 +1,112 @@
+@startuml TAD Deployment Architecture (Light Mode)
+
+' Light mode theme
+!theme cerulean
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam node {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+skinparam database {
+    BackgroundColor #e3f2fd
+    BorderColor #90caf9
+    FontColor #333333
+}
+
+' Client Layer
+package "Client Layer" {
+    node "Web Browser" as Browser
+    node "Mobile App" as MobileApp
+    node "External API Clients" as ExternalAPI
+}
+
+' Load Balancing
+package "Load Balancing" {
+    node "Load Balancer" as LB
+}
+
+' Application Layer
+package "Application Layer" {
+    node "Web Server 1\nFrankenPHP + Laravel Octane" as WebServer1
+    node "Web Server 2\nFrankenPHP + Laravel Octane" as WebServer2
+    node "Web Server 3\nFrankenPHP + Laravel Octane" as WebServer3
+}
+
+' Queue Processing
+package "Queue Processing" {
+    node "Horizon Worker 1" as HorizonWorker1
+    node "Horizon Worker 2" as HorizonWorker2
+}
+
+' Real-time Layer
+package "Real-time Layer" {
+    node "Reverb Server 1" as ReverbServer1
+    node "Reverb Server 2" as ReverbServer2
+}
+
+' Data Layer
+package "Data Layer" {
+    database "Primary Database\nPostgreSQL" as PrimaryDB
+    database "Read Replica\nPostgreSQL" as ReadReplica
+    database "Redis\nCache + Queue" as Redis
+    node "Typesense\nSearch Engine" as Typesense
+}
+
+' Storage Layer
+package "Storage Layer" {
+    node "Object Storage\nMedia Files" as ObjectStorage
+}
+
+' Connections
+Browser --> LB
+MobileApp --> LB
+ExternalAPI --> LB
+
+LB --> WebServer1
+LB --> WebServer2
+LB --> WebServer3
+
+WebServer1 --> PrimaryDB
+WebServer2 --> PrimaryDB
+WebServer3 --> PrimaryDB
+
+WebServer1 --> ReadReplica
+WebServer2 --> ReadReplica
+WebServer3 --> ReadReplica
+
+WebServer1 --> Redis
+WebServer2 --> Redis
+WebServer3 --> Redis
+
+Redis --> HorizonWorker1
+Redis --> HorizonWorker2
+
+HorizonWorker1 --> PrimaryDB
+HorizonWorker2 --> PrimaryDB
+
+WebServer1 --> ReverbServer1
+WebServer2 --> ReverbServer1
+WebServer3 --> ReverbServer2
+
+Browser --> ReverbServer1
+Browser --> ReverbServer2
+
+WebServer1 --> Typesense
+WebServer2 --> Typesense
+WebServer3 --> Typesense
+
+WebServer1 --> ObjectStorage
+WebServer2 --> ObjectStorage
+WebServer3 --> ObjectStorage
+
+HorizonWorker1 --> ObjectStorage
+HorizonWorker2 --> ObjectStorage
+
+@enduml

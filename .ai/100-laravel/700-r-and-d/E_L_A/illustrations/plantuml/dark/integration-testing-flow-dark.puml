@@ -1,0 +1,43 @@
+
+@startuml Integration Testing Flow Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam participant {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #34495e
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+
+    participant Test as Test Case
+    participant Command as Command
+    participant Aggregate as Aggregate
+    participant Event as Event Store
+    participant Projector as Projector
+    participant ReadModel as Read Model
+    participant Query as Query
+    
+    Test -> Command: Dispatch Command
+    Command -> Aggregate: Handle Command
+    Aggregate -> Event: Record Events
+    Event -> Projector: Process Events
+    Projector -> ReadModel: Update Read Model
+    Test -> Query: Execute Query
+    Query -> ReadModel: Retrieve Data
+    ReadModel -> Query: Return Data
+    Query -> Test: Return Result
+    Test -> Test: Assert Result
+@enduml

@@ -1,0 +1,30 @@
+{
+    "name": "webkul/support",
+    "description": "",
+    "authors": [
+        {
+            "name": "Aureus ERP",
+            "email": "support@aureuserp.in"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Support\\Providers\\SupportServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Support\\": "src/",
+            "Webkul\\Support\\Database\\Factories\\": "database/factories/",
+            "Webkul\\Support\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webkul\\Support\\Tests\\": "tests/"
+        }
+    }
+}

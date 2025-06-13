@@ -1,0 +1,49 @@
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+graph TD
+    A[Client] --> B[API Controller]
+    B --> C{Command or Query?}
+    
+    C -->|Command| D[Command Bus]
+    C -->|Query| E[Query Bus]
+    
+    D --> F[Command Handler]
+    E --> G[Query Handler]
+    
+    F --> H[Domain Model]
+    H --> I[Write Database]
+    
+    G --> J[Read Model]
+    J --> K[Read Database]
+    
+    H -.-> L[Event Bus]
+    L -.-> M[Event Handlers]
+    M -.-> J
+    
+    subgraph "Command Side"
+    D
+    F
+    H
+    I
+    end
+    
+    subgraph "Query Side"
+    E
+    G
+    J
+    K
+    end
+    
+    subgraph "Synchronization"
+    L
+    M
+    end
+    
+    classDef commandSide fill:#e6f7ff,stroke:#91d5ff,color:#0050b3
+    classDef querySide fill:#f6ffed,stroke:#b7eb8f,color:#389e0d
+    classDef sync fill:#fff7e6,stroke:#ffd591,color:#d46b08
+    
+    class D,F,H,I commandSide
+    class E,G,J,K querySide
+    class L,M sync
+```

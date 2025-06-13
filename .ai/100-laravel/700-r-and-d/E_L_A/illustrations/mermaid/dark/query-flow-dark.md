@@ -1,0 +1,11 @@
+# Query Flow (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2a2a2a', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#555555', 'lineColor': '#999999', 'secondaryColor': '#252525', 'tertiaryColor': '#333333' }}}%%
+flowchart LR
+    A[Client] --> B[Query]
+    B --> C[Query Handler]
+    C --> D[Read Model]
+    D --> E[Query Result]
+    E --> A
+```

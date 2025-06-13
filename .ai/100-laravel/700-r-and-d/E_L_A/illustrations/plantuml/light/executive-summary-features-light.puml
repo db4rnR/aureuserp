@@ -1,0 +1,90 @@
+@startuml Executive Summary Features (Light Mode)
+
+' Light mode theme
+!theme cerulean
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+' Main components
+rectangle "Enhanced Laravel Application" as A
+
+' Main features
+rectangle "User Management" as B
+rectangle "Team Management" as C
+rectangle "Content Management" as D
+rectangle "Task Management" as E
+rectangle "Communication" as F
+rectangle "Security & Compliance" as G
+
+' User Management features
+rectangle "Role-based Access Control" as B1
+rectangle "Multi-factor Authentication" as B2
+rectangle "User Status Tracking" as B3
+
+' Team Management features
+rectangle "Hierarchical Team Structure" as C1
+rectangle "Team Permissions" as C2
+rectangle "Team Activity Tracking" as C3
+
+' Content Management features
+rectangle "Post Creation & Publishing" as D1
+rectangle "Categorization & Tagging" as D2
+rectangle "Media Management" as D3
+
+' Task Management features
+rectangle "Hierarchical Todo Lists" as E1
+rectangle "Task Assignment" as E2
+rectangle "Due Date & Status Tracking" as E3
+
+' Communication features
+rectangle "Team Messaging" as F1
+rectangle "Conversation Management" as F2
+rectangle "Notification System" as F3
+
+' Security features
+rectangle "Comprehensive Audit Logs" as G1
+rectangle "Data Encryption" as G2
+rectangle "GDPR Compliance Tools" as G3
+
+' Connections
+A -down-> B
+A -down-> C
+A -down-> D
+A -down-> E
+A -down-> F
+A -down-> G
+
+B -down-> B1
+B -down-> B2
+B -down-> B3
+
+C -down-> C1
+C -down-> C2
+C -down-> C3
+
+D -down-> D1
+D -down-> D2
+D -down-> D3
+
+E -down-> E1
+E -down-> E2
+E -down-> E3
+
+F -down-> F1
+F -down-> F2
+F -down-> F3
+
+G -down-> G1
+G -down-> G2
+G -down-> G3
+
+@enduml

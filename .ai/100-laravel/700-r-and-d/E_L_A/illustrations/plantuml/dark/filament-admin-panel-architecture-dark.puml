@@ -1,0 +1,90 @@
+@startuml Filament Admin Panel Architecture (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+' Main components
+rectangle "Filament Admin Panel" as A
+
+' Main categories
+rectangle "Core Components" as B
+rectangle "Plugins" as C
+rectangle "Resources" as D
+rectangle "Pages" as E
+rectangle "Widgets" as F
+
+' Core components
+rectangle "Forms" as B1
+rectangle "Tables" as B2
+rectangle "Actions" as B3
+rectangle "Notifications" as B4
+rectangle "Infolist" as B5
+
+' Plugins
+rectangle "Official Plugins" as C1
+rectangle "Community Plugins" as C2
+
+' Official plugins
+rectangle "Media Library" as C1A
+rectangle "Tags" as C1B
+rectangle "Translatable" as C1C
+
+' Community plugins
+rectangle "Shield" as C2A
+rectangle "Backup" as C2B
+rectangle "Health" as C2C
+rectangle "Activity Log" as C2D
+rectangle "Schedule Monitor" as C2E
+
+' Resources
+rectangle "Model Resources" as D1
+rectangle "Custom Resources" as D2
+
+' Pages
+rectangle "Dashboard" as E1
+rectangle "Custom Pages" as E2
+
+' Connections
+A --> B
+A --> C
+A --> D
+A --> E
+A --> F
+
+B --> B1
+B --> B2
+B --> B3
+B --> B4
+B --> B5
+
+C --> C1
+C --> C2
+
+C1 --> C1A
+C1 --> C1B
+C1 --> C1C
+
+C2 --> C2A
+C2 --> C2B
+C2 --> C2C
+C2 --> C2D
+C2 --> C2E
+
+D --> D1
+D --> D2
+
+E --> E1
+E --> E2
+
+@enduml
