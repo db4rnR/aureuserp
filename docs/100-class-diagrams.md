@@ -298,11 +298,11 @@ classDiagram
         +cancel() void
     }
     
-    Contact }|--|| Organization : belongs_to
-    Contact ||--o{ SalesOpportunity : has
-    SalesOpportunity ||--o{ SalesQuote : generates
-    SalesQuote ||--o{ SalesOrder : converts_to
-    Contact ||--o{ SalesOrder : places
+    Contact "1" --> "1" Organization : belongs_to
+    Contact "1" --> "*" SalesOpportunity : has
+    SalesOpportunity "1" --> "*" SalesQuote : generates
+    SalesQuote "1" --> "*" SalesOrder : converts_to
+    Contact "1" --> "*" SalesOrder : places
 ```
 
 ### 4.3. Human Resources Domain
@@ -376,13 +376,13 @@ classDiagram
         +calculateDays() decimal
     }
     
-    Employee }|--|| Department : belongs_to
-    Employee }|--|| Position : holds
-    Employee }|--o| Employee : reports_to
-    Department }|--o| Employee : managed_by
-    Position }|--|| Department : exists_in
-    Employee ||--o{ Timesheet : submits
-    Employee ||--o{ TimeOffRequest : requests
+    Employee "*" --> "1" Department : belongs_to
+    Employee "*" --> "1" Position : holds
+    Employee "*" --> "0..1" Employee : reports_to
+    Department "1" --> "0..1" Employee : managed_by
+    Position "*" --> "1" Department : exists_in
+    Employee "1" --> "*" Timesheet : submits
+    Employee "1" --> "*" TimeOffRequest : requests
 ```
 
 ### 4.4. Inventory Management Domain
@@ -464,13 +464,13 @@ classDiagram
         +apply() void
     }
     
-    Product }|--|| ProductCategory : belongs_to
-    ProductCategory }|--o| ProductCategory : parent
-    Product ||--o{ ProductVariant : has
-    Product ||--o{ Inventory : tracked_in
-    Warehouse ||--o{ Inventory : stores
-    Product ||--o{ InventoryMovement : involves
-    Warehouse ||--o{ InventoryMovement : occurs_in
+    Product "*" --> "1" ProductCategory : belongs_to
+    ProductCategory "1" --> "0..1" ProductCategory : parent
+    Product "1" --> "*" ProductVariant : has
+    Product "1" --> "*" Inventory : tracked_in
+    Warehouse "1" --> "*" Inventory : stores
+    Product "1" --> "*" InventoryMovement : involves
+    Warehouse "1" --> "*" InventoryMovement : occurs_in
 ```
 
 ## 5. FilamentPHP Resource Classes
@@ -734,3 +734,9 @@ These class diagrams provide essential insights into:
 - **Plugin extensibility** and customization points
 
 **Confidence Level: 93%** - Based on Laravel conventions and FilamentPHP analysis
+
+---
+
+**Previous Document**: [090-system-diagrams.md](090-system-diagrams.md) - System Architecture Diagrams and Schematics
+
+**Next Document**: [999-summary.md](999-summary.md) - Project Analysis Summary

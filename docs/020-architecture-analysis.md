@@ -17,33 +17,39 @@ AureusERP implements a **layered architecture** with clear separation of concern
 
 ### 2.1.1. High-Level Architecture Diagram
 
-```ascii
-┌─────────────────────────────────────────────┐
-│            Presentation Layer               │
-│  ┌─────────────────┐  ┌─────────────────┐   │
-│  │  Admin Panel    │  │ Customer Panel  │   │
-│  │  (FilamentPHP)  │  │  (FilamentPHP)  │   │
-│  └─────────────────┘  └─────────────────┘   │ 
-├─────────────────────────────────────────────┤
-│              Application Layer              │
-│  ┌─────────┐ ┌─────────┐ ┌─────────────┐   │
-│  │Controllers│ │Middleware│ │Service Providers│ │
-│  └─────────┘ ┋─────────┘ └─────────────┘   │
-├─────────────────────────────────────────────┤
-│               Domain Layer                  │
-│  ┌─────────────────────────────────────┐   │
-│  │        Plugin Modules              │   │
-│  │ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐   │   │
-│  │ │Sales│ │ HR  │ │Acct │ │Inv  │... │   │
-│  │ └─────┘ └─────┘ └─────┘ └─────┘   │   │
-│  └─────────────────────────────────────┘   │
-├─────────────────────────────────────────────┤
-│            Infrastructure Layer             │ 
-│  ┌─────────────┐ ┌─────────────┐           │
-│  │  Database   │ │   Storage   │  ...      │
-│  │(MySQL/SQLite)│ │  (Local)    │           │
-│  └─────────────┘ └─────────────┘           │
-└─────────────────────────────────────────────┘
+```mermaid
+architecture-beta
+    group presentation(cloud)[Presentation Layer]
+    group application(server)[Application Layer] 
+    group domain(database)[Domain Layer]
+    group infrastructure(disk)[Infrastructure Layer]
+
+    service admin(server)[Admin Panel] in presentation
+    service customer(server)[Customer Panel] in presentation
+    
+    service controllers(server)[Controllers] in application
+    service middleware(server)[Middleware] in application
+    service providers(server)[Service Providers] in application
+    
+    service sales(database)[Sales] in domain
+    service hr(database)[HR] in domain  
+    service accounting(database)[Accounting] in domain
+    service inventory(database)[Inventory] in domain
+    
+    service database(database)[Database] in infrastructure
+    service storage(disk)[Storage] in infrastructure
+
+    admin:B -- T:controllers
+    customer:B -- T:controllers
+    controllers:B -- T:sales
+    controllers:B -- T:hr
+    controllers:B -- T:accounting
+    controllers:B -- T:inventory
+    sales:B -- T:database
+    hr:B -- T:database
+    accounting:B -- T:database
+    inventory:B -- T:database
+    sales:B -- T:storage
 ```
 
 ### 2.1.2. Architectural Patterns
@@ -158,25 +164,20 @@ The plugin system implements **automatic discovery** via composer merge:
 
 ### 2.4.2. Plugin Registration Flow
 
-```ascii
-Application Boot
-       ↓
-PluginManager::register()
-       ↓
-Read bootstrap/plugins.php
-       ↓
-Load Plugin Classes
-       ↓
-Register with FilamentPHP
-       ↓
-Plugin Resources Available
+```mermaid
+flowchart TD
+    A[Application Boot] --> B[PluginManager::register]
+    B --> C[Read bootstrap/plugins.php]
+    C --> D[Load Plugin Classes]
+    D --> E[Register with FilamentPHP]
+    E --> F[Plugin Resources Available]
 ```
 
 ### 2.4.3. Plugin Structure Standard
 
 Each plugin follows a consistent structure:
 
-```ascii
+```text
 plugins/webkul/{module}/
 ├── composer.json          ← Composer package definition
 ├── src/
@@ -250,7 +251,7 @@ class User extends Authenticatable implements FilamentUser
 
 ### 2.6.1. Directory Structure Rationale
 
-```ascii
+```text
 aureuserp/
 ├── app/                    ← Core application code
 │   ├── Http/Controllers/   ← Request handling (minimal)
@@ -285,5 +286,7 @@ The system uses sophisticated dependency management:
 - **Asset compilation**: Vite for frontend asset management
 
 ---
+
+**Previous Document**: [010-project-overview.md](010-project-overview.md) - AureusERP Project Overview
 
 **Next Document**: [030-technical-stack.md](030-technical-stack.md) - Detailed technology stack analysis

@@ -386,7 +386,7 @@ module.exports = {
     <!-- TailwindCSS v4 for main app -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="text-gray-900 bg-gray-50">
     @yield('content')
 </body>
 </html>
@@ -757,3 +757,9 @@ This comprehensive upgrade strategy ensures:
 - **Plugin Preservation**: All 22 plugins remain functional
 
 **Confidence Level: 90%** - Based on upgrade path analysis and compatibility research
+
+---
+
+**Previous Document**: [060-plugin-system.md](060-plugin-system.md) - Plugin System Architecture
+
+**Next Document**: [080-filament-v4-upgrade.md](080-filament-v4-upgrade.md) - Filament v4 Upgrade Strategy

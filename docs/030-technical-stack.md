@@ -17,23 +17,37 @@ AureusERP's technology stack represents a **modern, production-ready PHP ecosyst
 
 ### 3.1.1. Technology Stack Pyramid
 
-```ascii
-┌─────────────────────────────────────┐
-│        User Interface Layer        │
-│   FilamentPHP + TailwindCSS + JS   │
-├─────────────────────────────────────┤
-│      Application Framework         │
-│          Laravel 12.x              │
-├─────────────────────────────────────┤
-│        Runtime Environment         │
-│            PHP 8.2+                │
-├─────────────────────────────────────┤
-│       Database & Storage           │
-│      MySQL 8.0+ / SQLite          │
-├─────────────────────────────────────┤
-│      Infrastructure Layer          │
-│   Apache/Nginx + Linux/macOS      │
-└─────────────────────────────────────┘
+```mermaid
+architecture-beta
+    group ui(cloud)[User Interface Layer]
+    group app(server)[Application Framework] 
+    group runtime(server)[Runtime Environment]
+    group data(database)[Database Storage]
+    group infra(disk)[Infrastructure Layer]
+
+    service filament(server)[FilamentPHP] in ui
+    service tailwind(server)[TailwindCSS] in ui
+    service js(server)[JavaScript] in ui
+    
+    service laravel(server)[Laravel 12x] in app
+    
+    service php(server)[PHP 8x] in runtime
+    
+    service mysql(database)[MySQL 8] in data
+    service sqlite(database)[SQLite] in data
+    
+    service web(server)[Apache Nginx] in infra
+    service os(server)[Linux macOS] in infra
+
+    filament:B -- T:laravel
+    tailwind:B -- T:laravel
+    js:B -- T:laravel
+    laravel:B -- T:php
+    php:B -- T:mysql
+    php:B -- T:sqlite
+    mysql:B -- T:web
+    sqlite:B -- T:web
+    web:B -- T:os
 ```
 
 ### 3.1.2. Technology Selection Philosophy
@@ -263,22 +277,30 @@ This creates a **comprehensive development environment** with:
 
 ### 3.6.2. Scalability Architecture
 
-```ascii
-Scalability Layers:
-┌─────────────────────────────────┐
-│     Load Balancer (Future)     │
-├─────────────────────────────────┤
-│   Multiple App Servers         │
-│  ┌───────┐ ┌───────┐ ┌───────┐  │
-│  │ App 1 │ │ App 2 │ │ App N │  │
-│  └───────┘ └───────┘ └───────┘  │
-├─────────────────────────────────┤
-│        Shared Services         │
-│  ┌─────────┐ ┌───────────────┐  │
-│  │Database │ │ Queue/Cache   │  │
-│  │Cluster  │ │ (Redis)       │  │
-│  └─────────┘ └───────────────┘  │
-└─────────────────────────────────┘
+```mermaid
+architecture-beta
+    group loadbalancer(internet)[Load Balancer]
+    group appservers(cloud)[Application Servers]
+    group shared(database)[Shared Services]
+
+    service lb(internet)[Load Balancer] in loadbalancer
+    
+    service app1(server)[App Server 1] in appservers
+    service app2(server)[App Server 2] in appservers
+    service app3(server)[App Server N] in appservers
+    
+    service dbcluster(database)[Database Cluster] in shared
+    service redis(database)[Queue Cache Redis] in shared
+
+    lb:B -- T:app1
+    lb:B -- T:app2  
+    lb:B -- T:app3
+    app1:B -- T:dbcluster
+    app2:B -- T:dbcluster
+    app3:B -- T:dbcluster
+    app1:B -- T:redis
+    app2:B -- T:redis
+    app3:B -- T:redis
 ```
 
 ### 3.6.3. Technology Stack Maturity Assessment
@@ -310,5 +332,7 @@ Scalability Layers:
 **Overall Assessment**: **Excellent technology choices** for a modern ERP system, balancing innovation with stability.
 
 ---
+
+**Previous Document**: [020-architecture-analysis.md](020-architecture-analysis.md) - Architecture Analysis
 
 **Next Document**: [040-features-capabilities.md](040-features-capabilities.md) - Core features and functional capabilities analysis

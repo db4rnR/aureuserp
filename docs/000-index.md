@@ -120,3 +120,7 @@ The 5% uncertainty primarily relates to runtime behavior and deployment-specific
 #### Documentation Standards
 
 Documentation generated following AI Instructions v1.0 - Targeting highly visual learners and junior developers
+
+---
+
+**Next Document**: [010-project-overview.md](010-project-overview.md) - AureusERP Project Overview

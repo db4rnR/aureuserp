@@ -877,11 +877,9 @@ Each plugin needs updated documentation reflecting v4 changes:
 This plugin is compatible with FilamentPHP v4.0+
 
 ### Installation
-
 ```bash
 composer require webkul/plugin-name
 ```
-
 ### Configuration
 
 Updated configuration for v4...
@@ -937,3 +935,15 @@ FilamentPHP v4 upgrade requires:
 **Timeline Estimate**: 6-8 weeks for complete migration
 
 **Confidence Level: 85%** - Based on beta documentation and migration complexity analysis
+
+---
+
+**Previous Document**: [070-upgrade-roadmap.md](070-upgrade-roadmap.md) - Upgrade Roadmap
+
+**Next Document**: [090-system-diagrams.md](090-system-diagrams.md) - System Diagrams
+
+---
+
+**Previous Document**: [070-upgrade-roadmap.md](070-upgrade-roadmap.md) - Upgrade Roadmap
+
+**Next Document**: [090-system-diagrams.md](090-system-diagrams.md) - System Diagrams

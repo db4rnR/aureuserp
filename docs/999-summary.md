@@ -182,3 +182,7 @@ Plugins:     22 Webkul modules with hot-swappable architecture
 ---
 
 *This documentation serves as the definitive reference for understanding, maintaining, and evolving the AureusERP system. All diagrams have been validated and tested for accuracy.*
+
+---
+
+**Previous Document**: [100-class-diagrams.md](100-class-diagrams.md) - Class Diagrams and Object Models
