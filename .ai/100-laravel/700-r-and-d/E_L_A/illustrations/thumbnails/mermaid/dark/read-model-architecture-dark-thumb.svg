@@ -1,14 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="80" height="60" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
-  <rect width="80" height="60" fill="#2a2a2a" />
-  <rect x="5" y="10" width="20" height="15" rx="2" fill="#333333" stroke="#ffffff" />
-  <rect x="30" y="10" width="20" height="15" rx="2" fill="#333333" stroke="#ffffff" />
-  <rect x="55" y="10" width="20" height="15" rx="2" fill="#333333" stroke="#ffffff" />
-  <line x1="25" y1="17.5" x2="30" y2="17.5" stroke="#999999" stroke-width="1" />
-  <line x1="50" y1="17.5" x2="55" y2="17.5" stroke="#999999" stroke-width="1" />
-  <text x="15" y="20" font-family="Arial" font-size="4" text-anchor="middle" fill="#ffffff">EventStore</text>
-  <text x="40" y="20" font-family="Arial" font-size="4" text-anchor="middle" fill="#ffffff">Projector</text>
-  <text x="65" y="20" font-family="Arial" font-size="4" text-anchor="middle" fill="#ffffff">ReadModel</text>
-  <text x="27.5" y="15" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">events</text>
-  <text x="52.5" y="15" font-family="Arial" font-size="3" text-anchor="middle" fill="#ffffff">updates</text>
-</svg>
+version https://git-lfs.github.com/spec/v1
+oid sha256:64e95523cac94abeade2865705565689a2ea3787be3eee5e5c06e9c3f98813ea
+size 1146

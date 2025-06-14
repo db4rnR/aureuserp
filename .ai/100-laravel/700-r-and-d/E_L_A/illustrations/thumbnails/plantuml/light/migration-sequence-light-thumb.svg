@@ -1,30 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="300" height="200" fill="#f8f9fa" rx="5" ry="5" />
-
-  <!-- Title -->
-  <text x="150" y="30" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333">Migration Sequence</text>
-
-  <!-- Class Diagram Elements -->
-  <rect x="60" y="60" width="80" height="100" fill="#9c36b5" fill-opacity="0.2" stroke="#9c36b5" stroke-width="2" />
-  <rect x="60" y="60" width="80" height="25" fill="#9c36b5" stroke="#9c36b5" stroke-width="2" />
-  <text x="100" y="77" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#fff">Class A</text>
-
-  <line x1="60" y1="110" x2="140" y2="110" stroke="#9c36b5" stroke-width="1" />
-  <text x="65" y="95" font-family="Arial, sans-serif" font-size="10" fill="#333">- property1</text>
-  <text x="65" y="125" font-family="Arial, sans-serif" font-size="10" fill="#333">+ method1()</text>
-  <text x="65" y="140" font-family="Arial, sans-serif" font-size="10" fill="#333">+ method2()</text>
-
-  <rect x="160" y="60" width="80" height="100" fill="#9c36b5" fill-opacity="0.2" stroke="#9c36b5" stroke-width="2" />
-  <rect x="160" y="60" width="80" height="25" fill="#9c36b5" stroke="#9c36b5" stroke-width="2" />
-  <text x="200" y="77" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#fff">Class B</text>
-
-  <line x1="160" y1="110" x2="240" y2="110" stroke="#9c36b5" stroke-width="1" />
-  <text x="165" y="95" font-family="Arial, sans-serif" font-size="10" fill="#333">- property1</text>
-  <text x="165" y="125" font-family="Arial, sans-serif" font-size="10" fill="#333">+ method1()</text>
-  <text x="165" y="140" font-family="Arial, sans-serif" font-size="10" fill="#333">+ method2()</text>
-
-  <line x1="140" y1="90" x2="160" y2="90" stroke="#333" stroke-width="1.5" />
-  <polygon points="160,90 150,85 150,95" fill="#333" />
-</svg>
+version https://git-lfs.github.com/spec/v1
+oid sha256:a8f158477a380bc87729f9039cf4eeaa427db3408f4b59d5f80a7a53862c474c
+size 1974
