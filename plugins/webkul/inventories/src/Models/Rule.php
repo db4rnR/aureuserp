@@ -2,6 +2,10 @@
 
 namespace Webkul\Inventory\Models;
 
+use Webkul\Inventory\Enums\RuleAction;
+use Webkul\Inventory\Enums\GroupPropagation;
+use Webkul\Inventory\Enums\RuleAuto;
+use Webkul\Inventory\Enums\ProcureMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -61,10 +65,10 @@ class Rule extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'action'                   => Enums\RuleAction::class,
-        'group_propagation_option' => Enums\GroupPropagation::class,
-        'auto'                     => Enums\RuleAuto::class,
-        'procure_method'           => Enums\ProcureMethod::class,
+        'action'                   => RuleAction::class,
+        'group_propagation_option' => GroupPropagation::class,
+        'auto'                     => RuleAuto::class,
+        'procure_method'           => ProcureMethod::class,
         'location_dest_from_rule'  => 'boolean',
         'propagate_cancel'         => 'boolean',
         'propagate_carrier'        => 'boolean',

@@ -2,6 +2,7 @@
 
 namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources\PublicHolidayResource\Pages;
 
+use Filament\Actions\CreateAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
@@ -15,7 +16,7 @@ class ListPublicHolidays extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->label(__('time-off::filament/clusters/configurations/resources/public-holiday/pages/list-public-holiday.header-actions.create.title'))
                 ->icon('heroicon-o-plus-circle')
                 ->successNotification(
@@ -24,7 +25,7 @@ class ListPublicHolidays extends ListRecords
                         ->title(__('time-off::filament/clusters/configurations/resources/public-holiday/pages/list-public-holiday.header-actions.create.notification.created.title'))
                         ->body(__('time-off::filament/clusters/configurations/resources/public-holiday/pages/list-public-holiday.header-actions.create.notification.created.body'))
                 )
-                ->mutateFormDataUsing(function ($data) {
+                ->mutateDataUsing(function ($data) {
                     $user = Auth::user();
 
                     $data['company_id'] = $user->default_company_id;

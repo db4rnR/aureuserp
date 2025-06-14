@@ -2,12 +2,16 @@
 
 namespace Webkul\Chatter\Filament\Actions\Chatter;
 
+use Filament\Support\Enums\Width;
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\RichEditor;
+use Filament\Schemas\Components\Utilities\Get;
+use Throwable;
 use Filament\Actions\Action;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\MaxWidth;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Chatter\Mail\FollowerMail;
 use Webkul\Partner\Models\Partner;
@@ -65,12 +69,12 @@ class FollowerAction extends Action
             ->tooltip(__('chatter::filament/resources/actions/chatter/follower-action.setup.tooltip'))
             ->modalIcon('heroicon-s-user-plus')
             ->badge(fn (Model $record): int => $record->followers->count())
-            ->modalWidth(MaxWidth::TwoExtraLarge)
+            ->modalWidth(Width::TwoExtraLarge)
             ->slideOver(false)
-            ->form(function (Form $form) {
-                return $form
-                    ->schema([
-                        Forms\Components\Select::make('partners')
+            ->schema(function (Schema $schema) {
+                return $schema
+                    ->components([
+                        Select::make('partners')
                             ->label(__('chatter::filament/resources/actions/chatter/follower-action.setup.form.fields.recipients'))
                             ->preload()
                             ->searchable()
@@ -78,10 +82,10 @@ class FollowerAction extends Action
                             ->live()
                             ->relationship('followable', 'name')
                             ->required(),
-                        Forms\Components\Toggle::make('notify')
+                        Toggle::make('notify')
                             ->live()
                             ->label(__('chatter::filament/resources/actions/chatter/follower-action.setup.form.fields.notify-user')),
-                        Forms\Components\RichEditor::make('note')
+                        RichEditor::make('note')
                             ->disableGrammarly()
                             ->toolbarButtons([
                                 'attachFiles',
@@ -131,7 +135,7 @@ class FollowerAction extends Action
                             ->body(__('chatter::filament/resources/actions/chatter/follower-action.setup.actions.notification.success.body', ['partner' => $partner->name]))
                             ->send();
                     });
-                } catch (\Throwable $e) {
+                } catch (Throwable $e) {
                     info('Error adding followers', [
                         'error' => $e->getMessage(),
                         'trace' => $e->getTraceAsString(),

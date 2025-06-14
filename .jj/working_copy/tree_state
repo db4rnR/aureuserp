@@ -2763,8 +2763,8 @@ $app/Providers/AppServiceProvider.php
 ğ“„¥ô2‰
 
 composer.json
-ºñæĞö2 
-composer.lock»„çĞö2Ç”
+éÜÑö2à=
+composer.lock¸£ÛÑö2ÁÃ:
 config/app.php
 ğ“„¥ô2½!
 config/auth.php
@@ -2831,7 +2831,12 @@ Wdatabase/migrations/2024_11_26_053234_add_resource_permission_column_to_users_t
 docs/070-upgrade-roadmap.mdÀ¢‘Îö2Ì.
 docs/080-filament-v4-upgrade.md¹šÎö2º³*
 docs/090-system-diagrams.mdÎ­Ïö2íŠ)
-docs/100-class-diagrams.mdæ—ïÏö2¡™!
+docs/100-class-diagrams.mdæ—ïÏö2¡™5
+&docs/110-database/010-database.diagram÷ïæÖö2Ù«-
+"docs/110-database/020-database.png¸ÒêÖö28
+)docs/110-database/040-database-sqlite.sqlûÄñÖö2Åø	<
+-docs/110-database/050-database-postgresql.sql‹ˆóÖö2Åø	;
+,docs/110-database/060-database-snowflake.sql¶¶ôÖö2Åø	!
 docs/999-summary.md
 ¹šÎö2–<@
 2lang/vendor/filament-shield/ar/filament-shield.php
@@ -2895,7 +2900,7 @@ Wdatabase/migrations/2024_11_26_053234_add_resource_permission_column_to_users_t
 5lang/vendor/filament-shield/zh_TW/filament-shield.php
 ğ“„¥ô2Õ
 package.json
-Ù«Ìö2£
+€ıÈÑö2Ò
 phpunit.xml
 ğ“„¥ô2§	
 	pint.json
@@ -8152,25 +8157,39 @@ Gplugins/webkul/website/src/Filament/Customer/Resources/PageResource.php
 ğ“„¥ô2ü7
 )plugins/webkul/website/tailwind.config.js
 ğ“„¥ô2
-pnpm-lock.yamlöÆÌö2Îç 
-pnpm-workspace.yaml	§«÷Ëö2R
-postcss.config.js	à«Ìö2\
+pnpm-lock.yamlËŠİÑö2İï	 
+pnpm-workspace.yaml	ŞÑö2u
+postcss.config.js	ËĞóĞö2h
 public/.htaccess
-ğ“„¥ô2Û[
+ğ“„¥ô2Û4
+&public/css/awcodes/curator/curator.css
+ñäÛÑö2’;:
++public/css/awcodes/tiptap-editor/tiptap.cssèäÛÑö2¤[
 Mpublic/css/bezhansalleh/filament-language-switch/filament-language-switch.css
 ğ“„¥ô2œT(
 public/css/blogs/blogs.css
-Œ¬çĞö2ŒY3
-$public/css/filament/filament/app.css¬çĞö2†Ã2
-#public/css/filament/forms/forms.css‹¬çĞö2–‹5
+åÛÑö2ŒYS
+Dpublic/css/dotswan/filament-laravel-pulse/filament-laravel-pulse.cssÿäÛÑö2ÿÑ3
+$public/css/filament/filament/app.css“åÛÑö2†Ã2
+#public/css/filament/forms/forms.cssƒåÛÑö2–‹5
 'public/css/filament/support/support.css
-Œ¬çĞö2ËW
+‡åÛÑö2ËQ
+Cpublic/css/filament-spatie-health/filament-spatie-health-styles.css
+‹åÛÑö2œ@W
 Ipublic/css/guava/filament-icon-picker/filament-icon-picker-stylesheet.css
-Œ¬çĞö2…TU
+‰åÛÑö2…TL
+=public/css/kirschbaum-development/commentions/commentions.css‰åÛÑö2ÌåD
+6public/css/pxlrbt/filament-spotlight/spotlight-css.css
+ŠåÛÑö2Ü
+D
+6public/css/rmsramos/activitylog/activitylog-styles.css
+ŠåÛÑö2ÚY
+Kpublic/css/saade/filament-adjacency-list/filament-adjacency-list-styles.css
+ŠåÛÑö2ğU
 Gpublic/css/saade/filament-fullcalendar/filament-fullcalendar-styles.css
-Œ¬çĞö2Ÿ,
+‹åÛÑö2Ÿ,
 public/css/website/website.css
-¬çĞö2Æ[
+åÛÑö2Æ[
 public/favicon.icoğ“„¥ô2'
 public/images/favicon.ico
 ğ“„¥ô2¾!2
@@ -8181,33 +8200,44 @@ $public/images/invoice-27-02-2025.pdf
 public/images/logo-light.svg
 ğ“„¥ô2è2
 public/index.php
-ğ“„¥ô2Ô0
+ğ“„¥ô2Ô?
+0public/js/awcodes/curator/components/curation.jsÆäÛÑö2œ¾C
+4public/js/awcodes/tiptap-editor/components/tiptap.jsÅäÛÑö2öë+Q
+Bpublic/js/dotswan/filament-laravel-pulse/filament-laravel-pulse.jsßäÛÑö2 ¿0
 "public/js/filament/filament/app.js
-‰¬çĞö2Ù=2
-#public/js/filament/filament/echo.jsŠ¬çĞö2ŞÌA
+ßäÛÑö2Ù=2
+#public/js/filament/filament/echo.jsàäÛÑö2ŞÌA
 3public/js/filament/forms/components/color-picker.js
-¬çĞö2ÖLF
-7public/js/filament/forms/components/date-time-picker.js¬çĞö2²ºA
-2public/js/filament/forms/components/file-upload.js‚¬çĞö2Œ>
+ÆäÛÑö2ÖLF
+7public/js/filament/forms/components/date-time-picker.jsÆäÛÑö2²ºA
+2public/js/filament/forms/components/file-upload.jsÇäÛÑö2Œ>
 0public/js/filament/forms/components/key-value.js
-‚¬çĞö2õE
-6public/js/filament/forms/components/markdown-editor.jsƒ¬çĞö2šêA
-2public/js/filament/forms/components/rich-editor.js„¬çĞö2ğ¤<
--public/js/filament/forms/components/select.js„¬çĞö2³÷?
+ÈäÛÑö2õE
+6public/js/filament/forms/components/markdown-editor.jsÊäÛÑö2šêA
+2public/js/filament/forms/components/rich-editor.jsÍäÛÑö2ğ¤<
+-public/js/filament/forms/components/select.jsÍäÛÑö2³÷?
 1public/js/filament/forms/components/tags-input.js
-„¬çĞö2É=
+ÖäÛÑö2É=
 /public/js/filament/forms/components/textarea.js
-…¬çĞö2‰?
+ÙäÛÑö2‰?
 1public/js/filament/notifications/notifications.js
-Š¬çĞö2Ú68
+àäÛÑö2Ú68
 *public/js/filament/support/async-alpine.js
 ğ“„¥ô2’)4
-%public/js/filament/support/support.js‹¬çĞö2Ã©;
+%public/js/filament/support/support.jsàäÛÑö2Ã©;
 -public/js/filament/tables/components/table.js
-…¬çĞö2¸=
-.public/js/filament/widgets/components/chart.js†¬çĞö2ú·Q
-Bpublic/js/filament/widgets/components/stats-overview/stat/chart.js†¬çĞö2µ
-public/robots.txt	ğ“„¥ô2"
+ÙäÛÑö2¸=
+.public/js/filament/widgets/components/chart.jsÚäÛÑö2ú·Q
+Bpublic/js/filament/widgets/components/stats-overview/stat/chart.jsÚäÛÑö2µR
+Cpublic/js/kirschbaum-development/commentions/commentions-scripts.jsáäÛÑö2ä¸B
+3public/js/pxlrbt/filament-spotlight/spotlight-js.jsåäÛÑö2¥š\
+Mpublic/js/saade/filament-adjacency-list/components/filament-adjacency-list.jsÛäÛÑö2¸
+public/robots.txt	ğ“„¥ô23
+$public/vendor/telescope/app-dark.cssíòÛÑö2û”	.
+public/vendor/telescope/app.cssğòÛÑö2£“	2
+#public/vendor/telescope/favicon.icoôòÛÑö2şÏ7
+)public/vendor/telescope/mix-manifest.json
+ôòÛÑö2Ë"
 resources/css/app.css	å«Ìö28 
 resources/js/app.js	ğ“„¥ô2&
 resources/js/bootstrap.js	ğ“„¥ô2C
@@ -8228,7 +8258,7 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 "storage/framework/views/.gitignore	ğ“„¥ô2$
 storage/logs/.gitignore	ğ“„¥ô2 
 tailwind.config.js
-Ù«Ìö2Â+
+Û½öĞö2ü+
 tests/Feature/ExampleTest.php
 ğ“„¥ô2ç 
 tests/TestCase.php
@@ -8237,4 +8267,4 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 ğ“„¥ô2ó
 vite.config.js
 ğ“„¥ô2‡
- *¯ÇÔÌŒD€@›º Â=hd(®0
+ *7ÏİšõxJpH)YDÍ6¡#ìc0

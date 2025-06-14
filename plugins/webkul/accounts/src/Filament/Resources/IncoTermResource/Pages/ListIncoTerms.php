@@ -2,6 +2,7 @@
 
 namespace Webkul\Account\Filament\Resources\IncoTermResource\Pages;
 
+use Filament\Actions\CreateAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
@@ -14,7 +15,7 @@ class ListIncoTerms extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->icon('heroicon-o-plus-circle')
                 ->successNotification(
                     Notification::make()

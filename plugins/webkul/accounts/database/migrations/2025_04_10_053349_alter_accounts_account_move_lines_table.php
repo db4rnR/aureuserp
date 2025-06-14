@@ -1,5 +1,6 @@
 <?php
 
+use Webkul\Account\Enums\DisplayType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ return new class extends Migration
         DB::table('accounts_account_move_lines')->whereNull('is_downpayment')->update(['is_downpayment' => 0]);
 
         Schema::table('accounts_account_move_lines', function (Blueprint $table) {
-            $table->string('display_type')->default(Enums\DisplayType::PRODUCT)->comment('Display Type')->nullable()->change();
+            $table->string('display_type')->default(DisplayType::PRODUCT)->comment('Display Type')->nullable()->change();
 
             $table->boolean('is_imported')->default(0)->nullable(false)->change();
             $table->boolean('tax_tag_invert')->default(0)->nullable(false)->change();

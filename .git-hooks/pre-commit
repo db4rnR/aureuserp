@@ -1,0 +1,38 @@
+#!/bin/bash
+
+echo "Running pre-commit hooks..."
+
+# Run Laravel Pint
+echo "Running Laravel Pint..."
+./vendor/bin/pint --test
+if [ $? -ne 0 ]; then
+    echo "Laravel Pint found issues. Please fix them before committing."
+    exit 1
+fi
+
+# Run PHPStan
+echo "Running PHPStan..."
+./vendor/bin/phpstan analyse
+if [ $? -ne 0 ]; then
+    echo "PHPStan found issues. Please fix them before committing."
+    exit 1
+fi
+
+# Run Rector
+echo "Running Rector..."
+./vendor/bin/rector process --dry-run
+if [ $? -ne 0 ]; then
+    echo "Rector found issues. Please fix them before committing."
+    exit 1
+fi
+
+# Run Pest tests
+echo "Running Pest tests..."
+./vendor/bin/pest
+if [ $? -ne 0 ]; then
+    echo "Tests failed. Please fix them before committing."
+    exit 1
+fi
+
+echo "All pre-commit hooks passed!"
+exit 0

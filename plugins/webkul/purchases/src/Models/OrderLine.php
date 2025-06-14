@@ -2,6 +2,7 @@
 
 namespace Webkul\Purchase\Models;
 
+use Webkul\Purchase\Enums\QtyReceivedMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -79,7 +80,7 @@ class OrderLine extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'qty_received_method' => Enums\QtyReceivedMethod::class,
+        'qty_received_method' => QtyReceivedMethod::class,
         'planned_at'          => 'datetime',
         'is_downpayment'      => 'boolean',
         'propagate_cancel'    => 'boolean',

@@ -2,9 +2,11 @@
 
 namespace Webkul\Account\Filament\Resources\FiscalPositionResource\Pages;
 
+use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
-use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\FiscalPositionResource;
@@ -26,7 +28,7 @@ class EditFiscalPosition extends EditRecord
             ->body(__('accounts::filament/resources/fiscal-position/pages/edit-fiscal-position.notification.body'));
     }
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }
@@ -34,8 +36,8 @@ class EditFiscalPosition extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make()
+            ViewAction::make(),
+            DeleteAction::make()
                 ->successNotification(
                     Notification::make()
                         ->success()

@@ -2,6 +2,8 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages;
 
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -30,9 +32,9 @@ class EditVendorPrice extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make()
-                ->action(function (Actions\DeleteAction $action, ProductSupplier $record) {
+            ViewAction::make(),
+            DeleteAction::make()
+                ->action(function (DeleteAction $action, ProductSupplier $record) {
                     try {
                         $record->delete();
 

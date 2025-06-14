@@ -2,6 +2,7 @@
 
 namespace Webkul\Field;
 
+use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
@@ -35,7 +36,7 @@ class FieldsPlugin implements Plugin
 
     protected function getPluginBasePath($path = null): string
     {
-        $reflector = new \ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(get_class($this));
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

@@ -2,6 +2,7 @@
 
 namespace Webkul\Project\Filament\Resources\TaskResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
@@ -19,7 +20,7 @@ class ViewTask extends ViewRecord
             ChatterAction::make()
                 ->setResource(static::$resource)
                 ->setActivityPlans($this->getActivityPlans()),
-            Actions\DeleteAction::make()
+            DeleteAction::make()
                 ->successNotification(
                     Notification::make()
                         ->success()

@@ -2,6 +2,7 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages;
 
+use Filament\Actions\CreateAction;
 use Filament\Actions;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource;
@@ -19,7 +20,7 @@ class ListPartners extends BaseListPartners
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->label(__('New Customer'))
                 ->icon('heroicon-o-plus-circle'),
         ];

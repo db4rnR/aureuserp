@@ -16,6 +16,8 @@ This documentation provides a comprehensive analysis of the AureusERP project, f
 - **[080-filament-v4-upgrade.md](080-filament-v4-upgrade.md)** - FilamentPHP v4 beta upgrade guide ✅
 - **[090-system-diagrams.md](090-system-diagrams.md)** - System architecture diagrams and ERDs ✅
 - **[100-class-diagrams.md](100-class-diagrams.md)** - Object-oriented class diagrams and models ✅
+- **[110-code-quality-and-testing.md](110-code-quality-and-testing.md)** - Code quality tools and testing framework
+- **[130-database/](130-database/)** - Database schemas, diagrams, and SQL scripts
 - **[999-summary.md](999-summary.md)** - Complete documentation summary ✅
 
 ### Document Structure

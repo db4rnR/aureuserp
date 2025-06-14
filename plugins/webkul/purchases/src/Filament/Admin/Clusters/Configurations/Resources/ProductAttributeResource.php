@@ -2,6 +2,10 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources;
 
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource\Pages\ListProductAttributes;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource\Pages\CreateProductAttribute;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource\Pages\ViewProductAttribute;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource\Pages\EditProductAttribute;
 use Webkul\Product\Filament\Resources\AttributeResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource\Pages;
@@ -12,7 +16,7 @@ class ProductAttributeResource extends AttributeResource
 {
     protected static ?string $model = Attribute::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-swatch';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-swatch';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -44,10 +48,10 @@ class ProductAttributeResource extends AttributeResource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListProductAttributes::route('/'),
-            'create' => Pages\CreateProductAttribute::route('/create'),
-            'view'   => Pages\ViewProductAttribute::route('/{record}'),
-            'edit'   => Pages\EditProductAttribute::route('/{record}/edit'),
+            'index'  => ListProductAttributes::route('/'),
+            'create' => CreateProductAttribute::route('/create'),
+            'view'   => ViewProductAttribute::route('/{record}'),
+            'edit'   => EditProductAttribute::route('/{record}/edit'),
         ];
     }
 }

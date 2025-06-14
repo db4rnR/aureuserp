@@ -2,18 +2,18 @@
 
 namespace Webkul\Website\Filament\Customer\Auth;
 
+use Filament\Auth\Http\Responses\Contracts\RegistrationResponse;
+use Filament\Auth\Events\Registered;
+use Filament\Auth\Notifications\VerifyEmail;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Component;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
-use Filament\Events\Auth\Registered;
 use Filament\Facades\Filament;
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
-use Filament\Notifications\Auth\VerifyEmail;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\CanUseDatabaseTransactions;
 use Filament\Pages\Concerns\InteractsWithFormActions;
@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 /**
- * @property Form $form
+ * @property \Filament\Schemas\Schema $form
  */
 class Register extends Page
 {
@@ -38,7 +38,7 @@ class Register extends Page
     /**
      * @var view-string
      */
-    protected static string $view = 'website::filament.customer.pages.auth.register';
+    protected string $view = 'website::filament.customer.pages.auth.register';
 
     /**
      * @var array<string, mixed> | null
@@ -145,20 +145,20 @@ class Register extends Page
         $user->notify($notification);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     /**
-     * @return array<int | string, string | Form>
+     * @return array<int|string, string|\Filament\Schemas\Schema>
      */
     protected function getForms(): array
     {
         return [
             'form' => $this->form(
                 $this->makeForm()
-                    ->schema([
+                    ->components([
                         $this->getNameFormComponent(),
                         $this->getEmailFormComponent(),
                         $this->getPasswordFormComponent(),

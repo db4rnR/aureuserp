@@ -1,0 +1,57 @@
+parameters:
+    level: 8
+    paths:
+        - app
+        - bootstrap/app.php
+        - config
+        - database
+        - routes
+        - tests
+    excludePaths:
+        - app/Console/Kernel.php
+        - app/Exceptions/Handler.php
+        - app/Http/Middleware/Authenticate.php
+        - app/Http/Middleware/RedirectIfAuthenticated.php
+        - app/Providers/BroadcastServiceProvider.php
+        - bootstrap/cache/*
+        - database/migrations/*
+        - database/seeders/*
+        - tests/TestCase.php
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#PHPDoc tag @var#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::middleware\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::validate\(\)#'
+        - '#Access to an undefined property [a-zA-Z0-9\\_]+::\$[a-zA-Z0-9_]+#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::render\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::dispatch\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::input\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::route\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::factory\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::make\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::create\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::get\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::post\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::put\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::delete\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::patch\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::json\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertStatus\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertJson\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertJsonStructure\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertJsonFragment\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertJsonMissing\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertRedirect\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertViewIs\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertViewHas\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertSessionHas\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertSessionHasErrors\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertSessionDoesntHaveErrors\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertDatabaseHas\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertDatabaseMissing\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertDatabaseCount\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertSoftDeleted\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertModelExists\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertModelMissing\(\)#'
+    reportUnmatchedIgnoredErrors: false

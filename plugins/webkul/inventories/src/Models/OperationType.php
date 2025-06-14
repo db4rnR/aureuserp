@@ -2,6 +2,9 @@
 
 namespace Webkul\Inventory\Models;
 
+use Webkul\Inventory\Enums\ReservationMethod;
+use Webkul\Inventory\Enums\CreateBackorder;
+use Webkul\Inventory\Enums\MoveType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -74,9 +77,9 @@ class OperationType extends Model implements Sortable
      */
     protected $casts = [
         'type'                               => Enums\OperationType::class,
-        'reservation_method'                 => Enums\ReservationMethod::class,
-        'create_backorder'                   => Enums\CreateBackorder::class,
-        'move_type'                          => Enums\MoveType::class,
+        'reservation_method'                 => ReservationMethod::class,
+        'create_backorder'                   => CreateBackorder::class,
+        'move_type'                          => MoveType::class,
         'show_entire_packs'                  => 'boolean',
         'use_create_lots'                    => 'boolean',
         'use_existing_lots'                  => 'boolean',

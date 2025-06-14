@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\QuantityResource\Pages;
 
+use Webkul\Inventory\Enums\LocationType;
 use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -29,7 +30,7 @@ class ManageQuantities extends ManageRecords
                 ->icon('heroicon-s-building-office')
                 ->modifyQueryUsing(function (Builder $query) {
                     $query->whereHas('location', function (Builder $query) {
-                        $query->where('type', Enums\LocationType::INTERNAL);
+                        $query->where('type', LocationType::INTERNAL);
                     });
                 }),
             'transit_locations' => PresetView::make(__('inventories::filament/clusters/operations/resources/quantity/pages/manage-quantities.tabs.transit-locations'))
@@ -37,7 +38,7 @@ class ManageQuantities extends ManageRecords
                 ->icon('heroicon-s-truck')
                 ->modifyQueryUsing(function (Builder $query) {
                     $query->whereHas('location', function (Builder $query) {
-                        $query->where('type', Enums\LocationType::TRANSIT);
+                        $query->where('type', LocationType::TRANSIT);
                     });
                 }),
             'on_hand' => PresetView::make(__('inventories::filament/clusters/operations/resources/quantity/pages/manage-quantities.tabs.on-hand'))

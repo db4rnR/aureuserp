@@ -1,0 +1,35 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+          coverage: xdebug
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Check Code Style
+        run: composer pint:test
+
+      - name: Static Analysis
+        run: composer phpstan
+
+      - name: Rector Dry Run
+        run: composer rector:dry-run
+
+      - name: PHP Insights
+        run: composer insights -- --min-quality=90 --min-complexity=90 --min-architecture=90 --min-style=90 --no-interaction

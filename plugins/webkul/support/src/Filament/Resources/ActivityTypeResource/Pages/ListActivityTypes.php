@@ -2,8 +2,9 @@
 
 namespace Webkul\Support\Filament\Resources\ActivityTypeResource\Pages;
 
+use Filament\Actions\CreateAction;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Actions;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Support\Filament\Resources\ActivityTypeResource;
 use Webkul\Support\Models\ActivityType;
@@ -22,7 +23,7 @@ class ListActivityTypes extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->label(__('support::filament/resources/activity-type/pages/list-activity-type.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];

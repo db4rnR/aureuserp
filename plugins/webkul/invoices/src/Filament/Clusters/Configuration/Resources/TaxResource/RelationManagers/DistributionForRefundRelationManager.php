@@ -2,6 +2,7 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource\RelationManagers;
 
+use Webkul\Account\Enums\DocumentType;
 use Filament\Resources\RelationManagers\RelationManager;
 use Webkul\Account\Enums;
 use Webkul\Account\Traits\TaxPartition;
@@ -16,6 +17,6 @@ class DistributionForRefundRelationManager extends RelationManager
 
     public function getDocumentType(): string
     {
-        return Enums\DocumentType::INVOICE->value;
+        return DocumentType::INVOICE->value;
     }
 }

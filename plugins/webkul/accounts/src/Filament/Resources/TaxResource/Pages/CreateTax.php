@@ -2,8 +2,8 @@
 
 namespace Webkul\Account\Filament\Resources\TaxResource\Pages;
 
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Notifications\Notification;
-use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\TaxResource;
@@ -12,7 +12,7 @@ class CreateTax extends CreateRecord
 {
     protected static string $resource = TaxResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

@@ -2,7 +2,8 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\RelationManagers;
 
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
+use Filament\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -12,19 +13,19 @@ class BankAccountsRelationManager extends RelationManager
 {
     protected static string $relationship = 'bankAccounts';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return BankAccountResource::form($form);
+        return BankAccountResource::form($schema);
     }
 
     public function table(Table $table): Table
     {
         return BankAccountResource::table($table)
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                CreateAction::make()
                     ->label(__('invoices::filament/clusters/vendors/resources/vendor/relation-manager/bank-account-relation-manager.create-bank-account'))
                     ->icon('heroicon-o-plus-circle')
-                    ->mutateFormDataUsing(function (array $data): array {
+                    ->mutateDataUsing(function (array $data): array {
                         return $data;
                     }),
             ]);

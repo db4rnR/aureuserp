@@ -1,5 +1,7 @@
 <?php
 
+use Webkul\Inventory\Enums\ProcureMethod;
+use Webkul\Inventory\Enums\RuleAuto;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,8 +22,8 @@ return new class extends Migration
             $table->integer('delay')->nullable()->default(0);
             $table->string('group_propagation_option')->nullable();
             $table->string('action')->index();
-            $table->string('procure_method')->default(Enums\ProcureMethod::MAKE_TO_STOCK);
-            $table->string('auto')->default(Enums\RuleAuto::MANUAL);
+            $table->string('procure_method')->default(ProcureMethod::MAKE_TO_STOCK);
+            $table->string('auto')->default(RuleAuto::MANUAL);
             $table->string('push_domain')->nullable();
             $table->boolean('location_dest_from_rule')->nullable()->default(0);
             $table->boolean('propagate_cancel')->nullable()->default(0);

@@ -2,11 +2,13 @@
 
 namespace Webkul\Chatter\Filament\Actions\Chatter;
 
+use Filament\Forms\Components\FileUpload;
+use Exception;
+use Filament\Support\Enums\Width;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\IconPosition;
-use Filament\Support\Enums\MaxWidth;
 use Illuminate\Database\Eloquent\Model;
 
 class FileAction extends Action
@@ -25,8 +27,8 @@ class FileAction extends Action
             ->outlined()
             ->tooltip(__('chatter::filament/resources/actions/chatter/file-action.setup.tooltip'))
             ->badge(fn ($record) => $record->attachments()->count())
-            ->form([
-                Forms\Components\FileUpload::make('files')
+            ->schema([
+                FileUpload::make('files')
                     ->hiddenLabel()
                     ->multiple()
                     ->directory('chats-attachments')
@@ -106,7 +108,7 @@ class FileAction extends Action
                             ->body(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.warning.body'))
                             ->send();
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     Notification::make()
                         ->danger()
                         ->title(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.error.title'))
@@ -127,7 +129,7 @@ class FileAction extends Action
                     ->label('Upload')
                     ->icon('heroicon-m-paper-airplane')
             )
-            ->modalWidth(MaxWidth::ThreeExtraLarge)
+            ->modalWidth(Width::ThreeExtraLarge)
             ->slideOver(false);
     }
 }

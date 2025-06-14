@@ -2,10 +2,14 @@
 
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Actions;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\FileUpload;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Partner\Models\Partner;
@@ -43,22 +47,22 @@ class SendByEmailAction extends Action
                 ]);
             })
             ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.title'))
-            ->form(
-                function (Form $form) {
-                    return $form->schema([
-                        Forms\Components\Select::make('partners')
+            ->schema(
+                function (Schema $schema) {
+                    return $schema->components([
+                        Select::make('partners')
                             ->options(Partner::all()->pluck('name', 'id'))
                             ->multiple()
                             ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.partners'))
                             ->searchable()
                             ->preload(),
-                        Forms\Components\TextInput::make('subject')
+                        TextInput::make('subject')
                             ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.subject'))
                             ->hiddenLabel(),
-                        Forms\Components\RichEditor::make('description')
+                        RichEditor::make('description')
                             ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.description'))
                             ->hiddenLabel(),
-                        Forms\Components\FileUpload::make('file')
+                        FileUpload::make('file')
                             ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.attachment'))
                             ->downloadable()
                             ->openable()

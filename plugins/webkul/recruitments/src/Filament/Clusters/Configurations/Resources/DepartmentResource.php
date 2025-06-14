@@ -2,6 +2,11 @@
 
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources;
 
+use Filament\Panel;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\ListDepartments;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\CreateDepartment;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\EditDepartment;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\ViewDepartment;
 use Filament\Tables\Table;
 use Webkul\Employee\Filament\Resources\DepartmentResource as BaseDepartmentResource;
 use Webkul\Recruitment\Filament\Clusters\Configurations;
@@ -19,7 +24,7 @@ class DepartmentResource extends BaseDepartmentResource
         return __('recruitments::filament/clusters/configurations/resources/department.navigation.group');
     }
 
-    public static function getSlug(): string
+    public static function getSlug(?Panel $panel = null): string
     {
         return 'departments';
     }
@@ -36,10 +41,10 @@ class DepartmentResource extends BaseDepartmentResource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListDepartments::route('/'),
-            'create' => Pages\CreateDepartment::route('/create'),
-            'edit'   => Pages\EditDepartment::route('/{record}/edit'),
-            'view'   => Pages\ViewDepartment::route('/{record}'),
+            'index'  => ListDepartments::route('/'),
+            'create' => CreateDepartment::route('/create'),
+            'edit'   => EditDepartment::route('/{record}/edit'),
+            'view'   => ViewDepartment::route('/{record}'),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Operations\Actions;
 
+use Webkul\Inventory\Enums\OperationState;
 use Filament\Actions\Action;
 use Livewire\Component;
 use Webkul\Inventory\Enums;
@@ -31,6 +32,6 @@ class ReturnAction extends Action
 
                 return redirect()->to(OperationResource::getUrl('edit', ['record' => $newRecord]));
             })
-            ->visible(fn () => $this->getRecord()->state == Enums\OperationState::DONE);
+            ->visible(fn () => $this->getRecord()->state == OperationState::DONE);
     }
 }

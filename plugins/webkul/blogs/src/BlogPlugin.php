@@ -2,6 +2,7 @@
 
 namespace Webkul\Blog;
 
+use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Webkul\Support\Package;
@@ -48,7 +49,7 @@ class BlogPlugin implements Plugin
 
     protected function getPluginBasePath($path = null): string
     {
-        $reflector = new \ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(get_class($this));
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

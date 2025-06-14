@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages;
 
+use Webkul\Inventory\Enums\ReservationMethod;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class CreateOperationType extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['reservation_method'] = Enums\ReservationMethod::AT_CONFIRM;
+        $data['reservation_method'] = ReservationMethod::AT_CONFIRM;
 
         $data['creator_id'] = Auth::id();
 

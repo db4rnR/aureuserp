@@ -2,6 +2,7 @@
 
 namespace Webkul\Chatter;
 
+use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
@@ -33,7 +34,7 @@ class ChatterPlugin implements Plugin
 
     protected function getPluginBasePath($path = null): string
     {
-        $reflector = new \ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(get_class($this));
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

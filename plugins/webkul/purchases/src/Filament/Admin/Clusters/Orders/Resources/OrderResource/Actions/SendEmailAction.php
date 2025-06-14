@@ -2,6 +2,11 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions;
 
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\FileUpload;
+use Exception;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Notifications\Notification;
@@ -39,8 +44,8 @@ class SendEmailAction extends Action
         $this
             ->label(__('purchases::filament/admin/clusters/orders/resources/order/actions/send-email.label'))
             ->label(fn () => $this->getRecord()->state === OrderState::DRAFT ? __('purchases::filament/admin/clusters/orders/resources/order/actions/send-email.label') : __('purchases::filament/admin/clusters/orders/resources/order/actions/send-email.resend-label'))
-            ->form([
-                Forms\Components\Select::make('vendors')
+            ->schema([
+                Select::make('vendors')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order/actions/send-email.form.fields.to'))
                     ->options(Partner::get()->mapWithKeys(fn ($partner) => [
                         $partner->id => $partner->email
@@ -51,11 +56,11 @@ class SendEmailAction extends Action
                     ->searchable()
                     ->preload()
                     ->default(fn () => [$this->getRecord()->partner_id]),
-                Forms\Components\TextInput::make('subject')
+                TextInput::make('subject')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order/actions/send-email.form.fields.subject'))
                     ->required()
                     ->default("Purchase Order #{$this->getRecord()->name}"),
-                Forms\Components\MarkdownEditor::make('message')
+                MarkdownEditor::make('message')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order/actions/send-email.form.fields.message'))
                     ->required()
                     ->default(<<<MD
@@ -72,7 +77,7 @@ Best regards,
 --  
 {$userName}  
 MD),
-                Forms\Components\FileUpload::make('attachment')
+                FileUpload::make('attachment')
                     ->hiddenLabel()
                     ->disk('public')
                     ->default(function () {
@@ -84,7 +89,7 @@ MD),
             ->action(function (array $data, Order $record, Component $livewire) {
                 try {
                     $record = PurchaseOrder::sendRFQ($record, $data);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     Notification::make()
                         ->body($e->getMessage())
                         ->danger()

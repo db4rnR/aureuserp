@@ -2,6 +2,10 @@
 
 namespace Webkul\Purchase\Models;
 
+use Webkul\Purchase\Enums\OrderState;
+use Webkul\Purchase\Enums\OrderInvoiceStatus;
+use Webkul\Purchase\Enums\OrderReceiptStatus;
+use Webkul\Chatter\Models\Message;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -82,9 +86,9 @@ class Order extends Model
      * @var string
      */
     protected $casts = [
-        'state'                    => Enums\OrderState::class,
-        'invoice_status'           => Enums\OrderInvoiceStatus::class,
-        'receipt_status'           => Enums\OrderReceiptStatus::class,
+        'state'                    => OrderState::class,
+        'invoice_status'           => OrderInvoiceStatus::class,
+        'receipt_status'           => OrderReceiptStatus::class,
         'mail_reminder_confirmed'  => 'boolean',
         'mail_reception_confirmed' => 'boolean',
         'mail_reception_declined'  => 'boolean',
@@ -205,9 +209,9 @@ class Order extends Model
     /**
      * Add a new message
      */
-    public function addMessage(array $data): \Webkul\Chatter\Models\Message
+    public function addMessage(array $data): Message
     {
-        $message = new \Webkul\Chatter\Models\Message;
+        $message = new Message;
 
         $user = filament()->auth()->user();
 

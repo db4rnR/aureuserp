@@ -2,11 +2,11 @@
 
 namespace Webkul\Security\Livewire;
 
+use Filament\Schemas\Schema;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Form;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
 use Illuminate\Validation\Rules\Password;
@@ -20,7 +20,7 @@ class AcceptInvitation extends SimplePage
     use InteractsWithFormActions;
     use InteractsWithForms;
 
-    protected static string $view = 'security::livewire.accept-invitation';
+    protected string $view = 'security::livewire.accept-invitation';
 
     public int $invitation;
 
@@ -37,10 +37,10 @@ class AcceptInvitation extends SimplePage
         ]);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('name')
                     ->label(__('filament-panels::pages/auth/register.form.name.label'))
                     ->required()

@@ -2,6 +2,8 @@
 
 namespace Webkul\Project\Filament\Resources\TaskResource\Pages;
 
+use Webkul\Project\Filament\Widgets\StatsOverviewWidget;
+use Filament\Actions\CreateAction;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
@@ -21,7 +23,7 @@ class ListTasks extends ListRecords
     public function getHeaderWidgets(): array
     {
         return [
-            \Webkul\Project\Filament\Widgets\StatsOverviewWidget::make(),
+            StatsOverviewWidget::make(),
         ];
     }
 
@@ -101,7 +103,7 @@ class ListTasks extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->label(__('projects::filament/resources/task/pages/list-tasks.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];

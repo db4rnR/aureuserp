@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages;
 
+use Webkul\Inventory\Enums\OperationState;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -57,7 +58,7 @@ class CreateReceipt extends CreateRecord
 
         $data['destination_location_id'] ??= $operationType->destination_location_id;
 
-        $data['state'] ??= Enums\OperationState::DRAFT;
+        $data['state'] ??= OperationState::DRAFT;
 
         $data['creator_id'] = Auth::id();
 

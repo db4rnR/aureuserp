@@ -2,6 +2,8 @@
 
 namespace Webkul\Sale\Models;
 
+use Webkul\Sale\Enums\OrderState;
+use Webkul\Sale\Enums\QtyDeliveredMethod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -75,8 +77,8 @@ class OrderLine extends Model implements Sortable
     ];
 
     protected $casts = [
-        'cast'                 => Enums\OrderState::class,
-        'qty_delivered_method' => Enums\QtyDeliveredMethod::class,
+        'cast'                 => OrderState::class,
+        'qty_delivered_method' => QtyDeliveredMethod::class,
     ];
 
     public $sortable = [

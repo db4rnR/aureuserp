@@ -2,15 +2,16 @@
 
 namespace Webkul\TimeOff\Filament\Clusters;
 
+use Filament\Panel;
 use Filament\Clusters\Cluster;
 
 class MyTime extends Cluster
 {
-    protected static ?string $navigationIcon = 'heroicon-o-clock';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected static ?int $navigationSort = 1;
 
-    public static function getSlug(): string
+    public static function getSlug(?Panel $panel = null): string
     {
         return 'time-off/dashboard';
     }

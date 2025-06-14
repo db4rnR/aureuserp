@@ -2,6 +2,8 @@
 
 namespace Webkul\Purchase\Models;
 
+use Webkul\Purchase\Enums\RequisitionState;
+use Webkul\Purchase\Enums\RequisitionType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -54,8 +56,8 @@ class Requisition extends Model
      * @var string
      */
     protected $casts = [
-        'state' => Enums\RequisitionState::class,
-        'type'  => Enums\RequisitionType::class,
+        'state' => RequisitionState::class,
+        'type'  => RequisitionType::class,
     ];
 
     protected array $logAttributes = [
@@ -124,7 +126,7 @@ class Requisition extends Model
      */
     public function updateName()
     {
-        if ($this->type == Enums\RequisitionType::BLANKET_ORDER) {
+        if ($this->type == RequisitionType::BLANKET_ORDER) {
             $this->name = 'BO/'.$this->id;
         } else {
             $this->name = 'PT/'.$this->id;

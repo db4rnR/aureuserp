@@ -2,10 +2,11 @@
 
 namespace Webkul\Sale\Database\Factories;
 
+use Webkul\Sale\Models\OrderTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Webkul\Sale\Models\OrderTemplate>
+ * @extends Factory<OrderTemplate>
  */
 class OrderTemplateFactory extends Factory
 {

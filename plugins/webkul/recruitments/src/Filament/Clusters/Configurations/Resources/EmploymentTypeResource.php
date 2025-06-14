@@ -2,6 +2,7 @@
 
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources;
 
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\EmploymentTypeResource\Pages\ListEmploymentTypes;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmploymentTypeResource as BaseEmploymentTypeResource;
 use Webkul\Recruitment\Filament\Clusters\Configurations;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\EmploymentTypeResource\Pages;
@@ -23,7 +24,7 @@ class EmploymentTypeResource extends BaseEmploymentTypeResource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEmploymentTypes::route('/'),
+            'index' => ListEmploymentTypes::route('/'),
         ];
     }
 }

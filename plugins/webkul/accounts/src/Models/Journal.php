@@ -2,6 +2,7 @@
 
 namespace Webkul\Account\Models;
 
+use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -104,7 +105,7 @@ class Journal extends Model implements Sortable
         return match ($paymentType) {
             'inbound'  => $this->inboundPaymentMethodLines,
             'outbound' => $this->outboundPaymentMethodLines,
-            default    => throw new \InvalidArgumentException('Invalid payment type'),
+            default    => throw new InvalidArgumentException('Invalid payment type'),
         };
     }
 

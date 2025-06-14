@@ -2,6 +2,7 @@
 
 namespace Webkul\Website;
 
+use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
@@ -84,7 +85,7 @@ class WebsitePlugin implements Plugin
 
     protected function getPluginBasePath($path = null): string
     {
-        $reflector = new \ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(get_class($this));
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

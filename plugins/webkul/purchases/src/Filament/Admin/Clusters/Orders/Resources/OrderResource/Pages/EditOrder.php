@@ -2,6 +2,8 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages;
 
+use Filament\Actions\DeleteAction;
+use Webkul\Purchase\Enums\OrderState;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
@@ -61,9 +63,9 @@ class EditOrder extends EditRecord
             OrderActions\LockAction::make(),
             OrderActions\UnlockAction::make(),
             OrderActions\CancelAction::make(),
-            Actions\DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == Enums\OrderState::DONE)
-                ->action(function (Actions\DeleteAction $action, Order $record) {
+            DeleteAction::make()
+                ->hidden(fn () => $this->getRecord()->state == OrderState::DONE)
+                ->action(function (DeleteAction $action, Order $record) {
                     try {
                         $record->delete();
 

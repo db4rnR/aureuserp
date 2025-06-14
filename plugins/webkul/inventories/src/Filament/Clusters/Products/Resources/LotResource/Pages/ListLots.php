@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages;
 
+use Filament\Actions\CreateAction;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource;
@@ -21,7 +22,7 @@ class ListLots extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->label(__('inventories::filament/clusters/products/resources/lot/pages/list-lots.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];

@@ -2,6 +2,8 @@
 
 namespace Webkul\Blog\Filament\Admin\Resources\PostResource\Pages;
 
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -36,7 +38,7 @@ class EditPost extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('publish')
+            Action::make('publish')
                 ->label(__('blogs::filament/admin/resources/post/pages/edit-post.header-actions.publish.label'))
                 ->icon('heroicon-o-check-circle')
                 ->action(function (Post $record) {
@@ -53,7 +55,7 @@ class EditPost extends EditRecord
                         ->send();
                 })
                 ->visible(fn (Post $record) => ! $record->is_published),
-            Actions\Action::make('draft')
+            Action::make('draft')
                 ->label(__('blogs::filament/admin/resources/post/pages/edit-post.header-actions.draft.label'))
                 ->icon('heroicon-o-archive-box')
                 ->action(function (Post $record) {
@@ -66,7 +68,7 @@ class EditPost extends EditRecord
                         ->send();
                 })
                 ->visible(fn (Post $record) => $record->is_published),
-            Actions\DeleteAction::make()
+            DeleteAction::make()
                 ->successNotification(
                     Notification::make()
                         ->success()

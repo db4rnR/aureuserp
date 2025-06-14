@@ -2,13 +2,14 @@
 
 namespace Webkul\Contact\Filament\Clusters\Configurations\Resources;
 
+use Webkul\Contact\Filament\Clusters\Configurations\Resources\BankAccountResource\Pages\ManageBankAccounts;
 use Webkul\Contact\Filament\Clusters\Configurations;
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\BankAccountResource\Pages;
 use Webkul\Partner\Filament\Resources\BankAccountResource as BaseBankAccountResource;
 
 class BankAccountResource extends BaseBankAccountResource
 {
-    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -29,7 +30,7 @@ class BankAccountResource extends BaseBankAccountResource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageBankAccounts::route('/'),
+            'index' => ManageBankAccounts::route('/'),
         ];
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages;
 
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -15,26 +16,26 @@ class ManageBankAccounts extends ManageRelatedRecords
 
     protected static string $relationship = 'bankAccounts';
 
-    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
 
     public static function getNavigationLabel(): string
     {
         return __('invoices::filament/clusters/vendors/resources/vendor/pages/manage-bank-account.title');
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return BankAccountResource::form($form);
+        return BankAccountResource::form($schema);
     }
 
     public function table(Table $table): Table
     {
         return BankAccountResource::table($table)
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                CreateAction::make()
                     ->label(__('invoices::filament/clusters/vendors/resources/vendor/pages/manage-bank-account.table.header-actions.create.title'))
                     ->icon('heroicon-o-plus-circle')
-                    ->mutateFormDataUsing(function (array $data): array {
+                    ->mutateDataUsing(function (array $data): array {
                         return $data;
                     }),
             ]);

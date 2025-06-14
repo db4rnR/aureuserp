@@ -2,6 +2,9 @@
 
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources;
 
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\SkillTypeResource\Pages\ListSkillTypes;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\SkillTypeResource\Pages\ViewSkillType;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\SkillTypeResource\Pages\EditSkillType;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\SkillTypeResource as BaseSkillTypeResource;
 use Webkul\Recruitment\Filament\Clusters\Configurations;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\SkillTypeResource\Pages;
@@ -21,9 +24,9 @@ class SkillTypeResource extends BaseSkillTypeResource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSkillTypes::route('/'),
-            'view'   => Pages\ViewSkillType::route('/{record}'),
-            'edit'   => Pages\EditSkillType::route('/{record}/edit'),
+            'index'  => ListSkillTypes::route('/'),
+            'view'   => ViewSkillType::route('/{record}'),
+            'edit'   => EditSkillType::route('/{record}/edit'),
         ];
     }
 }

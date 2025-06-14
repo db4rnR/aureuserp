@@ -2,10 +2,11 @@
 
 namespace Webkul\Product\Filament\Resources\ProductResource\Actions;
 
+use Filament\Actions\Action;
+use Exception;
 use Closure;
 use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Notifications\Notification;
-use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -61,7 +62,7 @@ class GenerateVariantsAction extends Action
                 ->title(__('products::filament/resources/product/actions/generate-variants.notification.success.title'))
                 ->body(__('products::filament/resources/product/actions/generate-variants.notification.success.body'))
                 ->send();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->danger()
                 ->title(__('products::filament/resources/product/actions/generate-variants.notification.error.title'))

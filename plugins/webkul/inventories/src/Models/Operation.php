@@ -2,6 +2,8 @@
 
 namespace Webkul\Inventory\Models;
 
+use Webkul\Inventory\Enums\OperationState;
+use Webkul\Inventory\Enums\MoveType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -67,8 +69,8 @@ class Operation extends Model
      * @var string
      */
     protected $casts = [
-        'state'              => Enums\OperationState::class,
-        'move_type'          => Enums\MoveType::class,
+        'state'              => OperationState::class,
+        'move_type'          => MoveType::class,
         'is_favorite'        => 'boolean',
         'has_deadline_issue' => 'boolean',
         'is_printed'         => 'boolean',

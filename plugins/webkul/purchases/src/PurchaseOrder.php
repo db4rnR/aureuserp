@@ -2,6 +2,7 @@
 
 namespace Webkul\Purchase;
 
+use Webkul\Purchase\Enums\QtyReceivedMethod;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -199,7 +200,7 @@ class PurchaseOrder
 
         $line = $this->computeQtyReceived($line);
 
-        if ($line->qty_received_method == Enums\QtyReceivedMethod::MANUAL) {
+        if ($line->qty_received_method == QtyReceivedMethod::MANUAL) {
             $line->qty_received_manual = $line->qty_received ?? 0;
         }
 
@@ -322,11 +323,11 @@ class PurchaseOrder
     {
         $line->qty_received = 0.0;
 
-        if ($line->qty_received_method == Enums\QtyReceivedMethod::MANUAL) {
+        if ($line->qty_received_method == QtyReceivedMethod::MANUAL) {
             $line->qty_received = $line->qty_received_manual ?? 0.0;
         }
 
-        if ($line->qty_received_method == Enums\QtyReceivedMethod::STOCK_MOVE) {
+        if ($line->qty_received_method == QtyReceivedMethod::STOCK_MOVE) {
             $total = 0.0;
 
             foreach ($line->inventoryMoves as $move) {

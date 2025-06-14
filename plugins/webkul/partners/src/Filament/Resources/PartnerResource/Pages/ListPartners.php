@@ -2,6 +2,7 @@
 
 namespace Webkul\Partner\Filament\Resources\PartnerResource\Pages;
 
+use Filament\Actions\CreateAction;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
@@ -25,7 +26,7 @@ class ListPartners extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->label(__('partners::filament/resources/partner/pages/list-partners.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];

@@ -2,6 +2,8 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource\Pages;
 
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions;
 use Filament\Notifications\Notification;
@@ -24,7 +26,7 @@ class EditLocation extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('print')
+            Action::make('print')
                 ->label(__('inventories::filament/clusters/configurations/resources/location/pages/edit-location.header-actions.print.label'))
                 ->icon('heroicon-o-printer')
                 ->color('gray')
@@ -39,7 +41,7 @@ class EditLocation extends EditRecord
                         echo $pdf->output();
                     }, 'Location-'.$record->name.'.pdf');
                 }),
-            Actions\DeleteAction::make()
+            DeleteAction::make()
                 ->successNotification(
                     Notification::make()
                         ->success()

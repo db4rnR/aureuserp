@@ -2,11 +2,15 @@
 
 namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
 
+use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Actions\Action;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Radio;
+use Filament\Actions\DeleteAction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Notifications\Notification;
-use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Product\Filament\Resources\ProductResource;
@@ -15,7 +19,7 @@ class ViewProduct extends ViewRecord
 {
     protected static string $resource = ProductResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }
@@ -25,18 +29,18 @@ class ViewProduct extends ViewRecord
         return [
             ChatterAction::make()
                 ->setResource(static::$resource),
-            Actions\Action::make('print')
+            Action::make('print')
                 ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.label'))
                 ->color('gray')
                 ->icon('heroicon-o-printer')
-                ->form([
-                    Forms\Components\TextInput::make('quantity')
+                ->schema([
+                    TextInput::make('quantity')
                         ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.quantity'))
                         ->required()
                         ->numeric()
                         ->minValue(1)
                         ->maxValue(100),
-                    Forms\Components\Radio::make('format')
+                    Radio::make('format')
                         ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format'))
                         ->options([
                             'dymo'       => __('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format-options.dymo'),
@@ -66,7 +70,7 @@ class ViewProduct extends ViewRecord
                         echo $pdf->output();
                     }, 'Product-'.$record->name.'.pdf');
                 }),
-            Actions\DeleteAction::make()
+            DeleteAction::make()
                 ->successNotification(
                     Notification::make()
                         ->success()

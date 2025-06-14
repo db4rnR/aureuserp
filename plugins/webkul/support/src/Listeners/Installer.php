@@ -2,6 +2,7 @@
 
 namespace Webkul\Support\Listeners;
 
+use Exception;
 use GuzzleHttp\Client;
 use Webkul\Security\Models\User;
 
@@ -36,7 +37,7 @@ class Installer
                     'name' => $user?->name,
                 ],
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             /**
              * Skip the error
              */

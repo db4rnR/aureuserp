@@ -2,6 +2,7 @@
 
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\DepartureReasonResource\Pages;
 
+use Filament\Actions\CreateAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
@@ -14,7 +15,7 @@ class ListDepartureReasons extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->icon('heroicon-o-plus-circle')
                 ->label(__('employees::filament/clusters/configurations/resources/departure-reason/pages/list-departure.header-actions.create.label'))
                 ->successNotification(
@@ -23,7 +24,7 @@ class ListDepartureReasons extends ListRecords
                         ->title(__('employees::filament/clusters/configurations/resources/departure-reason/pages/list-departure.header-actions.create.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/departure-reason/pages/list-departure.header-actions.create.notification.body')),
                 )
-                ->mutateFormDataUsing(function (array $data): array {
+                ->mutateDataUsing(function (array $data): array {
                     $data['reason_code'] = crc32($data['name']) % 100000;
 
                     return $data;

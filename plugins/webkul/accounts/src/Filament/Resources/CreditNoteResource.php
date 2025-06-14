@@ -2,6 +2,10 @@
 
 namespace Webkul\Account\Filament\Resources;
 
+use Webkul\Account\Filament\Resources\CreditNoteResource\Pages\ListCreditNotes;
+use Webkul\Account\Filament\Resources\CreditNoteResource\Pages\CreateCreditNote;
+use Webkul\Account\Filament\Resources\CreditNoteResource\Pages\EditCreditNote;
+use Webkul\Account\Filament\Resources\CreditNoteResource\Pages\ViewCreditNote;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Account\Filament\Resources\CreditNoteResource\Pages;
 use Webkul\Account\Models\Move as AccountMove;
@@ -10,7 +14,7 @@ class CreditNoteResource extends InvoiceResource
 {
     protected static ?string $model = AccountMove::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-credit-card';
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
@@ -25,10 +29,10 @@ class CreditNoteResource extends InvoiceResource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListCreditNotes::route('/'),
-            'create' => Pages\CreateCreditNote::route('/create'),
-            'edit'   => Pages\EditCreditNote::route('/{record}/edit'),
-            'view'   => Pages\ViewCreditNote::route('/{record}'),
+            'index'  => ListCreditNotes::route('/'),
+            'create' => CreateCreditNote::route('/create'),
+            'edit'   => EditCreditNote::route('/{record}/edit'),
+            'view'   => ViewCreditNote::route('/{record}'),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Webkul\Account\Filament\Resources\BillResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -41,7 +42,7 @@ class EditBill extends EditRecord
             BaseActions\SetAsCheckedAction::make(),
             BaseActions\PrintAndSendAction::make(),
             CreditNoteAction::make(),
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 

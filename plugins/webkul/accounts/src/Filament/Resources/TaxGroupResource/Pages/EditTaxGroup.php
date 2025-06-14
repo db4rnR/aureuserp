@@ -2,6 +2,8 @@
 
 namespace Webkul\Account\Filament\Resources\TaxGroupResource\Pages;
 
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -29,8 +31,8 @@ class EditTaxGroup extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make()
+            ViewAction::make(),
+            DeleteAction::make()
                 ->action(function (TaxGroup $record) {
                     try {
                         $record->delete();

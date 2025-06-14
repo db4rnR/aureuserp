@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\ScrapResource\Pages;
 
+use Webkul\Inventory\Enums\ScrapState;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class CreateScrap extends CreateRecord
     {
         $data['uom_id'] ??= Product::find($data['product_id'])->uom_id;
 
-        $data['state'] ??= Enums\ScrapState::DRAFT;
+        $data['state'] ??= ScrapState::DRAFT;
 
         $data['creator_id'] = Auth::id();
 

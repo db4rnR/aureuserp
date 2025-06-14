@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Models;
 
+use Webkul\Inventory\Enums\LocationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -93,7 +94,7 @@ class Lot extends Model
     {
         return $this->quantities()
             ->whereHas('location', function ($query) {
-                $query->where('type', Enums\LocationType::INTERNAL)
+                $query->where('type', LocationType::INTERNAL)
                     ->where('is_scrap', false);
             })
             ->sum('quantity');

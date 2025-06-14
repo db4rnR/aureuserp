@@ -2,6 +2,9 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource\Pages;
 
+use Webkul\Purchase\Enums\RequisitionType;
+use Webkul\Purchase\Enums\RequisitionState;
+use Filament\Actions\CreateAction;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
@@ -34,22 +37,22 @@ class ListPurchaseAgreements extends ListRecords
             'blanket_orders' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.tabs.blanket-orders'))
                 ->icon('heroicon-o-clipboard-document')
                 ->favorite()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', Enums\RequisitionType::BLANKET_ORDER)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', RequisitionType::BLANKET_ORDER)),
 
             'purchase_templates' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.tabs.purchase-templates'))
                 ->icon('heroicon-o-document-plus')
                 ->favorite()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', Enums\RequisitionType::PURCHASE_TEMPLATE)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', RequisitionType::PURCHASE_TEMPLATE)),
 
             'draft' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.tabs.draft'))
                 ->icon('heroicon-o-pencil-square')
                 ->favorite()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('state', Enums\RequisitionState::DRAFT)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('state', RequisitionState::DRAFT)),
 
             'done' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.tabs.done'))
                 ->icon('heroicon-o-check-circle')
                 ->favorite()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('state', Enums\RequisitionState::CLOSED)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('state', RequisitionState::CLOSED)),
 
             'archived' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.tabs.archived'))
                 ->icon('heroicon-s-archive-box')
@@ -63,7 +66,7 @@ class ListPurchaseAgreements extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];

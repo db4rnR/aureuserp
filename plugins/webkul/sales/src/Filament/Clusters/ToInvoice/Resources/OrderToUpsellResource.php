@@ -2,9 +2,9 @@
 
 namespace Webkul\Sale\Filament\Clusters\ToInvoice\Resources;
 
-use Filament\Forms\Form;
-use Filament\Infolists\Infolist;
-use Filament\Pages\SubNavigationPosition;
+use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Schemas\Schema;
+use Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToUpsellResource\Pages\ListOrderToUpsells;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Webkul\Sale\Enums\InvoiceStatus;
@@ -17,11 +17,11 @@ class OrderToUpsellResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-arrow-up';
 
     protected static ?string $cluster = ToInvoice::class;
 
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -33,14 +33,14 @@ class OrderToUpsellResource extends Resource
         return __('sales::filament/clusters/to-invoice/resources/order-to-upsell.navigation.title');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return QuotationResource::form($form);
+        return QuotationResource::form($schema);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return QuotationResource::infolist($infolist);
+        return QuotationResource::infolist($schema);
     }
 
     public static function table(Table $table): Table
@@ -54,7 +54,7 @@ class OrderToUpsellResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListOrderToUpsells::route('/'),
+            'index'  => ListOrderToUpsells::route('/'),
         ];
     }
 }

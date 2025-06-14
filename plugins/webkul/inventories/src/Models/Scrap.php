@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Models;
 
+use Webkul\Inventory\Enums\ScrapState;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -77,7 +78,7 @@ class Scrap extends Model
      * @var string
      */
     protected $casts = [
-        'state'            => Enums\ScrapState::class,
+        'state'            => ScrapState::class,
         'should_replenish' => 'boolean',
         'closed_at'        => 'datetime',
     ];

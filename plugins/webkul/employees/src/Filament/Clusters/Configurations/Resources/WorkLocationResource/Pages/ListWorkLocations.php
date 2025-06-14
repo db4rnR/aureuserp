@@ -2,9 +2,10 @@
 
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\WorkLocationResource\Pages;
 
+use Filament\Actions\CreateAction;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Actions;
 use Filament\Notifications\Notification;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\WorkLocationResource;
 
@@ -15,7 +16,7 @@ class ListWorkLocations extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->label(__('employees::filament/clusters/configurations/resources/work-location/pages/list-work-location.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->successNotification(

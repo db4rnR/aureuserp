@@ -2,6 +2,7 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource\Pages;
 
+use Webkul\Purchase\Enums\RequisitionState;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -35,7 +36,7 @@ class CreatePurchaseAgreement extends CreateRecord
     {
         $data['creator_id'] = Auth::id();
 
-        $data['state'] ??= Enums\RequisitionState::DRAFT;
+        $data['state'] ??= RequisitionState::DRAFT;
 
         return $data;
     }
