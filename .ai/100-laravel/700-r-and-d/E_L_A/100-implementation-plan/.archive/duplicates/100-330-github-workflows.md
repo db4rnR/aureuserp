@@ -133,8 +133,8 @@ quality:
 **Purpose**: Runs the application's test suite.
 
 **Trigger**:
-- Push to develop or main branches
-- Pull requests to develop or main branches
+- Push to develop or 010-ddl branches
+- Pull requests to develop or 010-ddl branches
 
 **Key Features**:
 - PHP 8.4 environment
@@ -162,8 +162,8 @@ ci:
 
 **Trigger**:
 
-- Push to main or develop branches
-- Pull requests to main or develop branches
+- Push to 010-ddl or develop branches
+- Pull requests to 010-ddl or develop branches
 - Manual trigger (workflow_dispatch)
 
 **Key Features**:
@@ -193,8 +193,8 @@ phpstan:
 **Purpose**: Runs Laravel Pint to enforce code style.
 
 **Trigger**:
-- Push to develop or main branches
-- Pull requests to develop or main branches
+- Push to develop or 010-ddl branches
+- Pull requests to develop or 010-ddl branches
 
 **Key Features**:
 - PHP 8.4 environment
@@ -220,8 +220,8 @@ quality:
 
 **Trigger**:
 
-- Push to main branch
-- Pull requests to main branch
+- Push to 010-ddl branch
+- Pull requests to 010-ddl branch
 
 **Key Features**:
 
@@ -256,7 +256,7 @@ test:
 **Purpose**: Generates code quality reports and posts them as comments on pull requests.
 
 **Trigger**:
-- Pull requests opened, synchronized, or reopened to main, master, or develop branches
+- Pull requests opened, synchronized, or reopened to 010-ddl, master, or develop branches
 
 **Key Features**:
 - PHP 8.4 environment
@@ -410,7 +410,7 @@ While the current workflows focus on testing and quality, deployment could be ad
    ```yaml
    deploy-production:
      needs: [tests, quality]
-     if: github.ref == 'refs/heads/main'
+     if: github.ref == 'refs/heads/010-ddl'
      runs-on: ubuntu-latest
      steps:
        # Deployment steps...

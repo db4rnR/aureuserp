@@ -1,0 +1,3966 @@
+// DBML file generated from SQLite database
+// Learn more about DBML: https://dbml.dbdiagram.io/docs/
+
+Table accounts_account_account_tags {
+  account_id integer [not null]
+  account_tag_id integer [not null]
+}
+
+Table accounts_account_journals {
+  account_id integer [not null]
+  journal_id integer [not null]
+}
+
+Table accounts_account_move_lines {
+  id integer [pk]
+  sort integer
+  move_id integer [not null]
+  journal_id integer
+  company_id integer
+  company_currency_id integer
+  reconcile_id integer
+  payment_id integer
+  tax_repartition_line_id integer
+  account_id integer
+  currency_id integer [not null]
+  partner_id integer
+  group_tax_id integer
+  tax_line_id integer
+  tax_group_id integer
+  statement_id integer
+  statement_line_id integer
+  product_id integer
+  uom_id integer
+  created_by integer
+  move_name varchar
+  parent_state varchar
+  reference varchar
+  name varchar
+  matching_number varchar
+  display_type varchar [default: 'product']
+  date date
+  invoice_date date
+  date_maturity date
+  discount_date date
+  analytic_distribution text
+  debit decimal
+  credit decimal
+  balance decimal
+  amount_currency decimal
+  tax_base_amount decimal
+  amount_residual decimal
+  amount_residual_currency decimal
+  quantity decimal
+  price_unit decimal
+  price_subtotal decimal
+  price_total decimal
+  discount decimal
+  discount_amount_currency decimal
+  discount_balance decimal
+  is_imported integer [not null, default: '0']
+  tax_tag_invert integer [not null, default: '0']
+  reconciled integer [not null, default: '0']
+  is_downpayment integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+  full_reconcile_id integer
+  purchase_order_line_id integer
+}
+
+Table accounts_account_moves {
+  id integer [pk]
+  sort integer
+  journal_id integer
+  company_id integer
+  tax_cash_basis_origin_move_id integer
+  auto_post_origin_id integer
+  origin_payment_id integer
+  secure_sequence_number integer
+  invoice_payment_term_id integer
+  partner_id integer
+  commercial_partner_id integer
+  partner_shipping_id integer
+  partner_bank_id integer
+  fiscal_position_id integer
+  currency_id integer
+  reversed_entry_id integer
+  campaign_id integer
+  invoice_user_id integer
+  statement_line_id integer
+  invoice_incoterm_id integer
+  preferred_payment_method_line_id integer
+  invoice_cash_rounding_id integer
+  creator_id integer
+  sequence_prefix varchar
+  access_token varchar
+  name varchar
+  reference varchar
+  state varchar [not null, default: 'draft']
+  move_type varchar [not null]
+  auto_post integer [not null, default: '0']
+  inalterable_hash varchar
+  payment_reference varchar
+  qr_code_method varchar
+  payment_state varchar [default: 'not_paid']
+  invoice_source_email varchar
+  invoice_partner_display_name varchar
+  invoice_origin varchar
+  incoterm_location varchar
+  date date [not null]
+  auto_post_until date
+  invoice_date date
+  invoice_date_due date
+  delivery_date date
+  sending_data text
+  narration text
+  invoice_currency_rate decimal
+  amount_untaxed decimal
+  amount_tax decimal
+  amount_total decimal
+  amount_residual decimal
+  amount_untaxed_signed decimal
+  amount_untaxed_in_currency_signed decimal
+  amount_tax_signed decimal
+  amount_total_signed decimal
+  amount_total_in_currency_signed decimal
+  amount_residual_signed decimal
+  quick_edit_total_amount decimal
+  is_storno integer [not null, default: '0']
+  always_tax_exigible integer [not null, default: '0']
+  checked integer [not null, default: '0']
+  posted_before integer [not null, default: '0']
+  made_sequence_gap integer [not null, default: '0']
+  is_manually_modified integer [not null, default: '0']
+  is_move_sent integer [not null, default: '0']
+  source_id integer
+  medium_id integer
+  created_at datetime
+  updated_at datetime
+  tax_cash_basis_reconcile_id integer
+}
+
+Table accounts_account_payment_register_move_lines {
+  payment_register_id integer [not null]
+  move_line_id integer [not null]
+}
+
+Table accounts_account_payments {
+  id integer [pk]
+  journal_id integer
+  company_id integer
+  partner_bank_id integer
+  paired_internal_transfer_payment_id integer
+  payment_method_line_id integer
+  payment_method_id integer
+  currency_id integer
+  partner_id integer
+  outstanding_account_id integer
+  destination_account_id integer
+  created_by integer
+  name varchar
+  state varchar [not null]
+  payment_type varchar
+  partner_type varchar
+  memo varchar
+  payment_reference varchar
+  date date
+  amount decimal
+  amount_company_currency_signed decimal
+  is_reconciled integer
+  is_matched integer
+  is_sent integer
+  source_payment_id integer
+  created_at datetime
+  updated_at datetime
+  move_id integer
+  payment_token_id integer
+  payment_transaction_id integer
+}
+
+Table accounts_account_tags {
+  id integer [pk]
+  color varchar
+  country_id integer
+  creator_id integer
+  applicability varchar [not null]
+  name varchar [not null]
+  tax_negate integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_account_taxes {
+  account_id integer [not null]
+  tax_id integer [not null]
+}
+
+Table accounts_accounts {
+  id integer [pk]
+  currency_id integer
+  creator_id integer
+  account_type varchar [not null]
+  name varchar [not null]
+  code varchar
+  "note" varchar
+  deprecated integer
+  reconcile integer
+  non_trade integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_accounts_move_line_taxes {
+  move_line_id integer [not null]
+  tax_id integer [not null]
+}
+
+Table accounts_accounts_move_payment {
+  invoice_id integer [not null]
+  payment_id integer [not null]
+}
+
+Table accounts_accounts_move_reversal_move {
+  move_id integer [not null]
+  reversal_id integer [not null]
+}
+
+Table accounts_accounts_move_reversal_new_move {
+  new_move_id integer [not null]
+  reversal_id integer [not null]
+}
+
+Table accounts_accounts_move_reversals {
+  id integer [pk]
+  company_id integer [not null]
+  creator_id integer
+  reason text
+  date date [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_bank_statement_lines {
+  id integer [pk]
+  sort integer
+  journal_id integer
+  company_id integer
+  statement_id integer
+  partner_id integer
+  currency_id integer
+  foreign_currency_id integer
+  created_by integer
+  account_number varchar
+  partner_name varchar
+  transaction_type varchar
+  payment_reference varchar
+  internal_index varchar
+  transaction_details text
+  amount decimal
+  amount_currency decimal
+  is_reconciled integer [not null, default: '0']
+  amount_residual decimal
+  created_at datetime
+  updated_at datetime
+  move_id integer
+}
+
+Table accounts_bank_statements {
+  id integer [pk]
+  company_id integer
+  journal_id integer
+  created_by integer
+  name varchar
+  reference varchar
+  first_line_index varchar
+  date date
+  balance_start decimal [not null, default: '0']
+  balance_end decimal [not null, default: '0']
+  balance_end_real decimal [not null, default: '0']
+  is_completed integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_cash_roundings {
+  id integer [pk]
+  creator_id integer
+  strategy varchar [not null]
+  rounding_method varchar [not null]
+  name varchar [not null]
+  rounding decimal [not null, default: '0']
+  profit_account_id integer
+  loss_account_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_fiscal_position_taxes {
+  id integer [pk]
+  fiscal_position_id integer [not null]
+  company_id integer
+  tax_source_id integer [not null]
+  tax_destination_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_fiscal_positions {
+  id integer [pk]
+  sort integer
+  company_id integer [not null]
+  country_id integer
+  country_group_id integer
+  creator_id integer
+  zip_from varchar
+  zip_to varchar
+  foreign_vat varchar
+  name varchar [not null]
+  notes text
+  auto_reply integer [not null, default: '0']
+  vat_required integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_full_reconciles {
+  id integer [pk]
+  exchange_move_id integer
+  created_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_incoterms {
+  id integer [pk]
+  creator_id integer
+  code varchar [not null]
+  name varchar [not null]
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_journal_accounts {
+  journal_id integer [not null]
+  account_id integer [not null]
+}
+
+Table accounts_journals {
+  id integer [pk]
+  default_account_id integer
+  suspense_account_id integer
+  sort integer
+  currency_id integer
+  company_id integer
+  profit_account_id integer
+  loss_account_id integer
+  bank_account_id integer
+  creator_id integer
+  color varchar
+  access_token varchar
+  code varchar
+  type varchar [not null]
+  invoice_reference_type varchar [not null]
+  invoice_reference_model varchar [not null]
+  bank_statements_source varchar
+  name varchar [not null]
+  order_override_regex text
+  auto_check_on_post integer [default: '0']
+  restrict_mode_hash_table integer [default: '0']
+  refund_order integer [default: '0']
+  payment_order integer [default: '0']
+  show_on_dashboard integer [default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_partial_reconciles {
+  id integer [pk]
+  debit_move_id integer
+  credit_move_id integer
+  full_reconcile_id integer
+  exchange_move_id integer
+  debit_currency_id integer
+  credit_currency_id integer
+  company_id integer
+  created_by integer
+  max_date date
+  amount decimal
+  debit_amount_currency decimal
+  credit_amount_currency decimal
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_payment_due_terms {
+  id integer [pk]
+  nb_days integer
+  payment_id integer
+  creator_id integer
+  value varchar [not null]
+  delay_type varchar [not null]
+  days_next_month varchar
+  value_amount decimal [default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_payment_method_lines {
+  id integer [pk]
+  sort integer
+  payment_method_id integer
+  payment_account_id integer
+  journal_id integer
+  creator_id integer
+  name varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_payment_methods {
+  id integer [pk]
+  code varchar [not null]
+  payment_type varchar [not null]
+  name varchar [not null]
+  created_by integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_payment_registers {
+  id integer [pk]
+  currency_id integer
+  journal_id integer
+  partner_bank_id integer
+  custom_user_currency_id integer
+  source_currency_id integer
+  company_id integer
+  partner_id integer
+  payment_method_line_id integer
+  writeoff_account_id integer
+  creator_id integer
+  communication varchar
+  installments_mode varchar
+  payment_type varchar
+  partner_type varchar
+  payment_difference_handling varchar
+  writeoff_label varchar
+  payment_date date
+  amount decimal
+  custom_user_amount decimal
+  source_amount decimal
+  source_amount_currency decimal
+  group_payment integer [default: '0']
+  can_group_payments integer [default: '0']
+  payment_token_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_payment_terms {
+  id integer [pk]
+  company_id integer
+  sort integer
+  discount_days integer
+  creator_id integer
+  early_pay_discount varchar
+  name varchar [not null]
+  "note" varchar
+  display_on_invoice integer [default: '0']
+  early_discount integer [default: '0']
+  discount_percentage decimal [default: '0']
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_product_supplier_taxes {
+  product_id integer [not null]
+  tax_id integer [not null]
+}
+
+Table accounts_product_taxes {
+  product_id integer [not null]
+  tax_id integer [not null]
+}
+
+Table accounts_reconciles {
+  id integer [pk]
+  sort integer
+  company_id integer [not null]
+  past_months_limit integer
+  created_by integer
+  rule_type varchar [not null]
+  matching_order varchar [not null]
+  counter_part_type varchar
+  match_nature varchar
+  match_amount varchar
+  match_label varchar
+  match_level_parameters varchar
+  match_note varchar
+  match_note_parameters varchar
+  match_transaction_type varchar
+  match_transaction_type_parameters varchar
+  payment_tolerance_type varchar
+  decimal_separator varchar
+  name varchar [not null]
+  auto_reconcile integer [not null]
+  to_check integer [not null, default: '0']
+  match_text_location_label integer [not null, default: '0']
+  match_text_location_note integer [not null, default: '0']
+  match_text_location_reference integer [not null, default: '0']
+  match_same_currency integer [not null, default: '0']
+  allow_payment_tolerance integer [not null, default: '0']
+  match_partner integer [not null, default: '0']
+  match_amount_min decimal
+  match_amount_max decimal
+  payment_tolerance_parameters decimal
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_tax_groups {
+  id integer [pk]
+  sort integer
+  company_id integer
+  country_id integer
+  creator_id integer
+  name varchar [not null]
+  preceding_subtotal varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_tax_partition_lines {
+  id integer [pk]
+  account_id integer
+  tax_id integer
+  company_id integer
+  creator_id integer
+  sort integer
+  repartition_type varchar [not null]
+  document_type varchar [not null]
+  use_in_tax_closing varchar
+  factor decimal [default: '0']
+  factor_percent decimal [default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table accounts_tax_taxes {
+  parent_tax_id integer [not null]
+  child_tax_id integer [not null]
+}
+
+Table accounts_taxes {
+  id integer [pk]
+  sort integer
+  company_id integer [not null]
+  tax_group_id integer [not null]
+  cash_basis_transition_account_id integer
+  country_id integer
+  creator_id integer
+  type_tax_use varchar [not null]
+  tax_scope varchar
+  formula varchar
+  amount_type varchar [not null]
+  price_include_override varchar
+  tax_exigibility varchar
+  name varchar
+  description varchar
+  invoice_label varchar
+  invoice_legal_notes text
+  amount decimal [default: '0']
+  is_active integer [default: '0']
+  include_base_amount integer [default: '0']
+  is_base_affected integer [default: '0']
+  analytic integer [default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table activity_plan_templates {
+  id integer [pk]
+  sort integer
+  plan_id integer [not null]
+  activity_type_id integer [not null]
+  responsible_id integer
+  creator_id integer
+  delay_count integer
+  delay_unit varchar [not null]
+  delay_from varchar [not null]
+  summary text
+  responsible_type varchar [not null]
+  "note" text
+  created_at datetime
+  updated_at datetime
+}
+
+Table activity_plans {
+  id integer [pk]
+  plugin varchar
+  name varchar [not null]
+  is_active integer [default: '0']
+  creator_id integer
+  company_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  department_id integer
+}
+
+Table activity_type_suggestions {
+  activity_type_id integer [not null]
+  suggested_activity_type_id integer [not null]
+}
+
+Table activity_types {
+  id integer [pk]
+  sort integer
+  delay_count integer
+  delay_unit varchar [not null]
+  delay_from varchar [not null]
+  icon varchar
+  decoration_type varchar
+  chaining_type varchar [default: 'suggest']
+  plugin varchar
+  category varchar
+  name varchar [not null]
+  summary text
+  default_note text
+  is_active integer [not null, default: '1']
+  keep_done integer [not null, default: '0']
+  creator_id integer
+  default_user_id integer
+  activity_plan_id integer
+  triggered_next_type_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table analytic_records {
+  id integer [pk]
+  type varchar [not null]
+  name varchar
+  date date [not null]
+  amount decimal [not null, default: '0']
+  unit_amount decimal [not null, default: '0']
+  user_id integer
+  partner_id integer
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  project_id integer
+  task_id integer
+}
+
+Table banks {
+  id integer [pk]
+  name varchar
+  code varchar
+  email varchar
+  phone varchar
+  street1 varchar
+  street2 varchar
+  city varchar
+  zip varchar
+  state_id integer
+  country_id integer
+  creator_id integer [not null]
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table cache {
+  key varchar [pk]
+  value text [not null]
+  expiration integer [not null]
+}
+
+Table cache_locks {
+  key varchar [pk]
+  owner varchar [not null]
+  expiration integer [not null]
+}
+
+Table chatter_attachments {
+  id integer [pk]
+  company_id integer
+  creator_id integer
+  message_id integer
+  file_size varchar
+  name varchar
+  messageable_type varchar [not null]
+  messageable_id integer [not null]
+  file_path varchar
+  original_file_name varchar
+  mime_type varchar
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (messageable_type, messageable_id)
+  }
+}
+
+Table chatter_followers {
+  id integer [pk]
+  followable_type varchar [not null]
+  followable_id integer [not null]
+  partner_id integer
+  followed_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (followable_type, followable_id)
+    (followable_type, followable_id, partner_id) [unique]
+  }
+}
+
+Table chatter_messages {
+  id integer [pk]
+  company_id integer
+  activity_type_id integer
+  assigned_to integer
+  messageable_type varchar [not null]
+  messageable_id integer [not null]
+  type varchar
+  name varchar
+  subject varchar
+  body text
+  summary text
+  is_internal integer
+  date_deadline date
+  pinned_at date
+  log_name varchar
+  causer_type varchar [not null]
+  causer_id integer [not null]
+  event varchar
+  properties text
+  created_at datetime
+  updated_at datetime
+  is_read integer [not null, default: '0']
+
+  Indexes {
+    (messageable_type, messageable_id)
+    (causer_type, causer_id)
+  }
+}
+
+Table companies {
+  id integer [pk]
+  parent_id integer
+  currency_id integer
+  creator_id integer
+  sort integer
+  name varchar [not null]
+  company_id varchar
+  tax_id varchar
+  registration_number varchar
+  email varchar
+  phone varchar
+  mobile varchar
+  website varchar
+  color varchar
+  is_active integer [not null, default: '1']
+  founded_date date
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  partner_id integer [not null]
+  street1 varchar
+  street2 varchar
+  city varchar
+  zip varchar
+  state_id integer
+  country_id integer
+
+  Indexes {
+    (company_id) [unique]
+    (tax_id) [unique]
+  }
+}
+
+Table countries {
+  id integer [pk]
+  currency_id integer
+  phone_code varchar
+  code varchar
+  name varchar
+  state_required integer [not null, default: '0']
+  zip_required integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table currencies {
+  id integer [pk]
+  name varchar [not null]
+  symbol varchar
+  iso_numeric integer
+  decimal_places integer
+  full_name varchar
+  rounding decimal [not null, default: '0']
+  active integer [not null, default: '1']
+  created_at datetime
+  updated_at datetime
+}
+
+Table custom_fields {
+  id integer [pk]
+  code varchar [not null]
+  name varchar [not null]
+  type varchar [not null]
+  input_type varchar
+  is_multiselect integer [not null, default: '0']
+  datalist text
+  options text
+  form_settings text
+  use_in_table integer [not null, default: '0']
+  table_settings text
+  infolist_settings text
+  sort integer
+  customizable_type varchar [not null]
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (code, customizable_type) [unique]
+    (code)
+    (sort)
+  }
+}
+
+Table email_logs {
+  id integer [pk]
+  recipient_email varchar [not null]
+  recipient_name varchar [not null]
+  subject varchar [not null]
+  status varchar [not null]
+  error_message text
+  sent_at datetime [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_calendar_attendances {
+  id integer [pk]
+  sort integer
+  name varchar [not null]
+  day_of_week varchar [not null]
+  day_period varchar [not null]
+  week_type varchar
+  display_type varchar
+  date_from varchar
+  date_to varchar
+  duration_days varchar
+  hour_from varchar [not null]
+  hour_to varchar [not null]
+  calendar_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_calendar_leaves {
+  id integer [pk]
+  name varchar [not null]
+  time_type varchar [not null]
+  date_from varchar [not null]
+  date_to varchar [not null]
+  company_id integer
+  calendar_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_calendars {
+  id integer [pk]
+  name varchar [not null]
+  timezone varchar [not null]
+  hours_per_day real
+  is_active integer [not null, default: '0']
+  two_weeks_calendar integer [default: '0']
+  flexible_hours integer [default: '0']
+  full_time_required_hours real
+  creator_id integer
+  company_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_categories {
+  id integer [pk]
+  name varchar [not null]
+  color varchar
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name) [unique]
+  }
+}
+
+Table employees_departments {
+  id integer [pk]
+  company_id integer
+  parent_id integer
+  master_department_id integer
+  creator_id integer
+  name varchar
+  complete_name varchar
+  parent_path varchar
+  color text
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  manager_id integer
+}
+
+Table employees_departure_reasons {
+  id integer [pk]
+  sort integer
+  reason_code integer
+  name varchar [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_employee_categories {
+  employee_id integer
+  category_id integer
+}
+
+Table employees_employee_resume_line_types {
+  id integer [pk]
+  sort integer [not null]
+  name varchar [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_employee_resumes {
+  id integer [pk]
+  employee_id integer [not null]
+  employee_resume_line_type_id integer
+  creator_id integer
+  user_id integer
+  display_type varchar [not null]
+  start_date date [not null]
+  end_date date
+  name varchar [not null]
+  description text
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_employee_skills {
+  id integer [pk]
+  employee_id integer
+  skill_id integer
+  skill_level_id integer
+  skill_type_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+}
+
+Table employees_employees {
+  id integer [pk]
+  time_zone varchar
+  work_permit varchar
+  address_id integer
+  leave_manager_id integer
+  bank_account_id integer
+  private_state_id integer
+  private_country_id integer
+  company_id integer
+  user_id integer
+  creator_id integer
+  calendar_id integer
+  department_id integer
+  job_id integer
+  partner_id integer
+  work_location_id integer
+  parent_id integer
+  coach_id integer
+  country_id integer
+  state_id integer
+  country_of_birth integer
+  departure_reason_id integer
+  attendance_manager_id integer
+  name varchar
+  job_title varchar
+  work_phone varchar
+  mobile_phone varchar
+  color varchar
+  children integer
+  distance_home_work integer [default: '0']
+  km_home_work integer [default: '0']
+  distance_home_work_unit varchar [default: 'km']
+  work_email varchar
+  private_phone varchar
+  private_email varchar
+  private_street1 varchar
+  private_street2 varchar
+  private_city varchar
+  private_zip varchar
+  private_car_plate varchar
+  lang varchar
+  gender varchar
+  birthday varchar
+  marital varchar [not null, default: 'single']
+  spouse_complete_name varchar
+  spouse_birthdate varchar
+  place_of_birth varchar
+  ssnid varchar
+  sinid varchar
+  identification_id varchar
+  passport_id varchar
+  permit_no varchar
+  visa_no varchar
+  certificate varchar
+  study_field varchar
+  study_school varchar
+  emergency_contact varchar
+  emergency_phone varchar
+  employee_type varchar [not null, default: 'employee']
+  barcode varchar
+  pin varchar
+  visa_expire varchar
+  work_permit_expiration_date varchar
+  departure_date varchar
+  departure_description text
+  additional_note text
+  notes text
+  is_active integer [not null, default: '0']
+  is_flexible integer
+  is_fully_flexible integer
+  work_permit_scheduled_activity integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_employment_types {
+  id integer [pk]
+  sort integer
+  name varchar [not null]
+  code varchar
+  country_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table employees_job_positions {
+  id integer [pk]
+  sort integer
+  expected_employees integer
+  no_of_employee integer
+  no_of_recruitment integer
+  department_id integer
+  company_id integer
+  creator_id integer
+  employment_type_id integer
+  name varchar [not null]
+  description text
+  requirements text
+  is_active integer [not null, default: '0']
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  address_id integer
+  manager_id integer
+  industry_id integer
+  recruiter_id integer
+  no_of_hired_employee integer
+  date_from datetime
+  date_to datetime
+}
+
+Table employees_skill_levels {
+  id integer [pk]
+  name varchar [not null]
+  level integer
+  default_level integer
+  skill_type_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+
+  Indexes {
+    (skill_type_id)
+    (creator_id)
+  }
+}
+
+Table employees_skill_types {
+  id integer [pk]
+  name varchar [not null]
+  color varchar
+  is_active integer [not null, default: '0']
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+}
+
+Table employees_skills {
+  id integer [pk]
+  sort integer
+  name varchar [not null]
+  skill_type_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+
+  Indexes {
+    (skill_type_id)
+    (creator_id)
+  }
+}
+
+Table employees_work_locations {
+  id integer [pk]
+  name varchar [not null]
+  location_type varchar [not null]
+  location_number varchar
+  is_active integer [default: '0']
+  company_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+}
+
+Table failed_jobs {
+  id integer [pk]
+  uuid varchar [not null]
+  connection text [not null]
+  queue text [not null]
+  payload text [not null]
+  exception text [not null]
+  failed_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+
+  Indexes {
+    (uuid) [unique]
+  }
+}
+
+Table inventories_category_routes {
+  category_id integer [not null]
+  route_id integer [not null]
+}
+
+Table inventories_locations {
+  id integer [pk]
+  position_x integer [default: '0']
+  position_y integer [default: '0']
+  position_z integer [default: '0']
+  type varchar [not null]
+  name varchar [not null]
+  full_name varchar
+  description varchar
+  parent_path varchar
+  barcode varchar
+  removal_strategy varchar
+  cyclic_inventory_frequency integer [default: '0']
+  last_inventory_date date
+  next_inventory_date date
+  is_scrap integer [default: '0']
+  is_replenish integer [default: '0']
+  is_dock integer [default: '0']
+  parent_id integer
+  company_id integer
+  storage_category_id integer
+  warehouse_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (company_id, barcode) [unique]
+  }
+}
+
+Table inventories_lots {
+  id integer [pk]
+  name varchar [not null]
+  description text
+  reference varchar
+  properties text
+  expiry_reminded integer [default: '0']
+  expiration_date datetime
+  use_date datetime
+  removal_date datetime
+  alert_date datetime
+  product_id integer [not null]
+  uom_id integer
+  location_id integer
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name)
+  }
+}
+
+Table inventories_move_destinations {
+  origin_move_id integer [not null]
+  destination_move_id integer [not null]
+}
+
+Table inventories_move_lines {
+  id integer [pk]
+  lot_name varchar
+  state varchar
+  reference varchar
+  picking_description varchar
+  qty decimal [default: '0']
+  uom_qty decimal [default: '0']
+  is_picked integer [not null, default: '0']
+  scheduled_at datetime [not null]
+  move_id integer
+  operation_id integer
+  product_id integer [not null]
+  uom_id integer [not null]
+  package_id integer
+  result_package_id integer
+  package_level_id integer
+  lot_id integer
+  partner_id integer
+  source_location_id integer [not null]
+  destination_location_id integer [not null]
+  company_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_moves {
+  id integer [pk]
+  name varchar [not null]
+  state varchar
+  origin varchar
+  procure_method varchar [not null, default: 'make_to_stock']
+  reference varchar
+  description_picking text
+  next_serial varchar
+  next_serial_count integer
+  is_favorite integer [not null, default: '0']
+  product_qty decimal [default: '0']
+  product_uom_qty decimal [default: '0']
+  quantity decimal [default: '0']
+  is_picked integer [not null, default: '0']
+  is_scraped integer [not null, default: '0']
+  is_inventory integer [not null, default: '0']
+  reservation_date date
+  scheduled_at datetime [not null]
+  deadline datetime
+  alert_Date datetime
+  operation_id integer
+  product_id integer [not null]
+  uom_id integer [not null]
+  source_location_id integer [not null]
+  destination_location_id integer [not null]
+  final_location_id integer
+  partner_id integer
+  scrap_id integer
+  rule_id integer
+  operation_type_id integer
+  origin_returned_move_id integer
+  restrict_partner_id integer
+  warehouse_id integer
+  package_level_id integer
+  product_packaging_id integer
+  company_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  is_refund integer [not null, default: '0']
+  purchase_order_line_id integer
+  sale_order_line_id integer
+}
+
+Table inventories_operation_types {
+  id integer [pk]
+  name varchar [not null]
+  type varchar [not null]
+  sort integer
+  sequence_code varchar [not null]
+  reservation_method varchar [not null, default: 'at_confirm']
+  reservation_days_before integer [default: '0']
+  reservation_days_before_priority integer [default: '0']
+  product_label_format varchar
+  lot_label_format varchar
+  package_label_to_print varchar
+  barcode varchar
+  create_backorder varchar [not null, default: 'ask']
+  move_type varchar [default: 'direct']
+  show_entire_packs integer [default: '0']
+  use_create_lots integer [default: '0']
+  use_existing_lots integer [default: '0']
+  print_label integer [default: '0']
+  show_operations integer [default: '0']
+  auto_show_reception_report integer [default: '0']
+  auto_print_delivery_slip integer [default: '0']
+  auto_print_return_slip integer [default: '0']
+  auto_print_product_labels integer [default: '0']
+  auto_print_lot_labels integer [default: '0']
+  auto_print_reception_report integer [default: '0']
+  auto_print_reception_report_labels integer [default: '0']
+  auto_print_packages integer [default: '0']
+  auto_print_package_label integer [default: '0']
+  return_operation_type_id integer
+  source_location_id integer [not null]
+  destination_location_id integer [not null]
+  warehouse_id integer
+  company_id integer [not null]
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_operations {
+  id integer [pk]
+  name varchar
+  description text
+  origin varchar
+  move_type varchar [not null, default: 'direct']
+  state varchar
+  is_favorite integer [not null, default: '0']
+  has_deadline_issue integer [not null, default: '0']
+  is_printed integer [not null, default: '0']
+  is_locked integer [not null, default: '0']
+  deadline datetime
+  scheduled_at datetime
+  closed_at datetime
+  user_id integer
+  owner_id integer
+  operation_type_id integer [not null]
+  source_location_id integer [not null]
+  destination_location_id integer [not null]
+  back_order_id integer
+  return_id integer
+  partner_id integer
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  sale_order_id integer
+}
+
+Table inventories_order_points {
+  id integer [pk]
+  name varchar [not null]
+  trigger varchar [not null]
+  snoozed_until date
+  product_min_qty decimal [not null, default: '0']
+  product_max_qty decimal [not null, default: '0']
+  qty_multiple decimal [not null, default: '0']
+  qty_to_order_manual decimal [default: '0']
+  product_id integer [not null]
+  product_category_id integer
+  warehouse_id integer [not null]
+  location_id integer [not null]
+  route_id integer
+  company_id integer [not null]
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_package_destinations {
+  id integer [pk]
+  operation_id integer
+  destination_location_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_package_levels {
+  id integer [pk]
+  package_id integer [not null]
+  operation_id integer
+  destination_location_id integer
+  company_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_package_types {
+  id integer [pk]
+  sort integer
+  name varchar [not null]
+  barcode varchar
+  height decimal [default: '0']
+  width decimal [default: '0']
+  length decimal [default: '0']
+  base_weight decimal [default: '0']
+  max_weight decimal [default: '0']
+  shipper_package_code varchar
+  package_carrier_type varchar
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (barcode) [unique]
+  }
+}
+
+Table inventories_packages {
+  id integer [pk]
+  name varchar [not null]
+  package_use varchar [not null, default: 'disposable']
+  pack_date date
+  package_type_id integer
+  location_id integer
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_product_quantities {
+  id integer [pk]
+  quantity decimal [default: '0']
+  reserved_quantity decimal [not null, default: '0']
+  counted_quantity decimal [default: '0']
+  difference_quantity decimal [default: '0']
+  inventory_diff_quantity decimal [default: '0']
+  inventory_quantity_set integer [not null, default: '0']
+  scheduled_at date
+  incoming_at datetime [not null]
+  product_id integer [not null]
+  location_id integer [not null]
+  storage_category_id integer
+  lot_id integer
+  package_id integer
+  partner_id integer
+  user_id integer
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_product_quantity_relocations {
+  id integer [pk]
+  description text
+  destination_location_id integer
+  destination_package_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_product_routes {
+  product_id integer [not null]
+  route_id integer [not null]
+}
+
+Table inventories_route_packagings {
+  route_id integer [not null]
+  packaging_id integer [not null]
+}
+
+Table inventories_route_warehouses {
+  warehouse_id integer [not null]
+  route_id integer [not null]
+}
+
+Table inventories_routes {
+  id integer [pk]
+  sort integer
+  name varchar [not null]
+  product_selectable integer [default: '0']
+  product_category_selectable integer [default: '0']
+  warehouse_selectable integer [default: '0']
+  packaging_selectable integer [default: '0']
+  supplied_warehouse_id integer
+  supplier_warehouse_id integer
+  company_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_rules {
+  id integer [pk]
+  sort integer
+  name varchar [not null]
+  route_sort integer [default: '0']
+  delay integer [default: '0']
+  group_propagation_option varchar
+  action varchar [not null]
+  procure_method varchar [not null, default: 'make_to_stock']
+  auto varchar [not null, default: 'manual']
+  push_domain varchar
+  location_dest_from_rule integer [default: '0']
+  propagate_cancel integer [default: '0']
+  propagate_carrier integer [default: '0']
+  source_location_id integer
+  destination_location_id integer [not null]
+  route_id integer [not null]
+  operation_type_id integer
+  partner_address_id integer
+  warehouse_id integer
+  propagate_warehouse_id integer
+  company_id integer [not null]
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (action)
+  }
+}
+
+Table inventories_scrap_tags {
+  tag_id integer [not null]
+  scrap_id integer [not null]
+}
+
+Table inventories_scraps {
+  id integer [pk]
+  name varchar [not null]
+  origin varchar
+  state varchar
+  qty decimal [not null, default: '0']
+  should_replenish integer [not null, default: '0']
+  closed_at date
+  product_id integer [not null]
+  uom_id integer [not null]
+  lot_id integer
+  package_id integer
+  partner_id integer
+  operation_id integer
+  source_location_id integer [not null]
+  destination_location_id integer [not null]
+  company_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_storage_categories {
+  id integer [pk]
+  name varchar [not null]
+  sort integer
+  allow_new_products varchar [not null]
+  max_weight decimal [not null, default: '0']
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table inventories_storage_category_capacities {
+  id integer [pk]
+  qty decimal [not null, default: '0']
+  product_id integer
+  storage_category_id integer [not null]
+  package_type_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (product_id, storage_category_id) [unique]
+    (package_type_id, storage_category_id) [unique]
+  }
+}
+
+Table inventories_tags {
+  id integer [pk]
+  name varchar [not null]
+  color varchar
+  sort integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name) [unique]
+  }
+}
+
+Table inventories_warehouse_resupplies {
+  supplied_warehouse_id integer [not null]
+  supplier_warehouse_id integer [not null]
+}
+
+Table inventories_warehouses {
+  id integer [pk]
+  name varchar [not null]
+  code varchar
+  sort integer
+  reception_steps varchar [not null]
+  delivery_steps varchar [not null]
+  company_id integer [not null]
+  partner_address_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  view_location_id integer [not null]
+  lot_stock_location_id integer [not null]
+  input_stock_location_id integer
+  qc_stock_location_id integer
+  output_stock_location_id integer
+  pack_stock_location_id integer
+  mto_pull_id integer
+  buy_pull_id integer
+  pick_type_id integer
+  pack_type_id integer
+  out_type_id integer
+  in_type_id integer
+  internal_type_id integer
+  qc_type_id integer
+  store_type_id integer
+  xdock_type_id integer
+  crossdock_route_id integer
+  reception_route_id integer
+  delivery_route_id integer
+
+  Indexes {
+    (company_id, code) [unique]
+    (company_id, name) [unique]
+    (name)
+  }
+}
+
+Table job_batches {
+  id varchar [pk]
+  name varchar [not null]
+  total_jobs integer [not null]
+  pending_jobs integer [not null]
+  failed_jobs integer [not null]
+  failed_job_ids text [not null]
+  options text
+  cancelled_at integer
+  created_at integer [not null]
+  finished_at integer
+}
+
+Table job_position_skills {
+  job_position_id integer [not null]
+  skill_id integer [not null]
+}
+
+Table jobs {
+  id integer [pk]
+  queue varchar [not null]
+  payload text [not null]
+  attempts integer [not null]
+  reserved_at integer
+  available_at integer [not null]
+  created_at integer [not null]
+
+  Indexes {
+    (queue)
+  }
+}
+
+Table media {
+  id integer [pk]
+  disk varchar [not null, default: 'public']
+  directory varchar [not null, default: 'media']
+  visibility varchar [not null, default: 'public']
+  name varchar [not null]
+  path varchar [not null]
+  width integer
+  height integer
+  size integer
+  type varchar [not null, default: 'image']
+  ext varchar [not null]
+  alt varchar
+  title varchar
+  description text
+  caption text
+  exif text
+  curations text
+  created_at datetime
+  updated_at datetime
+  tenant_id integer
+}
+
+Table migrations {
+  id integer [pk]
+  migration varchar [not null]
+  batch integer [not null]
+}
+
+Table model_has_permissions {
+  permission_id integer [pk]
+  model_type varchar [pk]
+  model_id integer [pk]
+
+  Indexes {
+    (model_id, model_type)
+  }
+}
+
+Table model_has_roles {
+  role_id integer [pk]
+  model_type varchar [pk]
+  model_id integer [pk]
+
+  Indexes {
+    (model_id, model_type)
+  }
+}
+
+Table pages {
+  id integer [pk]
+  title varchar [not null]
+  slug varchar [not null]
+  layout varchar [not null, default: 'default']
+  blocks text [not null]
+  parent_id integer
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (title)
+    (layout)
+    (slug, parent_id) [unique]
+  }
+}
+
+Table partners_bank_accounts {
+  id integer [pk]
+  account_number varchar [not null]
+  account_holder_name varchar [not null]
+  is_active integer [not null, default: '1']
+  can_send_money integer [not null, default: '0']
+  creator_id integer
+  partner_id integer [not null]
+  bank_id integer [not null]
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (account_number) [unique]
+  }
+}
+
+Table partners_industries {
+  id integer [pk]
+  name varchar [not null]
+  description text
+  is_active integer [not null, default: '1']
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table partners_partner_tag {
+  tag_id integer [not null]
+  partner_id integer [not null]
+}
+
+Table partners_partners {
+  id integer [pk]
+  account_type varchar [not null, default: 'individual']
+  sub_type varchar [default: 'partner']
+  name varchar [not null]
+  avatar varchar
+  email varchar
+  job_title varchar
+  website varchar
+  tax_id varchar
+  phone varchar
+  mobile varchar
+  color varchar
+  company_registry varchar
+  reference varchar
+  parent_id integer
+  creator_id integer
+  user_id integer
+  title_id integer
+  company_id integer
+  industry_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  street1 varchar
+  street2 varchar
+  city varchar
+  zip varchar
+  state_id integer
+  country_id integer
+  message_bounce integer
+  supplier_rank integer
+  customer_rank integer
+  invoice_warning varchar
+  autopost_bills varchar
+  credit_limit varchar
+  ignore_abnormal_invoice_date varchar
+  ignore_abnormal_invoice_amount varchar
+  invoice_sending_method varchar
+  invoice_edi_format_store varchar
+  trust integer
+  invoice_warn_msg integer
+  debit_limit decimal
+  peppol_endpoint varchar
+  peppol_eas varchar
+  sale_warn varchar
+  sale_warn_msg varchar
+  comment text
+  property_account_payable_id integer
+  property_account_receivable_id integer
+  property_account_position_id integer
+  property_payment_term_id integer
+  property_supplier_payment_term_id integer
+  property_inbound_payment_method_line_id integer
+  property_outbound_payment_method_line_id integer
+  email_verified_at datetime
+  is_active integer [not null, default: '1']
+  password varchar
+  remember_token varchar
+
+  Indexes {
+    (company_registry)
+    (mobile)
+    (name)
+    (phone)
+    (reference)
+    (sub_type)
+    (tax_id)
+  }
+}
+
+Table partners_tags {
+  id integer [pk]
+  name varchar [not null]
+  color varchar
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name) [unique]
+  }
+}
+
+Table partners_titles {
+  id integer [pk]
+  name varchar [not null]
+  short_name varchar [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table password_reset_tokens {
+  email varchar [pk]
+  token varchar [not null]
+  created_at datetime
+}
+
+Table payments_payment_methods {
+  id integer [pk]
+  sort integer
+  primary_payment_method_id integer
+  created_by integer
+  code varchar [not null]
+  support_refund varchar
+  name varchar [not null]
+  is_active integer [not null, default: '1']
+  support_tokenization integer
+  support_express_checkout integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table payments_payment_tokens {
+  id integer [pk]
+  company_id integer
+  payment_method_id integer
+  partner_id integer
+  created_by integer
+  payment_details text
+  provider_reference_id varchar
+  is_active integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table payments_payment_transactions {
+  id integer [pk]
+  sort integer
+  move_id integer [not null]
+  journal_id integer
+  company_id integer
+  statement_id integer
+  partner_id integer
+  currency_id integer
+  foreign_currency_id integer
+  created_id integer
+  account_number varchar
+  partner_name varchar
+  transaction_type varchar
+  payment_reference varchar
+  internal_index varchar
+  transaction_details text
+  amount decimal [not null, default: '0']
+  amount_currency decimal [default: '0']
+  amount_residual decimal [default: '0']
+  is_reconciled integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table permissions {
+  id integer [pk]
+  name varchar [not null]
+  guard_name varchar [not null]
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name, guard_name) [unique]
+  }
+}
+
+Table plugin_dependencies {
+  plugin_id integer [not null]
+  dependency_id integer [not null]
+
+  Indexes {
+    (plugin_id, dependency_id) [unique]
+  }
+}
+
+Table plugins {
+  id integer [pk]
+  name varchar [not null]
+  author varchar
+  summary text
+  description text
+  latest_version varchar
+  license varchar
+  is_active integer [not null, default: '0']
+  is_installed integer [not null, default: '0']
+  sort integer
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name) [unique]
+  }
+}
+
+Table products_attribute_options {
+  id integer [pk]
+  name varchar [not null]
+  color varchar
+  extra_price decimal
+  sort integer
+  attribute_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_attributes {
+  id integer [pk]
+  name varchar [not null]
+  type varchar [not null]
+  sort integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_categories {
+  id integer [pk]
+  name varchar [not null]
+  full_name varchar
+  parent_path varchar
+  parent_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  product_properties_definition text
+
+  Indexes {
+    (name)
+  }
+}
+
+Table products_packagings {
+  id integer [pk]
+  name varchar [not null]
+  barcode varchar
+  qty decimal
+  sort integer
+  product_id integer [not null]
+  creator_id integer
+  company_id integer
+  created_at datetime
+  updated_at datetime
+  package_type_id integer
+}
+
+Table products_price_rule_items {
+  id integer [pk]
+  apply_to varchar [not null]
+  display_apply_to varchar [not null]
+  base varchar [not null]
+  type varchar [not null]
+  min_quantity decimal [default: '0']
+  fixed_price decimal [default: '0']
+  price_discount decimal [default: '0']
+  price_round decimal [default: '0']
+  price_surcharge decimal [default: '0']
+  price_markup decimal [default: '0']
+  price_min_margin decimal [default: '0']
+  percent_price decimal [default: '0']
+  starts_at datetime
+  ends_at datetime
+  price_rule_id integer [not null]
+  base_price_rule_id integer
+  product_id integer [not null]
+  category_id integer [not null]
+  currency_id integer
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_price_rules {
+  id integer [pk]
+  name varchar [not null]
+  sort integer
+  currency_id integer [not null]
+  company_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_product_attribute_values {
+  id integer [pk]
+  extra_price decimal
+  product_id integer
+  attribute_id integer
+  product_attribute_id integer [not null]
+  attribute_option_id integer [not null]
+}
+
+Table products_product_attributes {
+  id integer [pk]
+  sort integer
+  product_id integer [not null]
+  attribute_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_product_combinations {
+  id integer [pk]
+  product_id integer [not null]
+  product_attribute_value_id integer [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_product_price_lists {
+  id integer [pk]
+  sort integer
+  currency_id integer [not null]
+  company_id integer
+  creator_id integer
+  name varchar [not null]
+  is_active integer [not null, default: '1']
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_product_suppliers {
+  id integer [pk]
+  sort integer
+  delay integer [not null, default: '0']
+  product_name varchar
+  product_code varchar
+  starts_at date
+  ends_at date
+  min_qty decimal [not null, default: '0']
+  price decimal [not null, default: '0']
+  discount decimal [not null, default: '0']
+  product_id integer
+  partner_id integer [not null]
+  currency_id integer [not null]
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_product_tag {
+  tag_id integer [not null]
+  product_id integer [not null]
+}
+
+Table products_products {
+  id integer [pk]
+  type varchar [not null]
+  name varchar [not null]
+  service_tracking varchar [not null, default: 'none']
+  reference varchar
+  barcode varchar
+  price decimal
+  cost decimal
+  volume decimal
+  weight decimal
+  description text
+  description_purchase text
+  description_sale text
+  enable_sales integer
+  enable_purchase integer
+  is_favorite integer
+  is_configurable integer
+  sort integer
+  images text
+  parent_id integer
+  uom_id integer [not null]
+  uom_po_id integer [not null]
+  category_id integer [not null]
+  company_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  sale_delay integer
+  tracking varchar [default: 'qty']
+  description_picking text
+  description_pickingout text
+  description_pickingin text
+  is_storable integer [default: '0']
+  expiration_time integer [default: '0']
+  use_time integer [default: '0']
+  removal_time integer [default: '0']
+  alert_time integer [default: '0']
+  use_expiration_date integer [default: '0']
+  responsible_id integer
+  property_account_income_id integer
+  property_account_expense_id integer
+  image varchar
+  service_type varchar
+  sale_line_warn varchar
+  expense_policy text
+  invoice_policy text
+  sales_ok integer [not null, default: '1']
+  purchase_ok integer [not null, default: '1']
+  sale_line_warn_msg varchar
+}
+
+Table products_tags {
+  id integer [pk]
+  name varchar [not null]
+  color varchar
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name) [unique]
+  }
+}
+
+Table projects_milestones {
+  id integer [pk]
+  name varchar [not null]
+  deadline datetime
+  is_completed integer [not null, default: '0']
+  completed_at datetime
+  project_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name)
+    (deadline)
+    (completed_at)
+  }
+}
+
+Table projects_project_stages {
+  id integer [pk]
+  name varchar [not null]
+  tags text
+  is_active integer [not null, default: '1']
+  is_collapsed integer [not null, default: '0']
+  sort integer
+  company_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table projects_project_tag {
+  tag_id integer [not null]
+  project_id integer [not null]
+}
+
+Table projects_projects {
+  id integer [pk]
+  name varchar [not null]
+  tasks_label varchar
+  description text
+  visibility varchar
+  color varchar
+  sort integer
+  start_date date
+  end_date date
+  allocated_hours decimal
+  allow_timesheets integer [not null, default: '0']
+  allow_milestones integer [not null, default: '0']
+  allow_task_dependencies integer [not null, default: '0']
+  is_active integer [not null, default: '1']
+  stage_id integer
+  partner_id integer
+  company_id integer
+  user_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name)
+    (sort)
+  }
+}
+
+Table projects_tags {
+  id integer [pk]
+  name varchar [not null]
+  color varchar
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name) [unique]
+  }
+}
+
+Table projects_task_stages {
+  id integer [pk]
+  name varchar [not null]
+  is_active integer [not null, default: '1']
+  is_collapsed integer [not null, default: '0']
+  sort integer
+  project_id integer [not null]
+  company_id integer
+  user_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table projects_task_tag {
+  tag_id integer [not null]
+  task_id integer [not null]
+}
+
+Table projects_task_users {
+  id integer [pk]
+  task_id integer [not null]
+  user_id integer [not null]
+  stage_id integer
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (task_id, user_id) [unique]
+  }
+}
+
+Table projects_tasks {
+  id integer [pk]
+  title varchar [not null]
+  description text
+  color varchar
+  priority integer [not null, default: '0']
+  state varchar [not null]
+  tags text
+  sort integer
+  is_active integer [not null, default: '1']
+  is_recurring integer [not null, default: '0']
+  deadline datetime
+  working_hours_open decimal [not null, default: '0']
+  working_hours_close decimal [not null, default: '0']
+  allocated_hours decimal [not null, default: '0']
+  remaining_hours decimal [not null, default: '0']
+  effective_hours decimal [not null, default: '0']
+  total_hours_spent decimal [not null, default: '0']
+  overtime decimal [not null, default: '0']
+  progress decimal [not null, default: '0']
+  subtask_effective_hours decimal [not null, default: '0']
+  project_id integer
+  milestone_id integer
+  stage_id integer
+  partner_id integer
+  parent_id integer
+  company_id integer
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (title)
+    (priority)
+    (state)
+    (deadline)
+  }
+}
+
+Table projects_user_project_favorites {
+  project_id integer [not null]
+  user_id integer [not null]
+}
+
+Table purchases_order_account_moves {
+  order_id integer [not null]
+  move_id integer [not null]
+}
+
+Table purchases_order_groups {
+  id integer [pk]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table purchases_order_line_taxes {
+  order_line_id integer [not null]
+  tax_id integer [not null]
+}
+
+Table purchases_order_lines {
+  id integer [pk]
+  name text [not null]
+  state varchar
+  sort integer
+  qty_received_method varchar
+  display_type varchar
+  product_qty decimal [not null]
+  product_uom_qty real
+  product_packaging_qty real
+  price_tax real
+  discount decimal [not null, default: '0']
+  price_unit decimal [not null, default: '0']
+  price_subtotal decimal [not null, default: '0']
+  price_total decimal [not null, default: '0']
+  qty_invoiced decimal [not null, default: '0']
+  qty_received decimal [not null, default: '0']
+  qty_received_manual decimal [not null, default: '0']
+  qty_to_invoice decimal [not null, default: '0']
+  is_downpayment integer [not null, default: '0']
+  planned_at datetime
+  product_description_variants varchar
+  propagate_cancel integer
+  price_total_cc decimal [not null, default: '0']
+  uom_id integer
+  product_id integer
+  product_packaging_id integer
+  order_id integer [not null]
+  partner_id integer
+  currency_id integer
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  final_location_id integer
+  order_point_id integer
+
+  Indexes {
+    (order_id)
+    (partner_id)
+    (planned_at)
+    (product_id)
+  }
+}
+
+Table purchases_order_operations {
+  purchase_order_id integer [not null]
+  inventory_operation_id integer [not null]
+}
+
+Table purchases_orders {
+  id integer [pk]
+  name varchar [not null]
+  description text
+  priority varchar [not null, default: '0']
+  origin varchar
+  partner_reference varchar
+  state varchar
+  invoice_status varchar [not null, default: 'no']
+  receipt_status varchar [not null, default: 'no']
+  untaxed_amount decimal [not null, default: '0']
+  tax_amount decimal [not null, default: '0']
+  total_amount decimal [not null, default: '0']
+  total_cc_amount decimal [not null, default: '0']
+  currency_rate decimal [not null, default: '0']
+  invoice_count integer [not null, default: '0']
+  ordered_at datetime [not null]
+  approved_at datetime
+  planned_at datetime
+  calendar_start_at datetime
+  effective_date datetime
+  incoterm_location varchar
+  mail_reminder_confirmed integer [default: '0']
+  mail_reception_confirmed integer [default: '0']
+  mail_reception_declined integer [default: '0']
+  report_grids integer [default: '0']
+  requisition_id integer
+  purchases_group_id integer
+  partner_id integer [not null]
+  currency_id integer [not null]
+  fiscal_position_id integer
+  payment_term_id integer
+  incoterm_id integer
+  user_id integer
+  company_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+  operation_type_id integer
+
+  Indexes {
+    (approved_at)
+    (company_id)
+    (name)
+    (ordered_at)
+    (planned_at)
+    (priority)
+    (state)
+    (user_id)
+  }
+}
+
+Table purchases_requisition_lines {
+  id integer [pk]
+  qty decimal [default: '0']
+  price_unit decimal [default: '0']
+  requisition_id integer [not null]
+  product_id integer [not null]
+  uom_id integer
+  company_id integer
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table purchases_requisitions {
+  id integer [pk]
+  name varchar [not null]
+  type varchar [not null]
+  state varchar [not null]
+  reference varchar
+  starts_at date
+  ends_at date
+  description text
+  currency_id integer [not null]
+  partner_id integer [not null]
+  user_id integer
+  company_id integer [not null]
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table recruitments_applicant_applicant_categories {
+  applicant_id integer
+  category_id integer
+}
+
+Table recruitments_applicant_categories {
+  id integer [pk]
+  creator_id integer
+  name varchar [not null]
+  color varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table recruitments_applicant_interviewers {
+  applicant_id integer [not null]
+  interviewer_id integer [not null]
+}
+
+Table recruitments_applicants {
+  id integer [pk]
+  source_id integer
+  medium_id integer
+  candidate_id integer [not null]
+  stage_id integer
+  last_stage_id integer
+  company_id integer
+  recruiter_id integer
+  job_id integer
+  department_id integer
+  refuse_reason_id integer
+  creator_id integer
+  email_cc varchar
+  priority varchar [default: '0']
+  salary_proposed_extra varchar
+  salary_expected_extra varchar
+  applicant_properties text
+  applicant_notes text
+  is_active integer [not null, default: '0']
+  state varchar
+  create_date datetime
+  date_closed datetime
+  date_opened datetime
+  date_last_stage_updated datetime
+  refuse_date datetime
+  probability decimal [default: '0']
+  salary_proposed decimal [default: '0']
+  salary_expected decimal [default: '0']
+  delay_close decimal [default: '0']
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table recruitments_candidate_applicant_categories {
+  candidate_id integer
+  category_id integer
+}
+
+Table recruitments_candidate_skills {
+  id integer [pk]
+  candidate_id integer [not null]
+  skill_id integer [not null]
+  skill_level_id integer [not null]
+  skill_type_id integer [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table recruitments_candidates {
+  id integer [pk]
+  message_bounced integer [default: '0']
+  company_id integer
+  partner_id integer
+  degree_id integer
+  manager_id integer
+  employee_id integer
+  creator_id integer
+  email_cc varchar
+  name varchar
+  email_from varchar
+  phone varchar
+  linkedin_profile varchar
+  priority integer [default: '0']
+  availability_date date
+  candidate_properties text
+  is_active integer [default: '1']
+  color varchar
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table recruitments_degrees {
+  id integer [pk]
+  creator_id integer
+  sort integer [default: '0']
+  name varchar [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table recruitments_job_position_interviewers {
+  job_position_id integer [not null]
+  user_id integer [not null]
+}
+
+Table recruitments_refuse_reasons {
+  id integer [pk]
+  creator_id integer
+  sort integer [not null, default: '0']
+  name varchar [not null]
+  template varchar
+  is_active integer [not null, default: '1']
+  created_at datetime
+  updated_at datetime
+}
+
+Table recruitments_stages {
+  id integer [pk]
+  sort integer
+  creator_id integer
+  name varchar [not null]
+  legend_blocked varchar [not null]
+  legend_done varchar [not null]
+  legend_normal varchar [not null]
+  requirements text
+  hired_stage varchar
+  fold integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+  is_default integer [not null, default: '0']
+}
+
+Table recruitments_stages_jobs {
+  stage_id integer
+  job_id integer
+}
+
+Table role_has_permissions {
+  permission_id integer [pk]
+  role_id integer [pk]
+}
+
+Table roles {
+  id integer [pk]
+  name varchar [not null]
+  guard_name varchar [not null]
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (name, guard_name) [unique]
+  }
+}
+
+Table sales_advance_payment_invoice_order_sales {
+  advance_payment_invoice_id integer [not null]
+  order_id integer [not null]
+}
+
+Table sales_advance_payment_invoices {
+  id integer [pk]
+  currency_id integer
+  company_id integer
+  creator_id integer
+  advance_payment_method varchar [not null]
+  fixed_amount decimal [default: '0']
+  amount decimal [default: '0']
+  deduct_down_payments integer [not null, default: '0']
+  consolidated_billing integer [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table sales_order_invoices {
+  order_id integer [not null]
+  move_id integer [not null]
+}
+
+Table sales_order_line_invoices {
+  order_line_id integer [not null]
+  invoice_line_id integer [not null]
+}
+
+Table sales_order_line_taxes {
+  order_line_id integer [not null]
+  tax_id integer [not null]
+}
+
+Table sales_order_lines {
+  id integer [pk]
+  sort integer
+  order_id integer [not null]
+  company_id integer
+  currency_id integer
+  order_partner_id integer
+  salesman_id integer
+  product_id integer
+  product_uom_id integer
+  linked_sale_order_sale_id integer
+  product_packaging_id integer
+  creator_id integer
+  state varchar
+  display_type varchar
+  virtual_id varchar
+  linked_virtual_id varchar
+  qty_delivered_method varchar
+  invoice_status varchar
+  analytic_distribution varchar
+  name varchar [not null]
+  product_uom_qty decimal [not null, default: '0']
+  product_qty decimal [not null, default: '0']
+  price_unit decimal [not null, default: '0']
+  discount decimal [default: '0']
+  price_subtotal decimal [default: '0']
+  price_total decimal [default: '0']
+  price_reduce_taxexcl decimal [default: '0']
+  price_reduce_taxinc decimal [default: '0']
+  purchase_price decimal [default: '0']
+  margin decimal [default: '0']
+  margin_percent decimal [default: '0']
+  qty_delivered decimal [default: '0']
+  qty_invoiced decimal [default: '0']
+  qty_to_invoice decimal [default: '0']
+  untaxed_amount_invoiced decimal [default: '0']
+  untaxed_amount_to_invoice decimal [default: '0']
+  is_downpayment integer [default: '0']
+  is_expense integer [default: '0']
+  create_date datetime
+  write_date datetime
+  technical_price_unit decimal [default: '0']
+  price_tax decimal [default: '0']
+  product_packaging_qty decimal [default: '0']
+  customer_lead decimal [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+  route_id integer
+  warehouse_id integer
+}
+
+Table sales_order_options {
+  id integer [pk]
+  sort integer [default: '0']
+  order_id integer
+  product_id integer [not null]
+  line_id integer
+  uom_id integer
+  creator_id integer
+  name varchar [not null]
+  quantity decimal
+  price_unit decimal
+  discount decimal
+  created_at datetime
+  updated_at datetime
+}
+
+Table sales_order_tags {
+  order_id integer
+  tag_id integer
+}
+
+Table sales_order_template_products {
+  id integer [pk]
+  sort integer
+  order_template_id integer [not null]
+  company_id integer
+  product_id integer
+  product_uom_id integer
+  creator_id integer
+  display_type varchar
+  name varchar
+  quantity decimal [not null, default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table sales_order_templates {
+  id integer [pk]
+  sort integer [default: '0']
+  company_id integer
+  number_of_days integer
+  creator_id integer
+  name varchar [not null]
+  "note" text
+  journal_id integer
+  is_active integer [default: '0']
+  require_signature integer [default: '0']
+  require_payment integer [default: '0']
+  prepayment_percentage decimal [default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table sales_orders {
+  id integer [pk]
+  utm_source_id integer
+  campaign_id integer
+  medium_id integer
+  company_id integer [not null]
+  partner_id integer [not null]
+  journal_id integer
+  partner_invoice_id integer [not null]
+  partner_shipping_id integer [not null]
+  fiscal_position_id integer
+  payment_term_id integer
+  currency_id integer [not null]
+  user_id integer
+  team_id integer
+  creator_id integer
+  sale_order_template_id integer
+  access_token varchar
+  name varchar [not null]
+  state varchar
+  client_order_ref varchar
+  origin varchar
+  reference varchar
+  signed_by varchar
+  invoice_status varchar
+  validity_date date
+  "note" text
+  currency_rate decimal [default: '0']
+  amount_untaxed decimal [default: '0']
+  amount_tax decimal [default: '0']
+  amount_total decimal [default: '0']
+  locked integer [not null, default: '0']
+  require_signature integer [not null, default: '0']
+  require_payment integer [not null, default: '0']
+  commitment_date date
+  date_order date [not null]
+  signed_on date
+  prepayment_percent decimal [default: '0']
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  delivery_status varchar [default: 'no']
+  warehouse_id integer
+}
+
+Table sales_tags {
+  id integer [pk]
+  creator_id integer
+  name varchar [not null]
+  color varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table sales_team_members {
+  team_id integer [not null]
+  user_id integer [not null]
+}
+
+Table sales_teams {
+  id integer [pk]
+  sort integer [default: '0']
+  company_id integer
+  user_id integer
+  color varchar
+  creator_id integer
+  name varchar [not null]
+  is_active integer [default: '0']
+  invoiced_target decimal [default: '0']
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table sessions {
+  id varchar [pk]
+  user_id integer
+  ip_address varchar
+  user_agent text
+  payload text [not null]
+  last_activity integer [not null]
+
+  Indexes {
+    (user_id)
+    (last_activity)
+  }
+}
+
+Table settings {
+  id integer [pk]
+  group varchar [not null]
+  name varchar [not null]
+  locked integer [not null, default: '0']
+  payload text [not null]
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (group, name) [unique]
+  }
+}
+
+Table states {
+  id integer [pk]
+  country_id integer [not null]
+  name varchar [not null]
+  code varchar [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table table_view_favorites {
+  id integer [pk]
+  is_favorite integer [not null, default: '1']
+  view_type varchar [not null]
+  view_key varchar [not null]
+  filterable_type varchar [not null]
+  user_id integer [not null]
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (view_type, view_key, filterable_type, user_id) [unique]
+  }
+}
+
+Table table_views {
+  id integer [pk]
+  name varchar [not null]
+  icon varchar
+  color varchar
+  is_public integer [not null, default: '0']
+  filters text
+  filterable_type varchar [not null]
+  user_id integer [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table teams {
+  id integer [pk]
+  name varchar [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table time_off_leave_accrual_levels {
+  id integer [pk]
+  sort integer
+  accrual_plan_id integer [not null]
+  start_count integer
+  first_day integer
+  second_day integer
+  first_month_day integer
+  second_month_day integer
+  yearly_day integer
+  postpone_max_days integer
+  accrual_validity_count integer
+  creator_id integer
+  start_type varchar [not null, default: 'days']
+  added_value_type varchar [not null, default: 'days']
+  frequency varchar [not null, default: 'daily']
+  week_day varchar
+  first_month varchar
+  second_month varchar
+  yearly_month varchar
+  action_with_unused_accruals varchar [not null, default: 'lost']
+  accrual_validity_type varchar [default: 'days']
+  added_value integer [not null]
+  maximum_leave integer
+  maximum_leave_yearly integer
+  cap_accrued_time integer
+  cap_accrued_time_yearly integer
+  accrual_validity integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table time_off_leave_accrual_plans {
+  id integer [pk]
+  time_off_type_id integer
+  company_id integer
+  carryover_day integer
+  creator_id integer
+  name varchar [not null]
+  transition_mode varchar [not null, default: 'immediately']
+  accrued_gain_time varchar [not null, default: 'end']
+  carryover_date varchar [not null, default: 'year_start']
+  carryover_month varchar [not null, default: 'jan']
+  added_value_type varchar
+  is_active integer
+  is_based_on_worked_time integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table time_off_leave_allocations {
+  id integer [pk]
+  holiday_status_id integer [not null]
+  employee_id integer [not null]
+  employee_company_id integer
+  manager_id integer
+  approver_id integer
+  second_approver_id integer
+  department_id integer
+  accrual_plan_id integer
+  creator_id integer
+  name varchar
+  state varchar [default: 'confirm']
+  allocation_type varchar [default: 'regular']
+  date_from datetime [not null]
+  date_to datetime
+  last_executed_carryover_date datetime
+  last_called datetime
+  actual_last_called datetime
+  next_call datetime
+  carried_over_days_expiration_date datetime
+  notes text
+  already_accrued integer
+  number_of_days decimal [default: '0']
+  number_of_hours_display decimal [default: '0']
+  yearly_accrued_amount decimal [default: '0']
+  expiring_carryover_days decimal [default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table time_off_leave_mandatory_days {
+  id integer [pk]
+  company_id integer
+  creator_id integer
+  color varchar
+  name varchar [not null]
+  start_date datetime [not null]
+  end_date datetime [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table time_off_leave_types {
+  id integer [pk]
+  sort integer
+  color varchar
+  company_id integer
+  max_allowed_negative integer
+  creator_id integer
+  leave_validation_type varchar [default: 'hr']
+  requires_allocation varchar [not null, default: 'no']
+  employee_requests varchar [not null, default: 'no']
+  allocation_validation_type varchar [default: 'hr']
+  time_type varchar [default: 'leave']
+  request_unit varchar [not null, default: 'day']
+  name varchar [not null]
+  create_calendar_meeting integer
+  is_active integer
+  show_on_dashboard integer
+  unpaid integer
+  include_public_holidays_in_duration integer
+  support_document integer
+  allows_negative integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table time_off_leaves {
+  id integer [pk]
+  user_id integer
+  manager_id integer
+  holiday_status_id integer
+  employee_id integer [not null]
+  employee_company_id integer
+  company_id integer
+  department_id integer
+  calendar_id integer
+  meeting_id integer
+  first_approver_id integer
+  second_approver_id integer
+  creator_id integer
+  private_name varchar
+  state varchar
+  duration_display varchar
+  request_date_from_period varchar
+  request_date_from datetime
+  request_date_to datetime
+  notes text
+  attachment varchar
+  request_unit_half integer
+  request_unit_hours integer
+  date_from datetime
+  date_to datetime
+  number_of_days decimal [default: '0']
+  number_of_hours decimal [default: '0']
+  request_hour_from decimal [default: '0']
+  request_hour_to decimal [default: '0']
+  created_at datetime
+  updated_at datetime
+}
+
+Table time_off_user_leave_types {
+  user_id integer [not null]
+  leave_type_id integer [not null]
+}
+
+Table unit_of_measure_categories {
+  id integer [pk]
+  name varchar [not null]
+  creator_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table unit_of_measures {
+  id integer [pk]
+  type varchar [not null]
+  name varchar [not null]
+  factor decimal [default: '0']
+  rounding decimal [default: '0']
+  category_id integer [not null]
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table user_allowed_companies {
+  id integer [pk]
+  user_id integer [not null]
+  company_id integer [not null]
+}
+
+Table user_invitations {
+  id integer [pk]
+  email varchar [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table user_team {
+  user_id integer [not null]
+  team_id integer [not null]
+}
+
+Table users {
+  id integer [pk]
+  name varchar [not null]
+  email varchar [not null]
+  email_verified_at datetime
+  language varchar
+  is_active integer [not null, default: '1']
+  password varchar [not null]
+  remember_token varchar
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+  resource_permission varchar [not null, default: 'individual']
+  default_company_id integer
+  partner_id integer
+
+  Indexes {
+    (email) [unique]
+  }
+}
+
+Table utm_campaigns {
+  id integer [pk]
+  user_id integer
+  stage_id integer [not null]
+  color varchar
+  created_by integer
+  name varchar [not null]
+  title varchar [not null]
+  is_active integer [not null, default: '0']
+  is_auto_campaign integer [not null, default: '0']
+  company_id integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table utm_mediums {
+  id integer [pk]
+  creator_id integer
+  name varchar [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table utm_sources {
+  id integer [pk]
+  creator_id integer
+  name varchar [not null]
+  created_at datetime
+  updated_at datetime
+}
+
+Table utm_stages {
+  id integer [pk]
+  sort integer
+  name varchar [not null]
+  created_by integer
+  created_at datetime
+  updated_at datetime
+}
+
+Table website_pages {
+  id integer [pk]
+  title varchar [not null]
+  content text [not null]
+  slug varchar [not null]
+  is_published integer [not null, default: '0']
+  is_header_visible integer [not null, default: '0']
+  is_footer_visible integer [not null, default: '0']
+  published_at datetime
+  meta_title varchar
+  meta_keywords varchar
+  meta_description text
+  creator_id integer
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+
+  Indexes {
+    (slug) [unique]
+  }
+}
+
+// Relationships
+Ref: accounts_account_account_tags.account_tag_id > accounts_account_tags.id
+Ref: accounts_account_account_tags.account_id > accounts_accounts.id
+Ref: accounts_account_journals.journal_id > accounts_journals.id
+Ref: accounts_account_journals.account_id > accounts_accounts.id
+Ref: accounts_account_move_lines.purchase_order_line_id > purchases_order_lines.id
+Ref: accounts_account_move_lines.full_reconcile_id > accounts_full_reconciles.id
+Ref: accounts_account_move_lines.move_id > accounts_account_moves.id
+Ref: accounts_account_move_lines.journal_id > accounts_journals.id
+Ref: accounts_account_move_lines.company_id > companies.id
+Ref: accounts_account_move_lines.company_currency_id > currencies.id
+Ref: accounts_account_move_lines.reconcile_id > accounts_reconciles.id
+Ref: accounts_account_move_lines.payment_id > accounts_account_payments.id
+Ref: accounts_account_move_lines.tax_repartition_line_id > accounts_tax_partition_lines.id
+Ref: accounts_account_move_lines.account_id > accounts_accounts.id
+Ref: accounts_account_move_lines.currency_id > currencies.id
+Ref: accounts_account_move_lines.partner_id > partners_partners.id
+Ref: accounts_account_move_lines.group_tax_id > accounts_taxes.id
+Ref: accounts_account_move_lines.tax_line_id > accounts_taxes.id
+Ref: accounts_account_move_lines.tax_group_id > accounts_tax_groups.id
+Ref: accounts_account_move_lines.statement_id > accounts_bank_statements.id
+Ref: accounts_account_move_lines.statement_line_id > accounts_bank_statement_lines.id
+Ref: accounts_account_move_lines.product_id > products_products.id
+Ref: accounts_account_move_lines.uom_id > unit_of_measures.id
+Ref: accounts_account_move_lines.created_by > users.id
+Ref: accounts_account_moves.medium_id > utm_mediums.id
+Ref: accounts_account_moves.source_id > utm_sources.id
+Ref: accounts_account_moves.creator_id > users.id
+Ref: accounts_account_moves.invoice_cash_rounding_id > accounts_cash_roundings.id
+Ref: accounts_account_moves.preferred_payment_method_line_id > accounts_payment_method_lines.id
+Ref: accounts_account_moves.invoice_incoterm_id > accounts_incoterms.id
+Ref: accounts_account_moves.statement_line_id > accounts_bank_statement_lines.id
+Ref: accounts_account_moves.invoice_user_id > users.id
+Ref: accounts_account_moves.campaign_id > utm_campaigns.id
+Ref: accounts_account_moves.reversed_entry_id > accounts_account_moves.id
+Ref: accounts_account_moves.currency_id > currencies.id
+Ref: accounts_account_moves.fiscal_position_id > accounts_fiscal_positions.id
+Ref: accounts_account_moves.partner_bank_id > partners_bank_accounts.id
+Ref: accounts_account_moves.partner_shipping_id > partners_partners.id
+Ref: accounts_account_moves.commercial_partner_id > partners_partners.id
+Ref: accounts_account_moves.partner_id > partners_partners.id
+Ref: accounts_account_moves.invoice_payment_term_id > accounts_payment_terms.id
+Ref: accounts_account_moves.origin_payment_id > accounts_account_payments.id
+Ref: accounts_account_moves.auto_post_origin_id > accounts_account_moves.id
+Ref: accounts_account_moves.tax_cash_basis_origin_move_id > accounts_account_moves.id
+Ref: accounts_account_moves.company_id > companies.id
+Ref: accounts_account_moves.journal_id > accounts_journals.id
+Ref: accounts_account_moves.tax_cash_basis_reconcile_id > accounts_partial_reconciles.id
+Ref: accounts_account_payment_register_move_lines.move_line_id > accounts_account_move_lines.id
+Ref: accounts_account_payment_register_move_lines.payment_register_id > accounts_payment_registers.id
+Ref: accounts_account_payments.payment_transaction_id > payments_payment_transactions.id
+Ref: accounts_account_payments.payment_token_id > payments_payment_tokens.id
+Ref: accounts_account_payments.source_payment_id > accounts_account_payments.id
+Ref: accounts_account_payments.created_by > users.id
+Ref: accounts_account_payments.destination_account_id > accounts_accounts.id
+Ref: accounts_account_payments.outstanding_account_id > accounts_accounts.id
+Ref: accounts_account_payments.partner_id > partners_partners.id
+Ref: accounts_account_payments.currency_id > currencies.id
+Ref: accounts_account_payments.payment_method_id > accounts_payment_methods.id
+Ref: accounts_account_payments.payment_method_line_id > accounts_payment_method_lines.id
+Ref: accounts_account_payments.paired_internal_transfer_payment_id > accounts_account_payments.id
+Ref: accounts_account_payments.partner_bank_id > partners_bank_accounts.id
+Ref: accounts_account_payments.company_id > companies.id
+Ref: accounts_account_payments.journal_id > accounts_journals.id
+Ref: accounts_account_payments.move_id > accounts_account_moves.id
+Ref: accounts_account_tags.creator_id > users.id
+Ref: accounts_account_tags.country_id > countries.id
+Ref: accounts_account_taxes.tax_id > accounts_taxes.id
+Ref: accounts_account_taxes.account_id > accounts_accounts.id
+Ref: accounts_accounts.creator_id > users.id
+Ref: accounts_accounts.currency_id > currencies.id
+Ref: accounts_accounts_move_line_taxes.tax_id > accounts_taxes.id
+Ref: accounts_accounts_move_line_taxes.move_line_id > accounts_account_move_lines.id
+Ref: accounts_accounts_move_payment.payment_id > accounts_account_payments.id
+Ref: accounts_accounts_move_payment.invoice_id > accounts_account_moves.id
+Ref: accounts_accounts_move_reversal_move.reversal_id > accounts_accounts_move_reversals.id
+Ref: accounts_accounts_move_reversal_move.move_id > accounts_account_moves.id
+Ref: accounts_accounts_move_reversal_new_move.reversal_id > accounts_accounts_move_reversals.id
+Ref: accounts_accounts_move_reversal_new_move.new_move_id > accounts_account_moves.id
+Ref: accounts_accounts_move_reversals.creator_id > users.id
+Ref: accounts_accounts_move_reversals.company_id > companies.id
+Ref: accounts_bank_statement_lines.move_id > accounts_account_moves.id
+Ref: accounts_bank_statement_lines.journal_id > accounts_journals.id
+Ref: accounts_bank_statement_lines.company_id > companies.id
+Ref: accounts_bank_statement_lines.statement_id > accounts_bank_statements.id
+Ref: accounts_bank_statement_lines.partner_id > partners_partners.id
+Ref: accounts_bank_statement_lines.currency_id > currencies.id
+Ref: accounts_bank_statement_lines.foreign_currency_id > currencies.id
+Ref: accounts_bank_statement_lines.created_by > users.id
+Ref: accounts_bank_statements.created_by > users.id
+Ref: accounts_bank_statements.journal_id > accounts_journals.id
+Ref: accounts_bank_statements.company_id > companies.id
+Ref: accounts_cash_roundings.loss_account_id > accounts_accounts.id
+Ref: accounts_cash_roundings.profit_account_id > accounts_accounts.id
+Ref: accounts_cash_roundings.creator_id > users.id
+Ref: accounts_fiscal_position_taxes.creator_id > users.id
+Ref: accounts_fiscal_position_taxes.tax_destination_id > accounts_taxes.id
+Ref: accounts_fiscal_position_taxes.tax_source_id > accounts_taxes.id
+Ref: accounts_fiscal_position_taxes.company_id > companies.id
+Ref: accounts_fiscal_position_taxes.fiscal_position_id > accounts_fiscal_positions.id
+Ref: accounts_fiscal_positions.creator_id > users.id
+Ref: accounts_fiscal_positions.country_group_id > countries.id
+Ref: accounts_fiscal_positions.country_id > countries.id
+Ref: accounts_fiscal_positions.company_id > companies.id
+Ref: accounts_full_reconciles.created_id > users.id
+Ref: accounts_full_reconciles.exchange_move_id > accounts_account_moves.id
+Ref: accounts_incoterms.creator_id > users.id
+Ref: accounts_journal_accounts.account_id > accounts_accounts.id
+Ref: accounts_journal_accounts.journal_id > accounts_journals.id
+Ref: accounts_journals.creator_id > users.id
+Ref: accounts_journals.bank_account_id > banks.id
+Ref: accounts_journals.loss_account_id > accounts_accounts.id
+Ref: accounts_journals.profit_account_id > accounts_accounts.id
+Ref: accounts_journals.company_id > companies.id
+Ref: accounts_journals.currency_id > currencies.id
+Ref: accounts_journals.suspense_account_id > accounts_accounts.id
+Ref: accounts_journals.default_account_id > accounts_accounts.id
+Ref: accounts_partial_reconciles.created_by > users.id
+Ref: accounts_partial_reconciles.company_id > companies.id
+Ref: accounts_partial_reconciles.credit_currency_id > currencies.id
+Ref: accounts_partial_reconciles.debit_currency_id > currencies.id
+Ref: accounts_partial_reconciles.exchange_move_id > accounts_account_moves.id
+Ref: accounts_partial_reconciles.full_reconcile_id > accounts_full_reconciles.id
+Ref: accounts_partial_reconciles.credit_move_id > accounts_account_moves.id
+Ref: accounts_partial_reconciles.debit_move_id > accounts_account_moves.id
+Ref: accounts_payment_due_terms.creator_id > users.id
+Ref: accounts_payment_due_terms.payment_id > accounts_payment_terms.id
+Ref: accounts_payment_method_lines.creator_id > users.id
+Ref: accounts_payment_method_lines.journal_id > accounts_journals.id
+Ref: accounts_payment_method_lines.payment_account_id > accounts_accounts.id
+Ref: accounts_payment_method_lines.payment_method_id > accounts_payment_methods.id
+Ref: accounts_payment_methods.created_by > users.id
+Ref: accounts_payment_registers.creator_id > users.id
+Ref: accounts_payment_registers.writeoff_account_id > accounts_accounts.id
+Ref: accounts_payment_registers.payment_method_line_id > accounts_payment_method_lines.id
+Ref: accounts_payment_registers.partner_id > partners_partners.id
+Ref: accounts_payment_registers.company_id > companies.id
+Ref: accounts_payment_registers.source_currency_id > currencies.id
+Ref: accounts_payment_registers.custom_user_currency_id > currencies.id
+Ref: accounts_payment_registers.partner_bank_id > partners_bank_accounts.id
+Ref: accounts_payment_registers.journal_id > accounts_journals.id
+Ref: accounts_payment_registers.currency_id > currencies.id
+Ref: accounts_payment_terms.creator_id > users.id
+Ref: accounts_payment_terms.company_id > companies.id
+Ref: accounts_product_supplier_taxes.tax_id > accounts_taxes.id
+Ref: accounts_product_supplier_taxes.product_id > products_products.id
+Ref: accounts_product_taxes.tax_id > accounts_taxes.id
+Ref: accounts_product_taxes.product_id > products_products.id
+Ref: accounts_reconciles.created_by > users.id
+Ref: accounts_reconciles.company_id > companies.id
+Ref: accounts_tax_groups.creator_id > users.id
+Ref: accounts_tax_groups.country_id > countries.id
+Ref: accounts_tax_groups.company_id > companies.id
+Ref: accounts_tax_partition_lines.creator_id > users.id
+Ref: accounts_tax_partition_lines.company_id > companies.id
+Ref: accounts_tax_partition_lines.tax_id > accounts_taxes.id
+Ref: accounts_tax_partition_lines.account_id > accounts_accounts.id
+Ref: accounts_tax_taxes.child_tax_id > accounts_taxes.id
+Ref: accounts_tax_taxes.parent_tax_id > accounts_taxes.id
+Ref: accounts_taxes.creator_id > users.id
+Ref: accounts_taxes.country_id > countries.id
+Ref: accounts_taxes.cash_basis_transition_account_id > accounts_accounts.id
+Ref: accounts_taxes.tax_group_id > accounts_tax_groups.id
+Ref: accounts_taxes.company_id > companies.id
+Ref: activity_plan_templates.creator_id > users.id
+Ref: activity_plan_templates.responsible_id > users.id
+Ref: activity_plan_templates.activity_type_id > activity_types.id
+Ref: activity_plan_templates.plan_id > activity_plans.id
+Ref: activity_plans.department_id > employees_departments.id
+Ref: activity_plans.creator_id > users.id
+Ref: activity_plans.company_id > companies.id
+Ref: activity_type_suggestions.suggested_activity_type_id > activity_types.id
+Ref: activity_type_suggestions.activity_type_id > activity_types.id
+Ref: activity_types.triggered_next_type_id > activity_types.id
+Ref: activity_types.default_user_id > users.id
+Ref: activity_types.creator_id > users.id
+Ref: activity_types.activity_plan_id > activity_plans.id
+Ref: analytic_records.task_id > projects_tasks.id
+Ref: analytic_records.project_id > projects_projects.id
+Ref: analytic_records.user_id > users.id
+Ref: analytic_records.partner_id > partners_partners.id
+Ref: analytic_records.company_id > companies.id
+Ref: analytic_records.creator_id > users.id
+Ref: banks.creator_id > users.id
+Ref: banks.country_id > countries.id
+Ref: banks.state_id > states.id
+Ref: chatter_attachments.message_id > chatter_messages.id
+Ref: chatter_attachments.creator_id > users.id
+Ref: chatter_attachments.company_id > companies.id
+Ref: chatter_followers.partner_id > partners_partners.id
+Ref: chatter_messages.assigned_to > users.id
+Ref: chatter_messages.activity_type_id > activity_types.id
+Ref: chatter_messages.company_id > companies.id
+Ref: companies.partner_id > partners_partners.id
+Ref: companies.parent_id > companies.id
+Ref: companies.currency_id > currencies.id
+Ref: companies.creator_id > users.id
+Ref: companies.state_id > states.id
+Ref: companies.country_id > countries.id
+Ref: countries.currency_id > currencies.id
+Ref: employees_calendar_attendances.creator_id > users.id
+Ref: employees_calendar_attendances.calendar_id > employees_calendars.id
+Ref: employees_calendar_leaves.creator_id > users.id
+Ref: employees_calendar_leaves.calendar_id > employees_calendars.id
+Ref: employees_calendar_leaves.company_id > companies.id
+Ref: employees_calendars.company_id > companies.id
+Ref: employees_calendars.creator_id > users.id
+Ref: employees_categories.creator_id > users.id
+Ref: employees_departments.manager_id > employees_employees.id
+Ref: employees_departments.company_id > companies.id
+Ref: employees_departments.parent_id > employees_departments.id
+Ref: employees_departments.master_department_id > employees_departments.id
+Ref: employees_departments.creator_id > users.id
+Ref: employees_departure_reasons.creator_id > users.id
+Ref: employees_employee_categories.category_id > employees_categories.id
+Ref: employees_employee_categories.employee_id > employees_employees.id
+Ref: employees_employee_resume_line_types.creator_id > users.id
+Ref: employees_employee_resumes.user_id > users.id
+Ref: employees_employee_resumes.creator_id > users.id
+Ref: employees_employee_resumes.employee_resume_line_type_id > employees_employee_resume_line_types.id
+Ref: employees_employee_resumes.employee_id > employees_employees.id
+Ref: employees_employee_skills.creator_id > users.id
+Ref: employees_employee_skills.skill_type_id > employees_skill_types.id
+Ref: employees_employee_skills.skill_level_id > employees_skill_levels.id
+Ref: employees_employee_skills.skill_id > employees_skills.id
+Ref: employees_employee_skills.employee_id > employees_employees.id
+Ref: employees_employees.attendance_manager_id > users.id
+Ref: employees_employees.leave_manager_id > users.id
+Ref: employees_employees.bank_account_id > partners_bank_accounts.id
+Ref: employees_employees.departure_reason_id > employees_departure_reasons.id
+Ref: employees_employees.country_of_birth > countries.id
+Ref: employees_employees.country_id > countries.id
+Ref: employees_employees.state_id > states.id
+Ref: employees_employees.coach_id > employees_employees.id
+Ref: employees_employees.parent_id > employees_employees.id
+Ref: employees_employees.work_location_id > employees_work_locations.id
+Ref: employees_employees.partner_id > partners_partners.id
+Ref: employees_employees.job_id > employees_job_positions.id
+Ref: employees_employees.department_id > employees_departments.id
+Ref: employees_employees.calendar_id > employees_calendars.id
+Ref: employees_employees.creator_id > users.id
+Ref: employees_employees.user_id > users.id
+Ref: employees_employees.company_id > companies.id
+Ref: employees_employees.private_country_id > countries.id
+Ref: employees_employees.private_state_id > states.id
+Ref: employees_employment_types.creator_id > users.id
+Ref: employees_employment_types.country_id > countries.id
+Ref: employees_job_positions.recruiter_id > users.id
+Ref: employees_job_positions.industry_id > partners_industries.id
+Ref: employees_job_positions.manager_id > employees_employees.id
+Ref: employees_job_positions.address_id > partners_partners.id
+Ref: employees_job_positions.department_id > employees_departments.id
+Ref: employees_job_positions.creator_id > users.id
+Ref: employees_job_positions.company_id > companies.id
+Ref: employees_job_positions.employment_type_id > employees_employment_types.id
+Ref: employees_skill_levels.creator_id > users.id
+Ref: employees_skill_levels.skill_type_id > employees_skill_types.id
+Ref: employees_skill_types.creator_id > users.id
+Ref: employees_skills.creator_id > users.id
+Ref: employees_skills.skill_type_id > employees_skill_types.id
+Ref: employees_work_locations.creator_id > users.id
+Ref: employees_work_locations.company_id > companies.id
+Ref: inventories_category_routes.route_id > inventories_routes.id
+Ref: inventories_category_routes.category_id > products_categories.id
+Ref: inventories_locations.creator_id > users.id
+Ref: inventories_locations.warehouse_id > inventories_warehouses.id
+Ref: inventories_locations.storage_category_id > inventories_storage_categories.id
+Ref: inventories_locations.company_id > companies.id
+Ref: inventories_locations.parent_id > inventories_locations.id
+Ref: inventories_lots.creator_id > users.id
+Ref: inventories_lots.company_id > companies.id
+Ref: inventories_lots.location_id > inventories_locations.id
+Ref: inventories_lots.uom_id > unit_of_measures.id
+Ref: inventories_lots.product_id > products_products.id
+Ref: inventories_move_destinations.destination_move_id > inventories_moves.id
+Ref: inventories_move_destinations.origin_move_id > inventories_moves.id
+Ref: inventories_move_lines.creator_id > users.id
+Ref: inventories_move_lines.company_id > companies.id
+Ref: inventories_move_lines.destination_location_id > inventories_locations.id
+Ref: inventories_move_lines.source_location_id > inventories_locations.id
+Ref: inventories_move_lines.partner_id > partners_partners.id
+Ref: inventories_move_lines.lot_id > inventories_lots.id
+Ref: inventories_move_lines.package_level_id > inventories_package_levels.id
+Ref: inventories_move_lines.result_package_id > inventories_packages.id
+Ref: inventories_move_lines.package_id > inventories_packages.id
+Ref: inventories_move_lines.uom_id > unit_of_measures.id
+Ref: inventories_move_lines.product_id > products_products.id
+Ref: inventories_move_lines.operation_id > inventories_operations.id
+Ref: inventories_move_lines.move_id > inventories_moves.id
+Ref: inventories_moves.sale_order_line_id > sales_order_lines.id
+Ref: inventories_moves.creator_id > users.id
+Ref: inventories_moves.company_id > companies.id
+Ref: inventories_moves.product_packaging_id > products_packagings.id
+Ref: inventories_moves.package_level_id > inventories_package_levels.id
+Ref: inventories_moves.warehouse_id > inventories_warehouses.id
+Ref: inventories_moves.restrict_partner_id > partners_partners.id
+Ref: inventories_moves.origin_returned_move_id > inventories_moves.id
+Ref: inventories_moves.operation_type_id > inventories_operation_types.id
+Ref: inventories_moves.rule_id > inventories_rules.id
+Ref: inventories_moves.scrap_id > inventories_scraps.id
+Ref: inventories_moves.partner_id > partners_partners.id
+Ref: inventories_moves.final_location_id > inventories_locations.id
+Ref: inventories_moves.destination_location_id > inventories_locations.id
+Ref: inventories_moves.source_location_id > inventories_locations.id
+Ref: inventories_moves.uom_id > unit_of_measures.id
+Ref: inventories_moves.product_id > products_products.id
+Ref: inventories_moves.operation_id > inventories_operations.id
+Ref: inventories_moves.purchase_order_line_id > purchases_order_lines.id
+Ref: inventories_operation_types.creator_id > users.id
+Ref: inventories_operation_types.company_id > companies.id
+Ref: inventories_operation_types.warehouse_id > inventories_warehouses.id
+Ref: inventories_operation_types.destination_location_id > inventories_locations.id
+Ref: inventories_operation_types.source_location_id > inventories_locations.id
+Ref: inventories_operation_types.return_operation_type_id > inventories_operation_types.id
+Ref: inventories_operations.sale_order_id > sales_orders.id
+Ref: inventories_operations.user_id > users.id
+Ref: inventories_operations.owner_id > users.id
+Ref: inventories_operations.operation_type_id > inventories_operation_types.id
+Ref: inventories_operations.source_location_id > inventories_locations.id
+Ref: inventories_operations.destination_location_id > inventories_locations.id
+Ref: inventories_operations.back_order_id > inventories_operations.id
+Ref: inventories_operations.return_id > inventories_operations.id
+Ref: inventories_operations.partner_id > partners_partners.id
+Ref: inventories_operations.company_id > companies.id
+Ref: inventories_operations.creator_id > users.id
+Ref: inventories_order_points.creator_id > users.id
+Ref: inventories_order_points.company_id > companies.id
+Ref: inventories_order_points.route_id > inventories_routes.id
+Ref: inventories_order_points.location_id > inventories_locations.id
+Ref: inventories_order_points.warehouse_id > inventories_warehouses.id
+Ref: inventories_order_points.product_category_id > products_categories.id
+Ref: inventories_order_points.product_id > products_products.id
+Ref: inventories_package_destinations.creator_id > users.id
+Ref: inventories_package_destinations.destination_location_id > inventories_locations.id
+Ref: inventories_package_destinations.operation_id > inventories_operations.id
+Ref: inventories_package_levels.creator_id > users.id
+Ref: inventories_package_levels.company_id > companies.id
+Ref: inventories_package_levels.destination_location_id > inventories_locations.id
+Ref: inventories_package_levels.operation_id > inventories_operations.id
+Ref: inventories_package_levels.package_id > inventories_packages.id
+Ref: inventories_package_types.creator_id > users.id
+Ref: inventories_package_types.company_id > companies.id
+Ref: inventories_packages.creator_id > users.id
+Ref: inventories_packages.company_id > companies.id
+Ref: inventories_packages.location_id > inventories_locations.id
+Ref: inventories_packages.package_type_id > inventories_package_types.id
+Ref: inventories_product_quantities.creator_id > users.id
+Ref: inventories_product_quantities.company_id > companies.id
+Ref: inventories_product_quantities.user_id > users.id
+Ref: inventories_product_quantities.partner_id > partners_partners.id
+Ref: inventories_product_quantities.package_id > inventories_packages.id
+Ref: inventories_product_quantities.lot_id > inventories_lots.id
+Ref: inventories_product_quantities.storage_category_id > inventories_storage_categories.id
+Ref: inventories_product_quantities.location_id > inventories_locations.id
+Ref: inventories_product_quantities.product_id > products_products.id
+Ref: inventories_product_quantity_relocations.creator_id > users.id
+Ref: inventories_product_quantity_relocations.destination_package_id > inventories_packages.id
+Ref: inventories_product_quantity_relocations.destination_location_id > inventories_locations.id
+Ref: inventories_product_routes.route_id > inventories_routes.id
+Ref: inventories_product_routes.product_id > products_products.id
+Ref: inventories_route_packagings.packaging_id > products_packagings.id
+Ref: inventories_route_packagings.route_id > inventories_routes.id
+Ref: inventories_route_warehouses.route_id > inventories_routes.id
+Ref: inventories_route_warehouses.warehouse_id > inventories_warehouses.id
+Ref: inventories_routes.creator_id > users.id
+Ref: inventories_routes.company_id > companies.id
+Ref: inventories_routes.supplier_warehouse_id > inventories_warehouses.id
+Ref: inventories_routes.supplied_warehouse_id > inventories_warehouses.id
+Ref: inventories_rules.creator_id > users.id
+Ref: inventories_rules.company_id > companies.id
+Ref: inventories_rules.propagate_warehouse_id > inventories_warehouses.id
+Ref: inventories_rules.warehouse_id > inventories_warehouses.id
+Ref: inventories_rules.partner_address_id > partners_partners.id
+Ref: inventories_rules.operation_type_id > inventories_operation_types.id
+Ref: inventories_rules.route_id > inventories_routes.id
+Ref: inventories_rules.destination_location_id > inventories_locations.id
+Ref: inventories_rules.source_location_id > inventories_locations.id
+Ref: inventories_scrap_tags.scrap_id > inventories_scraps.id
+Ref: inventories_scrap_tags.tag_id > inventories_tags.id
+Ref: inventories_scraps.creator_id > users.id
+Ref: inventories_scraps.company_id > companies.id
+Ref: inventories_scraps.destination_location_id > inventories_locations.id
+Ref: inventories_scraps.source_location_id > inventories_locations.id
+Ref: inventories_scraps.operation_id > inventories_operations.id
+Ref: inventories_scraps.partner_id > partners_partners.id
+Ref: inventories_scraps.package_id > inventories_packages.id
+Ref: inventories_scraps.lot_id > inventories_lots.id
+Ref: inventories_scraps.uom_id > unit_of_measures.id
+Ref: inventories_scraps.product_id > products_products.id
+Ref: inventories_storage_categories.creator_id > users.id
+Ref: inventories_storage_categories.company_id > companies.id
+Ref: inventories_storage_category_capacities.creator_id > users.id
+Ref: inventories_storage_category_capacities.package_type_id > inventories_package_types.id
+Ref: inventories_storage_category_capacities.storage_category_id > inventories_storage_categories.id
+Ref: inventories_storage_category_capacities.product_id > products_products.id
+Ref: inventories_tags.creator_id > users.id
+Ref: inventories_warehouse_resupplies.supplier_warehouse_id > inventories_warehouses.id
+Ref: inventories_warehouse_resupplies.supplied_warehouse_id > inventories_warehouses.id
+Ref: inventories_warehouses.delivery_route_id > inventories_routes.id
+Ref: inventories_warehouses.reception_route_id > inventories_routes.id
+Ref: inventories_warehouses.crossdock_route_id > inventories_routes.id
+Ref: inventories_warehouses.xdock_type_id > inventories_operation_types.id
+Ref: inventories_warehouses.store_type_id > inventories_operation_types.id
+Ref: inventories_warehouses.qc_type_id > inventories_operation_types.id
+Ref: inventories_warehouses.internal_type_id > inventories_operation_types.id
+Ref: inventories_warehouses.in_type_id > inventories_operation_types.id
+Ref: inventories_warehouses.out_type_id > inventories_operation_types.id
+Ref: inventories_warehouses.pack_type_id > inventories_operation_types.id
+Ref: inventories_warehouses.pick_type_id > inventories_operation_types.id
+Ref: inventories_warehouses.buy_pull_id > inventories_rules.id
+Ref: inventories_warehouses.mto_pull_id > inventories_rules.id
+Ref: inventories_warehouses.pack_stock_location_id > inventories_locations.id
+Ref: inventories_warehouses.output_stock_location_id > inventories_locations.id
+Ref: inventories_warehouses.qc_stock_location_id > inventories_locations.id
+Ref: inventories_warehouses.input_stock_location_id > inventories_locations.id
+Ref: inventories_warehouses.lot_stock_location_id > inventories_locations.id
+Ref: inventories_warehouses.view_location_id > inventories_locations.id
+Ref: inventories_warehouses.company_id > companies.id
+Ref: inventories_warehouses.partner_address_id > partners_partners.id
+Ref: inventories_warehouses.creator_id > users.id
+Ref: job_position_skills.skill_id > employees_skills.id
+Ref: job_position_skills.job_position_id > employees_job_positions.id
+Ref: model_has_permissions.permission_id > permissions.id
+Ref: model_has_roles.role_id > roles.id
+Ref: pages.parent_id > pages.id
+Ref: partners_bank_accounts.bank_id > banks.id
+Ref: partners_bank_accounts.partner_id > partners_partners.id
+Ref: partners_bank_accounts.creator_id > users.id
+Ref: partners_industries.creator_id > users.id
+Ref: partners_partner_tag.partner_id > partners_partners.id
+Ref: partners_partner_tag.tag_id > partners_tags.id
+Ref: partners_partners.property_outbound_payment_method_line_id > accounts_payment_method_lines.id
+Ref: partners_partners.property_inbound_payment_method_line_id > accounts_payment_method_lines.id
+Ref: partners_partners.property_supplier_payment_term_id > accounts_payment_terms.id
+Ref: partners_partners.property_payment_term_id > accounts_payment_terms.id
+Ref: partners_partners.property_account_position_id > accounts_accounts.id
+Ref: partners_partners.property_account_receivable_id > accounts_accounts.id
+Ref: partners_partners.property_account_payable_id > accounts_accounts.id
+Ref: partners_partners.industry_id > partners_industries.id
+Ref: partners_partners.company_id > companies.id
+Ref: partners_partners.title_id > partners_titles.id
+Ref: partners_partners.user_id > users.id
+Ref: partners_partners.creator_id > users.id
+Ref: partners_partners.parent_id > partners_partners.id
+Ref: partners_partners.state_id > states.id
+Ref: partners_partners.country_id > countries.id
+Ref: partners_tags.creator_id > users.id
+Ref: partners_titles.creator_id > users.id
+Ref: payments_payment_methods.created_by > users.id
+Ref: payments_payment_methods.primary_payment_method_id > payments_payment_methods.id
+Ref: payments_payment_tokens.created_by > users.id
+Ref: payments_payment_tokens.partner_id > partners_partners.id
+Ref: payments_payment_tokens.payment_method_id > payments_payment_methods.id
+Ref: payments_payment_tokens.company_id > companies.id
+Ref: payments_payment_transactions.created_id > users.id
+Ref: payments_payment_transactions.foreign_currency_id > currencies.id
+Ref: payments_payment_transactions.currency_id > currencies.id
+Ref: payments_payment_transactions.partner_id > partners_partners.id
+Ref: payments_payment_transactions.statement_id > accounts_bank_statements.id
+Ref: payments_payment_transactions.company_id > companies.id
+Ref: payments_payment_transactions.journal_id > accounts_journals.id
+Ref: payments_payment_transactions.move_id > accounts_account_moves.id
+Ref: plugin_dependencies.dependency_id > plugins.id
+Ref: plugin_dependencies.plugin_id > plugins.id
+Ref: products_attribute_options.creator_id > users.id
+Ref: products_attribute_options.attribute_id > products_attributes.id
+Ref: products_attributes.creator_id > users.id
+Ref: products_categories.creator_id > users.id
+Ref: products_categories.parent_id > products_categories.id
+Ref: products_packagings.package_type_id > inventories_package_types.id
+Ref: products_packagings.product_id > products_products.id
+Ref: products_packagings.creator_id > users.id
+Ref: products_packagings.company_id > companies.id
+Ref: products_price_rule_items.creator_id > users.id
+Ref: products_price_rule_items.company_id > companies.id
+Ref: products_price_rule_items.currency_id > currencies.id
+Ref: products_price_rule_items.category_id > products_categories.id
+Ref: products_price_rule_items.product_id > products_products.id
+Ref: products_price_rule_items.base_price_rule_id > products_price_rules.id
+Ref: products_price_rule_items.price_rule_id > products_price_rules.id
+Ref: products_price_rules.creator_id > users.id
+Ref: products_price_rules.company_id > companies.id
+Ref: products_price_rules.currency_id > currencies.id
+Ref: products_product_attribute_values.attribute_option_id > products_attribute_options.id
+Ref: products_product_attribute_values.product_attribute_id > products_product_attributes.id
+Ref: products_product_attribute_values.attribute_id > products_attributes.id
+Ref: products_product_attribute_values.product_id > products_products.id
+Ref: products_product_attributes.creator_id > users.id
+Ref: products_product_attributes.attribute_id > products_attributes.id
+Ref: products_product_attributes.product_id > products_products.id
+Ref: products_product_combinations.product_attribute_value_id > products_product_attribute_values.id
+Ref: products_product_combinations.product_id > products_products.id
+Ref: products_product_price_lists.creator_id > users.id
+Ref: products_product_price_lists.company_id > companies.id
+Ref: products_product_price_lists.currency_id > currencies.id
+Ref: products_product_suppliers.creator_id > users.id
+Ref: products_product_suppliers.company_id > companies.id
+Ref: products_product_suppliers.currency_id > currencies.id
+Ref: products_product_suppliers.partner_id > partners_partners.id
+Ref: products_product_suppliers.product_id > products_products.id
+Ref: products_product_tag.product_id > products_products.id
+Ref: products_product_tag.tag_id > products_tags.id
+Ref: products_products.property_account_expense_id > accounts_accounts.id
+Ref: products_products.property_account_income_id > accounts_accounts.id
+Ref: products_products.creator_id > users.id
+Ref: products_products.company_id > companies.id
+Ref: products_products.category_id > products_categories.id
+Ref: products_products.uom_po_id > unit_of_measures.id
+Ref: products_products.uom_id > unit_of_measures.id
+Ref: products_products.parent_id > products_products.id
+Ref: products_products.responsible_id > users.id
+Ref: products_tags.creator_id > users.id
+Ref: projects_milestones.creator_id > users.id
+Ref: projects_milestones.project_id > projects_projects.id
+Ref: projects_project_stages.creator_id > users.id
+Ref: projects_project_stages.company_id > companies.id
+Ref: projects_project_tag.project_id > projects_projects.id
+Ref: projects_project_tag.tag_id > projects_tags.id
+Ref: projects_projects.creator_id > users.id
+Ref: projects_projects.user_id > users.id
+Ref: projects_projects.company_id > companies.id
+Ref: projects_projects.partner_id > partners_partners.id
+Ref: projects_projects.stage_id > projects_project_stages.id
+Ref: projects_tags.creator_id > users.id
+Ref: projects_task_stages.creator_id > users.id
+Ref: projects_task_stages.user_id > users.id
+Ref: projects_task_stages.company_id > companies.id
+Ref: projects_task_stages.project_id > projects_projects.id
+Ref: projects_task_tag.task_id > projects_tasks.id
+Ref: projects_task_tag.tag_id > projects_tags.id
+Ref: projects_task_users.stage_id > projects_task_stages.id
+Ref: projects_task_users.user_id > users.id
+Ref: projects_task_users.task_id > projects_tasks.id
+Ref: projects_tasks.creator_id > users.id
+Ref: projects_tasks.company_id > companies.id
+Ref: projects_tasks.parent_id > projects_tasks.id
+Ref: projects_tasks.partner_id > partners_partners.id
+Ref: projects_tasks.stage_id > projects_task_stages.id
+Ref: projects_tasks.milestone_id > projects_milestones.id
+Ref: projects_tasks.project_id > projects_projects.id
+Ref: projects_user_project_favorites.user_id > users.id
+Ref: projects_user_project_favorites.project_id > projects_projects.id
+Ref: purchases_order_account_moves.move_id > accounts_account_moves.id
+Ref: purchases_order_account_moves.order_id > purchases_orders.id
+Ref: purchases_order_groups.creator_id > users.id
+Ref: purchases_order_line_taxes.tax_id > accounts_taxes.id
+Ref: purchases_order_line_taxes.order_line_id > purchases_order_lines.id
+Ref: purchases_order_lines.order_point_id > inventories_order_points.id
+Ref: purchases_order_lines.final_location_id > inventories_locations.id
+Ref: purchases_order_lines.uom_id > unit_of_measures.id
+Ref: purchases_order_lines.product_id > products_products.id
+Ref: purchases_order_lines.product_packaging_id > products_packagings.id
+Ref: purchases_order_lines.order_id > purchases_orders.id
+Ref: purchases_order_lines.partner_id > partners_partners.id
+Ref: purchases_order_lines.currency_id > currencies.id
+Ref: purchases_order_lines.company_id > companies.id
+Ref: purchases_order_lines.creator_id > users.id
+Ref: purchases_order_operations.inventory_operation_id > inventories_operations.id
+Ref: purchases_order_operations.purchase_order_id > purchases_orders.id
+Ref: purchases_orders.operation_type_id > inventories_operation_types.id
+Ref: purchases_orders.requisition_id > purchases_requisitions.id
+Ref: purchases_orders.purchases_group_id > purchases_order_groups.id
+Ref: purchases_orders.partner_id > partners_partners.id
+Ref: purchases_orders.currency_id > currencies.id
+Ref: purchases_orders.fiscal_position_id > accounts_fiscal_positions.id
+Ref: purchases_orders.payment_term_id > accounts_payment_terms.id
+Ref: purchases_orders.incoterm_id > accounts_incoterms.id
+Ref: purchases_orders.user_id > users.id
+Ref: purchases_orders.company_id > companies.id
+Ref: purchases_orders.creator_id > users.id
+Ref: purchases_requisition_lines.creator_id > users.id
+Ref: purchases_requisition_lines.company_id > companies.id
+Ref: purchases_requisition_lines.uom_id > unit_of_measures.id
+Ref: purchases_requisition_lines.product_id > products_products.id
+Ref: purchases_requisition_lines.requisition_id > purchases_requisitions.id
+Ref: purchases_requisitions.creator_id > users.id
+Ref: purchases_requisitions.company_id > companies.id
+Ref: purchases_requisitions.user_id > users.id
+Ref: purchases_requisitions.partner_id > partners_partners.id
+Ref: purchases_requisitions.currency_id > currencies.id
+Ref: recruitments_applicant_applicant_categories.category_id > recruitments_applicant_categories.id
+Ref: recruitments_applicant_applicant_categories.applicant_id > recruitments_applicants.id
+Ref: recruitments_applicant_categories.creator_id > users.id
+Ref: recruitments_applicant_interviewers.interviewer_id > users.id
+Ref: recruitments_applicant_interviewers.applicant_id > recruitments_applicants.id
+Ref: recruitments_applicants.creator_id > users.id
+Ref: recruitments_applicants.refuse_reason_id > recruitments_refuse_reasons.id
+Ref: recruitments_applicants.department_id > employees_departments.id
+Ref: recruitments_applicants.job_id > employees_job_positions.id
+Ref: recruitments_applicants.recruiter_id > users.id
+Ref: recruitments_applicants.company_id > companies.id
+Ref: recruitments_applicants.last_stage_id > recruitments_stages.id
+Ref: recruitments_applicants.stage_id > recruitments_stages.id
+Ref: recruitments_applicants.candidate_id > recruitments_candidates.id
+Ref: recruitments_applicants.medium_id > utm_mediums.id
+Ref: recruitments_applicants.source_id > utm_sources.id
+Ref: recruitments_candidate_applicant_categories.category_id > recruitments_applicant_categories.id
+Ref: recruitments_candidate_applicant_categories.candidate_id > recruitments_candidates.id
+Ref: recruitments_candidate_skills.creator_id > users.id
+Ref: recruitments_candidate_skills.skill_type_id > employees_skill_types.id
+Ref: recruitments_candidate_skills.skill_level_id > employees_skill_levels.id
+Ref: recruitments_candidate_skills.skill_id > employees_skills.id
+Ref: recruitments_candidate_skills.candidate_id > recruitments_candidates.id
+Ref: recruitments_candidates.creator_id > users.id
+Ref: recruitments_candidates.employee_id > employees_employees.id
+Ref: recruitments_candidates.manager_id > users.id
+Ref: recruitments_candidates.degree_id > recruitments_degrees.id
+Ref: recruitments_candidates.partner_id > partners_partners.id
+Ref: recruitments_candidates.company_id > companies.id
+Ref: recruitments_degrees.creator_id > users.id
+Ref: recruitments_job_position_interviewers.user_id > users.id
+Ref: recruitments_job_position_interviewers.job_position_id > employees_job_positions.id
+Ref: recruitments_refuse_reasons.creator_id > users.id
+Ref: recruitments_stages.creator_id > users.id
+Ref: recruitments_stages_jobs.job_id > employees_job_positions.id
+Ref: recruitments_stages_jobs.stage_id > recruitments_stages.id
+Ref: role_has_permissions.role_id > roles.id
+Ref: role_has_permissions.permission_id > permissions.id
+Ref: sales_advance_payment_invoice_order_sales.order_id > sales_orders.id
+Ref: sales_advance_payment_invoice_order_sales.advance_payment_invoice_id > sales_advance_payment_invoices.id
+Ref: sales_advance_payment_invoices.creator_id > users.id
+Ref: sales_advance_payment_invoices.company_id > companies.id
+Ref: sales_advance_payment_invoices.currency_id > currencies.id
+Ref: sales_order_invoices.move_id > accounts_account_moves.id
+Ref: sales_order_invoices.order_id > sales_orders.id
+Ref: sales_order_line_invoices.invoice_line_id > accounts_account_move_lines.id
+Ref: sales_order_line_invoices.order_line_id > sales_order_lines.id
+Ref: sales_order_line_taxes.tax_id > accounts_taxes.id
+Ref: sales_order_line_taxes.order_line_id > sales_order_lines.id
+Ref: sales_order_lines.warehouse_id > inventories_warehouses.id
+Ref: sales_order_lines.route_id > inventories_routes.id
+Ref: sales_order_lines.order_id > sales_orders.id
+Ref: sales_order_lines.company_id > companies.id
+Ref: sales_order_lines.currency_id > currencies.id
+Ref: sales_order_lines.order_partner_id > partners_partners.id
+Ref: sales_order_lines.salesman_id > users.id
+Ref: sales_order_lines.product_id > products_products.id
+Ref: sales_order_lines.product_uom_id > unit_of_measures.id
+Ref: sales_order_lines.linked_sale_order_sale_id > sales_order_lines.id
+Ref: sales_order_lines.product_packaging_id > products_packagings.id
+Ref: sales_order_lines.creator_id > users.id
+Ref: sales_order_options.creator_id > users.id
+Ref: sales_order_options.uom_id > unit_of_measures.id
+Ref: sales_order_options.line_id > sales_order_lines.id
+Ref: sales_order_options.product_id > products_products.id
+Ref: sales_order_options.order_id > sales_orders.id
+Ref: sales_order_tags.tag_id > sales_tags.id
+Ref: sales_order_tags.order_id > sales_orders.id
+Ref: sales_order_template_products.creator_id > users.id
+Ref: sales_order_template_products.product_uom_id > unit_of_measures.id
+Ref: sales_order_template_products.product_id > products_products.id
+Ref: sales_order_template_products.company_id > companies.id
+Ref: sales_order_template_products.order_template_id > sales_order_templates.id
+Ref: sales_order_templates.creator_id > users.id
+Ref: sales_order_templates.company_id > companies.id
+Ref: sales_orders.warehouse_id > inventories_warehouses.id
+Ref: sales_orders.utm_source_id > utm_sources.id
+Ref: sales_orders.campaign_id > utm_campaigns.id
+Ref: sales_orders.medium_id > utm_mediums.id
+Ref: sales_orders.company_id > companies.id
+Ref: sales_orders.partner_id > partners_partners.id
+Ref: sales_orders.journal_id > accounts_journals.id
+Ref: sales_orders.partner_invoice_id > partners_partners.id
+Ref: sales_orders.partner_shipping_id > partners_partners.id
+Ref: sales_orders.fiscal_position_id > accounts_fiscal_positions.id
+Ref: sales_orders.payment_term_id > accounts_payment_terms.id
+Ref: sales_orders.currency_id > currencies.id
+Ref: sales_orders.user_id > users.id
+Ref: sales_orders.team_id > sales_teams.id
+Ref: sales_orders.creator_id > users.id
+Ref: sales_orders.sale_order_template_id > sales_order_templates.id
+Ref: sales_tags.creator_id > users.id
+Ref: sales_team_members.user_id > users.id
+Ref: sales_team_members.team_id > sales_teams.id
+Ref: sales_teams.creator_id > users.id
+Ref: sales_teams.user_id > users.id
+Ref: sales_teams.company_id > companies.id
+Ref: states.country_id > countries.id
+Ref: table_view_favorites.user_id > users.id
+Ref: table_views.user_id > users.id
+Ref: time_off_leave_accrual_levels.creator_id > users.id
+Ref: time_off_leave_accrual_levels.accrual_plan_id > time_off_leave_accrual_plans.id
+Ref: time_off_leave_accrual_plans.creator_id > users.id
+Ref: time_off_leave_accrual_plans.company_id > companies.id
+Ref: time_off_leave_accrual_plans.time_off_type_id > time_off_leave_types.id
+Ref: time_off_leave_allocations.creator_id > users.id
+Ref: time_off_leave_allocations.accrual_plan_id > time_off_leave_accrual_plans.id
+Ref: time_off_leave_allocations.department_id > employees_departments.id
+Ref: time_off_leave_allocations.second_approver_id > employees_employees.id
+Ref: time_off_leave_allocations.approver_id > employees_employees.id
+Ref: time_off_leave_allocations.manager_id > employees_employees.id
+Ref: time_off_leave_allocations.employee_company_id > companies.id
+Ref: time_off_leave_allocations.employee_id > employees_employees.id
+Ref: time_off_leave_allocations.holiday_status_id > time_off_leave_types.id
+Ref: time_off_leave_mandatory_days.creator_id > users.id
+Ref: time_off_leave_mandatory_days.company_id > companies.id
+Ref: time_off_leave_types.creator_id > users.id
+Ref: time_off_leave_types.company_id > companies.id
+Ref: time_off_leaves.creator_id > users.id
+Ref: time_off_leaves.second_approver_id > employees_employees.id
+Ref: time_off_leaves.first_approver_id > employees_employees.id
+Ref: time_off_leaves.calendar_id > employees_calendars.id
+Ref: time_off_leaves.department_id > employees_departments.id
+Ref: time_off_leaves.company_id > companies.id
+Ref: time_off_leaves.employee_company_id > companies.id
+Ref: time_off_leaves.employee_id > employees_employees.id
+Ref: time_off_leaves.holiday_status_id > time_off_leave_types.id
+Ref: time_off_leaves.manager_id > employees_employees.id
+Ref: time_off_leaves.user_id > users.id
+Ref: time_off_user_leave_types.leave_type_id > time_off_leave_types.id
+Ref: time_off_user_leave_types.user_id > users.id
+Ref: unit_of_measure_categories.creator_id > users.id
+Ref: unit_of_measures.creator_id > users.id
+Ref: unit_of_measures.category_id > unit_of_measure_categories.id
+Ref: user_allowed_companies.company_id > companies.id
+Ref: user_allowed_companies.user_id > users.id
+Ref: user_team.team_id > teams.id
+Ref: user_team.user_id > users.id
+Ref: users.partner_id > partners_partners.id
+Ref: users.default_company_id > companies.id
+Ref: utm_campaigns.company_id > companies.id
+Ref: utm_campaigns.created_by > users.id
+Ref: utm_campaigns.stage_id > utm_stages.id
+Ref: utm_campaigns.user_id > users.id
+Ref: utm_mediums.creator_id > users.id
+Ref: utm_sources.creator_id > users.id
+Ref: utm_stages.created_by > users.id
+Ref: website_pages.creator_id > users.id

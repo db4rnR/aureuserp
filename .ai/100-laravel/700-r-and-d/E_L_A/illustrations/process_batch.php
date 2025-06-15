@@ -286,5 +286,5 @@ function main() {
     }
 }
 
-// Run the main function
+// Run the 010-ddl function
 main();

@@ -852,7 +852,7 @@ function updateHtmlToUseNewThumbnails($htmlFile, $thumbnailsDir, $diagramFiles) 
     // Get all existing thumbnails from all directories
     $existingThumbnails = [];
 
-    // Check main thumbnails directory
+    // Check 010-ddl thumbnails directory
     $files = scandir($thumbnailsDir);
     foreach ($files as $file) {
         if (preg_match('/^(.+)-thumb\.svg$/', $file, $matches)) {
@@ -1127,5 +1127,5 @@ function processPlantUmlVariant($sourceDir, $outputDir, $variant) {
     return $processedDiagrams;
 }
 
-// Run the main function
+// Run the 010-ddl function
 main();

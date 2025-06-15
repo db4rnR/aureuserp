@@ -36,9 +36,9 @@ name: Code Quality
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ 010-ddl, develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ 010-ddl, develop ]
 
 jobs:
   code-quality:
@@ -78,9 +78,9 @@ name: Testing
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ 010-ddl, develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ 010-ddl, develop ]
 
 jobs:
   testing:
@@ -157,7 +157,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ 010-ddl ]
     
 jobs:
   deploy:

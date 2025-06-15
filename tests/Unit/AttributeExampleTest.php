@@ -4,6 +4,7 @@ use Pest\Attributes\Test;
 use Pest\Attributes\Group;
 use Pest\Attributes\Description;
 use Pest\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Example of a unit test using attributes instead of PHPDoc comments.

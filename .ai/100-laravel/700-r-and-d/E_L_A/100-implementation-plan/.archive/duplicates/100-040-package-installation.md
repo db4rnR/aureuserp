@@ -452,7 +452,7 @@ composer require --dev laravel/pint:"^1.18" \
 ### 2. Install JavaScript Dependencies
 
 ```bash
-## Install main dependencies
+## Install 010-ddl dependencies
 pnpm install @tailwindcss/vite@"^4.1.6" \
     autoprefixer@"^10.4.21" \
     axios@"^1.9.0" \

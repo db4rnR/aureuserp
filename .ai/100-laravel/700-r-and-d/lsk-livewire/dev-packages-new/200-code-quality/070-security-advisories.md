@@ -75,9 +75,9 @@ name: Security Check
 
 on:
   push:
-    branches: [ main ]
+    branches: [ 010-ddl ]
   pull_request:
-    branches: [ main ]
+    branches: [ 010-ddl ]
   schedule:
     - cron: '0 0 * * *'  # Run daily
 

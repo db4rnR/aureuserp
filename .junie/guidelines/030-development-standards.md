@@ -62,8 +62,7 @@ declare(strict_types=1);
 ### 3.2.3. UI and Component Development
 
 - Implement Livewire UI components as Volt Single File Components (SFC)
-- Ensure custom Blade directives include 'ume' in names for uniqueness
-- Ensure `HasUserTracking` trait accounts for soft deletes by recording 'deleted_by'
+- Ensure custom Blade directives include suitable prefixes in names for uniqueness
 
 ## 3.3. Testing Requirements
 
@@ -80,8 +79,27 @@ declare(strict_types=1);
 - Feature tests for application features
 - Integration tests for component interactions
 - Browser tests using Laravel Dusk
+- Architecture tests using PEST's architecture plugin
 
-### 3.3.3. State Test Type Safety
+### 3.3.3. Architecture Testing
+
+- Use PEST architecture tests (`pestphp/pest-plugin-arch`) to enforce architectural boundaries
+- Define and enforce layer dependencies (e.g., controllers should not depend on repositories directly)
+- Test that classes implement required interfaces and extend correct base classes
+- Verify namespace organization and adherence to architectural patterns
+- Example:
+
+```php
+test('controllers reside in correct namespace and follow naming convention', function () {
+    expect('App\Http\Controllers')
+        ->toHaveClasses(function ($class) {
+            return $class->toExtend('App\Http\Controllers\Controller')
+                ->andToHaveSuffix('Controller');
+        });
+});
+```
+
+### 3.3.4. State Test Type Safety
 
 - All state-related tests (e.g., for Spatie Model States) must:
   - Use only available methods and properties on state classes
@@ -104,7 +122,22 @@ declare(strict_types=1);
 
 ### 3.4.2. Modern PHP and Laravel Features
 
-- Use PHP 8 attributes over PHPDocs for robust type safety
+- Use PHP 8 attributes over PHPDocs for robust type safety:
+  - Use attributes for route definitions (`#[Route]`)
+  - Use attributes for validation rules (`#[Rule]`)
+  - Use attributes for middleware (`#[Middleware]`)
+  - Use attributes for dependency injection (`#[Inject]`)
+  - Use attributes for event listeners (`#[ListensTo]`)
+  - Use attributes for policies (`#[Policy]`)
+  - Example:
+  ```php
+  #[Route('users/{id}', methods: ['GET'])]
+  #[Middleware(['auth', 'verified'])]
+  public function show(#[FromRoute] int $id): View
+  {
+      // Method implementation
+  }
+  ```
 - Use PHP 8's match expression over traditional if-else statements
 - Target Laravel 12 and PHP 8.4 for all implementations
 - Adhere to Laravel 12 best practice and custom
@@ -226,3 +259,69 @@ Key development dependencies include:
 - Implement caching for expensive operations
 - Monitor application performance
 - Optimize memory usage
+
+## 3.8. Code Organization and Structure
+
+### 3.8.1. Namespace Standards
+
+- Ensure all classes have correct and complete namespace declarations
+- Follow PSR-4 autoloading standard
+- Organize namespaces to reflect the application's domain structure
+- Use consistent namespace prefixes across plugins
+- Avoid deeply nested namespaces (maximum 4 levels recommended)
+- Example namespace structure:
+  ```
+  App\Domain\Module\Submodule\ClassName
+  ```
+
+### 3.8.2. Traits and Attributes Implementation
+
+- Ensure classes implement all required traits for their functionality
+- Use PHP attributes instead of PHPDocs to document trait usage and class properties:
+  - Replace `@property` PHPDocs with proper property declarations
+  - Replace `@method` PHPDocs with interface implementations
+  - Use attributes for trait behavior configuration
+  - Use attributes for validation, casting, and other metadata
+- Avoid trait conflicts by carefully managing method names
+- Implement traits in a consistent order:
+  1. Framework traits (e.g., `HasFactory`)
+  2. Authentication traits (e.g., `Authenticatable`)
+  3. Domain-specific traits (e.g., `HasUserTracking`)
+  4. Feature traits (e.g., `HasAdditionalFeatures`)
+- Use architecture tests to verify correct trait implementation
+- Example of trait usage:
+  ```php
+  use HasFactory;
+  use Authenticatable;
+  use HasUserTracking;
+  use HasAdditionalFeatures;
+  ```
+- Example of attribute usage over PHPDocs:
+  ```php
+  // Instead of:
+  /**
+   * @property string $name
+   * @property Carbon $created_at
+   */
+
+  // Use proper property declarations:
+  public string $name;
+  public Carbon $created_at;
+
+  // Instead of:
+  /**
+   * @method void sendNotification(string $message)
+   */
+
+  // Implement the interface:
+  #[Override]
+  public function sendNotification(string $message): void
+  {
+      // Implementation
+  }
+
+  // Use attributes for validation, casting, etc.:
+  #[Cast('array')]
+  #[Rule('required|array')]
+  public $options;
+  ```

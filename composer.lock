@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e0088fff4a0bf09f1a134a4164bd4e1",
+    "content-hash": "dc4db50e570dc74a15503b9fcaeb29a1",
     "packages": [
         {
             "name": "amphp/amp",
@@ -882,11 +882,11 @@
         },
         {
             "name": "awcodes/filament-curator",
-            "version": "3.x-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/awcodes/filament-curator",
-                "reference": "eecccb269b8d847239e48c86afdb9d3431424191"
+                "reference": "80ae1c1b3efc00f5d67bfa09d4204356128b712f"
             },
             "require": {
                 "intervention/image": "^2.7.2",
@@ -956,11 +956,11 @@
         },
         {
             "name": "awcodes/filament-tiptap-editor",
-            "version": "3.x-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/awcodes/filament-tiptap-editor",
-                "reference": "ba0194224e34a1cd3c5b92c881c474c713321572"
+                "reference": "3bb80ede8e623af22951a98037197b3e7d298a15"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -1344,11 +1344,11 @@
         },
         {
             "name": "bezhansalleh/filament-shield",
-            "version": "3.x-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/bezhansalleh/filament-shield",
-                "reference": "398ba6e0600c1f6aa8a1c62511b40dd34ae82e32"
+                "reference": "8747b54b9bf97b0bca94227f4fc68e7dca3cee14"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -2731,7 +2731,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/dotswan/filament-laravel-pulse",
-                "reference": "9fbf04511c2407332b1f6da2b5d8c67e3104067f"
+                "reference": "d9a2c014d1793bd0ccc3d2588509f558984aec01"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -3745,7 +3745,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/lukas-frey/filament-icon-picker",
-                "reference": "123543b4d62653180fed47c11fce7caa0f00a5e9"
+                "reference": "ee32db65610817adcfe65381e9175a637a932392"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -4198,7 +4198,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/hugomyb/filament-media-action",
-                "reference": "9078f89f973b14b73bd89d7bf15bb97bbfb5eeb4"
+                "reference": "5a3f12d401f8e79e4395edb0096445c52eba3c78"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -4418,7 +4418,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/kirschbaum-development/commentions",
-                "reference": "40e1f1a289833c05c6d979bb27450fa2adcb4b35"
+                "reference": "c9743127ff993f2dac34231032045cdcf646ff9d"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -8259,11 +8259,11 @@
         },
         {
             "name": "pboivin/filament-peek",
-            "version": "2.x-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/pboivin/filament-peek",
-                "reference": "b6fb7771ebe3e8f841c388377e7cab0ac399d7df"
+                "reference": "2e5c038aac1021877e68ca6f3d5c36604796b81c"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -10468,11 +10468,11 @@
         },
         {
             "name": "saade/filament-adjacency-list",
-            "version": "3.x-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/saade/filament-adjacency-list",
-                "reference": "f771996a2bcd1b0abcad45e93d5be2f53edb6081"
+                "reference": "11b02d7145452b04f893ddf9e23821f19be2dfe1"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -10559,11 +10559,11 @@
         },
         {
             "name": "saade/filament-fullcalendar",
-            "version": "3.x-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/saade/filament-fullcalendar",
-                "reference": "c5494e0360c924c509cd703f8857ab4435828054"
+                "reference": "c9899739b24dd4f8f91af8cec9d08f790ecdead0"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -10776,7 +10776,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/shuvroroy/filament-spatie-laravel-backup",
-                "reference": "f5dc08f1a4a282a4cebe32943e95f726240b83ca"
+                "reference": "b05d0a26e5ab521fea956c294761e79e9c135469"
             },
             "require": {
                 "calebporzio/sushi": "^2.4|^2.5",
@@ -10853,7 +10853,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/shuvroroy/filament-spatie-laravel-health",
-                "reference": "4eef244cf77f9bfa57c32219c2ac0fd96b9e9539"
+                "reference": "c4a6a8fde5c8cad8519fd9d18474038b0537c904"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -16317,11 +16317,11 @@
         },
         {
             "name": "z3d0x/filament-fabricator",
-            "version": "2.x-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/z3d0x/filament-fabricator",
-                "reference": "ca38ff252cd4d55a11db91e7c19a237d7bf616fd"
+                "reference": "63480270f6282785232599c299b887a69512b47c"
             },
             "require": {
                 "filament/filament": "^4.0",
@@ -16674,6 +16674,94 @@
                 }
             ],
             "time": "2025-03-29T16:41:46+00:00"
+        },
+        {
+            "name": "colinodell/json5",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/colinodell/json5.git",
+                "reference": "5724d21bc5c910c2560af1b8915f0cc0163579c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/colinodell/json5/zipball/5724d21bc5c910c2560af1b8915f0cc0163579c8",
+                "reference": "5724d21bc5c910c2560af1b8915f0cc0163579c8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mikehaertl/php-shellcommand": "^1.7.0",
+                "phpstan/phpstan": "^1.10.57",
+                "scrutinizer/ocular": "^1.9",
+                "squizlabs/php_codesniffer": "^3.8.1",
+                "symfony/finder": "^6.0|^7.0",
+                "symfony/phpunit-bridge": "^7.0.3"
+            },
+            "bin": [
+                "bin/json5"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/global.php"
+                ],
+                "psr-4": {
+                    "ColinODell\\Json5\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Colin O'Dell",
+                    "email": "colinodell@gmail.com",
+                    "homepage": "https://www.colinodell.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "UTF-8 compatible JSON5 parser for PHP",
+            "homepage": "https://github.com/colinodell/json5",
+            "keywords": [
+                "JSON5",
+                "json",
+                "json5_decode",
+                "json_decode"
+            ],
+            "support": {
+                "issues": "https://github.com/colinodell/json5/issues",
+                "source": "https://github.com/colinodell/json5/tree/v3.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.colinodell.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.paypal.me/colinpodell/10.00",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/colinodell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/colinodell",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2024-02-09T13:06:12+00:00"
         },
         {
             "name": "composer/pcre",
@@ -17811,6 +17899,364 @@
                 "source": "https://github.com/iamcal/SQLParser/tree/v0.6"
             },
             "time": "2025-03-17T16:59:46+00:00"
+        },
+        {
+            "name": "infection/abstract-testframework-adapter",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/infection/abstract-testframework-adapter.git",
+                "reference": "18925e20d15d1a5995bb85c9dc09e8751e1e069b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/infection/abstract-testframework-adapter/zipball/18925e20d15d1a5995bb85c9dc09e8751e1e069b",
+                "reference": "18925e20d15d1a5995bb85c9dc09e8751e1e069b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.8",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Infection\\AbstractTestFramework\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Maks Rafalko",
+                    "email": "maks.rafalko@gmail.com"
+                }
+            ],
+            "description": "Abstract Test Framework Adapter for Infection",
+            "support": {
+                "issues": "https://github.com/infection/abstract-testframework-adapter/issues",
+                "source": "https://github.com/infection/abstract-testframework-adapter/tree/0.5.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/infection",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/infection",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2021-08-17T18:49:12+00:00"
+        },
+        {
+            "name": "infection/extension-installer",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/infection/extension-installer.git",
+                "reference": "9b351d2910b9a23ab4815542e93d541e0ca0cdcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/infection/extension-installer/zipball/9b351d2910b9a23ab4815542e93d541e0ca0cdcf",
+                "reference": "9b351d2910b9a23ab4815542e93d541e0ca0cdcf",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1 || ^2.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.9 || ^2.0",
+                "friendsofphp/php-cs-fixer": "^2.18, <2.19",
+                "infection/infection": "^0.15.2",
+                "php-coveralls/php-coveralls": "^2.4",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12.10",
+                "phpstan/phpstan-phpunit": "^0.12.6",
+                "phpstan/phpstan-strict-rules": "^0.12.2",
+                "phpstan/phpstan-webmozart-assert": "^0.12.2",
+                "phpunit/phpunit": "^9.5",
+                "vimeo/psalm": "^4.8"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Infection\\ExtensionInstaller\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Infection\\ExtensionInstaller\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Maks Rafalko",
+                    "email": "maks.rafalko@gmail.com"
+                }
+            ],
+            "description": "Infection Extension Installer",
+            "support": {
+                "issues": "https://github.com/infection/extension-installer/issues",
+                "source": "https://github.com/infection/extension-installer/tree/0.1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/infection",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/infection",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2021-10-20T22:08:34+00:00"
+        },
+        {
+            "name": "infection/include-interceptor",
+            "version": "0.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/infection/include-interceptor.git",
+                "reference": "0cc76d95a79d9832d74e74492b0a30139904bdf7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/infection/include-interceptor/zipball/0cc76d95a79d9832d74e74492b0a30139904bdf7",
+                "reference": "0cc76d95a79d9832d74e74492b0a30139904bdf7",
+                "shasum": ""
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "infection/infection": "^0.15.0",
+                "phan/phan": "^2.4 || ^3",
+                "php-coveralls/php-coveralls": "^2.2",
+                "phpstan/phpstan": "^0.12.8",
+                "phpunit/phpunit": "^8.5",
+                "vimeo/psalm": "^3.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Infection\\StreamWrapper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Maks Rafalko",
+                    "email": "maks.rafalko@gmail.com"
+                }
+            ],
+            "description": "Stream Wrapper: Include Interceptor. Allows to replace included (autoloaded) file with another one.",
+            "support": {
+                "issues": "https://github.com/infection/include-interceptor/issues",
+                "source": "https://github.com/infection/include-interceptor/tree/0.2.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/infection",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/infection",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2021-08-09T10:03:57+00:00"
+        },
+        {
+            "name": "infection/infection",
+            "version": "0.29.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/infection/infection.git",
+                "reference": "feea2a48a8aeedd3a4d2105167b41a46f0e568a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/infection/infection/zipball/feea2a48a8aeedd3a4d2105167b41a46f0e568a3",
+                "reference": "feea2a48a8aeedd3a4d2105167b41a46f0e568a3",
+                "shasum": ""
+            },
+            "require": {
+                "colinodell/json5": "^2.2 || ^3.0",
+                "composer-runtime-api": "^2.0",
+                "composer/xdebug-handler": "^2.0 || ^3.0",
+                "ext-dom": "*",
+                "ext-json": "*",
+                "ext-libxml": "*",
+                "ext-mbstring": "*",
+                "fidry/cpu-core-counter": "^0.4.0 || ^0.5.0 || ^1.0",
+                "infection/abstract-testframework-adapter": "^0.5.0",
+                "infection/extension-installer": "^0.1.0",
+                "infection/include-interceptor": "^0.2.5",
+                "infection/mutator": "^0.4",
+                "justinrainbow/json-schema": "^5.3 || ^6.0",
+                "nikic/php-parser": "^5.3",
+                "ondram/ci-detector": "^4.1.0",
+                "php": "^8.2",
+                "sanmai/later": "^0.1.1",
+                "sanmai/pipeline": "^5.1 || ^6",
+                "sebastian/diff": "^3.0.2 || ^4.0 || ^5.0 || ^6.0 || ^7.0",
+                "symfony/console": "^6.4 || ^7.0",
+                "symfony/filesystem": "^6.4 || ^7.0",
+                "symfony/finder": "^6.4 || ^7.0",
+                "symfony/process": "^6.4 || ^7.0",
+                "thecodingmachine/safe": "^v3.0",
+                "webmozart/assert": "^1.11"
+            },
+            "conflict": {
+                "antecedent/patchwork": "<2.1.25",
+                "dg/bypass-finals": "<1.4.1",
+                "phpunit/php-code-coverage": ">9,<9.1.4 || >9.2.17,<9.2.21"
+            },
+            "require-dev": {
+                "ext-simplexml": "*",
+                "fidry/makefile": "^1.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpstan/phpstan-webmozart-assert": "^2.0",
+                "phpunit/phpunit": "^11.5",
+                "rector/rector": "^2.0",
+                "sidz/phpstan-rules": "^0.5.1",
+                "symfony/yaml": "^6.4 || ^7.0",
+                "thecodingmachine/phpstan-safe-rule": "^1.4"
+            },
+            "bin": [
+                "bin/infection"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Infection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Maks Rafalko",
+                    "email": "maks.rafalko@gmail.com",
+                    "homepage": "https://twitter.com/maks_rafalko"
+                },
+                {
+                    "name": "Oleg Zhulnev",
+                    "homepage": "https://github.com/sidz"
+                },
+                {
+                    "name": "Gert de Pagter",
+                    "homepage": "https://github.com/BackEndTea"
+                },
+                {
+                    "name": "Théo FIDRY",
+                    "email": "theo.fidry@gmail.com",
+                    "homepage": "https://twitter.com/tfidry"
+                },
+                {
+                    "name": "Alexey Kopytko",
+                    "email": "alexey@kopytko.com",
+                    "homepage": "https://www.alexeykopytko.com"
+                },
+                {
+                    "name": "Andreas Möller",
+                    "email": "am@localheinz.com",
+                    "homepage": "https://localheinz.com"
+                }
+            ],
+            "description": "Infection is a Mutation Testing framework for PHP. The mutation adequacy score can be used to measure the effectiveness of a test set in terms of its ability to detect faults.",
+            "keywords": [
+                "coverage",
+                "mutant",
+                "mutation framework",
+                "mutation testing",
+                "testing",
+                "unit testing"
+            ],
+            "support": {
+                "issues": "https://github.com/infection/infection/issues",
+                "source": "https://github.com/infection/infection/tree/0.29.14"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/infection",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/infection",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-03-02T18:49:12+00:00"
+        },
+        {
+            "name": "infection/mutator",
+            "version": "0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/infection/mutator.git",
+                "reference": "3c976d721b02b32f851ee4e15d553ef1e9186d1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/infection/mutator/zipball/3c976d721b02b32f851ee4e15d553ef1e9186d1d",
+                "reference": "3c976d721b02b32f851ee4e15d553ef1e9186d1d",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6 || ^10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Infection\\Mutator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Maks Rafalko",
+                    "email": "maks.rafalko@gmail.com"
+                }
+            ],
+            "description": "Mutator interface to implement custom mutators (mutation operators) for Infection",
+            "support": {
+                "issues": "https://github.com/infection/mutator/issues",
+                "source": "https://github.com/infection/mutator/tree/0.4.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/infection",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/infection",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-04-29T08:19:52+00:00"
         },
         {
             "name": "jasonmccreary/laravel-test-assertions",
@@ -19052,6 +19498,84 @@
                 }
             ],
             "time": "2025-03-30T15:28:32+00:00"
+        },
+        {
+            "name": "ondram/ci-detector",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OndraM/ci-detector.git",
+                "reference": "8b0223b5ed235fd377c75fdd1bfcad05c0f168b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OndraM/ci-detector/zipball/8b0223b5ed235fd377c75fdd1bfcad05c0f168b8",
+                "reference": "8b0223b5ed235fd377c75fdd1bfcad05c0f168b8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.13.2",
+                "lmc/coding-standard": "^3.0.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/extension-installer": "^1.1.0",
+                "phpstan/phpstan": "^1.2.0",
+                "phpstan/phpstan-phpunit": "^1.0.0",
+                "phpunit/phpunit": "^9.6.13"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OndraM\\CiDetector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ondřej Machulda",
+                    "email": "ondrej.machulda@gmail.com"
+                }
+            ],
+            "description": "Detect continuous integration environment and provide unified access to properties of current build",
+            "keywords": [
+                "CircleCI",
+                "Codeship",
+                "Wercker",
+                "adapter",
+                "appveyor",
+                "aws",
+                "aws codebuild",
+                "azure",
+                "azure devops",
+                "azure pipelines",
+                "bamboo",
+                "bitbucket",
+                "buddy",
+                "ci-info",
+                "codebuild",
+                "continuous integration",
+                "continuousphp",
+                "devops",
+                "drone",
+                "github",
+                "gitlab",
+                "interface",
+                "jenkins",
+                "pipelines",
+                "sourcehut",
+                "teamcity",
+                "travis"
+            ],
+            "support": {
+                "issues": "https://github.com/OndraM/ci-detector/issues",
+                "source": "https://github.com/OndraM/ci-detector/tree/4.2.0"
+            },
+            "time": "2024-03-12T13:22:30+00:00"
         },
         {
             "name": "peckphp/peck",
@@ -22310,6 +22834,135 @@
             "time": "2025-06-13T22:05:09+00:00"
         },
         {
+            "name": "sanmai/later",
+            "version": "0.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sanmai/later.git",
+                "reference": "72a82d783864bca90412d8a26c1878f8981fee97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sanmai/later/zipball/72a82d783864bca90412d8a26c1878f8981fee97",
+                "reference": "72a82d783864bca90412d8a26c1878f8981fee97",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.8",
+                "friendsofphp/php-cs-fixer": "^3.35.1",
+                "infection/infection": ">=0.27.6",
+                "phan/phan": ">=2",
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpstan/phpstan": ">=1.4.5",
+                "phpunit/phpunit": ">=9.5 <10",
+                "vimeo/psalm": ">=2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Later\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Alexey Kopytko",
+                    "email": "alexey@kopytko.com"
+                }
+            ],
+            "description": "Later: deferred wrapper object",
+            "support": {
+                "issues": "https://github.com/sanmai/later/issues",
+                "source": "https://github.com/sanmai/later/tree/0.1.7"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sanmai",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-05-11T01:48:00+00:00"
+        },
+        {
+            "name": "sanmai/pipeline",
+            "version": "6.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sanmai/pipeline.git",
+                "reference": "f32413630904f83b069a7fbdfab34267dbaecdb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/f32413630904f83b069a7fbdfab34267dbaecdb6",
+                "reference": "f32413630904f83b069a7fbdfab34267dbaecdb6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.8",
+                "friendsofphp/php-cs-fixer": "^3.17",
+                "infection/infection": ">=0.10.5",
+                "league/pipeline": "^0.3 || ^1.0",
+                "phan/phan": ">=1.1",
+                "php-coveralls/php-coveralls": "^2.4.1",
+                "phpstan/phpstan": ">=0.10 <2",
+                "phpunit/phpunit": ">=9.4 <12",
+                "vimeo/psalm": ">=2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "v6.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Pipeline\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Alexey Kopytko",
+                    "email": "alexey@kopytko.com"
+                }
+            ],
+            "description": "General-purpose collections pipeline",
+            "support": {
+                "issues": "https://github.com/sanmai/pipeline/issues",
+                "source": "https://github.com/sanmai/pipeline/tree/6.16"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sanmai",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-06-02T06:36:22+00:00"
+        },
+        {
             "name": "sebastian/cli-parser",
             "version": "3.0.2",
             "source": {
@@ -25175,6 +25828,145 @@
                 "source": "https://github.com/ta-tikoma/phpunit-architecture-test/tree/0.8.5"
             },
             "time": "2025-04-20T20:23:40+00:00"
+        },
+        {
+            "name": "thecodingmachine/safe",
+            "version": "v3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thecodingmachine/safe.git",
+                "reference": "2cdd579eeaa2e78e51c7509b50cc9fb89a956236"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/2cdd579eeaa2e78e51c7509b50cc9fb89a956236",
+                "reference": "2cdd579eeaa2e78e51c7509b50cc9fb89a956236",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "php-parallel-lint/php-parallel-lint": "^1.4",
+                "phpstan/phpstan": "^2",
+                "phpunit/phpunit": "^10",
+                "squizlabs/php_codesniffer": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/special_cases.php",
+                    "generated/apache.php",
+                    "generated/apcu.php",
+                    "generated/array.php",
+                    "generated/bzip2.php",
+                    "generated/calendar.php",
+                    "generated/classobj.php",
+                    "generated/com.php",
+                    "generated/cubrid.php",
+                    "generated/curl.php",
+                    "generated/datetime.php",
+                    "generated/dir.php",
+                    "generated/eio.php",
+                    "generated/errorfunc.php",
+                    "generated/exec.php",
+                    "generated/fileinfo.php",
+                    "generated/filesystem.php",
+                    "generated/filter.php",
+                    "generated/fpm.php",
+                    "generated/ftp.php",
+                    "generated/funchand.php",
+                    "generated/gettext.php",
+                    "generated/gmp.php",
+                    "generated/gnupg.php",
+                    "generated/hash.php",
+                    "generated/ibase.php",
+                    "generated/ibmDb2.php",
+                    "generated/iconv.php",
+                    "generated/image.php",
+                    "generated/imap.php",
+                    "generated/info.php",
+                    "generated/inotify.php",
+                    "generated/json.php",
+                    "generated/ldap.php",
+                    "generated/libxml.php",
+                    "generated/lzf.php",
+                    "generated/mailparse.php",
+                    "generated/mbstring.php",
+                    "generated/misc.php",
+                    "generated/mysql.php",
+                    "generated/mysqli.php",
+                    "generated/network.php",
+                    "generated/oci8.php",
+                    "generated/opcache.php",
+                    "generated/openssl.php",
+                    "generated/outcontrol.php",
+                    "generated/pcntl.php",
+                    "generated/pcre.php",
+                    "generated/pgsql.php",
+                    "generated/posix.php",
+                    "generated/ps.php",
+                    "generated/pspell.php",
+                    "generated/readline.php",
+                    "generated/rnp.php",
+                    "generated/rpminfo.php",
+                    "generated/rrd.php",
+                    "generated/sem.php",
+                    "generated/session.php",
+                    "generated/shmop.php",
+                    "generated/sockets.php",
+                    "generated/sodium.php",
+                    "generated/solr.php",
+                    "generated/spl.php",
+                    "generated/sqlsrv.php",
+                    "generated/ssdeep.php",
+                    "generated/ssh2.php",
+                    "generated/stream.php",
+                    "generated/strings.php",
+                    "generated/swoole.php",
+                    "generated/uodbc.php",
+                    "generated/uopz.php",
+                    "generated/url.php",
+                    "generated/var.php",
+                    "generated/xdiff.php",
+                    "generated/xml.php",
+                    "generated/xmlrpc.php",
+                    "generated/yaml.php",
+                    "generated/yaz.php",
+                    "generated/zip.php",
+                    "generated/zlib.php"
+                ],
+                "classmap": [
+                    "lib/DateTime.php",
+                    "lib/DateTimeImmutable.php",
+                    "lib/Exceptions/",
+                    "generated/Exceptions/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
+            "support": {
+                "issues": "https://github.com/thecodingmachine/safe/issues",
+                "source": "https://github.com/thecodingmachine/safe/tree/v3.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/OskarStark",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/shish",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/staabm",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-05-14T06:15:44+00:00"
         },
         {
             "name": "theseer/tokenizer",

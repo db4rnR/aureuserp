@@ -578,7 +578,7 @@ Before starting, ensure you have:
 5. If you have a remote repository, add it and push:
    ```bash
    git remote add origin <repository-url>
-   git push -u origin main
+   git push -u origin 010-ddl
    ```
 
 ## Troubleshooting

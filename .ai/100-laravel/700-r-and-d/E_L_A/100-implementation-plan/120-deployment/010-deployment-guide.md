@@ -144,7 +144,7 @@ Follow these steps for a manual deployment:
 
 3. Pull the latest code:
    ```bash
-   git pull origin main
+   git pull origin 010-ddl
    ```
 
 4. Install/update dependencies:
@@ -193,7 +193,7 @@ name: Deploy Application
 
 on:
   push:
-    branches: [ main ]
+    branches: [ 010-ddl ]
 
 jobs:
   test:

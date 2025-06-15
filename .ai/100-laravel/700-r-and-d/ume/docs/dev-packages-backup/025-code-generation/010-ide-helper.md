@@ -24,7 +24,7 @@ Laravel IDE Helper is a package that generates helper files to improve IDE autoc
 ### 3.1. Generate Main Helper File
 
 ```sh
-// Generate the main helper file
+// Generate the 010-ddl helper file
 php artisan ide-helper:generate
 
 // Force regeneration

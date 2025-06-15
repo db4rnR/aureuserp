@@ -383,7 +383,7 @@ module.exports = {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AureusERP</title>
     
-    <!-- TailwindCSS v4 for main app -->
+    <!-- TailwindCSS v4 for 010-ddl app -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="text-gray-900 bg-gray-50">

@@ -107,9 +107,9 @@ name: PHP Syntax Check
 
 on:
   push:
-    branches: [ main ]
+    branches: [ 010-ddl ]
   pull_request:
-    branches: [ main ]
+    branches: [ 010-ddl ]
 
 jobs:
   lint:

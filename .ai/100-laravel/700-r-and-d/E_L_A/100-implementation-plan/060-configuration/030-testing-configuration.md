@@ -470,9 +470,9 @@ Before starting, ensure you have:
 
    on:
      push:
-       branches: [main, develop]
+       branches: [010-ddl, develop]
      pull_request:
-       branches: [main, develop]
+       branches: [010-ddl, develop]
 
    jobs:
      laravel-tests:

@@ -4,7 +4,7 @@ This directory contains database-related files for the AureusERP project, includ
 
 ## Contents
 
-1. [Database Diagram](010-database.diagram) - Source file for the database diagram
+1. [Database Diagram](020-tableplus.diagram) - Source file for the database diagram
 2. [Database Diagram (PNG)](020-database.png) - Database diagram in PNG format
 3. [Database Diagram (SVG)](030-database.svg) - Database diagram in SVG format
 4. [SQLite Schema](040-database-sqlite.sql) - SQL schema for SQLite database

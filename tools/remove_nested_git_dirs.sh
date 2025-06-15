@@ -9,7 +9,7 @@ if [ "$1" == "--dry-run" ]; then
     echo "Running in dry-run mode. No directories will be deleted."
 fi
 
-# Find all .git directories, excluding the main repository's .git directory
+# Find all .git directories, excluding the 010-ddl repository's .git directory
 NESTED_GIT_DIRS=$(find . -name ".git" -type d | grep -v "^./.git$")
 
 # Count the number of nested .git directories

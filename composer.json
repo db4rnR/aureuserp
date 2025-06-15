@@ -136,8 +136,9 @@
         "ergebnis/composer-normalize": "^2.47",
         "fakerphp/faker": "^1.24",
         "filament/upgrade": "^4.0",
+        "infection/infection": "^0.29.14",
         "jasonmccreary/laravel-test-assertions": "^2.8",
-        "larastan/larastan": "^3.2",
+        "larastan/larastan": "^3.4",
         "laravel-shift/blueprint": "^2.12",
         "laravel/dusk": "^8.3",
         "laravel/pail": "^1.2",
@@ -254,6 +255,7 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ergebnis/composer-normalize": true,
+            "infection/extension-installer": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true,
             "wikimedia/composer-merge-plugin": true

@@ -1,0 +1,11 @@
+CREATE TABLE User_Allowed_Companies
+(
+  Id         INTEGER NOT NULL
+    PRIMARY KEY AUTOINCREMENT,
+  User_Id    INTEGER NOT NULL
+    REFERENCES Users
+      ON DELETE CASCADE,
+  Company_Id INTEGER NOT NULL
+    REFERENCES Companies
+      ON DELETE CASCADE
+);
