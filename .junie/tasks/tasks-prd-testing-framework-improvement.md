@@ -2,6 +2,25 @@
 
 ## Relevant Files
 
+### Created/Modified Files:
+- `.junie/testing-improvement/prioritised-plugins.md` - Document identifying and prioritizing all plugins for test implementation
+- `tests/Unit/Plugins/Invoices/Models/InvoiceTest.php` - Unit tests for the Invoice model
+- `tests/Unit/Plugins/Invoices/Models/PaymentTermTest.php` - Unit tests for the PaymentTerm model
+- `tests/Unit/Plugins/Invoices/Models/ProductTest.php` - Unit tests for the Product model
+- `tests/Unit/Plugins/Invoices/Models/BillTest.php` - Unit tests for the Bill model
+- `tests/Unit/Plugins/Invoices/Models/AttributeTest.php` - Unit tests for the Attribute model
+
+### Remaining Models in Invoices Plugin (Need Tests):
+- `plugins/webkul/invoices/src/Models/BankAccount.php`
+- `plugins/webkul/invoices/src/Models/Category.php`
+- `plugins/webkul/invoices/src/Models/CreditNote.php`
+- `plugins/webkul/invoices/src/Models/Incoterm.php`
+- `plugins/webkul/invoices/src/Models/Partner.php`
+- `plugins/webkul/invoices/src/Models/Payment.php`
+- `plugins/webkul/invoices/src/Models/Refund.php`
+- `plugins/webkul/invoices/src/Models/Tax.php`
+- `plugins/webkul/invoices/src/Models/TaxGroup.php`
+
 ### For PHP/Laravel Projects:
 - `tests/TestCase.php` - Base test class that needs enhancement with utilities and helpers
 - `tests/Unit/Plugins/Accounts/` - Directory containing existing tests to use as reference
@@ -54,8 +73,8 @@ analyse`.
 ## Tasks
 
 - [ ] 1.0 Expand Plugin Test Coverage
-  - [ ] 1.1 Identify and prioritize 10 additional plugins beyond Accounts for test implementation
-  - [ ] 1.2 Create Unit tests for models in each selected plugin
+  - [✅] 1.1 Identify and prioritize **all** plugins for test implementation
+  - [ ] 1.2 Create Unit tests for models in each selected plugin (Started with Invoices plugin)
   - [ ] 1.3 Implement Feature tests for HTTP endpoints in each selected plugin
   - [ ] 1.4 Develop Integration tests for service classes in each selected plugin
   - [ ] 1.5 Ensure test coverage for critical business logic in each plugin
