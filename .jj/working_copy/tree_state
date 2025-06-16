@@ -2766,8 +2766,9 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 .junie/guidelines.md
 ¤¥Ôëö2Å>
 0.junie/guides/changing-github-repo-visibility.md
-ñ•âª÷2À)
-.junie/tasks/commit-message.mdĞ€Ëª÷2)
+ñ•âª÷2À,
+.junie/tasks/commit-message.md
+øß¿É÷2Æ)
 .junie/tasks/create-prd.mdc
 î½Û¨÷2ò-
 .junie/tasks/generate-tasks.mdc
@@ -2777,7 +2778,9 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 ".junie/tasks/process-task-list.mdc
 á¡Åª÷2œE
 7.junie/tasks/tasks-prd-testing-framework-improvement.md
-·û½ª÷2‚3L
+âî¾É÷2û;?
+1.junie/testing-improvement/prioritised-plugins.md
+âàŸÉ÷2'L
 >.junie/testing-improvement/templates/feature-test-template.php
 ´Ê¨÷2„4P
 B.junie/testing-improvement/templates/integration-test-template.php
@@ -11251,7 +11254,17 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 ,tests/Unit/Plugins/Accounts/MoveLineTest.php
 Ÿ¥ß÷2ª-6
 (tests/Unit/Plugins/Accounts/MoveTest.php
-”¥ß÷2á"0
+”¥ß÷2á"B
+4tests/Unit/Plugins/Invoices/Models/AttributeTest.php
+Š´½É÷2•=
+/tests/Unit/Plugins/Invoices/Models/BillTest.php
+±ÅäÇ÷2Ù@
+2tests/Unit/Plugins/Invoices/Models/InvoiceTest.php
+‚«ıÆ÷2ÕD
+6tests/Unit/Plugins/Invoices/Models/PaymentTermTest.php
+úÅÿÆ÷2·@
+2tests/Unit/Plugins/Invoices/Models/ProductTest.php
+Âä»Ç÷2ã'0
 tools/SqliteToDbmlConverter.php”×ûŒ÷2æ™"
 tools/file_moves.txt
 Ÿ»ûö2Û*
@@ -11264,4 +11277,4 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ğ“„¥ô2‡
- *Òù0€Ip§£XÉd¾Ò°Í3ñ“0
+ *C±ıÁ1º¾ ª|èÎså%¤\”ùË0
