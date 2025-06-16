@@ -11,10 +11,10 @@
 - `tests/Unit/Plugins/Invoices/Models/AttributeTest.php` - Unit tests for the Attribute model
 - `tests/Unit/Plugins/Invoices/Models/BankAccountTest.php` - Unit tests for the BankAccount model
 - `tests/Unit/Plugins/Invoices/Models/CategoryTest.php` - Unit tests for the Category model
+- `tests/Unit/Plugins/Invoices/Models/CreditNoteTest.php` - Unit tests for the CreditNote model
+- `tests/Unit/Plugins/Invoices/Models/IncotermTest.php` - Unit tests for the Incoterm model
 
 ### Remaining Models in Invoices Plugin (Need Tests):
-- `plugins/webkul/invoices/src/Models/CreditNote.php`
-- `plugins/webkul/invoices/src/Models/Incoterm.php`
 - `plugins/webkul/invoices/src/Models/Partner.php`
 - `plugins/webkul/invoices/src/Models/Payment.php`
 - `plugins/webkul/invoices/src/Models/Refund.php`
