@@ -2768,7 +2768,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 0.junie/guides/changing-github-repo-visibility.md
 ñ•âª÷2À,
 .junie/tasks/commit-message.md
-¢¶–Ñ÷2¥.)
+óï¼×÷2Ñ4)
 .junie/tasks/create-prd.mdc
 î½Û¨÷2ò-
 .junie/tasks/generate-tasks.mdc
@@ -2778,7 +2778,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 ".junie/tasks/process-task-list.mdc
 ™šÊ÷2¢E
 7.junie/tasks/tasks-prd-testing-framework-improvement.md
-Æç“Ñ÷2ŸL?
+š‰º×÷2êP?
 1.junie/testing-improvement/prioritised-plugins.md
 âàŸÉ÷2'L
 >.junie/testing-improvement/templates/feature-test-template.php
@@ -2849,8 +2849,8 @@ $app/Providers/AppServiceProvider.php
 bootstrap/providers.php
 „àÙö2Ä
 composer.json
-Ü‡¸ª÷2™N
-composer.lock°µ·ª÷2ù×<
+Ã“‚×÷2™N
+composer.lockç‚×÷2ù×<
 config/app.php
 ğ“„¥ô2½!
 config/auth.php
@@ -2860,7 +2860,7 @@ $app/Providers/AppServiceProvider.php
 config/curator.php
 Ú×àö2»!
 config/database.php
-ğ“„¥ô2±4!
+ì€óÖ÷2»;!
 config/debugbar.php
 ğ“„¥ô2Æs,
 config/filament-fabricator.php
@@ -11067,54 +11067,54 @@ Gplugins/webkul/website/src/Filament/Customer/Resources/PageResource.php
 public/.htaccess
 ğ“„¥ô2Û4
 &public/css/awcodes/curator/curator.css
-Ôó·ª÷2’;:
-+public/css/awcodes/tiptap-editor/tiptap.cssÓó·ª÷2¤[
+Ú‰ƒ×÷2’;:
++public/css/awcodes/tiptap-editor/tiptap.cssÚ‰ƒ×÷2¤[
 Mpublic/css/bezhansalleh/filament-language-switch/filament-language-switch.css
 ğ“„¥ô2œT(
 public/css/blogs/blogs.css
-Öó·ª÷2ŒYS
-Dpublic/css/dotswan/filament-laravel-pulse/filament-laravel-pulse.cssÔó·ª÷2ÿÑ3
-$public/css/filament/filament/app.cssØó·ª÷2ùá2
+Û‰ƒ×÷2ŒYS
+Dpublic/css/dotswan/filament-laravel-pulse/filament-laravel-pulse.cssÚ‰ƒ×÷2ÿÑ3
+$public/css/filament/filament/app.cssÛ‰ƒ×÷2ùá2
 #public/css/filament/forms/forms.css»‡Ùö2–‹5
 'public/css/filament/support/support.css
 »‡Ùö2ËQ
 Cpublic/css/filament-spatie-health/filament-spatie-health-styles.css
-Öó·ª÷2œ@W
+Û‰ƒ×÷2œ@W
 Ipublic/css/guava/filament-icon-picker/filament-icon-picker-stylesheet.css
-Õó·ª÷2…TL
-=public/css/kirschbaum-development/commentions/commentions.cssÕó·ª÷2ÌåD
+Ú‰ƒ×÷2…TL
+=public/css/kirschbaum-development/commentions/commentions.cssÚ‰ƒ×÷2ÌåD
 6public/css/pxlrbt/filament-spotlight/spotlight-css.css
 ¼‡Ùö2Ü
 D
 6public/css/rmsramos/activitylog/activitylog-styles.css
-Õó·ª÷2ÚY
+Ú‰ƒ×÷2ÚY
 Kpublic/css/saade/filament-adjacency-list/filament-adjacency-list-styles.css
-Öó·ª÷2ğU
+Ú‰ƒ×÷2ğU
 Gpublic/css/saade/filament-fullcalendar/filament-fullcalendar-styles.css
-Öó·ª÷2Ÿ,
+Ú‰ƒ×÷2Ÿ,
 public/css/website/website.css
-×ó·ª÷2Æ[
+Û‰ƒ×÷2Æ[
 public/favicon.icoğ“„¥ô2<
 .public/fonts/filament/filament/inter/index.css
-Ëó·ª÷2Òa
-Rpublic/fonts/filament/filament/inter/inter-cyrillic-ext-wght-normal-ASVAGXXE.woff2Ëó·ª÷2 Êa
-Rpublic/fonts/filament/filament/inter/inter-cyrillic-ext-wght-normal-XKHXBTUO.woff2Ëó·ª÷2”Õ]
-Npublic/fonts/filament/filament/inter/inter-cyrillic-wght-normal-EWLSKVKN.woff2Ìó·ª÷2´’]
-Npublic/fonts/filament/filament/inter/inter-cyrillic-wght-normal-R5CMSONN.woff2Ìó·ª÷2À‰]
+×‰ƒ×÷2Òa
+Rpublic/fonts/filament/filament/inter/inter-cyrillic-ext-wght-normal-ASVAGXXE.woff2×‰ƒ×÷2 Êa
+Rpublic/fonts/filament/filament/inter/inter-cyrillic-ext-wght-normal-XKHXBTUO.woff2×‰ƒ×÷2”Õ]
+Npublic/fonts/filament/filament/inter/inter-cyrillic-wght-normal-EWLSKVKN.woff2×‰ƒ×÷2´’]
+Npublic/fonts/filament/filament/inter/inter-cyrillic-wght-normal-R5CMSONN.woff2×‰ƒ×÷2À‰]
 Opublic/fonts/filament/filament/inter/inter-greek-ext-wght-normal-7GGTF7EK.woff2
-Ìó·ª÷2ÀW]
+×‰ƒ×÷2ÀW]
 Opublic/fonts/filament/filament/inter/inter-greek-ext-wght-normal-ZEVLMORV.woff2
-Íó·ª÷2¼cZ
-Kpublic/fonts/filament/filament/inter/inter-greek-wght-normal-AXVTPQD5.woff2Íó·ª÷2Ğ¯Z
-Kpublic/fonts/filament/filament/inter/inter-greek-wght-normal-N43DBLU2.woff2Îó·ª÷2€•^
-Opublic/fonts/filament/filament/inter/inter-latin-ext-wght-normal-5SRY4DMZ.woff2Îó·ª÷2ØÄ^
-Opublic/fonts/filament/filament/inter/inter-latin-ext-wght-normal-GZCIV3NH.woff2Îó·ª÷2ÄğZ
-Kpublic/fonts/filament/filament/inter/inter-latin-wght-normal-O25CN4JL.woff2Ïó·ª÷2¼úZ
-Kpublic/fonts/filament/filament/inter/inter-latin-wght-normal-OPIJAQLS.woff2Ïó·ª÷2ğì^
+×‰ƒ×÷2¼cZ
+Kpublic/fonts/filament/filament/inter/inter-greek-wght-normal-AXVTPQD5.woff2Ø‰ƒ×÷2Ğ¯Z
+Kpublic/fonts/filament/filament/inter/inter-greek-wght-normal-N43DBLU2.woff2Ø‰ƒ×÷2€•^
+Opublic/fonts/filament/filament/inter/inter-latin-ext-wght-normal-5SRY4DMZ.woff2Ø‰ƒ×÷2ØÄ^
+Opublic/fonts/filament/filament/inter/inter-latin-ext-wght-normal-GZCIV3NH.woff2Ø‰ƒ×÷2ÄğZ
+Kpublic/fonts/filament/filament/inter/inter-latin-wght-normal-O25CN4JL.woff2Ø‰ƒ×÷2¼úZ
+Kpublic/fonts/filament/filament/inter/inter-latin-wght-normal-OPIJAQLS.woff2Ø‰ƒ×÷2ğì^
 Ppublic/fonts/filament/filament/inter/inter-vietnamese-wght-normal-CE5GGD3W.woff2
-Ïó·ª÷2ŒP^
+Ø‰ƒ×÷2ŒP^
 Ppublic/fonts/filament/filament/inter/inter-vietnamese-wght-normal-TWG5UU7E.woff2
-Ïó·ª÷2¬R'
+Ø‰ƒ×÷2¬R'
 public/images/favicon.ico
 ğ“„¥ô2¾!2
 $public/images/invoice-27-02-2025.pdf
@@ -11125,69 +11125,69 @@ $public/images/invoice-27-02-2025.pdf
 ®ëğƒ÷2è2
 public/index.php
 ğ“„¥ô2Ô?
-0public/js/awcodes/curator/components/curation.js¾ó·ª÷2œ¾C
-4public/js/awcodes/tiptap-editor/components/tiptap.js½ó·ª÷2öë+Q
-Bpublic/js/dotswan/filament-laravel-pulse/filament-laravel-pulse.jsĞó·ª÷2 ¿3
+0public/js/awcodes/curator/components/curation.jsÓ‰ƒ×÷2œ¾C
+4public/js/awcodes/tiptap-editor/components/tiptap.jsÒ‰ƒ×÷2öë+Q
+Bpublic/js/dotswan/filament-laravel-pulse/filament-laravel-pulse.jsØ‰ƒ×÷2 ¿3
 %public/js/filament/actions/actions.js
-Ğó·ª÷2¼0
+Ù‰ƒ×÷2¼0
 "public/js/filament/filament/app.js
-Ğó·ª÷2ÄH2
-#public/js/filament/filament/echo.jsÑó·ª÷2ŞÌB
+Ù‰ƒ×÷2ÄH2
+#public/js/filament/filament/echo.jsÙ‰ƒ×÷2ŞÌB
 4public/js/filament/forms/components/checkbox-list.js
-¾ó·ª÷2èA
-2public/js/filament/forms/components/code-editor.js¿ó·ª÷2ÑÂ'A
+Ó‰ƒ×÷2èA
+2public/js/filament/forms/components/code-editor.jsÓ‰ƒ×÷2ÑÂ'A
 3public/js/filament/forms/components/color-picker.js
-Àó·ª÷2©LF
-7public/js/filament/forms/components/date-time-picker.jsÀó·ª÷2ëÈA
-2public/js/filament/forms/components/file-upload.jsÁó·ª÷2á›>
+Ó‰ƒ×÷2©LF
+7public/js/filament/forms/components/date-time-picker.jsÓ‰ƒ×÷2ëÈA
+2public/js/filament/forms/components/file-upload.jsÓ‰ƒ×÷2á›>
 0public/js/filament/forms/components/key-value.js
-Áó·ª÷2ãE
-6public/js/filament/forms/components/markdown-editor.jsÂó·ª÷2ÓìA
-2public/js/filament/forms/components/rich-editor.jsÃó·ª÷2‰ê<
--public/js/filament/forms/components/select.jsÃó·ª÷2æø<
--public/js/filament/forms/components/slider.jsÄó·ª÷2Úá?
+Ô‰ƒ×÷2ãE
+6public/js/filament/forms/components/markdown-editor.jsÔ‰ƒ×÷2ÓìA
+2public/js/filament/forms/components/rich-editor.jsÕ‰ƒ×÷2‰ê<
+-public/js/filament/forms/components/select.jsÕ‰ƒ×÷2æø<
+-public/js/filament/forms/components/slider.jsÕ‰ƒ×÷2Úá?
 1public/js/filament/forms/components/tags-input.js
-Äó·ª÷2®=
+Õ‰ƒ×÷2®=
 /public/js/filament/forms/components/textarea.js
-Åó·ª÷2å?
+Õ‰ƒ×÷2å?
 1public/js/filament/notifications/notifications.js
-Ñó·ª÷2¤6>
+Ù‰ƒ×÷2¤6>
 0public/js/filament/schemas/components/actions.js
-Åó·ª÷2…;
+Õ‰ƒ×÷2…;
 -public/js/filament/schemas/components/tabs.js
-Åó·ª÷2Î=
+Õ‰ƒ×÷2Î=
 /public/js/filament/schemas/components/wizard.js
-Åó·ª÷2ƒ3
+Õ‰ƒ×÷2ƒ3
 %public/js/filament/schemas/schemas.js
-Ñó·ª÷2Š8
+Ù‰ƒ×÷2Š8
 *public/js/filament/support/async-alpine.js
 ğ“„¥ô2’)4
-%public/js/filament/support/support.jsÒó·ª÷2¾µF
+%public/js/filament/support/support.jsÙ‰ƒ×÷2¾µF
 8public/js/filament/tables/components/columns/checkbox.js
-Æó·ª÷2ÉD
+Õ‰ƒ×÷2ÉD
 6public/js/filament/tables/components/columns/select.js
-Æó·ª÷2êH
+Ö‰ƒ×÷2êH
 :public/js/filament/tables/components/columns/text-input.js
-Æó·ª÷2êD
+Ö‰ƒ×÷2êD
 6public/js/filament/tables/components/columns/toggle.js
-Æó·ª÷2É;
+Ö‰ƒ×÷2É;
 -public/js/filament/tables/components/table.js
 ´‡Ùö2¸1
 #public/js/filament/tables/tables.js
-Òó·ª÷2Ù"=
-.public/js/filament/widgets/components/chart.jsÇó·ª÷2ûòQ
-Bpublic/js/filament/widgets/components/stats-overview/stat/chart.jsÇó·ª÷2ÇºR
-Cpublic/js/kirschbaum-development/commentions/commentions-scripts.jsÓó·ª÷2ä¸B
-3public/js/pxlrbt/filament-spotlight/spotlight-js.jsÓó·ª÷2Í“\
-Mpublic/js/saade/filament-adjacency-list/components/filament-adjacency-list.jsÈó·ª÷2¸_
-Ppublic/js/saade/filament-fullcalendar/components/filament-fullcalendar-alpine.jsÊó·ª÷2¶“O
+Ù‰ƒ×÷2Ù"=
+.public/js/filament/widgets/components/chart.jsÖ‰ƒ×÷2ûòQ
+Bpublic/js/filament/widgets/components/stats-overview/stat/chart.jsÖ‰ƒ×÷2ÇºR
+Cpublic/js/kirschbaum-development/commentions/commentions-scripts.jsÙ‰ƒ×÷2ä¸B
+3public/js/pxlrbt/filament-spotlight/spotlight-js.jsÚ‰ƒ×÷2Í“\
+Mpublic/js/saade/filament-adjacency-list/components/filament-adjacency-list.jsÖ‰ƒ×÷2¸_
+Ppublic/js/saade/filament-fullcalendar/components/filament-fullcalendar-alpine.jsÖ‰ƒ×÷2¶“O
 public/robots.txt	ğ“„¥ô23
-$public/vendor/telescope/app-dark.cssíû·ª÷2û”	.
-public/vendor/telescope/app.cssîû·ª÷2£“	-
-public/vendor/telescope/app.jsïû·ª÷2©­]2
-#public/vendor/telescope/favicon.icoñû·ª÷2şÏ7
+$public/vendor/telescope/app-dark.cssÎ‚×÷2û”	.
+public/vendor/telescope/app.cssÎ‚×÷2£“	-
+public/vendor/telescope/app.jsÎ‚×÷2©­]2
+#public/vendor/telescope/favicon.icoŸÎ‚×÷2şÏ7
 )public/vendor/telescope/mix-manifest.json
-ñû·ª÷2Ë$
+¢Î‚×÷2Ë$
 rector-type-safety.php
 Ì©¥ûö2Ñ
 
@@ -11230,7 +11230,17 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 7tests/Feature/Plugins/Accounts/PaymentsResourceTest.php
 ü–ßúö2›*@
 2tests/Feature/Plugins/Accounts/TaxResourceTest.php
-ÔÏàúö2°(8
+ÔÏàúö2°(H
+:tests/Feature/Plugins/Invoices/CreditNotesResourceTest.php
+ŒË×÷2ú6D
+6tests/Feature/Plugins/Invoices/InvoiceResourceTest.php
+ÂÖ×÷2ç4D
+6tests/Feature/Plugins/Invoices/PartnerResourceTest.php
+­ÒÒ÷2Ø&E
+7tests/Feature/Plugins/Invoices/PaymentsResourceTest.php
+¨°Ÿ×÷2İ$D
+6tests/Feature/Plugins/Invoices/ProductResourceTest.php
+ÀÖ¢×÷2™.8
 *tests/Integration/AttributeExampleTest.php
 Ş• îö2 /
 !tests/Integration/ExampleTest.php
@@ -11327,4 +11337,4 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ğ“„¥ô2‡
- *…è³Â]Ÿl	jı÷+™,Ü¨ü¶#0
+ *ÀU£¹:yØY:ï±öÆìˆ0
