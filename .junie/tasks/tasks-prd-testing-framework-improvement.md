@@ -13,13 +13,13 @@
 - `tests/Unit/Plugins/Invoices/Models/CategoryTest.php` - Unit tests for the Category model
 - `tests/Unit/Plugins/Invoices/Models/CreditNoteTest.php` - Unit tests for the CreditNote model
 - `tests/Unit/Plugins/Invoices/Models/IncotermTest.php` - Unit tests for the Incoterm model
+- `tests/Unit/Plugins/Invoices/Models/PartnerTest.php` - Unit tests for the Partner model
+- `tests/Unit/Plugins/Invoices/Models/PaymentTest.php` - Unit tests for the Payment model
+- `tests/Unit/Plugins/Invoices/Models/RefundTest.php` - Unit tests for the Refund model
+- `tests/Unit/Plugins/Invoices/Models/TaxTest.php` - Unit tests for the Tax model
+- `tests/Unit/Plugins/Invoices/Models/TaxGroupTest.php` - Unit tests for the TaxGroup model
 
-### Remaining Models in Invoices Plugin (Need Tests):
-- `plugins/webkul/invoices/src/Models/Partner.php`
-- `plugins/webkul/invoices/src/Models/Payment.php`
-- `plugins/webkul/invoices/src/Models/Refund.php`
-- `plugins/webkul/invoices/src/Models/Tax.php`
-- `plugins/webkul/invoices/src/Models/TaxGroup.php`
+### All models in the Invoices plugin now have tests!
 
 ### For PHP/Laravel Projects:
 - `tests/TestCase.php` - Base test class that needs enhancement with utilities and helpers
