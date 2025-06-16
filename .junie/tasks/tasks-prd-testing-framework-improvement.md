@@ -21,9 +21,23 @@
 - `tests/Unit/Plugins/Payments/Models/PaymentTest.php` - Unit tests for the Payment model
 - `tests/Unit/Plugins/Payments/Models/PaymentTokenTest.php` - Unit tests for the PaymentToken model
 - `tests/Unit/Plugins/Payments/Models/PaymentTransactionTest.php` - Unit tests for the PaymentTransaction model
+- `tests/Unit/Plugins/Products/Models/AttributeTest.php` - Unit tests for the Attribute model
+- `tests/Unit/Plugins/Products/Models/AttributeOptionTest.php` - Unit tests for the AttributeOption model
+- `tests/Unit/Plugins/Products/Models/CategoryTest.php` - Unit tests for the Category model
+- `tests/Unit/Plugins/Products/Models/PackagingTest.php` - Unit tests for the Packaging model
+- `tests/Unit/Plugins/Products/Models/PriceListTest.php` - Unit tests for the PriceList model
+- `tests/Unit/Plugins/Products/Models/PriceRuleTest.php` - Unit tests for the PriceRule model
+- `tests/Unit/Plugins/Products/Models/PriceRuleItemTest.php` - Unit tests for the PriceRuleItem model
+- `tests/Unit/Plugins/Products/Models/ProductTest.php` - Unit tests for the Product model
+- `tests/Unit/Plugins/Products/Models/ProductAttributeTest.php` - Unit tests for the ProductAttribute model
+- `tests/Unit/Plugins/Products/Models/ProductAttributeValueTest.php` - Unit tests for the ProductAttributeValue model
+- `tests/Unit/Plugins/Products/Models/ProductCombinationTest.php` - Unit tests for the ProductCombination model
+- `tests/Unit/Plugins/Products/Models/ProductSupplierTest.php` - Unit tests for the ProductSupplier model
+- `tests/Unit/Plugins/Products/Models/TagTest.php` - Unit tests for the Tag model
 
 ### All models in the Invoices plugin now have tests!
 ### All models in the Payments plugin now have tests!
+### All models in the Products plugin now have tests!
 
 ### For PHP/Laravel Projects:
 - `tests/TestCase.php` - Base test class that needs enhancement with utilities and helpers
@@ -78,7 +92,7 @@ analyse`.
 
 - [ ] 1.0 Expand Plugin Test Coverage
   - [✅] 1.1 Identify and prioritize **all** plugins for test implementation
-  - [ ] 1.2 Create Unit tests for models in each selected plugin (Completed for Invoices and Payments plugins)
+  - [ ] 1.2 Create Unit tests for models in each selected plugin (Completed for Invoices, Payments, and Products plugins)
   - [ ] 1.3 Implement Feature tests for HTTP endpoints in each selected plugin
   - [ ] 1.4 Develop Integration tests for service classes in each selected plugin
   - [ ] 1.5 Ensure test coverage for critical business logic in each plugin

@@ -11288,7 +11288,31 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 7tests/Unit/Plugins/Payments/Models/PaymentTokenTest.php
 Ğ¶¤Î÷2„	K
 =tests/Unit/Plugins/Payments/Models/PaymentTransactionTest.php
-ê½¥Î÷2ğ	0
+ê½¥Î÷2ğ	H
+:tests/Unit/Plugins/Products/Models/AttributeOptionTest.php
+Œ²ÇĞ÷2÷B
+4tests/Unit/Plugins/Products/Models/AttributeTest.php
+Ë†ÉĞ÷2òA
+3tests/Unit/Plugins/Products/Models/CategoryTest.php
+—Ÿ÷Î÷2°(B
+4tests/Unit/Plugins/Products/Models/PackagingTest.php
+…ÎÊĞ÷2ÇB
+4tests/Unit/Plugins/Products/Models/PriceListTest.php
+½–úÎ÷2ßF
+8tests/Unit/Plugins/Products/Models/PriceRuleItemTest.php
+ÖÏĞ÷2¼>B
+4tests/Unit/Plugins/Products/Models/PriceRuleTest.php
+›°ÌĞ÷2¬!I
+;tests/Unit/Plugins/Products/Models/ProductAttributeTest.php
+£×Ğ÷2ì*N
+@tests/Unit/Plugins/Products/Models/ProductAttributeValueTest.php
+ÙÃÙĞ÷2ß)K
+=tests/Unit/Plugins/Products/Models/ProductCombinationTest.php
+ÿòÛĞ÷2ï<@
+2tests/Unit/Plugins/Products/Models/ProductTest.php
+‘ÆĞ÷2ŠF<
+.tests/Unit/Plugins/Products/Models/TagTest.php
+ÌŒÕĞ÷2ò0
 tools/SqliteToDbmlConverter.php”×ûŒ÷2æ™"
 tools/file_moves.txt
 Ÿ»ûö2Û*
@@ -11301,4 +11325,4 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ğ“„¥ô2‡
- *([ê•­ß¼¸ÿp‰yºD‘^‚0
+ *7,„»ıÇOÒÀ²CP¨÷s{T0
