@@ -39,6 +39,13 @@
 ### All models in the Payments plugin now have tests!
 ### All models in the Products plugin now have tests!
 
+### Feature Tests for Resources:
+- `tests/Feature/Plugins/Invoices/CreditNotesResourceTest.php` - Feature tests for the CreditNotes resource
+- `tests/Feature/Plugins/Invoices/PartnerResourceTest.php` - Feature tests for the Partner resource
+- `tests/Feature/Plugins/Invoices/InvoiceResourceTest.php` - Feature tests for the Invoice resource
+- `tests/Feature/Plugins/Invoices/PaymentsResourceTest.php` - Feature tests for the Payments resource
+- `tests/Feature/Plugins/Invoices/ProductResourceTest.php` - Feature tests for the Product resource
+
 ### For PHP/Laravel Projects:
 - `tests/TestCase.php` - Base test class that needs enhancement with utilities and helpers
 - `tests/Unit/Plugins/Accounts/` - Directory containing existing tests to use as reference
@@ -92,8 +99,8 @@ analyse`.
 
 - [ ] 1.0 Expand Plugin Test Coverage
   - [✅] 1.1 Identify and prioritize **all** plugins for test implementation
-  - [ ] 1.2 Create Unit tests for models in each selected plugin (Completed for Invoices, Payments, and Products plugins)
-  - [ ] 1.3 Implement Feature tests for HTTP endpoints in each selected plugin
+  - [✅] 1.2 Create Unit tests for models in each selected plugin (Completed for Invoices, Payments, and Products plugins)
+  - [ ] 1.3 Implement Feature tests for HTTP endpoints in each selected plugin (Started with Invoices plugin resources)
   - [ ] 1.4 Develop Integration tests for service classes in each selected plugin
   - [ ] 1.5 Ensure test coverage for critical business logic in each plugin
   - [ ] 1.6 Verify all tests pass and provide meaningful feedback on failures

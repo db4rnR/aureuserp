@@ -2768,7 +2768,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 0.junie/guides/changing-github-repo-visibility.md
 ñ•âª÷2À,
 .junie/tasks/commit-message.md
-°ý«Î÷2‰")
+¢¶–Ñ÷2¥.)
 .junie/tasks/create-prd.mdc
 î½Û¨÷2ò-
 .junie/tasks/generate-tasks.mdc
@@ -2778,7 +2778,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 ".junie/tasks/process-task-list.mdc
 ž™šÊ÷2¢E
 7.junie/tasks/tasks-prd-testing-framework-improvement.md
-“Â¨Î÷2ÒA?
+Æç“Ñ÷2ŸL?
 1.junie/testing-improvement/prioritised-plugins.md
 âàŸÉ÷2'L
 >.junie/testing-improvement/templates/feature-test-template.php
@@ -11308,7 +11308,9 @@ $storage/framework/testing/.gitignore	ð“„¥ô2/
 @tests/Unit/Plugins/Products/Models/ProductAttributeValueTest.php
 ÙÃÙÐ÷2ß)K
 =tests/Unit/Plugins/Products/Models/ProductCombinationTest.php
-ÿòÛÐ÷2ï<@
+ÿòÛÐ÷2ï<H
+:tests/Unit/Plugins/Products/Models/ProductSupplierTest.php
+÷†‘Ñ÷2ÆB@
 2tests/Unit/Plugins/Products/Models/ProductTest.php
 ‘ÆÐ÷2ŠF<
 .tests/Unit/Plugins/Products/Models/TagTest.php
@@ -11325,4 +11327,4 @@ $storage/framework/testing/.gitignore	ð“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ð“„¥ô2‡
- *7,„»ýÇOÒÀ²CP¨÷s{T0
+ *…è³Â]Ÿl	jý÷+™,Ü¨ü¶#0

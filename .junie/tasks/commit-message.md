@@ -34,6 +34,12 @@ This commit continues our testing framework improvement initiative, focusing on 
   - ProductCombination
   - ProductSupplier
   - Tag
+- Implemented feature tests for resources in the Invoices plugin:
+  - CreditNotesResource
+  - PartnerResource
+  - InvoiceResource
+  - PaymentsResource
+  - ProductResource
 - Updated task tracking documentation to reflect progress
 
 ## Technical Details
@@ -82,10 +88,17 @@ The ProductSupplier tests specifically verify date range functionality for suppl
 
 The ProductCombination tests verify the complex relationships between configurable products, their variants, and the attribute combinations that define them, ensuring that product variants are correctly associated with their attribute values.
 
+The Feature tests for the Invoices plugin resources verify that the HTTP endpoints for managing invoices, credit notes, partners, payments, and products are working correctly. These tests ensure that users can view, create, edit, and manage these resources through the web interface. The tests specifically verify:
+- Resource listing pages load successfully
+- Resource creation pages load successfully
+- Resources can be created with valid data
+- Resources can be viewed and edited
+- Special pages like product attributes and variants load correctly
+
 ## Next Steps
 
-With all models in the Invoices, Payments, and Products plugins now having unit tests, the next steps are to:
-1. Implement Feature tests for HTTP endpoints in each selected plugin
+With all models in the Invoices, Payments, and Products plugins now having unit tests, and Feature tests implemented for the Invoices plugin resources, the next steps are to:
+1. Continue implementing Feature tests for HTTP endpoints in the Payments and Products plugins
 2. Develop Integration tests for service classes in each selected plugin
 3. Ensure test coverage for critical business logic in each plugin
 4. Verify all tests pass and provide meaningful feedback on failures
