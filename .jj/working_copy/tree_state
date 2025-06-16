@@ -2768,7 +2768,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 0.junie/guides/changing-github-repo-visibility.md
 ñ•âª÷2À,
 .junie/tasks/commit-message.md
-‹‹÷Í÷2ˆ)
+°ı«Î÷2‰")
 .junie/tasks/create-prd.mdc
 î½Û¨÷2ò-
 .junie/tasks/generate-tasks.mdc
@@ -2778,7 +2778,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 ".junie/tasks/process-task-list.mdc
 ™šÊ÷2¢E
 7.junie/tasks/tasks-prd-testing-framework-improvement.md
-‹‹õÍ÷2ß>?
+“Â¨Î÷2ÒA?
 1.junie/testing-improvement/prioritised-plugins.md
 âàŸÉ÷2'L
 >.junie/testing-improvement/templates/feature-test-template.php
@@ -11282,7 +11282,13 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 3tests/Unit/Plugins/Invoices/Models/TaxGroupTest.php
 ÖúóÍ÷2º<
 .tests/Unit/Plugins/Invoices/Models/TaxTest.php
-µ¸îÍ÷2°00
+µ¸îÍ÷2°0@
+2tests/Unit/Plugins/Payments/Models/PaymentTest.php
+ú«£Î÷2¥E
+7tests/Unit/Plugins/Payments/Models/PaymentTokenTest.php
+Ğ¶¤Î÷2„	K
+=tests/Unit/Plugins/Payments/Models/PaymentTransactionTest.php
+ê½¥Î÷2ğ	0
 tools/SqliteToDbmlConverter.php”×ûŒ÷2æ™"
 tools/file_moves.txt
 Ÿ»ûö2Û*
@@ -11295,4 +11301,4 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ğ“„¥ô2‡
- *—xgoø»É¨ô€+ŒW¥|\óå¯0
+ *([ê•­ß¼¸ÿp‰yºD‘^‚0
