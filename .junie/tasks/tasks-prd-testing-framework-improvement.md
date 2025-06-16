@@ -18,8 +18,12 @@
 - `tests/Unit/Plugins/Invoices/Models/RefundTest.php` - Unit tests for the Refund model
 - `tests/Unit/Plugins/Invoices/Models/TaxTest.php` - Unit tests for the Tax model
 - `tests/Unit/Plugins/Invoices/Models/TaxGroupTest.php` - Unit tests for the TaxGroup model
+- `tests/Unit/Plugins/Payments/Models/PaymentTest.php` - Unit tests for the Payment model
+- `tests/Unit/Plugins/Payments/Models/PaymentTokenTest.php` - Unit tests for the PaymentToken model
+- `tests/Unit/Plugins/Payments/Models/PaymentTransactionTest.php` - Unit tests for the PaymentTransaction model
 
 ### All models in the Invoices plugin now have tests!
+### All models in the Payments plugin now have tests!
 
 ### For PHP/Laravel Projects:
 - `tests/TestCase.php` - Base test class that needs enhancement with utilities and helpers
@@ -74,7 +78,7 @@ analyse`.
 
 - [ ] 1.0 Expand Plugin Test Coverage
   - [✅] 1.1 Identify and prioritize **all** plugins for test implementation
-  - [ ] 1.2 Create Unit tests for models in each selected plugin (Started with Invoices plugin)
+  - [ ] 1.2 Create Unit tests for models in each selected plugin (Completed for Invoices and Payments plugins)
   - [ ] 1.3 Implement Feature tests for HTTP endpoints in each selected plugin
   - [ ] 1.4 Develop Integration tests for service classes in each selected plugin
   - [ ] 1.5 Ensure test coverage for critical business logic in each plugin

@@ -2768,7 +2768,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 0.junie/guides/changing-github-repo-visibility.md
 ñ•âª÷2À,
 .junie/tasks/commit-message.md
-øß¿É÷2Æ)
+‹‹÷Í÷2ˆ)
 .junie/tasks/create-prd.mdc
 î½Û¨÷2ò-
 .junie/tasks/generate-tasks.mdc
@@ -2776,9 +2776,9 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 1.junie/tasks/prd-testing-framework-improvement.md
 êÄë©÷2Š@0
 ".junie/tasks/process-task-list.mdc
-á¡Åª÷2œE
+™šÊ÷2¢E
 7.junie/tasks/tasks-prd-testing-framework-improvement.md
-âî¾É÷2û;?
+‹‹õÍ÷2ß>?
 1.junie/testing-improvement/prioritised-plugins.md
 âàŸÉ÷2'L
 >.junie/testing-improvement/templates/feature-test-template.php
@@ -11256,15 +11256,33 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 (tests/Unit/Plugins/Accounts/MoveTest.php
 ”¥ß÷2á"B
 4tests/Unit/Plugins/Invoices/Models/AttributeTest.php
-Š´½É÷2•=
+Š´½É÷2•D
+6tests/Unit/Plugins/Invoices/Models/BankAccountTest.php
+øàÊ÷2ú=
 /tests/Unit/Plugins/Invoices/Models/BillTest.php
-±ÅäÇ÷2Ù@
+±ÅäÇ÷2ÙA
+3tests/Unit/Plugins/Invoices/Models/CategoryTest.php
+Â´Ë÷2¬*C
+5tests/Unit/Plugins/Invoices/Models/CreditNoteTest.php
+Úİ•Ì÷2Ò)A
+3tests/Unit/Plugins/Invoices/Models/IncotermTest.php
+‰Å©Ì÷2ª@
 2tests/Unit/Plugins/Invoices/Models/InvoiceTest.php
-‚«ıÆ÷2ÕD
+‚«ıÆ÷2Õ@
+2tests/Unit/Plugins/Invoices/Models/PartnerTest.php
+áÃÂÌ÷2ŠED
 6tests/Unit/Plugins/Invoices/Models/PaymentTermTest.php
 úÅÿÆ÷2·@
+2tests/Unit/Plugins/Invoices/Models/PaymentTest.php
+ì¦ÔÍ÷2ø=@
 2tests/Unit/Plugins/Invoices/Models/ProductTest.php
-Âä»Ç÷2ã'0
+Âä»Ç÷2ã'?
+1tests/Unit/Plugins/Invoices/Models/RefundTest.php
+ğäçÍ÷2Í'A
+3tests/Unit/Plugins/Invoices/Models/TaxGroupTest.php
+ÖúóÍ÷2º<
+.tests/Unit/Plugins/Invoices/Models/TaxTest.php
+µ¸îÍ÷2°00
 tools/SqliteToDbmlConverter.php”×ûŒ÷2æ™"
 tools/file_moves.txt
 Ÿ»ûö2Û*
@@ -11277,4 +11295,4 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ğ“„¥ô2‡
- *C±ıÁ1º¾ ª|èÎså%¤\”ùË0
+ *—xgoø»É¨ô€+ŒW¥|\óå¯0
