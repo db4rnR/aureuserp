@@ -2762,13 +2762,25 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 ,.junie/guidelines/040-workflow-guidelines.md
 æ¸Ëëö2¡D:
 ,.junie/guidelines/050-plugin-architecture.md
-Í¶Íëö2õ("
+Í¶Íëö2õ(5
+'.junie/guidelines/test-linting-rules.md
+˜ô£Ú÷2óH
+:.junie/guidelines/test-templates/feature-test-template.php
+ø©ŞØ÷2¤BL
+>.junie/guidelines/test-templates/integration-test-template.php
+ØëàØ÷2§;J
+<.junie/guidelines/test-templates/php-attributes-standards.md
+¡ìÍØ÷2…?E
+7.junie/guidelines/test-templates/unit-test-template.php
+¶ˆÜØ÷2Ã&4
+&.junie/guidelines/testing-standards.md
+ş“ÉØ÷2“-"
 .junie/guidelines.md
 ¤¥Ôëö2Å>
 0.junie/guides/changing-github-repo-visibility.md
 ñ•âª÷2À,
 .junie/tasks/commit-message.md
-Ââ×÷2ã8)
+½»¨Ú÷2ÇA)
 .junie/tasks/create-prd.mdc
 î½Û¨÷2ò-
 .junie/tasks/generate-tasks.mdc
@@ -2778,7 +2790,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 ".junie/tasks/process-task-list.mdc
 ™šÊ÷2¢E
 7.junie/tasks/tasks-prd-testing-framework-improvement.md
-â¦ã×÷2ÅS?
+’õ¤Ú÷2ÑS?
 1.junie/testing-improvement/prioritised-plugins.md
 âàŸÉ÷2'L
 >.junie/testing-improvement/templates/feature-test-template.php
@@ -2822,7 +2834,15 @@ T.junie/transcripts/2025-06-15-211622-prd-testing-framework-improvement-transcri
 LICENSE
 ğ“„¥ô2µ
 	README.md
-ğ“„¥ô2Å@?
+ğ“„¥ô2Å@6
+(app/Console/Commands/MakeFeatureTest.php
+•ÄçØ÷2Ğ:
+,app/Console/Commands/MakeIntegrationTest.php
+£ÖéØ÷2ş3
+%app/Console/Commands/MakeUnitTest.php
+¾°æØ÷2Í$
+app/Console/Kernel.php
+¹şîÙ÷2«?
 1app/Filament/Fabricator/Layouts/DefaultLayout.php
 ¢ÍÃàö2·:
 ,app/Filament/Fabricator/Layouts/MyLayout.php
@@ -2839,7 +2859,19 @@ $app/Providers/AppServiceProvider.php
 -app/Providers/Filament/AdminPanelProvider.php
 áØÙö2´>
 0app/Providers/Filament/CustomerPanelProvider.php
-ğ“„¥ô2â
+ğ“„¥ô2â;
+-app/Tests/Attributes/PerformanceAttribute.php
+ùÒØ÷2ı
+:
+,app/Tests/Attributes/PluginTestAttribute.php
+¼‡ĞØ÷2ß@
+2app/Tests/Attributes/RequiresDatabaseAttribute.php
+ıùĞØ÷2ë
+A
+3app/Tests/PHPStan/Rules/TestClassAttributesRule.php
+â›ŸÚ÷2¹B
+4app/Tests/PHPStan/Rules/TestFunctionDocBlockRule.php
+µÁ Ú÷2é
 artisanğ“„¥ô2Ş
 bootstrap/app.php
 ğ“„¥ô2'
@@ -3420,7 +3452,8 @@ $docs/130-database/010-ddl/states.sql
 5lang/vendor/filament-shield/zh_CN/filament-shield.php
 ğ“„¥ô2ØC
 5lang/vendor/filament-shield/zh_TW/filament-shield.php
-ğ“„¥ô2Õ
+ğ“„¥ô2Õ
+lint-tests.sh…–¢Ú÷2{
 package.json
 ÆıÕàö2ñ 
 packages/.DS_Store
@@ -5806,7 +5839,9 @@ Npackages/z3d0x/filament-fabricator/tests/Observers/PageRoutesObserver.test.php
 pest.config.php
 éÀ¡îö2¾
 phpinsights.php
-âÊøìö2×#
+âÊøìö2×# 
+phpstan-tests.neon
+ğÄ¡Ú÷2Û
 phpstan.neon
 áöìö2ù
 phpunit.xml
@@ -11278,7 +11313,7 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 3tests/Unit/Plugins/Invoices/Models/IncotermTest.php
 ‰Å©Ì÷2ª@
 2tests/Unit/Plugins/Invoices/Models/InvoiceTest.php
-‚«ıÆ÷2Õ@
+ÛÅıÙ÷2Ô#@
 2tests/Unit/Plugins/Invoices/Models/PartnerTest.php
 áÃÂÌ÷2ŠED
 6tests/Unit/Plugins/Invoices/Models/PaymentTermTest.php
@@ -11294,7 +11329,7 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 .tests/Unit/Plugins/Invoices/Models/TaxTest.php
 µ¸îÍ÷2°0@
 2tests/Unit/Plugins/Payments/Models/PaymentTest.php
-ú«£Î÷2¥E
+˜€Ú÷2êE
 7tests/Unit/Plugins/Payments/Models/PaymentTokenTest.php
 Ğ¶¤Î÷2„	K
 =tests/Unit/Plugins/Payments/Models/PaymentTransactionTest.php
@@ -11322,7 +11357,7 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 :tests/Unit/Plugins/Products/Models/ProductSupplierTest.php
 ÷†‘Ñ÷2ÆB@
 2tests/Unit/Plugins/Products/Models/ProductTest.php
-‘ÆĞ÷2ŠF<
+‰À„Ú÷2ÅP<
 .tests/Unit/Plugins/Products/Models/TagTest.php
 ÌŒÕĞ÷2ò0
 tools/SqliteToDbmlConverter.php”×ûŒ÷2æ™"
@@ -11337,4 +11372,4 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ğ“„¥ô2‡
- *VèQ«6bQ9Q×H%/ƒaÃš)#0
+ *EÒ®-íñ–ÆH)L‹d¸y€0

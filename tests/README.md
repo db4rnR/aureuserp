@@ -98,9 +98,140 @@ Pest supports the following attributes:
 function home_page_loads_successfully()
 {
     $response = get('/');
-    
+
     $response->assertStatus(200);
 }
+```
+
+## Testing Utilities and Helpers
+
+AureusERP provides a set of utilities and helpers to make testing easier and more consistent.
+
+### Base TestCase Class
+
+The `TestCase` class (`tests/TestCase.php`) provides a foundation for all tests in the AureusERP application. It includes utility methods for common operations, assertions, and test setup/teardown.
+
+#### Key Methods
+
+- **setUp()**: Clears the cache before each test
+- **useRefreshDatabase()**: Resets the database after each test
+- **useInMemoryDatabase()**: Configures an in-memory SQLite database for testing
+- **createTestFile()**: Creates a test file in storage
+- **deleteTestFile()**: Deletes a test file from storage
+- **assertDatabaseHasTable()**: Asserts that a database has a given table
+- **assertDatabaseDoesNotHaveTable()**: Asserts that a database does not have a given table
+- **assertJsonStructure()**: Asserts that a JSON response has a given structure
+- **assertModelHasAttributes()**: Asserts that a model has the expected attributes
+- **assertModelHasRelationships()**: Asserts that a model has the expected relationships
+- **assertObjectHasMethod()**: Asserts that an object has a method
+
+### Testing Traits
+
+#### API Testing Trait
+
+The `ApiTestingTrait` (`tests/Traits/ApiTestingTrait.php`) provides methods for API testing, including making API requests and asserting responses.
+
+```php
+use Tests\Traits\ApiTestingTrait;
+
+class ApiTest extends TestCase
+{
+    use ApiTestingTrait;
+
+    public function test_api_endpoint()
+    {
+        // Make an API request
+        $response = $this->getJson('users');
+
+        // Assert response
+        $this->assertSuccessful($response);
+        $this->assertPaginated($response);
+    }
+}
+```
+
+#### Authentication Testing Trait
+
+The `AuthenticationTestingTrait` (`tests/Traits/AuthenticationTestingTrait.php`) provides methods for authentication testing, including acting as different users and asserting authentication status.
+
+```php
+use Tests\Traits\AuthenticationTestingTrait;
+
+class AuthTest extends TestCase
+{
+    use AuthenticationTestingTrait;
+
+    public function test_authenticated_user_can_access_protected_route()
+    {
+        // Act as a user
+        $this->actingAs();
+
+        // Make a request with authentication
+        $response = $this->get('/protected-route', $this->getAuthHeaders());
+
+        // Assert response
+        $response->assertSuccessful();
+        $this->assertAuthenticated();
+    }
+}
+```
+
+#### Database Testing Trait
+
+The `DatabaseTestingTrait` (`tests/Traits/DatabaseTestingTrait.php`) provides methods for database testing, including transaction management and database assertions.
+
+```php
+use Tests\Traits\DatabaseTestingTrait;
+
+class DatabaseTest extends TestCase
+{
+    use DatabaseTestingTrait;
+
+    public function test_database_operations()
+    {
+        // Use in-memory database
+        $this->useInMemoryDatabase();
+
+        // Begin transaction
+        $this->beginDatabaseTransaction();
+
+        // Create records
+        $user = $this->createRecord(User::class, [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        // Assert model attributes
+        $this->assertModelAttributes($user, [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        // Rollback transaction
+        $this->rollbackDatabaseTransaction();
+    }
+}
+```
+
+### Test Helpers
+
+The `TestHelpers` class (`tests/Helpers/TestHelpers.php`) provides static helper methods for generating test data and working with models.
+
+```php
+use Tests\Helpers\TestHelpers;
+
+// Generate random data
+$email = TestHelpers::randomEmail();
+$date = TestHelpers::randomDate();
+
+// Create a test file
+$file = TestHelpers::createTestFile('test.txt');
+
+// Get random models
+$users = TestHelpers::getRandomModels(User::class, 5);
+
+// Clean up
+TestHelpers::cleanupTestFiles();
 ```
 
 ## Best Practices
@@ -112,3 +243,7 @@ function home_page_loads_successfully()
 5. **Use attributes**: Use PHP attributes instead of PHPDoc comments for better readability and maintainability.
 6. **Group tests**: Use the `#[Group]` attribute to organize tests into logical groups.
 7. **Write testable code**: Design your code to be testable by following SOLID principles and dependency injection.
+8. **Use the appropriate trait for your test type**: Use `ApiTestingTrait` for API tests, `AuthenticationTestingTrait` for authentication tests, and `DatabaseTestingTrait` for database tests.
+9. **Combine traits as needed**: You can use multiple traits in a single test class to access different functionality.
+10. **Use test helpers for generating test data**: Use the `TestHelpers` class to generate random test data and work with models.
+11. **Clean up after your tests**: Use the appropriate methods to clean up files and database changes after your tests.
