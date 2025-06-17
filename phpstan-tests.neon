@@ -1,0 +1,19 @@
+parameters:
+    level: 8
+    paths:
+        - tests
+    excludePaths:
+        - tests/TestCase.php
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: false
+
+services:
+    -
+        class: App\Tests\PHPStan\Rules\TestClassAttributesRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: App\Tests\PHPStan\Rules\TestFunctionDocBlockRule
+        tags:
+            - phpstan.rules.rule

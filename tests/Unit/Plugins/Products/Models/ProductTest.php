@@ -1,7 +1,10 @@
 <?php
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\CoversClass;
+use App\Tests\Attributes\PluginTest;
 use Webkul\Product\Models\Product;
 use Webkul\Product\Models\Category;
 use Webkul\Product\Models\Tag;
@@ -15,9 +18,17 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 use Webkul\Product\Enums\ProductType;
 
+/**
+ * Test Product model attributes and properties
+ *
+ * This test verifies that the Product model's attributes are correctly set
+ * and that its relationships with other models are properly defined.
+ */
 #[Test]
 #[Group('unit')]
 #[Group('products')]
+#[PluginTest('Products')]
+#[CoversClass(Product::class)]
 #[Description('Test Product model attributes and properties')]
 function product_model_attributes_and_properties()
 {
@@ -78,9 +89,18 @@ function product_model_attributes_and_properties()
     expect($product->supplierInformation())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
+/**
+ * Test Product model relationships with other models
+ *
+ * This test verifies that the Product model's relationships with other models
+ * are correctly established and accessible, including parent-child relationships,
+ * many-to-many relationships, and one-to-many relationships.
+ */
 #[Test]
 #[Group('unit')]
 #[Group('products')]
+#[PluginTest('Products')]
+#[CoversClass(Product::class)]
 #[Description('Test Product model relationships with other models')]
 function product_model_relationships_with_other_models()
 {
@@ -141,9 +161,18 @@ function product_model_relationships_with_other_models()
     expect($product->supplierInformation->first()->id)->toBe($supplierInfo->id);
 }
 
+/**
+ * Test Product model traits and interfaces
+ *
+ * This test verifies that the Product model uses the expected traits and implements
+ * the correct interfaces, including HasChatter, HasLogActivity, SoftDeletes, and Sortable.
+ * It also tests the configuration of these traits.
+ */
 #[Test]
 #[Group('unit')]
 #[Group('products')]
+#[PluginTest('Products')]
+#[CoversClass(Product::class)]
 #[Description('Test Product model traits and interfaces')]
 function product_model_traits_and_interfaces()
 {
@@ -177,9 +206,17 @@ function product_model_traits_and_interfaces()
     expect($sortable['sort_when_creating'])->toBeTrue();
 }
 
+/**
+ * Test Product model casts
+ *
+ * This test verifies that the Product model's attribute casts are correctly defined,
+ * ensuring that attributes are cast to the appropriate types (enum, boolean, array).
+ */
 #[Test]
 #[Group('unit')]
 #[Group('products')]
+#[PluginTest('Products')]
+#[CoversClass(Product::class)]
 #[Description('Test Product model casts')]
 function product_model_casts()
 {

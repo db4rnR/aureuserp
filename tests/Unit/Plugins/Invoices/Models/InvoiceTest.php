@@ -1,7 +1,10 @@
 <?php
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\CoversClass;
+use App\Tests\Attributes\PluginTest;
 use Webkul\Invoice\Models\Invoice;
 use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Enums\MoveState;
@@ -10,9 +13,17 @@ use Webkul\Security\Models\User;
 use Webkul\Partner\Models\Partner;
 use Webkul\Account\Models\Journal;
 
+/**
+ * Test Invoice model attributes and relationships
+ *
+ * This test verifies that the Invoice model's attributes are correctly set
+ * and that its relationships with other models are properly defined.
+ */
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
+#[PluginTest('Invoices')]
+#[CoversClass(Invoice::class)]
 #[Description('Test Invoice model attributes and relationships')]
 function invoice_model_attributes_and_relationships()
 {
@@ -54,9 +65,17 @@ function invoice_model_attributes_and_relationships()
     expect($invoice->lines())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
+/**
+ * Test Invoice model relationships with other models
+ *
+ * This test verifies that the Invoice model's relationships with other models
+ * (Currency, User, Partner, Journal) are correctly established and accessible.
+ */
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
+#[PluginTest('Invoices')]
+#[CoversClass(Invoice::class)]
 #[Description('Test Invoice model relationships with other models')]
 function invoice_model_relationships_with_other_models()
 {
@@ -81,9 +100,17 @@ function invoice_model_relationships_with_other_models()
     expect($invoice->journal->id)->toBe($journal->id);
 }
 
+/**
+ * Test Invoice model methods
+ *
+ * This test verifies that the Invoice model's methods, particularly those
+ * inherited from the Move model, function correctly.
+ */
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
+#[PluginTest('Invoices')]
+#[CoversClass(Invoice::class)]
 #[Description('Test Invoice model methods')]
 function invoice_model_methods()
 {
