@@ -1,4 +1,26 @@
 <?php
+/**
+ * Invoice Model Unit Tests
+ *
+ * This file contains unit tests for the Invoice model in the Invoices plugin.
+ * It tests the model's attributes, relationships, and methods to ensure they
+ * function correctly.
+ *
+ * Test Categories:
+ * - unit: These are unit tests focusing on a single component
+ * - invoices: These tests are specific to the Invoices plugin
+ * - database: These tests involve database operations
+ * - validation: These tests verify data validation
+ * - billing: These tests relate to billing functionality
+ * - workflow: These tests verify workflow operations
+ *
+ * Requirements:
+ * - Database connection configured for testing
+ * - Factories for Invoice, Currency, User, Partner, and Journal models
+ * - Proper configuration of model relationships
+ *
+ * @package Tests\Unit\Plugins\Invoices\Models
+ */
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
@@ -18,10 +40,28 @@ use Webkul\Account\Models\Journal;
  *
  * This test verifies that the Invoice model's attributes are correctly set
  * and that its relationships with other models are properly defined.
+ *
+ * Test data:
+ * - Creates a new Invoice with specific attributes using the factory
+ * - Tests both scalar attributes (name, ref, amounts) and enum attributes (state, move_type)
+ * - Tests date attributes to ensure they're properly cast to Carbon instances
+ * - Tests boolean attributes (auto_post)
+ *
+ * Assumptions:
+ * - The Invoice factory is properly configured
+ * - The Invoice model has the expected attributes and relationships
+ * - The Invoice model correctly casts date fields to Carbon instances
+ *
+ * Expected behavior:
+ * - All attributes should match the values set during creation
+ * - All relationships should be of the expected type
  */
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
+#[Group('database')]
+#[Group('validation')]
+#[Group('billing')]
 #[PluginTest('Invoices')]
 #[CoversClass(Invoice::class)]
 #[Description('Test Invoice model attributes and relationships')]
@@ -70,10 +110,27 @@ function invoice_model_attributes_and_relationships()
  *
  * This test verifies that the Invoice model's relationships with other models
  * (Currency, User, Partner, Journal) are correctly established and accessible.
+ *
+ * Test data:
+ * - Creates related models (Currency, User, Partner, Journal) using factories
+ * - Creates an Invoice with foreign keys pointing to the related models
+ * - Tests that the relationship accessors return the correct related models
+ *
+ * Assumptions:
+ * - The Invoice model has properly defined relationships with Currency, User, Partner, and Journal
+ * - The factories for all models are properly configured
+ * - The relationship methods use the correct foreign key columns
+ *
+ * Expected behavior:
+ * - The Invoice should be successfully created with the specified foreign keys
+ * - The relationship accessors should return the correct related models
+ * - The IDs of the related models should match the foreign keys set during creation
  */
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
+#[Group('database')]
+#[Group('billing')]
 #[PluginTest('Invoices')]
 #[CoversClass(Invoice::class)]
 #[Description('Test Invoice model relationships with other models')]
@@ -105,10 +162,29 @@ function invoice_model_relationships_with_other_models()
  *
  * This test verifies that the Invoice model's methods, particularly those
  * inherited from the Move model, function correctly.
+ *
+ * Test data:
+ * - Creates an Invoice with move_type set to OUT_INVOICE using the factory
+ * - Tests the behavior of methods inherited from the Move model
+ *
+ * Assumptions:
+ * - The Invoice model extends the Move model
+ * - The Move model has methods isInvoice(), isSaleDocument(), and isOutbound()
+ * - These methods determine document type based on the move_type attribute
+ * - OUT_INVOICE represents an outbound invoice (customer invoice)
+ *
+ * Expected behavior:
+ * - isInvoice(true) should return true for an invoice
+ * - isSaleDocument(true) should return true for a sales document (customer invoice)
+ * - isOutbound(true) should return true for an outbound document
+ * - These methods help determine the document's type and direction for business logic
  */
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
+#[Group('database')]
+#[Group('billing')]
+#[Group('workflow')]
 #[PluginTest('Invoices')]
 #[CoversClass(Invoice::class)]
 #[Description('Test Invoice model methods')]

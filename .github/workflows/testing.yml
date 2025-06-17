@@ -54,7 +54,7 @@ jobs:
           php artisan config:clear
           php artisan migrate --seed
 
-      - name: Run Tests
+      - name: Run Tests with Coverage
         env:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
@@ -62,7 +62,7 @@ jobs:
           DB_DATABASE: testing
           DB_USERNAME: root
           DB_PASSWORD: password
-        run: composer test
+        run: composer test:coverage
 
       - name: Upload Coverage Reports
         uses: codecov/codecov-action@v3

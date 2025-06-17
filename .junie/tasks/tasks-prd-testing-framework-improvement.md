@@ -34,6 +34,20 @@
 - `tests/Unit/Plugins/Products/Models/ProductCombinationTest.php` - Unit tests for the ProductCombination model
 - `tests/Unit/Plugins/Products/Models/ProductSupplierTest.php` - Unit tests for the ProductSupplier model
 - `tests/Unit/Plugins/Products/Models/TagTest.php` - Unit tests for the Tag model
+- `phpunit.xml` - Updated with coverage configuration
+- `codecov.yml` - Added configuration for Codecov integration
+- `.github/workflows/testing.yml` - Updated to run tests with coverage
+- `scripts/coverage-dashboard.php` - Added script for visualizing coverage metrics
+- `.junie/guidelines/test-coverage.md` - Added documentation for test coverage requirements and tools
+- `.junie/guidelines/test-categories.md` - Added documentation for test categorization scheme
+- `.junie/guidelines/plugin-testing-guidelines.md` - Added documentation for plugin-specific testing guidelines
+- `.junie/guidelines/test-data-requirements.md` - Added documentation for test data requirements and assumptions
+- `.junie/guidelines/test-examples.md` - Added examples for each test type and category
+- `.junie/guidelines/comprehensive-testing-guide.md` - Added comprehensive testing guide
+- `.junie/guidelines/test-helpers-utilities.md` - Added documentation for test helpers and utilities
+- `composer.json` - Updated with scripts for running tests by category
+- `tests/Unit/Plugins/Invoices/Models/InvoiceTest.php` - Updated with new test categories and enhanced documentation
+- `tests/Feature/Plugins/Invoices/InvoiceResourceTest.php` - Updated with new test categories
 
 ### All models in the Invoices plugin now have tests!
 ### All models in the Payments plugin now have tests!
@@ -122,29 +136,29 @@ analyse`.
   - [✅] 3.6 Add methods for common assertions
   - [✅] 3.7 Develop helpers for test setup and teardown
 
-- [ ] 4.0 Implement Test Coverage Reporting
-  - [ ] 4.1 Research and select appropriate coverage reporting tools compatible with Pest
-  - [ ] 4.2 Configure tools to generate test coverage reports
-  - [ ] 4.3 Set minimum coverage targets for each plugin (70%)
-  - [ ] 4.4 Integrate coverage reporting into CI/CD pipeline
-  - [ ] 4.5 Create a dashboard for visualizing test coverage metrics
-  - [ ] 4.6 Implement alerts for coverage drops below targets
+- [✅] 4.0 Implement Test Coverage Reporting
+  - [✅] 4.1 Research and select appropriate coverage reporting tools compatible with Pest
+  - [✅] 4.2 Configure tools to generate test coverage reports
+  - [✅] 4.3 Set minimum coverage targets for each plugin (70%)
+  - [✅] 4.4 Integrate coverage reporting into CI/CD pipeline
+  - [✅] 4.5 Create a dashboard for visualizing test coverage metrics
+  - [✅] 4.6 Implement alerts for coverage drops below targets
 
-- [ ] 5.0 Add Specific Test Categories
-  - [ ] 5.1 Define a comprehensive test categorization scheme
-  - [ ] 5.2 Implement technical categories (database, API, UI, performance)
-  - [ ] 5.3 Create domain-specific categories for business logic areas
-  - [ ] 5.4 Add categories for security, validation, and error handling tests
-  - [ ] 5.5 Update existing tests with appropriate categories
-  - [ ] 5.6 Document how to run tests by category
+- [✅] 5.0 Add Specific Test Categories
+  - [✅] 5.1 Define a comprehensive test categorization scheme
+  - [✅] 5.2 Implement technical categories (database, API, UI, performance)
+  - [✅] 5.3 Create domain-specific categories for business logic areas
+  - [✅] 5.4 Add categories for security, validation, and error handling tests
+  - [✅] 5.5 Update existing tests with appropriate categories
+  - [✅] 5.6 Document how to run tests by category
 
-- [ ] 6.0 Improve Test Documentation
-  - [ ] 6.1 Add inline documentation to existing tests
-  - [ ] 6.2 Create plugin-specific testing guidelines
-  - [ ] 6.3 Document test data requirements and assumptions
-  - [ ] 6.4 Provide examples for each test type and category
-  - [ ] 6.5 Create a comprehensive testing guide in `.junie/guidelines`
-  - [ ] 6.6 Add documentation for test helpers and utilities
+- [✅] 6.0 Improve Test Documentation
+  - [✅] 6.1 Add inline documentation to existing tests
+  - [✅] 6.2 Create plugin-specific testing guidelines
+  - [✅] 6.3 Document test data requirements and assumptions
+  - [✅] 6.4 Provide examples for each test type and category
+  - [✅] 6.5 Create a comprehensive testing guide in `.junie/guidelines`
+  - [✅] 6.6 Add documentation for test helpers and utilities
 
 - [ ] 7.0 Optimize Test Performance
   - [ ] 7.1 Analyze current test execution times to identify bottlenecks

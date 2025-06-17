@@ -14,6 +14,10 @@ use Webkul\Account\Models\Account;
 #[Test]
 #[Group('feature')]
 #[Group('invoices')]
+#[Group('api')]
+#[Group('ui')]
+#[Group('auth')]
+#[Group('billing')]
 #[Description('Test invoice listing page loads successfully')]
 function invoice_listing_page_loads_successfully()
 {
@@ -52,6 +56,11 @@ function invoice_creation_page_loads_successfully()
 #[Test]
 #[Group('feature')]
 #[Group('invoices')]
+#[Group('api')]
+#[Group('database')]
+#[Group('validation')]
+#[Group('billing')]
+#[Group('critical-path')]
 #[Description('Test invoice can be created successfully')]
 function invoice_can_be_created_successfully()
 {
@@ -172,6 +181,11 @@ function invoice_can_be_edited_successfully()
 #[Test]
 #[Group('feature')]
 #[Group('invoices')]
+#[Group('api')]
+#[Group('database')]
+#[Group('workflow')]
+#[Group('billing')]
+#[Group('critical-path')]
 #[Description('Test invoice can be confirmed successfully')]
 function invoice_can_be_confirmed_successfully()
 {

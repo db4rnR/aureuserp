@@ -2747,7 +2747,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 .github/workflows/deploy.yml
 ¾Êø÷2ñ+
 .github/workflows/testing.yml
-ÏÊø÷2à
+’ÔÂİ÷2÷
 
 .gitignore
 ğ“„¥ô2–,
@@ -2762,7 +2762,9 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 ,.junie/guidelines/040-workflow-guidelines.md
 æ¸Ëëö2¡D:
 ,.junie/guidelines/050-plugin-architecture.md
-Í¶Íëö2õ(5
+Í¶Íëö2õ(0
+".junie/guidelines/test-coverage.md
+»ŸÊİ÷2”'5
 '.junie/guidelines/test-linting-rules.md
 ˜ô£Ú÷2óH
 :.junie/guidelines/test-templates/feature-test-template.php
@@ -2790,7 +2792,7 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 ".junie/tasks/process-task-list.mdc
 ™šÊ÷2¢E
 7.junie/tasks/tasks-prd-testing-framework-improvement.md
-’õ¤Ú÷2ÑS?
+õÑÍİ÷2ãV?
 1.junie/testing-improvement/prioritised-plugins.md
 âàŸÉ÷2'L
 >.junie/testing-improvement/templates/feature-test-template.php
@@ -2879,7 +2881,9 @@ $app/Providers/AppServiceProvider.php
 bootstrap/plugins.php
 İßÙö2Ù	%
 bootstrap/providers.php
-„àÙö2Ä
+„àÙö2Ä
+codecov.yml
+â³Ãİ÷2ä
 composer.json
 Ã“‚×÷2™N
 composer.lockç‚×÷2ù×<
@@ -5845,7 +5849,7 @@ Npackages/z3d0x/filament-fabricator/tests/Observers/PageRoutesObserver.test.php
 phpstan.neon
 áöìö2ù
 phpunit.xml
-˜õ îö2¾
+İÚÁİ÷2Ş
 	pint.json
 …Ğ«ìö2†3
 %plugins/webkul/accounts/composer.json
@@ -11241,7 +11245,9 @@ Gresources/views/components/filament-fabricator/page-blocks/my.blade.php	Ô¹Çàö
 !resources/views/welcome.blade.phpğ“„¥ô2˜› 
 routes/console.php
 ğ“„¥ô2Ü
-routes/web.php	ğ“„¥ô2#
+routes/web.php	ğ“„¥ô2,
+scripts/coverage-dashboard.php
+Œ®Èİ÷2Ó7#
 storage/app/.gitignore	ğ“„¥ô2!+
 storage/app/private/.gitignore	ğ“„¥ô2(
 storage/debugbar/.gitignore	ğ“„¥ô2)
@@ -11275,7 +11281,9 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 7tests/Feature/Plugins/Invoices/PaymentsResourceTest.php
 ¨°Ÿ×÷2İ$D
 6tests/Feature/Plugins/Invoices/ProductResourceTest.php
-ÀÖ¢×÷2™.8
+ÀÖ¢×÷2™.+
+tests/Helpers/TestHelpers.php
+”ªÿÜ÷2®58
 *tests/Integration/AttributeExampleTest.php
 Ş• îö2 /
 !tests/Integration/ExampleTest.php
@@ -11287,9 +11295,15 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 tests/Pest.php
 Íü˜îö2Æ
 tests/README.md
-´à¢îö2´ 
+òµ„İ÷2ƒ? 
 tests/TestCase.php
-ğ“„¥ô21
+ öÜ÷2ƒ'.
+ tests/Traits/ApiTestingTrait.php
+ÄçøÜ÷2„49
++tests/Traits/AuthenticationTestingTrait.php
+ÎÄúÜ÷2€"3
+%tests/Traits/DatabaseTestingTrait.php
+ÍµüÜ÷2Ù51
 #tests/Unit/AttributeExampleTest.php
 ›¥ß÷2‚(
 tests/Unit/ExampleTest.php
@@ -11372,4 +11386,4 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ğ“„¥ô2‡
- *EÒ®-íñ–ÆH)L‹d¸y€0
+ *v¶oô’}ç…´VY‚B”K¼—0
