@@ -1,0 +1,101 @@
+@startuml Architecture Overview (Light Mode)
+
+' Light mode theme
+!theme plain
+skinparam backgroundColor white
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+skinparam DefaultBackgroundColor #FEFEFE
+skinparam DefaultBorderColor #999999
+
+' Define styles for different layers
+skinparam rectangle {
+    BackgroundColor<<Client>> #E3F2FD
+    BorderColor<<Client>> #2196F3
+    BackgroundColor<<Presentation>> #E8F5E9
+    BorderColor<<Presentation>> #4CAF50
+    BackgroundColor<<Application>> #FFF3E0
+    BorderColor<<Application>> #FF9800
+    BackgroundColor<<Domain>> #F3E5F5
+    BorderColor<<Domain>> #9C27B0
+    BackgroundColor<<Infrastructure>> #FFEBEE
+    BorderColor<<Infrastructure>> #F44336
+}
+
+' Client Layer
+rectangle "Client Layer" <<Client>> {
+    rectangle "Web Browser" as A1
+    rectangle "Mobile App" as A2
+    rectangle "API Consumers" as A3
+}
+
+' Presentation Layer
+rectangle "Presentation Layer" <<Presentation>> {
+    rectangle "Livewire Components" as B1
+    rectangle "Filament Admin Panel" as B2
+    rectangle "API Controllers" as B3
+}
+
+' Application Layer
+rectangle "Application Layer" <<Application>> {
+    rectangle "Controllers" as C1
+    rectangle "Commands/Handlers" as C2
+    rectangle "Query Services" as C3
+    rectangle "Events/Listeners" as C4
+}
+
+' Domain Layer
+rectangle "Domain Layer" <<Domain>> {
+    rectangle "Models" as D1
+    rectangle "Services" as D2
+    rectangle "State Machines" as D3
+    rectangle "Policies" as D4
+}
+
+' Infrastructure Layer
+rectangle "Infrastructure Layer" <<Infrastructure>> {
+    database "Database" as E1
+    rectangle "Search Engine" as E2
+    rectangle "Queue System" as E3
+    rectangle "WebSockets" as E4
+    rectangle "File Storage" as E5
+    rectangle "Cache" as E6
+}
+
+' Connections between layers
+A1 -down-> B1
+A1 -down-> B2
+A2 -down-> B3
+A3 -down-> B3
+
+B1 -down-> C1
+B1 -down-> C3
+B2 -down-> C1
+B2 -down-> C3
+B3 -down-> C1
+B3 -down-> C3
+
+C1 -down-> C2
+C1 -down-> D1
+C1 -down-> D2
+C2 -down-> D1
+C2 -down-> D2
+C2 -down-> D3
+C3 -down-> D1
+C4 -down-> D1
+C4 -down-> D2
+
+D1 -down-> E1
+D2 -down-> E1
+D2 -down-> E2
+D2 -down-> E3
+D2 -down-> E5
+D2 -down-> E6
+D3 -down-> E1
+D4 -down-> E1
+
+C4 -down-> E3
+C4 -down-> E4
+
+@enduml

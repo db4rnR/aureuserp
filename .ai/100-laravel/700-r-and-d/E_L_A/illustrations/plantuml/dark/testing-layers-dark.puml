@@ -1,0 +1,48 @@
+
+@startuml Testing Layers (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define custom colors
+!define UNIT_COLOR #2c3e50
+!define INTEGRATION_COLOR #34495e
+!define E2E_COLOR #1a237e
+
+' Title
+title Testing Pyramid
+
+' Create a pyramid-like structure using trapezoids
+polygon "End-to-End Tests: 10%" as E2E #E2E_COLOR {
+  (0,0) (100,0) (80,20) (20,20)
+}
+
+polygon "Integration Tests: 20%" as Integration #INTEGRATION_COLOR {
+  (20,20) (80,20) (60,50) (40,50)
+}
+
+polygon "Unit Tests: 70%" as Unit #UNIT_COLOR {
+  (40,50) (60,50) (50,100) (50,100)
+}
+
+' Add notes
+note left of E2E
+  Slow, expensive, brittle
+  Test complete user flows
+end note
+
+note left of Integration
+  Medium speed and cost
+  Test component interactions
+end note
+
+note left of Unit
+  Fast, cheap, stable
+  Test individual components
+end note
+
+@enduml

@@ -1,0 +1,51 @@
+# User Registration and Authentication (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+sequenceDiagram
+    actor User
+    participant Client as Client Browser
+    participant App as Laravel Application
+    participant Auth as Authentication Service
+    participant DB as Database
+    participant Email as Email Service
+
+    User->>Client: Access registration page
+    Client->>App: Request registration form
+    App->>Client: Return registration form
+    User->>Client: Fill in registration details
+    Client->>App: Submit registration data
+    App->>App: Validate input data
+
+    alt Invalid data
+        App->>Client: Return validation errors
+        Client->>User: Display validation errors
+    else Valid data
+        App->>DB: Create new user record
+        DB->>App: Confirm user creation
+        App->>Email: Send verification email
+        Email->>User: Deliver verification email
+        App->>Client: Return registration success
+        Client->>User: Display success message
+    end
+
+    User->>Client: Access login page
+    Client->>App: Request login form
+    App->>Client: Return login form
+    User->>Client: Enter credentials
+    Client->>App: Submit login credentials
+    App->>Auth: Verify credentials
+    Auth->>DB: Check user record
+
+    alt Invalid credentials
+        DB->>Auth: User not found/invalid
+        Auth->>App: Authentication failed
+        App->>Client: Return login error
+        Client->>User: Display error message
+    else Valid credentials
+        DB->>Auth: User record found
+        Auth->>App: Authentication successful
+        App->>Client: Return auth token & user data
+        Client->>User: Redirect to dashboard
+    end
+```

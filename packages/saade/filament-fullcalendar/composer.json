@@ -1,0 +1,60 @@
+{
+    "name": "saade/filament-fullcalendar",
+    "description": "The Most Popular JavaScript Calendar integrated with Filament 💛",
+    "keywords": [
+        "saade",
+        "laravel",
+        "filament-fullcalendar"
+    ],
+    "homepage": "https://github.com/saade/filament-fullcalendar",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Saade",
+            "email": "saade@outlook.com.br",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^4.0",
+        "illuminate/contracts": "^10.0|^11.0|^12.0",
+        "spatie/laravel-package-tools": "^1.13.5"
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.0|^8.0",
+        "nunomaduro/larastan": "^2.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
+        "phpstan/phpstan-phpunit": "^1.0|^2.0",
+        "spatie/laravel-ray": "^1.26"
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Saade\\FilamentFullCalendar\\": "src"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest coverage"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Saade\\FilamentFullCalendar\\FilamentFullCalendarServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

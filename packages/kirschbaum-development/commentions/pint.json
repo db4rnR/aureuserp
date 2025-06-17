@@ -1,0 +1,31 @@
+{
+    "preset": "laravel",
+    "cache-file": ".pint.cache",
+    "rules": {
+        "concat_space": {
+            "spacing": "one"
+        },
+        "new_with_parentheses": {
+            "anonymous_class": false,
+            "named_class": true
+        },
+        "ordered_class_elements": {
+            "order": [
+                "use_trait",
+                "constant",
+                "property",
+                "construct",
+                "phpunit",
+                "public",
+                "protected",
+                "private",
+                "method_public_static",
+                "method_protected_static",
+                "method_private_static"
+            ],
+            "sort_algorithm": "none"
+        },
+        "single_line_empty_body": true,
+        "single_trait_insert_per_statement": true
+    }
+}

@@ -1,0 +1,76 @@
+@startuml Project Overview (Light Mode)
+
+' Light mode theme
+!theme cerulean
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+' Main components
+rectangle "Enhanced Laravel Application" as A
+
+' Main categories
+rectangle "Core Features" as B
+rectangle "Advanced Features" as C
+rectangle "Technical Foundation" as D
+rectangle "User Experience" as E
+
+' Core features
+rectangle "User Management" as B1
+rectangle "Team Management" as B2
+rectangle "Content Management" as B3
+rectangle "Task Management" as B4
+
+' Advanced features
+rectangle "Real-time Messaging" as C1
+rectangle "Advanced Search" as C2
+rectangle "Audit & Compliance" as C3
+rectangle "Analytics & Reporting" as C4
+
+' Technical foundation
+rectangle "Laravel 12 Framework" as D1
+rectangle "CQRS Architecture" as D2
+rectangle "Event Sourcing" as D3
+rectangle "Scalable Infrastructure" as D4
+
+' User experience
+rectangle "Responsive Design" as E1
+rectangle "Filament Admin Panel" as E2
+rectangle "Livewire/Volt Components" as E3
+rectangle "Tailwind CSS Styling" as E4
+
+' Connections
+A -down-> B
+A -down-> C
+A -down-> D
+A -down-> E
+
+B -down-> B1
+B -down-> B2
+B -down-> B3
+B -down-> B4
+
+C -down-> C1
+C -down-> C2
+C -down-> C3
+C -down-> C4
+
+D -down-> D1
+D -down-> D2
+D -down-> D3
+D -down-> D4
+
+E -down-> E1
+E -down-> E2
+E -down-> E3
+E -down-> E4
+
+@enduml

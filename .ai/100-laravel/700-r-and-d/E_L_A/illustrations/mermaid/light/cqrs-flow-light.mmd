@@ -1,0 +1,41 @@
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+flowchart TD
+    A["Request / User Action"] --> B["Controller / Livewire Component"]
+
+    subgraph "Write Side - CQRS - Core Logic via hirethunk/verbs"
+        B_CMD["Controller / Livewire Component"] -->|"Sends Verbs Command Object"| C{"Command Bus (hirethunk/verbs)"}
+        C --> D["Verb Command Handler"]
+        D --> E["Domain Services / Models"]
+        D --> F["Validation Logic"]
+        E --> G[("Database: Persists State")]
+        D --> H["Command History (verbs)"]
+        H --> G_HIST[("Database: Stores History")]
+        D --> I{"Event Bus (Laravel)"}
+    end
+
+    subgraph "Write Side - Simple CRUD - Optional"
+        B_SCRUD["Controller / Livewire Component"] --> E_SCRUD["Domain Services / Models"]
+        E_SCRUD --> G_SCRUD[("Database: Persists State")]
+    end
+
+    B --> B_CMD
+    B --> B_SCRUD
+
+    subgraph "Read Side"
+        B_QUERY["Controller / Livewire Component"] -->|"Query Parameters"| J["Query Service / Eloquent Scopes"]
+        J --> G_READ[("Database: Reads State")]
+        J --> K["Response Data / View Model"]
+    end
+
+    B --> B_QUERY
+    B_QUERY --> K_OUT["Response Data / View Model"]
+
+    subgraph "Side Effects - Async Preferred"
+        I_SE{"Event Bus (Laravel)"} --> L["Listeners / Subscribers (Queued)"]
+        L --> M["Notifications"]
+        L --> N["Search Indexing"]
+        L --> O["Cache Updates"]
+        L --> P["..."]
+    end
+
+    I --> I_SE

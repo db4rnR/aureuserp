@@ -1,0 +1,38 @@
+# Test Structure (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2a2a2a', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#555555', 'lineColor': '#999999', 'secondaryColor': '#252525', 'tertiaryColor': '#333333' }}}%%
+classDiagram
+    class TestCase {
+        +setUp()
+        +tearDown()
+    }
+    
+    class AggregateTest {
+        +it_can_execute_command()
+        +it_cannot_execute_invalid_command()
+        +it_applies_event_correctly()
+    }
+    
+    class ProjectorTest {
+        +it_creates_read_model_from_event()
+        +it_updates_read_model_from_event()
+        +it_deletes_read_model_from_event()
+    }
+    
+    class ReactorTest {
+        +it_triggers_side_effect_from_event()
+        +it_handles_external_service_failure()
+    }
+    
+    class QueryTest {
+        +it_returns_correct_data()
+        +it_validates_input_correctly()
+        +it_handles_empty_results()
+    }
+    
+    TestCase <|-- AggregateTest
+    TestCase <|-- ProjectorTest
+    TestCase <|-- ReactorTest
+    TestCase <|-- QueryTest
+```

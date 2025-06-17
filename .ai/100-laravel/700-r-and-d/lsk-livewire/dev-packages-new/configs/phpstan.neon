@@ -1,0 +1,39 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 8
+    paths:
+        - app
+        - config
+        - database
+        - routes
+        - tests
+    excludePaths:
+        - ./storage/*
+        - ./bootstrap/cache/*
+        - ./node_modules/*
+        - ./vendor/*
+        - ./tests/Pest.php
+    
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    checkModelProperties: true
+    
+    ignoreErrors:
+        - '#Dynamic call to static method#'
+        - '#Call to an undefined method Illuminate\\Support\\HigherOrder#'
+        - '#Access to an undefined property App\\Models#'
+        - '#Property [a-zA-Z0-9\\_]+::\$listeners is never written, only read.#'
+    
+    baseline: phpstan-baseline.neon
+    
+    parallel:
+        maximumNumberOfProcesses: 4
+        processTimeout: 300.0
+    
+    memoryLimit: 1G
+    
+    typeAliases:
+        Collection: 'Illuminate\Support\Collection<int, %s>'
+        EloquentCollection: 'Illuminate\Database\Eloquent\Collection<int, %s>'

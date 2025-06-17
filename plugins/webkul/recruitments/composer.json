@@ -1,0 +1,30 @@
+{
+    "name": "webkul/recruitments",
+    "description": "",
+    "authors": [
+        {
+            "name": "Aureus ERP",
+            "email": "support@aureuserp.in"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Recruitment\\Providers\\RecruitmentServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Recruitment\\": "src/",
+            "Webkul\\Recruitment\\Database\\Factories\\": "database/factories/",
+            "Webkul\\Recruitment\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webkul\\Recruitment\\Tests\\": "tests/"
+        }
+    }
+}

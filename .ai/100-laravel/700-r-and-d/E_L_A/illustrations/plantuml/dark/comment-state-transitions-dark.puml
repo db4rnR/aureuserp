@@ -1,0 +1,58 @@
+
+@startuml Comment State Transitions Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam state {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam note {
+    BackgroundColor #4a148c
+    BorderColor #7b1fa2
+    FontColor #FFFFFF
+}
+
+
+    [*] --> Pending: Create Comment
+
+    Pending --> Approved : Approve
+    Pending --> Rejected : Reject
+    Pending --> Deleted : Delete
+
+    Approved --> Deleted : Delete
+    Rejected --> Deleted : Delete
+
+    Deleted --> [*]
+
+    state Pending {
+        [*] --> AwaitingModeration
+        AwaitingModeration --> [*]
+    }
+
+    state Approved {
+        [*] --> Visible
+        Visible --> Edited : Update
+        Edited --> Visible
+    }
+
+    state Rejected {
+        [*] --> Hidden
+        Hidden --> WithReason : Add Rejection Reason
+        WithReason --> [*]
+    }
+
+    note right of Pending : Comments start in Pending state<br>and await moderation
+    note right of Approved : Approved comments are visible<br>and can be edited
+    note right of Rejected : Rejected comments are hidden<br>with optional rejection reason
+    note right of Deleted : Deleted comments are<br>permanently removed
+
+@enduml

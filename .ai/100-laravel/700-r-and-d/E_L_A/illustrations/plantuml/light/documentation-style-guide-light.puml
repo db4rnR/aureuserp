@@ -1,0 +1,80 @@
+@startuml Documentation Style Guide (Light Mode)
+
+' Light mode theme
+!theme cerulean
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+' Main components
+rectangle "Documentation Structure" as A
+
+' Main categories
+rectangle "Document Types" as B
+rectangle "Formatting Rules" as C
+rectangle "Diagram Standards" as D
+rectangle "Code Examples" as E
+
+' Document types
+rectangle "Executive Summary" as B1
+rectangle "Project Roadmap" as B2
+rectangle "Technical Architecture Document" as B3
+rectangle "Implementation Plan" as B4
+rectangle "Style Guide" as B5
+
+' Formatting rules
+rectangle "Markdown Syntax" as C1
+rectangle "Heading Hierarchy" as C2
+rectangle "Table Formatting" as C3
+rectangle "List Formatting" as C4
+rectangle "Code Block Formatting" as C5
+
+' Diagram standards
+rectangle "Mermaid Diagrams" as D1
+rectangle "PlantUML Diagrams" as D2
+rectangle "Dark/Light Mode Variants" as D3
+rectangle "Diagram Naming Convention" as D4
+
+' Code examples
+rectangle "PHP Code Examples" as E1
+rectangle "JavaScript Code Examples" as E2
+rectangle "Blade Template Examples" as E3
+rectangle "Configuration Examples" as E4
+
+' Connections
+A --> B
+A --> C
+A --> D
+A --> E
+
+B --> B1
+B --> B2
+B --> B3
+B --> B4
+B --> B5
+
+C --> C1
+C --> C2
+C --> C3
+C --> C4
+C --> C5
+
+D --> D1
+D --> D2
+D --> D3
+D --> D4
+
+E --> E1
+E --> E2
+E --> E3
+E --> E4
+
+@enduml

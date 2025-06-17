@@ -1,0 +1,80 @@
+@startuml Documentation Components (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+' Main components
+rectangle "Documentation Components" as A
+
+' Main categories
+rectangle "Text Components" as B
+rectangle "Visual Components" as C
+rectangle "Code Components" as D
+rectangle "Interactive Components" as E
+
+' Text components
+rectangle "Headings" as B1
+rectangle "Paragraphs" as B2
+rectangle "Lists" as B3
+rectangle "Tables" as B4
+rectangle "Blockquotes" as B5
+rectangle "Notes & Warnings" as B6
+
+' Visual components
+rectangle "Diagrams" as C1
+rectangle "Charts" as C2
+rectangle "Screenshots" as C3
+rectangle "Icons" as C4
+
+' Code components
+rectangle "Inline Code" as D1
+rectangle "Code Blocks" as D2
+rectangle "File Snippets" as D3
+rectangle "Terminal Commands" as D4
+
+' Interactive components
+rectangle "Collapsible Sections" as E1
+rectangle "Table of Contents" as E2
+rectangle "Links" as E3
+rectangle "Anchors" as E4
+
+' Connections
+A --> B
+A --> C
+A --> D
+A --> E
+
+B --> B1
+B --> B2
+B --> B3
+B --> B4
+B --> B5
+B --> B6
+
+C --> C1
+C --> C2
+C --> C3
+C --> C4
+
+D --> D1
+D --> D2
+D --> D3
+D --> D4
+
+E --> E1
+E --> E2
+E --> E3
+E --> E4
+
+@enduml

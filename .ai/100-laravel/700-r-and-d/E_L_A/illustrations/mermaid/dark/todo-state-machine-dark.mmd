@@ -1,0 +1,39 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+stateDiagram-v2
+    [*] --> Created: Create Todo
+    Created --> InProgress: Start Work
+    Created --> Cancelled: Cancel
+    InProgress --> OnHold: Pause
+    InProgress --> Completed: Complete
+    InProgress --> Cancelled: Cancel
+    OnHold --> InProgress: Resume
+    OnHold --> Cancelled: Cancel
+    Completed --> [*]
+    Cancelled --> [*]
+
+    state Created {
+        [*] --> Draft
+        Draft --> ReadyToStart: Finalize
+        ReadyToStart --> [*]
+    }
+
+    state InProgress {
+        [*] --> Started
+        Started --> InReview: Submit for Review
+        InReview --> Started: Request Changes
+        InReview --> [*]: Approve
+    }
+
+    state OnHold {
+        [*] --> Blocked
+        [*] --> Deferred
+        Blocked --> [*]: Unblock
+        Deferred --> [*]: Prioritize
+    }
+
+    state Completed {
+        [*] --> Done
+        [*] --> PartiallyDone
+        Done --> [*]
+        PartiallyDone --> [*]
+    }

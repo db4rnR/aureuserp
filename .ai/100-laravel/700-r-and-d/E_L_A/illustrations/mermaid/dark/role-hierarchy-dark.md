@@ -1,0 +1,21 @@
+# Role Hierarchy (Dark Mode)
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2a2a2a', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#555555', 'lineColor': '#999999', 'secondaryColor': '#252525', 'tertiaryColor': '#333333' }}}%%
+flowchart TD
+    SuperAdmin[Super Administrator] --> Admin[Administrator]
+    Admin --> User[User]
+    
+    TeamOwner[Team Owner] --> TeamAdmin[Team Administrator]
+    TeamAdmin --> TeamMember[Team Member]
+    
+    SuperAdmin -.-> TeamOwner
+    Admin -.-> TeamAdmin
+    User -.-> TeamMember
+    
+    classDef global fill:#333333,stroke:#ffffff,stroke-width:1px
+    classDef team fill:#1a3a4a,stroke:#ffffff,stroke-width:1px
+    
+    class SuperAdmin,Admin,User global
+    class TeamOwner,TeamAdmin,TeamMember team
+```

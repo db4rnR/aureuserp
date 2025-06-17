@@ -1,0 +1,56 @@
+@startuml Todo State Machine (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' State styling
+skinparam state {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    StartColor #4CAF50
+    EndColor #F44336
+}
+
+' Note styling
+skinparam note {
+    BackgroundColor #4a148c
+    BorderColor #7b1fa2
+    FontColor #FFFFFF
+}
+
+' Define states
+state "Pending" as Pending
+state "InProgress" as InProgress
+state "Completed" as Completed
+state "Cancelled" as Cancelled
+
+' Define transitions
+[*] -right-> Pending
+Pending -right-> InProgress : Start
+InProgress -right-> Completed : Complete
+InProgress -up-> Pending : Pause / Re-queue
+Pending -down-> Cancelled : Cancel
+InProgress -down-> Cancelled : Cancel
+
+' Add notes
+note bottom of Pending
+  Initial state when a todo is created
+end note
+
+note bottom of InProgress
+  Active work being done on the todo
+end note
+
+note bottom of Completed
+  Todo has been successfully finished
+end note
+
+note bottom of Cancelled
+  Todo has been abandoned or is no longer relevant
+end note
+
+@enduml

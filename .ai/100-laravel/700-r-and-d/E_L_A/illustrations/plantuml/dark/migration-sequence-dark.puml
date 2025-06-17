@@ -1,0 +1,67 @@
+@startuml Migration Sequence (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam rectangle<<BaseTables>> {
+    BackgroundColor #1a237e
+    BorderColor #3949ab
+}
+
+' Main flow
+rectangle "Start Migration Process" as A
+rectangle "Create Base Tables (No Foreign Keys)" as B
+rectangle "Add Foreign Key Constraints" as C
+rectangle "Add Indexes" as D
+rectangle "Run Seeders" as E
+rectangle "Migration Complete" as F
+
+' Base Tables Order
+rectangle "Base Tables Order" <<BaseTables>> {
+    rectangle "1. Users" as B1
+    rectangle "2. Teams" as B2
+    rectangle "3. Categories" as B3
+    rectangle "4. Todos" as B4
+    rectangle "5. Posts" as B5
+    rectangle "6. Conversations" as B6
+    rectangle "7. Messages" as B7
+    rectangle "8. Roles & Permissions" as B8
+    rectangle "9. Media" as B9
+    rectangle "10. Tags" as B10
+    rectangle "11. Comments" as B11
+    rectangle "12. Settings" as B12
+    rectangle "13. Activity Logs" as B13
+}
+
+' Connections
+A -down-> B
+B -down-> C
+C -down-> D
+D -down-> E
+E -down-> F
+
+B1 -right-> B2
+B2 -right-> B3
+B3 -right-> B4
+B4 -down-> B5
+B5 -down-> B6
+B6 -down-> B7
+B7 -down-> B8
+B8 -down-> B9
+B9 -down-> B10
+B10 -down-> B11
+B11 -down-> B12
+B12 -down-> B13
+
+@enduml

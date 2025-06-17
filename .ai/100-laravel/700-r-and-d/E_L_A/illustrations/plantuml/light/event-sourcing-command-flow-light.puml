@@ -1,0 +1,115 @@
+
+@startuml Event Sourcing Command Flow Light (Light Mode)
+
+' Dark mode theme
+!theme cerulean
+skinparam backgroundColor #ffffff
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #f5f5f5
+    BorderColor #cccccc
+    FontColor #333333
+}
+
+skinparam database {
+    BackgroundColor #e6f7ff
+    BorderColor #91d5ff
+}
+
+
+    package "Command Handling" {
+        rectangle "RegisterUserCommand" as C1 --> |handled by| rectangle "CommandHandler" as CH1
+        rectangle "CreateTeamCommand" as C2 --> |handled by| rectangle "CommandHandler" as CH2
+        rectangle "CreatePostCommand" as C3 --> |handled by| rectangle "CommandHandler" as CH3
+        rectangle "CreateTodoCommand" as C4 --> |handled by| rectangle "CommandHandler" as CH4
+        
+        CH1 --> |retrieves| rectangle "UserAggregate" as UA
+        CH2 --> |retrieves| rectangle "TeamAggregate" as TA
+        CH3 --> |retrieves| rectangle "PostAggregate" as PA
+        CH4 --> |retrieves| rectangle "TodoAggregate" as TOA
+    }
+    
+    package "Event Generation" {
+        UA --> |records| rectangle "UserRegisteredEvent" as E1
+        TA --> |records| rectangle "TeamCreatedEvent" as E2
+        PA --> |records| rectangle "PostCreatedEvent" as E3
+        TOA --> |records| rectangle "TodoCreatedEvent" as E4
+        
+        E1 --> |stored in| rectangle "Event Store" as ES
+        E2 --> |stored in| ES
+        E3 --> |stored in| ES
+        E4 --> |stored in| ES
+    }
+    
+    package "Event Processing" {
+        ES --> |processed by| rectangle "UserProjector" as P1
+        ES --> |processed by| rectangle "TeamProjector" as P2
+        ES --> |processed by| rectangle "PostProjector" as P3
+        ES --> |processed by| rectangle "TodoProjector" as P4
+        
+        ES --> |processed by| rectangle "UserReactor" as R1
+        ES --> |processed by| rectangle "TeamReactor" as R2
+        ES --> |processed by| rectangle "PostReactor" as R3
+        ES --> |processed by| rectangle "TodoReactor" as R4
+    }
+    
+    package "Read Models" {
+        P1 --> |updates| rectangle "User Model" as RM1
+        P2 --> |updates| rectangle "Team Model" as RM2
+        P3 --> |updates| rectangle "Post Model" as RM3
+        P4 --> |updates| rectangle "Todo Model" as RM4
+    }
+    
+    package "Side Effects" {
+        R1 --> |executes| rectangle "S} Welcome Email" as SE1
+        R2 --> |executes| rectangle "Notify Team Members" as SE2
+        R3 --> |executes| rectangle "Update Search Index" as SE3
+        R4 --> |executes| rectangle "S} Due Date Reminder" as SE4
+    }
+    
+    style C1 fill:#F44336,stroke:#D32F2F,color:white
+    style C2 fill:#F44336,stroke:#D32F2F,color:white
+    style C3 fill:#F44336,stroke:#D32F2F,color:white
+    style C4 fill:#F44336,stroke:#D32F2F,color:white
+    
+    style CH1 fill:#F44336,stroke:#D32F2F,color:white,stroke-dasharray: 5 5
+    style CH2 fill:#F44336,stroke:#D32F2F,color:white,stroke-dasharray: 5 5
+    style CH3 fill:#F44336,stroke:#D32F2F,color:white,stroke-dasharray: 5 5
+    style CH4 fill:#F44336,stroke:#D32F2F,color:white,stroke-dasharray: 5 5
+    
+    style UA fill:#F44336,stroke:#D32F2F,color:white
+    style TA fill:#F44336,stroke:#D32F2F,color:white
+    style PA fill:#F44336,stroke:#D32F2F,color:white
+    style TOA fill:#F44336,stroke:#D32F2F,color:white
+    
+    style E1 fill:#4CAF50,stroke:#388E3C,color:white
+    style E2 fill:#4CAF50,stroke:#388E3C,color:white
+    style E3 fill:#4CAF50,stroke:#388E3C,color:white
+    style E4 fill:#4CAF50,stroke:#388E3C,color:white
+    
+    style ES fill:#2196F3,stroke:#1976D2,color:white
+    
+    style P1 fill:#9C27B0,stroke:#7B1FA2,color:white
+    style P2 fill:#9C27B0,stroke:#7B1FA2,color:white
+    style P3 fill:#9C27B0,stroke:#7B1FA2,color:white
+    style P4 fill:#9C27B0,stroke:#7B1FA2,color:white
+    
+    style R1 fill:#FF9800,stroke:#F57C00,color:white
+    style R2 fill:#FF9800,stroke:#F57C00,color:white
+    style R3 fill:#FF9800,stroke:#F57C00,color:white
+    style R4 fill:#FF9800,stroke:#F57C00,color:white
+    
+    style RM1 fill:#9C27B0,stroke:#7B1FA2,color:white,stroke-dasharray: 5 5
+    style RM2 fill:#9C27B0,stroke:#7B1FA2,color:white,stroke-dasharray: 5 5
+    style RM3 fill:#9C27B0,stroke:#7B1FA2,color:white,stroke-dasharray: 5 5
+    style RM4 fill:#9C27B0,stroke:#7B1FA2,color:white,stroke-dasharray: 5 5
+    
+    style SE1 fill:#FF9800,stroke:#F57C00,color:white,stroke-dasharray: 5 5
+    style SE2 fill:#FF9800,stroke:#F57C00,color:white,stroke-dasharray: 5 5
+    style SE3 fill:#FF9800,stroke:#F57C00,color:white,stroke-dasharray: 5 5
+    style SE4 fill:#FF9800,stroke:#F57C00,color:white,stroke-dasharray: 5 5
+@enduml

@@ -1,0 +1,49 @@
+@startuml Todo State Machine (Light Mode)
+
+' Light mode theme
+!theme plain
+skinparam backgroundColor white
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' State styling
+skinparam state {
+    BackgroundColor #FEFEFE
+    BorderColor #999999
+    StartColor #4CAF50
+    EndColor #F44336
+}
+
+' Define states
+state "Pending" as Pending
+state "InProgress" as InProgress
+state "Completed" as Completed
+state "Cancelled" as Cancelled
+
+' Define transitions
+[*] -right-> Pending
+Pending -right-> InProgress : Start
+InProgress -right-> Completed : Complete
+InProgress -up-> Pending : Pause / Re-queue
+Pending -down-> Cancelled : Cancel
+InProgress -down-> Cancelled : Cancel
+
+' Add notes
+note bottom of Pending
+  Initial state when a todo is created
+end note
+
+note bottom of InProgress
+  Active work being done on the todo
+end note
+
+note bottom of Completed
+  Todo has been successfully finished
+end note
+
+note bottom of Cancelled
+  Todo has been abandoned or is no longer relevant
+end note
+
+@enduml

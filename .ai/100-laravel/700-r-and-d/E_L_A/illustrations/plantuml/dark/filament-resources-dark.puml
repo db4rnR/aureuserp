@@ -1,0 +1,86 @@
+@startuml Filament Resources (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+' Main components
+rectangle "Filament Resources" as A
+
+' Main resources
+rectangle "User Resource" as B
+rectangle "Team Resource" as C
+rectangle "Post Resource" as D
+rectangle "Todo Resource" as E
+
+' User resource components
+rectangle "List Users" as B1
+rectangle "Create/Edit User" as B2
+rectangle "View User Details" as B3
+rectangle "Manage User Roles" as B4
+rectangle "User Activity Log" as B5
+
+' Team resource components
+rectangle "List Teams" as C1
+rectangle "Create/Edit Team" as C2
+rectangle "View Team Details" as C3
+rectangle "Manage Team Members" as C4
+rectangle "Team Hierarchy" as C5
+
+' Post resource components
+rectangle "List Posts" as D1
+rectangle "Create/Edit Post" as D2
+rectangle "View Post Details" as D3
+rectangle "Manage Categories" as D4
+rectangle "Manage Tags" as D5
+rectangle "Media Library" as D6
+
+' Todo resource components
+rectangle "List Todos" as E1
+rectangle "Create/Edit Todo" as E2
+rectangle "View Todo Details" as E3
+rectangle "Todo Assignments" as E4
+rectangle "Todo Hierarchy" as E5
+
+' Connections
+A --> B
+A --> C
+A --> D
+A --> E
+
+B --> B1
+B --> B2
+B --> B3
+B --> B4
+B --> B5
+
+C --> C1
+C --> C2
+C --> C3
+C --> C4
+C --> C5
+
+D --> D1
+D --> D2
+D --> D3
+D --> D4
+D --> D5
+D --> D6
+
+E --> E1
+E --> E2
+E --> E3
+E --> E4
+E --> E5
+
+@enduml

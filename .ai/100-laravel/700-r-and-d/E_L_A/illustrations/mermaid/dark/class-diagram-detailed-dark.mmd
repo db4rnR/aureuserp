@@ -1,0 +1,349 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+classDiagram
+    class User {
+        +id: string
+        +name: string
+        +email: string
+        +email_verified_at: datetime
+        +password: string
+        +remember_token: string
+        +two_factor_secret: string
+        +two_factor_recovery_codes: string
+        +two_factor_confirmed_at: datetime
+        +current_team_id: string
+        +profile_photo_path: string
+        +created_at: datetime
+        +updated_at: datetime
+        +deleted_at: datetime
+        +created_by: string
+        +updated_by: string
+        +deleted_by: string
+        +status: UserStatus
+        +presence: PresenceStatus
+        +getTeams()
+        +getOwnedTeams()
+        +getCurrentTeam()
+        +hasVerifiedEmail()
+        +markEmailAsVerified()
+    }
+
+    class Team {
+        +id: string
+        +name: string
+        +slug: string
+        +description: string
+        +personal_team: boolean
+        +parent_id: string
+        +created_at: datetime
+        +updated_at: datetime
+        +deleted_at: datetime
+        +created_by: string
+        +updated_by: string
+        +deleted_by: string
+        +status: TeamStatus
+        +presence: PresenceStatus
+        +getOwner()
+        +getUsers()
+        +getParent()
+        +getChildren()
+        +addUser()
+        +removeUser()
+    }
+
+    class Category {
+        +id: string
+        +name: string
+        +slug: string
+        +description: string
+        +parent_id: string
+        +team_id: string
+        +created_at: datetime
+        +updated_at: datetime
+        +deleted_at: datetime
+        +created_by: string
+        +updated_by: string
+        +deleted_by: string
+        +getTeam()
+        +getParent()
+        +getChildren()
+        +getPosts()
+        +getTodos()
+    }
+
+    class Post {
+        +id: string
+        +title: string
+        +slug: string
+        +content: string
+        +excerpt: string
+        +featured_image_path: string
+        +published_at: datetime
+        +team_id: string
+        +category_id: string
+        +created_at: datetime
+        +updated_at: datetime
+        +deleted_at: datetime
+        +created_by: string
+        +updated_by: string
+        +deleted_by: string
+        +status: PostStatus
+        +getTeam()
+        +getCategory()
+        +getAuthor()
+        +getTags()
+        +getComments()
+    }
+
+    class Todo {
+        +id: string
+        +title: string
+        +description: string
+        +due_date: datetime
+        +completed_at: datetime
+        +parent_id: string
+        +team_id: string
+        +category_id: string
+        +assignee_id: string
+        +created_at: datetime
+        +updated_at: datetime
+        +deleted_at: datetime
+        +created_by: string
+        +updated_by: string
+        +deleted_by: string
+        +status: TodoStatus
+        +priority: Priority
+        +getTeam()
+        +getCategory()
+        +getAssignee()
+        +getCreator()
+        +getParent()
+        +getChildren()
+    }
+
+    class Conversation {
+        +id: string
+        +title: string
+        +team_id: string
+        +created_at: datetime
+        +updated_at: datetime
+        +deleted_at: datetime
+        +created_by: string
+        +updated_by: string
+        +deleted_by: string
+        +getTeam()
+        +getParticipants()
+        +getMessages()
+        +addParticipant()
+        +removeParticipant()
+    }
+
+    class Message {
+        +id: string
+        +content: string
+        +conversation_id: string
+        +created_at: datetime
+        +updated_at: datetime
+        +deleted_at: datetime
+        +created_by: string
+        +updated_by: string
+        +deleted_by: string
+        +getConversation()
+        +getSender()
+        +getReadReceipts()
+    }
+
+    class TeamUser {
+        +team_id: string
+        +user_id: string
+        +role: string
+        +created_at: datetime
+        +updated_at: datetime
+    }
+
+    class ConversationUser {
+        +conversation_id: string
+        +user_id: string
+        +created_at: datetime
+        +updated_at: datetime
+    }
+
+    class Tag {
+        +id: string
+        +name: string
+        +slug: string
+        +type: string
+        +created_at: datetime
+        +updated_at: datetime
+    }
+
+    class Taggable {
+        +tag_id: string
+        +taggable_id: string
+        +taggable_type: string
+    }
+
+    class Comment {
+        +id: string
+        +content: string
+        +commentable_id: string
+        +commentable_type: string
+        +created_at: datetime
+        +updated_at: datetime
+        +deleted_at: datetime
+        +created_by: string
+        +updated_by: string
+        +deleted_by: string
+        +getCommentable()
+        +getAuthor()
+    }
+
+    class Media {
+        +id: string
+        +name: string
+        +file_name: string
+        +mime_type: string
+        +size: integer
+        +disk: string
+        +path: string
+        +mediable_id: string
+        +mediable_type: string
+        +created_at: datetime
+        +updated_at: datetime
+        +created_by: string
+        +updated_by: string
+        +getMediable()
+        +getUrl()
+    }
+
+    class Activity {
+        +id: string
+        +log_name: string
+        +description: string
+        +subject_id: string
+        +subject_type: string
+        +causer_id: string
+        +causer_type: string
+        +properties: json
+        +created_at: datetime
+        +getSubject()
+        +getCauser()
+    }
+
+    class Permission {
+        +id: string
+        +name: string
+        +guard_name: string
+        +created_at: datetime
+        +updated_at: datetime
+    }
+
+    class Role {
+        +id: string
+        +name: string
+        +guard_name: string
+        +team_id: string
+        +created_at: datetime
+        +updated_at: datetime
+        +getPermissions()
+    }
+
+    class ModelHasRoles {
+        +role_id: string
+        +model_id: string
+        +model_type: string
+        +team_id: string
+    }
+
+    class RoleHasPermissions {
+        +permission_id: string
+        +role_id: string
+    }
+
+    class ModelHasPermissions {
+        +permission_id: string
+        +model_id: string
+        +model_type: string
+        +team_id: string
+    }
+
+    class UserStatus {
+        <<enumeration>>
+        ACTIVE
+        INACTIVE
+        SUSPENDED
+        PENDING
+    }
+
+    class PresenceStatus {
+        <<enumeration>>
+        ONLINE
+        AWAY
+        BUSY
+        OFFLINE
+    }
+
+    class TeamStatus {
+        <<enumeration>>
+        ACTIVE
+        INACTIVE
+        ARCHIVED
+    }
+
+    class PostStatus {
+        <<enumeration>>
+        DRAFT
+        PUBLISHED
+        ARCHIVED
+        SCHEDULED
+    }
+
+    class TodoStatus {
+        <<enumeration>>
+        CREATED
+        IN_PROGRESS
+        ON_HOLD
+        COMPLETED
+        CANCELLED
+    }
+
+    class Priority {
+        <<enumeration>>
+        LOW
+        MEDIUM
+        HIGH
+        URGENT
+    }
+
+    User "1" -- "n" TeamUser : belongs to
+    Team "1" -- "n" TeamUser : has
+    Team "0..1" -- "n" Team : parent-children
+    User "1" -- "n" Team : owns
+    Team "1" -- "n" Category : has
+    Team "1" -- "n" Post : has
+    Team "1" -- "n" Todo : has
+    Category "0..1" -- "n" Category : parent-children
+    Category "1" -- "n" Post : has
+    Category "1" -- "n" Todo : has
+    User "1" -- "n" Post : creates
+    User "1" -- "n" Todo : creates
+    User "1" -- "n" Todo : assigned to
+    Todo "0..1" -- "n" Todo : parent-children
+    Team "1" -- "n" Conversation : has
+    User "n" -- "n" Conversation : participates in
+    Conversation "1" -- "n" Message : has
+    User "1" -- "n" Message : sends
+    Tag "1" -- "n" Taggable : has
+    Post "1" -- "n" Taggable : tagged with
+    Todo "1" -- "n" Taggable : tagged with
+    Post "1" -- "n" Comment : has
+    Todo "1" -- "n" Comment : has
+    User "1" -- "n" Comment : authors
+    Post "1" -- "n" Media : has
+    User "1" -- "n" Media : uploads
+    User "1" -- "n" Activity : causes
+    Post "1" -- "n" Activity : subject of
+    Todo "1" -- "n" Activity : subject of
+    Team "1" -- "n" Activity : subject of
+    Role "n" -- "n" Permission : has
+    User "n" -- "n" Role : has
+    Team "1" -- "n" Role : has

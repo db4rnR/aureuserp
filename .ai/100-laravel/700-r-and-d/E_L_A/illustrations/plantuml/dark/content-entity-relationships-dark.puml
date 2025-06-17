@@ -1,0 +1,126 @@
+@startuml
+!theme dark
+skinparam backgroundColor #222222
+skinparam classFontColor #ffffff
+skinparam classBorderColor #555555
+skinparam classBorderThickness 1
+skinparam classBackgroundColor #333333
+skinparam arrowColor #cccccc
+
+entity "POST" as post {
+  * id : uuid <<PK>>
+  --
+  * title : string
+  slug : string
+  * content : text
+  * status : string
+  * user_id : uuid <<FK>>
+  published_at : timestamp
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "TODO" as todo {
+  * id : uuid <<PK>>
+  --
+  * title : string
+  description : text
+  * status : string
+  due_date : timestamp
+  * user_id : uuid <<FK>>
+  team_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "COMMENTS" as comments {
+  * id : uuid <<PK>>
+  --
+  * content : text
+  * commentable_id : uuid
+  * commentable_type : string
+  * user_id : uuid <<FK>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "MEDIA" as media {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * file_name : string
+  * mime_type : string
+  * disk : string
+  * size : integer
+  * mediable_id : uuid
+  * mediable_type : string
+  * created_at : timestamp
+  * updated_at : timestamp
+  deleted_at : timestamp
+  created_by : uuid <<FK>>
+  updated_by : uuid <<FK>>
+  deleted_by : uuid <<FK>>
+}
+
+entity "TAGS" as tags {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "CATEGORY" as category {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  description : text
+  * team_id : uuid <<FK>>
+  parent_id : uuid <<FK>>
+}
+
+entity "USER" as user {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  * email : string
+}
+
+entity "STATUS" as status {
+  * id : uuid <<PK>>
+  --
+  * name : string
+  reason : string
+  metadata : json
+  * model_id : uuid
+  * model_type : string
+  * created_at : timestamp
+}
+
+post "0..*" -- "0..*" category : categorized as
+post "0..*" -- "0..*" tags : tagged with
+post "0..*" -- "0..*" media : has media
+post "0..*" -- "0..*" comments : has comments
+post "0..*" -- "1" user : authored by
+post "1" -- "0..*" status : has
+
+todo "0..*" -- "0..*" category : categorized as
+todo "0..*" -- "0..*" tags : tagged with
+todo "0..*" -- "0..*" media : has media
+todo "0..*" -- "0..*" comments : has comments
+todo "0..*" -- "1" user : assigned to
+todo "1" -- "0..*" status : has
+
+@enduml

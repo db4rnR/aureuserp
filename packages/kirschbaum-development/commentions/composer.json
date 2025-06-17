@@ -1,0 +1,61 @@
+{
+    "name": "kirschbaum-development/commentions",
+    "description": "A package to allow you to create comments, tag users and more",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Kirschbaum\\Commentions\\": "src/",
+            "Kirschbaum\\Commentions\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luís Dalmolin",
+            "email": "luis.nh@gmail.com"
+        }
+    ],
+    "require": {
+        "spatie/laravel-package-tools": "^1.18",
+        "league/html-to-markdown": "^5.1",
+        "illuminate/support": "^11.0|^12.0",
+        "illuminate/database": "^11.0|^12.0",
+        "livewire/livewire": "^3.5",
+        "filament/support": "*",
+        "filament/notifications": "*",
+        "filament/filament": "^4.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kirschbaum\\Commentions\\CommentionsServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.7",
+        "illuminate/auth": "^11.0|^12.0",
+        "orchestra/testbench": "^9.9|^10.0",
+        "pestphp/pest-plugin-laravel": "^3.1",
+        "pestphp/pest-plugin-livewire": "^3.0",
+        "laravel/pint": "^1.21",
+        "larastan/larastan": "^3.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "fix-style": "./vendor/bin/pint --config pint.json",
+        "check-style": "./vendor/bin/pint --config pint.json --test",
+        "static-analysis": "./vendor/bin/phpstan analyse -c phpstan.neon"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Event Sourcing Flow Diagram - ELA Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        
+        .diagram-container {
+            margin: 30px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #eee;
+            border-radius: 5px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .info-panel {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-left: 5px solid #3498db;
+            display: none;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+            max-width: 300px;
+            display: none;
+        }
+        
+        .highlight-write-side .node-command rect,
+        .highlight-write-side .node-command-handler rect,
+        .highlight-write-side .node-aggregate rect,
+        .highlight-write-side .node-event rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-read-side .node-projector rect,
+        .highlight-read-side .node-read-model rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-storage .node-event-store rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-process-management .node-process-manager rect,
+        .highlight-process-management .node-new-command rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .highlight-side-effects .node-reactor rect,
+        .highlight-side-effects .node-side-effect rect {
+            stroke: #ff5733 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .dark-mode {
+            background-color: #282c34;
+            color: #ecf0f1;
+        }
+        
+        .dark-mode .diagram-container {
+            background-color: #2c3e50;
+            border-color: #34495e;
+        }
+        
+        .dark-mode .controls {
+            background-color: #34495e;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #ecf0f1;
+        }
+        
+        .dark-mode .info-panel {
+            background-color: #34495e;
+            border-left-color: #3498db;
+        }
+        
+        .dark-mode button {
+            background-color: #3498db;
+        }
+        
+        .dark-mode button:hover {
+            background-color: #2980b9;
+        }
+
+        .accessibility-controls {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #28a745;
+        }
+
+        .dark-mode .accessibility-controls {
+            background-color: #343a40;
+            border-left-color: #28a745;
+        }
+
+        .static-link {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #ffc107;
+        }
+
+        .dark-mode .static-link {
+            background-color: #343a40;
+            border-left-color: #ffc107;
+        }
+
+        .keyboard-shortcuts {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .dark-mode .keyboard-shortcuts {
+            background-color: #343a40;
+        }
+
+        .keyboard-shortcut {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 0 5px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .dark-mode .keyboard-shortcut {
+            background-color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Event Sourcing Flow Diagram</h1>
+    <p>This interactive diagram illustrates the flow of commands and events through an event-sourced system. Use the controls below to explore different aspects of the system.</p>
+    
+    <div class="controls">
+        <h3>Highlight Components:</h3>
+        <button id="highlight-write-side" aria-label="Highlight Write Side Components">Write Side</button>
+        <button id="highlight-storage" aria-label="Highlight Storage Components">Storage</button>
+        <button id="highlight-read-side" aria-label="Highlight Read Side Components">Read Side</button>
+        <button id="highlight-process-management" aria-label="Highlight Process Management Components">Process Management</button>
+        <button id="highlight-side-effects" aria-label="Highlight Side Effects Components">Side Effects</button>
+        <button id="reset-highlights" aria-label="Reset All Highlights">Reset</button>
+        <button id="toggle-theme" aria-label="Toggle Dark/Light Mode">Toggle Dark/Light Mode</button>
+    </div>
+    
+    <div class="diagram-container">
+        <div class="mermaid" id="event-sourcing-diagram">
+            graph TD
+                subgraph "Write Side"
+                    A[User Action] --> B[Command]
+                    B --> C[Command Handler]
+                    C --> D[Aggregate]
+                    D --> E[Event]
+                end
+                
+                subgraph "Storage"
+                    E --> F[Event Store]
+                end
+                
+                subgraph "Read Side"
+                    E --> G[Projector]
+                    G --> H[Read Model]
+                end
+                
+                subgraph "Process Management"
+                    E --> I[Process Manager]
+                    I --> J[New Command]
+                    J --> C
+                end
+                
+                subgraph "Side Effects"
+                    E --> K[Reactor]
+                    K --> L[Side Effect]
+                end
+                
+                %% Component styling
+                classDef command fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+                classDef commandHandler fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+                classDef aggregate fill:#8E44AD,stroke:#6C3483,color:white,stroke-width:2px
+                classDef event fill:#27AE60,stroke:#1E8449,color:white,stroke-width:2px
+                classDef eventStore fill:#7F8C8D,stroke:#616A6B,color:white,stroke-width:2px
+                classDef projector fill:#D35400,stroke:#A04000,color:white,stroke-width:2px
+                classDef readModel fill:#F39C12,stroke:#B67B0B,color:white,stroke-width:2px
+                classDef processManager fill:#8E44AD,stroke:#6C3483,color:white,stroke-width:2px
+                classDef newCommand fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+                classDef reactor fill:#C0392B,stroke:#922B21,color:white,stroke-width:2px
+                classDef sideEffect fill:#C0392B,stroke:#922B21,color:white,stroke-width:2px
+                
+                %% Apply classes
+                class B command
+                class C commandHandler
+                class D aggregate
+                class E event
+                class F eventStore
+                class G projector
+                class H readModel
+                class I processManager
+                class J newCommand
+                class K reactor
+                class L sideEffect
+                
+                %% Add node IDs for JavaScript interaction
+                class B node-command
+                class C node-command-handler
+                class D node-aggregate
+                class E node-event
+                class F node-event-store
+                class G node-projector
+                class H node-read-model
+                class I node-process-manager
+                class J node-new-command
+                class K node-reactor
+                class L node-side-effect
+                
+                %% Click events
+                click B showInfo "Command: Represents user intent to change the system state"
+                click C showInfo "Command Handler: Validates and routes commands to appropriate aggregates"
+                click D showInfo "Aggregate: Domain entity that encapsulates business rules and state"
+                click E showInfo "Event: Immutable record of something that happened in the domain"
+                click F showInfo "Event Store: Persistent storage for all events"
+                click G showInfo "Projector: Builds and maintains read models based on events"
+                click H showInfo "Read Model: Optimized data structure for queries"
+                click I showInfo "Process Manager: Coordinates complex workflows across aggregates"
+                click J showInfo "New Command: Generated by process managers to trigger further actions"
+                click K showInfo "Reactor: Executes side effects when specific events occur"
+                click L showInfo "Side Effect: External actions such as sending emails or notifications"
+        </div>
+    </div>
+    
+    <div class="info-panel" id="info-panel">
+        <h3 id="info-title">Component Information</h3>
+        <p id="info-description">Click on a component to see more information.</p>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+
+    <div class="accessibility-controls">
+        <h3>Accessibility Options</h3>
+        <button id="increase-font" aria-label="Increase Font Size">Increase Font Size</button>
+        <button id="decrease-font" aria-label="Decrease Font Size">Decrease Font Size</button>
+        <button id="high-contrast" aria-label="Toggle High Contrast Mode">Toggle High Contrast</button>
+    </div>
+
+    <div class="keyboard-shortcuts">
+        <h3>Keyboard Shortcuts</h3>
+        <p>
+            <span class="keyboard-shortcut">W</span> Highlight Write Side
+            <span class="keyboard-shortcut">S</span> Highlight Storage
+            <span class="keyboard-shortcut">R</span> Highlight Read Side
+            <span class="keyboard-shortcut">P</span> Highlight Process Management
+            <span class="keyboard-shortcut">E</span> Highlight Side Effects
+            <span class="keyboard-shortcut">Esc</span> Reset Highlights
+            <span class="keyboard-shortcut">T</span> Toggle Dark/Light Mode
+        </p>
+    </div>
+
+    <div class="static-link">
+        <h3>Static Diagram Versions</h3>
+        <p>If you prefer to view static versions of this diagram:</p>
+        <ul>
+            <li><a href="../mermaid/light/event-sourcing-flow-enhanced-light.md">Light Mode Static Diagram</a></li>
+            <li><a href="../mermaid/dark/event-sourcing-flow-enhanced-dark.md">Dark Mode Static Diagram</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+        
+        // Wait for Mermaid to render
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners after Mermaid has rendered
+            setTimeout(setupInteractivity, 1000);
+        });
+        
+        function setupInteractivity() {
+            // Get elements
+            const diagramContainer = document.querySelector('.diagram-container');
+            const infoPanel = document.getElementById('info-panel');
+            const infoTitle = document.getElementById('info-title');
+            const infoDescription = document.getElementById('info-description');
+            const tooltip = document.getElementById('tooltip');
+            
+            // Highlight buttons
+            document.getElementById('highlight-write-side').addEventListener('click', function() {
+                resetHighlights();
+                diagramContainer.classList.add('highlight-write-side');
+                showComponentGroup('Write Side', 'The write side of the system is responsible for processing commands and generating events.');
+            });
+            
+            document.getElementById('highlight-storage').addEventListener('click', function() {
+                resetHighlights();
+                diagramContainer.classList.add('highlight-storage');
+                showComponentGroup('Storage', 'The storage layer is responsible for persisting events.');
+            });
+            
+            document.getElementById('highlight-read-side').addEventListener('click', function() {
+                resetHighlights();
+                diagramContainer.classList.add('highlight-read-side');
+                showComponentGroup('Read Side', 'The read side of the system is responsible for providing optimized views of the data.');
+            });
+            
+            document.getElementById('highlight-process-management').addEventListener('click', function() {
+                resetHighlights();
+                diagramContainer.classList.add('highlight-process-management');
+                showComponentGroup('Process Management', 'The process management layer is responsible for coordinating complex workflows.');
+            });
+            
+            document.getElementById('highlight-side-effects').addEventListener('click', function() {
+                resetHighlights();
+                diagramContainer.classList.add('highlight-side-effects');
+                showComponentGroup('Side Effects', 'The side effects layer is responsible for executing external actions.');
+            });
+            
+            document.getElementById('reset-highlights').addEventListener('click', function() {
+                resetHighlights();
+                infoPanel.style.display = 'none';
+            });
+            
+            document.getElementById('toggle-theme').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                // Update Mermaid theme
+                if (document.body.classList.contains('dark-mode')) {
+                    mermaid.initialize({
+                        theme: 'dark'
+                    });
+                } else {
+                    mermaid.initialize({
+                        theme: 'default'
+                    });
+                }
+                
+                // Re-render the diagram
+                const diagramDiv = document.getElementById('event-sourcing-diagram');
+                const diagramSource = diagramDiv.textContent;
+                diagramDiv.innerHTML = diagramSource;
+                mermaid.init(undefined, diagramDiv);
+                
+                // Re-setup interactivity after re-rendering
+                setTimeout(setupInteractivity, 1000);
+            });
+
+            // Accessibility controls
+            document.getElementById('increase-font').addEventListener('click', function() {
+                const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                document.body.style.fontSize = (currentSize + 2) + 'px';
+            });
+
+            document.getElementById('decrease-font').addEventListener('click', function() {
+                const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                document.body.style.fontSize = (currentSize - 2) + 'px';
+            });
+
+            document.getElementById('high-contrast').addEventListener('click', function() {
+                document.body.classList.toggle('high-contrast');
+            });
+            
+            // Setup tooltips for diagram nodes
+            const nodes = document.querySelectorAll('.node');
+            nodes.forEach(node => {
+                node.addEventListener('mouseover', function(e) {
+                    const nodeId = this.id;
+                    const tooltipText = getTooltipText(nodeId);
+                    
+                    if (tooltipText) {
+                        tooltip.textContent = tooltipText;
+                        tooltip.style.display = 'block';
+                        tooltip.style.left = (e.pageX + 10) + 'px';
+                        tooltip.style.top = (e.pageY + 10) + 'px';
+                    }
+                });
+                
+                node.addEventListener('mousemove', function(e) {
+                    tooltip.style.left = (e.pageX + 10) + 'px';
+                    tooltip.style.top = (e.pageY + 10) + 'px';
+                });
+                
+                node.addEventListener('mouseout', function() {
+                    tooltip.style.display = 'none';
+                });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                switch(e.key.toLowerCase()) {
+                    case 'w':
+                        document.getElementById('highlight-write-side').click();
+                        break;
+                    case 's':
+                        document.getElementById('highlight-storage').click();
+                        break;
+                    case 'r':
+                        document.getElementById('highlight-read-side').click();
+                        break;
+                    case 'p':
+                        document.getElementById('highlight-process-management').click();
+                        break;
+                    case 'e':
+                        document.getElementById('highlight-side-effects').click();
+                        break;
+                    case 'escape':
+                        document.getElementById('reset-highlights').click();
+                        break;
+                    case 't':
+                        document.getElementById('toggle-theme').click();
+                        break;
+                }
+            });
+        }
+        
+        // Function to show component information
+        function showInfo(nodeId, description) {
+            const infoPanel = document.getElementById('info-panel');
+            const infoTitle = document.getElementById('info-title');
+            const infoDescription = document.getElementById('info-description');
+            
+            infoTitle.textContent = nodeId;
+            infoDescription.textContent = description;
+            infoPanel.style.display = 'block';
+            
+            return false; // Prevent default click behavior
+        }
+        
+        // Function to show component group information
+        function showComponentGroup(title, description) {
+            const infoPanel = document.getElementById('info-panel');
+            const infoTitle = document.getElementById('info-title');
+            const infoDescription = document.getElementById('info-description');
+            
+            infoTitle.textContent = title;
+            infoDescription.textContent = description;
+            infoPanel.style.display = 'block';
+        }
+        
+        // Function to reset highlights
+        function resetHighlights() {
+            const diagramContainer = document.querySelector('.diagram-container');
+            diagramContainer.classList.remove(
+                'highlight-write-side',
+                'highlight-storage',
+                'highlight-read-side',
+                'highlight-process-management',
+                'highlight-side-effects'
+            );
+        }
+        
+        // Function to get tooltip text based on node ID
+        function getTooltipText(nodeId) {
+            const tooltips = {
+                'flowchart-B-': 'Command: Represents user intent',
+                'flowchart-C-': 'Command Handler: Validates and routes commands',
+                'flowchart-D-': 'Aggregate: Applies business rules',
+                'flowchart-E-': 'Event: Records what happened',
+                'flowchart-F-': 'Event Store: Persistent event log',
+                'flowchart-G-': 'Projector: Builds read models',
+                'flowchart-H-': 'Read Model: Optimized for queries',
+                'flowchart-I-': 'Process Manager: Coordinates workflows',
+                'flowchart-J-': 'New Command: Triggers further actions',
+                'flowchart-K-': 'Reactor: Handles side effects',
+                'flowchart-L-': 'Side Effect: External actions'
+            };
+            
+            // Find the matching tooltip
+            for (const key in tooltips) {
+                if (nodeId.includes(key)) {
+                    return tooltips[key];
+                }
+            }
+            
+            return null;
+        }
+    </script>
+</body>
+</html>

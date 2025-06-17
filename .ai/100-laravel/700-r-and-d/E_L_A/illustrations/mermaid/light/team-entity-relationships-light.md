@@ -1,0 +1,76 @@
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+erDiagram
+    TEAM ||--o{ TEAM : "parent of"
+    TEAM ||--|{ CATEGORY : "has"
+    TEAM ||--o{ TODO : "related to"
+    TEAM }o--o{ USER : "has members"
+    TEAM ||--o{ STATUS : "has"
+    
+    TEAM {
+        uuid id PK
+        string name
+        string slug
+        text description
+        uuid parent_id FK
+        string status
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+        uuid created_by FK
+        uuid updated_by FK
+        uuid deleted_by FK
+    }
+    
+    TEAM_USER }|--|| USER : "belongs to"
+    TEAM_USER }|--|| TEAM : "belongs to"
+    TEAM_USER {
+        uuid id PK
+        uuid team_id FK
+        uuid user_id FK
+        string role
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    CATEGORY ||--o{ CATEGORY : "parent of"
+    CATEGORY {
+        uuid id PK
+        string name
+        text description
+        uuid team_id FK
+        uuid parent_id FK
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+        uuid created_by FK
+        uuid updated_by FK
+        uuid deleted_by FK
+    }
+    
+    STATUS {
+        uuid id PK
+        string name
+        string reason
+        json metadata
+        uuid model_id
+        string model_type
+        timestamp created_at
+    }
+    
+    USER {
+        uuid id PK
+        string name
+        string email
+    }
+    
+    TODO {
+        uuid id PK
+        string title
+        text description
+        string status
+        timestamp due_date
+        uuid user_id FK
+        uuid team_id FK
+    }
+```

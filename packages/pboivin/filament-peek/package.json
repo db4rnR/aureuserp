@@ -1,0 +1,27 @@
+{
+    "private": true,
+    "scripts": {
+        "dev:styles": "npx tailwindcss -i resources/css/internal.css -o resources/dist/filament-peek.css --postcss --watch",
+        "dev:scripts": "esbuild resources/js/plugin.js --bundle --sourcemap=inline --outfile=resources/dist/filament-peek.js --watch",
+        "build:styles": "npx tailwindcss -i resources/css/internal.css -o resources/dist/filament-peek.css --postcss --minify && npm run purge",
+        "build:scripts": "esbuild resources/js/plugin.js --bundle --minify --outfile=resources/dist/filament-peek.js",
+        "purge": "filament-purge -i resources/dist/filament-peek.css -o resources/dist/filament-peek.css",
+        "dev": "npm-run-all --parallel dev:*",
+        "build": "npm-run-all build:*"
+    },
+    "devDependencies": {
+        "@awcodes/filament-plugin-purge": "^1.1",
+        "@tailwindcss/forms": "^0.5",
+        "@tailwindcss/typography": "^0.5",
+        "alpinejs": "^3.12",
+        "autoprefixer": "^10.4",
+        "esbuild": "^0.8",
+        "lodash.debounce": "^4.0",
+        "lodash.throttle": "^4.1",
+        "npm-run-all": "^4.1",
+        "postcss": "^8.4",
+        "prettier": "^2.7",
+        "prettier-plugin-tailwindcss": "^0.1",
+        "tailwindcss": "^3.3"
+    }
+}

@@ -1,0 +1,114 @@
+@startuml
+!theme light
+skinparam backgroundColor #ffffff
+skinparam arrowColor #666666
+skinparam nodeFontColor #333333
+skinparam nodeBorderColor #cccccc
+skinparam nodeBorderThickness 1
+skinparam nodeBackgroundColor #f5f5f5
+
+node "Status Implementation" as A
+node "User Status" as B
+node "Team Status" as C
+node "Post Status" as D
+node "Todo Status" as E
+
+node "Account Status" as B1
+node "Presence Status" as B2
+
+node "Active" as B1A
+node "Suspended" as B1B
+node "Deactivated" as B1C
+
+node "Online" as B2A
+node "Away" as B2B
+node "Busy" as B2C
+node "Offline" as B2D
+
+node "Team State" as C1
+node "Team Activity Status" as C2
+
+node "Active" as C1A
+node "Archived" as C1B
+node "Pending" as C1C
+
+node "High Activity" as C2A
+node "Medium Activity" as C2B
+node "Low Activity" as C2C
+node "Inactive" as C2D
+
+node "Draft" as D1
+node "Published" as D2
+node "Archived" as D3
+node "Scheduled" as D4
+
+node "Todo" as E1
+node "In Progress" as E2
+node "Blocked" as E3
+node "Completed" as E4
+node "Cancelled" as E5
+
+node "spatie/laravel-model-states" as F
+node "spatie/laravel-model-status" as G
+
+node "State Machines" as H
+node "Status History" as I
+
+node "Strict Transitions" as J
+node "Behavior per State" as K
+
+node "Multiple Status Types" as L
+node "Complete History" as M
+node "Metadata & Reasons" as N
+
+A --> B
+A --> C
+A --> D
+A --> E
+
+B --> B1
+B --> B2
+
+B1 --> B1A
+B1 --> B1B
+B1 --> B1C
+
+B2 --> B2A
+B2 --> B2B
+B2 --> B2C
+B2 --> B2D
+
+C --> C1
+C --> C2
+
+C1 --> C1A
+C1 --> C1B
+C1 --> C1C
+
+C2 --> C2A
+C2 --> C2B
+C2 --> C2C
+C2 --> C2D
+
+D --> D1
+D --> D2
+D --> D3
+D --> D4
+
+E --> E1
+E --> E2
+E --> E3
+E --> E4
+E --> E5
+
+F --> H
+G --> I
+
+H --> J
+H --> K
+
+I --> L
+I --> M
+I --> N
+
+@enduml

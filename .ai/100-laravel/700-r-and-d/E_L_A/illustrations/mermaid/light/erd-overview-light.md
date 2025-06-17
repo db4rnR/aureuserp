@@ -1,0 +1,36 @@
+# ERD Overview (Light Mode)
+
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+erDiagram
+    USER ||--o{ POST : "authors"
+    USER ||--o{ TODO : "assigned to"
+    USER ||--o{ MESSAGE : "sends"
+    USER }|--o{ COMMENT : "creates"
+    USER }o--o{ CONVERSATION : "participates in"
+    USER }o--o{ TEAM : "member of"
+    USER }|--o{ ROLE : "has"
+
+    TEAM ||--o{ TEAM : "parent of"
+    TEAM ||--o{ CATEGORY : "has"
+    TEAM ||--o{ TODO : "related to"
+
+    CATEGORY ||--o{ CATEGORY : "parent of"
+    CATEGORY }o--o{ POST : "categorizes"
+    CATEGORY }o--o{ TODO : "categorizes"
+
+    POST }o--o{ TAG : "tagged with"
+    POST }o--o{ MEDIA : "has"
+    POST }o--o{ COMMENT : "has"
+
+    TODO }o--o{ TAG : "tagged with"
+    TODO }o--o{ MEDIA : "has"
+    TODO }o--o{ COMMENT : "has"
+    TODO ||--o{ TODO : "parent of"
+
+    CONVERSATION ||--o{ MESSAGE : "contains"
+
+    ROLE }|--o{ PERMISSION : "has"
+    
+    COMMAND_LOG ||--o{ SNAPSHOT : "generates"
+```

@@ -1,0 +1,239 @@
+@startuml Enhanced Laravel Application ERD
+
+' Entity definitions
+class USER {
+  +bigint id <<PK>>
+  +bigint snowflake_id <<UQ,IDX>>
+  +string slug <<UQ,IDX>>
+  +string type <<IDX>> ' STI type
+  +string email <<UQ>>
+  +string password ' HASH
+  +timestamp email_verified_at <<NULL>>
+  +string status <<IDX>> ' User state
+  +bigint created_by <<FK,NULL,IDX>>
+  +bigint updated_by <<FK,NULL,IDX>>
+  +bigint deleted_by <<FK,NULL,IDX>>
+  +timestamp created_at
+  +timestamp updated_at
+  +timestamp deleted_at <<NULL,IDX>>
+}
+
+class TEAM {
+  +bigint id <<PK>>
+  +bigint snowflake_id <<UQ,IDX>>
+  +string slug <<UQ,IDX>>
+  +string name
+  +bigint parent_id <<FK,NULL,IDX>> ' Hierarchy
+  +string path <<IDX>>
+  +int depth <<IDX>>
+  +string status <<IDX>> ' Team state
+  +bigint created_by <<FK,NULL,IDX>>
+  +bigint updated_by <<FK,NULL,IDX>>
+  +bigint deleted_by <<FK,NULL,IDX>>
+  +timestamp created_at
+  +timestamp updated_at
+  +timestamp deleted_at <<NULL,IDX>>
+}
+
+class CATEGORY {
+  +bigint id <<PK>>
+  +bigint snowflake_id <<UQ,IDX>>
+  +bigint team_id <<FK,NN,IDX>>
+  +string name
+  +string slug <<UQ(team_id,slug)>>
+  +bigint parent_id <<FK,NULL,IDX>> ' Hierarchy
+  +string path <<IDX>>
+  +int depth <<IDX>>
+  +bigint created_by <<FK,NULL,IDX>>
+  +bigint updated_by <<FK,NULL,IDX>>
+  +bigint deleted_by <<FK,NULL,IDX>>
+  +timestamp created_at
+  +timestamp updated_at
+  +timestamp deleted_at <<NULL,IDX>>
+}
+
+class POST {
+  +bigint id <<PK>>
+  +bigint snowflake_id <<UQ,IDX>>
+  +bigint user_id <<FK,NN,IDX>> ' Author
+  +string title
+  +string slug <<UQ,IDX>>
+  +text content
+  +text excerpt <<NULL>>
+  +string status <<IDX>> ' Post state
+  +timestamp published_at <<NULL,IDX>>
+  +timestamp scheduled_for <<NULL>>
+  +bigint created_by <<FK,NULL,IDX>>
+  +bigint updated_by <<FK,NULL,IDX>>
+  +bigint deleted_by <<FK,NULL,IDX>>
+  +timestamp created_at
+  +timestamp updated_at
+  +timestamp deleted_at <<NULL,IDX>>
+}
+
+class TODO {
+  +bigint id <<PK>>
+  +bigint snowflake_id <<UQ,IDX>>
+  +string title
+  +string slug <<UQ,IDX>>
+  +text description <<NULL>>
+  +bigint user_id <<FK,NULL,IDX>> ' Assignee
+  +bigint team_id <<FK,NULL,IDX>> ' Associated Team
+  +bigint parent_id <<FK,NULL,IDX>> ' Hierarchy
+  +string path <<IDX>>
+  +int depth <<IDX>>
+  +string status <<IDX>> ' Todo state
+  +timestamp due_date <<NULL>>
+  +timestamp completed_at <<NULL>>
+  +bigint created_by <<FK,NULL,IDX>>
+  +bigint updated_by <<FK,NULL,IDX>>
+  +bigint deleted_by <<FK,NULL,IDX>>
+  +timestamp created_at
+  +timestamp updated_at
+  +timestamp deleted_at <<NULL,IDX>>
+}
+
+class CONVERSATION {
+  +bigint id <<PK>>
+  +string uuid <<UQ,IDX>>
+  +string name <<NULL>>
+  +string type <<IDX>>
+  +bigint created_by <<FK,NULL,IDX>>
+  +bigint updated_by <<FK,NULL,IDX>>
+  +timestamp created_at
+  +timestamp updated_at
+  +timestamp deleted_at <<NULL,IDX>>
+}
+
+class MESSAGE {
+  +bigint id <<PK>>
+  +string uuid <<UQ,IDX>>
+  +bigint conversation_id <<FK,NN,IDX>>
+  +bigint user_id <<FK,NN,IDX>> ' Sender
+  +text body
+  +bigint created_by <<FK,NULL,IDX>>
+  +bigint updated_by <<FK,NULL,IDX>>
+  +timestamp created_at <<IDX>>
+  +timestamp updated_at
+  +timestamp deleted_at <<NULL,IDX>>
+}
+
+class COMMAND_LOG {
+  +bigint id <<PK>>
+  +uuid command_id <<UQ,IDX>>
+  +string name <<IDX>>
+  +text payload
+  +text results <<NULL>>
+  +timestamp handled_at <<IDX>>
+  +string status
+}
+
+class SNAPSHOT {
+  +bigint id <<PK>>
+  +uuid command_id <<FK,IDX>>
+  +string subject_type <<IDX>>
+  +string subject_id <<IDX>>
+  +int version <<IDX>>
+  +text data
+  +timestamp created_at <<IDX>>
+}
+
+class ROLE {
+  +bigint id <<PK>>
+  +string name <<UQ,IDX>>
+  +string guard_name <<IDX>>
+}
+
+class PERMISSION {
+  +bigint id <<PK>>
+  +string name <<UQ,IDX>>
+  +string guard_name <<IDX>>
+}
+
+class MEDIA {
+  +bigint id <<PK>>
+  +string model_type <<IDX>>
+  +bigint model_id <<IDX>>
+  +string uuid <<UQ>>
+  +string collection_name <<IDX>>
+  ' ... other Spatie Media attributes ...
+}
+
+class TAGS {
+  +bigint id <<PK>>
+  +json name
+  +json slug
+  +string type <<NULL,IDX>>
+}
+
+class TAGGABLES {
+  +bigint tag_id <<FK>>
+  +string taggable_type <<IDX>>
+  +bigint taggable_id <<IDX>>
+  ' Composite PK: tag_id, taggable_type, taggable_id
+}
+
+class COMMENTS {
+  +bigint id <<PK>>
+  +string commentable_type <<IDX>>
+  +bigint commentable_id <<IDX>>
+  +string commenter_type <<NULL,IDX>>
+  +bigint commenter_id <<NULL,IDX>>
+  +text comment
+  +boolean approved
+  +bigint parent_id <<FK,NULL>> ' For threaded comments
+}
+
+class ACTIVITY_LOG {
+  +bigint id <<PK>>
+  +string log_name <<NULL,IDX>>
+  +text description
+  +string subject_type <<NULL,IDX>>
+  +bigint subject_id <<NULL,IDX>>
+  +string causer_type <<NULL,IDX>>
+  +bigint causer_id <<NULL,IDX>>
+  +json properties <<NULL>>
+  +uuid batch_uuid <<NULL,IDX>>
+  +string event <<NULL,IDX>>
+}
+
+' Relationships
+USER "1" --o "*" POST : authors
+USER "1" --o "*" TODO : assignedTo
+USER "1" --o "*" MESSAGE : sends
+USER "1" --o "*" COMMENTS : commentsAsCommenter
+USER "1" --o "*" ACTIVITY_LOG : causesActivity
+USER "1" -- "*" MEDIA : hasAvatar (Polymorphic)
+USER "*" -- "*" ROLE : model_has_roles (Pivot)
+USER "*" -- "*" CONVERSATION : conversation_user (Pivot)
+
+TEAM "1" --o "*" TEAM : parentOf (Hierarchy)
+TEAM "1" --o "*" CATEGORY : hasCategories
+TEAM "1" --o "*" TODO : associatedWith (Optional)
+TEAM "1" -- "*" MEDIA : hasAvatar (Polymorphic)
+
+CATEGORY "1" --o "*" CATEGORY : parentOf (Hierarchy)
+CATEGORY "*" -- "1" TEAM : belongsTo
+
+POST "*" --o "1" USER : authoredBy
+POST "*" -- "*" CATEGORY : categorizables (Pivot)
+POST "*" -- "*" TAGS : taggables (Pivot)
+POST "*" -- "*" MEDIA : hasMedia (Polymorphic)
+POST "*" -- "*" COMMENTS : commentable (Polymorphic)
+
+TODO "*" --o "1" USER : assignedTo (Optional)
+TODO "*" --o "1" TEAM : associatedWith (Optional)
+TODO "1" --o "*" TODO : parentOf (Hierarchy)
+TODO "*" -- "*" CATEGORY : categorizables (Pivot)
+TODO "*" -- "*" TAGS : taggables (Pivot)
+TODO "*" -- "*" MEDIA : hasMedia (Polymorphic)
+TODO "*" -- "*" COMMENTS : commentable (Polymorphic)
+
+CONVERSATION "1" --o "*" MESSAGE : hasMessages
+CONVERSATION "*" -- "*" USER : conversation_user (Pivot)
+
+ROLE "*" -- "*" PERMISSION : role_has_permissions (Pivot)
+
+COMMAND_LOG "1" --o "*" SNAPSHOT : mayGenerate
+
+@enduml

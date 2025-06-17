@@ -1,0 +1,30 @@
+@startuml
+!theme light
+skinparam backgroundColor #ffffff
+skinparam arrowColor #666666
+skinparam activityFontColor #333333
+skinparam activityBorderColor #cccccc
+skinparam activityBorderThickness 1
+skinparam activityBackgroundColor #f5f5f5
+
+start
+:Identify Diagram Need;
+:Choose Diagram Type;
+note right
+  Flowchart
+  ERD
+  Sequence
+  Class
+  State
+  Gantt
+end note
+:Create Draft in Mermaid;
+:Create Light Mode Version;
+:Create Dark Mode Version;
+:Convert to PlantUML;
+:Create Thumbnails;
+:Add to Index;
+:Update Source Document;
+stop
+
+@enduml

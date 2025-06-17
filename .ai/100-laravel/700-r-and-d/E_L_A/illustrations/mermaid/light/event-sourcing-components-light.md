@@ -1,0 +1,15 @@
+# Event Sourcing Components (Light Mode)
+
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+flowchart TD
+    A[Domain Event] --> B[Event Store]
+    B --> C[Event Stream]
+    C --> D[Projector]
+    D --> E[Read Model]
+    A --> F[Reactor]
+    F --> G[Side Effects]
+    
+    H[Aggregate] --> |Applies| A
+    I[Command] --> |Handled by| H
+```

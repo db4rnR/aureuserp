@@ -1,0 +1,281 @@
+@startuml Detailed Class Diagram (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam class {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    AttributeFontColor #FFFFFF
+    AttributeFontSize 11
+    AttributeIconSize 11
+    FontStyle normal
+}
+
+' Entity definitions
+class User {
+    +bigint id
+    +bigint snowflake_id
+    +string slug
+    +string type
+    +string email
+    +string password
+    +timestamp email_verified_at
+    +string status
+    +timestamps()
+    +userstamps()
+    +softDeletes()
+    +posts()
+    +todos()
+    +teams()
+    +conversations()
+    +messages()
+    +comments()
+}
+
+class Team {
+    +bigint id
+    +bigint snowflake_id
+    +string name
+    +string slug
+    +bigint parent_id
+    +string path
+    +int depth
+    +string status
+    +timestamps()
+    +userstamps()
+    +softDeletes()
+    +parent()
+    +children()
+    +users()
+    +categories()
+    +todos()
+}
+
+class Category {
+    +bigint id
+    +bigint snowflake_id
+    +bigint team_id
+    +string name
+    +string slug
+    +bigint parent_id
+    +string path
+    +int depth
+    +timestamps()
+    +userstamps()
+    +softDeletes()
+    +team()
+    +parent()
+    +children()
+    +posts()
+    +todos()
+}
+
+class Post {
+    +bigint id
+    +bigint snowflake_id
+    +bigint user_id
+    +string title
+    +string slug
+    +text content
+    +text excerpt
+    +string status
+    +timestamp published_at
+    +timestamp scheduled_for
+    +timestamps()
+    +userstamps()
+    +softDeletes()
+    +user()
+    +categories()
+    +tags()
+    +media()
+    +comments()
+}
+
+class Todo {
+    +bigint id
+    +bigint snowflake_id
+    +string title
+    +string slug
+    +text description
+    +bigint user_id
+    +bigint team_id
+    +bigint parent_id
+    +string path
+    +int depth
+    +string status
+    +timestamp due_date
+    +timestamp completed_at
+    +timestamps()
+    +userstamps()
+    +softDeletes()
+    +user()
+    +team()
+    +parent()
+    +children()
+    +categories()
+    +tags()
+    +media()
+    +comments()
+}
+
+class Conversation {
+    +bigint id
+    +uuid uuid
+    +string name
+    +string type
+    +timestamps()
+    +userstamps()
+    +softDeletes()
+    +users()
+    +messages()
+}
+
+class Message {
+    +bigint id
+    +uuid uuid
+    +bigint conversation_id
+    +bigint user_id
+    +text body
+    +timestamps()
+    +userstamps()
+    +softDeletes()
+    +conversation()
+    +user()
+}
+
+class Comment {
+    +bigint id
+    +string commentable_type
+    +bigint commentable_id
+    +bigint user_id
+    +text content
+    +timestamps()
+    +userstamps()
+    +softDeletes()
+    +commentable()
+    +user()
+}
+
+class Role {
+    +bigint id
+    +string name
+    +string guard_name
+    +timestamps()
+    +permissions()
+    +users()
+}
+
+class Permission {
+    +bigint id
+    +string name
+    +string guard_name
+    +timestamps()
+    +roles()
+}
+
+class Tag {
+    +bigint id
+    +json name
+    +json slug
+    +string type
+    +timestamps()
+    +taggables()
+}
+
+class Media {
+    +bigint id
+    +string model_type
+    +bigint model_id
+    +uuid uuid
+    +string collection_name
+    +string name
+    +string file_name
+    +string mime_type
+    +string disk
+    +string conversions_disk
+    +bigint size
+    +json manipulations
+    +json custom_properties
+    +json generated_conversions
+    +json responsive_images
+    +integer order_column
+    +timestamps()
+    +model()
+}
+
+class ActivityLog {
+    +bigint id
+    +string log_name
+    +text description
+    +string subject_type
+    +bigint subject_id
+    +string causer_type
+    +bigint causer_id
+    +json properties
+    +timestamp created_at
+    +subject()
+    +causer()
+}
+
+class CommandLog {
+    +bigint id
+    +uuid command_id
+    +string name
+    +text payload
+    +text results
+    +timestamp handled_at
+    +string status
+    +snapshots()
+}
+
+class Snapshot {
+    +bigint id
+    +uuid command_id
+    +string subject_type
+    +string subject_id
+    +int version
+    +text data
+    +timestamp created_at
+    +command()
+    +subject()
+}
+
+' Relationships
+User "1" -- "many" Post : authors
+User "1" -- "many" Todo : assigned to
+User "1" -- "many" Message : sends
+User "1" -- "many" Comment : creates
+User "many" -- "many" Conversation : participates in
+User "many" -- "many" Team : member of
+User "many" -- "many" Role : has
+
+Team "1" -- "many" Team : parent of
+Team "1" -- "many" Category : has
+Team "1" -- "many" Todo : related to
+
+Category "1" -- "many" Category : parent of
+Category "many" -- "many" Post : categorizes
+Category "many" -- "many" Todo : categorizes
+
+Post "many" -- "many" Tag : tagged with
+Post "1" -- "many" Media : has
+Post "1" -- "many" Comment : has
+
+Todo "many" -- "many" Tag : tagged with
+Todo "1" -- "many" Media : has
+Todo "1" -- "many" Comment : has
+Todo "1" -- "many" Todo : parent of
+
+Conversation "1" -- "many" Message : contains
+
+Role "many" -- "many" Permission : has
+
+CommandLog "1" -- "many" Snapshot : may generate
+
+@enduml

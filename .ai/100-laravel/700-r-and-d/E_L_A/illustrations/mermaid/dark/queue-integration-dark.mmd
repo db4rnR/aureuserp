@@ -1,0 +1,21 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2a2a2a', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#555555', 'lineColor': '#999999', 'secondaryColor': '#252525', 'tertiaryColor': '#333333' }}}%%
+sequenceDiagram
+    participant A as Aggregate
+    participant E as Event Store
+    participant R as Reactor
+    participant Q as Queue
+    participant W as Queue Worker
+    participant S as Side Effect
+    
+    A->>E: Store Event
+    E->>R: Dispatch Event
+    R->>Q: Push Job
+    Q->>W: Process Job
+    W->>S: Execute Side Effect
+    alt Success
+        S->>W: Return Success
+        W->>Q: Mark Job as Completed
+    else Failure
+        S->>W: Return Failure
+        W->>Q: Retry Job
+    end

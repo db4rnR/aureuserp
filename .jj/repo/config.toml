@@ -1,0 +1,4 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[snapshot]
+max-new-file-size = 107158838

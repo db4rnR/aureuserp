@@ -1,0 +1,75 @@
+@startuml Implementation Timeline (Light Mode)
+
+' Light mode theme
+!theme cerulean
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+
+' Project start date
+project starts 2025-01-01
+
+' Display settings
+printscale daily
+scale 1.0
+
+' Saturday and Sunday are closed
+closed days saturday sunday
+
+' Define styles
+skinparam ganttDiagram {
+    BackgroundColor #FFFFFF
+    FontColor #333333
+    ArrowColor #666666
+    BarColor #4CAF50
+    BarBackgroundColor #C8E6C9
+    MilestoneBackgroundColor #FFA726
+    MilestoneColor #FF9800
+}
+
+' Planning Phase
+[Planning] as [P] lasts 14 days
+[Project Setup] as [PS] lasts 14 days
+[Architecture Design] as [AD] lasts 14 days
+[AD] starts after [PS]'s end
+
+' Core Development Phase
+[Core Development] as [CD] lasts 56 days
+[CD] starts after [AD]'s end
+[Database Implementation] as [DI] lasts 21 days
+[DI] starts after [AD]'s end
+[Authentication System] as [AS] lasts 14 days
+[AS] starts after [DI]'s end
+[User Management] as [UM] lasts 14 days
+[UM] starts after [AS]'s end
+[Team Management] as [TM] lasts 14 days
+[TM] starts after [UM]'s end
+
+' Feature Development Phase
+[Feature Development] as [FD] lasts 56 days
+[FD] starts after [CD]'s end
+[Content Management] as [CM] lasts 21 days
+[CM] starts after [CD]'s end
+[Task Management] as [TKM] lasts 21 days
+[TKM] starts after [CM]'s end
+[Messaging System] as [MS] lasts 14 days
+[MS] starts after [TKM]'s end
+
+' Finalization Phase
+[Finalization] as [F] lasts 42 days
+[F] starts after [FD]'s end
+[Testing & QA] as [TQ] lasts 21 days
+[TQ] starts after [FD]'s end
+[Deployment] as [D] lasts 7 days
+[D] starts after [TQ]'s end
+[Training & Documentation] as [TD] lasts 14 days
+[TD] starts after [D]'s end
+
+' Milestones
+[Planning Complete] as [PC] happens at [AD]'s end
+[Core Features Complete] as [CFC] happens at [CD]'s end
+[All Features Complete] as [AFC] happens at [FD]'s end
+[Project Launch] as [PL] happens at [F]'s end
+
+@enduml

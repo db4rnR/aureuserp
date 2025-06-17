@@ -1,0 +1,94 @@
+@startuml TAD Database Schema (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam class {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+' Entities
+class USER {
+}
+
+class POST {
+}
+
+class TODO {
+}
+
+class MESSAGE {
+}
+
+class COMMENTS {
+}
+
+class ACTIVITY_LOG {
+}
+
+class CONVERSATION {
+}
+
+class ROLE {
+}
+
+class TEAM {
+}
+
+class CATEGORY {
+}
+
+class TAGS {
+}
+
+class MEDIA {
+}
+
+class PERMISSION {
+}
+
+class COMMAND_LOG {
+}
+
+class SNAPSHOT {
+}
+
+' Relationships
+USER "1" -- "0..*" POST : authors
+USER "1" -- "0..*" TODO : assigned to
+USER "1" -- "0..*" MESSAGE : sends
+USER "1" -- "0..*" COMMENTS : comments
+USER "1" -- "0..*" ACTIVITY_LOG : causer
+USER "0..*" -- "0..*" CONVERSATION : participates in
+USER "0..*" -- "0..*" ROLE : has
+
+TEAM "1" -- "0..*" TEAM : parent of
+TEAM "1" -- "1..*" CATEGORY : has
+TEAM "1" -- "0..*" TODO : related to
+
+CATEGORY "1" -- "0..*" CATEGORY : parent of
+
+POST "0..*" -- "0..*" CATEGORY : categorized as
+POST "0..*" -- "0..*" TAGS : tagged with
+POST "0..*" -- "0..*" MEDIA : has media
+POST "0..*" -- "0..*" COMMENTS : has comments
+
+TODO "0..*" -- "0..*" CATEGORY : categorized as
+TODO "0..*" -- "0..*" TAGS : tagged with
+TODO "0..*" -- "0..*" MEDIA : has media
+TODO "0..*" -- "0..*" COMMENTS : has comments
+
+CONVERSATION "1" -- "0..*" MESSAGE : contains
+
+ROLE "0..*" -- "0..*" PERMISSION : has
+
+COMMAND_LOG "1" -- "0..*" SNAPSHOT : generates
+
+@enduml

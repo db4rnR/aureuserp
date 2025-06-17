@@ -1,0 +1,76 @@
+{
+    "name": "z3d0x/filament-fabricator",
+    "description": "Block-Based Page Builder Skeleton for your Filament Apps",
+    "keywords": [
+        "Z3d0X",
+        "laravel",
+        "filament-fabricator"
+    ],
+    "homepage": "https://github.com/z3d0x/filament-fabricator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ziyaan Hassan",
+            "email": "ziyaan2010@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^4.0",
+        "illuminate/contracts": "^9.0 | ^10.0 | ^11.0 | ^12.0",
+        "pboivin/filament-peek": "*",
+        "spatie/laravel-package-tools": "^1.13.5"
+    },
+    "require-dev": {
+        "larastan/larastan": "^2.9",
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^7.0 | ^8.0",
+        "orchestra/testbench": "^8.0 | ^9.0 | ^10.0",
+        "pestphp/pest": "^2.0 | ^3.7",
+        "pestphp/pest-plugin-laravel": "^2.0 | ^3.1",
+        "pestphp/pest-plugin-livewire": "^2.0 | ^3.0",
+        "phpstan/phpstan-deprecation-rules": "^1.0 | ^2.0",
+        "phpstan/phpstan-phpunit": "^1.0 | ^2.0",
+        "spatie/laravel-ray": "^1.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "Z3d0X\\FilamentFabricator\\": "src",
+            "Z3d0X\\FilamentFabricator\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Z3d0X\\FilamentFabricator\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "pint": "vendor/bin/pint",
+        "test:pest": "vendor/bin/pest --parallel",
+        "test:phpstan": "vendor/bin/phpstan analyse",
+        "test": [
+            "@test:pest",
+            "@test:phpstan"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Z3d0X\\FilamentFabricator\\FilamentFabricatorServiceProvider"
+            ],
+            "aliases": {
+                "FilamentFabricator": "Z3d0X\\FilamentFabricator\\Facades\\FilamentFabricator"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

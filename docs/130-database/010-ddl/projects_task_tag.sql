@@ -1,0 +1,9 @@
+CREATE TABLE Projects_Task_Tag
+(
+  Tag_Id  INTEGER NOT NULL
+    REFERENCES Projects_Tags
+      ON DELETE CASCADE,
+  Task_Id INTEGER NOT NULL
+    REFERENCES Projects_Tasks
+      ON DELETE CASCADE
+);

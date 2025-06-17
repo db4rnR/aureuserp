@@ -1,0 +1,31 @@
+# Business Value (Light Mode)
+
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+graph TD
+    A[Business Value] --> B[Improved Team Collaboration]
+    A --> C[Streamlined Content Management]
+    A --> D[Enhanced Task Management]
+    A --> E[Secure Communication]
+    A --> F[Comprehensive Audit Trail]
+    A --> G[Scalable Architecture]
+
+    B --> B1[30% reduction in coordination time]
+    B --> B2[50% reduction in onboarding time]
+    
+    C --> C1[25% improvement in content delivery]
+    C --> C2[40% reduction in publishing errors]
+    
+    D --> D1[25% improvement in project delivery]
+    D --> D2[35% increase in task completion rate]
+    
+    E --> E1[40% reduction in communication tools costs]
+    E --> E2[90% user satisfaction rating]
+    
+    F --> F1[100% compliance with audit requirements]
+    F --> F2[60% reduction in compliance reporting time]
+    
+    G --> G1[Supports growth from 10 to 10,000+ users]
+    G --> G2[99.9% uptime in production]
+
+```

@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: local
+    hooks:
+      - id: pint
+        name: Laravel Pint
+        entry: vendor/bin/pint
+        language: system
+        types: [php]
+
+      - id: phpstan
+        name: PHPStan
+        entry: vendor/bin/phpstan analyse
+        language: system
+        types: [php]
+
+      - id: rector
+        name: Rector
+        entry: vendor/bin/rector process
+        language: system
+        types: [php]
+
+      - id: pest
+        name: Pest
+        entry: vendor/bin/pest
+        language: system
+        types: [php]
+        pass_filenames: false

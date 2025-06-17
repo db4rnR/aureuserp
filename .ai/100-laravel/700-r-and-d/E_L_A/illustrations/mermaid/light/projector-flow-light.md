@@ -1,0 +1,14 @@
+# Projector Flow (Light Mode)
+
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+flowchart LR
+    A[Event Store] --> B[Projector]
+    B --> C{Event Type?}
+    C -->|UserCreated| D[Handle UserCreated]
+    C -->|UserUpdated| E[Handle UserUpdated]
+    C -->|UserDeleted| F[Handle UserDeleted]
+    D --> G[Update User Read Model]
+    E --> G
+    F --> G
+```

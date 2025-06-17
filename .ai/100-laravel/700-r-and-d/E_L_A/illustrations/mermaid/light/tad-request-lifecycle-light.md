@@ -1,0 +1,44 @@
+# TAD Request Lifecycle (Light Mode)
+
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+sequenceDiagram
+    participant Client
+    participant Server as FrankenPHP Server
+    participant Middleware as Laravel Middleware Stack
+    participant Router as Laravel Router
+    participant Controller
+    participant Service
+    participant Model
+    participant DB as Database
+    
+    Client->>Server: HTTP Request
+    Server->>Middleware: Pass Request
+    
+    Middleware->>Middleware: Global Middleware
+    Note over Middleware: TrustProxies, HandleCors, PreventRequestsDuringMaintenance, TrimStrings, ConvertEmptyStringsToNull
+    
+    Middleware->>Middleware: Route Middleware
+    Note over Middleware: Authenticate, Authorize, ValidateSignature, ThrottleRequests, etc.
+    
+    Middleware->>Router: Route Resolution
+    Router->>Controller: Dispatch to Controller Action
+    
+    alt API Request
+        Controller->>Service: Call Service Method
+        Service->>Model: Interact with Model
+        Model->>DB: Query Database
+        DB-->>Model: Return Data
+        Model-->>Service: Return Model/Collection
+        Service-->>Controller: Return Response Data
+        Controller-->>Client: JSON Response
+    else Web Request
+        Controller->>Service: Call Service Method
+        Service->>Model: Interact with Model
+        Model->>DB: Query Database
+        DB-->>Model: Return Data
+        Model-->>Service: Return Model/Collection
+        Service-->>Controller: Return Response Data
+        Controller-->>Client: HTML Response (View)
+    end
+```

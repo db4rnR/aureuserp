@@ -1,0 +1,7 @@
+
+@ª$¶CÄ™çG[Øâ· 5\µ¤j£1<¢‚N¸lÖ×Ë–äès]*µUˆ®ª]¢]hÎ	£#R”	ˆ¼b*¾4@™ŽÎÁ•!“…mR§{½˜üF•
+ Òé…ÕåPOR0Œ7òßèf;~«€µöªB‹"7©ðÿ°‹e¦XÂŠ
+	µª†Ñö2<	Áª†Ñö2<snapshot working copy"$StandAloneComplexs-MacBook-Pro.local*s-a-c2«
+args¢jj log -T 'change_id ++ "à¶žjjk" ++ commit_id ++ "à¶žjjk" ++ author.name() ++ "à¶žjjk" ++ author.email() ++ "à¶žjjk" ++ author.timestamp().local().format("%F %H:%M:%S") ++ "à¶žjjk" ++ description ++ "à¶žjjk" ++ empty ++ "à¶žjjk" ++ conflict ++ "à¶žjjk" ++ diff.files().map(|entry| entry.status() ++ "@?!" ++ entry.source().path().display() ++ "@?!" ++ entry.target().path().display() ++ "@?!" ++ entry.target().conflict()).join("
+") ++ "jjkà¶ž
+"' --no-graph -r mqxktpmn --config-file /Users/s-a-c/.vscode/extensions/jjk.jjk-0.8.1/dist/config.toml8

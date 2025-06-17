@@ -1,0 +1,37 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2c3e50', 'primaryTextColor': '#ecf0f1', 'primaryBorderColor': '#7f8c8d', 'lineColor': '#ecf0f1', 'secondaryColor': '#34495e', 'tertiaryColor': '#282c34' }}}%%
+sequenceDiagram
+    actor User
+    participant Client as Client Browser
+    participant App as Laravel Application
+    participant TeamService as Team Service
+    participant DB as Database
+    participant Notification as Notification Service
+
+    User->>Client: Access team creation page
+    Client->>App: Request team form
+    App->>Client: Return team form
+    User->>Client: Fill in team details
+    Client->>App: Submit team data
+    App->>App: Validate input data
+
+    alt Invalid data
+        App->>Client: Return validation errors
+        Client->>User: Display validation errors
+    else Valid data
+        App->>TeamService: Create new team
+        TeamService->>DB: Store team record
+        DB->>TeamService: Confirm team creation
+        TeamService->>App: Return team data
+        App->>Client: Return success response
+        Client->>User: Display success message
+    end
+
+    User->>Client: Invite members to team
+    Client->>App: Submit member invitations
+    App->>TeamService: Process invitations
+    TeamService->>DB: Store invitation records
+    TeamService->>Notification: Send invitation emails
+    Notification-->>User: Deliver invitation emails
+    TeamService->>App: Return invitation status
+    App->>Client: Display invitation status
+    Client->>User: Show invitation confirmation

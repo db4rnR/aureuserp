@@ -1,0 +1,93 @@
+
+flowchart TB
+    subgraph Client ["Client Layer"]
+        rectangle ""Web Browser"" as Browser
+        rectangle ""Mobile App"" as MobileApp
+        rectangle ""Laravel Echo Client"" as Echo
+    }
+
+    subgraph WebSocket ["WebSocket Layer"]
+        rectangle ""Laravel Reverb"" as Reverb
+        rectangle ""Channels"" as Channels
+        
+        subgraph ChannelTypes ["Channel Types"]
+            rectangle ""Private Channels"" as Private
+            rectangle ""Presence Channels"" as Presence
+            rectangle ""Public Channels"" as Public
+        }
+    }
+
+    subgraph Application ["Application Layer"]
+        subgraph EventSourcing ["Event Sourcing"]
+            rectangle ""Aggregates"" as Aggregates
+            rectangle ""Domain Events"" as Events
+            rectangle ""Reactors"" as Reactors
+        }
+        
+        subgraph Broadcasting ["Broadcasting"]
+            rectangle ""Broadcast Events"" as BroadcastEvents
+            rectangle ""Broadcast Queue"" as Queue
+        }
+        
+        subgraph Models ["Models"]
+            rectangle ""Comment Model"" as Comment
+            rectangle ""Message Model"" as Message
+            rectangle ""Todo Model"" as Todo
+        }
+    }
+
+    subgraph Infrastructure ["Infrastructure Layer"]
+        rectangle ""Redis PubSub"" as Redis
+        rectangle ""Event Store"" as EventStore
+        rectangle ""Database"" as Database
+    }
+    
+    %% Client connections
+    Browser --> Echo
+    MobileApp --> Echo
+    Echo --> Reverb
+    
+    %% WebSocket connections
+    Reverb --> Channels
+    Channels --> ChannelTypes
+    
+    %% Event flow
+    Aggregates --> Events
+    Events --> Reactors
+    Events --> EventStore
+    
+    %% Reactor actions
+    Reactors --> BroadcastEvents
+    Reactors --> Models
+    
+    %% Broadcasting flow
+    BroadcastEvents --> Queue
+    Queue --> Redis
+    
+    %% WebSocket server connections
+    Redis --> Reverb
+    
+    %% Model persistence
+    Models --> Database
+    
+    %% Channel examples
+    Private --> |"commentable.Post.{id}"| Comment
+    Private --> |"todo.{id}"| Todo
+    Presence --> |"conversation.{id}"| Message
+    
+    %% Add notes
+    classDef note fill:#fff,stroke:#999,stroke-width:1px,color:#333
+    
+    class Client,WebSocket,Application,Infrastructure,EventSourcing,Broadcasting,Models,ChannelTypes note
+    
+    %% Add styling
+    classDef clientLayer fill:#e1f5fe,stroke:#81d4fa,stroke-width:2px
+    classDef wsLayer fill:#e8f5e9,stroke:#a5d6a7,stroke-width:2px
+    classDef appLayer fill:#fff3e0,stroke:#ffe0b2,stroke-width:2px
+    classDef infraLayer fill:#f3e5f5,stroke:#e1bee7,stroke-width:2px
+    
+    class Client clientLayer
+    class WebSocket,Reverb,Channels,ChannelTypes,Private,Presence,Public wsLayer
+    class Application,EventSourcing,Broadcasting,Models,Aggregates,Events,Reactors,BroadcastEvents,Queue,Comment,Message,Todo appLayer
+    class Infrastructure,Redis,EventStore,Database infraLayer
+@enduml

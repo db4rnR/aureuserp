@@ -1,0 +1,42 @@
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+graph TD
+    A[Documentation Root] --> B[Executive Summary]
+    A --> C[Product Requirements]
+    A --> D[Project Roadmap]
+    A --> E[Technical Architecture]
+    A --> F[Implementation Plan]
+    A --> G[Questions & Decisions Log]
+    A --> H[Reference Documents]
+    
+    B --> B1[Project Overview]
+    B --> B2[Business Value]
+    B --> B3[Success Metrics]
+    
+    C --> C1[Features]
+    C --> C2[Requirements]
+    C --> C3[User Stories]
+    
+    D --> D1[Timeline]
+    D --> D2[Milestones]
+    D --> D3[Resource Allocation]
+    
+    E --> E1[Architecture Overview]
+    E --> E2[Database Schema]
+    E --> E3[API Specifications]
+    E --> E4[Security Architecture]
+    
+    F --> F1[Setup Instructions]
+    F --> F2[Configuration]
+    F --> F3[Implementation Details]
+    F --> F4[Testing]
+    
+    H --> H1[Glossary]
+    H --> H2[Coding Standards]
+    H --> H3[Documentation Style Guide]
+    H --> H4[Illustrations]
+    
+    H4 --> H4A[Diagrams]
+    H4 --> H4B[Screenshots]
+    H4 --> H4C[Mockups]
+```

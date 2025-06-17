@@ -1,0 +1,41 @@
+@startuml User Registration Sequence (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam participant {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+' Participants
+actor User as "User"
+participant RegistrationForm as "Registration Form"
+participant FortifyController as "Fortify Controller"
+participant UserRepository as "User Repository"
+participant EmailVerification as "Email Verification"
+participant Database as "Database"
+
+' Sequence
+User -> RegistrationForm: Fill registration form
+RegistrationForm -> FortifyController: Submit registration data
+FortifyController -> FortifyController: Validate input
+FortifyController -> UserRepository: Create user
+UserRepository -> UserRepository: Generate snowflake ID
+UserRepository -> UserRepository: Generate slug
+UserRepository -> UserRepository: Hash password
+UserRepository -> Database: Save user
+Database --> UserRepository: Confirm save
+UserRepository --> FortifyController: Return user
+FortifyController -> EmailVerification: Send verification email
+EmailVerification --> User: Email with verification link
+FortifyController --> RegistrationForm: Registration successful
+RegistrationForm --> User: Show success message
+
+@enduml

@@ -1,0 +1,69 @@
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f5f5f5', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666', 'secondaryColor': '#f0f0f0', 'tertiaryColor': '#ffffff' }}}%%
+stateDiagram-v2
+    [*] --> Draft: PostCreatedEvent
+    Draft --> Published: PostPublishedEvent
+    Published --> Draft: PostUnpublishedEvent
+    Draft --> Archived: PostArchivedEvent
+    Published --> Archived: PostArchivedEvent
+    Archived --> Draft: PostRestoredEvent
+    Draft --> Deleted: PostDeletedEvent
+    Published --> Deleted: PostDeletedEvent
+    Archived --> Deleted: PostDeletedEvent
+    Draft --> PendingReview: PostSubmittedForReviewEvent
+    PendingReview --> Draft: PostRejectedEvent
+    PendingReview --> Published: PostApprovedEvent
+    Draft --> Scheduled: PostScheduledEvent
+    Scheduled --> Published: PostPublishedEvent
+    Scheduled --> Draft: PostUnscheduledEvent
+    
+    %% State styling with classes
+    classDef draftState fill:#2980B9,stroke:#333,color:white
+    classDef pendingReviewState fill:#F39C12,stroke:#333,color:white
+    classDef publishedState fill:#27AE60,stroke:#333,color:white
+    classDef scheduledState fill:#8E44AD,stroke:#333,color:white
+    classDef archivedState fill:#7F8C8D,stroke:#333,color:white
+    classDef deletedState fill:#C0392B,stroke:#333,color:white
+    
+    class Draft draftState
+    class PendingReview pendingReviewState
+    class Published publishedState
+    class Scheduled scheduledState
+    class Archived archivedState
+    class Deleted deletedState
+    
+    %% Notes
+    note right of Draft
+        Post is in draft mode
+        Only visible to author and team members
+        Can be edited freely
+    end note
+    
+    note right of PendingReview
+        Post is awaiting review
+        Cannot be edited while in review
+        Reviewers can approve or reject
+    end note
+    
+    note right of Published
+        Post is published and visible to all
+        Changes require a new revision
+        Appears in feeds and search results
+    end note
+    
+    note right of Scheduled
+        Post is scheduled for future publication
+        Will automatically publish at scheduled time
+        Can be unscheduled to return to draft
+    end note
+    
+    note right of Archived
+        Post is archived and not visible in normal views
+        Still accessible via direct link
+        Can be restored to draft state
+    end note
+    
+    note right of Deleted
+        Post has been permanently deleted
+        Cannot be recovered
+        All associated data is soft-deleted
+    end note

@@ -1,0 +1,247 @@
+@startuml ERD Overview (Light Mode)
+
+' Light mode theme
+!theme plain
+skinparam backgroundColor white
+skinparam ClassBackgroundColor #FEFEFE
+skinparam ClassBorderColor #999999
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam linetype ortho
+
+' Entity definitions
+entity "USER" as user {
+  * id : bigint <<PK>>
+  --
+  * snowflake_id : bigint <<UQ,IDX>>
+  * slug : string <<UQ,IDX>>
+  * type : string <<IDX>>
+  * email : string <<UQ>>
+  * password : string
+  o email_verified_at : timestamp <<NULL>>
+  * status : string <<IDX>>
+  o created_by : bigint <<FK,NULL,IDX>>
+  o updated_by : bigint <<FK,NULL,IDX>>
+  o deleted_by : bigint <<FK,NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  o deleted_at : timestamp <<NULL,IDX>>
+}
+
+entity "TEAM" as team {
+  * id : bigint <<PK>>
+  --
+  * snowflake_id : bigint <<UQ,IDX>>
+  * name : string
+  * slug : string <<UQ,IDX>>
+  o parent_id : bigint <<FK,NULL,IDX>>
+  * path : string <<IDX>>
+  * depth : int <<IDX>>
+  * status : string <<IDX>>
+  o created_by : bigint <<FK,NULL,IDX>>
+  o updated_by : bigint <<FK,NULL,IDX>>
+  o deleted_by : bigint <<FK,NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  o deleted_at : timestamp <<NULL,IDX>>
+}
+
+entity "CATEGORY" as category {
+  * id : bigint <<PK>>
+  --
+  * snowflake_id : bigint <<UQ,IDX>>
+  * team_id : bigint <<FK,NN,IDX>>
+  * name : string
+  * slug : string <<UQ(team_id,slug)>>
+  o parent_id : bigint <<FK,NULL,IDX>>
+  * path : string <<IDX>>
+  * depth : int <<IDX>>
+  o created_by : bigint <<FK,NULL,IDX>>
+  o updated_by : bigint <<FK,NULL,IDX>>
+  o deleted_by : bigint <<FK,NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  o deleted_at : timestamp <<NULL,IDX>>
+}
+
+entity "POST" as post {
+  * id : bigint <<PK>>
+  --
+  * snowflake_id : bigint <<UQ,IDX>>
+  * user_id : bigint <<FK,NN,IDX>>
+  * title : string
+  * slug : string <<UQ,IDX>>
+  * content : text
+  o excerpt : text <<NULL>>
+  * status : string <<IDX>>
+  o published_at : timestamp <<NULL,IDX>>
+  o scheduled_for : timestamp <<NULL>>
+  o created_by : bigint <<FK,NULL,IDX>>
+  o updated_by : bigint <<FK,NULL,IDX>>
+  o deleted_by : bigint <<FK,NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  o deleted_at : timestamp <<NULL,IDX>>
+}
+
+entity "TODO" as todo {
+  * id : bigint <<PK>>
+  --
+  * snowflake_id : bigint <<UQ,IDX>>
+  * title : string
+  * slug : string <<UQ,IDX>>
+  o description : text <<NULL>>
+  o user_id : bigint <<FK,NULL,IDX>>
+  o team_id : bigint <<FK,NULL,IDX>>
+  o parent_id : bigint <<FK,NULL,IDX>>
+  * path : string <<IDX>>
+  * depth : int <<IDX>>
+  * status : string <<IDX>>
+  o due_date : timestamp <<NULL>>
+  o completed_at : timestamp <<NULL>>
+  o created_by : bigint <<FK,NULL,IDX>>
+  o updated_by : bigint <<FK,NULL,IDX>>
+  o deleted_by : bigint <<FK,NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  o deleted_at : timestamp <<NULL,IDX>>
+}
+
+entity "MESSAGE" as message {
+  * id : bigint <<PK>>
+  --
+  * uuid : string <<UQ>>
+  * conversation_id : bigint <<FK,NN,IDX>>
+  * user_id : bigint <<FK,NN,IDX>>
+  * body : text
+  o created_by : bigint <<FK,NULL,IDX>>
+  o updated_by : bigint <<FK,NULL,IDX>>
+  o deleted_by : bigint <<FK,NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  o deleted_at : timestamp <<NULL,IDX>>
+}
+
+entity "CONVERSATION" as conversation {
+  * id : bigint <<PK>>
+  --
+  * uuid : string <<UQ>>
+  * name : string
+  * type : string
+  o created_by : bigint <<FK,NULL,IDX>>
+  o updated_by : bigint <<FK,NULL,IDX>>
+  o deleted_by : bigint <<FK,NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  o deleted_at : timestamp <<NULL,IDX>>
+}
+
+entity "COMMENT" as comment {
+  * id : bigint <<PK>>
+  --
+  * commentable_type : string <<IDX>>
+  * commentable_id : bigint <<IDX>>
+  * user_id : bigint <<FK,NN,IDX>>
+  * content : text
+  o created_by : bigint <<FK,NULL,IDX>>
+  o updated_by : bigint <<FK,NULL,IDX>>
+  o deleted_by : bigint <<FK,NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+  o deleted_at : timestamp <<NULL,IDX>>
+}
+
+entity "ROLE" as role {
+  * id : bigint <<PK>>
+  --
+  * name : string <<UQ,IDX>>
+  * guard_name : string <<IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "PERMISSION" as permission {
+  * id : bigint <<PK>>
+  --
+  * name : string <<UQ,IDX>>
+  * guard_name : string <<IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "TAG" as tag {
+  * id : bigint <<PK>>
+  --
+  * name : json
+  * slug : json
+  o type : string <<NULL,IDX>>
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "MEDIA" as media {
+  * id : bigint <<PK>>
+  --
+  * model_type : string <<IDX>>
+  * model_id : bigint <<IDX>>
+  * uuid : string <<UQ>>
+  * collection_name : string <<IDX>>
+  * name : string
+  * file_name : string
+  * mime_type : string
+  * disk : string
+  * conversions_disk : string
+  * size : bigint
+  * manipulations : json
+  * custom_properties : json
+  * generated_conversions : json
+  * responsive_images : json
+  * order_column : integer
+  * created_at : timestamp
+  * updated_at : timestamp
+}
+
+entity "ACTIVITY_LOG" as activity_log {
+  * id : bigint <<PK>>
+  --
+  o log_name : string <<NULL,IDX>>
+  * description : text
+  o subject_type : string <<NULL,IDX>>
+  o subject_id : bigint <<NULL,IDX>>
+  o causer_type : string <<NULL,IDX>>
+  o causer_id : bigint <<NULL,IDX>>
+  * properties : json
+  * created_at : timestamp
+}
+
+' Relationships
+user ||--o{ post : "authors"
+user ||--o{ todo : "assigned to"
+user ||--o{ message : "sends"
+user ||--o{ comment : "creates"
+user }o--o{ conversation : "participates in"
+user }o--o{ team : "member of"
+user }|--o{ role : "has"
+
+team ||--o{ team : "parent of"
+team ||--o{ category : "has"
+team ||--o{ todo : "related to"
+
+category ||--o{ category : "parent of"
+category }o--o{ post : "categorizes"
+category }o--o{ todo : "categorizes"
+
+post }o--o{ tag : "tagged with"
+post }o--o{ media : "has"
+post }o--o{ comment : "has"
+
+todo }o--o{ tag : "tagged with"
+todo }o--o{ media : "has"
+todo }o--o{ comment : "has"
+todo ||--o{ todo : "parent of"
+
+conversation ||--o{ message : "contains"
+
+role }|--o{ permission : "has"
+
+@enduml

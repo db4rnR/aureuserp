@@ -1,0 +1,43 @@
+
+@startuml Event Sourcing Permissions Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam participant {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #34495e
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+
+    participant User
+    participant Command
+    participant CommandHandler
+    participant PermissionChecker
+    participant Aggregate
+    participant EventStore
+    
+    User -> Command: Dispatch Command
+    Command -> CommandHandler: Handle Command
+    CommandHandler -> PermissionChecker: Check Permission
+    alt Has Permission
+        PermissionChecker -> CommandHandler: Permission Granted
+        CommandHandler -> Aggregate: Execute Command
+        Aggregate -> EventStore: Record Events
+    else No Permission
+        PermissionChecker -> CommandHandler: Permission Denied
+        CommandHandler -> User: Unauthorized Exception
+    end
+@enduml

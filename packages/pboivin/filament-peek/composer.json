@@ -1,0 +1,78 @@
+{
+    "name": "pboivin/filament-peek",
+    "description": "Full-screen page preview modal for Filament",
+    "keywords": [
+        "laravel",
+        "filament",
+        "plugin",
+        "preview",
+        "previewer",
+        "modal"
+    ],
+    "homepage": "https://github.com/pboivin/filament-peek",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick Boivin",
+            "email": "pboivin@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^4.0",
+        "spatie/laravel-package-tools": "^1.15",
+        "illuminate/contracts": "^10.0 || ^11.0 || ^12.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^7.9 || ^8.0",
+        "larastan/larastan": "^2.0 || ^3.0",
+        "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",
+        "pestphp/pest": "^2.0 || ^3.7",
+        "pestphp/pest-plugin-arch": "^2.0 || ^3.0",
+        "pestphp/pest-plugin-laravel": "^2.0 || ^3.1",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0 || ^2.0",
+        "phpstan/phpstan-phpunit": "^1.0 || ^2.0",
+        "spatie/invade": "^1.1 || ^2.1",
+        "symfony/polyfill-php82": "^1.28"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pboivin\\FilamentPeek\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pboivin\\FilamentPeek\\Tests\\": "tests/src",
+            "Pboivin\\FilamentPeek\\Tests\\Database\\Factories\\": "tests/database/factories"
+        }
+    },
+    "scripts": {
+        "pint": "vendor/bin/pint",
+        "test:pest": "vendor/bin/pest --parallel",
+        "test:phpstan": "vendor/bin/phpstan analyse",
+        "test": [
+            "@test:pest",
+            "@test:phpstan"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pboivin\\FilamentPeek\\FilamentPeekServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,71 @@
+@startuml Authentication Flow (Light Mode)
+
+' Light mode theme
+!theme plain
+skinparam backgroundColor white
+skinparam ArrowColor #666666
+skinparam shadowing false
+skinparam DefaultFontColor #333333
+skinparam DefaultBackgroundColor #FEFEFE
+skinparam DefaultBorderColor #999999
+
+' Define styles
+skinparam sequence {
+    ArrowColor #666666
+    LifeLineBorderColor #999999
+    LifeLineBackgroundColor #FEFEFE
+    ParticipantBorderColor #999999
+    ParticipantBackgroundColor #FEFEFE
+    ActorBorderColor #999999
+    ActorBackgroundColor #FEFEFE
+    BoxBorderColor #999999
+    BoxBackgroundColor #F5F5F5
+}
+
+' Participants
+actor User
+participant "Client" as Client
+participant "Server" as Server
+database "Database" as Database
+
+' Authentication flow
+User -> Client: Enter credentials
+Client -> Server: Send credentials
+Server -> Database: Validate credentials
+Database --> Server: Return user data
+alt Credentials valid
+    Server -> Server: Generate JWT token
+    Server --> Client: Return JWT token
+    Client --> User: Show dashboard
+else Credentials invalid
+    Server --> Client: Return error
+    Client --> User: Show error message
+end
+
+' Two-factor authentication flow
+note over User, Database: Two-factor authentication flow
+User -> Client: Request login
+Client -> Server: Send credentials
+Server -> Database: Validate credentials
+Database --> Server: Return user data
+alt 2FA enabled
+    Server --> Client: Request 2FA code
+    Client --> User: Show 2FA input
+    User -> Client: Enter 2FA code
+    Client -> Server: Send 2FA code
+    Server -> Server: Validate 2FA code
+    alt 2FA code valid
+        Server -> Server: Generate JWT token
+        Server --> Client: Return JWT token
+        Client --> User: Show dashboard
+    else 2FA code invalid
+        Server --> Client: Return error
+        Client --> User: Show error message
+    end
+else 2FA disabled
+    Server -> Server: Generate JWT token
+    Server --> Client: Return JWT token
+    Client --> User: Show dashboard
+end
+
+@enduml

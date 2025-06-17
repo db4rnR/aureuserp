@@ -1,0 +1,20 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#2a2a2a', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#555555', 'lineColor': '#999999', 'secondaryColor': '#252525', 'tertiaryColor': '#333333' }}}%%
+sequenceDiagram
+    participant Test as Test Case
+    participant Command as Command
+    participant Aggregate as Aggregate
+    participant Event as Event Store
+    participant Projector as Projector
+    participant ReadModel as Read Model
+    participant Query as Query
+    
+    Test->>Command: Dispatch Command
+    Command->>Aggregate: Handle Command
+    Aggregate->>Event: Record Events
+    Event->>Projector: Process Events
+    Projector->>ReadModel: Update Read Model
+    Test->>Query: Execute Query
+    Query->>ReadModel: Retrieve Data
+    ReadModel->>Query: Return Data
+    Query->>Test: Return Result
+    Test->>Test: Assert Result

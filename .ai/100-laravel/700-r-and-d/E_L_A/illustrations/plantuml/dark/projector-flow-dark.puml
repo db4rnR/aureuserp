@@ -1,0 +1,32 @@
+
+@startuml Projector Flow Dark (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+skinparam database {
+    BackgroundColor #1a237e
+    BorderColor #3949ab
+}
+
+
+    rectangle "Event Store" as A --> rectangle "Projector" as B
+    B --> C{Event Type?}
+    C --> rectangle : "UserCreated" "Handle UserCreated" as D
+    C --> rectangle : "UserUpdated" "Handle UserUpdated" as E
+    C --> rectangle : "UserDeleted" "Handle UserDeleted" as F
+    D --> rectangle "Update User Read Model" as G
+    E --> G
+    F --> G
+@enduml

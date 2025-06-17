@@ -1,0 +1,33 @@
+{
+  "name": "guava/filament-icon-picker",
+  "description": "A filament plugin that adds an icon picker field.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lukas Frey",
+      "email": "mail@lukasfrey.cz"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Guava\\FilamentIconPicker\\": "src"
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^7.0|^8.0|^9.0"
+  },
+  "require": {
+    "php": "^8.0",
+    "filament/filament": "^4.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Guava\\FilamentIconPicker\\FilamentIconPickerServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

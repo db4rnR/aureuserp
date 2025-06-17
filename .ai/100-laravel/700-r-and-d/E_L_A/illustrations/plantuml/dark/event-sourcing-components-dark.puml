@@ -1,0 +1,38 @@
+@startuml Event Sourcing Components (Dark Mode)
+
+' Dark mode theme
+!theme cyborg
+skinparam backgroundColor #282c34
+skinparam ArrowColor #ecf0f1
+skinparam shadowing false
+skinparam DefaultFontColor #FFFFFF
+
+' Define styles
+skinparam rectangle {
+    BackgroundColor #2c3e50
+    BorderColor #7f8c8d
+    FontColor #FFFFFF
+}
+
+' Components
+rectangle "Domain Event" as A
+rectangle "Event Store" as B
+rectangle "Event Stream" as C
+rectangle "Projector" as D
+rectangle "Read Model" as E
+rectangle "Reactor" as F
+rectangle "Side Effects" as G
+rectangle "Aggregate" as H
+rectangle "Command" as I
+
+' Connections
+A --> B
+B --> C
+C --> D
+D --> E
+A --> F
+F --> G
+H --> A : Applies
+I --> H : Handled by
+
+@enduml

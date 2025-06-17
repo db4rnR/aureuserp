@@ -1,0 +1,81 @@
+
+graph TD
+    %% Main components
+    rectangle "User Action" as A --> rectangle "Command" as B
+    B --> rectangle "Command Handler" as C
+    C --> rectangle "Aggregate" as D
+    D --> rectangle "Event" as E
+    E --> rectangle "Event Store" as F
+    E --> rectangle "Projector" as G
+    G --> rectangle "Read Model" as H
+    E --> rectangle "Process Manager" as I
+    I --> rectangle "New Command" as J
+    J --> C
+    E --> rectangle "Reactor" as K
+    K --> rectangle "Side Effect" as L
+    
+    %% Component styling
+    style B fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+    style C fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+    style D fill:#8E44AD,stroke:#6C3483,color:white,stroke-width:2px
+    style E fill:#27AE60,stroke:#1E8449,color:white,stroke-width:2px
+    style F fill:#7F8C8D,stroke:#616A6B,color:white,stroke-width:2px
+    style G fill:#D35400,stroke:#A04000,color:white,stroke-width:2px
+    style H fill:#F39C12,stroke:#B67B0B,color:white,stroke-width:2px
+    style I fill:#8E44AD,stroke:#6C3483,color:white,stroke-width:2px
+    style J fill:#2980B9,stroke:#1F618D,color:white,stroke-width:2px
+    style K fill:#C0392B,stroke:#922B21,color:white,stroke-width:2px
+    style L fill:#C0392B,stroke:#922B21,color:white,stroke-width:2px
+    
+    %% Subgraphs for logical grouping
+    package "Write Side" {
+        B
+        C
+        D
+        E
+    }
+    
+    package "Storage" {
+        F
+    }
+    
+    package "Read Side" {
+        G
+        H
+    }
+    
+    package "Process Management" {
+        I
+        J
+    }
+    
+    package "Side Effects" {
+        K
+        L
+    }
+    
+    %% Annotations
+    classDef annotation fill:none,stroke:none,color:#666
+    
+    rectangle "User initiates action" as A1:::annotation
+    rectangle "Command represents intent" as B1:::annotation
+    rectangle "Validates and routes command" as C1:::annotation
+    rectangle "Applies business rules" as D1:::annotation
+    rectangle "Records what happened" as E1:::annotation
+    rectangle "Persistent event log" as F1:::annotation
+    rectangle "Builds read models" as G1:::annotation
+    rectangle "Optimized for queries" as H1:::annotation
+    rectangle "Coordinates workflows" as I1:::annotation
+    rectangle "Handles side effects" as K1:::annotation
+    
+    A --- A1
+    B --- B1
+    C --- C1
+    D --- D1
+    E --- E1
+    F --- F1
+    G --- G1
+    H --- H1
+    I --- I1
+    K --- K1
+@enduml

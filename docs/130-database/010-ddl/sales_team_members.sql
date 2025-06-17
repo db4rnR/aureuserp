@@ -1,0 +1,9 @@
+CREATE TABLE Sales_Team_Members
+(
+  Team_Id INTEGER NOT NULL
+    REFERENCES Sales_Teams
+      ON DELETE CASCADE,
+  User_Id INTEGER NOT NULL
+    REFERENCES Users
+      ON DELETE CASCADE
+);
