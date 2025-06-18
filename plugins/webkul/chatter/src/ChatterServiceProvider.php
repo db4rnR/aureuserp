@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter;
 
 use Livewire\Livewire;
@@ -7,7 +9,7 @@ use Webkul\Chatter\Livewire\ChatterPanel;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class ChatterServiceProvider extends PackageServiceProvider
+final class ChatterServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'chatter';
 
@@ -15,7 +17,7 @@ class ChatterServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->isCore()
             ->hasViews()
             ->hasTranslations()

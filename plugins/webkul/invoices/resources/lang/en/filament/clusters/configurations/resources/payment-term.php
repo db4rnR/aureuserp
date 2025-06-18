@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Payment Terms',
 
@@ -16,39 +18,38 @@ return [
     'form' => [
         'sections' => [
             'fields' => [
-                'payment-term'         => 'Payment Term',
-                'early-discount'       => 'Early Discount',
+                'payment-term' => 'Payment Term',
+                'early-discount' => 'Early Discount',
                 'discount-days-prefix' => 'if paid within',
                 'discount-days-suffix' => 'days',
-                'reduced-tax'          => 'Reduced tax',
-                'note'                 => 'Note',
-                'status'               => 'Status',
+                'reduced-tax' => 'Reduced tax',
+                'note' => 'Note',
+                'status' => 'Status',
             ],
         ],
     ],
 
     'table' => [
         'columns' => [
-            'payment-term'       => 'Payment Term',
-            'company'            => 'Company',
-            'discount-days'      => 'Discount Days',
+            'payment-term' => 'Payment Term',
+            'company' => 'Company',
+            'discount-days' => 'Discount Days',
             'early-pay-discount' => 'Early Pay Discount',
-            'status'             => 'Status',
-            'early-discount'     => 'Early Discount',
+            'status' => 'Status',
+            'early-discount' => 'Early Discount',
             'display-on-invoice' => 'Display on Invoice',
-            'created-by'         => 'Created By',
-            'created-at'         => 'Created At',
-            'updated-at'         => 'Updated At',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'payment-term'        => 'Payment Term',
-            'company-name'        => 'Company Name',
-            'discount-days'       => 'Discount Days',
-            'early-pay-discount'  => 'Early Pay Discount',
-            'payment-term'        => 'Payment Term',
-            'display-on-invoice'  => 'Display on Invoice',
-            'early-discount'      => 'Early Discount',
+            'company-name' => 'Company Name',
+            'discount-days' => 'Discount Days',
+            'early-pay-discount' => 'Early Pay Discount',
+            'payment-term' => 'Payment Term',
+            'display-on-invoice' => 'Display on Invoice',
+            'early-discount' => 'Early Discount',
             'discount-percentage' => 'Discount Percentage',
         ],
 
@@ -56,21 +57,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Payment Term restored',
-                    'body'  => 'The payment term has been restored successfully.',
+                    'body' => 'The payment term has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Payment Term deleted',
-                    'body'  => 'The payment term has been deleted successfully.',
+                    'body' => 'The payment term has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Payment Term force deleted',
-                    'body'  => 'The payment term has been force deleted successfully.',
+                    'body' => 'The payment term has been force deleted successfully.',
                 ],
             ],
         ],
@@ -79,21 +80,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Payment Terms restored',
-                    'body'  => 'The payment Terms has been restored successfully.',
+                    'body' => 'The payment Terms has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Payment Terms deleted',
-                    'body'  => 'The payment Terms has been deleted successfully.',
+                    'body' => 'The payment Terms has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Payment Terms force deleted',
-                    'body'  => 'The payment Terms has been force deleted successfully.',
+                    'body' => 'The payment Terms has been force deleted successfully.',
                 ],
             ],
         ],
@@ -102,14 +103,14 @@ return [
     'infolist' => [
         'sections' => [
             'entries' => [
-                'payment-term'         => 'Payment Term',
-                'early-discount'       => 'Early Discount',
-                'discount-percentage'  => 'Discount Percentage',
+                'payment-term' => 'Payment Term',
+                'early-discount' => 'Early Discount',
+                'discount-percentage' => 'Discount Percentage',
                 'discount-days-prefix' => 'if paid within',
                 'discount-days-suffix' => 'days',
-                'reduced-tax'          => 'Reduced tax',
-                'note'                 => 'Note',
-                'status'               => 'Status',
+                'reduced-tax' => 'Reduced tax',
+                'note' => 'Note',
+                'status' => 'Status',
             ],
         ],
     ],

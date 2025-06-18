@@ -1,31 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Clusters\Settings\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Select;
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Schema;
 use Spatie\Permission\Models\Role;
 use Webkul\Security\Settings\UserSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 use Webkul\Support\Models\Company;
 
-class ManageUsers extends SettingsPage
+final class ManageUsers extends SettingsPage
 {
     use HasPageShield;
 
     protected static ?string $cluster = Settings::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static string $settings = UserSettings::class;
 
     public static function getNavigationGroup(): string
     {
         return __('security::filament/clusters/manage-users.group');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('security::filament/clusters/manage-users.navigation.label');
     }
 
     public function getBreadcrumbs(): array
@@ -38,11 +45,6 @@ class ManageUsers extends SettingsPage
     public function getTitle(): string
     {
         return __('security::filament/clusters/manage-users.title');
-    }
-
-    public static function getNavigationLabel(): string
-    {
-        return __('security::filament/clusters/manage-users.navigation.label');
     }
 
     public function form(Schema $schema): Schema

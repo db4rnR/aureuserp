@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\JournalResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ use Webkul\Account\Enums\CommunicationStandard;
 use Webkul\Account\Enums\CommunicationType;
 use Webkul\Account\Filament\Resources\JournalResource;
 
-class EditJournal extends EditRecord
+final class EditJournal extends EditRecord
 {
     protected static string $resource = JournalResource::class;
 
@@ -41,8 +42,8 @@ class EditJournal extends EditRecord
     {
         $data['creator_id'] = Auth::user()->id;
 
-        $data['invoice_reference_type'] = $data['invoice_reference_type'] ?? CommunicationType::INVOICE->value;
-        $data['invoice_reference_model'] = $data['invoice_reference_model'] ?? CommunicationStandard::AUREUS->value;
+        $data['invoice_reference_type'] ??= CommunicationType::INVOICE->value;
+        $data['invoice_reference_model'] ??= CommunicationStandard::AUREUS->value;
 
         return $data;
     }

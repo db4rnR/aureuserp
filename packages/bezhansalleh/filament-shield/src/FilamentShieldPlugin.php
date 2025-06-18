@@ -14,17 +14,25 @@ use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 
-class FilamentShieldPlugin implements Plugin
+final class FilamentShieldPlugin implements Plugin
 {
     use CanBeCentralApp;
     use CanCustomizeColumns;
     use CanLocalizePermissionLabels;
-    use HasSimpleResourcePermissionView;
     use EvaluatesClosures;
+    use HasSimpleResourcePermissionView;
 
     public static function make(): static
     {
-        return app(static::class);
+        return app(self::class);
+    }
+
+    public static function get(): static
+    {
+        /** @var static $plugin */
+        $plugin = filament(app(static::class)->getId());
+
+        return $plugin;
     }
 
     public function getId(): string
@@ -45,13 +53,5 @@ class FilamentShieldPlugin implements Plugin
     public function boot(Panel $panel): void
     {
         //
-    }
-
-    public static function get(): static
-    {
-        /** @var static $plugin */
-        $plugin = filament(app(static::class)->getId());
-
-        return $plugin;
     }
 }

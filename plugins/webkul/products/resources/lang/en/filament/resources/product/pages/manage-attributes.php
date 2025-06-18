@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Attributes',
 
     'form' => [
         'attribute' => 'Attribute',
-        'values'    => 'Values',
+        'values' => 'Values',
     ],
 
     'table' => [
@@ -17,28 +19,28 @@ return [
 
                 'notification' => [
                     'title' => 'Attribute created',
-                    'body'  => 'The attribute has been created successfully.',
+                    'body' => 'The attribute has been created successfully.',
                 ],
             ],
         ],
 
         'columns' => [
             'attribute' => 'Attribute',
-            'values'    => 'Values',
+            'values' => 'Values',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Attribute updated',
-                    'body'  => 'The attribute has been updated successfully.',
+                    'body' => 'The attribute has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Attribute deleted',
-                    'body'  => 'The attribute has been deleted successfully.',
+                    'body' => 'The attribute has been deleted successfully.',
                 ],
             ],
         ],

@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages;
 
-use Filament\Tables\Columns\TextColumn;
+use BackedEnum;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 
-class ManageProducts extends ManageRelatedRecords
+final class ManageProducts extends ManageRelatedRecords
 {
     protected static string $resource = PackageResource::class;
 
     protected static string $relationship = 'quantities';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function getNavigationLabel(): string
     {

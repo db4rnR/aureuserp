@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment;
 
 use Webkul\Support\Console\Commands\InstallCommand;
@@ -7,7 +9,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class RecruitmentServiceProvider extends PackageServiceProvider
+final class RecruitmentServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'recruitments';
 
@@ -15,7 +17,7 @@ class RecruitmentServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasViews()
             ->hasTranslations()
             ->hasMigrations([
@@ -38,13 +40,13 @@ class RecruitmentServiceProvider extends PackageServiceProvider
             ->hasDependencies([
                 'employees',
             ])
-            ->hasSeeder('Webkul\\Recruitment\\Database\Seeders\\DatabaseSeeder')
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasSeeder(Database\Seeders\DatabaseSeeder::class)
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 }

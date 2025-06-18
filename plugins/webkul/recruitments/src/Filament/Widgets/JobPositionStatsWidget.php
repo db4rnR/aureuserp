@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Widgets;
 
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
@@ -10,116 +12,11 @@ use Illuminate\Support\Carbon;
 use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Recruitment\Models\Applicant;
 
-class JobPositionStatsWidget extends BaseWidget
+final class JobPositionStatsWidget extends BaseWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 
     protected ?string $pollingInterval = '15s';
-
-    protected function getData(): array
-    {
-        $query = EmployeeJobPosition::query();
-        $applicantQuery = Applicant::query();
-
-        if (! empty($this->pageFilters['selectedDepartments'])) {
-            $query->whereIn('department_id', $this->pageFilters['selectedDepartments']);
-            $applicantQuery->whereIn('department_id', $this->pageFilters['selectedDepartments']);
-        }
-
-        if (! empty($this->pageFilters['selectedCompanies'])) {
-            $query->whereIn('company_id', $this->pageFilters['selectedCompanies']);
-            $applicantQuery->whereIn('company_id', $this->pageFilters['selectedCompanies']);
-        }
-
-        $currentPeriodStart = ! is_null($this->pageFilters['startDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['startDate']) :
-            now()->subMonth();
-
-        $currentPeriodEnd = ! is_null($this->pageFilters['endDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['endDate']) :
-            now();
-
-        $daysDifference = $currentPeriodEnd->diffInDays($currentPeriodStart);
-
-        $previousPeriodStart = (clone $currentPeriodStart)->subDays($daysDifference);
-        $previousPeriodEnd = (clone $currentPeriodEnd)->subDays($daysDifference);
-
-        $currentStats = $this->calculatePeriodStats($query->clone(), $applicantQuery->clone(), $currentPeriodStart, $currentPeriodEnd);
-        $previousStats = $this->calculatePeriodStats($query->clone(), $applicantQuery->clone(), $previousPeriodStart, $previousPeriodEnd);
-
-        $jobsChart = $this->generateChartData($query->clone(), $currentPeriodStart, $currentPeriodEnd);
-        $applicationsChart = $this->generateChartData($applicantQuery->clone(), $currentPeriodStart, $currentPeriodEnd);
-        $hiredChart = $this->generateChartData(
-            $applicantQuery->clone()->whereNotNull('date_closed'),
-            $currentPeriodStart,
-            $currentPeriodEnd
-        );
-
-        return [
-            'current'  => $currentStats,
-            'previous' => $previousStats,
-            'charts'   => [
-                'jobs'         => $jobsChart,
-                'applications' => $applicationsChart,
-                'hired'        => $hiredChart,
-            ],
-        ];
-    }
-
-    protected function calculatePeriodStats($query, $applicantQuery, $startDate, $endDate): array
-    {
-        $jobStats = $query->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw('
-                COUNT(*) as total_jobs,
-                SUM(CASE WHEN is_active = 1 THEN 1 ELSE 0 END) as active_jobs
-            ')
-            ->first();
-
-        $applicantStats = $applicantQuery->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw('
-                COUNT(*) as total_applications,
-                SUM(CASE WHEN date_closed IS NOT NULL THEN 1 ELSE 0 END) as hired_count
-            ')
-            ->first();
-
-        return [
-            'total_jobs'         => $jobStats->total_jobs ?? 0,
-            'active_jobs'        => $jobStats->active_jobs ?? 0,
-            'total_applications' => $applicantStats->total_applications ?? 0,
-            'hired_count'        => $applicantStats->hired_count ?? 0,
-        ];
-    }
-
-    protected function generateChartData($query, $startDate, $endDate): array
-    {
-        $data = [];
-        $current = clone $startDate;
-
-        while ($current <= $endDate) {
-            $count = $query->whereDate('created_at', $current)->count();
-            $data[] = $count;
-            $current->addDay();
-        }
-
-        return $data;
-    }
-
-    protected function calculatePercentageChange($current, $previous): array
-    {
-        if ($previous == 0) {
-            return [
-                'percentage' => 100,
-                'trend'      => 'success',
-            ];
-        }
-
-        $change = (($current - $previous) / $previous) * 100;
-
-        return [
-            'percentage' => abs(round($change, 1)),
-            'trend'      => $change >= 0 ? 'success' : 'danger',
-        ];
-    }
 
     protected function getStats(): array
     {
@@ -161,6 +58,111 @@ class JobPositionStatsWidget extends BaseWidget
                 ->descriptionIcon($hiredChange['trend'] === 'success' ? 'heroicon-m-arrow-trending-up' : 'heroicon-m-arrow-trending-down')
                 ->color($hiredChange['trend'])
                 ->chart($data['charts']['hired']),
+        ];
+    }
+
+    private function getData(): array
+    {
+        $query = EmployeeJobPosition::query();
+        $applicantQuery = Applicant::query();
+
+        if (! empty($this->pageFilters['selectedDepartments'])) {
+            $query->whereIn('department_id', $this->pageFilters['selectedDepartments']);
+            $applicantQuery->whereIn('department_id', $this->pageFilters['selectedDepartments']);
+        }
+
+        if (! empty($this->pageFilters['selectedCompanies'])) {
+            $query->whereIn('company_id', $this->pageFilters['selectedCompanies']);
+            $applicantQuery->whereIn('company_id', $this->pageFilters['selectedCompanies']);
+        }
+
+        $currentPeriodStart = is_null($this->pageFilters['startDate'] ?? null) ?
+            now()->subMonth() :
+            Carbon::parse($this->pageFilters['startDate']);
+
+        $currentPeriodEnd = is_null($this->pageFilters['endDate'] ?? null) ?
+            now() :
+            Carbon::parse($this->pageFilters['endDate']);
+
+        $daysDifference = $currentPeriodEnd->diffInDays($currentPeriodStart);
+
+        $previousPeriodStart = (clone $currentPeriodStart)->subDays($daysDifference);
+        $previousPeriodEnd = (clone $currentPeriodEnd)->subDays($daysDifference);
+
+        $currentStats = $this->calculatePeriodStats($query->clone(), $applicantQuery->clone(), $currentPeriodStart, $currentPeriodEnd);
+        $previousStats = $this->calculatePeriodStats($query->clone(), $applicantQuery->clone(), $previousPeriodStart, $previousPeriodEnd);
+
+        $jobsChart = $this->generateChartData($query->clone(), $currentPeriodStart, $currentPeriodEnd);
+        $applicationsChart = $this->generateChartData($applicantQuery->clone(), $currentPeriodStart, $currentPeriodEnd);
+        $hiredChart = $this->generateChartData(
+            $applicantQuery->clone()->whereNotNull('date_closed'),
+            $currentPeriodStart,
+            $currentPeriodEnd
+        );
+
+        return [
+            'current' => $currentStats,
+            'previous' => $previousStats,
+            'charts' => [
+                'jobs' => $jobsChart,
+                'applications' => $applicationsChart,
+                'hired' => $hiredChart,
+            ],
+        ];
+    }
+
+    private function calculatePeriodStats($query, $applicantQuery, $startDate, $endDate): array
+    {
+        $jobStats = $query->whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('
+                COUNT(*) as total_jobs,
+                SUM(CASE WHEN is_active = 1 THEN 1 ELSE 0 END) as active_jobs
+            ')
+            ->first();
+
+        $applicantStats = $applicantQuery->whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('
+                COUNT(*) as total_applications,
+                SUM(CASE WHEN date_closed IS NOT NULL THEN 1 ELSE 0 END) as hired_count
+            ')
+            ->first();
+
+        return [
+            'total_jobs' => $jobStats->total_jobs ?? 0,
+            'active_jobs' => $jobStats->active_jobs ?? 0,
+            'total_applications' => $applicantStats->total_applications ?? 0,
+            'hired_count' => $applicantStats->hired_count ?? 0,
+        ];
+    }
+
+    private function generateChartData($query, $startDate, $endDate): array
+    {
+        $data = [];
+        $current = clone $startDate;
+
+        while ($current <= $endDate) {
+            $count = $query->whereDate('created_at', $current)->count();
+            $data[] = $count;
+            $current->addDay();
+        }
+
+        return $data;
+    }
+
+    private function calculatePercentageChange($current, $previous): array
+    {
+        if ($previous === 0) {
+            return [
+                'percentage' => 100,
+                'trend' => 'success',
+            ];
+        }
+
+        $change = (($current - $previous) / $previous) * 100;
+
+        return [
+            'percentage' => abs(round($change, 1)),
+            'trend' => $change >= 0 ? 'success' : 'danger',
         ];
     }
 }

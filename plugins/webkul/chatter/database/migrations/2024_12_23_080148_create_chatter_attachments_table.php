@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chatter_attachments', function (Blueprint $table) {
+        Schema::create('chatter_attachments', function (Blueprint $table): void {
             $table->id();
 
             $table->unsignedBigInteger('company_id')->nullable()->comment('Company');

@@ -6,7 +6,7 @@ namespace Dotswan\FilamentLaravelPulse\Widgets;
 
 use Filament\Widgets\Widget;
 
-class PulseServers extends Widget
+final class PulseServers extends Widget
 {
     protected string $view = 'filament-laravel-pulse::widgets.pulse-servers';
 

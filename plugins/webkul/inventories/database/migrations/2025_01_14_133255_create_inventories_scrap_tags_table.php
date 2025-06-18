@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories_scrap_tags', function (Blueprint $table) {
+        Schema::create('inventories_scrap_tags', function (Blueprint $table): void {
             $table->foreignId('tag_id')
                 ->constrained('inventories_tags')
                 ->cascadeOnDelete();

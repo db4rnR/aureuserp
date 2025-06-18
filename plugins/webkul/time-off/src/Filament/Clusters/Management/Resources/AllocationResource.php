@@ -1,48 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Management\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Radio;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
+use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages\ListAllocations;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages\CreateAllocation;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages\EditAllocation;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages\ViewAllocation;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Webkul\Field\Filament\Forms\Components\ProgressStepper;
 use Webkul\TimeOff\Enums\AllocationType;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages;
+use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages\CreateAllocation;
+use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages\EditAllocation;
+use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages\ListAllocations;
+use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages\ViewAllocation;
 use Webkul\TimeOff\Models\LeaveAllocation;
 
-class AllocationResource extends Resource
+final class AllocationResource extends Resource
 {
     protected static ?string $model = LeaveAllocation::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-calendar-days';
 
     protected static ?string $cluster = Management::class;
 
@@ -73,10 +73,8 @@ class AllocationResource extends Resource
                                     State::VALIDATE_TWO->value,
                                 ];
 
-                                if ($record) {
-                                    if ($record->state === State::REFUSE->value) {
-                                        $onlyStates[] = State::REFUSE->value;
-                                    }
+                                if ($record && $record->state === State::REFUSE->value) {
+                                    $onlyStates[] = State::REFUSE->value;
                                 }
 
                                 return collect(State::options())->only($onlyStates)->toArray();
@@ -201,13 +199,9 @@ class AllocationResource extends Resource
                     Action::make('approve')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->hidden(fn ($record) => $record->state === State::VALIDATE_TWO->value)
-                        ->action(function ($record) {
-                            if ($record->state === State::VALIDATE_ONE->value) {
-                                $record->update(['state' => State::VALIDATE_TWO->value]);
-                            } else {
-                                $record->update(['state' => State::VALIDATE_TWO->value]);
-                            }
+                        ->hidden(fn ($record): bool => $record->state === State::VALIDATE_TWO->value)
+                        ->action(function ($record): void {
+                            $record->update(['state' => State::VALIDATE_TWO->value]);
 
                             Notification::make()
                                 ->success()
@@ -218,15 +212,16 @@ class AllocationResource extends Resource
                         ->label(function ($record) {
                             if ($record->state === State::VALIDATE_ONE->value) {
                                 return __('time-off::filament/clusters/management/resources/allocation.table.actions.approve.title.validate');
-                            } else {
-                                return __('time-off::filament/clusters/management/resources/allocation.table.actions.approve.title.approve');
                             }
+
+                            return __('time-off::filament/clusters/management/resources/allocation.table.actions.approve.title.approve');
+
                         }),
                     Action::make('refuse')
                         ->icon('heroicon-o-x-circle')
-                        ->hidden(fn ($record) => $record->state === State::REFUSE->value)
+                        ->hidden(fn ($record): bool => $record->state === State::REFUSE->value)
                         ->color('danger')
-                        ->action(function ($record) {
+                        ->action(function ($record): void {
                             $record->update(['state' => State::REFUSE->value]);
 
                             Notification::make()
@@ -311,10 +306,10 @@ class AllocationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListAllocations::route('/'),
+            'index' => ListAllocations::route('/'),
             'create' => CreateAllocation::route('/create'),
-            'edit'   => EditAllocation::route('/{record}/edit'),
-            'view'   => ViewAllocation::route('/{record}'),
+            'edit' => EditAllocation::route('/{record}/edit'),
+            'view' => ViewAllocation::route('/{record}'),
         ];
     }
 }

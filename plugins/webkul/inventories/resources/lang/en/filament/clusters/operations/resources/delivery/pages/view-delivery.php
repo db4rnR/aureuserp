@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'print' => [
@@ -10,12 +12,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Delivery Deleted',
-                    'body'  => 'The delivery has been deleted successfully.',
+                    'body' => 'The delivery has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Delivery could not be deleted',
-                    'body'  => 'The delivery cannot be deleted because it is currently in use.',
+                    'body' => 'The delivery cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

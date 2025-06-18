@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Filament\Admin\Resources\PostResource\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Blog\Filament\Admin\Resources\PostResource;
 use Webkul\Blog\Models\Post;
 
-class EditPost extends EditRecord
+final class EditPost extends EditRecord
 {
     protected static string $resource = PostResource::class;
 
@@ -41,11 +42,11 @@ class EditPost extends EditRecord
             Action::make('publish')
                 ->label(__('blogs::filament/admin/resources/post/pages/edit-post.header-actions.publish.label'))
                 ->icon('heroicon-o-check-circle')
-                ->action(function (Post $record) {
+                ->action(function (Post $record): void {
                     $record->update([
                         'last_editor_id' => Auth::id(),
-                        'published_at'   => now(),
-                        'is_published'   => true,
+                        'published_at' => now(),
+                        'is_published' => true,
                     ]);
 
                     Notification::make()
@@ -54,11 +55,11 @@ class EditPost extends EditRecord
                         ->body(__('blogs::filament/admin/resources/post/pages/edit-post.header-actions.publish.notification.body'))
                         ->send();
                 })
-                ->visible(fn (Post $record) => ! $record->is_published),
+                ->visible(fn (Post $record): bool => ! $record->is_published),
             Action::make('draft')
                 ->label(__('blogs::filament/admin/resources/post/pages/edit-post.header-actions.draft.label'))
                 ->icon('heroicon-o-archive-box')
-                ->action(function (Post $record) {
+                ->action(function (Post $record): void {
                     $record->update(['is_published' => false]);
 
                     Notification::make()

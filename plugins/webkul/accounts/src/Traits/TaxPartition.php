@@ -1,26 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Traits;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Forms\Components\Select;
-use Webkul\Account\Enums\RepartitionType;
-use Webkul\Account\Enums\DocumentType;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\CreateAction;
-use Filament\Forms;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
-use Filament\Tables;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\DocumentType;
+use Webkul\Account\Enums\RepartitionType;
 
 trait TaxPartition
 {
@@ -35,7 +34,7 @@ trait TaxPartition
                     ->maxValue(100)
                     ->label(__('accounts::traits/tax-partition.form.factor-percent'))
                     ->live()
-                    ->afterStateUpdated(fn (Set $set, $state) => $set('factor', (float) $state / 100)),
+                    ->afterStateUpdated(fn (Set $set, $state): mixed => $set('factor', (float) $state / 100)),
                 TextInput::make('factor')
                     ->readOnly()
                     ->label(__('accounts::traits/tax-partition.form.factor-ratio')),
@@ -102,7 +101,7 @@ trait TaxPartition
             ->headerActions([
                 CreateAction::make()
                     ->icon('heroicon-o-plus-circle')
-                    ->mutateDataUsing(function ($data) {
+                    ->mutateDataUsing(function (array $data) {
                         $user = Auth::user();
 
                         $data['creator_id'] = $user->id;

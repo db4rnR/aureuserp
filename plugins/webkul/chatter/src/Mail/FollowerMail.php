@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Mail;
 
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class FollowerMail extends Mailable
+final class FollowerMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +31,7 @@ class FollowerMail extends Mailable
     {
         return new Envelope(
             subject: $this->payload['subject'],
-            from: new Address($this->payload['from']['address'], '"'.addslashes($this->payload['from']['name']).'"'),
+            from: new Address($this->payload['from']['address'], '"'.addslashes((string) $this->payload['from']['name']).'"'),
         );
     }
 

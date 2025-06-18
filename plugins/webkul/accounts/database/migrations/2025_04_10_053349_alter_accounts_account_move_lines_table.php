@@ -19,7 +19,7 @@ return new class extends Migration
         DB::table('accounts_account_move_lines')->whereNull('reconciled')->update(['reconciled' => 0]);
         DB::table('accounts_account_move_lines')->whereNull('is_downpayment')->update(['is_downpayment' => 0]);
 
-        Schema::table('accounts_account_move_lines', function (Blueprint $table) {
+        Schema::table('accounts_account_move_lines', function (Blueprint $table): void {
             $table->string('display_type')->default(DisplayType::PRODUCT)->comment('Display Type')->nullable()->change();
 
             $table->boolean('is_imported')->default(0)->nullable(false)->change();
@@ -34,7 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_account_move_lines', function (Blueprint $table) {
+        Schema::table('accounts_account_move_lines', function (Blueprint $table): void {
             $table->string('display_type')->default(null)->comment('Display Type')->nullable()->change();
 
             $table->boolean('is_imported')->nullable()->default(null)->change();

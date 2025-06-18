@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -14,7 +16,7 @@ enum PackageUse: string implements HasLabel
     {
         return match ($this) {
             self::DISPOSABLE => __('inventories::enums/package-use.disposable'),
-            self::REUSABLE   => __('inventories::enums/package-use.reusable'),
+            self::REUSABLE => __('inventories::enums/package-use.reusable'),
         };
     }
 }

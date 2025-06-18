@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_fiscal_position_taxes', function (Blueprint $table) {
+        Schema::create('accounts_fiscal_position_taxes', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('fiscal_position_id')->comment('Fiscal Position')->constrained('accounts_fiscal_positions')->cascadeOnDelete();

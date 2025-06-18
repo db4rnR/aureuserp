@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_order_options', function (Blueprint $table) {
+        Schema::create('sales_order_options', function (Blueprint $table): void {
             $table->id();
 
             $table->integer('sort')->nullable()->default(0);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Traits;
 
 // use Barryvdh\DomPDF\PDF;
@@ -14,7 +16,7 @@ trait PDFHandler
      * Generate a PDF from HTML content.
      *
      * @param  string  $html  HTML content to convert to PDF.
-     * @return PDF Returns the generated PDF instance.
+     * @return Pdf Returns the generated PDF instance.
      */
     protected function generatePDF(string $html): \Barryvdh\DomPDF\Pdf
     {
@@ -36,7 +38,7 @@ trait PDFHandler
      */
     protected function savePDF(string $html, ?string $fileName = null): string
     {
-        $fileName = $fileName ? Str::slug($fileName).'.pdf' : Str::uuid().'.pdf';
+        $fileName = $fileName !== null && $fileName !== '' && $fileName !== '0' ? Str::slug($fileName).'.pdf' : Str::uuid().'.pdf';
         $filePath = "pdfs/{$fileName}";
 
         $pdf = $this->generatePDF($html);
@@ -54,7 +56,7 @@ trait PDFHandler
      */
     protected function downloadPDF(string $html, ?string $fileName = null): Response
     {
-        $fileName = $fileName ? Str::slug($fileName).'.pdf' : 'document-'.date('Y-m-d').'.pdf';
+        $fileName = $fileName !== null && $fileName !== '' && $fileName !== '0' ? Str::slug($fileName).'.pdf' : 'document-'.date('Y-m-d').'.pdf';
 
         return $this->generatePDF($html)->download($fileName);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -13,7 +15,7 @@ enum OrderPointTrigger: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::MANUAL    => __('inventories::enums/order-point-trigger.manual'),
+            self::MANUAL => __('inventories::enums/order-point-trigger.manual'),
             self::AUTOMATIC => __('inventories::enums/order-point-trigger.automatic'),
         };
     }

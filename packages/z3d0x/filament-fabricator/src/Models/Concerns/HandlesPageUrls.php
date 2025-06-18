@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Models\Concerns;
 
 use Illuminate\Support\Facades\Cache;
@@ -69,7 +71,7 @@ trait HandlesPageUrls
             // Remove any trailing slash in the parent URI since
             // every URIs we'll use has a leading slash.
             // This avoids having two consecutive slashes.
-            $parentUri = rtrim($parentUri, '/');
+            $parentUri = mb_rtrim($parentUri, '/');
 
             return "{$parentUri}{$selfUri}";
         });

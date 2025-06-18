@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Recruitment',
@@ -7,21 +9,21 @@ return [
 
     'filters-form' => [
         'job-position' => 'Job Position',
-        'departments'  => 'Departments',
-        'companies'    => 'Companies',
-        'stages'       => 'Stages',
-        'status'       => [
-            'title'   => 'Status',
+        'departments' => 'Departments',
+        'companies' => 'Companies',
+        'stages' => 'Stages',
+        'status' => [
+            'title' => 'Status',
             'options' => [
-                'all'      => 'All',
-                'ongoing'  => 'Ongoing',
-                'hired'    => 'Hired',
-                'refused'  => 'Refused',
+                'all' => 'All',
+                'ongoing' => 'Ongoing',
+                'hired' => 'Hired',
+                'refused' => 'Refused',
                 'archived' => 'Archived',
             ],
         ],
 
         'start-date' => 'Start Date',
-        'end-date'   => 'End Date',
+        'end-date' => 'End Date',
     ],
 ];

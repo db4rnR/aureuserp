@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListReceipts extends ListRecords
+final class ListReceipts extends ListRecords
 {
     use HasTableViews;
 

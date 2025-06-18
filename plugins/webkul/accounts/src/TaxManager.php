@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account;
 
 use Webkul\Account\Models\Tax;
 
-class TaxManager
+final class TaxManager
 {
     /**
      * Calculate taxes.
@@ -12,9 +14,8 @@ class TaxManager
      * @param  array  $taxIds
      * @param  float  $subTotal
      * @param  float  $quantity
-     * @return array
      */
-    public static function collect($taxIds, $subTotal, $quantity)
+    public static function collect($taxIds, $subTotal, $quantity): array
     {
         if (empty($taxIds)) {
             return [$subTotal, 0, []];
@@ -31,7 +32,7 @@ class TaxManager
         $adjustedSubTotal = $subTotal;
 
         foreach ($taxes as $tax) {
-            $amount = floatval($tax->amount);
+            $amount = (float) ($tax->amount);
 
             $tax->price_include_override ??= 'tax_excluded';
 
@@ -47,8 +48,8 @@ class TaxManager
 
             $currentTaxAmount = 0;
 
-            if ($tax->price_include_override == 'tax_included') {
-                if ($tax->amount_type == 'percent') {
+            if ($tax->price_include_override === 'tax_included') {
+                if ($tax->amount_type === 'percent') {
                     $taxFactor = $amount / 100;
 
                     $currentTaxAmount = $currentTaxBase - ($currentTaxBase / (1 + $taxFactor));
@@ -59,19 +60,16 @@ class TaxManager
                         $currentTaxAmount = $adjustedSubTotal;
                     }
                 }
-
                 $adjustedSubTotal -= $currentTaxAmount;
+            } elseif ($tax->amount_type === 'percent') {
+                $currentTaxAmount = $currentTaxBase * $amount / 100;
             } else {
-                if ($tax->amount_type == 'percent') {
-                    $currentTaxAmount = $currentTaxBase * $amount / 100;
-                } else {
-                    $currentTaxAmount = $amount * $quantity;
-                }
+                $currentTaxAmount = $amount * $quantity;
             }
 
             $taxesComputed[] = [
-                'tax_id'              => $tax->id,
-                'tax_amount'          => $currentTaxAmount,
+                'tax_id' => $tax->id,
+                'tax_amount' => $currentTaxAmount,
                 'include_base_amount' => $tax->include_base_amount,
             ];
 

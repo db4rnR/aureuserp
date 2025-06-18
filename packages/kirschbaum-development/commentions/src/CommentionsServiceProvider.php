@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions;
 
 use Filament\Support\Assets\Css;
@@ -15,7 +17,7 @@ use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class CommentionsServiceProvider extends PackageServiceProvider
+final class CommentionsServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'commentions';
 
@@ -27,7 +29,7 @@ class CommentionsServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name(static::$name)
+            ->name(self::$name)
             ->hasConfigFile()
             ->hasViews()
             ->hasMigrations([
@@ -45,16 +47,16 @@ class CommentionsServiceProvider extends PackageServiceProvider
 
         FilamentAsset::register(
             [
-                Js::make('commentions-scripts', __DIR__ . '/../resources/dist/commentions.js'),
+                Js::make('commentions-scripts', __DIR__.'/../resources/dist/commentions.js'),
             ],
-            'kirschbaum-development/' . static::$name
+            'kirschbaum-development/'.self::$name
         );
 
         FilamentAsset::register(
             [
-                Css::make('commentions', __DIR__ . '/../resources/dist/commentions.css'),
+                Css::make('commentions', __DIR__.'/../resources/dist/commentions.css'),
             ],
-            'kirschbaum-development/' . static::$name
+            'kirschbaum-development/'.self::$name
         );
 
         Gate::policy(CommentModel::class, config('commentions.comment.policy'));

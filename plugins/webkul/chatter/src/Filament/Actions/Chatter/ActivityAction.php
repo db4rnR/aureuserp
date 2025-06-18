@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Filament\Actions\Chatter;
 
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\DatePicker;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Hidden;
 use Exception;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\HtmlString;
@@ -21,26 +22,9 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\ActivityPlan;
 use Webkul\Support\Models\ActivityType;
 
-class ActivityAction extends Action
+final class ActivityAction extends Action
 {
-    protected mixed $activityPlans;
-
-    public static function getDefaultName(): ?string
-    {
-        return 'activity.action';
-    }
-
-    public function setActivityPlans(mixed $activityPlans)
-    {
-        $this->activityPlans = $activityPlans;
-
-        return $this;
-    }
-
-    public function getActivityPlans(): mixed
-    {
-        return $this->activityPlans;
-    }
+    private mixed $activityPlans;
 
     protected function setUp(): void
     {
@@ -49,92 +33,90 @@ class ActivityAction extends Action
         $this
             ->color('gray')
             ->outlined()
-            ->schema(function ($form, $record) {
-                return $form->schema([
-                    Group::make()
-                        ->schema([
-                            Group::make()
-                                ->schema([
-                                    Select::make('activity_plan_id')
-                                        ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.activity-plan'))
-                                        ->options($this->getActivityPlans())
-                                        ->searchable()
-                                        ->hidden($this->getActivityPlans()->isEmpty())
-                                        ->preload()
-                                        ->live(),
-                                    DatePicker::make('date_deadline')
-                                        ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.plan-date'))
-                                        ->hidden(fn (Get $get) => ! $get('activity_plan_id'))
-                                        ->live()
-                                        ->native(false),
-                                ])
-                                ->columns(2),
+            ->schema(fn ($form, $record) => $form->schema([
+                Group::make()
+                    ->schema([
+                        Group::make()
+                            ->schema([
+                                Select::make('activity_plan_id')
+                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.activity-plan'))
+                                    ->options($this->activityPlans)
+                                    ->searchable()
+                                    ->hidden($this->activityPlans->isEmpty())
+                                    ->preload()
+                                    ->live(),
+                                DatePicker::make('date_deadline')
+                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.plan-date'))
+                                    ->hidden(fn (Get $get): bool => ! $get('activity_plan_id'))
+                                    ->live()
+                                    ->native(false),
+                            ])
+                            ->columns(2),
 
-                            Group::make()
-                                ->schema([
-                                    Placeholder::make('plan_summary')
-                                        ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.plan-summary'))
-                                        ->content(function (Get $get) {
-                                            if (! $get('activity_plan_id')) {
-                                                return null;
-                                            }
+                        Group::make()
+                            ->schema([
+                                Placeholder::make('plan_summary')
+                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.plan-summary'))
+                                    ->content(function (Get $get): ?HtmlString {
+                                        if (! $get('activity_plan_id')) {
+                                            return null;
+                                        }
 
-                                            $activityPlanTemplates = ActivityPlan::find($get('activity_plan_id'))
-                                                ->activityPlanTemplates;
+                                        $activityPlanTemplates = ActivityPlan::find($get('activity_plan_id'))
+                                            ->activityPlanTemplates;
 
-                                            $html = '<div class="space-y-2">';
-                                            foreach ($activityPlanTemplates as $activityPlanTemplate) {
-                                                $planDate = $get('date_deadline') ? Carbon::parse($get('date_deadline'))->format('m/d/Y') : '';
-                                                $html .= '<div class="flex items-center space-x-2" style="margin-left: 20px;">
+                                        $html = '<div class="space-y-2">';
+                                        foreach ($activityPlanTemplates as $activityPlanTemplate) {
+                                            $planDate = $get('date_deadline') ? Carbon::parse($get('date_deadline'))->format('m/d/Y') : '';
+                                            $html .= '<div class="flex items-center space-x-2" style="margin-left: 20px;">
                                                             <span>•</span>
-                                                            <span style="margin-left:2px;">'.$activityPlanTemplate->summary.($planDate ? ' ('.$planDate.')' : '').'</span>
+                                                            <span style="margin-left:2px;">'.$activityPlanTemplate->summary.($planDate !== '' && $planDate !== '0' ? ' ('.$planDate.')' : '').'</span>
                                                           </div>';
-                                            }
-                                            $html .= '</div>';
+                                        }
+                                        $html .= '</div>';
 
-                                            return new HtmlString($html);
-                                        })->hidden(fn (Get $get) => ! $get('activity_plan_id')),
-                                    Select::make('activity_type_id')
-                                        ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.activity-type'))
-                                        ->options(ActivityType::pluck('name', 'id'))
-                                        ->searchable()
-                                        ->preload()
-                                        ->live()
-                                        ->required()
-                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
-                                    DatePicker::make('date_deadline')
-                                        ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.due-date'))
-                                        ->native(false)
-                                        ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))->category == 'meeting' : false)
-                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
-                                    TextInput::make('summary')
-                                        ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.summary'))
-                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
-                                    Select::make('assigned_to')
-                                        ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.assigned-to'))
-                                        ->searchable()
-                                        ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))->category == 'meeting' : false)
-                                        ->live()
-                                        ->visible(fn (Get $get) => ! $get('activity_plan_id'))
-                                        ->options(User::all()->pluck('name', 'id')->toArray())
-                                        ->required(),
-                                ])->columns(2),
-                            RichEditor::make('body')
-                                ->hiddenLabel()
-                                ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))->category == 'meeting' : false)
-                                ->visible(fn (Get $get) => ! $get('activity_plan_id'))
-                                ->placeholder(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.log-note'))
-                                ->visible(fn (Get $get) => ! $get('activity_plan_id')),
-                            Hidden::make('type')
-                                ->default('activity'),
-                        ]),
-                ]);
-            })
-            ->action(function (array $data, ?Model $record = null) {
+                                        return new HtmlString($html);
+                                    })->hidden(fn (Get $get): bool => ! $get('activity_plan_id')),
+                                Select::make('activity_type_id')
+                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.activity-type'))
+                                    ->options(ActivityType::pluck('name', 'id'))
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    ->required()
+                                    ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
+                                DatePicker::make('date_deadline')
+                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.due-date'))
+                                    ->native(false)
+                                    ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))->category === 'meeting')
+                                    ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
+                                TextInput::make('summary')
+                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.summary'))
+                                    ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
+                                Select::make('assigned_to')
+                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.assigned-to'))
+                                    ->searchable()
+                                    ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))->category === 'meeting')
+                                    ->live()
+                                    ->visible(fn (Get $get): bool => ! $get('activity_plan_id'))
+                                    ->options(User::all()->pluck('name', 'id')->toArray())
+                                    ->required(),
+                            ])->columns(2),
+                        RichEditor::make('body')
+                            ->hiddenLabel()
+                            ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))->category === 'meeting')
+                            ->visible(fn (Get $get): bool => ! $get('activity_plan_id'))
+                            ->placeholder(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.log-note'))
+                            ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
+                        Hidden::make('type')
+                            ->default('activity'),
+                    ]),
+            ]))
+            ->action(function (array $data, ?Model $record = null): void {
                 try {
                     $user = filament()->auth()->user();
 
-                    $data['assigned_to'] = $data['assigned_to'] ?? $user->id;
+                    $data['assigned_to'] ??= $user->id;
 
                     if (isset($data['activity_plan_id'])) {
                         $activityPlan = ActivityPlan::find($data['activity_plan_id']);
@@ -145,9 +127,9 @@ class ActivityAction extends Action
                             $data = [
                                 ...$data,
                                 ...$activityPlanTemplate->toArray(),
-                                'body'        => $activityPlanTemplate['note'] ?? null,
+                                'body' => $activityPlanTemplate['note'] ?? null,
                                 'causer_type' => $user?->getMorphClass(),
-                                'causer_id'   => $user->id,
+                                'causer_id' => $user->id,
                             ];
 
                             $body .= '<div class="space-y-2" style="margin-left: 20px;">
@@ -155,7 +137,7 @@ class ActivityAction extends Action
                                     <span>•</span>
                                     <span style="margin-left:2px;">'.
                                 $activityPlanTemplate->summary.
-                                ' ('.(isset($data['date_deadline']) ? $data['date_deadline'] : now()->format('m/d/Y')).')'.
+                                ' ('.($data['date_deadline'] ?? now()->format('m/d/Y')).')'.
                                 '</span>
                                 </div>
                             </div>';
@@ -193,10 +175,27 @@ class ActivityAction extends Action
             ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.title'))
             ->icon('heroicon-o-clock')
             ->modalIcon('heroicon-o-clock')
-            ->modalSubmitAction(function ($action) {
+            ->modalSubmitAction(function ($action): void {
                 $action->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.submit-action-title'));
                 $action->icon('heroicon-m-paper-airplane');
             })
             ->slideOver(false);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'activity.action';
+    }
+
+    public function setActivityPlans(mixed $activityPlans): self
+    {
+        $this->activityPlans = $activityPlans;
+
+        return $this;
+    }
+
+    public function getActivityPlans(): mixed
+    {
+        return $this->activityPlans;
     }
 }

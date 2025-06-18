@@ -1,21 +1,23 @@
 <?php
 
-use Webkul\Invoice\Models\CreditNote;
+declare(strict_types=1);
+
+use Webkul\Account\Enums\JournalType;
 use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Enums\MoveType;
+use Webkul\Account\Models\Account;
 use Webkul\Account\Models\Journal;
-use Webkul\Account\Enums\JournalType;
-use Webkul\Support\Models\Company;
-use Webkul\Support\Models\Currency;
+use Webkul\Invoice\Models\CreditNote;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
-use Webkul\Account\Models\Account;
+use Webkul\Support\Models\Company;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test credit notes listing page loads successfully')]
-function credit_notes_listing_page_loads_successfully()
+function credit_notes_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -34,7 +36,7 @@ function credit_notes_listing_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test credit note creation page loads successfully')]
-function credit_note_creation_page_loads_successfully()
+function credit_note_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -53,7 +55,7 @@ function credit_note_creation_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test credit note can be created successfully')]
-function credit_note_can_be_created_successfully()
+function credit_note_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -106,7 +108,7 @@ function credit_note_can_be_created_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test credit note can be viewed successfully')]
-function credit_note_can_be_viewed_successfully()
+function credit_note_can_be_viewed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -132,7 +134,7 @@ function credit_note_can_be_viewed_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test credit note can be edited successfully')]
-function credit_note_can_be_edited_successfully()
+function credit_note_can_be_edited_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -173,7 +175,7 @@ function credit_note_can_be_edited_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test credit note can be confirmed successfully')]
-function credit_note_can_be_confirmed_successfully()
+function credit_note_can_be_confirmed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -202,7 +204,7 @@ function credit_note_can_be_confirmed_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test credit note can be cancelled successfully')]
-function credit_note_can_be_cancelled_successfully()
+function credit_note_can_be_cancelled_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website;
 
-use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Collection;
+use ReflectionClass;
 use Webkul\Support\Package;
 use Webkul\Website\Filament\Customer\Auth\Login;
 use Webkul\Website\Filament\Customer\Auth\PasswordReset\RequestPasswordReset;
@@ -19,16 +21,16 @@ use Webkul\Website\Filament\Customer\Resources\PageResource;
 use Webkul\Website\Models\Page;
 use Webkul\Website\Settings\ContactSettings;
 
-class WebsitePlugin implements Plugin
+final class WebsitePlugin implements Plugin
 {
+    public static function make(): static
+    {
+        return app(self::class);
+    }
+
     public function getId(): string
     {
         return 'website';
-    }
-
-    public static function make(): static
-    {
-        return app(static::class);
     }
 
     public function register(Panel $panel): void
@@ -38,7 +40,7 @@ class WebsitePlugin implements Plugin
         }
 
         $panel
-            ->when($panel->getId() == 'customer', function (Panel $panel) {
+            ->when($panel->getId() === 'customer', function (Panel $panel): void {
                 $panel
                     ->login(Login::class)
                     ->registration(Register::class)
@@ -64,12 +66,12 @@ class WebsitePlugin implements Plugin
                         PanelsRenderHook::FOOTER,
                         fn (): string => view('website::filament.customer.footer.index', [
                             'navigationItems' => $this->getFooterNavigationItems(),
-                            'contacts'        => $this->getContacts(),
-                            'socialLinks'     => $this->getSocialLinks(),
+                            'contacts' => $this->getContacts(),
+                            'socialLinks' => $this->getSocialLinks(),
                         ])->render(),
                     );
             })
-            ->when($panel->getId() == 'admin', function (Panel $panel) {
+            ->when($panel->getId() === 'admin', function (Panel $panel): void {
                 $panel
                     ->discoverResources(in: $this->getPluginBasePath('/Filament/Admin/Resources'), for: 'Webkul\\Website\\Filament\\Admin\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Admin/Pages'), for: 'Webkul\\Website\\Filament\\Admin\\Pages')
@@ -83,14 +85,14 @@ class WebsitePlugin implements Plugin
         //
     }
 
-    protected function getPluginBasePath($path = null): string
+    private function getPluginBasePath($path = null): string
     {
-        $reflector = new ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(self::class);
 
         return dirname($reflector->getFileName()).($path ?? '');
     }
 
-    protected function getTopNavigationItems(): Collection
+    private function getTopNavigationItems(): Collection
     {
         return new Collection([
             NavigationItem::make('Login')
@@ -102,18 +104,18 @@ class WebsitePlugin implements Plugin
         ]);
     }
 
-    protected function getNavigationItems(): Collection
+    private function getNavigationItems(): Collection
     {
         $navigationItems = new Collection;
 
         $pages = Page::where('is_header_visible', true)->get();
 
-        $pages->each(function ($page) use ($navigationItems) {
+        $pages->each(function ($page) use ($navigationItems): void {
             $navigationItems->push(
                 NavigationItem::make($page->slug)
                     ->label($page->title)
                     ->url(fn (): string => PageResource::getUrl('view', ['record' => $page->slug]))
-                    ->isActiveWhen(function () use ($page) {
+                    ->isActiveWhen(function () use ($page): bool {
                         if (! request()->routeIs(PageResource::getRouteBaseName().'.view')) {
                             return false;
                         }
@@ -126,7 +128,7 @@ class WebsitePlugin implements Plugin
         return $navigationItems;
     }
 
-    protected function getFooterNavigationItems(): Collection
+    private function getFooterNavigationItems(): Collection
     {
         $navigationItems = new Collection([
             NavigationItem::make('Home')
@@ -135,12 +137,12 @@ class WebsitePlugin implements Plugin
 
         $pages = Page::where('is_footer_visible', true)->get();
 
-        $pages->each(function ($page) use ($navigationItems) {
+        $pages->each(function ($page) use ($navigationItems): void {
             $navigationItems->push(
                 NavigationItem::make($page->slug)
                     ->label($page->title)
                     ->url(fn (): string => PageResource::getUrl('view', ['record' => $page->slug]))
-                    ->isActiveWhen(function () use ($page) {
+                    ->isActiveWhen(function () use ($page): bool {
                         if (! request()->routeIs(PageResource::getRouteBaseName().'.view')) {
                             return false;
                         }
@@ -153,7 +155,7 @@ class WebsitePlugin implements Plugin
         return $navigationItems;
     }
 
-    protected function getContacts(): array
+    private function getContacts(): array
     {
         $contacts = [];
 
@@ -170,7 +172,7 @@ class WebsitePlugin implements Plugin
         return $contacts;
     }
 
-    protected function getSocialLinks(): Collection
+    private function getSocialLinks(): Collection
     {
         $socialLinks = new Collection;
 

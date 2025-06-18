@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeeResume extends Model
+final class EmployeeResume extends Model
 {
     protected $table = 'employees_employee_resumes';
 

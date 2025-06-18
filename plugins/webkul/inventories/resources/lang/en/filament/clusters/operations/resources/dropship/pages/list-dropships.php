@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'create' => [
@@ -7,7 +9,7 @@ return [
 
             'notification' => [
                 'title' => 'Dropship created',
-                'body'  => 'The dropship has been created successfully.',
+                'body' => 'The dropship has been created successfully.',
             ],
         ],
     ],

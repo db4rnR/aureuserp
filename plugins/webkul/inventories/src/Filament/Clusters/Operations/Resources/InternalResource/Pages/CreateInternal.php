@@ -1,36 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages;
 
-use Webkul\Inventory\Enums\OperationState;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource;
 use Webkul\Inventory\Models\OperationType;
 
-class CreateInternal extends CreateRecord
+final class CreateInternal extends CreateRecord
 {
     protected static string $resource = InternalResource::class;
 
     public function getTitle(): string|Htmlable
     {
         return __('inventories::filament/clusters/operations/resources/internal/pages/create-internal.title');
-    }
-
-    protected function getRedirectUrl(): string
-    {
-        return $this->getResource()::getUrl('edit', ['record' => $this->getRecord()]);
-    }
-
-    protected function getCreatedNotification(): Notification
-    {
-        return Notification::make()
-            ->success()
-            ->title(__('inventories::filament/clusters/operations/resources/internal/pages/create-internal.notification.title'))
-            ->body(__('inventories::filament/clusters/operations/resources/internal/pages/create-internal.notification.body'));
     }
 
     public function mount(): void
@@ -46,6 +35,19 @@ class CreateInternal extends CreateRecord
         $this->data['destination_location_id'] = $operationType?->destination_location_id;
 
         $this->form->fill($this->data);
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('edit', ['record' => $this->getRecord()]);
+    }
+
+    protected function getCreatedNotification(): Notification
+    {
+        return Notification::make()
+            ->success()
+            ->title(__('inventories::filament/clusters/operations/resources/internal/pages/create-internal.notification.title'))
+            ->body(__('inventories::filament/clusters/operations/resources/internal/pages/create-internal.notification.body'));
     }
 
     protected function mutateFormDataBeforeCreate(array $data): array

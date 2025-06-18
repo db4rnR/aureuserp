@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class PaymentRegisterSeeder extends Seeder
+final class PaymentRegisterSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Actions;
-use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\ListPosts;
-use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\CreatePost;
-use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\EditPost;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Pboivin\FilamentPeek\Forms\Actions\InlinePreviewAction;
-use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages;
+use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\CreatePost;
+use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\EditPost;
+use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\ListPosts;
 use Pboivin\FilamentPeek\Tests\Models\Post;
 
-class PostResource extends Resource
+final class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 

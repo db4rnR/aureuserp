@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
-use Webkul\Inventory\Enums\MoveState;
-use Webkul\Inventory\Enums\LocationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Inventory\Database\Factories\MoveFactory;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\LocationType;
+use Webkul\Inventory\Enums\MoveState;
 use Webkul\Partner\Models\Partner;
 use Webkul\Purchase\Models\OrderLine as PurchaseOrderLine;
 use Webkul\Sale\Models\OrderLine as SaleOrderLine;
@@ -18,7 +19,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-class Move extends Model
+final class Move extends Model
 {
     use HasFactory;
 
@@ -80,16 +81,16 @@ class Move extends Model
      * @var string
      */
     protected $casts = [
-        'state'            => MoveState::class,
-        'is_favorite'      => 'boolean',
-        'is_picked'        => 'boolean',
-        'is_scraped'       => 'boolean',
-        'is_inventory'     => 'boolean',
-        'is_refund'        => 'boolean',
+        'state' => MoveState::class,
+        'is_favorite' => 'boolean',
+        'is_picked' => 'boolean',
+        'is_scraped' => 'boolean',
+        'is_inventory' => 'boolean',
+        'is_refund' => 'boolean',
         'reservation_date' => 'date',
-        'scheduled_at'     => 'datetime',
-        'deadline'         => 'datetime',
-        'alert_Date'       => 'datetime',
+        'scheduled_at' => 'datetime',
+        'deadline' => 'datetime',
+        'alert_Date' => 'datetime',
     ];
 
     /**
@@ -97,7 +98,7 @@ class Move extends Model
      *
      * @return bool True if the move is a purchase return, false otherwise
      */
-    public function isPurchaseReturn()
+    public function isPurchaseReturn(): bool
     {
         return $this->destinationLocation->type === LocationType::SUPPLIER
             || (
@@ -111,7 +112,7 @@ class Move extends Model
      *
      * @return bool True if the move is a purchase return, false otherwise
      */
-    public function isDropshipped()
+    public function isDropshipped(): bool
     {
         return (
             $this->sourceLocation->type === LocationType::SUPPLIER
@@ -128,7 +129,7 @@ class Move extends Model
      *
      * @return bool True if the move is a purchase return, false otherwise
      */
-    public function isDropshippedReturned()
+    public function isDropshippedReturned(): bool
     {
         return (
             $this->sourceLocation->type === LocationType::CUSTOMER
@@ -222,7 +223,7 @@ class Move extends Model
 
     public function moveDestinations(): BelongsToMany
     {
-        return $this->belongsToMany(Move::class, 'inventories_move_destinations', 'origin_move_id', 'destination_move_id');
+        return $this->belongsToMany(self::class, 'inventories_move_destinations', 'origin_move_id', 'destination_move_id');
     }
 
     public function company(): BelongsTo
@@ -237,7 +238,11 @@ class Move extends Model
 
     public function shouldBypassReservation(): bool
     {
-        return $this->sourceLocation->shouldBypassReservation() || ! $this->product->is_storable;
+        if ($this->sourceLocation->shouldBypassReservation()) {
+            return true;
+        }
+
+        return ! $this->product->is_storable;
     }
 
     public function purchaseOrderLine(): BelongsTo

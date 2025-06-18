@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Print & Send',
 
@@ -7,10 +9,10 @@ return [
         'title' => 'Preview Invoice',
 
         'form' => [
-            'partners'    => 'Customer',
-            'subject'     => 'Subject',
+            'partners' => 'Customer',
+            'subject' => 'Subject',
             'description' => 'Description',
-            'files'       => 'Attachment',
+            'files' => 'Attachment',
         ],
 
         'action' => [
@@ -22,7 +24,7 @@ return [
         'notification' => [
             'invoice-sent' => [
                 'title' => 'Invoice Sent',
-                'body'  => 'Invoice has been sent successfully.',
+                'body' => 'Invoice has been sent successfully.',
             ],
         ],
     ],

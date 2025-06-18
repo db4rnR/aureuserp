@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Scraps',
@@ -12,19 +14,19 @@ return [
                 'title' => 'General',
 
                 'fields' => [
-                    'product'              => 'Product',
-                    'package'              => 'Package',
-                    'quantity'             => 'Quantity',
-                    'unit'                 => 'Unit of Measure',
-                    'lot'                  => 'Lot/Serial',
-                    'tags'                 => 'Tags',
-                    'name'                 => 'Name',
-                    'color'                => 'Color',
-                    'owner'                => 'Owner',
-                    'source-location'      => 'Source Location',
+                    'product' => 'Product',
+                    'package' => 'Package',
+                    'quantity' => 'Quantity',
+                    'unit' => 'Unit of Measure',
+                    'lot' => 'Lot/Serial',
+                    'tags' => 'Tags',
+                    'name' => 'Name',
+                    'color' => 'Color',
+                    'owner' => 'Owner',
+                    'source-location' => 'Source Location',
                     'destination-location' => 'Scrap Location',
-                    'source-document'      => 'Source Document',
-                    'company'              => 'Company',
+                    'source-document' => 'Source Document',
+                    'company' => 'Company',
                 ],
             ],
         ],
@@ -32,42 +34,42 @@ return [
 
     'table' => [
         'columns' => [
-            'date'            => 'Date',
-            'reference'       => 'Reference',
-            'product'         => 'Product',
-            'package'         => 'Package',
-            'quantity'        => 'Quantity',
-            'uom'             => 'Unit of Measure',
+            'date' => 'Date',
+            'reference' => 'Reference',
+            'product' => 'Product',
+            'package' => 'Package',
+            'quantity' => 'Quantity',
+            'uom' => 'Unit of Measure',
             'source-location' => 'Source Location',
-            'scrap-location'  => 'Scrap Location',
-            'unit'            => 'Unit of Measure',
-            'lot'             => 'Lot/Serial',
-            'tags'            => 'Tags',
-            'state'           => 'State',
+            'scrap-location' => 'Scrap Location',
+            'unit' => 'Unit of Measure',
+            'lot' => 'Lot/Serial',
+            'tags' => 'Tags',
+            'state' => 'State',
         ],
 
         'groups' => [
-            'product'              => 'Product',
-            'source-location'      => 'Source Location',
+            'product' => 'Product',
+            'source-location' => 'Source Location',
             'destination-location' => 'Scrap Location',
         ],
 
         'filters' => [
-            'source-location'      => 'Source Location',
+            'source-location' => 'Source Location',
             'destination-location' => 'Scrap Location',
-            'product'              => 'Product',
-            'state'                => 'State',
-            'product-category'     => 'Product Category',
-            'uom'                  => 'Unit of Measure',
-            'lot'                  => 'Lot/Serial',
-            'package'              => 'Package',
-            'tags'                 => 'Tags',
-            'company'              => 'Company',
-            'quantity'             => 'Quantity',
-            'creator'              => 'Creator',
-            'closed-at'            => 'Closed At',
-            'created-at'           => 'Created At',
-            'updated-at'           => 'Updated At',
+            'product' => 'Product',
+            'state' => 'State',
+            'product-category' => 'Product Category',
+            'uom' => 'Unit of Measure',
+            'lot' => 'Lot/Serial',
+            'package' => 'Package',
+            'tags' => 'Tags',
+            'company' => 'Company',
+            'quantity' => 'Quantity',
+            'creator' => 'Creator',
+            'closed-at' => 'Closed At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'actions' => [
@@ -75,12 +77,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Scrap deleted',
-                        'body'  => 'The scrap has been deleted successfully.',
+                        'body' => 'The scrap has been deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Scrap could not be deleted',
-                        'body'  => 'The scrap cannot be deleted because it is currently in use.',
+                        'body' => 'The scrap cannot be deleted because it is currently in use.',
                     ],
                 ],
             ],
@@ -91,12 +93,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Scraps deleted',
-                        'body'  => 'The selected scraps have been deleted successfully.',
+                        'body' => 'The selected scraps have been deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Scraps could not be deleted',
-                        'body'  => 'The scraps cannot be deleted because they are currently in use.',
+                        'body' => 'The scraps cannot be deleted because they are currently in use.',
                     ],
                 ],
             ],
@@ -109,16 +111,16 @@ return [
                 'title' => 'Scrap Details',
 
                 'entries' => [
-                    'product'              => 'Product',
-                    'quantity'             => 'Quantity',
-                    'lot'                  => 'Lot',
-                    'tags'                 => 'Tags',
-                    'package'              => 'Package',
-                    'owner'                => 'Owner',
-                    'source-location'      => 'Source Location',
+                    'product' => 'Product',
+                    'quantity' => 'Quantity',
+                    'lot' => 'Lot',
+                    'tags' => 'Tags',
+                    'package' => 'Package',
+                    'owner' => 'Owner',
+                    'source-location' => 'Source Location',
                     'destination-location' => 'Destination Location',
-                    'source-document'      => 'Source Document',
-                    'company'              => 'Company',
+                    'source-document' => 'Source Document',
+                    'company' => 'Company',
                 ],
             ],
 
@@ -126,8 +128,8 @@ return [
                 'title' => 'Record Information',
 
                 'entries' => [
-                    'created-by'   => 'Created By',
-                    'created-at'   => 'Created At',
+                    'created-by' => 'Created By',
+                    'created-at' => 'Created At',
                     'last-updated' => 'Last Updated',
                 ],
             ],

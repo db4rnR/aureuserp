@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Tax group updated',
-        'body'  => 'The tax group has been updated successfully.',
+        'body' => 'The tax group has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -11,12 +13,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Tax group deleted',
-                    'body'  => 'The tax group has been deleted successfully.',
+                    'body' => 'The tax group has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Tax Group could not be deleted',
-                    'body'  => 'The tax group cannot be deleted because it is currently in use.',
+                    'body' => 'The tax group cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

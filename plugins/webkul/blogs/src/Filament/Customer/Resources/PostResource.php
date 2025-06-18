@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Filament\Customer\Resources;
 
-use Webkul\Blog\Filament\Customer\Resources\PostResource\Pages\ViewPost;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Blog\Filament\Customer\Resources\PostResource\Pages;
+use Webkul\Blog\Filament\Customer\Resources\PostResource\Pages\ViewPost;
 use Webkul\Blog\Models\Post;
 
-class PostResource extends Resource
+final class PostResource extends Resource
 {
     public static string $parentResource = CategoryResource::class;
 

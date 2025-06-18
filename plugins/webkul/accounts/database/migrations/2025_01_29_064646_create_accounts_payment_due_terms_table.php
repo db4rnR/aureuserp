@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_payment_due_terms', function (Blueprint $table) {
+        Schema::create('accounts_payment_due_terms', function (Blueprint $table): void {
             $table->id();
             $table->integer('nb_days')->nullable()->comment('Number of Days');
             $table->foreignId('payment_id')->nullable()->comment('Payment Terms')->constrained('accounts_payment_terms')->cascadeOnDelete();

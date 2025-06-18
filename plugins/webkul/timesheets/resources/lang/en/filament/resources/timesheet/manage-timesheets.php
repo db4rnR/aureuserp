@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'create' => [
@@ -7,13 +9,13 @@ return [
 
             'notification' => [
                 'title' => 'Timesheet created',
-                'body'  => 'The timesheet has been created successfully.',
+                'body' => 'The timesheet has been created successfully.',
             ],
         ],
     ],
 
     'tabs' => [
-        'all'           => 'All Timesheets',
+        'all' => 'All Timesheets',
         'my-timesheets' => 'My Timesheets',
     ],
 ];

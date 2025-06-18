@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Pboivin\FilamentPeek\Tests\Models\Post;
 
-class PostFactory extends Factory
+final class PostFactory extends Factory
 {
     protected $model = Post::class;
 

@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\StageResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\StageResource;
 
-class EditStage extends EditRecord
+final class EditStage extends EditRecord
 {
     protected static string $resource = StageResource::class;
 

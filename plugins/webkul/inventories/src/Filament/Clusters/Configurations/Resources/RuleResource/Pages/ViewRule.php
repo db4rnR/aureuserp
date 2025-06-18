@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource\Pages;
 
 use Filament\Actions\EditAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 
-class ViewRule extends ViewRecord
+final class ViewRule extends ViewRecord
 {
     protected static string $resource = RuleResource::class;
 

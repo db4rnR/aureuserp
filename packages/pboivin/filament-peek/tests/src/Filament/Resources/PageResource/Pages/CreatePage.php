@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
@@ -7,7 +9,7 @@ use Pboivin\FilamentPeek\Pages\Actions\PreviewAction;
 use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource;
 
-class CreatePage extends CreateRecord
+final class CreatePage extends CreateRecord
 {
     use HasPreviewModal;
 

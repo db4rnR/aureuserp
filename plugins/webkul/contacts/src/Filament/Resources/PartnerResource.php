@@ -1,24 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Contact\Filament\Resources;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Contact\Filament\Resources\PartnerResource\Pages\ViewPartner;
-use Webkul\Contact\Filament\Resources\PartnerResource\Pages\EditPartner;
-use Webkul\Contact\Filament\Resources\PartnerResource\Pages\ManageContacts;
-use Webkul\Contact\Filament\Resources\PartnerResource\Pages\ManageAddresses;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\ContactsRelationManager;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\AddressesRelationManager;
-use Webkul\Contact\Filament\Resources\PartnerResource\Pages\ListPartners;
-use Webkul\Contact\Filament\Resources\PartnerResource\Pages\CreatePartner;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
-use Webkul\Contact\Filament\Resources\PartnerResource\Pages;
+use Webkul\Contact\Filament\Resources\PartnerResource\Pages\CreatePartner;
+use Webkul\Contact\Filament\Resources\PartnerResource\Pages\EditPartner;
+use Webkul\Contact\Filament\Resources\PartnerResource\Pages\ListPartners;
+use Webkul\Contact\Filament\Resources\PartnerResource\Pages\ManageAddresses;
+use Webkul\Contact\Filament\Resources\PartnerResource\Pages\ManageContacts;
+use Webkul\Contact\Filament\Resources\PartnerResource\Pages\ViewPartner;
 use Webkul\Partner\Filament\Resources\PartnerResource as BasePartnerResource;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers;
+use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\AddressesRelationManager;
+use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\ContactsRelationManager;
 use Webkul\Partner\Models\Partner;
 
-class PartnerResource extends BasePartnerResource
+final class PartnerResource extends BasePartnerResource
 {
     protected static ?string $model = Partner::class;
 
@@ -26,7 +26,7 @@ class PartnerResource extends BasePartnerResource
 
     protected static bool $shouldRegisterNavigation = true;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationLabel(): string
     {
@@ -66,11 +66,11 @@ class PartnerResource extends BasePartnerResource
     public static function getPages(): array
     {
         return [
-            'index'     => ListPartners::route('/'),
-            'create'    => CreatePartner::route('/create'),
-            'view'      => ViewPartner::route('/{record}'),
-            'edit'      => EditPartner::route('/{record}/edit'),
-            'contacts'  => ManageContacts::route('/{record}/contacts'),
+            'index' => ListPartners::route('/'),
+            'create' => CreatePartner::route('/create'),
+            'view' => ViewPartner::route('/{record}'),
+            'edit' => EditPartner::route('/{record}/edit'),
+            'contacts' => ManageContacts::route('/{record}/contacts'),
             'addresses' => ManageAddresses::route('/{record}/addresses'),
         ];
     }

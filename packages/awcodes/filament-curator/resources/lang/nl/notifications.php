@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'Het record is succesvol bijgewerkt.',
     'update_error' => 'Er is een fout opgetreden bij het bijwerken van de record.',

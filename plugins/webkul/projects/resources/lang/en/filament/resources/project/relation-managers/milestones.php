@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'table' => [
         'header-actions' => [
@@ -8,7 +10,7 @@ return [
 
                 'notification' => [
                     'title' => 'Milestone created',
-                    'body'  => 'The milestone has been created successfully.',
+                    'body' => 'The milestone has been created successfully.',
                 ],
             ],
         ],

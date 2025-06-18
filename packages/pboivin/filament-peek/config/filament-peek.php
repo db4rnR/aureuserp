@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Pboivin\FilamentPeek\Livewire\BuilderEditor;
 
 return [

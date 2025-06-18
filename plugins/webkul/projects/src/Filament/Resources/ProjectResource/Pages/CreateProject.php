@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources\ProjectResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -7,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Resources\ProjectResource;
 
-class CreateProject extends CreateRecord
+final class CreateProject extends CreateRecord
 {
     protected static string $resource = ProjectResource::class;
 

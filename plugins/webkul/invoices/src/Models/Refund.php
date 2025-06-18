@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Models;
 
 use Webkul\Account\Models\Move as BaseMove;
 
-class Refund extends BaseMove
+final class Refund extends BaseMove
 {
     //
 }

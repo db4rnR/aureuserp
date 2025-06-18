@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         if (! Schema::hasTable('purchases_order_operations') && Schema::hasTable('inventories_operations')) {
-            Schema::create('purchases_order_operations', function (Blueprint $table) {
+            Schema::create('purchases_order_operations', function (Blueprint $table): void {
                 $table->foreignId('purchase_order_id')
                     ->constrained('purchases_orders')
                     ->cascadeOnDelete();

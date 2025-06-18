@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -7,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource;
 
-class CreateTeam extends CreateRecord
+final class CreateTeam extends CreateRecord
 {
     protected static string $resource = TeamResource::class;
 

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-class CheckedList extends Node
+final class CheckedList extends Node
 {
     public static $name = 'checkedList';
 

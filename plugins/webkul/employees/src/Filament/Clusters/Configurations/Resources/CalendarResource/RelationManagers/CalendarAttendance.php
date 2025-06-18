@@ -1,46 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\CalendarResource\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Webkul\Employee\Enums\DayPeriod;
-use Webkul\Employee\Enums\WeekType;
-use Filament\Forms\Components\TimePicker;
-use Filament\Forms\Components\DatePicker;
-use Webkul\Employee\Enums\CalendarDisplayType;
-use Filament\Forms\Components\Hidden;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\CreateAction;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Group;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TimePicker;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Employee\Enums;
+use Webkul\Employee\Enums\CalendarDisplayType;
 use Webkul\Employee\Enums\DayOfWeek;
+use Webkul\Employee\Enums\DayPeriod;
+use Webkul\Employee\Enums\WeekType;
 
-class CalendarAttendance extends RelationManager
+final class CalendarAttendance extends RelationManager
 {
     protected static string $relationship = 'attendance';
 
@@ -137,7 +135,7 @@ class CalendarAttendance extends RelationManager
                     ->formatStateUsing(fn ($state) => DayOfWeek::options()[$state]),
                 TextColumn::make('day_period')
                     ->label(__('employees::filament/clusters/configurations/resources/calendar/relation-managers/working-hours.table.columns.day-period'))
-                    ->formatStateUsing(fn ($state) => ucfirst($state))
+                    ->formatStateUsing(fn ($state): string => ucfirst((string) $state))
                     ->badge()
                     ->color('secondary'),
                 TextColumn::make('hour_from')

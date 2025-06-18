@@ -1,26 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Security\Models\User;
 
-class ProductAttributeValue extends Model
+final class ProductAttributeValue extends Model
 {
-    /**
-     * Table name.
-     *
-     * @var string
-     */
-    protected $table = 'products_product_attribute_values';
-
     /**
      * Timestamps.
      *
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * Table name.
+     *
+     * @var string
+     */
+    protected $table = 'products_product_attribute_values';
 
     /**
      * Fillable.

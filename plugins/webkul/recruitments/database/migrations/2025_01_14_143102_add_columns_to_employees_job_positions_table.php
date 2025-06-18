@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('employees_job_positions', function (Blueprint $table) {
+        Schema::table('employees_job_positions', function (Blueprint $table): void {
             $table->unsignedBigInteger('address_id')->nullable()->after('company_id')->comment('Job Location');
             $table->unsignedBigInteger('manager_id')->nullable()->after('address_id')->comment('Department Manager');
             $table->unsignedBigInteger('industry_id')->nullable()->after('manager_id')->comment('Partner Industry');
@@ -32,7 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('employees_job_positions', function (Blueprint $table) {
+        Schema::table('employees_job_positions', function (Blueprint $table): void {
             $table->dropForeign(['address_id']);
             $table->dropForeign(['manager_id']);
             $table->dropForeign(['industry_id']);

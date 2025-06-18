@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees_employee_resume_line_types', function (Blueprint $table) {
+        Schema::create('employees_employee_resume_line_types', function (Blueprint $table): void {
             $table->id();
             $table->integer('sort');
             $table->string('name');

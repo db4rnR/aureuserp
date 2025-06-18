@@ -1,34 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ViewVendor;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\EditVendor;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ManageContacts;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ManageAddresses;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ManageBills;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ManagePurchases;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\ContactsRelationManager;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\AddressesRelationManager;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ListVendors;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\CreateVendor;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource as BaseVendorResource;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers;
+use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\AddressesRelationManager;
+use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\ContactsRelationManager;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders;
-use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages;
+use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\CreateVendor;
+use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\EditVendor;
+use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ListVendors;
+use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ManageAddresses;
+use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ManageBills;
+use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ManageContacts;
+use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ManagePurchases;
+use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ViewVendor;
 use Webkul\Purchase\Models\Partner;
 
-class VendorResource extends BaseVendorResource
+final class VendorResource extends BaseVendorResource
 {
     use HasCustomFields;
 
     protected static ?string $model = Partner::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -36,7 +37,7 @@ class VendorResource extends BaseVendorResource
 
     protected static ?int $navigationSort = 4;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -75,13 +76,13 @@ class VendorResource extends BaseVendorResource
     public static function getPages(): array
     {
         return [
-            'index'     => ListVendors::route('/'),
-            'create'    => CreateVendor::route('/create'),
-            'view'      => ViewVendor::route('/{record}'),
-            'edit'      => EditVendor::route('/{record}/edit'),
-            'contacts'  => ManageContacts::route('/{record}/contacts'),
+            'index' => ListVendors::route('/'),
+            'create' => CreateVendor::route('/create'),
+            'view' => ViewVendor::route('/{record}'),
+            'edit' => EditVendor::route('/{record}/edit'),
+            'contacts' => ManageContacts::route('/{record}/contacts'),
             'addresses' => ManageAddresses::route('/{record}/addresses'),
-            'bills'     => ManageBills::route('/{record}/bills'),
+            'bills' => ManageBills::route('/{record}/bills'),
             'purchases' => ManagePurchases::route('/{record}/purchases'),
         ];
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -23,12 +25,11 @@ use Illuminate\Support\Carbon;
  */
 interface Page extends HasPageUrls
 {
+    public static function query(): Builder;
+
     public function parent(): BelongsTo;
 
     public function children(): HasMany;
 
     public function allChildren(): HasMany;
-
-    /** @return Builder */
-    public static function query();
 }

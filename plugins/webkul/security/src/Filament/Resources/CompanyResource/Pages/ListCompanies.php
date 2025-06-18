@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources\CompanyResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Security\Filament\Resources\CompanyResource;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListCompanies extends ListRecords
+final class ListCompanies extends ListRecords
 {
     use HasTableViews;
 

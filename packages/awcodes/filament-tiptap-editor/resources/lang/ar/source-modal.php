@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'heading' => 'تحرير كود المصدر',
     'buttons' => [

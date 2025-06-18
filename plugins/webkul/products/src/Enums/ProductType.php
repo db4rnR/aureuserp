@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -13,7 +15,7 @@ enum ProductType: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::GOODS   => __('products::enums/product-type.goods'),
+            self::GOODS => __('products::enums/product-type.goods'),
             self::SERVICE => __('products::enums/product-type.service'),
         };
     }

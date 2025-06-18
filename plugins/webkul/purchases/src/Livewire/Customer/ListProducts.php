@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Livewire\Customer;
 
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -11,14 +13,14 @@ use Filament\Tables\Table;
 use Livewire\Component;
 use Webkul\Purchase\Models\OrderLine;
 
-class ListProducts extends Component implements HasForms, HasTable
+final class ListProducts extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
 
     public $record;
 
-    public function mount($record)
+    public function mount($record): void
     {
         $this->record = $record;
     }

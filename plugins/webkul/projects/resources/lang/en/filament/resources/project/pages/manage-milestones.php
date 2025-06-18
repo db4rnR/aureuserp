@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Milestones',
 
@@ -10,7 +12,7 @@ return [
 
                 'notification' => [
                     'title' => 'Milestone created',
-                    'body'  => 'The milestone has been created successfully.',
+                    'body' => 'The milestone has been created successfully.',
                 ],
             ],
         ],

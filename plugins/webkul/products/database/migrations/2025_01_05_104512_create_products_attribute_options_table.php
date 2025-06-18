@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_attribute_options', function (Blueprint $table) {
+        Schema::create('products_attribute_options', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('color')->nullable();

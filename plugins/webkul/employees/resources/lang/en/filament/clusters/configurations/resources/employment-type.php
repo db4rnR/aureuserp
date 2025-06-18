@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Employment Types',
 
@@ -10,35 +12,35 @@ return [
 
     'form' => [
         'fields' => [
-            'name'    => 'Employment Type',
-            'code'    => 'Code',
+            'name' => 'Employment Type',
+            'code' => 'Code',
             'country' => 'Country',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'id'         => 'ID',
-            'name'       => 'Employment Type',
-            'code'       => 'Code',
-            'country'    => 'Country',
+            'id' => 'ID',
+            'name' => 'Employment Type',
+            'code' => 'Code',
+            'country' => 'Country',
             'created-by' => 'Created By',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
 
         'filters' => [
-            'name'       => 'Employment Type',
-            'country'    => 'Country',
+            'name' => 'Employment Type',
+            'country' => 'Country',
             'created-by' => 'Created By',
             'updated-at' => 'Updated At',
             'created-at' => 'Created At',
         ],
 
         'groups' => [
-            'name'       => 'Employment Type',
-            'country'    => 'Country',
-            'code'       => 'Code',
+            'name' => 'Employment Type',
+            'country' => 'Country',
+            'code' => 'Code',
             'created-by' => 'Created By',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
@@ -48,14 +50,14 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Employment Type',
-                    'body'  => 'The Employment Type has been edited successfully.',
+                    'body' => 'The Employment Type has been edited successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Employment Type deleted',
-                    'body'  => 'The Employment Type has been deleted successfully.',
+                    'body' => 'The Employment Type has been deleted successfully.',
                 ],
             ],
         ],
@@ -64,7 +66,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Employment Types deleted',
-                    'body'  => 'The Employment Types has been deleted successfully.',
+                    'body' => 'The Employment Types has been deleted successfully.',
                 ],
             ],
         ],
@@ -73,7 +75,7 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Employment Types',
-                    'body'  => 'The Employment Types has been created successfully.',
+                    'body' => 'The Employment Types has been created successfully.',
                 ],
             ],
         ],
@@ -81,8 +83,8 @@ return [
 
     'infolist' => [
         'entries' => [
-            'name'    => 'Employment Type',
-            'code'    => 'Code',
+            'name' => 'Employment Type',
+            'code' => 'Code',
             'country' => 'Country',
         ],
     ],

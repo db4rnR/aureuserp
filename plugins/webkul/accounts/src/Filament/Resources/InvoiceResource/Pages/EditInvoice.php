@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\InvoiceResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Partner\Models\Partner;
 
-class EditInvoice extends EditRecord
+final class EditInvoice extends EditRecord
 {
     protected static string $resource = InvoiceResource::class;
 
@@ -73,7 +74,7 @@ class EditInvoice extends EditRecord
         return $data;
     }
 
-    protected function afterSave(): void
+    private function afterSave(): void
     {
         Account::computeAccountMove($this->getRecord());
     }

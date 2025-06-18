@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasColor;
@@ -20,33 +22,33 @@ enum OperationState: string implements HasColor, HasLabel
     public static function options(): array
     {
         return [
-            self::DRAFT->value     => __('inventories::enums/operation-state.draft'),
+            self::DRAFT->value => __('inventories::enums/operation-state.draft'),
             self::CONFIRMED->value => __('inventories::enums/operation-state.confirmed'),
-            self::ASSIGNED->value  => __('inventories::enums/operation-state.assigned'),
-            self::DONE->value      => __('inventories::enums/operation-state.done'),
-            self::CANCELED->value  => __('inventories::enums/operation-state.canceled'),
+            self::ASSIGNED->value => __('inventories::enums/operation-state.assigned'),
+            self::DONE->value => __('inventories::enums/operation-state.done'),
+            self::CANCELED->value => __('inventories::enums/operation-state.canceled'),
         ];
     }
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::DRAFT        => __('inventories::enums/operation-state.draft'),
-            self::CONFIRMED    => __('inventories::enums/operation-state.confirmed'),
-            self::ASSIGNED     => __('inventories::enums/operation-state.assigned'),
-            self::DONE         => __('inventories::enums/operation-state.done'),
-            self::CANCELED     => __('inventories::enums/operation-state.canceled'),
+            self::DRAFT => __('inventories::enums/operation-state.draft'),
+            self::CONFIRMED => __('inventories::enums/operation-state.confirmed'),
+            self::ASSIGNED => __('inventories::enums/operation-state.assigned'),
+            self::DONE => __('inventories::enums/operation-state.done'),
+            self::CANCELED => __('inventories::enums/operation-state.canceled'),
         };
     }
 
     public function getColor(): string
     {
         return match ($this) {
-            self::DRAFT     => 'gray',
+            self::DRAFT => 'gray',
             self::CONFIRMED => 'warning',
-            self::ASSIGNED  => 'primary',
-            self::DONE      => 'success',
-            self::CANCELED  => 'danger',
+            self::ASSIGNED => 'primary',
+            self::DONE => 'success',
+            self::CANCELED => 'danger',
         };
     }
 }

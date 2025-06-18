@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\LeaveAccrualLevel>
  */
-class LeaveAccrualLevelFactory extends Factory
+final class LeaveAccrualLevelFactory extends Factory
 {
     /**
      * Define the model's default state.

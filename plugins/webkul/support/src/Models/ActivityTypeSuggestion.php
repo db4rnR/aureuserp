@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ActivityTypeSuggestion extends Model
+final class ActivityTypeSuggestion extends Model
 {
-    protected $table = 'activity_type_suggestions';
-
     public $timestamps = false;
+
+    protected $table = 'activity_type_suggestions';
 
     protected $fillable = [
         'activity_type_id',

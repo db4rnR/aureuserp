@@ -6,10 +6,10 @@ This directory contains a comprehensive report on the installed Composer (PHP) a
 
 ## Directory Structure
 
-- **[000-index.md](200-junie/010-package-analysis/000-index.md)**: Main index file with table of contents and navigation
-- **[010-composer-packages.md](200-junie/010-package-analysis/010-composer-packages.md)**: Documentation for PHP/Composer packages
-- **[020-node-packages.md](200-junie/010-package-analysis/020-node-packages.md)**: Documentation for Node.js packages
-- **[030-configuration-best-practices.md](200-junie/010-package-analysis/030-configuration-best-practices.md)**: General configuration best practices
+- **[000-index.md](200-junie/020-package-analysis/000-index.md)**: Main index file with table of contents and navigation
+- **[010-composer-packages.md](200-junie/020-package-analysis/010-composer-packages.md)**: Documentation for PHP/Composer packages
+- **[020-node-packages.md](200-junie/020-package-analysis/020-node-packages.md)**: Documentation for Node.js packages
+- **[030-configuration-best-practices.md](200-junie/020-package-analysis/030-configuration-best-practices.md)**: General configuration best practices
 
 ## Content Summary
 
@@ -53,7 +53,7 @@ The configuration best practices document provides general guidance on:
 
 ## How to Use This Documentation
 
-1. Start with the [index file](200-junie/010-package-analysis/000-index.md) to get an overview of the content
+1. Start with the [index file](200-junie/020-package-analysis/000-index.md) to get an overview of the content
 2. Navigate to the specific section you're interested in
 3. Follow the configuration instructions and best practices when working with packages
 4. Refer to the best practices document for general guidance on package configuration

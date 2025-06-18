@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Facades;
 
 use Closure;
@@ -34,7 +36,7 @@ use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
  *
  * @see \Z3d0X\FilamentFabricator\FilamentFabricatorManager
  */
-class FilamentFabricator extends Facade
+final class FilamentFabricator extends Facade
 {
     protected static function getFacadeAccessor()
     {

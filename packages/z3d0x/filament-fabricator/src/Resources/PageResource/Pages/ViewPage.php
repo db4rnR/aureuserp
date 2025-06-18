@@ -1,22 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\Action;
-use Filament\Pages\Actions;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
 
-class ViewPage extends ViewRecord
+final class ViewPage extends ViewRecord
 {
     protected static string $resource = PageResource::class;
 
     public static function getResource(): string
     {
-        return config('filament-fabricator.page-resource') ?? static::$resource;
+        return config('filament-fabricator.page-resource') ?? self::$resource;
     }
 
     protected function getActions(): array

@@ -1,57 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Webkul\Account\Enums\TypeTaxUse;
-use Webkul\Account\Enums\AmountType;
-use Webkul\Account\Enums\TaxScope;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
+use BackedEnum;
 use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Schemas\Components\Grid;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
-use Webkul\Account\Filament\Resources\TaxResource\Pages\ListTaxes;
-use Webkul\Account\Filament\Resources\TaxResource\Pages\CreateTax;
-use Webkul\Account\Filament\Resources\TaxResource\Pages\ViewTax;
-use Webkul\Account\Filament\Resources\TaxResource\Pages\EditTax;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\AmountType;
 use Webkul\Account\Enums\TaxIncludeOverride;
-use Webkul\Account\Filament\Resources\TaxResource\Pages;
+use Webkul\Account\Enums\TaxScope;
+use Webkul\Account\Enums\TypeTaxUse;
+use Webkul\Account\Filament\Resources\TaxResource\Pages\CreateTax;
+use Webkul\Account\Filament\Resources\TaxResource\Pages\EditTax;
+use Webkul\Account\Filament\Resources\TaxResource\Pages\ListTaxes;
+use Webkul\Account\Filament\Resources\TaxResource\Pages\ViewTax;
 use Webkul\Account\Models\Tax;
 
-class TaxResource extends Resource
+final class TaxResource extends Resource
 {
     protected static ?string $model = Tax::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-receipt-percent';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-receipt-percent';
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Start;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Start;
 
     public static function form(Schema $schema): Schema
     {
@@ -215,10 +214,10 @@ class TaxResource extends Resource
                     EditAction::make(),
                     ViewAction::make(),
                     DeleteAction::make()
-                        ->action(function (Tax $record) {
+                        ->action(function (Tax $record): void {
                             try {
                                 $record->delete();
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('accounts::filament/resources/tax.table.actions.delete.notification.error.title'))
@@ -237,10 +236,10 @@ class TaxResource extends Resource
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->delete());
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('accounts::filament/resources/tax.table.bulk-actions.delete.notification.error.title'))
@@ -334,10 +333,10 @@ class TaxResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListTaxes::route('/'),
+            'index' => ListTaxes::route('/'),
             'create' => CreateTax::route('/create'),
-            'view'   => ViewTax::route('/{record}'),
-            'edit'   => EditTax::route('/{record}/edit'),
+            'view' => ViewTax::route('/{record}'),
+            'edit' => EditTax::route('/{record}/edit'),
         ];
     }
 }

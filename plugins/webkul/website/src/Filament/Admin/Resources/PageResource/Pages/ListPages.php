@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Filament\Admin\Resources\PageResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 use Webkul\Website\Filament\Admin\Resources\PageResource;
 
-class ListPages extends ListRecords
+final class ListPages extends ListRecords
 {
     use HasTableViews;
 
@@ -21,9 +22,7 @@ class ListPages extends ListRecords
             'archived' => PresetView::make(__('website::filament/admin/resources/page/pages/list-records.tabs.archived'))
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 

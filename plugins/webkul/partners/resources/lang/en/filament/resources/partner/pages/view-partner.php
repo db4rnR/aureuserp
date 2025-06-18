@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'View Contact',
 
@@ -7,7 +9,7 @@ return [
         'delete' => [
             'notification' => [
                 'title' => 'Contact deleted',
-                'body'  => 'The contact has been deleted successfully.',
+                'body' => 'The contact has been deleted successfully.',
             ],
         ],
     ],

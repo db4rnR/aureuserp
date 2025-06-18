@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field;
 
 use Illuminate\Support\Facades\Gate;
@@ -8,7 +10,7 @@ use Webkul\Field\Policies\FieldPolicy;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class FieldServiceProvider extends PackageServiceProvider
+final class FieldServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'fields';
 
@@ -16,7 +18,7 @@ class FieldServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->isCore()
             ->hasViews()
             ->hasTranslations()

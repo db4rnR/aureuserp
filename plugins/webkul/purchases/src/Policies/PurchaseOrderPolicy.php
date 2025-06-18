@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -7,7 +9,7 @@ use Webkul\Purchase\Models\PurchaseOrder;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-class PurchaseOrderPolicy
+final class PurchaseOrderPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 
@@ -22,7 +24,7 @@ class PurchaseOrderPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, PurchaseOrder $purchaseOrder): bool
+    public function view(User $user): bool
     {
         return $user->can('view_purchase::order');
     }

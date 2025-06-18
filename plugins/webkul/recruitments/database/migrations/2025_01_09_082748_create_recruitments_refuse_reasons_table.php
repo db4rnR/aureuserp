@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recruitments_refuse_reasons', function (Blueprint $table) {
+        Schema::create('recruitments_refuse_reasons', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('creator_id')->nullable()->constrained('users')->nullOnDelete();
             $table->integer('sort')->default(0)->comment('Sort order');

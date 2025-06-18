@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Public Holidays',
 
@@ -11,55 +13,55 @@ return [
 
     'form' => [
         'fields' => [
-            'name'             => 'Name',
+            'name' => 'Name',
             'name-placeholder' => 'Enter the name of the public holiday',
-            'date-from'        => 'Start Date',
-            'date-to'          => 'End Date',
-            'color'            => 'Color',
-            'calendar'         => 'Calendar',
+            'date-from' => 'Start Date',
+            'date-to' => 'End Date',
+            'color' => 'Color',
+            'calendar' => 'Calendar',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'company-name' => 'Company Name',
-            'calendar'     => 'Calendar',
-            'created-by'   => 'Created By',
-            'date-from'    => 'Start Date',
-            'date-to'      => 'End Date',
+            'calendar' => 'Calendar',
+            'created-by' => 'Created By',
+            'date-from' => 'Start Date',
+            'date-to' => 'End Date',
         ],
 
         'filters' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'company-name' => 'Company Name',
-            'created-by'   => 'Created By',
-            'date-from'    => 'Start Date',
-            'date-to'      => 'End Date',
-            'created-at'   => 'Created At',
-            'updated-at'   => 'Updated At',
+            'created-by' => 'Created By',
+            'date-from' => 'Start Date',
+            'date-to' => 'End Date',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'company-name' => 'Company Name',
-            'created-by'   => 'Created By',
-            'date-from'    => 'Start Date',
-            'date-to'      => 'End Date',
+            'created-by' => 'Created By',
+            'date-from' => 'Start Date',
+            'date-to' => 'End Date',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Public holiday updated',
-                    'body'  => 'The public holiday has been restored successfully.',
+                    'body' => 'The public holiday has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Public holiday deleted',
-                    'body'  => 'The public holiday has been deleted successfully.',
+                    'body' => 'The public holiday has been deleted successfully.',
                 ],
             ],
         ],
@@ -68,7 +70,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Public holidays deleted',
-                    'body'  => 'The public holidays has been deleted successfully.',
+                    'body' => 'The public holidays has been deleted successfully.',
                 ],
             ],
         ],
@@ -76,10 +78,10 @@ return [
 
     'infolist' => [
         'entries' => [
-            'name'      => 'Name',
+            'name' => 'Name',
             'date-from' => 'Start Date',
-            'date-to'   => 'End Date',
-            'color'     => 'Color',
+            'date-to' => 'End Date',
+            'color' => 'Color',
         ],
     ],
 ];

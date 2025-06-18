@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
-use Webkul\TimeOff\Models\LeaveAllocation;
 
-class LeaveAllocationPolicy
+final class LeaveAllocationPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class LeaveAllocationPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, LeaveAllocation $leaveAllocation): bool
+    public function view(User $user): bool
     {
         return $user->can('view_my::allocation');
     }
@@ -37,7 +38,7 @@ class LeaveAllocationPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, LeaveAllocation $leaveAllocation): bool
+    public function update(User $user): bool
     {
         return $user->can('update_my::allocation');
     }
@@ -45,7 +46,7 @@ class LeaveAllocationPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, LeaveAllocation $leaveAllocation): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_my::allocation');
     }
@@ -61,7 +62,7 @@ class LeaveAllocationPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, LeaveAllocation $leaveAllocation): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_my::allocation');
     }
@@ -77,7 +78,7 @@ class LeaveAllocationPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, LeaveAllocation $leaveAllocation): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_my::allocation');
     }
@@ -93,7 +94,7 @@ class LeaveAllocationPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, LeaveAllocation $leaveAllocation): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_my::allocation');
     }

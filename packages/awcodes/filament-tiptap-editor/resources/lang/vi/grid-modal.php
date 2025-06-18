@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'heading' => 'Tùy chọn về cột',
     'labels' => [

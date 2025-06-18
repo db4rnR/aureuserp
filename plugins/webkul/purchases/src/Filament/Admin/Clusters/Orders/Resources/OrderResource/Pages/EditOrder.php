@@ -1,24 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages;
 
-use Filament\Actions\DeleteAction;
-use Webkul\Purchase\Enums\OrderState;
-use Filament\Actions;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions as OrderActions;
 use Webkul\Purchase\Models\Order;
 
-class EditOrder extends EditRecord
+final class EditOrder extends EditRecord
 {
     protected static string $resource = OrderResource::class;
+
+    public function updateForm(): void
+    {
+        $this->fillForm();
+    }
 
     protected function getRedirectUrl(): string
     {
@@ -64,13 +69,13 @@ class EditOrder extends EditRecord
             OrderActions\UnlockAction::make(),
             OrderActions\CancelAction::make(),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == OrderState::DONE)
-                ->action(function (DeleteAction $action, Order $record) {
+                ->hidden(fn (): bool => $this->getRecord()->state === OrderState::DONE)
+                ->action(function (DeleteAction $action, Order $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('purchases::filament/admin/clusters/orders/resources/order/pages/edit-order.header-actions.delete.notification.error.title'))
@@ -98,13 +103,8 @@ class EditOrder extends EditRecord
         return $data;
     }
 
-    protected function afterSave(): void
+    private function afterSave(): void
     {
         PurchaseOrder::computePurchaseOrder($this->getRecord());
-    }
-
-    public function updateForm(): void
-    {
-        $this->fillForm();
     }
 }

@@ -1,22 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Actions;
 
 use Filament\Actions\Action;
-use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ViewField;
+use Filament\Schemas\Components\Grid;
 use FilamentTiptapEditor\TiptapEditor;
 
-class GridBuilderAction extends Action
+final class GridBuilderAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'filament_tiptap_grid';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -83,7 +80,7 @@ class GridBuilderAction extends Action
             ];
         });
 
-        $this->action(function (TiptapEditor $component, $data) {
+        $this->action(function (TiptapEditor $component, $data): void {
             $component->getLivewire()->dispatch(
                 event: 'insertFromAction',
                 type: 'grid',
@@ -91,5 +88,10 @@ class GridBuilderAction extends Action
                 data: $data,
             );
         });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'filament_tiptap_grid';
     }
 }

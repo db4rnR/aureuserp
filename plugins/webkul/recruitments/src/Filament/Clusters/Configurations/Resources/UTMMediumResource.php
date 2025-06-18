@@ -1,35 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources;
 
-use Filament\Schemas\Schema;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
+use Filament\Panel;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMMediumResource\Pages\ListUTMMedia;
-use Filament\Panel;
-use Filament\Forms;
-use Filament\Infolists;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Webkul\Recruitment\Filament\Clusters\Configurations;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMMediumResource\Pages;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMMediumResource\Pages\ListUTMMedia;
 use Webkul\Recruitment\Models\UTMMedium;
 
-class UTMMediumResource extends Resource
+final class UTMMediumResource extends Resource
 {
     protected static ?string $model = UTMMedium::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
     protected static ?string $cluster = Configurations::class;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +10,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-class AdvancedPaymentInvoice extends Model
+final class AdvancedPaymentInvoice extends Model
 {
     protected $table = 'sales_advance_payment_invoices';
 

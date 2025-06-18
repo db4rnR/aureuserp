@@ -1,9 +1,11 @@
 <?php
 
-use FilamentTiptapEditor\Actions\MediaAction;
+declare(strict_types=1);
+
 use FilamentTiptapEditor\Actions\EditMediaAction;
-use FilamentTiptapEditor\Actions\LinkAction;
 use FilamentTiptapEditor\Actions\GridBuilderAction;
+use FilamentTiptapEditor\Actions\LinkAction;
+use FilamentTiptapEditor\Actions\MediaAction;
 use FilamentTiptapEditor\Actions\OEmbedAction;
 use FilamentTiptapEditor\Enums\TiptapOutput;
 

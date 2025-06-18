@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Unit;
 
 use Illuminate\Support\Facades\View;
 use Pboivin\FilamentPeek\Forms\Components\PreviewLink;
 use Pboivin\FilamentPeek\Support;
 
-it('has a default label', function () {
+it('has a default label', function (): void {
     $previewLink = PreviewLink::make();
 
     expect($previewLink->getLabel())->toEqual('Preview');
 });
 
-it('can render', function () {
+it('can render', function (): void {
     $previewLink = PreviewLink::make();
 
     $content = (string) $previewLink->render();
@@ -25,7 +27,7 @@ it('can render', function () {
     expect($content)->not->toContain('underline');
 });
 
-it('can be aligned', function () {
+it('can be aligned', function (): void {
     $previewLink = PreviewLink::make()->alignRight();
 
     $content = (string) $previewLink->render();
@@ -33,7 +35,7 @@ it('can be aligned', function () {
     expect($content)->toContain('flex justify');
 });
 
-it('can be underlined', function () {
+it('can be underlined', function (): void {
     $previewLink = PreviewLink::make()->underline();
 
     $content = (string) $previewLink->render();
@@ -41,7 +43,7 @@ it('can be underlined', function () {
     expect($content)->toContain('underline');
 });
 
-it('sets the view hook to render the modal', function () {
+it('sets the view hook to render the modal', function (): void {
     PreviewLink::make();
 
     $shared = View::getShared();

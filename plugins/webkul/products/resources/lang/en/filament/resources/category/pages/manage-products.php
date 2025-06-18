@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Products',
 
@@ -10,7 +12,7 @@ return [
 
                 'notification' => [
                     'title' => 'Product created',
-                    'body'  => 'The product has been created successfully.',
+                    'body' => 'The product has been created successfully.',
                 ],
             ],
         ],

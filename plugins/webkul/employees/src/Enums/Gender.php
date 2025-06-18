@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Enums;
 
 enum Gender: string
@@ -13,9 +15,9 @@ enum Gender: string
     public static function options(): array
     {
         return [
-            self::Male->value   => __('employees::enums/gender.male'),
+            self::Male->value => __('employees::enums/gender.male'),
             self::Female->value => __('employees::enums/gender.female'),
-            self::Other->value  => __('employees::enums/gender.other'),
+            self::Other->value => __('employees::enums/gender.other'),
         ];
     }
 }

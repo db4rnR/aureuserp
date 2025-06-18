@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Pages;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Sale\Enums\OrderState;
@@ -13,18 +14,18 @@ use Webkul\Sale\Facades\SaleOrder;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Actions as BaseActions;
 
-class EditQuotation extends EditRecord
+final class EditQuotation extends EditRecord
 {
     protected static string $resource = QuotationResource::class;
+
+    public static function getSubNavigationPosition(): SubNavigationPosition
+    {
+        return SubNavigationPosition::Top;
+    }
 
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('edit', ['record' => $this->getRecord()]);
-    }
-
-    static function getSubNavigationPosition(): SubNavigationPosition
-    {
-        return SubNavigationPosition::Top;
     }
 
     protected function getSavedNotification(): ?Notification
@@ -48,7 +49,7 @@ class EditQuotation extends EditRecord
             BaseActions\SendByEmailAction::make(),
             BaseActions\LockAndUnlockAction::make(),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == OrderState::SALE)
+                ->hidden(fn (): bool => $this->getRecord()->state === OrderState::SALE)
                 ->successNotification(
                     Notification::make()
                         ->success()
@@ -58,7 +59,7 @@ class EditQuotation extends EditRecord
         ];
     }
 
-    protected function afterSave(): void
+    private function afterSave(): void
     {
         SaleOrder::computeSaleOrder($this->getRecord());
     }

@@ -1,26 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Activity Plans',
     ],
 
     'form' => [
-        'name'   => 'Name',
+        'name' => 'Name',
         'status' => 'Status',
     ],
 
     'table' => [
         'columns' => [
-            'name'       => 'Name',
-            'status'     => 'Status',
+            'name' => 'Name',
+            'status' => 'Status',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'name'       => 'Name',
-            'status'     => 'Status',
+            'name' => 'Name',
+            'status' => 'Status',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
@@ -29,21 +31,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Activity Plan restored',
-                    'body'  => 'The activity plan has been restored successfully.',
+                    'body' => 'The activity plan has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Activity Plan deleted',
-                    'body'  => 'The activity plan has been deleted successfully.',
+                    'body' => 'The activity plan has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Activity Plan force deleted',
-                    'body'  => 'The activity plan has been force deleted successfully.',
+                    'body' => 'The activity plan has been force deleted successfully.',
                 ],
             ],
         ],
@@ -52,21 +54,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Activity Plans restored',
-                    'body'  => 'The activity plans has been restored successfully.',
+                    'body' => 'The activity plans has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Activity Plans deleted',
-                    'body'  => 'The activity plans has been deleted successfully.',
+                    'body' => 'The activity plans has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Activity Plans force deleted',
-                    'body'  => 'The activity plans has been force deleted successfully.',
+                    'body' => 'The activity plans has been force deleted successfully.',
                 ],
             ],
         ],
@@ -75,14 +77,14 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Activity Plan created',
-                    'body'  => 'The activity plan has been created successfully.',
+                    'body' => 'The activity plan has been created successfully.',
                 ],
             ],
         ],
     ],
 
     'infolist' => [
-        'name'   => 'Name',
+        'name' => 'Name',
         'status' => 'Status',
     ],
 ];

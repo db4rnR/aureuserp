@@ -1,24 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Helpers;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * Helper functions for tests.
  */
-class TestHelpers
+final class TestHelpers
 {
     /**
      * Generate a random string.
-     *
-     * @param int $length
-     * @return string
      */
     public static function randomString(int $length = 10): string
     {
@@ -27,38 +26,29 @@ class TestHelpers
 
     /**
      * Generate a random email.
-     *
-     * @param string|null $domain
-     * @return string
      */
     public static function randomEmail(?string $domain = null): string
     {
-        $domain = $domain ?: 'example.com';
-        return Str::random(10) . '@' . $domain;
+        $domain = $domain !== null && $domain !== '' && $domain !== '0' ? $domain : 'example.com';
+
+        return Str::random(10).'@'.$domain;
     }
 
     /**
      * Generate a random phone number.
-     *
-     * @return string
      */
     public static function randomPhoneNumber(): string
     {
-        return '+' . rand(1, 9) . rand(100000000, 999999999);
+        return '+'.random_int(1, 9).random_int(100000000, 999999999);
     }
 
     /**
      * Generate a random date.
-     *
-     * @param string $format
-     * @param string|null $startDate
-     * @param string|null $endDate
-     * @return string
      */
     public static function randomDate(string $format = 'Y-m-d', ?string $startDate = null, ?string $endDate = null): string
     {
-        $startDate = $startDate ?: '2000-01-01';
-        $endDate = $endDate ?: '2030-12-31';
+        $startDate = $startDate !== null && $startDate !== '' && $startDate !== '0' ? $startDate : '2000-01-01';
+        $endDate = $endDate !== null && $endDate !== '' && $endDate !== '0' ? $endDate : '2030-12-31';
 
         $startTimestamp = strtotime($startDate);
         $endTimestamp = strtotime($endDate);
@@ -70,61 +60,42 @@ class TestHelpers
 
     /**
      * Generate a random boolean.
-     *
-     * @return bool
      */
     public static function randomBoolean(): bool
     {
-        return (bool) rand(0, 1);
+        return (bool) random_int(0, 1);
     }
 
     /**
      * Generate a random element from an array.
-     *
-     * @param array $array
-     * @return mixed
      */
-    public static function randomElement(array $array)
+    public static function randomElement(array $array): mixed
     {
         return Arr::random($array);
     }
 
     /**
      * Generate a random number.
-     *
-     * @param int $min
-     * @param int $max
-     * @return int
      */
     public static function randomNumber(int $min = 1, int $max = 100): int
     {
-        return rand($min, $max);
+        return random_int($min, $max);
     }
 
     /**
      * Generate a random decimal.
-     *
-     * @param int $min
-     * @param int $max
-     * @param int $decimals
-     * @return float
      */
     public static function randomDecimal(int $min = 1, int $max = 100, int $decimals = 2): float
     {
-        return round(rand($min * 100, $max * 100) / 100, $decimals);
+        return round(random_int($min * 100, $max * 100) / 100, $decimals);
     }
 
     /**
      * Create a test image file.
-     *
-     * @param string $filename
-     * @param int $width
-     * @param int $height
-     * @return UploadedFile
      */
     public static function createTestImage(string $filename = 'test.jpg', int $width = 100, int $height = 100): UploadedFile
     {
-        $path = sys_get_temp_dir() . '/' . $filename;
+        $path = sys_get_temp_dir().'/'.$filename;
 
         $image = imagecreatetruecolor($width, $height);
         $background = imagecolorallocate($image, 255, 255, 255);
@@ -147,13 +118,10 @@ class TestHelpers
 
     /**
      * Create a test PDF file.
-     *
-     * @param string $filename
-     * @return UploadedFile
      */
     public static function createTestPdf(string $filename = 'test.pdf'): UploadedFile
     {
-        $path = sys_get_temp_dir() . '/' . $filename;
+        $path = sys_get_temp_dir().'/'.$filename;
 
         $content = '%PDF-1.4
 1 0 obj
@@ -235,15 +203,10 @@ startxref
 
     /**
      * Create a test file.
-     *
-     * @param string $filename
-     * @param string $content
-     * @param string $mimeType
-     * @return UploadedFile
      */
     public static function createTestFile(string $filename, string $content = 'Test content', string $mimeType = 'text/plain'): UploadedFile
     {
-        $path = sys_get_temp_dir() . '/' . $filename;
+        $path = sys_get_temp_dir().'/'.$filename;
 
         file_put_contents($path, $content);
 
@@ -258,10 +221,6 @@ startxref
 
     /**
      * Get the attributes of a model.
-     *
-     * @param Model $model
-     * @param array $except
-     * @return array
      */
     public static function getModelAttributes(Model $model, array $except = []): array
     {
@@ -270,9 +229,6 @@ startxref
 
     /**
      * Convert a collection to an array of IDs.
-     *
-     * @param Collection $collection
-     * @return array
      */
     public static function collectionToIds(Collection $collection): array
     {
@@ -281,9 +237,6 @@ startxref
 
     /**
      * Get a random model from the database.
-     *
-     * @param string $model
-     * @return Model|null
      */
     public static function getRandomModel(string $model): ?Model
     {
@@ -292,10 +245,6 @@ startxref
 
     /**
      * Get a random subset of models from the database.
-     *
-     * @param string $model
-     * @param int $count
-     * @return Collection
      */
     public static function getRandomModels(string $model, int $count = 3): Collection
     {
@@ -304,10 +253,6 @@ startxref
 
     /**
      * Clean up test files.
-     *
-     * @param string $disk
-     * @param string $directory
-     * @return void
      */
     public static function cleanupTestFiles(string $disk = 'local', string $directory = 'test'): void
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -7,7 +9,7 @@ use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 use Webkul\TimeOff\Models\Leave;
 
-class LeavePolicy
+final class LeavePolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 
@@ -22,7 +24,7 @@ class LeavePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Leave $leave): bool
+    public function view(User $user): bool
     {
         return $user->can('view_time::off');
     }

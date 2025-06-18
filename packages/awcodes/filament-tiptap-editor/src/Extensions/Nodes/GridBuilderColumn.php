@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-class GridBuilderColumn extends Node
+final class GridBuilderColumn extends Node
 {
     public static $name = 'gridBuilderColumn';
 
@@ -31,7 +33,7 @@ class GridBuilderColumn extends Node
 
                     return [
                         'data-col-span' => $attributes['data-col-span'],
-                        'style' => 'grid-column: span ' . $attributes['data-col-span'] . ';',
+                        'style' => 'grid-column: span '.$attributes['data-col-span'].';',
                     ];
                 },
             ],

@@ -1,52 +1,51 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Webkul\Inventory\Enums\ProductTracking;
-use Filament\Forms\Components\Select;
+use BackedEnum;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ViewProduct;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\EditProduct;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageAttributes;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageVariants;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageQuantities;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageMoves;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ListProducts;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\CreateProduct;
-use Webkul\Inventory\Enums\MoveState;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Field\Filament\Traits\HasCustomFields;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\MoveState;
+use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Inventory\Filament\Clusters\Products;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\CreateProduct;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\EditProduct;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ListProducts;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageAttributes;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageMoves;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageQuantities;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageVariants;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ViewProduct;
 use Webkul\Inventory\Models\Move;
 use Webkul\Inventory\Models\Product;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Product\Enums\ProductType;
 use Webkul\Product\Filament\Resources\ProductResource as BaseProductResource;
 
-class ProductResource extends BaseProductResource
+final class ProductResource extends BaseProductResource
 {
     use HasCustomFields;
 
     protected static ?string $model = Product::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -54,7 +53,7 @@ class ProductResource extends BaseProductResource
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -79,7 +78,7 @@ class ProductResource extends BaseProductResource
                             ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.tracking.fields.track-inventory'))
                             ->default(true)
                             ->live()
-                            ->afterStateUpdated(function (Set $set, Get $get) {
+                            ->afterStateUpdated(function (Set $set, Get $get): void {
                                 if (! $get('is_storable')) {
                                     $set('tracking', ProductTracking::QTY->value);
 
@@ -93,8 +92,8 @@ class ProductResource extends BaseProductResource
                             ->default(ProductTracking::QTY->value)
                             ->visible(fn (Get $get, TraceabilitySettings $settings): bool => $settings->enable_lots_serial_numbers && (bool) $get('is_storable'))
                             ->live()
-                            ->afterStateUpdated(function (Set $set, Get $get) {
-                                if ($get('tracking') == ProductTracking::QTY->value) {
+                            ->afterStateUpdated(function (Set $set, Get $get): void {
+                                if ($get('tracking') === ProductTracking::QTY->value) {
                                     $set('use_expiration_date', false);
                                 }
                             }),
@@ -167,10 +166,10 @@ class ProductResource extends BaseProductResource
                     ])
                     ->visible(fn (Get $get): bool => (bool) $get('use_expiration_date')),
             ])
-            ->visible(fn (Get $get): bool => $get('type') == ProductType::GOODS->value);
+            ->visible(fn (Get $get): bool => $get('type') === ProductType::GOODS->value);
 
         $firstGroupChildComponents[] = Section::make(__('inventories::filament/clusters/products/resources/product.form.sections.additional.title'))
-            ->visible(! empty($customFormFields = static::getCustomFormFields()))
+            ->visible(($customFormFields = self::getCustomFormFields()) !== [])
             ->schema($customFormFields);
 
         $components[0]->childComponents($firstGroupChildComponents);
@@ -270,7 +269,7 @@ class ProductResource extends BaseProductResource
                     ])
                     ->visible(fn ($record): bool => (bool) $record->use_expiration_date),
             ])
-            ->visible(fn ($record): bool => $record->type == ProductType::GOODS);
+            ->visible(fn ($record): bool => $record->type === ProductType::GOODS);
 
         $components[0]->childComponents($firstGroupChildComponents);
 
@@ -294,13 +293,13 @@ class ProductResource extends BaseProductResource
     public static function getPages(): array
     {
         return [
-            'index'      => ListProducts::route('/'),
-            'create'     => CreateProduct::route('/create'),
-            'view'       => ViewProduct::route('/{record}'),
-            'edit'       => EditProduct::route('/{record}/edit'),
+            'index' => ListProducts::route('/'),
+            'create' => CreateProduct::route('/create'),
+            'view' => ViewProduct::route('/{record}'),
+            'edit' => EditProduct::route('/{record}/edit'),
             'attributes' => ManageAttributes::route('/{record}/attributes'),
-            'variants'   => ManageVariants::route('/{record}/variants'),
-            'moves'      => ManageMoves::route('/{record}/moves'),
+            'variants' => ManageVariants::route('/{record}/variants'),
+            'moves' => ManageMoves::route('/{record}/moves'),
             'quantities' => ManageQuantities::route('/{record}/quantities'),
         ];
     }
@@ -308,37 +307,37 @@ class ProductResource extends BaseProductResource
     public static function createMove($record, $currentQuantity, $sourceLocationId, $destinationLocationId)
     {
         $move = Move::create([
-            'name'                    => 'Product Quantity Updated',
-            'state'                   => MoveState::DONE,
-            'product_id'              => $record->product_id,
-            'source_location_id'      => $sourceLocationId,
+            'name' => 'Product Quantity Updated',
+            'state' => MoveState::DONE,
+            'product_id' => $record->product_id,
+            'source_location_id' => $sourceLocationId,
             'destination_location_id' => $destinationLocationId,
-            'product_qty'             => abs($currentQuantity),
-            'product_uom_qty'         => abs($currentQuantity),
-            'quantity'                => abs($currentQuantity),
-            'reference'               => 'Product Quantity Updated',
-            'scheduled_at'            => now(),
-            'uom_id'                  => $record->product->uom_id,
-            'creator_id'              => Auth::id(),
-            'company_id'              => $record->company_id,
+            'product_qty' => abs($currentQuantity),
+            'product_uom_qty' => abs($currentQuantity),
+            'quantity' => abs($currentQuantity),
+            'reference' => 'Product Quantity Updated',
+            'scheduled_at' => now(),
+            'uom_id' => $record->product->uom_id,
+            'creator_id' => Auth::id(),
+            'company_id' => $record->company_id,
         ]);
 
         $move->lines()->create([
-            'state'                   => MoveState::DONE,
-            'qty'                     => abs($currentQuantity),
-            'uom_qty'                 => abs($currentQuantity),
-            'is_picked'               => 1,
-            'scheduled_at'            => now(),
-            'operation_id'            => null,
-            'product_id'              => $record->product_id,
-            'result_package_id'       => $record->package_id,
-            'lot_id'                  => $record->lot_id,
-            'uom_id'                  => $record->product->uom_id,
-            'source_location_id'      => $sourceLocationId,
+            'state' => MoveState::DONE,
+            'qty' => abs($currentQuantity),
+            'uom_qty' => abs($currentQuantity),
+            'is_picked' => 1,
+            'scheduled_at' => now(),
+            'operation_id' => null,
+            'product_id' => $record->product_id,
+            'result_package_id' => $record->package_id,
+            'lot_id' => $record->lot_id,
+            'uom_id' => $record->product->uom_id,
+            'source_location_id' => $sourceLocationId,
             'destination_location_id' => $destinationLocationId,
-            'reference'               => $move->reference,
-            'company_id'              => $record->company_id,
-            'creator_id'              => Auth::id(),
+            'reference' => $move->reference,
+            'company_id' => $record->company_id,
+            'creator_id' => Auth::id(),
         ]);
 
         return $move;

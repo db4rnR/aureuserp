@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -17,10 +19,10 @@ enum RuleAction: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::PULL       => __('inventories::enums/rule-action.pull'),
-            self::PUSH       => __('inventories::enums/rule-action.push'),
-            self::PULL_PUSH  => __('inventories::enums/rule-action.pull-push'),
-            self::BUY        => __('inventories::enums/rule-action.buy'),
+            self::PULL => __('inventories::enums/rule-action.pull'),
+            self::PUSH => __('inventories::enums/rule-action.push'),
+            self::PULL_PUSH => __('inventories::enums/rule-action.pull-push'),
+            self::BUY => __('inventories::enums/rule-action.buy'),
         };
     }
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchases_order_lines', function (Blueprint $table) {
+        Schema::create('purchases_order_lines', function (Blueprint $table): void {
             $table->id();
             $table->text('name');
             $table->string('state')->nullable();

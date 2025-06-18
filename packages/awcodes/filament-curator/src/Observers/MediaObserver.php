@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Observers;
 
 use Awcodes\Curator\Models\Media;
 use Illuminate\Support\Facades\Storage;
 use stdClass;
 
-class MediaObserver
+final class MediaObserver
 {
     /**
      * Handle the Media "creating" event.
@@ -37,18 +39,18 @@ class MediaObserver
     {
         // Replace image
         if ($this->hasMediaUpload($media)) {
-            if (Storage::disk($media->disk)->exists($media->directory . '/' . $media->getOriginal()['name'] . '.' . $media->getOriginal()['ext'])) {
-                Storage::disk($media->disk)->delete($media->directory . '/' . $media->getOriginal()['name'] . '.' . $media->getOriginal()['ext']);
+            if (Storage::disk($media->disk)->exists($media->directory.'/'.$media->getOriginal()['name'].'.'.$media->getOriginal()['ext'])) {
+                Storage::disk($media->disk)->delete($media->directory.'/'.$media->getOriginal()['name'].'.'.$media->getOriginal()['ext']);
             }
 
             foreach ($media->file as $k => $v) {
                 $media->{$k} = $v;
             }
 
-            Storage::disk($media->disk)->move($media->path, $media->directory . '/' . $media->getOriginal()['name'] . '.' . $media->ext);
+            Storage::disk($media->disk)->move($media->path, $media->directory.'/'.$media->getOriginal()['name'].'.'.$media->ext);
 
             $media->name = $media->getOriginal()['name'];
-            $media->path = $media->directory . '/' . $media->getOriginal()['name'] . '.' . $media->ext;
+            $media->path = $media->directory.'/'.$media->getOriginal()['name'].'.'.$media->ext;
 
             // Delete glide-cache for replaced image
             $server = app(config('curator.glide.server'))->getFactory();
@@ -57,11 +59,11 @@ class MediaObserver
 
         // Rename file name
         if ($media->isDirty(['name']) && ! blank($media->name)) {
-            if (Storage::disk($media->disk)->exists($media->directory . '/' . $media->name . '.' . $media->ext)) {
-                $media->name = $media->name . '-' . time();
+            if (Storage::disk($media->disk)->exists($media->directory.'/'.$media->name.'.'.$media->ext)) {
+                $media->name = $media->name.'-'.time();
             }
-            Storage::disk($media->disk)->move($media->path, $media->directory . '/' . $media->name . '.' . $media->ext);
-            $media->path = $media->directory . '/' . $media->name . '.' . $media->ext;
+            Storage::disk($media->disk)->move($media->path, $media->directory.'/'.$media->name.'.'.$media->ext);
+            $media->path = $media->directory.'/'.$media->name.'.'.$media->ext;
         }
 
         $media->__unset('file');
@@ -75,11 +77,11 @@ class MediaObserver
     {
         Storage::disk($media->disk)->delete($media->path);
 
-        if (Storage::disk($media->disk)->allFiles($media->directory . '/' . $media->name)) {
-            Storage::disk($media->disk)->deleteDirectory($media->directory . '/' . $media->name);
+        if (Storage::disk($media->disk)->allFiles($media->directory.'/'.$media->name)) {
+            Storage::disk($media->disk)->deleteDirectory($media->directory.'/'.$media->name);
         }
 
-        if (count(Storage::disk($media->disk)->allFiles($media->directory)) == 0) {
+        if (count(Storage::disk($media->disk)->allFiles($media->directory)) === 0) {
             Storage::disk($media->disk)->deleteDirectory($media->directory);
         }
 

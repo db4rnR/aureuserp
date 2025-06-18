@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -7,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 
-class CreateRule extends CreateRecord
+final class CreateRule extends CreateRecord
 {
     protected static string $resource = RuleResource::class;
 

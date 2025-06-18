@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -7,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Employee\Models\Calendar;
 use Webkul\Security\Models\User;
 
-class CalendarAttendanceSeeder extends Seeder
+final class CalendarAttendanceSeeder extends Seeder
 {
     /**
      * Run the database seeds.

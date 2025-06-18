@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources\TaskResource\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Tables\Filters\TrashedFilter;
-use Filament\Tables\Enums\FiltersLayout;
-use Filament\Actions\CreateAction;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Enums\TaskState;
@@ -22,7 +23,7 @@ use Webkul\Project\Filament\Resources\TaskResource;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Models\TaskStage;
 
-class SubTasksRelationManager extends RelationManager
+final class SubTasksRelationManager extends RelationManager
 {
     protected static string $relationship = 'subTasks';
 
@@ -45,16 +46,14 @@ class SubTasksRelationManager extends RelationManager
                 CreateAction::make()
                     ->label(__('projects::filament/resources/task/relation-managers/sub-tasks.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
-                    ->fillForm(function (array $arguments): array {
-                        return [
-                            'stage_id'     => TaskStage::first()?->id,
-                            'state'        => TaskState::IN_PROGRESS,
-                            'project_id'   => $this->getOwnerRecord()->project_id,
-                            'milestone_id' => $this->getOwnerRecord()->milestone_id,
-                            'partner_id'   => $this->getOwnerRecord()->partner_id,
-                            'users'        => $this->getOwnerRecord()->users->pluck('id')->toArray(),
-                        ];
-                    })
+                    ->fillForm(fn (array $arguments): array => [
+                        'stage_id' => TaskStage::first()?->id,
+                        'state' => TaskState::IN_PROGRESS,
+                        'project_id' => $this->getOwnerRecord()->project_id,
+                        'milestone_id' => $this->getOwnerRecord()->milestone_id,
+                        'partner_id' => $this->getOwnerRecord()->partner_id,
+                        'users' => $this->getOwnerRecord()->users->pluck('id')->toArray(),
+                    ])
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::id();
 

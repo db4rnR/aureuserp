@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Unit\Fixtures;
 
 use Filament\Resources\Pages\ListRecords;
 use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 
-class ListRecordsDummy extends ListRecords
+final class ListRecordsDummy extends ListRecords
 {
     use HasPreviewModal;
 

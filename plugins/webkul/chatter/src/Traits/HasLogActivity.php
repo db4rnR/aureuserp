@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Traits;
 
-use Exception;
 use BackedEnum;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -13,13 +15,13 @@ trait HasLogActivity
     /**
      * Boot the trait
      */
-    public static function bootHasLogActivity()
+    public static function bootHasLogActivity(): void
     {
         static::created(fn (Model $model) => $model->logModelActivity('created'));
         static::updated(fn (Model $model) => $model->logModelActivity('updated'));
 
         if (method_exists(static::class, 'bootSoftDeletes')) {
-            static::deleted(function (Model $model) {
+            static::deleted(function (Model $model): void {
                 if (method_exists($model, 'trashed') && $model->trashed()) {
                     $model->logModelActivity('soft_deleted');
                 } else {
@@ -47,20 +49,38 @@ trait HasLogActivity
             }
 
             return $this->addMessage([
-                'type'         => 'notification',
-                'log_name'     => 'default',
-                'body'         => $this->generateActivityDescription($event),
+                'type' => 'notification',
+                'log_name' => 'default',
+                'body' => $this->generateActivityDescription($event),
                 'subject_type' => $this->getMorphClass(),
-                'subject_id'   => $this->getKey(),
-                'causer_type'  => $user->getMorphClass(),
-                'causer_id'    => $user->id,
-                'event'        => $event,
-                'properties'   => $changes,
+                'subject_id' => $this->getKey(),
+                'causer_type' => $user->getMorphClass(),
+                'causer_id' => $user->id,
+                'event' => $event,
+                'properties' => $changes,
             ]);
         } catch (Exception $e) {
             report($e);
 
             return null;
+        }
+    }
+
+    /**
+     * Sort array recursively
+     */
+    protected static function ksortRecursive(&$array): void
+    {
+        if (! is_array($array)) {
+            return;
+        }
+
+        ksort($array);
+
+        foreach ($array as &$value) {
+            if (is_array($value)) {
+                static::ksortRecursive($value);
+            }
         }
     }
 
@@ -160,10 +180,10 @@ trait HasLogActivity
 
                 if ($oldValue !== $newValue) {
                     return [
-                        'type'      => 'modified',
+                        'type' => 'modified',
                         'old_value' => $oldValue,
                         'new_value' => $newValue,
-                        'relation'  => $relation,
+                        'relation' => $relation,
                         'attribute' => $attribute,
                     ];
                 }
@@ -183,7 +203,7 @@ trait HasLogActivity
 
             if ($oldValue !== $newValue) {
                 return [
-                    'type'      => array_key_exists($key, $original) ? 'modified' : 'added',
+                    'type' => array_key_exists($key, $original) ? 'modified' : 'added',
                     'old_value' => $oldValue,
                     'new_value' => $newValue,
                 ];
@@ -201,7 +221,7 @@ trait HasLogActivity
         return match ($event) {
             'created' => $this->getModelAttributes(),
             'updated' => $this->getAllAttributeChanges(),
-            default   => null
+            default => null
         };
     }
 
@@ -242,31 +262,27 @@ trait HasLogActivity
             if ($parsed = $this->parseRelationAttribute($key)) {
                 [$relation, $attribute] = $parsed;
                 $foreignKey = $this->$relation()->getForeignKeyName();
-
                 if (array_key_exists($foreignKey, $current)) {
                     $oldValue = $this->getRelatedValue($relation, $original[$foreignKey] ?? null, $attribute);
                     $newValue = $this->getRelatedValue($relation, $current[$foreignKey], $attribute);
 
                     if ($oldValue !== $newValue) {
                         $changes[$key] = [
-                            'type'      => 'modified',
+                            'type' => 'modified',
                             'old_value' => $oldValue,
                             'new_value' => $newValue,
                         ];
                     }
                 }
-            } else {
-                if (array_key_exists($key, $current)) {
-                    $oldValue = $this->formatAttributeValue($key, $original[$key] ?? null);
-                    $newValue = $this->formatAttributeValue($key, $current[$key]);
-
-                    if ($oldValue !== $newValue) {
-                        $changes[$key] = [
-                            'type'      => array_key_exists($key, $original) ? 'modified' : 'added',
-                            'old_value' => $oldValue,
-                            'new_value' => $newValue,
-                        ];
-                    }
+            } elseif (array_key_exists($key, $current)) {
+                $oldValue = $this->formatAttributeValue($key, $original[$key] ?? null);
+                $newValue = $this->formatAttributeValue($key, $current[$key]);
+                if ($oldValue !== $newValue) {
+                    $changes[$key] = [
+                        'type' => array_key_exists($key, $original) ? 'modified' : 'added',
+                        'old_value' => $oldValue,
+                        'new_value' => $newValue,
+                    ];
                 }
             }
         }
@@ -306,7 +322,7 @@ trait HasLogActivity
                     }
 
                     return $enumInstance->value;
-                } catch (Exception $e) {
+                } catch (Exception) {
                     return $value;
                 }
             }
@@ -314,9 +330,9 @@ trait HasLogActivity
 
         if (
             ! is_array($value)
-            && json_decode($value, true)
+            && json_decode((string) $value, true)
         ) {
-            $value = json_decode($value, true);
+            $value = json_decode((string) $value, true);
         }
 
         if (is_array($value)) {
@@ -327,24 +343,6 @@ trait HasLogActivity
     }
 
     /**
-     * Sort array recursively
-     */
-    protected static function ksortRecursive(&$array)
-    {
-        if (! is_array($array)) {
-            return;
-        }
-
-        ksort($array);
-
-        foreach ($array as &$value) {
-            if (is_array($value)) {
-                static::ksortRecursive($value);
-            }
-        }
-    }
-
-    /**
      * Generate activity description
      */
     protected function generateActivityDescription(string $event): string
@@ -352,13 +350,13 @@ trait HasLogActivity
         $modelName = Str::headline(class_basename(static::class));
 
         return match ($event) {
-            'created'      => __('chatter::traits/has-log-activity.activity-log-failed.events.created', [
+            'created' => __('chatter::traits/has-log-activity.activity-log-failed.events.created', [
                 'model' => $modelName,
             ]),
-            'updated'      => __('chatter::traits/has-log-activity.activity-log-failed.events.updated', [
+            'updated' => __('chatter::traits/has-log-activity.activity-log-failed.events.updated', [
                 'model' => $modelName,
             ]),
-            'deleted'      => __('chatter::traits/has-log-activity.activity-log-failed.events.deleted', [
+            'deleted' => __('chatter::traits/has-log-activity.activity-log-failed.events.deleted', [
                 'model' => $modelName,
             ]),
             'soft_deleted' => __('chatter::traits/has-log-activity.activity-log-failed.events.soft-deleted', [
@@ -367,10 +365,10 @@ trait HasLogActivity
             'hard_deleted' => __('chatter::traits/has-log-activity.activity-log-failed.events.hard-deleted', [
                 'model' => $modelName,
             ]),
-            'restored'     => __('chatter::traits/has-log-activity.activity-log-failed.events.restored', [
+            'restored' => __('chatter::traits/has-log-activity.activity-log-failed.events.restored', [
                 'model' => $modelName,
             ]),
-            default        => $event
+            default => $event
         };
     }
 }

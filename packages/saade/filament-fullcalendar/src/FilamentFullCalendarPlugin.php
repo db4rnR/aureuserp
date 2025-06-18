@@ -1,39 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentFullCalendar;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-class FilamentFullCalendarPlugin implements Plugin
+final class FilamentFullCalendarPlugin implements Plugin
 {
-    protected array $plugins = ['dayGrid', 'timeGrid', 'interaction', 'list', 'moment', 'momentTimezone'];
+    private array $plugins = ['dayGrid', 'timeGrid', 'interaction', 'list', 'moment', 'momentTimezone'];
 
-    protected ?string $schedulerLicenseKey = null;
+    private ?string $schedulerLicenseKey = null;
 
-    protected array $config = [];
+    private array $config = [];
 
-    protected ?string $timezone = null;
+    private ?string $timezone = null;
 
-    protected ?string $locale = null;
+    private ?string $locale = null;
 
-    protected ?bool $editable = null;
+    private ?bool $editable = null;
 
-    protected ?bool $selectable = null;
-
-    public function getId(): string
-    {
-        return 'filament-fullcalendar';
-    }
+    private ?bool $selectable = null;
 
     public static function make(): static
     {
-        return app(static::class);
+        return app(self::class);
     }
 
     public static function get(): static
     {
         return filament(app(static::class)->getId());
+    }
+
+    public function getId(): string
+    {
+        return 'filament-fullcalendar';
     }
 
     public function register(Panel $panel): void
@@ -103,7 +105,7 @@ class FilamentFullCalendarPlugin implements Plugin
 
     public function getLocale(): string
     {
-        return $this->locale ?? strtolower(str_replace('_', '-', app()->getLocale()));
+        return $this->locale ?? mb_strtolower(str_replace('_', '-', app()->getLocale()));
     }
 
     public function editable(bool $editable = true): static

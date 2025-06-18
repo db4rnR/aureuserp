@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Webkul\Account\Models\Move as Move;
+use Webkul\Account\Models\Move;
 
-class AccountMove extends Move
+final class AccountMove extends Move
 {
     public function lines()
     {

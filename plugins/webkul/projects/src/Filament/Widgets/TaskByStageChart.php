@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Widgets;
 
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
@@ -10,7 +12,7 @@ use Illuminate\Support\Carbon;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Models\TaskStage;
 
-class TaskByStageChart extends ChartWidget
+final class TaskByStageChart extends ChartWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 
@@ -29,11 +31,11 @@ class TaskByStageChart extends ChartWidget
     {
         $datasets = [
             'datasets' => [],
-            'labels'   => [],
+            'labels' => [],
         ];
 
         foreach (TaskStage::all() as $stage) {
-            if (in_array($stage->name, $datasets['labels'])) {
+            if (in_array($stage->name, $datasets['labels'], true)) {
                 $datasets['labels'][] = $stage->name.' '.$stage->id;
             } else {
                 $datasets['labels'][] = $stage->name;
@@ -46,13 +48,13 @@ class TaskByStageChart extends ChartWidget
             }
 
             if (! empty($this->pageFilters['selectedAssignees'])) {
-                $query->whereHas('users', function ($q) {
+                $query->whereHas('users', function ($q): void {
                     $q->whereIn('users.id', $this->pageFilters['selectedAssignees']);
                 });
             }
 
             if (! empty($this->pageFilters['selectedTags'])) {
-                $query->whereHas('tags', function ($q) {
+                $query->whereHas('tags', function ($q): void {
                     $q->whereIn('projects_task_tag.tag_id', $this->pageFilters['selectedTags']);
                 });
             }
@@ -61,13 +63,13 @@ class TaskByStageChart extends ChartWidget
                 $query->whereIn('parent_id', $this->pageFilters['selectedPartners']);
             }
 
-            $startDate = ! is_null($this->pageFilters['startDate'] ?? null) ?
-                Carbon::parse($this->pageFilters['startDate']) :
-                null;
+            $startDate = is_null($this->pageFilters['startDate'] ?? null) ?
+                null :
+                Carbon::parse($this->pageFilters['startDate']);
 
-            $endDate = ! is_null($this->pageFilters['endDate'] ?? null) ?
-                Carbon::parse($this->pageFilters['endDate']) :
-                now();
+            $endDate = is_null($this->pageFilters['endDate'] ?? null) ?
+                now() :
+                Carbon::parse($this->pageFilters['endDate']);
 
             $datasets['datasets'][] = $query
                 ->whereBetween('created_at', [$startDate, $endDate])
@@ -79,7 +81,7 @@ class TaskByStageChart extends ChartWidget
             'datasets' => [
                 [
                     'label' => __('projects::filament/widgets/task-by-stage.datasets.label'),
-                    'data'  => $datasets['datasets'],
+                    'data' => $datasets['datasets'],
                 ],
             ],
             'labels' => $datasets['labels'],

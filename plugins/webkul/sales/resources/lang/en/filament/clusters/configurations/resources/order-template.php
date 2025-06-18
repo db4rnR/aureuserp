@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Order Template Products',
 
@@ -9,50 +11,50 @@ return [
     ],
 
     'global-search' => [
-        'name'    => 'Name',
+        'name' => 'Name',
     ],
 
     'form' => [
         'fields' => [
-            'sort'           => 'Sort',
+            'sort' => 'Sort',
             'order-template' => 'Order Template',
-            'company'        => 'Company',
-            'product'        => 'Product',
-            'product-uom'    => 'Product UOM',
-            'creator'        => 'Creator',
-            'display-type'   => 'Display Type',
-            'name'           => 'Name',
-            'quantity'       => 'Quantity',
+            'company' => 'Company',
+            'product' => 'Product',
+            'product-uom' => 'Product UOM',
+            'creator' => 'Creator',
+            'display-type' => 'Display Type',
+            'name' => 'Name',
+            'quantity' => 'Quantity',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'sort'           => 'Sort',
+            'sort' => 'Sort',
             'order-template' => 'Order Template',
-            'company'        => 'Company',
-            'product'        => 'Product',
-            'product-uom'    => 'Product UOM',
-            'created-by'     => 'Created By',
-            'display-type'   => 'Display Type',
-            'name'           => 'Name',
-            'quantity'       => 'Quantity',
-            'created-at'     => 'Created At',
-            'updated-at'     => 'Updated At',
+            'company' => 'Company',
+            'product' => 'Product',
+            'product-uom' => 'Product UOM',
+            'created-by' => 'Created By',
+            'display-type' => 'Display Type',
+            'name' => 'Name',
+            'quantity' => 'Quantity',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
 
         ],
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Order Template Products updated',
-                    'body'  => 'The order template products has been updated successfully.',
+                    'body' => 'The order template products has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Order Template Products deleted',
-                    'body'  => 'The order template products has been deleted successfully.',
+                    'body' => 'The order template products has been deleted successfully.',
                 ],
             ],
         ],
@@ -60,7 +62,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Order Template Products deleted',
-                    'body'  => 'The order template products has been deleted successfully.',
+                    'body' => 'The order template products has been deleted successfully.',
                 ],
             ],
         ],
@@ -68,14 +70,14 @@ return [
 
     'infolist' => [
         'entries' => [
-            'sort'           => 'Sort Order',
+            'sort' => 'Sort Order',
             'order-template' => 'Order Template',
-            'company'        => 'Company',
-            'product'        => 'Product',
-            'product-uom'    => 'Product UOM',
-            'display-type'   => 'Display Type',
-            'name'           => 'Name',
-            'quantity'       => 'Quantity',
+            'company' => 'Company',
+            'product' => 'Product',
+            'product-uom' => 'Product UOM',
+            'display-type' => 'Display Type',
+            'name' => 'Name',
+            'quantity' => 'Quantity',
         ],
     ],
 ];

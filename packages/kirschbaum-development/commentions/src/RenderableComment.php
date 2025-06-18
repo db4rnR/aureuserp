@@ -1,39 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions;
 
 use Carbon\Carbon;
-use DateTime;
+use DateTimeImmutable;
 use Kirschbaum\Commentions\Contracts\RenderableComment as RenderableCommentContract;
 use Livewire\Wireable;
 
-class RenderableComment implements RenderableCommentContract, Wireable
+final class RenderableComment implements RenderableCommentContract, Wireable
 {
-    protected bool $isComment;
+    private bool $isComment;
 
-    protected string|int $id;
+    private string|int $id;
 
-    protected ?string $authorName;
+    private ?string $authorName;
 
-    protected ?string $authorAvatar;
+    private ?string $authorAvatar;
 
-    protected string $body;
+    private string $body;
 
-    protected ?string $parsedBody;
+    private ?string $parsedBody;
 
-    protected ?string $label;
+    private ?string $label;
 
-    protected DateTime|Carbon $createdAt;
+    private DateTimeImmutable|Carbon $createdAt;
 
-    protected DateTime|Carbon $updatedAt;
+    private DateTimeImmutable|Carbon $updatedAt;
 
     public function __construct(
         string|int $id,
         ?string $authorName,
         string $body,
         ?string $authorAvatar = null,
-        DateTime|Carbon $createdAt = new Carbon(),
-        DateTime|Carbon $updatedAt = new Carbon(),
+        DateTimeImmutable|Carbon $createdAt = new Carbon(),
+        DateTimeImmutable|Carbon $updatedAt = new Carbon(),
         bool $isComment = false,
         ?string $parsedBody = null,
         ?string $label = null,
@@ -47,6 +49,21 @@ class RenderableComment implements RenderableCommentContract, Wireable
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
         $this->label = $label;
+    }
+
+    public static function fromLivewire($value)
+    {
+        return new self(
+            isComment: $value['isComment'],
+            id: $value['id'],
+            authorName: $value['authorName'],
+            authorAvatar: $value['authorAvatar'],
+            body: $value['body'],
+            parsedBody: $value['parsedBody'],
+            createdAt: new Carbon($value['createdAt']),
+            updatedAt: new Carbon($value['updatedAt']),
+            label: $value['label'],
+        );
     }
 
     public function isComment(): bool
@@ -79,12 +96,12 @@ class RenderableComment implements RenderableCommentContract, Wireable
         return $this->parsedBody ?? $this->body;
     }
 
-    public function getCreatedAt(): DateTime|Carbon
+    public function getCreatedAt(): DateTimeImmutable|Carbon
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): DateTime|Carbon
+    public function getUpdatedAt(): DateTimeImmutable|Carbon
     {
         return $this->updatedAt;
     }
@@ -112,20 +129,5 @@ class RenderableComment implements RenderableCommentContract, Wireable
             'updatedAt' => $this->updatedAt->format('Y-m-d H:i:s'),
             'label' => $this->label,
         ];
-    }
-
-    public static function fromLivewire($value)
-    {
-        return new static(
-            isComment: $value['isComment'],
-            id: $value['id'],
-            authorName: $value['authorName'],
-            authorAvatar: $value['authorAvatar'],
-            body: $value['body'],
-            parsedBody: $value['parsedBody'],
-            createdAt: new Carbon($value['createdAt']),
-            updatedAt: new Carbon($value['updatedAt']),
-            label: $value['label'],
-        );
     }
 }

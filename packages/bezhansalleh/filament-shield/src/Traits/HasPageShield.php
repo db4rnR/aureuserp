@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Traits;
 
 use BezhanSalleh\FilamentShield\Support\Utils;
@@ -9,6 +11,16 @@ use Illuminate\Support\Str;
 
 trait HasPageShield
 {
+    public static function shouldRegisterNavigation(array $parameters = []): bool
+    {
+        return static::canAccess() && parent::shouldRegisterNavigation();
+    }
+
+    public static function canAccess(array $parameters = []): bool
+    {
+        return Filament::auth()->user()->can(static::getPermissionName());
+    }
+
     public function booted(): void
     {
         $this->beforeBooted();
@@ -34,17 +46,6 @@ trait HasPageShield
         $this->afterBooted();
     }
 
-    protected function beforeBooted(): void {}
-
-    protected function afterBooted(): void {}
-
-    protected function beforeShieldRedirects(): void {}
-
-    protected function getShieldRedirectPath(): string
-    {
-        return Filament::getUrl();
-    }
-
     protected static function getPermissionName(): string
     {
         return Str::of(class_basename(static::class))
@@ -56,13 +57,14 @@ trait HasPageShield
             ->toString();
     }
 
-    public static function shouldRegisterNavigation(array $parameters = []): bool
-    {
-        return static::canAccess() && parent::shouldRegisterNavigation();
-    }
+    protected function beforeBooted(): void {}
 
-    public static function canAccess(array $parameters = []): bool
+    protected function afterBooted(): void {}
+
+    protected function beforeShieldRedirects(): void {}
+
+    protected function getShieldRedirectPath(): string
     {
-        return Filament::auth()->user()->can(static::getPermissionName());
+        return Filament::getUrl();
     }
 }

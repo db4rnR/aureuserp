@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'label' => 'Confirm Order',
 
@@ -7,7 +9,7 @@ return [
         'notification' => [
             'success' => [
                 'title' => 'Order confirmed',
-                'body'  => 'The order has been confirmed successfully.',
+                'body' => 'The order has been confirmed successfully.',
             ],
         ],
     ],

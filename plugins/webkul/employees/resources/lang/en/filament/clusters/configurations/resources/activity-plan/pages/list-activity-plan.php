@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tabs' => [
-        'all'      => 'All',
+        'all' => 'All',
         'archived' => 'Archived',
     ],
 
@@ -12,7 +14,7 @@ return [
 
             'notification' => [
                 'title' => 'Activity Plan created',
-                'body'  => 'The activity plan has been created successfully.',
+                'body' => 'The activity plan has been created successfully.',
             ],
         ],
     ],

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Pboivin\FilamentPeek\Tests\Database\Factories\CategoryFactory;
 
-class Category extends Model
+final class Category extends Model
 {
     use HasFactory;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'create' => [
@@ -8,7 +10,7 @@ return [
             'notification' => [
                 'created' => [
                     'title' => 'Mandatory day created',
-                    'body'  => 'The mandatory day has been created successfully.',
+                    'body' => 'The mandatory day has been created successfully.',
                 ],
             ],
         ],

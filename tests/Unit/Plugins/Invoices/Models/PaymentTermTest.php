@@ -1,7 +1,9 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Invoice\Models\PaymentTerm;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
@@ -10,7 +12,7 @@ use Webkul\Support\Models\Company;
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test PaymentTerm model attributes and relationships')]
-function payment_term_model_attributes_and_relationships()
+function payment_term_model_attributes_and_relationships(): void
 {
     // Create a test payment term
     $paymentTerm = PaymentTerm::factory()->create([
@@ -27,16 +29,16 @@ function payment_term_model_attributes_and_relationships()
     expect($paymentTerm->note)->toBe('Payment due within 30 days');
 
     // Test relationships
-    expect($paymentTerm->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($paymentTerm->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($paymentTerm->lines())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($paymentTerm->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($paymentTerm->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($paymentTerm->lines())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test PaymentTerm model relationships with other models')]
-function payment_term_model_relationships_with_other_models()
+function payment_term_model_relationships_with_other_models(): void
 {
     // Create related models
     $company = Company::factory()->create();
@@ -57,7 +59,7 @@ function payment_term_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test PaymentTerm model with lines')]
-function payment_term_model_with_lines()
+function payment_term_model_with_lines(): void
 {
     // Create a payment term
     $paymentTerm = PaymentTerm::factory()->create();

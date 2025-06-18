@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Filament\Admin\Resources\PostResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Blog\Filament\Admin\Resources\PostResource;
 
-class ViewPost extends ViewRecord
+final class ViewPost extends ViewRecord
 {
     protected static string $resource = PostResource::class;
 

@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\ViewInvoice;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\EditInvoice;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\ListInvoices;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\CreateInvoice;
 use Filament\Resources\Pages\Page;
 use Webkul\Account\Filament\Resources\InvoiceResource as BaseInvoiceResource;
 use Webkul\Invoice\Filament\Clusters\Customer;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\CreateInvoice;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\EditInvoice;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\ListInvoices;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\ViewInvoice;
 use Webkul\Invoice\Models\Invoice;
 
-class InvoiceResource extends BaseInvoiceResource
+final class InvoiceResource extends BaseInvoiceResource
 {
     protected static ?string $model = Invoice::class;
 
@@ -23,7 +24,7 @@ class InvoiceResource extends BaseInvoiceResource
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -56,10 +57,10 @@ class InvoiceResource extends BaseInvoiceResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListInvoices::route('/'),
+            'index' => ListInvoices::route('/'),
             'create' => CreateInvoice::route('/create'),
-            'view'   => ViewInvoice::route('/{record}'),
-            'edit'   => EditInvoice::route('/{record}/edit'),
+            'view' => ViewInvoice::route('/{record}'),
+            'edit' => EditInvoice::route('/{record}/edit'),
         ];
     }
 }

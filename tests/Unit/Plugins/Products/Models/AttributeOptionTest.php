@@ -1,16 +1,18 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Product\Models\AttributeOption;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Product\Models\Attribute;
+use Webkul\Product\Models\AttributeOption;
 use Webkul\Security\Models\User;
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test AttributeOption model attributes and properties')]
-function attribute_option_model_attributes_and_properties()
+function attribute_option_model_attributes_and_properties(): void
 {
     // Create a test attribute option
     $attributeOption = AttributeOption::factory()->create([
@@ -27,15 +29,15 @@ function attribute_option_model_attributes_and_properties()
     expect($attributeOption->sort)->toBe(1);
 
     // Test relationships
-    expect($attributeOption->attribute())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($attributeOption->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($attributeOption->attribute())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($attributeOption->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test AttributeOption model relationships with other models')]
-function attribute_option_model_relationships_with_other_models()
+function attribute_option_model_relationships_with_other_models(): void
 {
     // Create related models
     $attribute = Attribute::factory()->create(['name' => 'Test Attribute']);
@@ -57,16 +59,16 @@ function attribute_option_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test AttributeOption model traits and interfaces')]
-function attribute_option_model_traits_and_interfaces()
+function attribute_option_model_traits_and_interfaces(): void
 {
     // Create a test attribute option
     $attributeOption = AttributeOption::factory()->create();
 
     // Test that the model uses the expected traits and implements interfaces
-    expect($attributeOption)->toBeInstanceOf(\Spatie\EloquentSortable\Sortable::class);
+    expect($attributeOption)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
 
     // Test sortable configuration
-    $sortable = (new \ReflectionClass($attributeOption))->getProperty('sortable')->getValue($attributeOption);
+    $sortable = new ReflectionClass($attributeOption)->getProperty('sortable')->getValue($attributeOption);
     expect($sortable)->toBeArray();
     expect($sortable)->toHaveKey('order_column_name');
     expect($sortable['order_column_name'])->toBe('sort');

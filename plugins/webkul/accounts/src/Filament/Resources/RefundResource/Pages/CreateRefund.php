@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\RefundResource\Pages;
 
-use Webkul\Account\Enums\MoveType;
 use Filament\Notifications\Notification;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\CreateInvoice as CreateBaseRefund;
 use Webkul\Account\Filament\Resources\RefundResource;
 
-class CreateRefund extends CreateBaseRefund
+final class CreateRefund extends CreateBaseRefund
 {
     protected static string $resource = RefundResource::class;
 

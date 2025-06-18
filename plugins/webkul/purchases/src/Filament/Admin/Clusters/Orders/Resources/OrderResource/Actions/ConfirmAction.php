@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions;
 
 use Filament\Actions\Action;
@@ -9,13 +11,8 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-class ConfirmAction extends Action
+final class ConfirmAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'purchases.orders.confirm';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -35,10 +32,15 @@ class ConfirmAction extends Action
                     ->success()
                     ->send();
             })
-            ->visible(fn () => ! in_array($this->getRecord()->state, [
+            ->visible(fn (): bool => ! in_array($this->getRecord()->state, [
                 OrderState::PURCHASE,
                 OrderState::DONE,
                 OrderState::CANCELED,
-            ]));
+            ], true));
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'purchases.orders.confirm';
     }
 }

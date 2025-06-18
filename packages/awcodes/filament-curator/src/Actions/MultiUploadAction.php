@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Actions;
 
 use Awcodes\Curator\Components\Forms\Uploader;
@@ -7,13 +9,8 @@ use Awcodes\Curator\Models\Media;
 use Filament\Actions\Action;
 use Illuminate\Support\Facades\App;
 
-class MultiUploadAction extends Action
+final class MultiUploadAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'curator_multi_upload';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -38,7 +35,7 @@ class MultiUploadAction extends Action
                     ->visibility(config('curator.visibility'))
                     ->storeFileNamesIn('originalFilename'),
             ])
-            ->action(function ($data) {
+            ->action(function ($data): void {
                 foreach ($data['files'] as $item) {
                     $item['title'] = pathinfo($data['originalFilename'][$item['path']] ?? null, PATHINFO_FILENAME);
 
@@ -48,5 +45,10 @@ class MultiUploadAction extends Action
                     )->toArray();
                 }
             });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'curator_multi_upload';
     }
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('utm_mediums', function (Blueprint $table) {
+        Schema::create('utm_mediums', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('creator_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('name')->comment('Name');

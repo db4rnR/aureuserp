@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,9 +10,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Z3d0X\FilamentFabricator\Models\Concerns\HandlesPageUrls;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as Contract;
 
-class Page extends Model implements Contract
+final class Page extends Model implements Contract
 {
     use HandlesPageUrls;
+
+    protected $guarded = [];
+
+    protected $casts = [
+        'blocks' => 'array',
+        'parent_id' => 'integer',
+    ];
 
     public function __construct(array $attributes = [])
     {
@@ -21,21 +30,14 @@ class Page extends Model implements Contract
         parent::__construct($attributes);
     }
 
-    protected $guarded = [];
-
-    protected $casts = [
-        'blocks' => 'array',
-        'parent_id' => 'integer',
-    ];
-
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(static::class, 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     public function children(): HasMany
     {
-        return $this->hasMany(static::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     public function allChildren(): HasMany

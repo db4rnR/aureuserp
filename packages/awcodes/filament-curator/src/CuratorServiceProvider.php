@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator;
 
 use Awcodes\Curator\Commands\UpgradeCommand;
-use Awcodes\Curator\Components\Modals\CuratorPanel;
 use Awcodes\Curator\Components\Modals\CuratorCuration;
+use Awcodes\Curator\Components\Modals\CuratorPanel;
 use Awcodes\Curator\Models\Media;
 use Awcodes\Curator\Observers\MediaObserver;
 use Awcodes\Curator\Resources\MediaResource;
@@ -19,7 +21,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class CuratorServiceProvider extends PackageServiceProvider
+final class CuratorServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -32,7 +34,7 @@ class CuratorServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 UpgradeCommand::class,
             ])
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->publishMigrations()
                     ->askToRunMigrations();
@@ -53,8 +55,8 @@ class CuratorServiceProvider extends PackageServiceProvider
         Blade::component('curator-curation', Curation::class);
 
         FilamentAsset::register([
-            AlpineComponent::make('curation', __DIR__ . '/../resources/dist/curation.js'),
-            Css::make('curator', __DIR__ . '/../resources/dist/curator.css')->loadedOnRequest(),
+            AlpineComponent::make('curation', __DIR__.'/../resources/dist/curation.js'),
+            Css::make('curator', __DIR__.'/../resources/dist/curator.css')->loadedOnRequest(),
         ], 'awcodes/curator');
     }
 }

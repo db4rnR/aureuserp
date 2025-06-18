@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class QuotationAndOrderSettings extends Settings
+final class QuotationAndOrderSettings extends Settings
 {
     public int $default_quotation_validity;
 

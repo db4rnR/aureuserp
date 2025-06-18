@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'Rekord został pomyślnie zaktualizowany.',
     'update_error' => 'Wystąpił błąd podczas aktualizacji rekordu.',

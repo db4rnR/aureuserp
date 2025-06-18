@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Support;
 
-class Html
+final class Html
 {
     public static function injectPreviewModalStyle(string $htmlContent): string
     {

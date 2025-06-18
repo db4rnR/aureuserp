@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('time_off_user_leave_types', function (Blueprint $table) {
+        Schema::create('time_off_user_leave_types', function (Blueprint $table): void {
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('leave_type_id')->constrained('time_off_leave_types')->cascadeOnDelete();
         });

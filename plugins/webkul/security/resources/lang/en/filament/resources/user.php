@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Users',
 
@@ -9,29 +11,29 @@ return [
     ],
 
     'global-search' => [
-        'name'  => 'Name',
+        'name' => 'Name',
         'email' => 'Email',
     ],
 
     'form' => [
         'sections' => [
             'general-information' => [
-                'title'  => 'General Information',
+                'title' => 'General Information',
                 'fields' => [
-                    'name'                  => 'Name',
-                    'email'                 => 'Email',
-                    'password'              => 'Password',
+                    'name' => 'Name',
+                    'email' => 'Email',
+                    'password' => 'Password',
                     'password-confirmation' => 'Password Confirmation',
                 ],
             ],
 
             'permissions' => [
-                'title'  => 'Permissions',
+                'title' => 'Permissions',
                 'fields' => [
-                    'roles'               => 'Roles',
-                    'permissions'         => 'Permissions',
+                    'roles' => 'Roles',
+                    'permissions' => 'Permissions',
                     'resource-permission' => 'Resource Permission',
-                    'teams'               => 'Teams',
+                    'teams' => 'Teams',
                 ],
             ],
 
@@ -40,62 +42,62 @@ return [
             ],
 
             'lang-and-status' => [
-                'title'  => 'Language & Status',
+                'title' => 'Language & Status',
                 'fields' => [
                     'language' => 'Preferred Language',
-                    'status'   => 'Status',
+                    'status' => 'Status',
                 ],
             ],
 
             'multi-company' => [
-                'title'             => 'Multi Company',
+                'title' => 'Multi Company',
                 'allowed-companies' => 'Allowed Companies',
-                'default-company'   => 'Default Company',
+                'default-company' => 'Default Company',
             ],
         ],
     ],
 
     'table' => [
         'columns' => [
-            'avatar'              => 'Avatar',
-            'name'                => 'Name',
-            'email'               => 'Email',
-            'teams'               => 'Teams',
-            'role'                => 'Role',
+            'avatar' => 'Avatar',
+            'name' => 'Name',
+            'email' => 'Email',
+            'teams' => 'Teams',
+            'role' => 'Role',
             'resource-permission' => 'Resource Permission',
-            'default-company'     => 'Default Company',
-            'allowed-company'     => 'Allowed Company',
-            'created-at'          => 'Created At',
-            'updated-at'          => 'Updated At',
+            'default-company' => 'Default Company',
+            'allowed-company' => 'Allowed Company',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'filters' => [
             'resource-permission' => 'Resource Permission',
-            'teams'               => 'Teams',
-            'roles'               => 'Roles',
-            'default-company'     => 'Default Company',
-            'allowed-companies'   => 'Allowed Companies',
+            'teams' => 'Teams',
+            'roles' => 'Roles',
+            'default-company' => 'Default Company',
+            'allowed-companies' => 'Allowed Companies',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'User edited',
-                    'body'  => 'The user has been edited successfully.',
+                    'body' => 'The user has been edited successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'User deleted',
-                    'body'  => 'The user has been deleted successfully.',
+                    'body' => 'The user has been deleted successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'User restored',
-                    'body'  => 'The user has been restored successfully.',
+                    'body' => 'The user has been restored successfully.',
                 ],
             ],
         ],
@@ -104,21 +106,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Users restored',
-                    'body'  => 'The users has been restored successfully.',
+                    'body' => 'The users has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Users deleted',
-                    'body'  => 'The users has been deleted successfully.',
+                    'body' => 'The users has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Users force deleted',
-                    'body'  => 'The users has been force deleted successfully.',
+                    'body' => 'The users has been force deleted successfully.',
                 ],
             ],
         ],
@@ -127,7 +129,7 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Users created',
-                    'body'  => 'The users has been created successfully.',
+                    'body' => 'The users has been created successfully.',
                 ],
             ],
         ],
@@ -136,22 +138,22 @@ return [
     'infolist' => [
         'sections' => [
             'general-information' => [
-                'title'   => 'General Information',
+                'title' => 'General Information',
                 'entries' => [
-                    'name'                  => 'Name',
-                    'email'                 => 'Email',
-                    'password'              => 'Password',
+                    'name' => 'Name',
+                    'email' => 'Email',
+                    'password' => 'Password',
                     'password-confirmation' => 'Password Confirmation',
                 ],
             ],
 
             'permissions' => [
-                'title'   => 'Permissions',
+                'title' => 'Permissions',
                 'entries' => [
-                    'roles'               => 'Roles',
-                    'permissions'         => 'Permissions',
+                    'roles' => 'Roles',
+                    'permissions' => 'Permissions',
                     'resource-permission' => 'Resource Permission',
-                    'teams'               => 'Teams',
+                    'teams' => 'Teams',
                 ],
             ],
 
@@ -160,17 +162,17 @@ return [
             ],
 
             'lang-and-status' => [
-                'title'   => 'Language & Status',
+                'title' => 'Language & Status',
                 'entries' => [
                     'language' => 'Preferred Language',
-                    'status'   => 'Status',
+                    'status' => 'Status',
                 ],
             ],
 
             'multi-company' => [
-                'title'             => 'Multi Company',
+                'title' => 'Multi Company',
                 'allowed-companies' => 'Allowed Companies',
-                'default-company'   => 'Default Company',
+                'default-company' => 'Default Company',
             ],
         ],
     ],

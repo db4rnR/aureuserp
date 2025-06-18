@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Project\Models\ProjectStage;
 use Webkul\Security\Models\User;
 
-class ProjectStagePolicy
+final class ProjectStagePolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class ProjectStagePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ProjectStage $projectStage): bool
+    public function view(User $user): bool
     {
         return $user->can('view_project::stage');
     }
@@ -37,7 +38,7 @@ class ProjectStagePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ProjectStage $projectStage): bool
+    public function update(User $user): bool
     {
         return $user->can('update_project::stage');
     }
@@ -45,7 +46,7 @@ class ProjectStagePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ProjectStage $projectStage): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_project::stage');
     }
@@ -61,7 +62,7 @@ class ProjectStagePolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, ProjectStage $projectStage): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_project::stage');
     }
@@ -77,7 +78,7 @@ class ProjectStagePolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, ProjectStage $projectStage): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_project::stage');
     }
@@ -93,7 +94,7 @@ class ProjectStagePolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, ProjectStage $projectStage): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_project::stage');
     }

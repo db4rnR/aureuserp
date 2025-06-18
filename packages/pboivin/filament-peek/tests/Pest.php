@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Pboivin\FilamentPeek\Tests\TestCase;
 use Pboivin\FilamentPeek\Tests\TestCaseWithAssetsDisabled;
 use Pboivin\FilamentPeek\Tests\TestCaseWithPreviewUrl;

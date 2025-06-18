@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recruitments_applicants', function (Blueprint $table) {
+        Schema::create('recruitments_applicants', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('source_id')->nullable()->constrained('utm_sources')->nullOnDelete();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\PaymentsResource\Actions;
 
 use Filament\Actions\Action;
@@ -7,13 +9,8 @@ use Livewire\Component;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Models\Payment;
 
-class ResetToDraftAction extends Action
+final class ResetToDraftAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'customers.payment.reset-to-draft';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,8 +24,11 @@ class ResetToDraftAction extends Action
 
                 $livewire->refreshFormData(['state']);
             })
-            ->hidden(function (Payment $record) {
-                return $record->state == PaymentStatus::DRAFT->value;
-            });
+            ->hidden(fn (Payment $record): bool => $record->state === PaymentStatus::DRAFT->value);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'customers.payment.reset-to-draft';
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\PaymentsResource\Actions;
 
 use Filament\Actions\Action;
@@ -7,13 +9,8 @@ use Livewire\Component;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Models\Payment;
 
-class CancelAction extends Action
+final class CancelAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'customers.payment.cancel';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,8 +24,11 @@ class CancelAction extends Action
 
                 $livewire->refreshFormData(['state']);
             })
-            ->hidden(function (Payment $record) {
-                return $record->state == PaymentStatus::CANCELED->value;
-            });
+            ->hidden(fn (Payment $record): bool => $record->state === PaymentStatus::CANCELED->value);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'customers.payment.cancel';
     }
 }

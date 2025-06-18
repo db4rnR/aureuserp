@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Filament\Resources\TitleResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\TitleResource;
 
-class ManageTitles extends ManageRecords
+final class ManageTitles extends ManageRecords
 {
     protected static string $resource = TitleResource::class;
 

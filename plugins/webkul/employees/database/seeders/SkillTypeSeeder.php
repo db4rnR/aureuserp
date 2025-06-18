@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class SkillTypeSeeder extends Seeder
+final class SkillTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,46 +23,46 @@ class SkillTypeSeeder extends Seeder
 
         $skillTypes = [
             [
-                'id'         => 1,
-                'name'       => 'Languages',
-                'color'      => 'danger',
-                'is_active'  => 1,
+                'id' => 1,
+                'name' => 'Languages',
+                'color' => 'danger',
+                'is_active' => 1,
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id'         => 2,
-                'name'       => 'Soft Skills',
-                'color'      => 'success',
-                'is_active'  => 1,
+                'id' => 2,
+                'name' => 'Soft Skills',
+                'color' => 'success',
+                'is_active' => 1,
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id'         => 3,
-                'name'       => 'Programming Languages',
-                'color'      => 'warning',
-                'is_active'  => 1,
+                'id' => 3,
+                'name' => 'Programming Languages',
+                'color' => 'warning',
+                'is_active' => 1,
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id'         => 4,
-                'name'       => 'IT',
-                'color'      => 'info',
-                'is_active'  => 1,
+                'id' => 4,
+                'name' => 'IT',
+                'color' => 'info',
+                'is_active' => 1,
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id'         => 5,
-                'name'       => 'Marketing',
-                'color'      => 'gray',
-                'is_active'  => 1,
+                'id' => 5,
+                'name' => 'Marketing',
+                'color' => 'gray',
+                'is_active' => 1,
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),

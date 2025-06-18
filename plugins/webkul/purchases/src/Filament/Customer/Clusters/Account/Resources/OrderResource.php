@@ -1,23 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Customer\Clusters\Account\Resources;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ViewAction;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\FontWeight;
-use Filament\Schemas\Components\Actions;
-use Filament\Actions\Action;
-use Filament\Infolists\Components\ViewEntry;
-use Filament\Schemas\Components\Livewire;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Infolists;
+use Filament\Actions\Action;
+use Filament\Actions\ViewAction;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ViewEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Livewire;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +25,7 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Models\Order;
 use Webkul\Website\Filament\Customer\Clusters\Account;
 
-class OrderResource extends Resource
+final class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
@@ -63,7 +63,7 @@ class OrderResource extends Resource
             ->recordActions([
                 ViewAction::make(),
             ])
-            ->modifyQueryUsing(function (Builder $query) {
+            ->modifyQueryUsing(function (Builder $query): void {
                 $query->where('partner_id', Auth::guard('customer')->id());
             });
     }
@@ -88,7 +88,7 @@ class OrderResource extends Resource
                                         ->color('success')
                                         ->icon('heroicon-o-check-circle')
                                         ->disabled(fn (Order $record): bool => $record->mail_reception_confirmed)
-                                        ->action(function (Order $record) {
+                                        ->action(function (Order $record): void {
                                             $record->update([
                                                 'mail_reception_confirmed' => true,
                                             ]);
@@ -109,7 +109,7 @@ class OrderResource extends Resource
                                         ->color('danger')
                                         ->icon('heroicon-o-x-circle')
                                         ->disabled(fn (Order $record): bool => $record->mail_reception_declined)
-                                        ->action(function (Order $record) {
+                                        ->action(function (Order $record): void {
                                             $record->update([
                                                 'mail_reception_declined' => true,
                                             ]);
@@ -134,25 +134,25 @@ class OrderResource extends Resource
                                         ->label(__('purchases::filament/customer/clusters/account/resources/order.infolist.settings.actions.print.label'))
                                         ->icon('heroicon-o-printer')
                                         ->action(function (Order $record) {
-                                            if ($record->state == OrderState::SENT) {
-                                                $pdf = PDF::loadView('purchases::filament.admin.clusters.orders.orders.actions.print-quotation', [
-                                                    'records'  => [$record],
+                                            if ($record->state === OrderState::SENT) {
+                                                $pdf = Pdf::loadView('purchases::filament.admin.clusters.orders.orders.actions.print-quotation', [
+                                                    'records' => [$record],
                                                 ]);
 
                                                 $pdf->setPaper('a4', 'portrait');
 
-                                                return response()->streamDownload(function () use ($pdf) {
+                                                return response()->streamDownload(function () use ($pdf): void {
                                                     echo $pdf->output();
                                                 }, 'Quotation-'.str_replace('/', '_', $record->name).'.pdf');
                                             }
 
-                                            $pdf = PDF::loadView('purchases::filament.admin.clusters.orders.orders.actions.print-purchase-order', [
-                                                'records'  => [$record],
+                                            $pdf = Pdf::loadView('purchases::filament.admin.clusters.orders.orders.actions.print-purchase-order', [
+                                                'records' => [$record],
                                             ]);
 
                                             $pdf->setPaper('a4', 'portrait');
 
-                                            return response()->streamDownload(function () use ($pdf) {
+                                            return response()->streamDownload(function () use ($pdf): void {
                                                 echo $pdf->output();
                                             }, 'Purchase Order-'.str_replace('/', '_', $record->name).'.pdf');
                                         }),
@@ -181,7 +181,7 @@ class OrderResource extends Resource
                                             ->size('text-3xl')
                                             ->weight(FontWeight::Bold)
                                             ->formatStateUsing(function (Order $record) {
-                                                if ($record->state == OrderState::SENT) {
+                                                if ($record->state === OrderState::SENT) {
                                                     return __('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.quotation', ['id' => $record->name]);
                                                 }
 
@@ -210,15 +210,11 @@ class OrderResource extends Resource
                                             ->hiddenLabel()
                                             ->size('text-2xl')
                                             ->weight(FontWeight::Bold)
-                                            ->formatStateUsing(function (Order $record) {
-                                                return __('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.products');
-                                            }),
+                                            ->formatStateUsing(fn (Order $record) => __('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.products')),
 
-                                        Livewire::make('list-products', function (Order $record) {
-                                            return [
-                                                'record' => $record,
-                                            ];
-                                        }),
+                                        Livewire::make('list-products', fn (Order $record): array => [
+                                            'record' => $record,
+                                        ]),
 
                                         /**
                                          * Order totals
@@ -248,7 +244,7 @@ class OrderResource extends Resource
                                                             ->money(fn ($record) => $record->currency->code),
                                                     ]),
                                             ])
-                                            ->visible(fn (Order $record): bool => in_array($record->state, [OrderState::PURCHASE, OrderState::DONE])),
+                                            ->visible(fn (Order $record): bool => in_array($record->state, [OrderState::PURCHASE, OrderState::DONE], true)),
                                     ]),
 
                                 /**
@@ -261,21 +257,19 @@ class OrderResource extends Resource
                                             ->hiddenLabel()
                                             ->size('text-2xl')
                                             ->weight(FontWeight::Bold)
-                                            ->formatStateUsing(function (Order $record) {
-                                                return __('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.communication-history');
-                                            }),
+                                            ->formatStateUsing(fn (Order $record) => __('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.communication-history')),
 
-                                        Livewire::make('chatter-panel', function (Order $record) {
+                                        Livewire::make('chatter-panel', function (Order $record): array {
                                             $record = Order::findOrFail($record->id);
 
                                             return [
-                                                'record'             => $record,
-                                                'showMessageAction'  => true,
+                                                'record' => $record,
+                                                'showMessageAction' => true,
                                                 'showActivityAction' => false,
                                                 'showFollowerAction' => false,
-                                                'showLogAction'      => false,
-                                                'showFileAction'     => false,
-                                                'filters'            => [
+                                                'showLogAction' => false,
+                                                'showFileAction' => false,
+                                                'filters' => [
                                                     'type' => [
                                                         'comment',
                                                     ],

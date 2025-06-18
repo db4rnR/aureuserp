@@ -1,28 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Actions\Print;
 
-use Filament\Schemas\Components\Wizard;
-use Filament\Schemas\Components\Wizard\Step;
-use Filament\Forms\Components\Radio;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Webkul\Inventory\Settings\TraceabilitySettings;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
-use Filament\Forms;
-use Webkul\Inventory\Settings;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Wizard;
+use Filament\Schemas\Components\Wizard\Step;
+use Webkul\Inventory\Settings\TraceabilitySettings;
 
-class LabelsAction extends Action
+final class LabelsAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'inventories.operations.print.labels';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,11 +32,11 @@ class LabelsAction extends Action
                                 ->label('Type')
                                 ->options([
                                     'product' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.type-options.product'),
-                                    'lot'     => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.type-options.lot'),
+                                    'lot' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.type-options.lot'),
                                 ])
                                 ->default('product')
                                 ->live()
-                                ->afterStateUpdated(function (Get $get, Set $set) {
+                                ->afterStateUpdated(function (Get $get, Set $set): void {
                                     if ($get('type') === 'product') {
                                         $set('quantity_type', 'operation');
                                         $set('quantity', null);
@@ -68,7 +63,7 @@ class LabelsAction extends Action
                                         ->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type'))
                                         ->options([
                                             'operation' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.operation'),
-                                            'custom'    => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.custom'),
+                                            'custom' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.custom'),
                                         ])
                                         ->default('operation')
                                         ->live(),
@@ -82,10 +77,10 @@ class LabelsAction extends Action
                                     Radio::make('format')
                                         ->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.format'))
                                         ->options([
-                                            'dymo'       => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.dymo'),
-                                            '2x7_price'  => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.2x7_price'),
-                                            '4x7_price'  => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.4x7_price'),
-                                            '4x12'       => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.4x12'),
+                                            'dymo' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.dymo'),
+                                            '2x7_price' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.2x7_price'),
+                                            '4x7_price' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.4x7_price'),
+                                            '4x12' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.4x12'),
                                             '4x12_price' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.4x12_price'),
                                         ])
                                         ->default('2x7_price')
@@ -97,7 +92,7 @@ class LabelsAction extends Action
                                     Radio::make('quantity_type')
                                         ->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type'))
                                         ->options([
-                                            'per_lot'  => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.per-slot'),
+                                            'per_lot' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.per-slot'),
                                             'per_unit' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.per-unit'),
                                         ])
                                         ->default('per_lot')
@@ -116,24 +111,29 @@ class LabelsAction extends Action
                 ]),
             ])
             ->action(function (array $data, $record) {
-                $pdf = PDF::loadView('inventories::filament.clusters.operations.actions.labels', [
-                    'type'         => $data['type'] ?? 'product',
+                $pdf = Pdf::loadView('inventories::filament.clusters.operations.actions.labels', [
+                    'type' => $data['type'] ?? 'product',
                     'quantityType' => $data['quantity_type'] ?? 1,
-                    'quantity'     => $data['quantity'] ?? 1,
-                    'format'       => $data['format'],
-                    'records'      => $record->moveLines,
+                    'quantity' => $data['quantity'] ?? 1,
+                    'format' => $data['format'],
+                    'records' => $record->moveLines,
                 ]);
 
                 $paperSize = match ($data['format']) {
-                    'dymo'  => [0, 0, 252.2, 144],
+                    'dymo' => [0, 0, 252.2, 144],
                     default => 'a4',
                 };
 
                 $pdf->setPaper($paperSize, 'portrait');
 
-                return response()->streamDownload(function () use ($pdf) {
+                return response()->streamDownload(function () use ($pdf): void {
                     echo $pdf->output();
                 }, 'Labels-'.str_replace('/', '_', $record->name).'.pdf');
             });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'inventories.operations.print.labels';
     }
 }

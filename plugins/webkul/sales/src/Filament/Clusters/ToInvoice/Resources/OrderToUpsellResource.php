@@ -1,27 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\ToInvoice\Resources;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToUpsellResource\Pages\ListOrderToUpsells;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Sale\Enums\InvoiceStatus;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 use Webkul\Sale\Filament\Clusters\ToInvoice;
-use Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToUpsellResource\Pages;
+use Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToUpsellResource\Pages\ListOrderToUpsells;
 use Webkul\Sale\Models\Order;
 
-class OrderToUpsellResource extends Resource
+final class OrderToUpsellResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-arrow-up';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-arrow-up';
 
     protected static ?string $cluster = ToInvoice::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -46,7 +48,7 @@ class OrderToUpsellResource extends Resource
     public static function table(Table $table): Table
     {
         return QuotationResource::table($table)
-            ->modifyQueryUsing(function ($query) {
+            ->modifyQueryUsing(function ($query): void {
                 $query->where('invoice_status', InvoiceStatus::UP_SELLING);
             });
     }
@@ -54,7 +56,7 @@ class OrderToUpsellResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListOrderToUpsells::route('/'),
+            'index' => ListOrderToUpsells::route('/'),
         ];
     }
 }

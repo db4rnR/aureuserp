@@ -35,10 +35,10 @@ trait CanRegisterPlugin
                             callback: fn (Stringer $stringer) => $stringer
                                 ->indent(4)
                                 ->append($pluginsArray, $shieldPlugin)
-                                ->append($shieldPlugin, '->centralApp(' . $tenantModelClass . '),'),
+                                ->append($shieldPlugin, '->centralApp('.$tenantModelClass.'),'),
                             default: fn (Stringer $stringer) => $stringer
                                 ->indent(4)
-                                ->append($pluginsArray, $shieldPlugin . ',')
+                                ->append($pluginsArray, $shieldPlugin.',')
                         ),
                 )
                 ->when(/** @phpstan-ignore-next-line */
@@ -51,12 +51,12 @@ trait CanRegisterPlugin
                                 ->append($pluginsArray, '])')
                                 ->indent(4)
                                 ->append($pluginsArray, $shieldPlugin)
-                                ->append($shieldPlugin, '->centralApp(' . $tenantModelClass . '),'),
+                                ->append($shieldPlugin, '->centralApp('.$tenantModelClass.'),'),
                             default: fn (Stringer $stringer) => $stringer
                                 ->append($pluginsTarget, $pluginsArray, true)
                                 ->append($pluginsArray, '])')
                                 ->indent(4)
-                                ->append($pluginsArray, $shieldPlugin . ',')
+                                ->append($pluginsArray, $shieldPlugin.',')
                         )
                 )
                 ->save();

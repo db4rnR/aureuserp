@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Tests\Database\Factories;
 
 use FilamentTiptapEditor\Tests\Models\Page;
 use FilamentTiptapEditor\TiptapFaker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PageFactory extends Factory
+final class PageFactory extends Factory
 {
     protected $model = Page::class;
 

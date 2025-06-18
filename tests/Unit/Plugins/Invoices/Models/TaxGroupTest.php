@@ -1,9 +1,11 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Invoice\Models\TaxGroup;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Account\Models\TaxGroup as BaseTaxGroup;
+use Webkul\Invoice\Models\TaxGroup;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
@@ -12,7 +14,7 @@ use Webkul\Support\Models\Country;
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test TaxGroup model inheritance and properties')]
-function tax_group_model_inheritance_and_properties()
+function tax_group_model_inheritance_and_properties(): void
 {
     // Create a test tax group
     $taxGroup = TaxGroup::factory()->create([
@@ -29,16 +31,16 @@ function tax_group_model_inheritance_and_properties()
     expect($taxGroup->preceding_subtotal)->toBeTrue();
 
     // Test relationships inherited from the base class
-    expect($taxGroup->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($taxGroup->country())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($taxGroup->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($taxGroup->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($taxGroup->country())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($taxGroup->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test TaxGroup model relationships with other models')]
-function tax_group_model_relationships_with_other_models()
+function tax_group_model_relationships_with_other_models(): void
 {
     // Create related models
     $company = Company::factory()->create();
@@ -62,16 +64,16 @@ function tax_group_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test TaxGroup model traits and interfaces')]
-function tax_group_model_traits_and_interfaces()
+function tax_group_model_traits_and_interfaces(): void
 {
     // Create a test tax group
     $taxGroup = TaxGroup::factory()->create();
 
     // Test that the model uses the expected traits and implements interfaces
-    expect($taxGroup)->toBeInstanceOf(\Spatie\EloquentSortable\Sortable::class);
+    expect($taxGroup)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
 
     // Test sortable configuration
-    $sortable = (new \ReflectionClass($taxGroup))->getProperty('sortable')->getValue($taxGroup);
+    $sortable = new ReflectionClass($taxGroup)->getProperty('sortable')->getValue($taxGroup);
     expect($sortable)->toBeArray();
     expect($sortable)->toHaveKey('order_column_name');
     expect($sortable['order_column_name'])->toBe('sort');

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase;
 
-use Webkul\Purchase\Enums\QtyReceivedMethod;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -19,6 +20,7 @@ use Webkul\Inventory\Models\OperationType;
 use Webkul\Inventory\Models\Receipt;
 use Webkul\Product\Enums\ProductType;
 use Webkul\Purchase\Enums as PurchaseEnums;
+use Webkul\Purchase\Enums\QtyReceivedMethod;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrderResource;
 use Webkul\Purchase\Mail\VendorPurchaseOrderMail;
 use Webkul\Purchase\Models\AccountMove;
@@ -27,9 +29,9 @@ use Webkul\Purchase\Models\OrderLine;
 use Webkul\Purchase\Settings\OrderSettings;
 use Webkul\Support\Package;
 
-class PurchaseOrder
+final readonly class PurchaseOrder
 {
-    public function __construct(protected OrderSettings $orderSettings) {}
+    public function __construct(private OrderSettings $orderSettings) {}
 
     public function sendRFQ(Order $record, array $data): Order
     {
@@ -67,7 +69,7 @@ class PurchaseOrder
     public function confirmPurchaseOrder(Order $record): Order
     {
         $record->update([
-            'state'       => $this->orderSettings->enable_lock_confirmed_orders
+            'state' => $this->orderSettings->enable_lock_confirmed_orders
                 ? PurchaseEnums\OrderState::DONE
                 : PurchaseEnums\OrderState::PURCHASE,
             'approved_at' => now(),
@@ -200,7 +202,7 @@ class PurchaseOrder
 
         $line = $this->computeQtyReceived($line);
 
-        if ($line->qty_received_method == QtyReceivedMethod::MANUAL) {
+        if ($line->qty_received_method === QtyReceivedMethod::MANUAL) {
             $line->qty_received_manual = $line->qty_received ?? 0;
         }
 
@@ -213,7 +215,7 @@ class PurchaseOrder
         if ($line->discount > 0) {
             $discountAmount = $subTotal * ($line->discount / 100);
 
-            $subTotal = $subTotal - $discountAmount;
+            $subTotal -= $discountAmount;
         }
 
         $taxIds = $line->taxes->pluck('id')->toArray();
@@ -233,25 +235,19 @@ class PurchaseOrder
 
     public function computeInvoiceStatus(Order $order): Order
     {
-        if (! in_array($order->state, [PurchaseEnums\OrderState::PURCHASE, PurchaseEnums\OrderState::DONE])) {
+        if (! in_array($order->state, [PurchaseEnums\OrderState::PURCHASE, PurchaseEnums\OrderState::DONE], true)) {
             $order->invoice_status = PurchaseEnums\OrderInvoiceStatus::NO;
 
             return $order;
         }
 
-        $floatIsZero = function ($value, $precision) {
-            return abs($value) < pow(10, -$precision);
-        };
+        $floatIsZero = (fn ($value, $precision): bool => abs($value) < 10 ** -$precision);
 
         $precision = 4;
 
-        if ($order->lines->contains(function ($line) use ($floatIsZero, $precision) {
-            return ! $floatIsZero($line->qty_to_invoice, $precision);
-        })) {
+        if ($order->lines->contains(fn ($line): bool => ! $floatIsZero($line->qty_to_invoice, $precision))) {
             $order->invoice_status = PurchaseEnums\OrderInvoiceStatus::TO_INVOICED;
-        } elseif ($order->lines->every(function ($line) use ($floatIsZero, $precision) {
-            return $floatIsZero($line->qty_to_invoice, $precision);
-        }) && $order->accountMoves->isNotEmpty()) {
+        } elseif ($order->lines->every(fn ($line): bool => $floatIsZero($line->qty_to_invoice, $precision)) && $order->accountMoves->isNotEmpty()) {
             $order->invoice_status = PurchaseEnums\OrderInvoiceStatus::INVOICED;
         } else {
             $order->invoice_status = PurchaseEnums\OrderInvoiceStatus::NO;
@@ -268,17 +264,11 @@ class PurchaseOrder
             return $order;
         }
 
-        if ($order->operations->isEmpty() || $order->operations->every(function ($receipt) {
-            return $receipt->state == InventoryEnums\OperationState::CANCELED;
-        })) {
+        if ($order->operations->isEmpty() || $order->operations->every(fn ($receipt): bool => $receipt->state === InventoryEnums\OperationState::CANCELED)) {
             $order->receipt_status = PurchaseEnums\OrderReceiptStatus::NO;
-        } elseif ($order->operations->every(function ($receipt) {
-            return in_array($receipt->state, [InventoryEnums\OperationState::DONE, InventoryEnums\OperationState::CANCELED]);
-        })) {
+        } elseif ($order->operations->every(fn ($receipt): bool => in_array($receipt->state, [InventoryEnums\OperationState::DONE, InventoryEnums\OperationState::CANCELED], true))) {
             $order->receipt_status = PurchaseEnums\OrderReceiptStatus::FULL;
-        } elseif ($order->operations->contains(function ($receipt) {
-            return $receipt->state == InventoryEnums\OperationState::DONE;
-        })) {
+        } elseif ($order->operations->contains(fn ($receipt): bool => $receipt->state === InventoryEnums\OperationState::DONE)) {
             $order->receipt_status = PurchaseEnums\OrderReceiptStatus::PARTIAL;
         } else {
             $order->receipt_status = PurchaseEnums\OrderReceiptStatus::PENDING;
@@ -293,12 +283,12 @@ class PurchaseOrder
 
         foreach ($line->accountMoveLines as $accountMoveLine) {
             if (
-                $accountMoveLine->move->state != AccountEnums\MoveState::CANCEL
-                || $accountMoveLine->move->payment_state == AccountEnums\PaymentState::INVOICING_LEGACY
+                $accountMoveLine->move->state !== AccountEnums\MoveState::CANCEL
+                || $accountMoveLine->move->payment_state === AccountEnums\PaymentState::INVOICING_LEGACY
             ) {
-                if ($accountMoveLine->move->move_type == AccountEnums\MoveType::IN_INVOICE) {
+                if ($accountMoveLine->move->move_type === AccountEnums\MoveType::IN_INVOICE) {
                     $qty += $accountMoveLine->uom->computeQuantity($accountMoveLine->quantity, $line->uom);
-                } elseif ($accountMoveLine->move->move_type == AccountEnums\MoveType::IN_REFUND) {
+                } elseif ($accountMoveLine->move->move_type === AccountEnums\MoveType::IN_REFUND) {
                     $qty -= $accountMoveLine->uom->computeQuantity($accountMoveLine->quantity, $line->uom);
                 }
             }
@@ -306,8 +296,8 @@ class PurchaseOrder
 
         $line->qty_invoiced = $qty;
 
-        if (in_array($line->order->state, [PurchaseEnums\OrderState::PURCHASE, PurchaseEnums\OrderState::DONE])) {
-            if ($line->product->purchase_method == 'purchase') {
+        if (in_array($line->order->state, [PurchaseEnums\OrderState::PURCHASE, PurchaseEnums\OrderState::DONE], true)) {
+            if ($line->product->purchase_method === 'purchase') {
                 $line->qty_to_invoice = $line->product_qty - $line->qty_invoiced;
             } else {
                 $line->qty_to_invoice = $line->qty_received - $line->qty_invoiced;
@@ -323,11 +313,11 @@ class PurchaseOrder
     {
         $line->qty_received = 0.0;
 
-        if ($line->qty_received_method == QtyReceivedMethod::MANUAL) {
+        if ($line->qty_received_method === QtyReceivedMethod::MANUAL) {
             $line->qty_received = $line->qty_received_manual ?? 0.0;
         }
 
-        if ($line->qty_received_method == QtyReceivedMethod::STOCK_MOVE) {
+        if ($line->qty_received_method === QtyReceivedMethod::STOCK_MOVE) {
             $total = 0.0;
 
             foreach ($line->inventoryMoves as $move) {
@@ -376,13 +366,13 @@ class PurchaseOrder
         return $line;
     }
 
-    public function generateRFQPdf($record)
+    public function generateRFQPdf($record): string
     {
         $pdfPath = 'Request for Quotation-'.str_replace('/', '_', $record->name).'.pdf';
 
         if (! Storage::exists($pdfPath)) {
-            $pdf = PDF::loadView('purchases::filament.admin.clusters.orders.orders.actions.print-quotation', [
-                'records'  => [$record],
+            $pdf = Pdf::loadView('purchases::filament.admin.clusters.orders.orders.actions.print-quotation', [
+                'records' => [$record],
             ]);
 
             Storage::disk('public')->put($pdfPath, $pdf->output());
@@ -391,13 +381,13 @@ class PurchaseOrder
         return $pdfPath;
     }
 
-    public function generatePurchaseOrderPdf($record)
+    public function generatePurchaseOrderPdf($record): string
     {
         $pdfPath = 'Purchase Order-'.str_replace('/', '_', $record->name).'.pdf';
 
         if (! Storage::exists($pdfPath)) {
-            $pdf = PDF::loadView('purchases::filament.admin.clusters.orders.orders.actions.print-purchase-order', [
-                'records'  => [$record],
+            $pdf = Pdf::loadView('purchases::filament.admin.clusters.orders.orders.actions.print-purchase-order', [
+                'records' => [$record],
             ]);
 
             Storage::disk('public')->put($pdfPath, $pdf->output());
@@ -406,13 +396,57 @@ class PurchaseOrder
         return $pdfPath;
     }
 
-    protected function createInventoryReceipt(Order $record): void
+    public function createAccountMove($record): void
     {
-        if (! in_array($record->state, [PurchaseEnums\OrderState::PURCHASE, PurchaseEnums\OrderState::DONE])) {
+        $accountMove = AccountMove::create([
+            'move_type' => $record->qty_to_invoice >= 0 ? AccountEnums\MoveType::IN_INVOICE : AccountEnums\MoveType::IN_REFUND,
+            'invoice_origin' => $record->name,
+            'date' => now(),
+            'company_id' => $record->company_id,
+            'currency_id' => $record->currency_id,
+            'invoice_payment_term_id' => $record->payment_term_id,
+            'partner_id' => $record->partner_id,
+            'fiscal_position_id' => $record->fiscal_position_id,
+        ]);
+
+        $record->accountMoves()->attach($accountMove->id);
+
+        foreach ($record->lines as $line) {
+            $this->createAccountMoveLine($accountMove, $line);
+        }
+
+        AccountFacade::computeAccountMove($accountMove);
+    }
+
+    public function createAccountMoveLine($accountMove, $orderLine): void
+    {
+        $accountMoveLine = $accountMove->lines()->create([
+            'state' => $accountMove->state,
+            'name' => $orderLine->name,
+            'date' => $accountMove->date,
+            'parent_state' => $accountMove->state,
+            'quantity' => abs($orderLine->qty_to_invoice),
+            'price_unit' => $orderLine->price_unit,
+            'discount' => $orderLine->discount,
+            'company_id' => $accountMove->company_id,
+            'currency_id' => $accountMove->currency_id,
+            'company_currency_id' => $accountMove->currency_id,
+            'partner_id' => $accountMove->partner_id,
+            'product_id' => $orderLine->product_id,
+            'uom_id' => $orderLine->uom_id,
+            'purchase_order_line_id' => $orderLine->id,
+        ]);
+
+        $accountMoveLine->taxes()->sync($orderLine->taxes->pluck('id'));
+    }
+
+    private function createInventoryReceipt(Order $record): void
+    {
+        if (! in_array($record->state, [PurchaseEnums\OrderState::PURCHASE, PurchaseEnums\OrderState::DONE], true)) {
             return;
         }
 
-        if (! $record->lines->contains(fn ($line) => $line->product->type === ProductType::GOODS)) {
+        if (! $record->lines->contains(fn ($line): bool => $line->product->type === ProductType::GOODS)) {
             return;
         }
 
@@ -422,7 +456,7 @@ class PurchaseOrder
 
         $operationType = $this->getInventoryOperationType($record);
 
-        if (! $operationType) {
+        if (! $operationType instanceof OperationType) {
             return;
         }
 
@@ -433,17 +467,17 @@ class PurchaseOrder
         $supplierLocation = Location::where('type', InventoryEnums\LocationType::SUPPLIER)->first();
 
         $operation = Receipt::create([
-            'state'                   => InventoryEnums\OperationState::DRAFT,
-            'move_type'               => InventoryEnums\MoveType::DIRECT,
-            'origin'                  => $record->name,
-            'partner_id'              => $record->partner_id,
-            'date'                    => $record->ordered_at,
-            'operation_type_id'       => $record->operation_type_id,
-            'source_location_id'      => $supplierLocation->id,
+            'state' => InventoryEnums\OperationState::DRAFT,
+            'move_type' => InventoryEnums\MoveType::DIRECT,
+            'origin' => $record->name,
+            'partner_id' => $record->partner_id,
+            'date' => $record->ordered_at,
+            'operation_type_id' => $record->operation_type_id,
+            'source_location_id' => $supplierLocation->id,
             'destination_location_id' => $record->operationType->destination_location_id,
-            'company_id'              => $record->company_id,
-            'user_id'                 => Auth::id(),
-            'creator_id'              => Auth::id(),
+            'company_id' => $record->company_id,
+            'user_id' => Auth::id(),
+            'creator_id' => Auth::id(),
         ]);
 
         $operation->save();
@@ -454,28 +488,28 @@ class PurchaseOrder
             ]);
 
             $move = Move::create([
-                'operation_id'            => $operation->id,
-                'name'                    => $operation->name,
-                'reference'               => $operation->name,
-                'description_picking'     => $line->product->picking_description ?? $line->name,
-                'state'                   => InventoryEnums\MoveState::DRAFT,
-                'scheduled_at'            => $line->planned_at,
-                'deadline'                => $line->planned_at,
-                'reservation_date'        => now(),
-                'product_packaging_id'    => $line->product_packaging_id,
-                'product_id'              => $line->product_id,
-                'product_qty'             => $line->product_qty,
-                'product_uom_qty'         => $line->product_uom_qty,
-                'quantity'                => $line->product_uom_qty,
-                'uom_id'                  => $line->uom_id,
-                'partner_id'              => $operation->partner_id,
-                'warehouse_id'            => $operation->destinationLocation->warehouse_id,
-                'source_location_id'      => $operation->source_location_id,
+                'operation_id' => $operation->id,
+                'name' => $operation->name,
+                'reference' => $operation->name,
+                'description_picking' => $line->product->picking_description ?? $line->name,
+                'state' => InventoryEnums\MoveState::DRAFT,
+                'scheduled_at' => $line->planned_at,
+                'deadline' => $line->planned_at,
+                'reservation_date' => now(),
+                'product_packaging_id' => $line->product_packaging_id,
+                'product_id' => $line->product_id,
+                'product_qty' => $line->product_qty,
+                'product_uom_qty' => $line->product_uom_qty,
+                'quantity' => $line->product_uom_qty,
+                'uom_id' => $line->uom_id,
+                'partner_id' => $operation->partner_id,
+                'warehouse_id' => $operation->destinationLocation->warehouse_id,
+                'source_location_id' => $operation->source_location_id,
                 'destination_location_id' => $operation->destination_location_id,
-                'operation_type_id'       => $operation->operation_type_id,
-                'final_location_id'       => $line->final_location_id,
-                'company_id'              => $operation->destinationLocation->company_id,
-                'purchase_order_line_id'  => $line->id,
+                'operation_type_id' => $operation->operation_type_id,
+                'final_location_id' => $line->final_location_id,
+                'company_id' => $operation->destinationLocation->company_id,
+                'purchase_order_line_id' => $line->id,
             ]);
         }
 
@@ -493,7 +527,7 @@ class PurchaseOrder
         ]);
     }
 
-    protected function cancelInventoryOperations(Order $record): void
+    private function cancelInventoryOperations(Order $record): void
     {
         if (! Package::isPluginInstalled('inventories')) {
             return;
@@ -503,10 +537,10 @@ class PurchaseOrder
             return;
         }
 
-        $record->operations->each(function ($operation) {
+        $record->operations->each(function ($operation): void {
             foreach ($operation->moves as $move) {
                 $move->update([
-                    'state'    => InventoryEnums\MoveState::CANCELED,
+                    'state' => InventoryEnums\MoveState::CANCELED,
                     'quantity' => 0,
                 ]);
 
@@ -517,16 +551,16 @@ class PurchaseOrder
         });
     }
 
-    protected function getInventoryOperationType(Order $record): ?OperationType
+    private function getInventoryOperationType(Order $record): ?OperationType
     {
         $operationType = OperationType::where('type', InventoryEnums\OperationType::INCOMING)
-            ->whereHas('warehouse', function ($query) use ($record) {
+            ->whereHas('warehouse', function ($query) use ($record): void {
                 $query->where('company_id', $record->company_id);
             })
             ->first();
 
         if (! $operationType) {
-            $operationType = OperationType::where('type', InventoryEnums\OperationType::INCOMING)
+            return OperationType::where('type', InventoryEnums\OperationType::INCOMING)
                 ->whereDoesntHave('warehouse')
                 ->first();
         }
@@ -534,52 +568,8 @@ class PurchaseOrder
         return $operationType;
     }
 
-    protected function getFinalWarehouseLocation(Order $record): ?Location
+    private function getFinalWarehouseLocation(Order $record): ?Location
     {
         return $record->operationType->warehouse->lotStockLocation;
-    }
-
-    public function createAccountMove($record): void
-    {
-        $accountMove = AccountMove::create([
-            'move_type'               => $record->qty_to_invoice >= 0 ? AccountEnums\MoveType::IN_INVOICE : AccountEnums\MoveType::IN_REFUND,
-            'invoice_origin'          => $record->name,
-            'date'                    => now(),
-            'company_id'              => $record->company_id,
-            'currency_id'             => $record->currency_id,
-            'invoice_payment_term_id' => $record->payment_term_id,
-            'partner_id'              => $record->partner_id,
-            'fiscal_position_id'      => $record->fiscal_position_id,
-        ]);
-
-        $record->accountMoves()->attach($accountMove->id);
-
-        foreach ($record->lines as $line) {
-            $this->createAccountMoveLine($accountMove, $line);
-        }
-
-        AccountFacade::computeAccountMove($accountMove);
-    }
-
-    public function createAccountMoveLine($accountMove, $orderLine): void
-    {
-        $accountMoveLine = $accountMove->lines()->create([
-            'state'                  => $accountMove->state,
-            'name'                   => $orderLine->name,
-            'date'                   => $accountMove->date,
-            'parent_state'           => $accountMove->state,
-            'quantity'               => abs($orderLine->qty_to_invoice),
-            'price_unit'             => $orderLine->price_unit,
-            'discount'               => $orderLine->discount,
-            'company_id'             => $accountMove->company_id,
-            'currency_id'            => $accountMove->currency_id,
-            'company_currency_id'    => $accountMove->currency_id,
-            'partner_id'             => $accountMove->partner_id,
-            'product_id'             => $orderLine->product_id,
-            'uom_id'                 => $orderLine->uom_id,
-            'purchase_order_line_id' => $orderLine->id,
-        ]);
-
-        $accountMoveLine->taxes()->sync($orderLine->taxes->pluck('id'));
     }
 }

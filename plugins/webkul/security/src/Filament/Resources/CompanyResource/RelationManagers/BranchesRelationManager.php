@@ -1,44 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources\CompanyResource\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\FileUpload;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\Toggle;
 use Filament\Actions\Action;
-use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Actions\CreateAction;
-use Filament\Tables\Filters\TrashedFilter;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\ImageEntry;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +46,7 @@ use Webkul\Security\Enums\CompanyStatus;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\Currency;
 
-class BranchesRelationManager extends RelationManager
+final class BranchesRelationManager extends RelationManager
 {
     protected static string $relationship = 'branches';
 
@@ -111,7 +111,7 @@ class BranchesRelationManager extends RelationManager
                                                 Select::make('country_id')
                                                     ->label(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.address-information.fields.country'))
                                                     ->relationship(name: 'country', titleAttribute: 'name')
-                                                    ->afterStateUpdated(fn (Set $set) => $set('state_id', null))
+                                                    ->afterStateUpdated(fn (Set $set): mixed => $set('state_id', null))
                                                     ->searchable()
                                                     ->preload()
                                                     ->live(),
@@ -124,28 +124,26 @@ class BranchesRelationManager extends RelationManager
                                                     )
                                                     ->searchable()
                                                     ->preload()
-                                                    ->createOptionForm(function (Schema $schema, Get $get, Set $set) {
-                                                        return $schema
-                                                            ->components([
-                                                                TextInput::make('name')
-                                                                    ->label(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.address-information.fields.state-name'))
-                                                                    ->required(),
-                                                                TextInput::make('code')
-                                                                    ->label(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.address-information.fields.state-code'))
-                                                                    ->required()
-                                                                    ->unique('states'),
-                                                                Select::make('country_id')
-                                                                    ->label(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.address-information.fields.country'))
-                                                                    ->relationship('country', 'name')
-                                                                    ->searchable()
-                                                                    ->preload()
-                                                                    ->live()
-                                                                    ->default($get('country_id'))
-                                                                    ->afterStateUpdated(function (Get $get) use ($set) {
-                                                                        $set('country_id', $get('country_id'));
-                                                                    }),
-                                                            ]);
-                                                    }),
+                                                    ->createOptionForm(fn (Schema $schema, Get $get, Set $set): Schema => $schema
+                                                        ->components([
+                                                            TextInput::make('name')
+                                                                ->label(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.address-information.fields.state-name'))
+                                                                ->required(),
+                                                            TextInput::make('code')
+                                                                ->label(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.address-information.fields.state-code'))
+                                                                ->required()
+                                                                ->unique('states'),
+                                                            Select::make('country_id')
+                                                                ->label(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.address-information.fields.country'))
+                                                                ->relationship('country', 'name')
+                                                                ->searchable()
+                                                                ->preload()
+                                                                ->live()
+                                                                ->default($get('country_id'))
+                                                                ->afterStateUpdated(function (Get $get) use ($set): void {
+                                                                    $set('country_id', $get('country_id'));
+                                                                }),
+                                                        ])),
                                             ])
                                             ->columns(2),
                                     ]),
@@ -196,7 +194,7 @@ class BranchesRelationManager extends RelationManager
                                                     ])->columns(2),
                                             ])
                                             ->createOptionAction(
-                                                fn (Action $action) => $action
+                                                fn (Action $action): Action => $action
                                                     ->modalHeading(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.additional-information.fields.currency-create'))
                                                     ->modalSubmitActionLabel(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.additional-information.fields.currency-create'))
                                                     ->modalWidth('lg')
@@ -333,9 +331,7 @@ class BranchesRelationManager extends RelationManager
                 SelectFilter::make('country')
                     ->label(__('security::filament/resources/company/relation-managers/manage-branch.table.filters.country'))
                     ->multiple()
-                    ->options(function () {
-                        return Country::pluck('name', 'name');
-                    }),
+                    ->options(fn () => Country::pluck('name', 'name')),
             ])
             ->filtersFormColumns(2)
             ->recordActions([

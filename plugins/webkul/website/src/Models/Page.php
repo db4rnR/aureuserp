@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Security\Models\User;
 use Webkul\Website\Database\Factories\PageFactory;
 
-class Page extends Model
+final class Page extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -45,10 +47,10 @@ class Page extends Model
      * @var string
      */
     protected $casts = [
-        'is_published'      => 'boolean',
+        'is_published' => 'boolean',
         'is_header_visible' => 'boolean',
         'is_footer_visible' => 'boolean',
-        'published_at'      => 'datetime',
+        'published_at' => 'datetime',
     ];
 
     public function creator(): BelongsTo

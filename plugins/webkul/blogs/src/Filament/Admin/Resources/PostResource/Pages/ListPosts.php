@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Filament\Admin\Resources\PostResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ use Webkul\Blog\Filament\Admin\Resources\PostResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListPosts extends ListRecords
+final class ListPosts extends ListRecords
 {
     use HasTableViews;
 
@@ -23,16 +24,12 @@ class ListPosts extends ListRecords
             'my_posts' => PresetView::make(__('blogs::filament/admin/resources/post/pages/list-posts.tabs.my-posts'))
                 ->icon('heroicon-s-user')
                 ->favorite()
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query->where('author_id', Auth::id());
-                }),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('author_id', Auth::id())),
 
             'archived' => PresetView::make(__('blogs::filament/admin/resources/post/pages/list-posts.tabs.archived'))
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 

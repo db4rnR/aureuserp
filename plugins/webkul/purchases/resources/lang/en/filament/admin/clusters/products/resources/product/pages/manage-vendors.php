@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Vendors',
 
@@ -10,7 +12,7 @@ return [
 
                 'notification' => [
                     'title' => 'Vendor Price created',
-                    'body'  => 'The vendor price has been created successfully.',
+                    'body' => 'The vendor price has been created successfully.',
                 ],
             ],
         ],

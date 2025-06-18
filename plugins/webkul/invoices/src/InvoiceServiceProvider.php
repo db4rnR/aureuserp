@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice;
 
 use Webkul\Support\Console\Commands\InstallCommand;
@@ -7,13 +9,13 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class InvoiceServiceProvider extends PackageServiceProvider
+final class InvoiceServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'invoices';
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasTranslations()
             ->hasMigrations([
                 '2025_02_04_082243_alter_products_products_table',
@@ -26,12 +28,12 @@ class InvoiceServiceProvider extends PackageServiceProvider
             ->hasDependencies([
                 'accounts',
             ])
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 }

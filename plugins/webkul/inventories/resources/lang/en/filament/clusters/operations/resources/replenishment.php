@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Replenishment',
@@ -13,23 +15,23 @@ return [
 
     'table' => [
         'columns' => [
-            'product'           => 'Product',
-            'location'          => 'Location',
-            'route'             => 'Route',
-            'vendor'            => 'Vendor',
-            'trigger'           => 'Trigger',
-            'on-hand'           => 'On Hand',
-            'min'               => 'Min',
-            'max'               => 'Max',
+            'product' => 'Product',
+            'location' => 'Location',
+            'route' => 'Route',
+            'vendor' => 'Vendor',
+            'trigger' => 'Trigger',
+            'on-hand' => 'On Hand',
+            'min' => 'Min',
+            'max' => 'Max',
             'multiple-quantity' => 'Multiple Quantity',
-            'to-order'          => 'To Order',
-            'uom'               => 'UOM',
-            'company'           => 'Company',
+            'to-order' => 'To Order',
+            'uom' => 'UOM',
+            'company' => 'Company',
         ],
 
         'groups' => [
             'location' => 'Location',
-            'product'  => 'Product',
+            'product' => 'Product',
             'category' => 'Category',
         ],
 
@@ -42,13 +44,13 @@ return [
 
                 'notification' => [
                     'title' => 'Replenishment added',
-                    'body'  => 'The replenishment has been added successfully.',
+                    'body' => 'The replenishment has been added successfully.',
                 ],
 
                 'before' => [
                     'notification' => [
                         'title' => 'Replenishment already exists',
-                        'body'  => 'A replenishment already exists for this configuration. Please update the existing replenishment instead.',
+                        'body' => 'A replenishment already exists for this configuration. Please update the existing replenishment instead.',
                     ],
                 ],
             ],

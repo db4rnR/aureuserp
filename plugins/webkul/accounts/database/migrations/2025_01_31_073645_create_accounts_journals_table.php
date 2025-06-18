@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_journals', function (Blueprint $table) {
+        Schema::create('accounts_journals', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('default_account_id')

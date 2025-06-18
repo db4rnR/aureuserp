@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources\CompanyResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -7,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Security\Filament\Resources\CompanyResource;
 
-class CreateCompany extends CreateRecord
+final class CreateCompany extends CreateRecord
 {
     protected static string $resource = CompanyResource::class;
 
@@ -27,7 +29,7 @@ class CreateCompany extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         return [
-            'creator_id'  => Auth::user()->id,
+            'creator_id' => Auth::user()->id,
             ...$data,
         ];
     }

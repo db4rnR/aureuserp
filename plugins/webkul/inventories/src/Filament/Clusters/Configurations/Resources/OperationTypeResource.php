@@ -1,48 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Webkul\Inventory\Enums\LocationType;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Radio;
-use Webkul\Inventory\Enums\ReservationMethod;
-use Webkul\Inventory\Enums\CreateBackorder;
-use Webkul\Inventory\Enums\MoveType;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteAction;
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\CreateAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
-use Filament\Infolists\Components\IconEntry;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages\ListOperationTypes;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages\CreateOperationType;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages\ViewOperationType;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages\EditOperationType;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
-use Filament\Infolists;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -50,8 +44,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\CreateBackorder;
+use Webkul\Inventory\Enums\LocationType;
+use Webkul\Inventory\Enums\MoveType;
+use Webkul\Inventory\Enums\ReservationMethod;
 use Webkul\Inventory\Filament\Clusters\Configurations;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages\CreateOperationType;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages\EditOperationType;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages\ListOperationTypes;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages\ViewOperationType;
 use Webkul\Inventory\Models\Location;
 use Webkul\Inventory\Models\OperationType;
 use Webkul\Inventory\Models\Warehouse;
@@ -59,11 +60,11 @@ use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-class OperationTypeResource extends Resource
+final class OperationTypeResource extends Resource
 {
     protected static ?string $model = OperationType::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-queue-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-queue-list';
 
     protected static ?int $navigationSort = 3;
 
@@ -115,7 +116,7 @@ class OperationTypeResource extends Resource
                                                     ->native(true)
                                                     ->live()
                                                     ->selectablePlaceholder(false)
-                                                    ->afterStateUpdated(function (Set $set, Get $get) {
+                                                    ->afterStateUpdated(function (Set $set, Get $get): void {
                                                         // Clear existing values
                                                         $set('print_label', null);
 
@@ -158,7 +159,7 @@ class OperationTypeResource extends Resource
                                                 Toggle::make('print_label')
                                                     ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.generate-shipping-labels'))
                                                     ->inline(false)
-                                                    ->visible(fn (Get $get): bool => in_array($get('type'), [Enums\OperationType::OUTGOING->value, Enums\OperationType::INTERNAL->value])),
+                                                    ->visible(fn (Get $get): bool => in_array($get('type'), [Enums\OperationType::OUTGOING->value, Enums\OperationType::INTERNAL->value], true)),
                                                 Select::make('warehouse_id')
                                                     ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.warehouse'))
                                                     ->relationship(
@@ -166,28 +167,22 @@ class OperationTypeResource extends Resource
                                                         'name',
                                                         modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                                                     )
-                                                    ->getOptionLabelFromRecordUsing(function ($record): string {
-                                                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
-                                                    })
-                                                    ->disableOptionWhen(function ($label) {
-                                                        return str_contains($label, ' (Deleted)');
-                                                    })
+                                                    ->getOptionLabelFromRecordUsing(fn ($record): string => $record->name.($record->trashed() ? ' (Deleted)' : ''))
+                                                    ->disableOptionWhen(fn ($label): bool => str_contains((string) $label, ' (Deleted)'))
                                                     ->searchable()
                                                     ->preload()
                                                     ->live()
-                                                    ->default(function (Get $get) {
-                                                        return Warehouse::first()?->id;
-                                                    }),
+                                                    ->default(fn (Get $get) => Warehouse::first()?->id),
                                                 Radio::make('reservation_method')
                                                     ->required()
                                                     ->options(ReservationMethod::class)
                                                     ->default(ReservationMethod::AT_CONFIRM->value)
-                                                    ->visible(fn (Get $get): bool => $get('type') != Enums\OperationType::INCOMING->value),
+                                                    ->visible(fn (Get $get): bool => $get('type') !== Enums\OperationType::INCOMING->value),
                                                 Toggle::make('auto_show_reception_report')
                                                     ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.show-reception-report'))
                                                     ->inline(false)
                                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.show-reception-report-hint-tooltip'))
-                                                    ->visible(fn (OperationSettings $settings, Get $get): bool => $settings->enable_reception_report && in_array($get('type'), [Enums\OperationType::INCOMING->value, Enums\OperationType::INTERNAL->value])),
+                                                    ->visible(fn (OperationSettings $settings, Get $get): bool => $settings->enable_reception_report && in_array($get('type'), [Enums\OperationType::INCOMING->value, Enums\OperationType::INTERNAL->value], true)),
                                             ]),
 
                                         Group::make()
@@ -203,7 +198,7 @@ class OperationTypeResource extends Resource
                                                     ->relationship('returnOperationType', 'name')
                                                     ->searchable()
                                                     ->preload()
-                                                    ->visible(fn (Get $get): bool => $get('type') != Enums\OperationType::DROPSHIP->value),
+                                                    ->visible(fn (Get $get): bool => $get('type') !== Enums\OperationType::DROPSHIP->value),
                                                 Select::make('create_backorder')
                                                     ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.create-backorder'))
                                                     ->required()
@@ -213,7 +208,7 @@ class OperationTypeResource extends Resource
                                                     ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.move-type'))
                                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.move-type-hint-tooltip'))
                                                     ->options(MoveType::class)
-                                                    ->visible(fn (Get $get): bool => $get('type') == Enums\OperationType::INTERNAL->value),
+                                                    ->visible(fn (Get $get): bool => $get('type') === Enums\OperationType::INTERNAL->value),
                                             ]),
                                     ])
                                     ->columns(2),
@@ -228,7 +223,7 @@ class OperationTypeResource extends Resource
                                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.lots.fields.use-existing-hint-tooltip'))
                                             ->inline(false),
                                     ])
-                                    ->visible(fn (TraceabilitySettings $settings, Get $get): bool => $settings->enable_lots_serial_numbers && $get('type') != Enums\OperationType::DROPSHIP->value),
+                                    ->visible(fn (TraceabilitySettings $settings, Get $get): bool => $settings->enable_lots_serial_numbers && $get('type') !== Enums\OperationType::DROPSHIP->value),
                                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.locations.title'))
                                     ->schema([
                                         Select::make('source_location_id')
@@ -239,12 +234,8 @@ class OperationTypeResource extends Resource
                                                 'full_name',
                                                 modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                                             )
-                                            ->getOptionLabelFromRecordUsing(function ($record): string {
-                                                return $record->full_name.($record->trashed() ? ' (Deleted)' : '');
-                                            })
-                                            ->disableOptionWhen(function ($label) {
-                                                return str_contains($label, ' (Deleted)');
-                                            })
+                                            ->getOptionLabelFromRecordUsing(fn ($record): string => $record->full_name.($record->trashed() ? ' (Deleted)' : ''))
+                                            ->disableOptionWhen(fn ($label): bool => str_contains((string) $label, ' (Deleted)'))
                                             ->searchable()
                                             ->preload()
                                             ->required()
@@ -274,12 +265,8 @@ class OperationTypeResource extends Resource
                                                 'full_name',
                                                 modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                                             )
-                                            ->getOptionLabelFromRecordUsing(function ($record): string {
-                                                return $record->full_name.($record->trashed() ? ' (Deleted)' : '');
-                                            })
-                                            ->disableOptionWhen(function ($label) {
-                                                return str_contains($label, ' (Deleted)');
-                                            })
+                                            ->getOptionLabelFromRecordUsing(fn ($record): string => $record->full_name.($record->trashed() ? ' (Deleted)' : ''))
+                                            ->disableOptionWhen(fn ($label): bool => str_contains((string) $label, ' (Deleted)'))
                                             ->searchable()
                                             ->preload()
                                             ->required()
@@ -292,7 +279,7 @@ class OperationTypeResource extends Resource
                                                         ->when($warehouseId, fn ($query) => $query->where('warehouse_id', $warehouseId))
                                                         ->first()?->id,
                                                     Enums\OperationType::OUTGOING => Location::where('type', LocationType::CUSTOMER->value)->first()?->id,
-                                                    Enums\OperationType::INTERNAL => Location::where(function ($query) use ($warehouseId) {
+                                                    Enums\OperationType::INTERNAL => Location::where(function ($query) use ($warehouseId): void {
                                                         $query->whereNull('warehouse_id')
                                                             ->when($warehouseId, fn ($q) => $q->orWhere('warehouse_id', $warehouseId));
                                                     })->first()?->id,
@@ -392,10 +379,10 @@ class OperationTypeResource extends Resource
                             ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.delete.notification.body')),
                     ),
                 ForceDeleteAction::make()
-                    ->action(function (OperationType $record) {
+                    ->action(function (OperationType $record): void {
                         try {
                             $record->forceDelete();
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.force-delete.notification.error.title'))
@@ -427,10 +414,10 @@ class OperationTypeResource extends Resource
                                 ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.delete.notification.body')),
                         ),
                     ForceDeleteBulkAction::make()
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->forceDelete());
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.force-delete.notification.error.title'))
@@ -570,10 +557,10 @@ class OperationTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListOperationTypes::route('/'),
+            'index' => ListOperationTypes::route('/'),
             'create' => CreateOperationType::route('/create'),
-            'view'   => ViewOperationType::route('/{record}'),
-            'edit'   => EditOperationType::route('/{record}/edit'),
+            'view' => ViewOperationType::route('/{record}'),
+            'edit' => EditOperationType::route('/{record}/edit'),
         ];
     }
 }

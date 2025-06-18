@@ -1,29 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Clusters\Configurations\Resources\ActivityPlanResource\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Tables\Filters\Filter;
-use Filament\Actions\CreateAction;
-use Filament\Support\Enums\Width;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Forms;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Security\Models\User;
@@ -33,7 +34,7 @@ use Webkul\Support\Enums\ActivityResponsibleType;
 use Webkul\Support\Filament\Resources\ActivityTypeResource;
 use Webkul\Support\Models\ActivityType;
 
-class ActivityTemplateRelationManager extends RelationManager
+final class ActivityTemplateRelationManager extends RelationManager
 {
     protected static string $relationship = 'activityPlanTemplates';
 
@@ -56,10 +57,10 @@ class ActivityTemplateRelationManager extends RelationManager
                                                     ->searchable()
                                                     ->required()
                                                     ->default(ActivityType::first()?->id)
-                                                    ->createOptionForm(fn (Schema $schema) => ActivityTypeResource::form($schema))
+                                                    ->createOptionForm(fn (Schema $schema): Schema => ActivityTypeResource::form($schema))
                                                     ->preload()
                                                     ->live()
-                                                    ->afterStateUpdated(function ($state, callable $set) {
+                                                    ->afterStateUpdated(function ($state, callable $set): void {
                                                         $activityType = ActivityType::find($state);
 
                                                         if ($activityType && $activityType->default_user_id) {
@@ -92,7 +93,7 @@ class ActivityTemplateRelationManager extends RelationManager
                                         Select::make('responsible_id')
                                             ->label(__('projects::filament/clusters/configurations/resources/activity-plan/relation-managers/activity-template.form.sections.assignment.fields.assignee'))
                                             ->options(fn () => User::pluck('name', 'id'))
-                                            ->hidden(fn (Get $get) => $get('responsible_type') !== ActivityResponsibleType::OTHER->value)
+                                            ->hidden(fn (Get $get): bool => $get('responsible_type') !== ActivityResponsibleType::OTHER->value)
                                             ->searchable()
                                             ->preload(),
                                     ]),
@@ -201,12 +202,10 @@ class ActivityTemplateRelationManager extends RelationManager
             ->headerActions([
                 CreateAction::make()
                     ->modalWidth(Width::FitContent)
-                    ->mutateDataUsing(function (array $data): array {
-                        return [
-                            ...$data,
-                            'creator_id' => Auth::user()->id,
-                        ];
-                    })
+                    ->mutateDataUsing(fn (array $data): array => [
+                        ...$data,
+                        'creator_id' => Auth::user()->id,
+                    ])
                     ->successNotification(
                         Notification::make()
                             ->success()
@@ -219,12 +218,10 @@ class ActivityTemplateRelationManager extends RelationManager
                     ViewAction::make(),
                     EditAction::make()
                         ->modalWidth(Width::FitContent)
-                        ->mutateDataUsing(function (array $data): array {
-                            return [
-                                ...$data,
-                                'creator_id' => Auth::user()->id,
-                            ];
-                        })
+                        ->mutateDataUsing(fn (array $data): array => [
+                            ...$data,
+                            'creator_id' => Auth::user()->id,
+                        ])
                         ->successNotification(
                             Notification::make()
                                 ->success()

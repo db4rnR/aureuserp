@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
 use Webkul\Partner\Filament\Resources\PartnerResource\Pages\EditPartner as BaseEditVendor;
 
-class EditVendor extends BaseEditVendor
+final class EditVendor extends BaseEditVendor
 {
     protected static string $resource = VendorResource::class;
 

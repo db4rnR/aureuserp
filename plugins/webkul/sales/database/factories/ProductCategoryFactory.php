@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductCategoryFactory extends Factory
+final class ProductCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,14 +16,14 @@ class ProductCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'parent_id'                                 => null,
-            'creator_id'                                => null,
-            'name'                                      => $this->faker->name,
-            'complete_name'                             => $this->faker->name,
-            'parent_path'                               => $this->faker->name,
-            'product_properties_definition'             => $this->faker->name,
-            'property_account_income_category_id'       => null,
-            'property_account_expense_category_id'      => null,
+            'parent_id' => null,
+            'creator_id' => null,
+            'name' => $this->faker->name,
+            'complete_name' => $this->faker->name,
+            'parent_path' => $this->faker->name,
+            'product_properties_definition' => $this->faker->name,
+            'property_account_income_category_id' => null,
+            'property_account_expense_category_id' => null,
             'property_account_down_payment_category_id' => null,
         ];
     }

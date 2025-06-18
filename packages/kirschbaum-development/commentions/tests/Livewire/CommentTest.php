@@ -1,17 +1,19 @@
 <?php
 
-use Tests\Policies\BlockedCommentPolicy;
+declare(strict_types=1);
+
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\Comment as CommentModel;
 use Kirschbaum\Commentions\Livewire\Comment as CommentComponent;
 use Kirschbaum\Commentions\RenderableComment;
 use Tests\Models\Post;
 use Tests\Models\User;
+use Tests\Policies\BlockedCommentPolicy;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
 
-test('can render a comment', function () {
+test('can render a comment', function (): void {
     /** @var User $user */
     $user = User::factory()->create();
     actingAs($user);
@@ -32,7 +34,7 @@ test('can render a comment', function () {
         ->assertSeeHtml('wire:click="delete"'); // Author should see a delete button
 });
 
-test('other users cannot see edit and delete buttons by default', function () {
+test('other users cannot see edit and delete buttons by default', function (): void {
     $user = User::factory()->create();
     actingAs($user);
 
@@ -47,7 +49,7 @@ test('other users cannot see edit and delete buttons by default', function () {
         ->assertDontSeeHtml('wire:click="delete"');
 });
 
-test('guests cannot see edit and delete buttons', function () {
+test('guests cannot see edit and delete buttons', function (): void {
     $author = User::factory()->create();
     $post = Post::factory()->create();
     $comment = CommentModel::factory()->author($author)->commentable($post)->create();
@@ -59,7 +61,7 @@ test('guests cannot see edit and delete buttons', function () {
         ->assertDontSeeHtml('wire:click="delete"');
 });
 
-test('custom policy can change who can see edit and delete buttons', function () {
+test('custom policy can change who can see edit and delete buttons', function (): void {
     $user = User::factory()->create();
     actingAs($user);
 
@@ -75,7 +77,7 @@ test('custom policy can change who can see edit and delete buttons', function ()
         ->assertDontSeeHtml('wire:click="delete"');
 });
 
-test('author can update a comment by default', function () {
+test('author can update a comment by default', function (): void {
     $user = User::factory()->create();
     actingAs($user);
 
@@ -96,7 +98,7 @@ test('author can update a comment by default', function () {
     ]);
 });
 
-test('other users cannot update a comment by default', function () {
+test('other users cannot update a comment by default', function (): void {
     $user = User::factory()->create();
     actingAs($user);
 
@@ -118,7 +120,7 @@ test('other users cannot update a comment by default', function () {
     ]);
 });
 
-test('guests cannot update a comment', function () {
+test('guests cannot update a comment', function (): void {
     $author = User::factory()->create();
     $post = Post::factory()->create();
     $comment = CommentModel::factory()->author($author)->commentable($post)->create([
@@ -137,7 +139,7 @@ test('guests cannot update a comment', function () {
     ]);
 });
 
-test('custom policy can change who can edit a comment', function () {
+test('custom policy can change who can edit a comment', function (): void {
     $user = User::factory()->create();
     actingAs($user);
 
@@ -160,7 +162,7 @@ test('custom policy can change who can edit a comment', function () {
     ]);
 });
 
-test('author can delete a comment by default', function () {
+test('author can delete a comment by default', function (): void {
     $user = User::factory()->create();
     actingAs($user);
 
@@ -176,7 +178,7 @@ test('author can delete a comment by default', function () {
     ]);
 });
 
-test('other users cannot delete a comment by default', function () {
+test('other users cannot delete a comment by default', function (): void {
     $user = User::factory()->create();
     actingAs($user);
 
@@ -193,7 +195,7 @@ test('other users cannot delete a comment by default', function () {
     ]);
 });
 
-test('guests cannot delete a comment', function () {
+test('guests cannot delete a comment', function (): void {
     $author = User::factory()->create();
     $post = Post::factory()->create();
     $comment = CommentModel::factory()->author($author)->commentable($post)->create();
@@ -207,7 +209,7 @@ test('guests cannot delete a comment', function () {
     ]);
 });
 
-test('custom policy can change who can delete a comment', function () {
+test('custom policy can change who can delete a comment', function (): void {
     $user = User::factory()->create();
     actingAs($user);
 
@@ -225,7 +227,7 @@ test('custom policy can change who can delete a comment', function () {
     ]);
 });
 
-test('can render a custom renderable comment', function () {
+test('can render a custom renderable comment', function (): void {
     $comment = new RenderableComment(
         id: 1,
         authorName: 'System',

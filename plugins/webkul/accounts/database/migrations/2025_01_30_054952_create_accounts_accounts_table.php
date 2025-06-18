@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_accounts', function (Blueprint $table) {
+        Schema::create('accounts_accounts', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('currency_id')->nullable()->comment('Currency')->constrained('currencies')->nullOnDelete();
             $table->foreignId('creator_id')->nullable()->comment('Creator')->constrained('users')->nullOnDelete();
@@ -31,7 +31,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_journals', function (Blueprint $table) {
+        Schema::table('accounts_journals', function (Blueprint $table): void {
             if (Schema::hasColumn('accounts_journals', 'loss_account_id')) {
                 $table->dropForeign(['loss_account_id']);
             }

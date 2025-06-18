@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'details' => [
         'uploaded_on' => '업로드 날짜',

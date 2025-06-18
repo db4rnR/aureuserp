@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Carbon\Carbon;
@@ -12,7 +14,7 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class ProductQuantity extends Model
+final class ProductQuantity extends Model
 {
     use HasFactory;
 
@@ -55,8 +57,8 @@ class ProductQuantity extends Model
      */
     protected $casts = [
         'inventory_quantity_set' => 'boolean',
-        'scheduled_at'           => 'date',
-        'incoming_at'            => 'datetime',
+        'scheduled_at' => 'date',
+        'incoming_at' => 'datetime',
     ];
 
     public function product(): BelongsTo
@@ -110,21 +112,9 @@ class ProductQuantity extends Model
     }
 
     /**
-     * Bootstrap any application services.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($productQuantity) {
-            $productQuantity->updateScheduledAt();
-        });
-    }
-
-    /**
      * Update the scheduled_at attribute
      */
-    public function updateScheduledAt()
+    public function updateScheduledAt(): void
     {
         $this->scheduled_at = Carbon::create(
             now()->year,
@@ -136,6 +126,18 @@ class ProductQuantity extends Model
         if ($this->location?->cyclic_inventory_frequency) {
             $this->scheduled_at = now()->addDays($this->location->cyclic_inventory_frequency);
         }
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::saving(function ($productQuantity): void {
+            $productQuantity->updateScheduledAt();
+        });
     }
 
     protected static function newFactory(): ProductQuantityFactory

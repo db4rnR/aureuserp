@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Enums;
 
 enum ActivityDelayInterval: string
@@ -14,7 +16,7 @@ enum ActivityDelayInterval: string
     {
         return [
             self::BEFORE_PLAN_DATE->value => __('support::enums/activity-delay-interval.before-plan-date'),
-            self::AFTER_PLAN_DATE->value  => __('support::enums/activity-delay-interval.after-plan-date'),
+            self::AFTER_PLAN_DATE->value => __('support::enums/activity-delay-interval.after-plan-date'),
         ];
     }
 }

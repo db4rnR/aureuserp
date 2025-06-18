@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Timesheet\Filament\Resources\TimesheetResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Support\Facades\Auth;
@@ -12,11 +13,22 @@ use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 use Webkul\Timesheet\Filament\Resources\TimesheetResource;
 
-class ManageTimesheets extends ManageRecords
+final class ManageTimesheets extends ManageRecords
 {
     use HasTableViews;
 
     protected static string $resource = TimesheetResource::class;
+
+    public function getPresetTableViews(): array
+    {
+        return [
+            'my_timesheets' => PresetView::make(__('timesheets::filament/resources/timesheet/manage-timesheets.tabs.my-timesheets'))
+                ->badge(Timesheet::where('user_id', Auth::id())->count())
+                ->icon('heroicon-o-clock')
+                ->modifyQueryUsing(fn ($query) => $query->where('user_id', Auth::id()))
+                ->favorite(),
+        ];
+    }
 
     protected function getHeaderActions(): array
     {
@@ -35,19 +47,6 @@ class ManageTimesheets extends ManageRecords
                         ->title(__('timesheets::filament/resources/timesheet/manage-timesheets.header-actions.create.notification.title'))
                         ->body(__('timesheets::filament/resources/timesheet/manage-timesheets.header-actions.create.notification.body')),
                 ),
-        ];
-    }
-
-    public function getPresetTableViews(): array
-    {
-        return [
-            'my_timesheets' => PresetView::make(__('timesheets::filament/resources/timesheet/manage-timesheets.tabs.my-timesheets'))
-                ->badge(Timesheet::where('user_id', Auth::id())->count())
-                ->icon('heroicon-o-clock')
-                ->modifyQueryUsing(function ($query) {
-                    return $query->where('user_id', Auth::id());
-                })
-                ->favorite(),
         ];
     }
 }

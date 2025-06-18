@@ -1,17 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Actions\Print;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 
-class PackageAction extends Action
+final class PackageAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'inventories.operations.print.package';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,15 +18,20 @@ class PackageAction extends Action
             ->action(function ($record) {
                 $packages = $record->packages()->distinct()->get();
 
-                $pdf = PDF::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
-                    'records'  => $packages,
+                $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
+                    'records' => $packages,
                 ]);
 
                 $pdf->setPaper('a4', 'portrait');
 
-                return response()->streamDownload(function () use ($pdf) {
+                return response()->streamDownload(function () use ($pdf): void {
                     echo $pdf->output();
                 }, 'Package-'.str_replace('/', '_', $record->name).'.pdf');
             });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'inventories.operations.print.package';
     }
 }

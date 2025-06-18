@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;

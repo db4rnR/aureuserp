@@ -1,57 +1,57 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Forms\Components\RichEditor;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\ListQuotationTemplates;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\CreateQuotationTemplate;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\ViewQuotationTemplate;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\EditQuotationTemplate;
-use Filament\Forms\Components\Repeater;
+use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Schemas\Components\Grid;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\IconEntry;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentView;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Table;
 use Webkul\Sale\Enums\OrderDisplayType;
 use Webkul\Sale\Filament\Clusters\Configuration;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\CreateQuotationTemplate;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\EditQuotationTemplate;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\ListQuotationTemplates;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\ViewQuotationTemplate;
 use Webkul\Sale\Models\OrderTemplate;
 
-class QuotationTemplateResource extends Resource
+final class QuotationTemplateResource extends Resource
 {
     protected static ?string $model = OrderTemplate::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document';
 
     protected static ?string $cluster = Configuration::class;
 
@@ -84,9 +84,9 @@ class QuotationTemplateResource extends Resource
                                     ->tabs([
                                         Tab::make(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.title'))
                                             ->schema([
-                                                static::getProductRepeater(),
-                                                static::getSectionRepeater(),
-                                                static::getNoteRepeater(),
+                                                self::getProductRepeater(),
+                                                self::getSectionRepeater(),
+                                                self::getNoteRepeater(),
                                             ]),
                                         Tab::make(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.terms-and-conditions.title'))
                                             ->schema([
@@ -132,7 +132,7 @@ class QuotationTemplateResource extends Resource
                                                     ->prefix('of')
                                                     ->suffix('%')
                                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.signature-and-payment.fields.prepayment-percentage'))
-                                                    ->visible(fn (Get $get) => $get('require_payment') === true),
+                                                    ->visible(fn (Get $get): bool => $get('require_payment') === true),
                                             ])->columns(1),
                                     ]),
                             ])
@@ -268,10 +268,10 @@ class QuotationTemplateResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListQuotationTemplates::route('/'),
+            'index' => ListQuotationTemplates::route('/'),
             'create' => CreateQuotationTemplate::route('/create'),
-            'view'   => ViewQuotationTemplate::route('/{record}'),
-            'edit'   => EditQuotationTemplate::route('/{record}/edit'),
+            'view' => ViewQuotationTemplate::route('/{record}'),
+            'edit' => EditQuotationTemplate::route('/{record}/edit'),
         ];
     }
 
@@ -285,7 +285,7 @@ class QuotationTemplateResource extends Resource
             ->cloneable()
             ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
             ->deleteAction(
-                fn (Action $action) => $action->requiresConfirmation(),
+                fn (Action $action): Action => $action->requiresConfirmation(),
             )
             ->extraItemActions([
                 Action::make('view')
@@ -294,7 +294,7 @@ class QuotationTemplateResource extends Resource
                         array $arguments,
                         $livewire
                     ): void {
-                        $recordId = explode('-', $arguments['item'])[1];
+                        $recordId = explode('-', (string) $arguments['item'])[1];
 
                         $redirectUrl = OrderTemplateProductResource::getUrl('edit', ['record' => $recordId]);
 
@@ -335,7 +335,7 @@ class QuotationTemplateResource extends Resource
             ->cloneable()
             ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
             ->deleteAction(
-                fn (Action $action) => $action->requiresConfirmation(),
+                fn (Action $action): Action => $action->requiresConfirmation(),
             )
             ->extraItemActions([
                 Action::make('view')
@@ -344,7 +344,7 @@ class QuotationTemplateResource extends Resource
                         array $arguments,
                         $livewire
                     ): void {
-                        $recordId = explode('-', $arguments['item'])[1];
+                        $recordId = explode('-', (string) $arguments['item'])[1];
 
                         $redirectUrl = OrderTemplateProductResource::getUrl('edit', ['record' => $recordId]);
 
@@ -378,7 +378,7 @@ class QuotationTemplateResource extends Resource
             ->cloneable()
             ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
             ->deleteAction(
-                fn (Action $action) => $action->requiresConfirmation(),
+                fn (Action $action): Action => $action->requiresConfirmation(),
             )
             ->extraItemActions([
                 Action::make('view')
@@ -387,7 +387,7 @@ class QuotationTemplateResource extends Resource
                         array $arguments,
                         $livewire
                     ): void {
-                        $recordId = explode('-', $arguments['item'])[1];
+                        $recordId = explode('-', (string) $arguments['item'])[1];
 
                         $redirectUrl = OrderTemplateProductResource::getUrl('edit', ['record' => $recordId]);
 
@@ -510,7 +510,7 @@ class QuotationTemplateResource extends Resource
                                                 TextEntry::make('prepayment_percentage')
                                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.prepayment-percentage'))
                                                     ->suffix('%')
-                                                    ->visible(fn ($record) => $record->require_payment === true),
+                                                    ->visible(fn ($record): bool => $record->require_payment === true),
                                             ]),
                                     ]),
                             ])

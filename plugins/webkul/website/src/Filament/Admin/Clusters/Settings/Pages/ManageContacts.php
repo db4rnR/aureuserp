@@ -1,31 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Filament\Admin\Clusters\Settings\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use UnitEnum;
 use Webkul\Support\Filament\Clusters\Settings;
 use Webkul\Website\Settings\ContactSettings;
 
-class ManageContacts extends SettingsPage
+final class ManageContacts extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-truck';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
 
     protected static ?string $slug = 'website/manage-contacts';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Website';
+    protected static string|UnitEnum|null $navigationGroup = 'Website';
 
     protected static ?int $navigationSort = 5;
 
     protected static string $settings = ContactSettings::class;
 
     protected static ?string $cluster = Settings::class;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('website::filament/admin/clusters/settings/pages/manage-contacts.title');
+    }
 
     public function getBreadcrumbs(): array
     {
@@ -35,11 +43,6 @@ class ManageContacts extends SettingsPage
     }
 
     public function getTitle(): string
-    {
-        return __('website::filament/admin/clusters/settings/pages/manage-contacts.title');
-    }
-
-    public static function getNavigationLabel(): string
     {
         return __('website::filament/admin/clusters/settings/pages/manage-contacts.title');
     }

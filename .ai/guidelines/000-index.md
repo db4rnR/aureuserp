@@ -1,5 +1,44 @@
 # AureusERP AI Assistant Guidelines
+# AureusERP AI Assistant Guidelines
 
+## Core Communication Principle
+
+**All documents and responses should be clear, actionable, and suitable for a junior developer to understand and implement.**
+
+This principle guides all documentation, code, and communication within the AureusERP project.
+
+## Guidelines Index
+
+1. [Project Overview](010-project-overview.md) - Core information about AureusERP
+2. [Documentation Standards](020-documentation-standards.md) - Guidelines for documentation
+3. [Development Standards](030-development-standards.md) - Code style and architecture patterns
+4. [Workflow Guidelines](040-workflow-guidelines.md) - Git workflow and terminal management
+5. [Plugin Architecture](050-plugin-architecture.md) - Working with plugins
+6. [Testing Standards](060-testing-standards.md) - Testing requirements and practices
+
+## Using These Guidelines
+
+These guidelines serve as a comprehensive reference for working with the AureusERP codebase. They are designed to be approachable for developers of all experience levels, with special attention to clarity for junior developers.
+
+When working on the project:
+
+1. Start by understanding the project structure and architecture in the Project Overview
+2. Follow the Documentation Standards when creating or updating documentation
+3. Adhere to Development Standards when writing or modifying code
+4. Use the Workflow Guidelines for consistent Git and development workflows
+5. Refer to Plugin Architecture when working with or creating plugins
+6. Follow Testing Standards to ensure code quality and reliability
+
+## Maintenance
+
+These guidelines should be updated whenever there are significant changes to:
+
+- Project architecture or structure
+- Development standards or workflows
+- Documentation requirements
+- AI Assistant behavior or capabilities
+
+When updating these guidelines, ensure that all affected documents are updated consistently and that the main index reflects the current structure.
 ## Overview
 
 This document serves as the main index for the AureusERP AI Assistant guidelines. These guidelines are designed to ensure consistent, high-quality interactions when working with the AureusERP codebase.

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Commands\Concerns;
 
-use ReflectionClass;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use Illuminate\Support\Str;
+use ReflectionClass;
 
 trait CanGeneratePolicy
 {
@@ -46,7 +48,7 @@ trait CanGeneratePolicy
     {
         $stubVariables = collect(Utils::getResourcePermissionPrefixes($entity['fqcn']))
             ->reduce(function ($gates, $permission) use ($entity) {
-                $gates[Str::studly($permission)] = $permission . '_' . $entity['resource'];
+                $gates[Str::studly($permission)] = $permission.'_'.$entity['resource'];
 
                 return $gates;
             }, []);
@@ -60,10 +62,10 @@ trait CanGeneratePolicy
         $path = $reflectionClass->getFileName();
 
         $stubVariables['namespace'] = Str::of($path)->contains(['vendor', 'src'])
-            ? 'App\\' . Utils::getPolicyNamespace()
+            ? 'App\\'.Utils::getPolicyNamespace()
             : Str::of($namespace)->replace('Models', Utils::getPolicyNamespace()); /** @phpstan-ignore-line */
         $stubVariables['model_name'] = $entity['model'];
-        $stubVariables['model_fqcn'] = $namespace . '\\' . $entity['model'];
+        $stubVariables['model_fqcn'] = $namespace.'\\'.$entity['model'];
         $stubVariables['model_variable'] = Str::of($entity['model'])->camel();
         $stubVariables['modelPolicy'] = "{$entity['model']}Policy";
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Enums;
 
 use Filament\Support\Contracts\HasColor;
@@ -16,27 +18,27 @@ enum OrderInvoiceStatus: string implements HasColor, HasLabel
     public static function options(): array
     {
         return [
-            self::NO->value          => __('purchases::enums/order-invoice-status.no'),
+            self::NO->value => __('purchases::enums/order-invoice-status.no'),
             self::TO_INVOICED->value => __('purchases::enums/order-invoice-status.to-invoiced'),
-            self::INVOICED->value    => __('purchases::enums/order-invoice-status.invoiced'),
+            self::INVOICED->value => __('purchases::enums/order-invoice-status.invoiced'),
         ];
     }
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::NO          => __('purchases::enums/order-invoice-status.no'),
+            self::NO => __('purchases::enums/order-invoice-status.no'),
             self::TO_INVOICED => __('purchases::enums/order-invoice-status.to-invoiced'),
-            self::INVOICED    => __('purchases::enums/order-invoice-status.invoiced'),
+            self::INVOICED => __('purchases::enums/order-invoice-status.invoiced'),
         };
     }
 
     public function getColor(): string
     {
         return match ($this) {
-            self::NO          => 'gray',
+            self::NO => 'gray',
             self::TO_INVOICED => 'warning',
-            self::INVOICED    => 'success',
+            self::INVOICED => 'success',
         };
     }
 }

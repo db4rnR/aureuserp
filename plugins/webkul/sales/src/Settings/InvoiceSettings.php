@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class InvoiceSettings extends Settings
+final class InvoiceSettings extends Settings
 {
     public string $invoice_policy;
 

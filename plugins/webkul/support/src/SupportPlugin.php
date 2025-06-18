@@ -1,29 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support;
 
-use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\HtmlString;
+use ReflectionClass;
 
-class SupportPlugin implements Plugin
+final class SupportPlugin implements Plugin
 {
+    public static function make(): static
+    {
+        return app(self::class);
+    }
+
     public function getId(): string
     {
         return 'support';
     }
 
-    public static function make(): static
-    {
-        return app(static::class);
-    }
-
     public function register(Panel $panel): void
     {
         $panel
-            ->when($panel->getId() == 'admin', function (Panel $panel) {
+            ->when($panel->getId() === 'admin', function (Panel $panel): void {
                 $panel->passwordReset()
                     ->discoverResources(in: $this->getPluginBasePath('/Filament/Resources'), for: 'Webkul\\Support\\Filament\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Support\\Filament\\Pages')
@@ -36,7 +38,7 @@ class SupportPlugin implements Plugin
     {
         FilamentView::registerRenderHook(
             name: 'panels::scripts.before',
-            hook: fn () => new HtmlString(html: "
+            hook: fn (): HtmlString => new HtmlString(html: "
             <script>
                 document.addEventListener('livewire:navigated', function() {
                     setTimeout(() => {
@@ -51,9 +53,9 @@ class SupportPlugin implements Plugin
         "));
     }
 
-    protected function getPluginBasePath($path = null): string
+    private function getPluginBasePath($path = null): string
     {
-        $reflector = new ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(self::class);
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

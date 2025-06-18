@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup\Components;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
@@ -16,7 +17,7 @@ use Livewire\Component;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelBackup\Models\BackupDestinationStatus;
 
-class BackupDestinationStatusListRecords extends Component implements HasForms, HasTable
+final class BackupDestinationStatusListRecords extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;

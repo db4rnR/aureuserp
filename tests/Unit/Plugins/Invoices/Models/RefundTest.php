@@ -1,21 +1,23 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Invoice\Models\Refund;
-use Webkul\Account\Models\Move as BaseMove;
-use Webkul\Account\Enums\MoveType;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Account\Enums\MoveState;
-use Webkul\Support\Models\Currency;
-use Webkul\Security\Models\User;
-use Webkul\Partner\Models\Partner;
+use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Models\Journal;
+use Webkul\Account\Models\Move as BaseMove;
+use Webkul\Invoice\Models\Refund;
+use Webkul\Partner\Models\Partner;
+use Webkul\Security\Models\User;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Refund model inheritance and properties')]
-function refund_model_inheritance_and_properties()
+function refund_model_inheritance_and_properties(): void
 {
     // Create a test refund
     $refund = Refund::factory()->create([
@@ -52,18 +54,18 @@ function refund_model_inheritance_and_properties()
     expect($refund->amount_residual)->toBe(1200.00);
 
     // Test relationships inherited from the base class
-    expect($refund->journal())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($refund->partner())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($refund->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($refund->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($refund->lines())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($refund->journal())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($refund->partner())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($refund->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($refund->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($refund->lines())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Refund model relationships with other models')]
-function refund_model_relationships_with_other_models()
+function refund_model_relationships_with_other_models(): void
 {
     // Create related models
     $currency = Currency::factory()->create();
@@ -90,7 +92,7 @@ function refund_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Refund model methods')]
-function refund_model_methods()
+function refund_model_methods(): void
 {
     // Create a test refund
     $refund = Refund::factory()->create([
@@ -108,7 +110,7 @@ function refund_model_methods()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Refund model sequence prefix generation')]
-function refund_model_sequence_prefix_generation()
+function refund_model_sequence_prefix_generation(): void
 {
     // Create a test refund
     $refund = Refund::factory()->create([
@@ -119,7 +121,7 @@ function refund_model_sequence_prefix_generation()
     $refund->updateSequencePrefix();
 
     // Test that the sequence prefix was generated correctly
-    $expectedPrefix = 'RBILL/' . date('Y') . '/' . date('m');
+    $expectedPrefix = 'RBILL/'.date('Y').'/'.date('m');
     expect($refund->sequence_prefix)->toBe($expectedPrefix);
 }
 
@@ -127,14 +129,14 @@ function refund_model_sequence_prefix_generation()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Refund model traits')]
-function refund_model_traits()
+function refund_model_traits(): void
 {
     // Create a test refund
     $refund = Refund::factory()->create();
 
     // Test that the model uses the expected traits
-    expect($refund)->toBeInstanceOf(\Webkul\Chatter\Traits\HasChatter::class);
-    expect($refund)->toBeInstanceOf(\Webkul\Field\Traits\HasCustomFields::class);
-    expect($refund)->toBeInstanceOf(\Webkul\Chatter\Traits\HasLogActivity::class);
-    expect($refund)->toBeInstanceOf(\Spatie\EloquentSortable\Sortable::class);
+    expect($refund)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
+    expect($refund)->toBeInstanceOf(Webkul\Field\Traits\HasCustomFields::class);
+    expect($refund)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
+    expect($refund)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
 }

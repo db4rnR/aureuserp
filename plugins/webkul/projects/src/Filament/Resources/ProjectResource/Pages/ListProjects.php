@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources\ProjectResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ use Webkul\Project\Filament\Resources\ProjectResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListProjects extends ListRecords
+final class ListProjects extends ListRecords
 {
     use HasTableViews;
 
@@ -28,11 +29,9 @@ class ListProjects extends ListRecords
             'my_favorite_projects' => PresetView::make(__('projects::filament/resources/project/pages/list-projects.tabs.my-favorite-projects'))
                 ->icon('heroicon-s-star')
                 ->favorite()
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query
-                        ->leftJoin('projects_user_project_favorites', 'projects_user_project_favorites.project_id', '=', 'projects_projects.id')
-                        ->where('projects_user_project_favorites.user_id', Auth::id());
-                }),
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->leftJoin('projects_user_project_favorites', 'projects_user_project_favorites.project_id', '=', 'projects_projects.id')
+                    ->where('projects_user_project_favorites.user_id', Auth::id())),
 
             'unassigned_projects' => PresetView::make(__('projects::filament/resources/project/pages/list-projects.tabs.unassigned-projects'))
                 ->icon('heroicon-s-user-minus')
@@ -42,9 +41,7 @@ class ListProjects extends ListRecords
             'archived_projects' => PresetView::make(__('projects::filament/resources/project/pages/list-projects.tabs.archived-projects'))
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 

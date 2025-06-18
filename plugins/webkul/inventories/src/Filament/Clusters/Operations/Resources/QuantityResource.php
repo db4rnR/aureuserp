@@ -1,38 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
-use Webkul\Inventory\Enums\LocationType;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
+use BackedEnum;
 use Filament\Actions\Action;
-use Webkul\Inventory\Enums\ProductTracking;
-use Filament\Forms\Components\TextInput;
+use Filament\Actions\CreateAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\TextInputColumn;
-use Filament\Tables\Grouping\Group;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Enums\FiltersLayout;
-use Filament\Actions\CreateAction;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\QuantityResource\Pages\ManageQuantities;
-use Filament\Forms;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\LocationType;
+use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Inventory\Filament\Clusters\Operations;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\QuantityResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\QuantityResource\Pages\ManageQuantities;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource;
@@ -45,17 +44,17 @@ use Webkul\Inventory\Settings\ProductSettings;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-class QuantityResource extends Resource
+final class QuantityResource extends Resource
 {
     protected static ?string $model = ProductQuantity::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrows-up-down';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-up-down';
 
     protected static ?int $navigationSort = 4;
 
     protected static ?string $cluster = Operations::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationLabel(): string
     {
@@ -81,7 +80,7 @@ class QuantityResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required()
-                    ->visible(fn (WarehouseSettings $settings) => $settings->enable_locations),
+                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
                 Select::make('product_id')
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.form.fields.product'))
                     ->relationship(
@@ -93,7 +92,7 @@ class QuantityResource extends Resource
                     ->preload()
                     ->required()
                     ->live()
-                    ->afterStateUpdated(function (Set $set, Get $get) {
+                    ->afterStateUpdated(function (Set $set, Get $get): void {
                         $set('lot_id', null);
                     }),
                 Select::make('lot_id')
@@ -106,7 +105,7 @@ class QuantityResource extends Resource
                     ->searchable()
                     ->preload()
                     ->createOptionForm(fn (Schema $schema): Schema => LotResource::form($schema))
-                    ->createOptionAction(function (Action $action, Get $get) {
+                    ->createOptionAction(function (Action $action, Get $get): void {
                         $action
                             ->mutateDataUsing(function (array $data) use ($get): array {
                                 $data['product_id'] = $get('product_id');
@@ -133,7 +132,7 @@ class QuantityResource extends Resource
                     ->searchable()
                     ->preload()
                     ->createOptionForm(fn (Schema $schema): Schema => PackageResource::form($schema))
-                    ->visible(fn (OperationSettings $settings) => $settings->enable_packages),
+                    ->visible(fn (OperationSettings $settings): bool => $settings->enable_packages),
                 TextInput::make('counted_quantity')
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.form.fields.counted-qty'))
                     ->numeric()
@@ -158,14 +157,14 @@ class QuantityResource extends Resource
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.table.columns.location'))
                     ->searchable()
                     ->sortable()
-                    ->visible(fn (WarehouseSettings $settings) => $settings->enable_locations),
+                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
                 TextColumn::make('storageCategory.name')
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.table.columns.storage-category'))
                     ->searchable()
                     ->sortable()
                     ->placeholder('—')
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->visible(fn (WarehouseSettings $settings) => $settings->enable_locations),
+                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
                 TextColumn::make('product.name')
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.table.columns.product'))
                     ->searchable()
@@ -180,13 +179,13 @@ class QuantityResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->placeholder('—')
-                    ->visible(fn (TraceabilitySettings $settings) => $settings->enable_lots_serial_numbers),
+                    ->visible(fn (TraceabilitySettings $settings): bool => $settings->enable_lots_serial_numbers),
                 TextColumn::make('package.name')
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.table.columns.package'))
                     ->searchable()
                     ->sortable()
                     ->placeholder('—')
-                    ->visible(fn (OperationSettings $settings) => $settings->enable_packages),
+                    ->visible(fn (OperationSettings $settings): bool => $settings->enable_packages),
                 TextColumn::make('available_quantity')
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.table.columns.available-quantity'))
                     ->sortable()
@@ -199,13 +198,13 @@ class QuantityResource extends Resource
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.table.columns.counted'))
                     ->sortable()
                     ->rules(['numeric', 'min:0'])
-                    ->beforeStateUpdated(function ($record, $state) {
+                    ->beforeStateUpdated(function ($record, $state): void {
                         $record->update([
-                            'inventory_quantity_set'  => true,
+                            'inventory_quantity_set' => true,
                             'inventory_diff_quantity' => $state - $record->quantity,
                         ]);
                     })
-                    ->afterStateUpdated(function ($record, $state) {
+                    ->afterStateUpdated(function ($record, $state): void {
                         Notification::make()
                             ->success()
                             ->title(__('inventories::filament/clusters/operations/resources/quantity.table.columns.on-hand-before-state-updated.notification.title'))
@@ -217,7 +216,7 @@ class QuantityResource extends Resource
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.table.columns.difference'))
                     ->sortable()
                     ->formatStateUsing(fn ($record) => $record->inventory_quantity_set ? $record->inventory_diff_quantity : '')
-                    ->color(fn ($record) => $record->inventory_diff_quantity > 0 ? 'success' : 'danger'),
+                    ->color(fn ($record): string => $record->inventory_diff_quantity > 0 ? 'success' : 'danger'),
                 TextColumn::make('scheduled_at')
                     ->label(__('inventories::filament/clusters/operations/resources/quantity.table.columns.scheduled-at'))
                     ->sortable()
@@ -250,13 +249,11 @@ class QuantityResource extends Resource
                         ->label(__('inventories::filament/clusters/operations/resources/quantity.table.groups.package')),
                     Group::make('company.name')
                         ->label(__('inventories::filament/clusters/operations/resources/quantity.table.groups.company')),
-                ])->filter(function ($group) {
-                    return match ($group->getId()) {
-                        'location.full_name', 'storageCategory.name' => app(WarehouseSettings::class)->enable_locations,
-                        'lot.name'     => app(TraceabilitySettings::class)->enable_lots_serial_numbers,
-                        'package.name' => app(OperationSettings::class)->enable_packages,
-                        default        => true
-                    };
+                ])->filter(fn ($group) => match ($group->getId()) {
+                    'location.full_name', 'storageCategory.name' => app(WarehouseSettings::class)->enable_locations,
+                    'lot.name' => app(TraceabilitySettings::class)->enable_lots_serial_numbers,
+                    'package.name' => app(OperationSettings::class)->enable_packages,
+                    default => true
                 })->all()
             )
             ->filters([
@@ -399,7 +396,7 @@ class QuantityResource extends Resource
                     ])->filter()->values()->all()),
             ], layout: FiltersLayout::Modal)
             ->filtersTriggerAction(
-                fn (Action $action) => $action
+                fn (Action $action): Action => $action
                     ->slideOver(),
             )
             ->filtersFormColumns(2)
@@ -410,7 +407,7 @@ class QuantityResource extends Resource
                     ->mutateDataUsing(function (array $data): array {
                         $product = Product::find($data['product_id']);
 
-                        $data['location_id'] = $data['location_id'] ?? Warehouse::first()->lot_stock_location_id;
+                        $data['location_id'] ??= Warehouse::first()->lot_stock_location_id;
 
                         $data['creator_id'] = Auth::id();
 
@@ -426,7 +423,7 @@ class QuantityResource extends Resource
 
                         return $data;
                     })
-                    ->before(function (CreateAction $action, array $data) {
+                    ->before(function (CreateAction $action, array $data): void {
                         $existingQuantity = ProductQuantity::where('location_id', $data['location_id'] ?? Warehouse::first()->lot_stock_location_id)
                             ->where('product_id', $data['product_id'])
                             ->where('package_id', $data['package_id'] ?? null)
@@ -461,7 +458,7 @@ class QuantityResource extends Resource
                             ->title(__('inventories::filament/clusters/operations/resources/quantity.table.actions.apply.notification.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/quantity.table.actions.apply.notification.body')),
                     )
-                    ->action(function (ProductQuantity $record) {
+                    ->action(function (ProductQuantity $record): void {
                         $adjustmentLocation = Location::where('type', LocationType::INVENTORY)
                             ->where('is_scrap', false)
                             ->first();
@@ -471,22 +468,22 @@ class QuantityResource extends Resource
                         $diffQuantity = $record->inventory_diff_quantity;
 
                         $record->update([
-                            'quantity'                => $countedQuantity,
-                            'counted_quantity'        => 0,
+                            'quantity' => $countedQuantity,
+                            'counted_quantity' => 0,
                             'inventory_diff_quantity' => 0,
-                            'inventory_quantity_set'  => false,
+                            'inventory_quantity_set' => false,
                         ]);
 
                         ProductQuantity::updateOrCreate(
                             [
                                 'location_id' => $adjustmentLocation->id,
-                                'product_id'  => $record->product_id,
-                                'lot_id'      => $record->lot_id,
+                                'product_id' => $record->product_id,
+                                'lot_id' => $record->lot_id,
                             ], [
-                                'quantity'               => -$record->product->on_hand_quantity,
-                                'company_id'             => $record->company_id,
-                                'creator_id'             => Auth::id(),
-                                'incoming_at'            => now(),
+                                'quantity' => -$record->product->on_hand_quantity,
+                                'company_id' => $record->company_id,
+                                'creator_id' => Auth::id(),
+                                'incoming_at' => now(),
                                 'inventory_quantity_set' => false,
                             ]
                         );
@@ -514,20 +511,20 @@ class QuantityResource extends Resource
                             ->title(__('inventories::filament/clusters/operations/resources/quantity.table.actions.clear.notification.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/quantity.table.actions.clear.notification.body')),
                     )
-                    ->action(function (ProductQuantity $record) {
+                    ->action(function (ProductQuantity $record): void {
                         $record->update([
-                            'inventory_quantity_set'  => false,
-                            'counted_quantity'        => 0,
+                            'inventory_quantity_set' => false,
+                            'counted_quantity' => 0,
                             'inventory_diff_quantity' => 0,
                         ]);
                     }),
             ])
-            ->modifyQueryUsing(function (Builder $query) {
-                $query->whereHas('location', function (Builder $query) {
+            ->modifyQueryUsing(function (Builder $query): void {
+                $query->whereHas('location', function (Builder $query): void {
                     $query->whereIn('type', [LocationType::INTERNAL, LocationType::TRANSIT]);
                 });
 
-                $query->whereHas('product', function (Builder $query) {
+                $query->whereHas('product', function (Builder $query): void {
                     $query->whereNull('deleted_at');
                 });
             });
@@ -536,7 +533,7 @@ class QuantityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ManageQuantities::route('/'),
+            'index' => ManageQuantities::route('/'),
         ];
     }
 }

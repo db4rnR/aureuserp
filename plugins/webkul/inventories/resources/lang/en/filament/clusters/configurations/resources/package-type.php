@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Package Types',
@@ -9,13 +11,13 @@ return [
     'form' => [
         'sections' => [
             'general' => [
-                'title'  => 'General',
+                'title' => 'General',
 
                 'fields' => [
-                    'name'       => 'Name',
-                    'barcode'    => 'Barcode',
-                    'company'    => 'Company',
-                    'weight'     => 'Weight',
+                    'name' => 'Name',
+                    'barcode' => 'Barcode',
+                    'company' => 'Company',
+                    'weight' => 'Weight',
                     'max-weight' => 'Max Weight',
 
                     'fieldsets' => [
@@ -24,7 +26,7 @@ return [
 
                             'fields' => [
                                 'length' => 'Length',
-                                'width'  => 'Width',
+                                'width' => 'Width',
                                 'height' => 'Height',
                             ],
                         ],
@@ -36,13 +38,13 @@ return [
 
     'table' => [
         'columns' => [
-            'name'       => 'Name',
-            'barcode'    => 'Barcode',
-            'weight'     => 'Weight',
+            'name' => 'Name',
+            'barcode' => 'Barcode',
+            'weight' => 'Weight',
             'max-weight' => 'Max Weight',
-            'width'      => 'Width',
-            'height'     => 'Height',
-            'length'     => 'Length',
+            'width' => 'Width',
+            'height' => 'Height',
+            'length' => 'Length',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
@@ -56,7 +58,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Package Type deleted',
-                    'body'  => 'The package type has been deleted successfully.',
+                    'body' => 'The package type has been deleted successfully.',
                 ],
             ],
         ],
@@ -65,7 +67,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Package Type deleted',
-                    'body'  => 'The package type has been deleted successfully.',
+                    'body' => 'The package type has been deleted successfully.',
                 ],
             ],
         ],
@@ -74,23 +76,23 @@ return [
     'infolist' => [
         'sections' => [
             'general' => [
-                'title'   => 'General Information',
+                'title' => 'General Information',
                 'entries' => [
-                    'name'      => 'Name',
+                    'name' => 'Name',
                     'fieldsets' => [
                         'size' => [
-                            'title'   => 'Package Dimensions',
+                            'title' => 'Package Dimensions',
                             'entries' => [
                                 'length' => 'Length',
-                                'width'  => 'Width',
+                                'width' => 'Width',
                                 'height' => 'Height',
                             ],
                         ],
                     ],
-                    'weight'     => 'Base Weight',
+                    'weight' => 'Base Weight',
                     'max-weight' => 'Maximum Weight',
-                    'barcode'    => 'Barcode',
-                    'company'    => 'Company',
+                    'barcode' => 'Barcode',
+                    'company' => 'Company',
                     'created-at' => 'Created At',
                     'updated-at' => 'Last Updated',
                 ],
@@ -100,8 +102,8 @@ return [
                 'title' => 'Record Information',
 
                 'entries' => [
-                    'created-by'   => 'Created By',
-                    'created-at'   => 'Created At',
+                    'created-by' => 'Created By',
+                    'created-at' => 'Created At',
                     'last-updated' => 'Last Updated',
                 ],
             ],

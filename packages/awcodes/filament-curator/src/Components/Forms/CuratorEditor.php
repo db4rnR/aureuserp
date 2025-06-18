@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Components\Forms;
 
-use Filament\Actions\Action;
 use Awcodes\Curator\Concerns\HasCurationPresets;
 use Closure;
+use Filament\Actions\Action;
 use Filament\Actions\Concerns\CanBeOutlined;
 use Filament\Actions\Concerns\HasSize;
 use Filament\Forms\Components\Field;
@@ -13,42 +15,18 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\View;
 use Livewire\Component;
 
-class CuratorEditor extends Field
+final class CuratorEditor extends Field
 {
     use CanBeOutlined;
     use HasColor;
     use HasCurationPresets;
     use HasSize;
 
-    protected string | Htmlable | Closure | null $buttonLabel = null;
+    protected string|Htmlable|Closure|null $buttonLabel = null;
 
-    protected array | Closure | null $formats = null;
+    protected array|Closure|null $formats = null;
 
     protected string $view = 'curator::components.forms.curation';
-
-    public function buttonLabel(string | Htmlable | Closure | null $label): static
-    {
-        $this->buttonLabel = $label;
-
-        return $this;
-    }
-
-    public function formats(array | Closure $formats): static
-    {
-        $this->formats = $formats;
-
-        return $this;
-    }
-
-    public function getButtonLabel(): string | Htmlable | null
-    {
-        return $this->evaluate($this->buttonLabel);
-    }
-
-    public function getFormats(): array
-    {
-        return $this->evaluate($this->formats) ?? config('curator.curation_formats');
-    }
 
     protected function setUp(): void
     {
@@ -65,6 +43,30 @@ class CuratorEditor extends Field
         ]);
     }
 
+    public function buttonLabel(string|Htmlable|Closure|null $label): static
+    {
+        $this->buttonLabel = $label;
+
+        return $this;
+    }
+
+    public function formats(array|Closure $formats): static
+    {
+        $this->formats = $formats;
+
+        return $this;
+    }
+
+    public function getButtonLabel(): string|Htmlable|null
+    {
+        return $this->evaluate($this->buttonLabel);
+    }
+
+    public function getFormats(): array
+    {
+        return $this->evaluate($this->formats) ?? config('curator.curation_formats');
+    }
+
     public function getCurationAction(): Action
     {
         return Action::make('open_curation_panel')
@@ -75,12 +77,12 @@ class CuratorEditor extends Field
             ->size($this->getSize())
             ->modalWidth('screen')
             ->modalFooterActions(fn () => [])->modalHeading(static function (CuratorEditor $component) {
-                return trans('curator::views.curation.heading') . ' ' . $component->getRecord()->name;
+                return trans('curator::views.curation.heading').' '.$component->getRecord()->name;
             })
             ->modalContent(static function (CuratorEditor $component, Component $livewire) {
                 return View::make('curator::components.actions.curation-action', [
                     'statePath' => $component->getStatePath(),
-                    'modalId' => $livewire->getId() . '-form-component-action',
+                    'modalId' => $livewire->getId().'-form-component-action',
                     'media' => $component->getRecord(),
                     'presets' => $component->getPresets(),
                     'formats' => $component->getFormats(),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Concerns;
 
 use Closure;
@@ -9,30 +11,30 @@ use Illuminate\Contracts\Support\Arrayable;
 
 trait HasMentions
 {
-    protected array | Closure | null $mentionItems = null;
+    protected array|Closure|null $mentionItems = null;
 
-    protected string | Closure | null $emptyMentionItemsMessage = null;
+    protected string|Closure|null $emptyMentionItemsMessage = null;
 
-    protected string | Closure | null $mentionItemsPlaceholder = null;
+    protected string|Closure|null $mentionItemsPlaceholder = null;
 
-    protected string | Closure | null $mentionItemsLoading = null;
+    protected string|Closure|null $mentionItemsLoading = null;
 
-    protected int | Closure | null $maxMentionItems = 8;
+    protected int|Closure|null $maxMentionItems = 8;
 
     protected ?Closure $getMentionItemsUsing = null;
 
-    protected string | Closure $mentionTrigger = '@';
+    protected string|Closure $mentionTrigger = '@';
 
-    protected int | Closure $mentionDebounce = 400;
+    protected int|Closure $mentionDebounce = 400;
 
-    protected MentionSearchStrategy | Closure $mentionSearchStrategy = MentionSearchStrategy::StartsWith;
+    protected MentionSearchStrategy|Closure $mentionSearchStrategy = MentionSearchStrategy::StartsWith;
 
     /**
      * Set mention suggestions.
      *
      * @param  array|Closure|null  $suggestions  Either a hardcoded array or an array with MentionItem objects
      */
-    public function mentionItems(array | Closure | null $suggestions): static
+    public function mentionItems(array|Closure|null $suggestions): static
     {
         $this->mentionItems = $suggestions;
 
@@ -54,7 +56,7 @@ trait HasMentions
     /**
      * Set the message to display when no mention suggestions are found.
      */
-    public function emptyMentionItemsMessage(string | Closure | null $message): static
+    public function emptyMentionItemsMessage(string|Closure|null $message): static
     {
         $this->emptyMentionItemsMessage = $message;
 
@@ -69,7 +71,7 @@ trait HasMentions
     /**
      * Set the search strategy for static mention items
      */
-    public function mentionSearchStrategy(MentionSearchStrategy | Closure $searchStrategy): static
+    public function mentionSearchStrategy(MentionSearchStrategy|Closure $searchStrategy): static
     {
         $this->mentionSearchStrategy = $searchStrategy;
 
@@ -84,7 +86,7 @@ trait HasMentions
     /**
      * Show a maximum of mention items
      */
-    public function maxMentionItems(int | Closure | null $maxItems): static
+    public function maxMentionItems(int|Closure|null $maxItems): static
     {
         $this->maxMentionItems = $maxItems;
 
@@ -99,7 +101,7 @@ trait HasMentions
     /**
      * Set debounce when using getMentionItemsUsing
      */
-    public function mentionDebounce(int | Closure $debounceInMs): static
+    public function mentionDebounce(int|Closure $debounceInMs): static
     {
         $this->mentionDebounce = $debounceInMs;
 
@@ -114,7 +116,7 @@ trait HasMentions
     /**
      * Set a trigger character, '@' by default
      */
-    public function mentionTrigger(string | Closure $trigger = '@'): static
+    public function mentionTrigger(string|Closure $trigger = '@'): static
     {
         $this->mentionTrigger = $trigger;
 
@@ -129,7 +131,7 @@ trait HasMentions
     /**
      * Set the message to display in the empty suggestions state when the trigger character is typed but no input is provided.
      */
-    public function mentionItemsPlaceholder(string | Closure | null $message): static
+    public function mentionItemsPlaceholder(string|Closure|null $message): static
     {
         $this->mentionItemsPlaceholder = $message;
 
@@ -144,7 +146,7 @@ trait HasMentions
     /**
      * Set the message to display in the loading suggestions state when the trigger character is typed and input is provided.
      */
-    public function mentionItemsLoading(string | Closure | null $message): static
+    public function mentionItemsLoading(string|Closure|null $message): static
     {
         $this->mentionItemsLoading = $message;
 

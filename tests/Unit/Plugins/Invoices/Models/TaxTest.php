@@ -1,14 +1,16 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Invoice\Models\Tax;
-use Webkul\Account\Models\Tax as BaseTax;
-use Webkul\Account\Models\TaxGroup;
-use Webkul\Account\Models\Account;
-use Webkul\Account\Models\TaxPartition;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Account\Enums\DocumentType;
 use Webkul\Account\Enums\RepartitionType;
+use Webkul\Account\Models\Account;
+use Webkul\Account\Models\Tax as BaseTax;
+use Webkul\Account\Models\TaxGroup;
+use Webkul\Account\Models\TaxPartition;
+use Webkul\Invoice\Models\Tax;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
@@ -17,7 +19,7 @@ use Webkul\Support\Models\Country;
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Tax model inheritance and properties')]
-function tax_model_inheritance_and_properties()
+function tax_model_inheritance_and_properties(): void
 {
     // Create a test tax
     $tax = Tax::factory()->create([
@@ -44,21 +46,21 @@ function tax_model_inheritance_and_properties()
     expect($tax->analytic)->toBeFalse();
 
     // Test relationships inherited from the base class
-    expect($tax->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($tax->taxGroup())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($tax->cashBasisTransitionAccount())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($tax->country())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($tax->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($tax->distributionForInvoice())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($tax->distributionForRefund())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($tax->parentTaxes())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($tax->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($tax->taxGroup())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($tax->cashBasisTransitionAccount())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($tax->country())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($tax->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($tax->distributionForInvoice())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($tax->distributionForRefund())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($tax->parentTaxes())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Tax model relationships with other models')]
-function tax_model_relationships_with_other_models()
+function tax_model_relationships_with_other_models(): void
 {
     // Create related models
     $company = Company::factory()->create();
@@ -88,7 +90,7 @@ function tax_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Tax model boot method for distribution creation')]
-function tax_model_boot_method_for_distribution_creation()
+function tax_model_boot_method_for_distribution_creation(): void
 {
     // Create a test tax
     $tax = Tax::factory()->create();
@@ -122,7 +124,7 @@ function tax_model_boot_method_for_distribution_creation()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Tax model parent-child relationships')]
-function tax_model_parent_child_relationships()
+function tax_model_parent_child_relationships(): void
 {
     // Create parent and child taxes
     $parentTax = Tax::factory()->create(['name' => 'Parent Tax']);
@@ -139,16 +141,16 @@ function tax_model_parent_child_relationships()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Tax model traits and interfaces')]
-function tax_model_traits_and_interfaces()
+function tax_model_traits_and_interfaces(): void
 {
     // Create a test tax
     $tax = Tax::factory()->create();
 
     // Test that the model uses the expected traits and implements interfaces
-    expect($tax)->toBeInstanceOf(\Spatie\EloquentSortable\Sortable::class);
+    expect($tax)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
 
     // Test sortable configuration
-    $sortable = (new \ReflectionClass($tax))->getProperty('sortable')->getValue($tax);
+    $sortable = new ReflectionClass($tax)->getProperty('sortable')->getValue($tax);
     expect($sortable)->toBeArray();
     expect($sortable)->toHaveKey('order_column_name');
     expect($sortable['order_column_name'])->toBe('sort');

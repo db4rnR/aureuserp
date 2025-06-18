@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\ListActivityTypes;
+use Webkul\Sale\Filament\Clusters\Configuration;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\CreateActivityType;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\EditActivityType;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\ListActivityTypes;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\ViewActivityType;
-use Webkul\Sale\Filament\Clusters\Configuration;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages;
 use Webkul\Sale\Models\ActivityType;
 use Webkul\Support\Filament\Resources\ActivityTypeResource as BaseActivityTypeResource;
 
-class ActivityTypeResource extends BaseActivityTypeResource
+final class ActivityTypeResource extends BaseActivityTypeResource
 {
     protected static ?string $model = ActivityType::class;
 
@@ -32,10 +33,10 @@ class ActivityTypeResource extends BaseActivityTypeResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListActivityTypes::route('/'),
+            'index' => ListActivityTypes::route('/'),
             'create' => CreateActivityType::route('/create'),
-            'edit'   => EditActivityType::route('/{record}/edit'),
-            'view'   => ViewActivityType::route('/{record}'),
+            'edit' => EditActivityType::route('/{record}/edit'),
+            'view' => ViewActivityType::route('/{record}'),
         ];
     }
 }

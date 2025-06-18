@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_full_reconciles', function (Blueprint $table) {
+        Schema::create('accounts_full_reconciles', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('exchange_move_id')->nullable()->constrained('accounts_account_moves')->nullOnDelete();
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_account_move_lines', function (Blueprint $table) {
+        Schema::table('accounts_account_move_lines', function (Blueprint $table): void {
             if (Schema::hasColumn('accounts_account_move_lines', 'full_reconcile_id')) {
                 $table->dropForeign(['full_reconcile_id']);
             }

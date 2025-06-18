@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TaxFactory extends Factory
+final class TaxFactory extends Factory
 {
     public function definition(): array
     {

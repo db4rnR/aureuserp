@@ -1,23 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Filament\Resources\ActivityTypeResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\Support\Filament\Resources\ActivityTypeResource;
 use Webkul\Support\Models\ActivityType;
 
-class ListActivityTypes extends ListRecords
+final class ListActivityTypes extends ListRecords
 {
     protected static string $resource = ActivityTypeResource::class;
 
-    protected static ?string $pluginName = 'employees';
+    private static ?string $pluginName = 'employees';
 
-    protected static function getPluginName()
+    public function getTabs(): array
     {
-        return static::$pluginName;
+        return [
+            'all' => Tab::make(__('support::filament/resources/activity-type/pages/list-activity-type.tabs.all'))
+                ->badge(ActivityType::where('plugin', $this->getPluginName())->count()),
+            'archived' => Tab::make(__('support::filament/resources/activity-type/pages/list-activity-type.tabs.archived'))
+                ->badge(ActivityType::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->where('plugin', $this->getPluginName())->onlyTrashed()),
+        ];
     }
 
     protected function getHeaderActions(): array
@@ -29,16 +36,8 @@ class ListActivityTypes extends ListRecords
         ];
     }
 
-    public function getTabs(): array
+    private function getPluginName(): ?string
     {
-        return [
-            'all' => Tab::make(__('support::filament/resources/activity-type/pages/list-activity-type.tabs.all'))
-                ->badge(ActivityType::where('plugin', static::getPluginName())->count()),
-            'archived' => Tab::make(__('support::filament/resources/activity-type/pages/list-activity-type.tabs.archived'))
-                ->badge(ActivityType::onlyTrashed()->count())
-                ->modifyQueryUsing(function ($query) {
-                    return $query->where('plugin', static::getPluginName())->onlyTrashed();
-                }),
-        ];
+        return self::$pluginName;
     }
 }

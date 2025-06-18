@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Resources\DepartmentResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Employee\Filament\Resources\DepartmentResource;
 
-class CreateDepartment extends CreateRecord
+final class CreateDepartment extends CreateRecord
 {
     protected static string $resource = DepartmentResource::class;
 

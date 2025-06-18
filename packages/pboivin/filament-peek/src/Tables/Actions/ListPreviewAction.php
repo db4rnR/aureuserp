@@ -1,22 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tables\Actions;
 
 use Filament\Actions\Action;
 use Pboivin\FilamentPeek\Support\Concerns\SetsInitialPreviewModalData;
-use Pboivin\FilamentPeek\Support\Panel;
 use Pboivin\FilamentPeek\Support\Page;
+use Pboivin\FilamentPeek\Support\Panel;
 use Pboivin\FilamentPeek\Support\View;
-use Pboivin\FilamentPeek\Support;
 
-class ListPreviewAction extends Action
+final class ListPreviewAction extends Action
 {
     use SetsInitialPreviewModalData;
-
-    public static function getDefaultName(): ?string
-    {
-        return 'listPreview';
-    }
 
     protected function setUp(): void
     {
@@ -24,7 +20,7 @@ class ListPreviewAction extends Action
 
         $this->label(__('filament-peek::ui.preview-action-label'))
             ->icon('heroicon-s-eye')
-            ->action(function ($livewire, $record) {
+            ->action(function ($livewire, $record): void {
                 Panel::ensurePluginIsLoaded();
 
                 Page::ensurePreviewModalSupport($livewire);
@@ -39,5 +35,10 @@ class ListPreviewAction extends Action
             });
 
         View::setupPreviewModal();
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'listPreview';
     }
 }

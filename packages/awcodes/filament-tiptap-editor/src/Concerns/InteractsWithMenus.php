@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Concerns;
 
 use Closure;
@@ -7,40 +9,40 @@ use FilamentTiptapEditor\Enums\TippyPlacement;
 
 trait InteractsWithMenus
 {
-    protected array | Closure | null $bubbleMenuTools = null;
+    protected array|Closure|null $bubbleMenuTools = null;
 
-    protected array | Closure | null $floatingMenuTools = null;
+    protected array|Closure|null $floatingMenuTools = null;
 
-    protected bool | Closure | null $shouldShowBubbleMenus = null;
+    protected bool|Closure|null $shouldShowBubbleMenus = null;
 
-    protected bool | Closure | null $shouldShowFloatingMenus = null;
+    protected bool|Closure|null $shouldShowFloatingMenus = null;
 
-    protected bool | Closure | null $shouldShowToolbarMenus = null;
+    protected bool|Closure|null $shouldShowToolbarMenus = null;
 
-    protected string | TippyPlacement | Closure $tippyPlacement = TippyPlacement::Auto;
+    protected string|TippyPlacement|Closure $tippyPlacement = TippyPlacement::Auto;
 
-    public function disableBubbleMenus(bool | Closure | null $condition = true): static
+    public function disableBubbleMenus(bool|Closure|null $condition = true): static
     {
         $this->shouldShowBubbleMenus = $condition;
 
         return $this;
     }
 
-    public function disableFloatingMenus(bool | Closure | null $condition = true): static
+    public function disableFloatingMenus(bool|Closure|null $condition = true): static
     {
         $this->shouldShowFloatingMenus = $condition;
 
         return $this;
     }
 
-    public function disableToolbarMenus(bool | Closure | null $condition = true): static
+    public function disableToolbarMenus(bool|Closure|null $condition = true): static
     {
         $this->shouldShowToolbarMenus = $condition;
 
         return $this;
     }
 
-    public function bubbleMenuTools(array | Closure $tools): static
+    public function bubbleMenuTools(array|Closure $tools): static
     {
         $this->bubbleMenuTools = $tools;
 
@@ -51,26 +53,27 @@ trait InteractsWithMenus
     {
         if ($this->bubbleMenuTools) {
             return $this->evaluate($this->bubbleMenuTools);
-        } elseif ($this->profile !== 'none') {
+        }
+        if ($this->profile !== 'none') {
             return config('filament-tiptap-editor.bubble_menu_tools');
         }
 
         return [];
     }
 
-    public function tippyPlacement(string | TippyPlacement | Closure $placement): static
+    public function tippyPlacement(string|TippyPlacement|Closure $placement): static
     {
         $this->tippyPlacement = $placement;
 
         return $this;
     }
 
-    public function getTippyPlacement(): string | TippyPlacement
+    public function getTippyPlacement(): string|TippyPlacement
     {
         return $this->evaluate($this->tippyPlacement);
     }
 
-    public function floatingMenuTools(array | Closure $tools): static
+    public function floatingMenuTools(array|Closure $tools): static
     {
         $this->floatingMenuTools = $tools;
 
@@ -81,7 +84,8 @@ trait InteractsWithMenus
     {
         if ($this->floatingMenuTools) {
             return $this->evaluate($this->floatingMenuTools);
-        } elseif ($this->profile !== 'none') {
+        }
+        if ($this->profile !== 'none') {
             return config('filament-tiptap-editor.floating_menu_tools');
         }
 

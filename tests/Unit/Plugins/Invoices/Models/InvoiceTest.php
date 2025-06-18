@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Invoice Model Unit Tests
  *
@@ -18,22 +20,20 @@
  * - Database connection configured for testing
  * - Factories for Invoice, Currency, User, Partner, and Journal models
  * - Proper configuration of model relationships
- *
- * @package Tests\Unit\Plugins\Invoices\Models
  */
 
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Description;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Tests\Attributes\PluginTest;
-use Webkul\Invoice\Models\Invoice;
-use Webkul\Account\Enums\MoveType;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Webkul\Account\Enums\MoveState;
-use Webkul\Support\Models\Currency;
-use Webkul\Security\Models\User;
-use Webkul\Partner\Models\Partner;
+use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Models\Journal;
+use Webkul\Invoice\Models\Invoice;
+use Webkul\Partner\Models\Partner;
+use Webkul\Security\Models\User;
+use Webkul\Support\Models\Currency;
 
 /**
  * Test Invoice model attributes and relationships
@@ -65,7 +65,7 @@ use Webkul\Account\Models\Journal;
 #[PluginTest('Invoices')]
 #[CoversClass(Invoice::class)]
 #[Description('Test Invoice model attributes and relationships')]
-function invoice_model_attributes_and_relationships()
+function invoice_model_attributes_and_relationships(): void
 {
     // Create a test invoice
     $invoice = Invoice::factory()->create([
@@ -98,11 +98,11 @@ function invoice_model_attributes_and_relationships()
     expect($invoice->amount_residual)->toBe(1200.00);
 
     // Test relationships
-    expect($invoice->journal())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($invoice->partner())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($invoice->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($invoice->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($invoice->lines())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($invoice->journal())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($invoice->partner())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($invoice->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($invoice->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($invoice->lines())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
 /**
@@ -134,7 +134,7 @@ function invoice_model_attributes_and_relationships()
 #[PluginTest('Invoices')]
 #[CoversClass(Invoice::class)]
 #[Description('Test Invoice model relationships with other models')]
-function invoice_model_relationships_with_other_models()
+function invoice_model_relationships_with_other_models(): void
 {
     // Create related models
     $currency = Currency::factory()->create();
@@ -188,7 +188,7 @@ function invoice_model_relationships_with_other_models()
 #[PluginTest('Invoices')]
 #[CoversClass(Invoice::class)]
 #[Description('Test Invoice model methods')]
-function invoice_model_methods()
+function invoice_model_methods(): void
 {
     // Create a test invoice
     $invoice = Invoice::factory()->create([

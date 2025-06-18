@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -7,7 +9,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\Employee\Models\EmployeeCategory;
 use Webkul\Employee\Models\EmployeeEmployeeCategory;
 
-class EmployeeEmployeeCategoryFactory extends Factory
+final class EmployeeEmployeeCategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

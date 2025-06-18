@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\ListPaymentTerms;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\CreatePaymentTerm;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\ViewPaymentTerm;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\EditPaymentTerm;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\ManagePaymentDueTerm;
 use Webkul\Account\Filament\Resources\PaymentTermResource as BasePaymentTermResource;
 use Webkul\Invoice\Filament\Clusters\Configuration;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\CreatePaymentTerm;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\EditPaymentTerm;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\ListPaymentTerms;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\ManagePaymentDueTerm;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\ViewPaymentTerm;
 use Webkul\Invoice\Models\PaymentTerm;
 
-class PaymentTermResource extends BasePaymentTermResource
+final class PaymentTermResource extends BasePaymentTermResource
 {
     protected static ?string $model = PaymentTerm::class;
 
@@ -38,10 +39,10 @@ class PaymentTermResource extends BasePaymentTermResource
     public static function getPages(): array
     {
         return [
-            'index'             => ListPaymentTerms::route('/'),
-            'create'            => CreatePaymentTerm::route('/create'),
-            'view'              => ViewPaymentTerm::route('/{record}'),
-            'edit'              => EditPaymentTerm::route('/{record}/edit'),
+            'index' => ListPaymentTerms::route('/'),
+            'create' => CreatePaymentTerm::route('/create'),
+            'view' => ViewPaymentTerm::route('/{record}'),
+            'edit' => EditPaymentTerm::route('/{record}/edit'),
             'payment-due-terms' => ManagePaymentDueTerm::route('/{record}/payment-due-terms'),
         ];
     }

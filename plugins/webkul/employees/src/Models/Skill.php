@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +15,14 @@ use Webkul\Employee\Database\Factories\SkillFactory;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-class Skill extends Model implements Sortable
+final class Skill extends Model implements Sortable
 {
     use HasCustomFields, HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'employees_skills';
 
@@ -24,11 +31,6 @@ class Skill extends Model implements Sortable
         'name',
         'skill_type_id',
         'creator_id',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function skillType(): BelongsTo

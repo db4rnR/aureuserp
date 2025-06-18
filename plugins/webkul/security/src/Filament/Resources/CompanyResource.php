@@ -1,48 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\Toggle;
+use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\TrashedFilter;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Schemas\Components\Grid;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\ColorEntry;
-use Webkul\Security\Filament\Resources\CompanyResource\RelationManagers\BranchesRelationManager;
-use Webkul\Security\Filament\Resources\CompanyResource\Pages\ListCompanies;
-use Webkul\Security\Filament\Resources\CompanyResource\Pages\CreateCompany;
-use Webkul\Security\Filament\Resources\CompanyResource\Pages\ViewCompany;
-use Webkul\Security\Filament\Resources\CompanyResource\Pages\EditCompany;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -50,19 +46,22 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Security\Enums\CompanyStatus;
-use Webkul\Security\Filament\Resources\CompanyResource\Pages;
-use Webkul\Security\Filament\Resources\CompanyResource\RelationManagers;
+use Webkul\Security\Filament\Resources\CompanyResource\Pages\CreateCompany;
+use Webkul\Security\Filament\Resources\CompanyResource\Pages\EditCompany;
+use Webkul\Security\Filament\Resources\CompanyResource\Pages\ListCompanies;
+use Webkul\Security\Filament\Resources\CompanyResource\Pages\ViewCompany;
+use Webkul\Security\Filament\Resources\CompanyResource\RelationManagers\BranchesRelationManager;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\Currency;
 
-class CompanyResource extends Resource
+final class CompanyResource extends Resource
 {
     use HasCustomFields;
 
     protected static ?string $model = Company::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?int $navigationSort = 2;
 
@@ -84,7 +83,7 @@ class CompanyResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('security::filament/resources/company.global-search.name')  => $record->name ?? '—',
+            __('security::filament/resources/company.global-search.name') => $record->name ?? '—',
             __('security::filament/resources/company.global-search.email') => $record->email ?? '—',
         ];
     }
@@ -143,7 +142,7 @@ class CompanyResource extends Resource
                                                 Select::make('country_id')
                                                     ->label(__('security::filament/resources/company.form.sections.address-information.fields.country'))
                                                     ->relationship(name: 'country', titleAttribute: 'name')
-                                                    ->afterStateUpdated(fn (Set $set) => $set('state_id', null))
+                                                    ->afterStateUpdated(fn (Set $set): mixed => $set('state_id', null))
                                                     ->searchable()
                                                     ->preload()
                                                     ->live(),
@@ -156,28 +155,26 @@ class CompanyResource extends Resource
                                                     )
                                                     ->searchable()
                                                     ->preload()
-                                                    ->createOptionForm(function (Schema $schema, Get $get, Set $set) {
-                                                        return $schema
-                                                            ->components([
-                                                                TextInput::make('name')
-                                                                    ->label(__('security::filament/resources/company.form.sections.address-information.fields.state-name'))
-                                                                    ->required(),
-                                                                TextInput::make('code')
-                                                                    ->label(__('security::filament/resources/company.form.sections.address-information.fields.state-code'))
-                                                                    ->required()
-                                                                    ->unique('states'),
-                                                                Select::make('country_id')
-                                                                    ->label(__('security::filament/resources/company.form.sections.address-information.fields.country'))
-                                                                    ->relationship('country', 'name')
-                                                                    ->searchable()
-                                                                    ->preload()
-                                                                    ->live()
-                                                                    ->default($get('country_id'))
-                                                                    ->afterStateUpdated(function (Get $get) use ($set) {
-                                                                        $set('country_id', $get('country_id'));
-                                                                    }),
-                                                            ]);
-                                                    }),
+                                                    ->createOptionForm(fn (Schema $schema, Get $get, Set $set): Schema => $schema
+                                                        ->components([
+                                                            TextInput::make('name')
+                                                                ->label(__('security::filament/resources/company.form.sections.address-information.fields.state-name'))
+                                                                ->required(),
+                                                            TextInput::make('code')
+                                                                ->label(__('security::filament/resources/company.form.sections.address-information.fields.state-code'))
+                                                                ->required()
+                                                                ->unique('states'),
+                                                            Select::make('country_id')
+                                                                ->label(__('security::filament/resources/company.form.sections.address-information.fields.country'))
+                                                                ->relationship('country', 'name')
+                                                                ->searchable()
+                                                                ->preload()
+                                                                ->live()
+                                                                ->default($get('country_id'))
+                                                                ->afterStateUpdated(function (Get $get) use ($set): void {
+                                                                    $set('country_id', $get('country_id'));
+                                                                }),
+                                                        ])),
                                             ])
                                             ->columns(2),
                                     ]),
@@ -227,7 +224,7 @@ class CompanyResource extends Resource
                                                     ])->columns(2),
                                             ])
                                             ->createOptionAction(
-                                                fn (Action $action) => $action
+                                                fn (Action $action): Action => $action
                                                     ->modalHeading(__('security::filament/resources/company.form.sections.additional-information.fields.currency-create'))
                                                     ->modalSubmitActionLabel(__('security::filament/resources/company.form.sections.additional-information.fields.currency-create'))
                                                     ->modalWidth('xl')
@@ -238,7 +235,7 @@ class CompanyResource extends Resource
                                         Toggle::make('is_active')
                                             ->label(__('security::filament/resources/company.form.sections.additional-information.fields.status'))
                                             ->default(true),
-                                        ...static::getCustomFormFields(),
+                                        ...self::getCustomFormFields(),
                                     ])->columns(2),
                             ])
                             ->columnSpan(['lg' => 2]),
@@ -371,9 +368,7 @@ class CompanyResource extends Resource
                 SelectFilter::make('country')
                     ->label(__('security::filament/resources/company.table.filters.country'))
                     ->multiple()
-                    ->options(function () {
-                        return Country::pluck('name', 'name');
-                    }),
+                    ->options(fn () => Country::pluck('name', 'name')),
             ])
             ->filtersFormColumns(2)
             ->recordActions([
@@ -426,7 +421,7 @@ class CompanyResource extends Resource
                                 ->body(__('security::filament/resources/company.table.bulk-actions.restore.notification.body')),
                         ),
                 ]),
-            ])->modifyQueryUsing(function (Builder $query) {
+            ])->modifyQueryUsing(function (Builder $query): void {
                 $query
                     ->where('creator_id', Auth::user()->id)
                     ->whereNull('parent_id');
@@ -557,10 +552,10 @@ class CompanyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListCompanies::route('/'),
+            'index' => ListCompanies::route('/'),
             'create' => CreateCompany::route('/create'),
-            'view'   => ViewCompany::route('/{record}'),
-            'edit'   => EditCompany::route('/{record}/edit'),
+            'view' => ViewCompany::route('/{record}'),
+            'edit' => EditCompany::route('/{record}/edit'),
         ];
     }
 

@@ -1,51 +1,52 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\Select;
+use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Tables\Columns\Layout\Stack;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Enums\FiltersLayout;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Schemas\Components\Grid;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -55,11 +56,11 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Enums\AccountType;
 use Webkul\Partner\Models\Partner;
 
-class PartnerResource extends Resource
+final class PartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -79,7 +80,7 @@ class PartnerResource extends Resource
                                             ->columnSpan(2)
                                             ->options(AccountType::class)
                                             ->default(AccountType::INDIVIDUAL->value)
-                                            ->options(function () {
+                                            ->options(function (): array {
                                                 $options = AccountType::options();
 
                                                 unset($options[AccountType::ADDRESS->value]);
@@ -107,13 +108,11 @@ class PartnerResource extends Resource
                                             ->columnSpan(2)
                                             ->createOptionForm(fn (Schema $schema): Schema => self::form($schema))
                                             ->editOptionForm(fn (Schema $schema): Schema => self::form($schema))
-                                            ->createOptionAction(function (Action $action) {
+                                            ->createOptionAction(function (Action $action): void {
                                                 $action
-                                                    ->fillForm(function (array $arguments): array {
-                                                        return [
-                                                            'account_type' => AccountType::COMPANY->value,
-                                                        ];
-                                                    })
+                                                    ->fillForm(fn (array $arguments): array => [
+                                                        'account_type' => AccountType::COMPANY->value,
+                                                    ])
                                                     ->mutateDataUsing(function (array $data) {
                                                         $data['account_type'] = AccountType::COMPANY->value;
 
@@ -216,10 +215,10 @@ class PartnerResource extends Resource
                                         Select::make('country_id')
                                             ->label(__('partners::filament/resources/partner.form.sections.general.address.fields.country'))
                                             ->relationship(name: 'country', titleAttribute: 'name')
-                                            ->afterStateUpdated(fn (Set $set) => $set('state_id', null))
+                                            ->afterStateUpdated(fn (Set $set): mixed => $set('state_id', null))
                                             ->searchable()
                                             ->preload()
-                                            ->afterStateUpdated(function (Set $set, Get $get) {
+                                            ->afterStateUpdated(function (Set $set, Get $get): void {
                                                 $set('state_id', null);
                                             })
                                             ->live(),
@@ -230,30 +229,28 @@ class PartnerResource extends Resource
                                                 titleAttribute: 'name',
                                                 modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
                                             )
-                                            ->createOptionForm(function (Schema $schema, Get $get, Set $set) {
-                                                return $schema
-                                                    ->components([
-                                                        TextInput::make('name')
-                                                            ->label(__('partners::filament/resources/partner.form.sections.general.address.fields.name'))
-                                                            ->required()
-                                                            ->maxLength(255),
-                                                        TextInput::make('code')
-                                                            ->label(__('partners::filament/resources/partner.form.sections.general.address.fields.code'))
-                                                            ->required()
-                                                            ->unique('states')
-                                                            ->maxLength(255),
-                                                        Select::make('country_id')
-                                                            ->label(__('partners::filament/resources/partner.form.sections.general.address.fields.country'))
-                                                            ->relationship('country', 'name')
-                                                            ->searchable()
-                                                            ->preload()
-                                                            ->live()
-                                                            ->default($get('country_id'))
-                                                            ->afterStateUpdated(function (Get $get) use ($set) {
-                                                                $set('country_id', $get('country_id'));
-                                                            }),
-                                                    ]);
-                                            })
+                                            ->createOptionForm(fn (Schema $schema, Get $get, Set $set): Schema => $schema
+                                                ->components([
+                                                    TextInput::make('name')
+                                                        ->label(__('partners::filament/resources/partner.form.sections.general.address.fields.name'))
+                                                        ->required()
+                                                        ->maxLength(255),
+                                                    TextInput::make('code')
+                                                        ->label(__('partners::filament/resources/partner.form.sections.general.address.fields.code'))
+                                                        ->required()
+                                                        ->unique('states')
+                                                        ->maxLength(255),
+                                                    Select::make('country_id')
+                                                        ->label(__('partners::filament/resources/partner.form.sections.general.address.fields.country'))
+                                                        ->relationship('country', 'name')
+                                                        ->searchable()
+                                                        ->preload()
+                                                        ->live()
+                                                        ->default($get('country_id'))
+                                                        ->afterStateUpdated(function (Get $get) use ($set): void {
+                                                            $set('country_id', $get('country_id'));
+                                                        }),
+                                                ]))
                                             ->searchable()
                                             ->preload(),
                                     ]),
@@ -315,7 +312,7 @@ class PartnerResource extends Resource
                         Stack::make([
                             TextColumn::make('parent.name')
                                 ->label(__('partners::filament/resources/partner.table.columns.parent'))
-                                ->icon(fn (Partner $record) => $record->parent->account_type === AccountType::INDIVIDUAL->value ? 'heroicon-o-user' : 'heroicon-o-building-office')
+                                ->icon(fn (Partner $record): string => $record->parent->account_type === AccountType::INDIVIDUAL->value ? 'heroicon-o-user' : 'heroicon-o-building-office')
                                 ->tooltip(__('partners::filament/resources/partner.table.columns.parent'))
                                 ->sortable(),
                         ])
@@ -351,15 +348,13 @@ class PartnerResource extends Resource
                         Stack::make([
                             TextColumn::make('tags.name')
                                 ->badge()
-                                ->state(function (Partner $record): array {
-                                    return $record->tags()->get()->map(fn ($tag) => [
-                                        'label' => $tag->name,
-                                        'color' => $tag->color ?? '#808080',
-                                    ])->toArray();
-                                })
+                                ->state(fn (Partner $record): array => $record->tags()->get()->map(fn ($tag): array => [
+                                    'label' => $tag->name,
+                                    'color' => $tag->color ?? '#808080',
+                                ])->toArray())
                                 ->badge()
                                 ->formatStateUsing(fn ($state) => $state['label'])
-                                ->color(fn ($state) => Color::generateV3Palette($state['color']))
+                                ->color(fn ($state): array => Color::generateV3Palette($state['color']))
                                 ->weight(FontWeight::Bold),
                         ])
                             ->visible(fn ($record): bool => (bool) $record->tags()->get()?->count()),
@@ -480,7 +475,7 @@ class PartnerResource extends Resource
                     ]),
             ], layout: FiltersLayout::Modal)
             ->filtersTriggerAction(
-                fn (Action $action) => $action
+                fn (Action $action): Action => $action
                     ->slideOver(),
             )
             ->filtersFormColumns(2)
@@ -510,10 +505,10 @@ class PartnerResource extends Resource
                             ->body(__('partners::filament/resources/partner.table.actions.delete.notification.body')),
                     ),
                 ForceDeleteAction::make()
-                    ->action(function (Partner $record) {
+                    ->action(function (Partner $record): void {
                         try {
                             $record->forceDelete();
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('partners::filament/resources/partner.table.actions.force-delete.notification.error.title'))
@@ -545,10 +540,10 @@ class PartnerResource extends Resource
                                 ->body(__('partners::filament/resources/partner.table.bulk-actions.delete.notification.body')),
                         ),
                     ForceDeleteBulkAction::make()
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->forceDelete());
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('partners::filament/resources/partner.table.bulk-actions.force-delete.notification.error.title'))
@@ -564,13 +559,13 @@ class PartnerResource extends Resource
                         ),
                 ]),
             ])
-            ->modifyQueryUsing(function (Builder $query) {
+            ->modifyQueryUsing(function (Builder $query): void {
                 $query->where('account_type', '!=', AccountType::ADDRESS);
             })
             ->contentGrid([
-                'sm'  => 1,
-                'md'  => 2,
-                'xl'  => 3,
+                'sm' => 1,
+                'md' => 2,
+                'xl' => 3,
                 '2xl' => 4,
             ])
             ->paginated([
@@ -650,15 +645,13 @@ class PartnerResource extends Resource
                                 TextEntry::make('tags.name')
                                     ->label(__('partners::filament/resources/partner.infolist.sections.general.fields.tags'))
                                     ->badge()
-                                    ->state(function (Partner $record): array {
-                                        return $record->tags()->get()->map(fn ($tag) => [
-                                            'label' => $tag->name,
-                                            'color' => $tag->color ?? '#808080',
-                                        ])->toArray();
-                                    })
+                                    ->state(fn (Partner $record): array => $record->tags()->get()->map(fn ($tag): array => [
+                                        'label' => $tag->name,
+                                        'color' => $tag->color ?? '#808080',
+                                    ])->toArray())
                                     ->badge()
                                     ->formatStateUsing(fn ($state) => $state['label'])
-                                    ->color(fn ($state) => Color::generateV3Palette($state['color']))
+                                    ->color(fn ($state): array => Color::generateV3Palette($state['color']))
                                     ->separator(',')
                                     ->visible(fn ($record): bool => (bool) $record->tags()->count()),
                             ]),

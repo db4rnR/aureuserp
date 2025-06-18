@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -10,7 +12,7 @@ use Webkul\Support\Models\Company;
 /**
  * @extends Factory<ProjectStage>
  */
-class ProjectStageFactory extends Factory
+final class ProjectStageFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -27,12 +29,12 @@ class ProjectStageFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'         => fake()->name(),
-            'sort'         => fake()->randomNumber(),
-            'is_active'    => true,
+            'name' => fake()->name(),
+            'sort' => fake()->randomNumber(),
+            'is_active' => true,
             'is_collapsed' => false,
-            'company_id'   => Company::factory(),
-            'creator_id'   => User::factory(),
+            'company_id' => Company::factory(),
+            'creator_id' => User::factory(),
         ];
     }
 }

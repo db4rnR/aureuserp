@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
-use Webkul\Purchase\Enums\RequisitionState;
-use Webkul\Purchase\Enums\RequisitionType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,12 +14,13 @@ use Webkul\Chatter\Traits\HasLogActivity;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Partner\Models\Partner;
 use Webkul\Purchase\Database\Factories\RequisitionFactory;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\RequisitionState;
+use Webkul\Purchase\Enums\RequisitionType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-class Requisition extends Model
+final class Requisition extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes;
 
@@ -57,7 +58,7 @@ class Requisition extends Model
      */
     protected $casts = [
         'state' => RequisitionState::class,
-        'type'  => RequisitionType::class,
+        'type' => RequisitionType::class,
     ];
 
     protected array $logAttributes = [
@@ -69,10 +70,10 @@ class Requisition extends Model
         'ends_at',
         'description',
         'currency.name' => 'Currency',
-        'partner.name'  => 'Partner',
-        'user.name'     => 'Buyer',
-        'company.name'  => 'Company',
-        'creator.name'  => 'Creator',
+        'partner.name' => 'Partner',
+        'user.name' => 'Buyer',
+        'company.name' => 'Company',
+        'creator.name' => 'Creator',
     ];
 
     public function partner(): BelongsTo
@@ -106,31 +107,31 @@ class Requisition extends Model
     }
 
     /**
-     * Bootstrap any application services.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($order) {
-            $order->updateName();
-        });
-
-        static::created(function ($order) {
-            $order->update(['name' => $order->name]);
-        });
-    }
-
-    /**
      * Update the full name without triggering additional events
      */
-    public function updateName()
+    public function updateName(): void
     {
-        if ($this->type == RequisitionType::BLANKET_ORDER) {
+        if ($this->type === RequisitionType::BLANKET_ORDER) {
             $this->name = 'BO/'.$this->id;
         } else {
             $this->name = 'PT/'.$this->id;
         }
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::saving(function ($order): void {
+            $order->updateName();
+        });
+
+        self::created(function ($order): void {
+            $order->update(['name' => $order->name]);
+        });
     }
 
     protected static function newFactory(): RequisitionFactory

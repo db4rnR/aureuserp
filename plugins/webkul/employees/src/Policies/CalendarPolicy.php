@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Employee\Models\Calendar;
 use Webkul\Security\Models\User;
 
-class CalendarPolicy
+final class CalendarPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class CalendarPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Calendar $calendar): bool
+    public function view(User $user): bool
     {
         return $user->can('view_calendar');
     }
@@ -37,7 +38,7 @@ class CalendarPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Calendar $calendar): bool
+    public function update(User $user): bool
     {
         return $user->can('update_calendar');
     }
@@ -45,7 +46,7 @@ class CalendarPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Calendar $calendar): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_calendar');
     }
@@ -61,7 +62,7 @@ class CalendarPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Calendar $calendar): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_calendar');
     }
@@ -77,7 +78,7 @@ class CalendarPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Calendar $calendar): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_calendar');
     }
@@ -93,7 +94,7 @@ class CalendarPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Calendar $calendar): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_calendar');
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,9 +18,14 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Database\Factories\CompanyFactory;
 
-class Company extends Model implements Sortable
+final class Company extends Model implements Sortable
 {
     use HasChatter, HasCustomFields, HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -51,11 +58,6 @@ class Company extends Model implements Sortable
         'website',
     ];
 
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
-    ];
-
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
@@ -79,7 +81,7 @@ class Company extends Model implements Sortable
      */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Company::class, 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     /**
@@ -87,7 +89,7 @@ class Company extends Model implements Sortable
      */
     public function branches(): HasMany
     {
-        return $this->hasMany(Company::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     /**
@@ -143,60 +145,60 @@ class Company extends Model implements Sortable
     /**
      * Bootstrap the model and its traits.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::creating(function ($company) {
+        self::creating(function ($company): void {
             if (! $company->partner_id) {
                 $partner = Partner::create([
-                    'creator_id'       => $company->creator_id ?? Auth::id(),
-                    'sub_type'         => 'company',
+                    'creator_id' => $company->creator_id ?? Auth::id(),
+                    'sub_type' => 'company',
                     'company_registry' => $company->registration_number,
-                    'name'             => $company->name,
-                    'email'            => $company->email,
-                    'website'          => $company->website,
-                    'tax_id'           => $company->tax_id,
-                    'phone'            => $company->phone,
-                    'mobile'           => $company->mobile,
-                    'color'            => $company->color,
-                    'street1'          => $company->street1,
-                    'street2'          => $company->street2,
-                    'city'             => $company->city,
-                    'zip'              => $company->zip,
-                    'state_id'         => $company->state_id,
-                    'country_id'       => $company->country_id,
-                    'parent_id'        => $company->parent_id,
-                    'company_id'       => $company->id,
+                    'name' => $company->name,
+                    'email' => $company->email,
+                    'website' => $company->website,
+                    'tax_id' => $company->tax_id,
+                    'phone' => $company->phone,
+                    'mobile' => $company->mobile,
+                    'color' => $company->color,
+                    'street1' => $company->street1,
+                    'street2' => $company->street2,
+                    'city' => $company->city,
+                    'zip' => $company->zip,
+                    'state_id' => $company->state_id,
+                    'country_id' => $company->country_id,
+                    'parent_id' => $company->parent_id,
+                    'company_id' => $company->id,
                 ]);
 
                 $company->partner_id = $partner->id;
             }
         });
 
-        static::saved(function ($company) {
+        self::saved(function ($company): void {
             Partner::updateOrCreate(
                 [
                     'id' => $company->partner_id,
                 ], [
-                    'creator_id'       => $company->creator_id ?? Auth::id(),
-                    'sub_type'         => 'company',
+                    'creator_id' => $company->creator_id ?? Auth::id(),
+                    'sub_type' => 'company',
                     'company_registry' => $company->registration_number,
-                    'name'             => $company->name,
-                    'email'            => $company->email,
-                    'website'          => $company->website,
-                    'tax_id'           => $company->tax_id,
-                    'phone'            => $company->phone,
-                    'mobile'           => $company->mobile,
-                    'color'            => $company->color,
-                    'street1'          => $company->street1,
-                    'street2'          => $company->street2,
-                    'city'             => $company->city,
-                    'zip'              => $company->zip,
-                    'state_id'         => $company->state_id,
-                    'country_id'       => $company->country_id,
-                    'parent_id'        => $company->parent_id,
-                    'company_id'       => $company->id,
+                    'name' => $company->name,
+                    'email' => $company->email,
+                    'website' => $company->website,
+                    'tax_id' => $company->tax_id,
+                    'phone' => $company->phone,
+                    'mobile' => $company->mobile,
+                    'color' => $company->color,
+                    'street1' => $company->street1,
+                    'street2' => $company->street2,
+                    'city' => $company->city,
+                    'zip' => $company->zip,
+                    'state_id' => $company->state_id,
+                    'country_id' => $company->country_id,
+                    'parent_id' => $company->parent_id,
+                    'company_id' => $company->id,
                 ]
             );
         });

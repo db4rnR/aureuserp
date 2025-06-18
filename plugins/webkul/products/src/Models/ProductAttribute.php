@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,9 +12,14 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 
-class ProductAttribute extends Model implements Sortable
+final class ProductAttribute extends Model implements Sortable
 {
     use SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -31,11 +38,6 @@ class ProductAttribute extends Model implements Sortable
         'product_id',
         'attribute_id',
         'creator_id',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function product(): BelongsTo
@@ -63,11 +65,11 @@ class ProductAttribute extends Model implements Sortable
         return $this->belongsTo(User::class);
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::deleting(function ($attribute) {
+        self::deleting(function ($attribute): void {
             $attribute->product->variants()->forceDelete();
         });
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,9 +13,14 @@ use Webkul\Sale\Enums\OrderDisplayType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class OrderTemplate extends Model implements Sortable
+final class OrderTemplate extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'sales_order_templates';
 
@@ -29,11 +36,6 @@ class OrderTemplate extends Model implements Sortable
         'require_signature',
         'require_payment',
         'prepayment_percentage',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function company()

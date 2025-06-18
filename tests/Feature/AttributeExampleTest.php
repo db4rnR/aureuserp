@@ -1,24 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Pest\Attributes\Test;
-use Pest\Attributes\Group;
-use Pest\Attributes\Description;
 use Pest\Attributes\DataProvider;
-use Pest\Attributes\Depends;
+use Pest\Attributes\Description;
+use Pest\Attributes\Group;
+use Pest\Attributes\Test;
+
+use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
-use function Pest\Laravel\actingAs;
 
 /**
  * Example of feature tests using attributes instead of PHPDoc comments.
  */
-
 #[Test]
 #[Group('feature')]
 #[Description('Test that the home page loads successfully')]
-function home_page_loads_successfully()
+function home_page_loads_successfully(): void
 {
     $response = get('/');
 
@@ -28,7 +29,7 @@ function home_page_loads_successfully()
 #[Test]
 #[Group('feature')]
 #[Description('Test that the login page loads successfully')]
-function login_page_loads_successfully()
+function login_page_loads_successfully(): void
 {
     $response = get('/login');
 
@@ -39,7 +40,7 @@ function login_page_loads_successfully()
 #[Test]
 #[Group('feature')]
 #[Description('Test user registration process')]
-function user_can_register()
+function user_can_register(): void
 {
     $userData = [
         'name' => 'Test User',
@@ -61,10 +62,10 @@ function user_can_register()
 #[Test]
 #[Group('feature')]
 #[Description('Test user login process')]
-function user_can_login()
+function user_can_login(): void
 {
     // Create a user
-    $user = User::factory()->create([
+    User::factory()->create([
         'email' => 'test_login@example.com',
         'password' => Hash::make('password'),
     ]);
@@ -85,7 +86,7 @@ function user_can_login()
 #[Test]
 #[Group('feature')]
 #[Description('Test authenticated user can access protected routes')]
-function authenticated_user_can_access_protected_routes()
+function authenticated_user_can_access_protected_routes(): void
 {
     // Create a user
     $user = User::factory()->create();
@@ -103,7 +104,7 @@ function authenticated_user_can_access_protected_routes()
 #[Test]
 #[Group('feature')]
 #[Description('Test unauthenticated user cannot access protected routes')]
-function unauthenticated_user_cannot_access_protected_routes()
+function unauthenticated_user_cannot_access_protected_routes(): void
 {
     // Try to access a protected route without authentication
     $response = get('/dashboard');
@@ -116,7 +117,7 @@ function unauthenticated_user_cannot_access_protected_routes()
 #[Group('feature')]
 #[DataProvider('user_roles_provider')]
 #[Description('Test user access based on roles')]
-function user_access_based_on_role($role, $route, $expectedStatus)
+function user_access_based_on_role($role, $route, $expectedStatus): void
 {
     // Create a user with the given role
     // This is just an example. Adjust according to your actual user and role structure.
@@ -133,7 +134,7 @@ function user_access_based_on_role($role, $route, $expectedStatus)
     $response->assertStatus($expectedStatus);
 }
 
-function user_roles_provider()
+function user_roles_provider(): array
 {
     return [
         'admin can access admin dashboard' => ['admin', '/admin/dashboard', 200],

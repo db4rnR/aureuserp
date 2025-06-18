@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,12 +9,12 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 
-class RefuseReason extends Model implements Sortable
+final class RefuseReason extends Model implements Sortable
 {
     use SortableTrait;
 
     public $sortable = [
-        'order_column_name'  => 'sort',
+        'order_column_name' => 'sort',
         'sort_when_creating' => true,
     ];
 

@@ -1,25 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList\Forms\Components;
 
+use Closure;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Field;
+use Illuminate\Support\Str;
 use Saade\FilamentAdjacencyList\Forms\Components\Concerns\HasActions;
 use Saade\FilamentAdjacencyList\Forms\Components\Concerns\HasForm;
-use Filament\Actions\Action;
-use Closure;
-use Filament\Forms;
-use Illuminate\Support\Str;
 
-class AdjacencyList extends Field
+final class AdjacencyList extends Field
 {
     use HasActions;
     use HasForm;
 
     protected string $view = 'filament-adjacency-list::builder';
 
-    protected string | Closure $labelKey = 'label';
+    protected string|Closure $labelKey = 'label';
 
-    protected string | Closure $childrenKey = 'children';
+    protected string|Closure $childrenKey = 'children';
 
     protected int $maxDepth = -1;
 
@@ -27,7 +28,7 @@ class AdjacencyList extends Field
     {
         parent::setUp();
 
-        $this->afterStateHydrated(function (AdjacencyList $component, ?array $state) {
+        $this->afterStateHydrated(function (AdjacencyList $component, ?array $state): void {
             if (! $state) {
                 $component->state([]);
             }
@@ -45,7 +46,7 @@ class AdjacencyList extends Field
 
         $this->registerListeners([
             'builder::sort' => [
-                function (AdjacencyList $component, string $targetStatePath, array $targetItemsStatePaths) {
+                function (AdjacencyList $component, string $targetStatePath, array $targetItemsStatePaths): void {
                     $state = $component->getState();
                     $targetStatePath = $this->getRelativeStatePath($targetStatePath);
 
@@ -71,7 +72,7 @@ class AdjacencyList extends Field
         ]);
     }
 
-    public function labelKey(string | Closure $key): static
+    public function labelKey(string|Closure $key): static
     {
         $this->labelKey = $key;
 
@@ -83,7 +84,7 @@ class AdjacencyList extends Field
         return $this->evaluate($this->labelKey);
     }
 
-    public function childrenKey(string | Closure $key): static
+    public function childrenKey(string|Closure $key): static
     {
         $this->childrenKey = $key;
 
@@ -95,7 +96,7 @@ class AdjacencyList extends Field
         return $this->evaluate($this->childrenKey);
     }
 
-    public function maxDepth(int | Closure $maxDepth): static
+    public function maxDepth(int|Closure $maxDepth): static
     {
         $this->maxDepth = $maxDepth;
 

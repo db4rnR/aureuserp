@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -15,9 +17,9 @@ enum GroupPropagation: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::NONE      => __('inventories::enums/group-propagation.none'),
+            self::NONE => __('inventories::enums/group-propagation.none'),
             self::PROPAGATE => __('inventories::enums/group-propagation.propagate'),
-            self::FIXED     => __('inventories::enums/group-propagation.fixed'),
+            self::FIXED => __('inventories::enums/group-propagation.fixed'),
         };
     }
 }

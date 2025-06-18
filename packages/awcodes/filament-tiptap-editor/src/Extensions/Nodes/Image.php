@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use Tiptap\Nodes\Image as BaseImage;
 
-class Image extends BaseImage
+final class Image extends BaseImage
 {
     public function addAttributes(): array
     {

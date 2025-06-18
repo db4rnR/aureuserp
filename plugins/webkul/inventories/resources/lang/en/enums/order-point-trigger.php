@@ -1,6 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'manual'    => 'Manual',
+    'manual' => 'Manual',
     'automatic' => 'Automatic',
 ];

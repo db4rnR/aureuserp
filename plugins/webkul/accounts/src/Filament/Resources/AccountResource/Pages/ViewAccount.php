@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\AccountResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Account\Filament\Resources\AccountResource;
 
-class ViewAccount extends ViewRecord
+final class ViewAccount extends ViewRecord
 {
     protected static string $resource = AccountResource::class;
 

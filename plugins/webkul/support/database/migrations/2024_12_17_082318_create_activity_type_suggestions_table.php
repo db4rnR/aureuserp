@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('activity_type_suggestions', function (Blueprint $table) {
+        Schema::create('activity_type_suggestions', function (Blueprint $table): void {
             $table->unsignedBigInteger('activity_type_id')->comment('The primary activity type');
             $table->unsignedBigInteger('suggested_activity_type_id')->comment('The suggested activity type');
 
@@ -32,7 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('activity_type_suggestions', function (Blueprint $table) {
+        Schema::table('activity_type_suggestions', function (Blueprint $table): void {
             $table->dropForeign('activity_type_id');
             $table->dropForeign('suggested_activity_type_id');
         });

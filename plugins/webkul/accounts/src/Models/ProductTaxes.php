@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Product\Models\Product;
 
-class ProductTaxes extends Model
+final class ProductTaxes extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'accounts_product_taxes';
 
     protected $fillable = [
         'product_id',
         'tax_id',
     ];
-
-    public $timestamps = false;
 
     public function product()
     {

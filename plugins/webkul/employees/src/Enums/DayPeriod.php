@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Enums;
 
 enum DayPeriod: string
@@ -15,10 +17,10 @@ enum DayPeriod: string
     public static function options(): array
     {
         return [
-            self::Morning->value   => __('employees::enums/day-period.morning'),
+            self::Morning->value => __('employees::enums/day-period.morning'),
             self::Afternoon->value => __('employees::enums/day-period.afternoon'),
-            self::Evening->value   => __('employees::enums/day-period.evening'),
-            self::Night->value     => __('employees::enums/day-period.night'),
+            self::Evening->value => __('employees::enums/day-period.evening'),
+            self::Night->value => __('employees::enums/day-period.night'),
         ];
     }
 }

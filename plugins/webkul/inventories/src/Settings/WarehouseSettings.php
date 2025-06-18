@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class WarehouseSettings extends Settings
+final class WarehouseSettings extends Settings
 {
     public bool $enable_locations;
 

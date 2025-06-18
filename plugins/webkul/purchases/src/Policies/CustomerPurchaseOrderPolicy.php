@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Purchase\Models\CustomerPurchaseOrder;
 use Webkul\Website\Models\Partner;
 
-class CustomerPurchaseOrderPolicy
+final class CustomerPurchaseOrderPolicy
 {
     use HandlesAuthorization;
 
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(Partner $user): bool
+    public function viewAny(): bool
     {
         return true;
     }

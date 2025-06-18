@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Inventory\Models\Package;
 use Webkul\Security\Models\User;
 
-class PackagePolicy
+final class PackagePolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class PackagePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Package $package): bool
+    public function view(User $user): bool
     {
         return $user->can('view_package');
     }
@@ -37,7 +38,7 @@ class PackagePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Package $package): bool
+    public function update(User $user): bool
     {
         return $user->can('update_package');
     }
@@ -45,7 +46,7 @@ class PackagePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Package $package): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_package');
     }
@@ -61,7 +62,7 @@ class PackagePolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Package $package): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_package');
     }
@@ -77,7 +78,7 @@ class PackagePolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Package $package): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_package');
     }
@@ -93,7 +94,7 @@ class PackagePolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Package $package): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_package');
     }

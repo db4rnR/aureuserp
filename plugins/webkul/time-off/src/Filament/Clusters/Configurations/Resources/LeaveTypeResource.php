@@ -1,62 +1,60 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Radio;
-use Webkul\TimeOff\Enums\LeaveValidationType;
-use Filament\Schemas\Components\Utilities\Get;
-use Webkul\TimeOff\Enums\EmployeeRequest;
-use Webkul\TimeOff\Enums\AllocationValidationType;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\Select;
-use Webkul\TimeOff\Enums\RequestUnit;
-use Filament\Forms\Components\Toggle;
-use Webkul\TimeOff\Enums\TimeType;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ColorColumn;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Schemas\Components\Grid;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\IconEntry;
-use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages\ListLeaveTypes;
-use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages\CreateLeaveType;
-use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages\ViewLeaveType;
-use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages\EditLeaveType;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\TextSize;
+use Filament\Tables\Columns\ColorColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
-use Webkul\TimeOff\Enums;
+use Webkul\TimeOff\Enums\AllocationValidationType;
+use Webkul\TimeOff\Enums\EmployeeRequest;
+use Webkul\TimeOff\Enums\LeaveValidationType;
+use Webkul\TimeOff\Enums\RequestUnit;
 use Webkul\TimeOff\Enums\RequiresAllocation;
+use Webkul\TimeOff\Enums\TimeType;
 use Webkul\TimeOff\Filament\Clusters\Configurations;
-use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages;
+use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages\CreateLeaveType;
+use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages\EditLeaveType;
+use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages\ListLeaveTypes;
+use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource\Pages\ViewLeaveType;
 use Webkul\TimeOff\Models\LeaveType;
 
-class LeaveTypeResource extends Resource
+final class LeaveTypeResource extends Resource
 {
     protected static ?string $model = LeaveType::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $cluster = Configurations::class;
 
@@ -103,14 +101,14 @@ class LeaveTypeResource extends Resource
                                                             ->label(__('time-off::filament/clusters/configurations/resources/leave-type.form.sections.general.fields.employee-requests'))
                                                             ->inline(false)
                                                             ->live()
-                                                            ->visible(fn (Get $get) => $get('requires_allocation') === RequiresAllocation::YES->value)
+                                                            ->visible(fn (Get $get): bool => $get('requires_allocation') === RequiresAllocation::YES->value)
                                                             ->default(EmployeeRequest::NO->value)
                                                             ->options(EmployeeRequest::class),
                                                         Radio::make('allocation_validation_type')
                                                             ->label(__('time-off::filament/clusters/configurations/resources/leave-type.form.sections.general.fields.approval'))
                                                             ->inline(false)
                                                             ->live()
-                                                            ->visible(fn (Get $get) => $get('requires_allocation') === RequiresAllocation::YES->value)
+                                                            ->visible(fn (Get $get): bool => $get('requires_allocation') === RequiresAllocation::YES->value)
                                                             ->default(AllocationValidationType::HR->value)
                                                             ->options(AllocationValidationType::class),
                                                     ]),
@@ -154,14 +152,14 @@ class LeaveTypeResource extends Resource
                                             ->default(TimeType::LEAVE->value)
                                             ->label(__('time-off::filament/clusters/configurations/resources/leave-type.form.sections.configuration.fields.kind-of-time')),
                                         Toggle::make('allows_negative')
-                                            ->visible(fn (Get $get) => $get('requires_allocation') === RequiresAllocation::YES->value)
+                                            ->visible(fn (Get $get): bool => $get('requires_allocation') === RequiresAllocation::YES->value)
                                             ->live()
                                             ->inline(false)
                                             ->label(__('time-off::filament/clusters/configurations/resources/leave-type.form.sections.configuration.fields.allow-negative-cap')),
                                         TextInput::make('max_allowed_negative')
                                             ->numeric()
                                             ->default(0)
-                                            ->visible(fn (Get $get) => $get('requires_allocation') === RequiresAllocation::YES->value && $get('allows_negative') === true)
+                                            ->visible(fn (Get $get): bool => $get('requires_allocation') === RequiresAllocation::YES->value && $get('allows_negative') === true)
                                             ->label(__('time-off::filament/clusters/configurations/resources/leave-type.form.sections.configuration.fields.max-negative-cap'))
                                             ->step(1)
                                             ->live()
@@ -351,14 +349,14 @@ class LeaveTypeResource extends Resource
                                                             ->icon('heroicon-o-user-group')
                                                             ->placeholder('—')
                                                             ->formatStateUsing(fn ($state) => EmployeeRequest::options()[$state])
-                                                            ->visible(fn ($record) => $record->requires_allocation === RequiresAllocation::YES->value)
+                                                            ->visible(fn ($record): bool => $record->requires_allocation === RequiresAllocation::YES->value)
                                                             ->badge(),
                                                         TextEntry::make('allocation_validation_type')
                                                             ->label(__('time-off::filament/clusters/configurations/resources/leave-type.infolist.sections.general.entries.approval'))
                                                             ->icon('heroicon-o-shield-check')
                                                             ->placeholder('—')
                                                             ->formatStateUsing(fn ($state) => AllocationValidationType::options()[$state])
-                                                            ->visible(fn ($record) => $record->requires_allocation === RequiresAllocation::YES->value)
+                                                            ->visible(fn ($record): bool => $record->requires_allocation === RequiresAllocation::YES->value)
                                                             ->badge(),
                                                     ]),
                                             ]),
@@ -378,9 +376,7 @@ class LeaveTypeResource extends Resource
                                         ->icon('heroicon-o-bell-alert')
                                         ->placeholder('—')
                                         ->listWithLineBreaks()
-                                        ->getStateUsing(function ($record) {
-                                            return $record->notifiedTimeOffOfficers->pluck('name')->join(', ') ?: '—';
-                                        }),
+                                        ->getStateUsing(fn ($record) => $record->notifiedTimeOffOfficers->pluck('name')->join(', ') ?: '—'),
                                     TextEntry::make('request_unit')
                                         ->label(__('time-off::filament/clusters/configurations/resources/leave-type.infolist.sections.configuration.entries.take-time-off-in'))
                                         ->icon('heroicon-o-clock')
@@ -407,13 +403,13 @@ class LeaveTypeResource extends Resource
                                         ->badge(),
                                     IconEntry::make('allows_negative')
                                         ->boolean()
-                                        ->visible(fn ($record) => $record->requires_allocation === RequiresAllocation::YES->value)
+                                        ->visible(fn ($record): bool => $record->requires_allocation === RequiresAllocation::YES->value)
                                         ->placeholder('—'),
                                     TextEntry::make('max_allowed_negative')
                                         ->label(__('time-off::filament/clusters/configurations/resources/leave-type.infolist.sections.configuration.entries.max-negative-cap'))
                                         ->icon('heroicon-o-arrow-trending-down')
                                         ->placeholder('—')
-                                        ->visible(fn ($record) => $record->requires_allocation === RequiresAllocation::YES->value && $record->allows_negative === true)
+                                        ->visible(fn ($record): bool => $record->requires_allocation === RequiresAllocation::YES->value && $record->allows_negative === true)
                                         ->numeric(),
                                 ]),
                         ])->columnSpan(1),
@@ -424,10 +420,10 @@ class LeaveTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListLeaveTypes::route('/'),
+            'index' => ListLeaveTypes::route('/'),
             'create' => CreateLeaveType::route('/create'),
-            'view'   => ViewLeaveType::route('/{record}'),
-            'edit'   => EditLeaveType::route('/{record}/edit'),
+            'view' => ViewLeaveType::route('/{record}'),
+            'edit' => EditLeaveType::route('/{record}/edit'),
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\CashRoundingResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -7,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\CashRoundingResource;
 
-class CreateCashRounding extends CreateRecord
+final class CreateCashRounding extends CreateRecord
 {
     protected static string $resource = CashRoundingResource::class;
 

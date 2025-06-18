@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Forms\Components;
 
-use Filament\Schemas\Components\Component;
-use Pboivin\FilamentPeek\Support\View;
-use Pboivin\FilamentPeek\Support\Panel;
-use Pboivin\FilamentPeek\Support\Page;
 use Filament\Forms\Contracts\HasForms;
-use Pboivin\FilamentPeek\Support;
+use Filament\Schemas\Components\Component;
+use Pboivin\FilamentPeek\Support\Page;
+use Pboivin\FilamentPeek\Support\Panel;
+use Pboivin\FilamentPeek\Support\View;
 
 /**
  * @deprecated Use InlinePreviewAction instead.
  */
-class PreviewLink extends Component
+final class PreviewLink extends Component
 {
     protected string $view = 'filament-peek::components.preview-link';
 
@@ -28,7 +29,7 @@ class PreviewLink extends Component
     {
         View::setupPreviewModal();
 
-        return app(static::class)
+        return app(self::class)
             ->configure()
             ->label(__('filament-peek::ui.preview-action-label'));
     }

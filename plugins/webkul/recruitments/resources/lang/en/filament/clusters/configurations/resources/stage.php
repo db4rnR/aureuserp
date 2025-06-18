@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Stages',
 
@@ -14,22 +16,22 @@ return [
                 'title' => 'General Information',
 
                 'fields' => [
-                    'stage-name'   => 'Stage Name',
-                    'sort'         => 'Sequence Order',
+                    'stage-name' => 'Stage Name',
+                    'sort' => 'Sequence Order',
                     'requirements' => 'Requirements',
                 ],
             ],
 
             'tooltips' => [
-                'title'       => 'Tooltips',
+                'title' => 'Tooltips',
                 'description' => 'Define the custom label for application status.',
 
                 'fields' => [
-                    'gray-label'          => 'Gray Label',
-                    'gray-label-tooltip'  => 'The label for the gray status.',
-                    'red-label'           => 'Red Label',
-                    'red-label-tooltip'   => 'The label for the red status.',
-                    'green-label'         => 'Green Label',
+                    'gray-label' => 'Gray Label',
+                    'gray-label-tooltip' => 'The label for the gray status.',
+                    'red-label' => 'Red Label',
+                    'red-label-tooltip' => 'The label for the red status.',
+                    'green-label' => 'Green Label',
                     'green-label-tooltip' => 'The label for the green status.',
                 ],
             ],
@@ -39,8 +41,8 @@ return [
 
                 'fields' => [
                     'job-positions' => 'Job Positions',
-                    'folded'        => 'Folded',
-                    'hired-stage'   => 'Hired Stage',
+                    'folded' => 'Folded',
+                    'hired-stage' => 'Hired Stage',
                     'default-stage' => 'Default Stage',
                 ],
             ],
@@ -49,46 +51,46 @@ return [
 
     'table' => [
         'columns' => [
-            'id'                 => 'ID',
-            'name'               => 'Stage Name',
-            'hired-stage'        => 'Hired Stage',
-            'default-stage'      => 'Default Stage',
-            'folded'             => 'Folded',
-            'job-positions'      => 'Job Positions',
-            'created-by'         => 'Created By',
-            'created-at'         => 'Created At',
-            'updated-at'         => 'Updated At',
+            'id' => 'ID',
+            'name' => 'Stage Name',
+            'hired-stage' => 'Hired Stage',
+            'default-stage' => 'Default Stage',
+            'folded' => 'Folded',
+            'job-positions' => 'Job Positions',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'filters' => [
-            'name'         => 'Stage Name',
+            'name' => 'Stage Name',
             'job-position' => 'Job Position',
-            'folded'       => 'Folded',
-            'gray-label'   => 'Gray Label',
-            'red-label'    => 'Red Label',
-            'green-label'  => 'Green Label',
-            'created-by'   => 'Created By',
-            'created-at'   => 'Created At',
-            'updated-at'   => 'Updated At',
+            'folded' => 'Folded',
+            'gray-label' => 'Gray Label',
+            'red-label' => 'Red Label',
+            'green-label' => 'Green Label',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
             'job-position' => 'Job Position',
-            'stage-name'   => 'Stage Name',
-            'folded'       => 'Folded',
-            'gray-label'   => 'Gray Label',
-            'red-label'    => 'Red Label',
-            'green-label'  => 'Green Label',
-            'created-by'   => 'Created By',
-            'created-at'   => 'Created At',
-            'updated-at'   => 'Updated At',
+            'stage-name' => 'Stage Name',
+            'folded' => 'Folded',
+            'gray-label' => 'Gray Label',
+            'red-label' => 'Red Label',
+            'green-label' => 'Green Label',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'actions' => [
             'delete' => [
                 'notification' => [
                     'title' => 'Stage deleted',
-                    'body'  => 'The Stage has been deleted successfully.',
+                    'body' => 'The Stage has been deleted successfully.',
                 ],
             ],
         ],
@@ -97,7 +99,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Stages deleted',
-                    'body'  => 'The Stages has been deleted successfully.',
+                    'body' => 'The Stages has been deleted successfully.',
                 ],
             ],
         ],
@@ -115,22 +117,22 @@ return [
                 'title' => 'General Information',
 
                 'entries' => [
-                    'stage-name'   => 'Stage Name',
-                    'sort'         => 'Sequence Order',
+                    'stage-name' => 'Stage Name',
+                    'sort' => 'Sequence Order',
                     'requirements' => 'Requirements',
                 ],
             ],
 
             'tooltips' => [
-                'title'       => 'Tooltips',
+                'title' => 'Tooltips',
                 'description' => 'Define the custom label for application status.',
 
                 'entries' => [
-                    'gray-label'          => 'Gray Label',
-                    'gray-label-tooltip'  => 'The label for the gray status.',
-                    'red-label'           => 'Red Label',
-                    'red-label-tooltip'   => 'The label for the red status.',
-                    'green-label'         => 'Green Label',
+                    'gray-label' => 'Gray Label',
+                    'gray-label-tooltip' => 'The label for the gray status.',
+                    'red-label' => 'Red Label',
+                    'red-label-tooltip' => 'The label for the red status.',
+                    'green-label' => 'Green Label',
                     'green-label-tooltip' => 'The label for the green status.',
                 ],
             ],
@@ -139,10 +141,10 @@ return [
                 'title' => 'Additional Information',
 
                 'entries' => [
-                    'job-positions'      => 'Job Position',
-                    'folded'             => 'Folded',
-                    'hired-stage'        => 'Hired Stage',
-                    'default-stage'      => 'Default Stage',
+                    'job-positions' => 'Job Position',
+                    'folded' => 'Folded',
+                    'hired-stage' => 'Hired Stage',
+                    'default-stage' => 'Default Stage',
                 ],
             ],
         ],

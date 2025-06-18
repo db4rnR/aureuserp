@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
         'sections' => [
@@ -7,8 +9,8 @@ return [
                 'title' => 'General',
 
                 'fields' => [
-                    'name'  => 'Name',
-                    'code'  => 'Bank Identifier Code',
+                    'name' => 'Name',
+                    'code' => 'Bank Identifier Code',
                     'email' => 'Email',
                     'phone' => 'Phone',
                 ],
@@ -19,11 +21,11 @@ return [
 
                 'fields' => [
                     'address' => 'Address',
-                    'city'    => 'City',
+                    'city' => 'City',
                     'street1' => 'Street 1',
                     'street2' => 'Street 2',
-                    'state'   => 'State',
-                    'zip'     => 'Zip',
+                    'state' => 'State',
+                    'zip' => 'Zip',
                     'country' => 'Country',
                 ],
             ],
@@ -32,45 +34,45 @@ return [
 
     'table' => [
         'columns' => [
-            'name'           => 'Name',
-            'code'           => 'Bank Identifier Code',
-            'country'        => 'Country',
-            'created-at'     => 'Created At',
-            'updated-at'     => 'Updated At',
-            'deleted-at'     => 'Deleted At',
+            'name' => 'Name',
+            'code' => 'Bank Identifier Code',
+            'country' => 'Country',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
+            'deleted-at' => 'Deleted At',
         ],
 
         'groups' => [
-            'country'               => 'Country',
-            'created-at'            => 'Created At',
+            'country' => 'Country',
+            'created-at' => 'Created At',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Bank updated',
-                    'body'  => 'The bank has been updated successfully.',
+                    'body' => 'The bank has been updated successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Bank restored',
-                    'body'  => 'The bank has been restored successfully.',
+                    'body' => 'The bank has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Bank deleted',
-                    'body'  => 'The bank has been deleted successfully.',
+                    'body' => 'The bank has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Bank force deleted',
-                    'body'  => 'The bank has been force deleted successfully.',
+                    'body' => 'The bank has been force deleted successfully.',
                 ],
             ],
         ],
@@ -79,21 +81,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Banks restored',
-                    'body'  => 'The banks has been restored successfully.',
+                    'body' => 'The banks has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Banks deleted',
-                    'body'  => 'The banks has been deleted successfully.',
+                    'body' => 'The banks has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Banks force deleted',
-                    'body'  => 'The banks has been force deleted successfully.',
+                    'body' => 'The banks has been force deleted successfully.',
                 ],
             ],
         ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Widgets;
 
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
@@ -11,120 +13,11 @@ use Flowframe\Trend\TrendValue;
 use Illuminate\Support\Carbon;
 use Webkul\Project\Models\Task;
 
-class StatsOverviewWidget extends BaseWidget
+final class StatsOverviewWidget extends BaseWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 
     protected ?string $pollingInterval = '15s';
-
-    protected function getData(): array
-    {
-        $query = Task::query();
-
-        if (! empty($this->pageFilters['selectedProjects'])) {
-            $query->whereIn('project_id', $this->pageFilters['selectedProjects']);
-        }
-
-        if (! empty($this->pageFilters['selectedAssignees'])) {
-            $query->whereHas('users', function ($q) {
-                $q->whereIn('users.id', $this->pageFilters['selectedAssignees']);
-            });
-        }
-
-        if (! empty($this->pageFilters['selectedTags'])) {
-            $query->whereHas('tags', function ($q) {
-                $q->whereIn('projects_task_tag.tag_id', $this->pageFilters['selectedTags']);
-            });
-        }
-
-        if (! empty($this->pageFilters['selectedPartners'])) {
-            $query->whereIn('parent_id', $this->pageFilters['selectedPartners']);
-        }
-
-        $currentPeriodStart = ! is_null($this->pageFilters['startDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['startDate']) :
-            now()->subMonth();
-
-        $currentPeriodEnd = ! is_null($this->pageFilters['endDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['endDate']) :
-            now();
-
-        $daysDifference = $currentPeriodEnd->diffInDays($currentPeriodStart);
-
-        $previousPeriodStart = (clone $currentPeriodStart)->subDays($daysDifference);
-        $previousPeriodEnd = (clone $currentPeriodEnd)->subDays($daysDifference);
-
-        $currentStats = $this->calculatePeriodStats($query->clone(), $currentPeriodStart, $currentPeriodEnd);
-
-        $previousStats = $this->calculatePeriodStats($query->clone(), $previousPeriodStart, $previousPeriodEnd);
-
-        $tasksChart = $this->generateTrendData($query->clone(), 'COUNT', '*', $currentPeriodStart, $currentPeriodEnd);
-        $hoursSpentChart = $this->generateTrendData($query->whereNull('parent_id')->clone(), 'SUM', 'total_hours_spent', $currentPeriodStart, $currentPeriodEnd);
-        $remainingHoursChart = $this->generateTrendData($query->whereNull('parent_id')->clone(), 'SUM', 'remaining_hours', $currentPeriodStart, $currentPeriodEnd);
-
-        return [
-            'current'  => $currentStats,
-            'previous' => $previousStats,
-            'charts'   => [
-                'tasks'          => $tasksChart,
-                'hoursSpent'     => $hoursSpentChart,
-                'remainingHours' => $remainingHoursChart,
-            ],
-        ];
-    }
-
-    protected function calculatePeriodStats($query, $startDate, $endDate): array
-    {
-        $taskStats = $query->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw('
-                COUNT(*) as total_tasks
-            ')
-            ->first();
-
-        $stats = $query->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw('
-                SUM(total_hours_spent) as total_hours_spent,
-                SUM(remaining_hours) as total_remaining_hours
-            ')
-            ->whereNull('parent_id')
-            ->first();
-
-        return [
-            'total_tasks'           => $taskStats->total_tasks ?? 0,
-            'total_hours_spent'     => $stats->total_hours_spent ?? 0,
-            'total_remaining_hours' => $stats->total_remaining_hours ?? 0,
-        ];
-    }
-
-    protected function generateTrendData($query, $aggregate, $column, $startDate, $endDate): array
-    {
-        $trend = Trend::query($query)
-            ->between(
-                start: $startDate,
-                end: $endDate,
-            )
-            ->perDay()
-            ->aggregate($column, $aggregate);
-
-        return $trend->map(fn (TrendValue $value) => round((float) $value->aggregate, 2))->toArray();
-    }
-
-    protected function calculatePercentageChange($current, $previous): array
-    {
-        if ($previous == 0) {
-            return [
-                'percentage' => 100,
-                'trend'      => 'success',
-            ];
-        }
-
-        $change = (($current - $previous) / $previous) * 100;
-
-        return [
-            'percentage' => abs(round($change, 1)),
-            'trend'      => $change >= 0 ? 'success' : 'danger',
-        ];
-    }
 
     protected function getStats(): array
     {
@@ -173,6 +66,115 @@ class StatsOverviewWidget extends BaseWidget
                 ->descriptionIcon($remainingHoursChange['trend'] === 'success' ? 'heroicon-m-arrow-trending-up' : 'heroicon-m-arrow-trending-down')
                 ->color($remainingHoursChange['trend'])
                 ->chart($data['charts']['remainingHours']),
+        ];
+    }
+
+    private function getData(): array
+    {
+        $query = Task::query();
+
+        if (! empty($this->pageFilters['selectedProjects'])) {
+            $query->whereIn('project_id', $this->pageFilters['selectedProjects']);
+        }
+
+        if (! empty($this->pageFilters['selectedAssignees'])) {
+            $query->whereHas('users', function ($q): void {
+                $q->whereIn('users.id', $this->pageFilters['selectedAssignees']);
+            });
+        }
+
+        if (! empty($this->pageFilters['selectedTags'])) {
+            $query->whereHas('tags', function ($q): void {
+                $q->whereIn('projects_task_tag.tag_id', $this->pageFilters['selectedTags']);
+            });
+        }
+
+        if (! empty($this->pageFilters['selectedPartners'])) {
+            $query->whereIn('parent_id', $this->pageFilters['selectedPartners']);
+        }
+
+        $currentPeriodStart = is_null($this->pageFilters['startDate'] ?? null) ?
+            now()->subMonth() :
+            Carbon::parse($this->pageFilters['startDate']);
+
+        $currentPeriodEnd = is_null($this->pageFilters['endDate'] ?? null) ?
+            now() :
+            Carbon::parse($this->pageFilters['endDate']);
+
+        $daysDifference = $currentPeriodEnd->diffInDays($currentPeriodStart);
+
+        $previousPeriodStart = (clone $currentPeriodStart)->subDays($daysDifference);
+        $previousPeriodEnd = (clone $currentPeriodEnd)->subDays($daysDifference);
+
+        $currentStats = $this->calculatePeriodStats($query->clone(), $currentPeriodStart, $currentPeriodEnd);
+
+        $previousStats = $this->calculatePeriodStats($query->clone(), $previousPeriodStart, $previousPeriodEnd);
+
+        $tasksChart = $this->generateTrendData($query->clone(), 'COUNT', '*', $currentPeriodStart, $currentPeriodEnd);
+        $hoursSpentChart = $this->generateTrendData($query->whereNull('parent_id')->clone(), 'SUM', 'total_hours_spent', $currentPeriodStart, $currentPeriodEnd);
+        $remainingHoursChart = $this->generateTrendData($query->whereNull('parent_id')->clone(), 'SUM', 'remaining_hours', $currentPeriodStart, $currentPeriodEnd);
+
+        return [
+            'current' => $currentStats,
+            'previous' => $previousStats,
+            'charts' => [
+                'tasks' => $tasksChart,
+                'hoursSpent' => $hoursSpentChart,
+                'remainingHours' => $remainingHoursChart,
+            ],
+        ];
+    }
+
+    private function calculatePeriodStats($query, $startDate, $endDate): array
+    {
+        $taskStats = $query->whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('
+                COUNT(*) as total_tasks
+            ')
+            ->first();
+
+        $stats = $query->whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('
+                SUM(total_hours_spent) as total_hours_spent,
+                SUM(remaining_hours) as total_remaining_hours
+            ')
+            ->whereNull('parent_id')
+            ->first();
+
+        return [
+            'total_tasks' => $taskStats->total_tasks ?? 0,
+            'total_hours_spent' => $stats->total_hours_spent ?? 0,
+            'total_remaining_hours' => $stats->total_remaining_hours ?? 0,
+        ];
+    }
+
+    private function generateTrendData(\Illuminate\Database\Eloquent\Builder $query, string $aggregate, string $column, $startDate, $endDate): array
+    {
+        $trend = Trend::query($query)
+            ->between(
+                start: $startDate,
+                end: $endDate,
+            )
+            ->perDay()
+            ->aggregate($column, $aggregate);
+
+        return $trend->map(fn (TrendValue $value): float => round((float) $value->aggregate, 2))->toArray();
+    }
+
+    private function calculatePercentageChange($current, $previous): array
+    {
+        if ($previous === 0) {
+            return [
+                'percentage' => 100,
+                'trend' => 'success',
+            ];
+        }
+
+        $change = (($current - $previous) / $previous) * 100;
+
+        return [
+            'percentage' => abs(round($change, 1)),
+            'trend' => $change >= 0 ? 'success' : 'danger',
         ];
     }
 }

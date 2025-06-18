@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TableViews\Filament\Concerns;
 
-use Filament\Support\Enums\Width;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Support\Concerns\EvaluatesClosures;
+use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Url;
 use Webkul\TableViews\Filament\Actions\CreateViewAction;
@@ -42,17 +44,6 @@ trait HasTableViews
         parent::bootedInteractsWithTable();
 
         $this->loadDefaultActiveTableView();
-    }
-
-    protected function loadDefaultActiveTableView(): void
-    {
-        if (filled($this->activeTableView)) {
-            $this->applyTableViewFilters();
-
-            return;
-        }
-
-        $this->activeTableView = $this->getDefaultActiveTableView();
     }
 
     public function loadView($tabKey): void
@@ -135,20 +126,18 @@ trait HasTableViews
     public function getSavedTableViews(): array
     {
         return TableViewModel::where('filterable_type', static::class)
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query->where('user_id', auth()->id())
                     ->orWhere('is_public', true);
             })
             ->get()
-            ->mapWithKeys(function (TableViewModel $tableView) {
-                return [
-                    $tableView->id => SavedView::make($tableView->getKey())
-                        ->model($tableView)
-                        ->label($tableView->name)
-                        ->icon($tableView->icon)
-                        ->color($tableView->color),
-                ];
-            })->all();
+            ->mapWithKeys(fn (TableViewModel $tableView) => [
+                $tableView->id => SavedView::make($tableView->getKey())
+                    ->model($tableView)
+                    ->label($tableView->name)
+                    ->icon($tableView->icon)
+                    ->color($tableView->color),
+            ])->all();
     }
 
     /**
@@ -157,9 +146,7 @@ trait HasTableViews
     public function getFavoriteTableViews(): array
     {
         return collect($this->getAllTableViews())
-            ->filter(function (PresetView $presetView, string|int $id) {
-                return $presetView->isFavorite($id);
-            })
+            ->filter(fn (PresetView $presetView, string|int $id): bool => $presetView->isFavorite($id))
             ->all();
     }
 
@@ -196,9 +183,7 @@ trait HasTableViews
 
     public function getDefaultActiveTableView(): string|int|null
     {
-        $defaultViewKey = array_key_first(array_filter($this->getCachedFavoriteTableViews(), function ($view) {
-            return $view->isDefault() === true;
-        }));
+        $defaultViewKey = array_key_first(array_filter($this->getCachedFavoriteTableViews(), fn ($view): bool => $view->isDefault() === true));
 
         return $defaultViewKey ?? array_key_first($this->getCachedFavoriteTableViews());
     }
@@ -221,30 +206,15 @@ trait HasTableViews
         }
 
         return [
-            'tableFilters'        => $this->tableFilters,
-            'tableGrouping'       => $this->tableGrouping,
-            'tableSearch'         => $this->tableSearch,
+            'tableFilters' => $this->tableFilters,
+            'tableGrouping' => $this->tableGrouping,
+            'tableSearch' => $this->tableSearch,
             'tableColumnSearches' => $this->tableColumnSearches,
-            'tableSortColumn'     => $this->tableSortColumn,
-            'tableSortDirection'  => $this->tableSortDirection,
+            'tableSortColumn' => $this->tableSortColumn,
+            'tableSortDirection' => $this->tableSortDirection,
             'tableRecordsPerPage' => $this->tableRecordsPerPage,
             'toggledTableColumns' => $this->toggledTableColumns,
-        ] != $tableViews[$this->activeTableView]->getModel()->filters;
-    }
-
-    protected function modifyQueryWithActiveTab(Builder $query): Builder
-    {
-        if (blank(filled($this->activeTableView))) {
-            return $query;
-        }
-
-        $tableViews = $this->getAllTableViews();
-
-        if (! array_key_exists($this->activeTableView, $tableViews)) {
-            return $query;
-        }
-
-        return $tableViews[$this->activeTableView]->modifyQuery($query);
+        ] !== $tableViews[$this->activeTableView]->getModel()->filters;
     }
 
     public function setTableViewsFormMaxHeight(string|Closure|null $height): static
@@ -295,12 +265,12 @@ trait HasTableViews
                 $data['filterable_type'] = static::class;
 
                 $data['filters'] = [
-                    'tableFilters'        => $this->tableFilters,
-                    'tableGrouping'       => $this->tableGrouping,
-                    'tableSearch'         => $this->tableSearch,
+                    'tableFilters' => $this->tableFilters,
+                    'tableGrouping' => $this->tableGrouping,
+                    'tableSearch' => $this->tableSearch,
                     'tableColumnSearches' => $this->tableColumnSearches,
-                    'tableSortColumn'     => $this->tableSortColumn,
-                    'tableSortDirection'  => $this->tableSortDirection,
+                    'tableSortColumn' => $this->tableSortColumn,
+                    'tableSortDirection' => $this->tableSortDirection,
                     'tableRecordsPerPage' => $this->tableRecordsPerPage,
                     'toggledTableColumns' => $this->toggledTableColumns,
                 ];
@@ -327,7 +297,7 @@ trait HasTableViews
             ->label(__('table-views::filament/concerns/has-table-views.reset'))
             ->color('danger')
             ->link()
-            ->action(function () {
+            ->action(function (): void {
                 $this->resetTableViews();
             });
     }
@@ -337,7 +307,7 @@ trait HasTableViews
         return Action::make('applyTableView')
             ->label(__('table-views::filament/concerns/has-table-views.apply-view'))
             ->icon('heroicon-s-arrow-small-right')
-            ->action(function (array $arguments) {
+            ->action(function (array $arguments): void {
                 $this->resetTableViews();
 
                 $this->activeTableView = $arguments['view_key'];
@@ -351,13 +321,13 @@ trait HasTableViews
         return Action::make('addTableViewToFavorites')
             ->label(__('table-views::filament/concerns/has-table-views.add-to-favorites'))
             ->icon('heroicon-o-star')
-            ->action(function (array $arguments) {
+            ->action(function (array $arguments): void {
                 TableViewFavoriteModel::updateOrCreate(
                     [
-                        'view_type'       => $arguments['view_type'],
-                        'view_key'        => $arguments['view_key'],
+                        'view_type' => $arguments['view_type'],
+                        'view_key' => $arguments['view_key'],
                         'filterable_type' => static::class,
-                        'user_id'         => auth()->id(),
+                        'user_id' => auth()->id(),
                     ], [
                         'is_favorite' => true,
                     ]
@@ -373,13 +343,13 @@ trait HasTableViews
         return Action::make('removeTableViewFromFavorites')
             ->label(__('table-views::filament/concerns/has-table-views.remove-from-favorites'))
             ->icon('heroicon-o-minus-circle')
-            ->action(function (array $arguments) {
+            ->action(function (array $arguments): void {
                 TableViewFavoriteModel::updateOrCreate(
                     [
-                        'view_type'       => $arguments['view_type'],
-                        'view_key'        => $arguments['view_key'],
+                        'view_type' => $arguments['view_type'],
+                        'view_key' => $arguments['view_key'],
                         'filterable_type' => static::class,
-                        'user_id'         => auth()->id(),
+                        'user_id' => auth()->id(),
                     ], [
                         'is_favorite' => false,
                     ]
@@ -409,11 +379,11 @@ trait HasTableViews
             ->icon('heroicon-m-trash')
             ->color('danger')
             ->requiresConfirmation()
-            ->action(function (array $arguments) {
+            ->action(function (array $arguments): void {
                 TableViewModel::find($arguments['view_key'])->delete();
 
                 TableViewFavoriteModel::where('view_key', $arguments['view_key'])
-                    ->where('filterable_type', (string) static::class)
+                    ->where('filterable_type', static::class)
                     ->delete();
 
                 unset($this->cachedTableViews);
@@ -428,15 +398,15 @@ trait HasTableViews
             ->icon('heroicon-m-arrows-right-left')
             ->color('danger')
             ->requiresConfirmation()
-            ->action(function (array $arguments) {
+            ->action(function (array $arguments): void {
                 TableViewModel::find($arguments['view_key'])->update([
                     'filters' => [
-                        'tableFilters'        => $this->tableFilters,
-                        'tableGrouping'       => $this->tableGrouping,
-                        'tableSearch'         => $this->tableSearch,
+                        'tableFilters' => $this->tableFilters,
+                        'tableGrouping' => $this->tableGrouping,
+                        'tableSearch' => $this->tableSearch,
                         'tableColumnSearches' => $this->tableColumnSearches,
-                        'tableSortColumn'     => $this->tableSortColumn,
-                        'tableSortDirection'  => $this->tableSortDirection,
+                        'tableSortColumn' => $this->tableSortColumn,
+                        'tableSortDirection' => $this->tableSortDirection,
                         'tableRecordsPerPage' => $this->tableRecordsPerPage,
                         'toggledTableColumns' => $this->toggledTableColumns,
                     ],
@@ -452,28 +422,28 @@ trait HasTableViews
         return ActionGroup::make([
             $this->applyTableViewAction()
                 ->arguments([
-                    'view_key'  => $key,
+                    'view_key' => $key,
                     'view_type' => $type,
                 ])
-                ->visible(fn () => $key != $this->activeTableView),
+                ->visible(fn (): bool => $key !== $this->activeTableView),
 
             $this->addTableViewToFavoritesAction()
                 ->arguments([
-                    'view_key'  => $key,
+                    'view_key' => $key,
                     'view_type' => $type,
                 ])
-                ->visible(fn () => ! $tableView->isFavorite($key)),
+                ->visible(fn (): bool => ! $tableView->isFavorite($key)),
 
             $this->removeTableViewFromFavoritesAction()
                 ->arguments([
-                    'view_key'  => $key,
+                    'view_key' => $key,
                     'view_type' => $type,
                 ])
                 ->visible(fn () => $tableView->isFavorite($key)),
 
             $this->editTableViewAction(['view_model' => $tableView->getModel()])
                 ->arguments([
-                    'view_key'  => $key,
+                    'view_key' => $key,
                     'view_type' => $type,
                 ])
                 ->visible(fn () => $tableView->isEditable()),
@@ -481,18 +451,44 @@ trait HasTableViews
             ActionGroup::make([
                 $this->replaceTableViewAction()
                     ->arguments([
-                        'view_key'  => $key,
+                        'view_key' => $key,
                         'view_type' => $type,
                     ])
-                    ->visible(fn () => $tableView->isReplaceable() && $key == $this->activeTableView && $this->isActiveTableViewModified()),
+                    ->visible(fn (): bool => $tableView->isReplaceable() && $key === $this->activeTableView && $this->isActiveTableViewModified()),
 
                 $this->deleteTableViewAction()
                     ->arguments([
-                        'view_key'  => $key,
+                        'view_key' => $key,
                         'view_type' => $type,
                     ])
-                    ->visible(fn () => $key == $tableView->isDeletable()),
+                    ->visible(fn (): bool => $key === $tableView->isDeletable()),
             ])->dropdown(false),
         ])->dropdownPlacement('bottom-end');
+    }
+
+    protected function loadDefaultActiveTableView(): void
+    {
+        if (filled($this->activeTableView)) {
+            $this->applyTableViewFilters();
+
+            return;
+        }
+
+        $this->activeTableView = $this->getDefaultActiveTableView();
+    }
+
+    protected function modifyQueryWithActiveTab(Builder $query): Builder
+    {
+        if (blank(filled($this->activeTableView))) {
+            return $query;
+        }
+
+        $tableViews = $this->getAllTableViews();
+
+        if (! array_key_exists($this->activeTableView, $tableViews)) {
+            return $query;
+        }
+
+        return $tableViews[$this->activeTableView]->modifyQuery($query);
     }
 }

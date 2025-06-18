@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Receipts',
 
@@ -9,9 +11,9 @@ return [
 
     'form' => [
         'fieldset' => [
-            'title'  => 'Recipient',
+            'title' => 'Recipient',
             'fields' => [
-                'reference'         => 'Reference',
+                'reference' => 'Reference',
                 'payment-reference' => 'Payment Reference',
             ],
         ],

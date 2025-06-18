@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TableViews;
 
 use Filament\Support\Facades\FilamentView;
@@ -8,7 +10,7 @@ use Illuminate\Contracts\View\View;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class TableViewsServiceProvider extends PackageServiceProvider
+final class TableViewsServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'table-views';
 
@@ -16,7 +18,7 @@ class TableViewsServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->isCore()
             ->hasViews()
             ->hasTranslations()
@@ -29,7 +31,7 @@ class TableViewsServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void {}
 
-    public function packageRegistered()
+    public function packageRegistered(): void
     {
         FilamentView::registerRenderHook(
             PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE,

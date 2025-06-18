@@ -1,23 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\OperationState;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource;
 use Webkul\Inventory\Models\Delivery;
 
-class EditDelivery extends EditRecord
+final class EditDelivery extends EditRecord
 {
     protected static string $resource = DeliveryResource::class;
+
+    public function updateForm(): void
+    {
+        $this->fillForm();
+    }
 
     protected function getRedirectUrl(): string
     {
@@ -36,7 +41,7 @@ class EditDelivery extends EditRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             OperationActions\TodoAction::make(),
             OperationActions\CheckAvailabilityAction::make(),
             OperationActions\ValidateAction::make(),
@@ -53,13 +58,13 @@ class EditDelivery extends EditRecord
                 ->color('gray')
                 ->button(),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == OperationState::DONE)
-                ->action(function (DeleteAction $action, Delivery $record) {
+                ->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
+                ->action(function (DeleteAction $action, Delivery $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/delivery/pages/edit-delivery.header-actions.delete.notification.error.title'))
@@ -76,10 +81,5 @@ class EditDelivery extends EditRecord
                         ->body(__('inventories::filament/clusters/operations/resources/delivery/pages/edit-delivery.header-actions.delete.notification.success.body')),
                 ),
         ];
-    }
-
-    public function updateForm(): void
-    {
-        $this->fillForm();
     }
 }

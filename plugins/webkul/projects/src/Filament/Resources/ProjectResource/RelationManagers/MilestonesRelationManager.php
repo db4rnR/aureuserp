@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources\ProjectResource\RelationManagers;
 
-use Filament\Schemas\Schema;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\MilestoneResource;
 use Webkul\Project\Settings\TaskSettings;
 
-class MilestonesRelationManager extends RelationManager
+final class MilestonesRelationManager extends RelationManager
 {
     protected static string $relationship = 'milestones';
 

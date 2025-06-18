@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'Záznam bol úspešne aktualizovaný.',
     'update_error' => 'Pri aktualizácii záznamu došlo ku chybe.',

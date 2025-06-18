@@ -1,30 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Settings\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Toggle;
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
+use Filament\Forms\Components\Toggle;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Schema;
+use UnitEnum;
 use Webkul\Sale\Settings\ProductSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-class ManageProducts extends SettingsPage
+final class ManageProducts extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cube';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cube';
 
     protected static ?string $slug = 'sale/manage-products';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Sales';
+    protected static string|UnitEnum|null $navigationGroup = 'Sales';
 
     protected static ?int $navigationSort = 1;
 
     protected static string $settings = ProductSettings::class;
 
     protected static ?string $cluster = Settings::class;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('sales::filament/clusters/settings/pages/manage-products.navigation.title');
+    }
 
     public function getBreadcrumbs(): array
     {
@@ -36,11 +45,6 @@ class ManageProducts extends SettingsPage
     public function getTitle(): string
     {
         return __('sales::filament/clusters/settings/pages/manage-products.title');
-    }
-
-    public static function getNavigationLabel(): string
-    {
-        return __('sales::filament/clusters/settings/pages/manage-products.navigation.title');
     }
 
     public function form(Schema $schema): Schema

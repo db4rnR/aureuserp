@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource;
 
-class ListPackageTypes extends ListRecords
+final class ListPackageTypes extends ListRecords
 {
     protected static string $resource = PackageTypeResource::class;
 
@@ -19,7 +20,7 @@ class ListPackageTypes extends ListRecords
             CreateAction::make()
                 ->label(__('inventories::filament/clusters/configurations/resources/package-type/pages/list-package-types.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
-                ->mutateDataUsing(function ($data) {
+                ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
 
                     $data['creator_id'] = $user->id;

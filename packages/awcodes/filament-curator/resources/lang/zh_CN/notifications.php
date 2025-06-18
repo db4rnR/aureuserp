@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => '记录更新成功',
     'update_error' => '更新记录时出错',

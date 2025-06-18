@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Webkul\Account\Models\Tax;
 use Webkul\Account\Models\TaxGroup;
 use Webkul\Account\TaxManager;
@@ -8,7 +10,7 @@ use Webkul\Account\TaxManager;
 #[Group('integration')]
 #[Group('accounts')]
 #[Description('Test tax calculation with percentage tax')]
-function tax_calculation_with_percentage_tax()
+function tax_calculation_with_percentage_tax(): void
 {
     // Create a tax with percentage amount type
     $tax = Tax::factory()->create([
@@ -39,7 +41,7 @@ function tax_calculation_with_percentage_tax()
 #[Group('integration')]
 #[Group('accounts')]
 #[Description('Test tax calculation with fixed tax')]
-function tax_calculation_with_fixed_tax()
+function tax_calculation_with_fixed_tax(): void
 {
     // Create a tax with fixed amount type
     $tax = Tax::factory()->create([
@@ -70,7 +72,7 @@ function tax_calculation_with_fixed_tax()
 #[Group('integration')]
 #[Group('accounts')]
 #[Description('Test tax calculation with tax group')]
-function tax_calculation_with_tax_group()
+function tax_calculation_with_tax_group(): void
 {
     // Create taxes
     $tax1 = Tax::factory()->create([
@@ -108,7 +110,7 @@ function tax_calculation_with_tax_group()
 #[Group('integration')]
 #[Group('accounts')]
 #[Description('Test tax calculation with inclusive price')]
-function tax_calculation_with_inclusive_price()
+function tax_calculation_with_inclusive_price(): void
 {
     // Create a tax with percentage amount type
     $tax = Tax::factory()->create([
@@ -138,7 +140,7 @@ function tax_calculation_with_inclusive_price()
 #[Group('integration')]
 #[Group('accounts')]
 #[Description('Test tax calculation with discount')]
-function tax_calculation_with_discount()
+function tax_calculation_with_discount(): void
 {
     // Create a tax with percentage amount type
     $tax = Tax::factory()->create([

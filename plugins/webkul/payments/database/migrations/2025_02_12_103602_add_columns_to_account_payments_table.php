@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('accounts_account_payments', function (Blueprint $table) {
+        Schema::table('accounts_account_payments', function (Blueprint $table): void {
             $table->foreignId('payment_token_id')->nullable()->comment('Payment Token')->constrained('payments_payment_tokens')->nullOnDelete();
             $table->foreignId('payment_transaction_id')->nullable()->comment('Payment Transaction')->constrained('payments_payment_transactions')->nullOnDelete();
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_account_payments', function (Blueprint $table) {
+        Schema::table('accounts_account_payments', function (Blueprint $table): void {
             $table->dropForeign(['payment_token_id']);
             $table->dropForeign(['payment_transaction_id']);
             $table->dropColumn('payment_token_id');

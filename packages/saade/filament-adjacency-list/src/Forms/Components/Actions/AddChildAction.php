@@ -1,20 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList\Forms\Components\Actions;
 
 use Filament\Actions\Action;
-use Filament\Support\Enums\Size;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Size;
 use Illuminate\Support\Str;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-class AddChildAction extends Action
+final class AddChildAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'addChild';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,7 +31,7 @@ class AddChildAction extends Action
 
                 $items = $component->getState();
 
-                data_set($items, ("$statePath." . $component->getChildrenKey() . ".$uuid"), [
+                data_set($items, ("$statePath.".$component->getChildrenKey().".$uuid"), [
                     $component->getLabelKey() => __('filament-adjacency-list::adjacency-list.items.untitled'),
                     $component->getChildrenKey() => [],
                     ...$data,
@@ -53,5 +50,10 @@ class AddChildAction extends Action
         $this->visible(
             fn (AdjacencyList $component): bool => $component->isAddable()
         );
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'addChild';
     }
 }

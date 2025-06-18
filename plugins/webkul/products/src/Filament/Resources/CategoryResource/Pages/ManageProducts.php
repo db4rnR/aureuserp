@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\CategoryResource\Pages;
 
-use Filament\Schemas\Schema;
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Enums\ProductType;
@@ -14,13 +16,13 @@ use Webkul\Product\Filament\Resources\CategoryResource;
 use Webkul\Product\Filament\Resources\ProductResource;
 use Webkul\Support\Models\UOM;
 
-class ManageProducts extends ManageRelatedRecords
+final class ManageProducts extends ManageRelatedRecords
 {
     protected static string $resource = CategoryResource::class;
 
     protected static string $relationship = 'products';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     public static function getNavigationLabel(): string
     {
@@ -43,9 +45,9 @@ class ManageProducts extends ManageRelatedRecords
                         $uom_id = UOM::first()->id;
 
                         return [
-                            'type'        => ProductType::GOODS->value,
-                            'uom_id'      => $uom_id,
-                            'uom_po_id'   => $uom_id,
+                            'type' => ProductType::GOODS->value,
+                            'uom_id' => $uom_id,
+                            'uom_po_id' => $uom_id,
                             'category_id' => $this->getOwnerRecord()->id,
                         ];
                     })

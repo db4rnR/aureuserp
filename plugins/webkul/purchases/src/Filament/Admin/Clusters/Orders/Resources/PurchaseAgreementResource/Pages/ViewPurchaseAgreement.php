@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Webkul\Purchase\Enums\RequisitionState;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\RequisitionState;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource;
 
-class ViewPurchaseAgreement extends ViewRecord
+final class ViewPurchaseAgreement extends ViewRecord
 {
     protected static string $resource = PurchaseAgreementResource::class;
 
@@ -19,9 +19,9 @@ class ViewPurchaseAgreement extends ViewRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == RequisitionState::CLOSED)
+                ->hidden(fn (): bool => $this->getRecord()->state === RequisitionState::CLOSED)
                 ->successNotification(
                     Notification::make()
                         ->success()

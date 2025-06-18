@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -10,7 +12,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<Tag>
  */
-class MilestoneFactory extends Factory
+final class MilestoneFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -27,12 +29,12 @@ class MilestoneFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'         => fake()->name(),
-            'deadline'     => fake()->date(),
+            'name' => fake()->name(),
+            'deadline' => fake()->date(),
             'is_completed' => fake()->boolean(),
             'completed_at' => fake()->date(),
-            'project_id'   => Project::factory(),
-            'creator_id'   => User::factory(),
+            'project_id' => Project::factory(),
+            'creator_id' => User::factory(),
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Departments',
 
@@ -9,9 +11,9 @@ return [
     ],
 
     'global-search' => [
-        'name'               => 'Department',
+        'name' => 'Department',
         'department-manager' => 'Manager',
-        'company'            => 'Company',
+        'company' => 'Company',
     ],
 
     'form' => [
@@ -20,18 +22,18 @@ return [
                 'title' => 'General Information',
 
                 'fields' => [
-                    'name'                => 'Name',
-                    'manager'             => 'Manager',
-                    'parent-department'   => 'Parent Department',
+                    'name' => 'Name',
+                    'manager' => 'Manager',
+                    'parent-department' => 'Parent Department',
                     'manager-placeholder' => 'Select Manager',
-                    'company'             => 'Company',
+                    'company' => 'Company',
                     'company-placeholder' => 'Select Company',
-                    'color'               => 'Color',
+                    'color' => 'Color',
                 ],
             ],
 
             'additional' => [
-                'title'       => 'Additional Information',
+                'title' => 'Additional Information',
                 'description' => 'Additional information about this department.',
             ],
         ],
@@ -39,46 +41,46 @@ return [
 
     'table' => [
         'columns' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'manager-name' => 'Manager',
             'company-name' => 'Company',
         ],
 
         'groups' => [
-            'name'       => 'Name',
-            'manager'    => 'Manager',
-            'company'    => 'Company',
+            'name' => 'Name',
+            'manager' => 'Manager',
+            'company' => 'Company',
             'updated-at' => 'Updated At',
             'created-at' => 'Created At',
         ],
 
         'filters' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'manager-name' => 'Manager',
             'company-name' => 'Company',
-            'updated-at'   => 'Updated At',
-            'created-at'   => 'Created At',
+            'updated-at' => 'Updated At',
+            'created-at' => 'Created At',
         ],
 
         'actions' => [
             'restore' => [
                 'notification' => [
                     'title' => 'Department restored',
-                    'body'  => 'The department has been restored successfully.',
+                    'body' => 'The department has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Department deleted',
-                    'body'  => 'The department has been deleted successfully.',
+                    'body' => 'The department has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Department force deleted',
-                    'body'  => 'The department has been force deleted successfully.',
+                    'body' => 'The department has been force deleted successfully.',
                 ],
             ],
         ],
@@ -87,21 +89,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Departments restored',
-                    'body'  => 'The departments has been restored successfully.',
+                    'body' => 'The departments has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Departments deleted',
-                    'body'  => 'The departments has been deleted successfully.',
+                    'body' => 'The departments has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Departments force deleted',
-                    'body'  => 'The departments has been force deleted successfully.',
+                    'body' => 'The departments has been force deleted successfully.',
                 ],
             ],
         ],
@@ -113,10 +115,10 @@ return [
                 'title' => 'General',
 
                 'entries' => [
-                    'name'            => 'Name',
-                    'manager'         => 'Manager',
-                    'company'         => 'Company',
-                    'color'           => 'Color',
+                    'name' => 'Name',
+                    'manager' => 'Manager',
+                    'company' => 'Company',
+                    'color' => 'Color',
                     'hierarchy-title' => 'Department Organization',
                 ],
             ],

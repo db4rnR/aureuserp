@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek;
 
 use Illuminate\Support\Facades\Cache;
 
-class CachedPreview
+final class CachedPreview
 {
     public static ?string $cacheStore = null;
 
@@ -18,8 +20,13 @@ class CachedPreview
         string $pageClass,
         string $view,
         array $data,
-    ): CachedPreview {
-        return new CachedPreview($pageClass, $view, $data);
+    ): self {
+        return new self($pageClass, $view, $data);
+    }
+
+    public static function get(string $token): ?self
+    {
+        return Cache::store(self::$cacheStore)->get("filament-peek-preview-{$token}");
     }
 
     public function render(): string
@@ -29,11 +36,6 @@ class CachedPreview
 
     public function put(string $token, int $ttl = 60): bool
     {
-        return Cache::store(static::$cacheStore)->put("filament-peek-preview-{$token}", $this, $ttl);
-    }
-
-    public static function get(string $token): ?CachedPreview
-    {
-        return Cache::store(static::$cacheStore)->get("filament-peek-preview-{$token}");
+        return Cache::store(self::$cacheStore)->put("filament-peek-preview-{$token}", $this, $ttl);
     }
 }

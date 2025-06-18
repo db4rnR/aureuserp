@@ -1,24 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Actions;
 
 use Filament\Actions\Action;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\HtmlString;
 
-class LinkAction extends Action
+final class LinkAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'filament_tiptap_link';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,12 +31,12 @@ class LinkAction extends Action
                 'referrerpolicy' => '',
                 'as_button' => false,
                 'button_theme' => '',
-            ])->mountUsing(function (Schema $schema, array $arguments) {
+            ])->mountUsing(function (Schema $schema, array $arguments): void {
                 $schema->fill($arguments);
             })->modalHeading(function (array $arguments) {
                 $context = blank($arguments['href']) ? 'insert' : 'update';
 
-                return trans('filament-tiptap-editor::link-modal.heading.' . $context);
+                return trans('filament-tiptap-editor::link-modal.heading.'.$context);
             })->form([
                 Grid::make(['md' => 3])
                     ->schema([
@@ -80,7 +77,7 @@ class LinkAction extends Action
                                 'accent' => trans('filament-tiptap-editor::link-modal.labels.button_theme.accent'),
                             ]),
                     ]),
-            ])->action(function (TiptapEditor $component, $data, $arguments) {
+            ])->action(function (TiptapEditor $component, $data, $arguments): void {
                 $component->getLivewire()->dispatch(
                     event: 'insertFromAction',
                     type: 'link',
@@ -114,5 +111,10 @@ class LinkAction extends Action
 
                 return [];
             });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'filament_tiptap_link';
     }
 }

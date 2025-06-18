@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\View\Components;
 
 use Awcodes\Curator\Models\Media;
@@ -8,12 +10,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Curation extends Component
+final class Curation extends Component
 {
     public ?array $curatedMedia = null;
 
     public function __construct(
-        public int | Media | null $media,
+        public int|Media|null $media,
         public ?string $curation = null,
     ) {
         if (! $media instanceof Media) {
@@ -28,7 +30,7 @@ class Curation extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View | string | Closure
+    public function render(): View|string|Closure
     {
         if ($this->curatedMedia) {
             $this->curatedMedia['url'] = Helpers::getUrl(disk: $this->curatedMedia['disk'], path: $this->curatedMedia['path']);

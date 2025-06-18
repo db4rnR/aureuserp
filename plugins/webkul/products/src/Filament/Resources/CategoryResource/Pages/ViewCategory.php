@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\CategoryResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Product\Filament\Resources\CategoryResource;
 use Webkul\Product\Models\Category;
 
-class ViewCategory extends ViewRecord
+final class ViewCategory extends ViewRecord
 {
     protected static string $resource = CategoryResource::class;
 
@@ -20,12 +21,12 @@ class ViewCategory extends ViewRecord
         return [
             EditAction::make(),
             DeleteAction::make()
-                ->action(function (DeleteAction $action, Category $record) {
+                ->action(function (DeleteAction $action, Category $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('products::filament/resources/category/pages/view-category.header-actions.delete.notification.error.title'))

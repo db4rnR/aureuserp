@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup;
 
 use Livewire\Livewire;
@@ -8,7 +10,7 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\Components\BackupDestinationStatusList
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentSpatieLaravelBackupServiceProvider extends PackageServiceProvider
+final class FilamentSpatieLaravelBackupServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

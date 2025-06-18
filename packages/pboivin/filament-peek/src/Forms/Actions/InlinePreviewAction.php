@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Forms\Actions;
 
 use Filament\Actions\Action;
 use Pboivin\FilamentPeek\Support\Concerns\SetsInitialPreviewModalData;
-use Pboivin\FilamentPeek\Support\Panel;
 use Pboivin\FilamentPeek\Support\Page;
+use Pboivin\FilamentPeek\Support\Panel;
 use Pboivin\FilamentPeek\Support\View;
-use Pboivin\FilamentPeek\Support;
 
-class InlinePreviewAction extends Action
+final class InlinePreviewAction extends Action
 {
     use SetsInitialPreviewModalData;
 
@@ -17,18 +18,13 @@ class InlinePreviewAction extends Action
 
     protected ?string $builderField = null;
 
-    public static function getDefaultName(): ?string
-    {
-        return 'inlinePreview'.static::$count++;
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->label(__('filament-peek::ui.preview-action-label'))
             ->link()
-            ->action(function ($livewire) {
+            ->action(function ($livewire): void {
                 Panel::ensurePluginIsLoaded();
 
                 Page::ensurePreviewModalSupport($livewire);
@@ -47,6 +43,11 @@ class InlinePreviewAction extends Action
             });
 
         View::setupPreviewModal();
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'inlinePreview'.self::$count++;
     }
 
     public function builderPreview(string $builderField = 'blocks'): static

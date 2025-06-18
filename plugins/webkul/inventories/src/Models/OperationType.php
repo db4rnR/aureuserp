@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
-use Webkul\Inventory\Enums\ReservationMethod;
-use Webkul\Inventory\Enums\CreateBackorder;
-use Webkul\Inventory\Enums\MoveType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,12 +13,20 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Inventory\Database\Factories\OperationTypeFactory;
 use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\CreateBackorder;
+use Webkul\Inventory\Enums\MoveType;
+use Webkul\Inventory\Enums\ReservationMethod;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class OperationType extends Model implements Sortable
+final class OperationType extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -76,29 +83,24 @@ class OperationType extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'type'                               => Enums\OperationType::class,
-        'reservation_method'                 => ReservationMethod::class,
-        'create_backorder'                   => CreateBackorder::class,
-        'move_type'                          => MoveType::class,
-        'show_entire_packs'                  => 'boolean',
-        'use_create_lots'                    => 'boolean',
-        'use_existing_lots'                  => 'boolean',
-        'print_label'                        => 'boolean',
-        'show_operations'                    => 'boolean',
-        'auto_show_reception_report'         => 'boolean',
-        'auto_print_delivery_slip'           => 'boolean',
-        'auto_print_return_slip'             => 'boolean',
-        'auto_print_product_labels'          => 'boolean',
-        'auto_print_lot_labels'              => 'boolean',
-        'auto_print_reception_report'        => 'boolean',
+        'type' => Enums\OperationType::class,
+        'reservation_method' => ReservationMethod::class,
+        'create_backorder' => CreateBackorder::class,
+        'move_type' => MoveType::class,
+        'show_entire_packs' => 'boolean',
+        'use_create_lots' => 'boolean',
+        'use_existing_lots' => 'boolean',
+        'print_label' => 'boolean',
+        'show_operations' => 'boolean',
+        'auto_show_reception_report' => 'boolean',
+        'auto_print_delivery_slip' => 'boolean',
+        'auto_print_return_slip' => 'boolean',
+        'auto_print_product_labels' => 'boolean',
+        'auto_print_lot_labels' => 'boolean',
+        'auto_print_reception_report' => 'boolean',
         'auto_print_reception_report_labels' => 'boolean',
-        'auto_print_packages'                => 'boolean',
-        'auto_print_package_label'           => 'boolean',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'auto_print_packages' => 'boolean',
+        'auto_print_package_label' => 'boolean',
     ];
 
     public function returnOperationType(): BelongsTo

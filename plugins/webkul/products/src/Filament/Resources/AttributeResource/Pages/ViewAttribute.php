@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\AttributeResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Product\Filament\Resources\AttributeResource;
 
-class ViewAttribute extends ViewRecord
+final class ViewAttribute extends ViewRecord
 {
     protected static string $resource = AttributeResource::class;
 

@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\FiscalPositionResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Account\Filament\Resources\FiscalPositionResource;
 
-class ListFiscalPositions extends ListRecords
+final class ListFiscalPositions extends ListRecords
 {
     protected static string $resource = FiscalPositionResource::class;
 

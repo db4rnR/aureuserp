@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Enums;
 
 enum Week: string
@@ -21,13 +23,13 @@ enum Week: string
     public static function options(): array
     {
         return [
-            self::SUNDAY->value    => __('Sunday'),
-            self::MONDAY->value    => __('Monday'),
-            self::TUESDAY->value   => __('Tuesday'),
+            self::SUNDAY->value => __('Sunday'),
+            self::MONDAY->value => __('Monday'),
+            self::TUESDAY->value => __('Tuesday'),
             self::WEDNESDAY->value => __('Wednesday'),
-            self::THURSDAY->value  => __('Thursday'),
-            self::FRIDAY->value    => __('Friday'),
-            self::SATURDAY->value  => __('Saturday'),
+            self::THURSDAY->value => __('Thursday'),
+            self::FRIDAY->value => __('Friday'),
+            self::SATURDAY->value => __('Saturday'),
         ];
     }
 }

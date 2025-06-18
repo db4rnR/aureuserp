@@ -1,30 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Applications\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Tables\Columns\Layout\Stack;
-use Filament\Tables\Columns\TextColumn;
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\EditAction;
-use Filament\Support\Enums\Size;
-use Webkul\Recruitment\Filament\Clusters\Applications\Resources\JobByPositionResource\Pages\ListJobByPositions;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
-use Filament\Tables;
+use Filament\Support\Enums\Size;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\JobPositionResource;
 use Webkul\Recruitment\Filament\Clusters\Applications;
-use Webkul\Recruitment\Filament\Clusters\Applications\Resources\JobByPositionResource\Pages;
+use Webkul\Recruitment\Filament\Clusters\Applications\Resources\JobByPositionResource\Pages\ListJobByPositions;
 use Webkul\Recruitment\Models\Applicant;
 use Webkul\Recruitment\Models\JobPosition;
 
-class JobByPositionResource extends Resource
+final class JobByPositionResource extends Resource
 {
     protected static ?string $model = JobPosition::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
 
     protected static ?string $cluster = Applications::class;
 
@@ -99,41 +100,37 @@ class JobByPositionResource extends Resource
                     ->button()
                     ->color('primary')
                     ->size('sm')
-                    ->action(function ($record) {
-                        return redirect(ApplicantResource::getUrl('index', [
-                            'tableFilters' => [
-                                'queryBuilder' => [
-                                    'rules' => [
-                                        'dPtN' => [
-                                            'type' => 'stage',
-                                            'data' => [
-                                                'operator' => 'isRelatedTo',
-                                                'settings' => [
-                                                    'values' => [1],
-                                                ],
+                    ->action(fn ($record) => redirect(ApplicantResource::getUrl('index', [
+                        'tableFilters' => [
+                            'queryBuilder' => [
+                                'rules' => [
+                                    'dPtN' => [
+                                        'type' => 'stage',
+                                        'data' => [
+                                            'operator' => 'isRelatedTo',
+                                            'settings' => [
+                                                'values' => [1],
                                             ],
                                         ],
-                                        'kwWd' => [
-                                            'type' => 'job',
-                                            'data' => [
-                                                'operator' => 'isRelatedTo',
-                                                'settings' => [
-                                                    'values' => [$record->id],
-                                                ],
+                                    ],
+                                    'kwWd' => [
+                                        'type' => 'job',
+                                        'data' => [
+                                            'operator' => 'isRelatedTo',
+                                            'settings' => [
+                                                'values' => [$record->id],
                                             ],
                                         ],
                                     ],
                                 ],
                             ],
-                        ]));
-                    }),
+                        ],
+                    ]))),
                 ActionGroup::make([
                     EditAction::make('to_recruitment')
-                        ->label(function ($record) {
-                            return __('recruitments::filament/clusters/applications/resources/job-by-application.table.actions.to-recruitment.to-recruitment', [
-                                'count' => $record->no_of_recruitment,
-                            ]);
-                        })
+                        ->label(fn ($record) => __('recruitments::filament/clusters/applications/resources/job-by-application.table.actions.to-recruitment.to-recruitment', [
+                            'count' => $record->no_of_recruitment,
+                        ]))
                         ->icon(null)
                         ->color('primary')
                         ->size(Size::Large),
@@ -148,25 +145,23 @@ class JobByPositionResource extends Resource
                         })
                         ->color('primary')
                         ->size(Size::Large)
-                        ->action(function ($record) {
-                            return redirect(ApplicantResource::getUrl('index', [
-                                'tableFilters' => [
-                                    'queryBuilder' => [
-                                        'rules' => [
-                                            'kwWd' => [
-                                                'type' => 'job',
-                                                'data' => [
-                                                    'operator' => 'isRelatedTo',
-                                                    'settings' => [
-                                                        'values' => [$record->id],
-                                                    ],
+                        ->action(fn ($record) => redirect(ApplicantResource::getUrl('index', [
+                            'tableFilters' => [
+                                'queryBuilder' => [
+                                    'rules' => [
+                                        'kwWd' => [
+                                            'type' => 'job',
+                                            'data' => [
+                                                'operator' => 'isRelatedTo',
+                                                'settings' => [
+                                                    'values' => [$record->id],
                                                 ],
                                             ],
                                         ],
                                     ],
                                 ],
-                            ]));
-                        }),
+                            ],
+                        ]))),
                 ]),
             ]);
     }

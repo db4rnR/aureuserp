@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -15,9 +17,9 @@ enum PriceRuleBase: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::LIST_PRICE     => __('products::enums/price-rule-base.list-price'),
+            self::LIST_PRICE => __('products::enums/price-rule-base.list-price'),
             self::STANDARD_PRICE => __('products::enums/price-rule-base.standard-price'),
-            self::PRICE_RULES    => __('products::enums/price-rule-base.price-rules'),
+            self::PRICE_RULES => __('products::enums/price-rule-base.price-rules'),
         };
     }
 }

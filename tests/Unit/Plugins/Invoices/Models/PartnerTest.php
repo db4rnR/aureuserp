@@ -1,25 +1,27 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Invoice\Models\Partner;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Account\Models\Partner as AccountPartner;
+use Webkul\Invoice\Models\Partner;
+use Webkul\Partner\Enums\AccountType;
+use Webkul\Partner\Models\BankAccount;
+use Webkul\Partner\Models\Industry;
 use Webkul\Partner\Models\Partner as BasePartner;
+use Webkul\Partner\Models\Tag;
+use Webkul\Partner\Models\Title;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\State;
-use Webkul\Partner\Models\Title;
-use Webkul\Partner\Models\Industry;
-use Webkul\Partner\Models\BankAccount;
-use Webkul\Partner\Models\Tag;
-use Webkul\Partner\Enums\AccountType;
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Partner model inheritance and properties')]
-function partner_model_inheritance_and_properties()
+function partner_model_inheritance_and_properties(): void
 {
     // Create a test partner
     $partner = Partner::factory()->create([
@@ -41,34 +43,34 @@ function partner_model_inheritance_and_properties()
     expect($partner->account_type)->toBe(AccountType::COMPANY);
 
     // Test relationships inherited from the base class
-    expect($partner->country())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->state())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->parent())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->user())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->title())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->industry())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->addresses())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($partner->contacts())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($partner->bankAccounts())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($partner->tags())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($partner->country())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->state())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->parent())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->user())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->title())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->industry())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->addresses())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($partner->contacts())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($partner->bankAccounts())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($partner->tags())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
 
     // Test relationships inherited from the Account Partner class
-    expect($partner->propertyAccountPayable())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->propertyAccountReceivable())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->propertyAccountPosition())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->propertyPaymentTerm())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->propertySupplierPaymentTerm())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->propertyOutboundPaymentMethodLine())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($partner->propertyInboundPaymentMethodLine())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->propertyAccountPayable())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->propertyAccountReceivable())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->propertyAccountPosition())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->propertyPaymentTerm())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->propertySupplierPaymentTerm())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->propertyOutboundPaymentMethodLine())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($partner->propertyInboundPaymentMethodLine())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Partner model relationships with other models')]
-function partner_model_relationships_with_other_models()
+function partner_model_relationships_with_other_models(): void
 {
     // Create related models
     $user = User::factory()->create();
@@ -119,7 +121,7 @@ function partner_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Partner model additional fillable fields from Account Partner')]
-function partner_model_additional_fillable_fields()
+function partner_model_additional_fillable_fields(): void
 {
     // Create a reflection of the Partner class to access protected properties
     $reflection = new ReflectionClass(Partner::class);
@@ -159,7 +161,7 @@ function partner_model_additional_fillable_fields()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Partner model methods')]
-function partner_model_methods()
+function partner_model_methods(): void
 {
     // Create a test partner with an avatar
     $partner = Partner::factory()->create([
@@ -170,21 +172,21 @@ function partner_model_methods()
     expect($partner->avatar_url)->not->toBeNull();
 
     // Test the canAccessPanel method
-    expect($partner->canAccessPanel(new \Filament\Panel()))->toBeTrue();
+    expect($partner->canAccessPanel(new Filament\Panel()))->toBeTrue();
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Partner model traits')]
-function partner_model_traits()
+function partner_model_traits(): void
 {
     // Create a test partner
     $partner = Partner::factory()->create();
 
     // Test that the model uses the expected traits
-    expect($partner)->toBeInstanceOf(\Webkul\Chatter\Traits\HasChatter::class);
-    expect($partner)->toBeInstanceOf(\Webkul\Chatter\Traits\HasLogActivity::class);
-    expect($partner)->toBeInstanceOf(\Illuminate\Database\Eloquent\SoftDeletes::class);
-    expect($partner)->toBeInstanceOf(\Illuminate\Notifications\Notifiable::class);
+    expect($partner)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
+    expect($partner)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
+    expect($partner)->toBeInstanceOf(Illuminate\Database\Eloquent\SoftDeletes::class);
+    expect($partner)->toBeInstanceOf(Illuminate\Notifications\Notifiable::class);
 }

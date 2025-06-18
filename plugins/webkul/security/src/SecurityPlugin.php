@@ -1,28 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security;
 
-use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use ReflectionClass;
 use Webkul\Security\Settings\UserSettings;
 
-class SecurityPlugin implements Plugin
+final class SecurityPlugin implements Plugin
 {
+    public static function make(): static
+    {
+        return app(self::class);
+    }
+
     public function getId(): string
     {
         return 'security';
     }
 
-    public static function make(): static
-    {
-        return app(static::class);
-    }
-
     public function register(Panel $panel): void
     {
         $panel
-            ->when($panel->getId() == 'admin', function (Panel $panel) {
+            ->when($panel->getId() === 'admin', function (Panel $panel): void {
                 $panel->passwordReset()
                     ->discoverResources(in: $this->getPluginBasePath('/Filament/Resources'), for: 'Webkul\\Security\\Filament\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Security\\Filament\\Pages')
@@ -43,9 +45,9 @@ class SecurityPlugin implements Plugin
         //
     }
 
-    protected function getPluginBasePath($path = null): string
+    private function getPluginBasePath($path = null): string
     {
-        $reflector = new ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(self::class);
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

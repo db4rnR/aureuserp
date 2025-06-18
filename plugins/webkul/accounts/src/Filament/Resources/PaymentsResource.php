@@ -1,48 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\ToggleButtons;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Infolists\Components\TextEntry;
-use Webkul\Account\Filament\Resources\PaymentsResource\Pages\ListPayments;
-use Webkul\Account\Filament\Resources\PaymentsResource\Pages\CreatePayments;
-use Webkul\Account\Filament\Resources\PaymentsResource\Pages\ViewPayments;
-use Webkul\Account\Filament\Resources\PaymentsResource\Pages\EditPayments;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Enums\PaymentType;
-use Webkul\Account\Filament\Resources\PaymentsResource\Pages;
+use Webkul\Account\Filament\Resources\PaymentsResource\Pages\CreatePayments;
+use Webkul\Account\Filament\Resources\PaymentsResource\Pages\EditPayments;
+use Webkul\Account\Filament\Resources\PaymentsResource\Pages\ListPayments;
+use Webkul\Account\Filament\Resources\PaymentsResource\Pages\ViewPayments;
 use Webkul\Account\Models\Payment;
 use Webkul\Field\Filament\Forms\Components\ProgressStepper;
 
-class PaymentsResource extends Resource
+final class PaymentsResource extends Resource
 {
     protected static ?string $model = Payment::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -78,12 +78,8 @@ class PaymentsResource extends Resource
                                         'account_number',
                                         modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                                     )
-                                    ->getOptionLabelFromRecordUsing(function ($record): string {
-                                        return $record->account_number.($record->trashed() ? ' (Deleted)' : '');
-                                    })
-                                    ->disableOptionWhen(function ($label) {
-                                        return str_contains($label, ' (Deleted)');
-                                    })
+                                    ->getOptionLabelFromRecordUsing(fn ($record): string => $record->account_number.($record->trashed() ? ' (Deleted)' : ''))
+                                    ->disableOptionWhen(fn ($label): bool => str_contains((string) $label, ' (Deleted)'))
                                     ->searchable()
                                     ->preload()
                                     ->required(),
@@ -344,11 +340,11 @@ class PaymentsResource extends Resource
                                 TextEntry::make('state')
                                     ->badge()
                                     ->color(fn (string $state): string => match ($state) {
-                                        PaymentStatus::DRAFT->value      => 'gray',
+                                        PaymentStatus::DRAFT->value => 'gray',
                                         PaymentStatus::IN_PROCESS->value => 'warning',
-                                        PaymentStatus::PAID->value       => 'success',
-                                        PaymentStatus::CANCELED->value   => 'danger',
-                                        default                          => 'gray',
+                                        PaymentStatus::PAID->value => 'success',
+                                        PaymentStatus::CANCELED->value => 'danger',
+                                        default => 'gray',
                                     })
                                     ->label(__('accounts::filament/resources/payment.infolist.sections.payment-information.entries.state'))
                                     ->formatStateUsing(fn (string $state): string => PaymentStatus::options()[$state]),
@@ -391,10 +387,10 @@ class PaymentsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListPayments::route('/'),
+            'index' => ListPayments::route('/'),
             'create' => CreatePayments::route('/create'),
-            'view'   => ViewPayments::route('/{record}'),
-            'edit'   => EditPayments::route('/{record}/edit'),
+            'view' => ViewPayments::route('/{record}'),
+            'edit' => EditPayments::route('/{record}/edit'),
         ];
     }
 }

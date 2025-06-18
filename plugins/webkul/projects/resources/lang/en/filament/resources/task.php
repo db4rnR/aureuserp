@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Tasks',
 
@@ -9,8 +11,8 @@ return [
     ],
 
     'global-search' => [
-        'project'   => 'Project',
-        'customer'  => 'Customer',
+        'project' => 'Project',
+        'customer' => 'Customer',
         'milestone' => 'Milestone',
     ],
 
@@ -20,16 +22,16 @@ return [
                 'title' => 'General',
 
                 'fields' => [
-                    'title'             => 'Title',
+                    'title' => 'Title',
                     'title-placeholder' => 'Task Title...',
-                    'tags'              => 'Tags',
-                    'name'              => 'Name',
-                    'color'             => 'Color',
-                    'description'       => 'Description',
-                    'project'           => 'Project',
-                    'status'            => 'Status',
-                    'start_date'        => 'Start Date',
-                    'end_date'          => 'End Date',
+                    'tags' => 'Tags',
+                    'name' => 'Name',
+                    'color' => 'Color',
+                    'description' => 'Description',
+                    'project' => 'Project',
+                    'status' => 'Status',
+                    'start_date' => 'Start Date',
+                    'end_date' => 'End Date',
                 ],
             ],
 
@@ -41,15 +43,15 @@ return [
                 'title' => 'Settings',
 
                 'fields' => [
-                    'project'                     => 'Project',
-                    'milestone'                   => 'Milestone',
-                    'milestone-hint-text'         => 'Automatically deliver your services upon reaching a milestone by linking it to a sales order item.',
-                    'name'                        => 'Name',
-                    'deadline'                    => 'Deadline',
-                    'is-completed'                => 'Is Completed',
-                    'customer'                    => 'Customer',
-                    'assignees'                   => 'Assignees',
-                    'allocated-hours'             => 'Allocated Hours',
+                    'project' => 'Project',
+                    'milestone' => 'Milestone',
+                    'milestone-hint-text' => 'Automatically deliver your services upon reaching a milestone by linking it to a sales order item.',
+                    'name' => 'Name',
+                    'deadline' => 'Deadline',
+                    'is-completed' => 'Is Completed',
+                    'customer' => 'Customer',
+                    'assignees' => 'Assignees',
+                    'allocated-hours' => 'Allocated Hours',
                     'allocated-hours-helper-text' => 'In hours (Eg. 1.5 hours means 1 hour 30 minutes)',
                 ],
             ],
@@ -58,79 +60,79 @@ return [
 
     'table' => [
         'columns' => [
-            'id'                  => 'ID',
-            'priority'            => 'Priority',
-            'state'               => 'State',
-            'new-state'           => 'New State',
-            'update-state'        => 'Update State',
-            'title'               => 'Title',
-            'project'             => 'Project',
+            'id' => 'ID',
+            'priority' => 'Priority',
+            'state' => 'State',
+            'new-state' => 'New State',
+            'update-state' => 'Update State',
+            'title' => 'Title',
+            'project' => 'Project',
             'project-placeholder' => 'Private Task',
-            'milestone'           => 'Milestone',
-            'customer'            => 'Customer',
-            'assignees'           => 'Assignees',
-            'allocated-time'      => 'Allocated Time',
-            'time-spent'          => 'Time Spent',
-            'time-remaining'      => 'Time Remaining',
-            'progress'            => 'Progress',
-            'deadline'            => 'Deadline',
-            'tags'                => 'Tags',
-            'stage'               => 'Stage',
+            'milestone' => 'Milestone',
+            'customer' => 'Customer',
+            'assignees' => 'Assignees',
+            'allocated-time' => 'Allocated Time',
+            'time-spent' => 'Time Spent',
+            'time-remaining' => 'Time Remaining',
+            'progress' => 'Progress',
+            'deadline' => 'Deadline',
+            'tags' => 'Tags',
+            'stage' => 'Stage',
         ],
 
         'groups' => [
-            'state'      => 'State',
-            'project'    => 'Project',
-            'milestone'  => 'Milestone',
-            'customer'   => 'Customer',
-            'deadline'   => 'Deadline',
-            'stage'      => 'Stage',
+            'state' => 'State',
+            'project' => 'Project',
+            'milestone' => 'Milestone',
+            'customer' => 'Customer',
+            'deadline' => 'Deadline',
+            'stage' => 'Stage',
             'created-at' => 'Created At',
         ],
 
         'filters' => [
-            'title'             => 'Title',
-            'priority'          => 'Priority',
-            'low'               => 'Low',
-            'high'              => 'High',
-            'state'             => 'State',
-            'tags'              => 'Tags',
-            'allocated-hours'   => 'Allocated Hours',
+            'title' => 'Title',
+            'priority' => 'Priority',
+            'low' => 'Low',
+            'high' => 'High',
+            'state' => 'State',
+            'tags' => 'Tags',
+            'allocated-hours' => 'Allocated Hours',
             'total-hours-spent' => 'Total Hours Spent',
-            'remaining-hours'   => 'Remaining Hours',
-            'overtime'          => 'Overtime',
-            'progress'          => 'Progress',
-            'deadline'          => 'Deadline',
-            'created-at'        => 'Created At',
-            'updated-at'        => 'Updated At',
-            'assignees'         => 'Assignees',
-            'customer'          => 'Customer',
-            'project'           => 'Project',
-            'stage'             => 'Stage',
-            'milestone'         => 'Milestone',
-            'company'           => 'Company',
-            'creator'           => 'Creator',
+            'remaining-hours' => 'Remaining Hours',
+            'overtime' => 'Overtime',
+            'progress' => 'Progress',
+            'deadline' => 'Deadline',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
+            'assignees' => 'Assignees',
+            'customer' => 'Customer',
+            'project' => 'Project',
+            'stage' => 'Stage',
+            'milestone' => 'Milestone',
+            'company' => 'Company',
+            'creator' => 'Creator',
         ],
 
         'actions' => [
             'restore' => [
                 'notification' => [
                     'title' => 'Task restored',
-                    'body'  => 'The task has been restored successfully.',
+                    'body' => 'The task has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Task deleted',
-                    'body'  => 'The task has been deleted successfully.',
+                    'body' => 'The task has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Task force deleted',
-                    'body'  => 'The task has been force deleted successfully.',
+                    'body' => 'The task has been force deleted successfully.',
                 ],
             ],
         ],
@@ -139,21 +141,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Tasks restored',
-                    'body'  => 'The tasks has been restored successfully.',
+                    'body' => 'The tasks has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Tasks deleted',
-                    'body'  => 'The tasks has been deleted successfully.',
+                    'body' => 'The tasks has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Tasks force deleted',
-                    'body'  => 'The tasks has been force deleted successfully.',
+                    'body' => 'The tasks has been force deleted successfully.',
                 ],
             ],
         ],
@@ -165,10 +167,10 @@ return [
                 'title' => 'General',
 
                 'entries' => [
-                    'title'       => 'Title',
-                    'state'       => 'State',
-                    'tags'        => 'Tags',
-                    'priority'    => 'Priority',
+                    'title' => 'Title',
+                    'state' => 'State',
+                    'tags' => 'Tags',
+                    'priority' => 'Priority',
                     'description' => 'Description',
                 ],
             ],
@@ -177,12 +179,12 @@ return [
                 'title' => 'Project Information',
 
                 'entries' => [
-                    'project'   => 'Project',
+                    'project' => 'Project',
                     'milestone' => 'Milestone',
-                    'customer'  => 'Customer',
+                    'customer' => 'Customer',
                     'assignees' => 'Assignees',
-                    'deadline'  => 'Deadline',
-                    'stage'     => 'Stage',
+                    'deadline' => 'Deadline',
+                    'stage' => 'Stage',
                 ],
             ],
 
@@ -190,12 +192,12 @@ return [
                 'title' => 'Time Tracking',
 
                 'entries' => [
-                    'allocated-time'        => 'Allocated Time',
-                    'time-spent'            => 'Time Spent',
-                    'time-spent-suffix'     => ' Hours',
-                    'time-remaining'        => 'Time Remaining',
+                    'allocated-time' => 'Allocated Time',
+                    'time-spent' => 'Time Spent',
+                    'time-spent-suffix' => ' Hours',
+                    'time-remaining' => 'Time Remaining',
                     'time-remaining-suffix' => ' Hours',
-                    'progress'              => 'Progress',
+                    'progress' => 'Progress',
                 ],
             ],
 
@@ -207,8 +209,8 @@ return [
                 'title' => 'Record Information',
 
                 'entries' => [
-                    'created-at'   => 'Created At',
-                    'created-by'   => 'Created By',
+                    'created-at' => 'Created At',
+                    'created-by' => 'Created By',
                     'last-updated' => 'Last Updated',
                 ],
             ],
@@ -217,7 +219,7 @@ return [
                 'title' => 'Statistics',
 
                 'entries' => [
-                    'sub-tasks'         => 'Sub Tasks',
+                    'sub-tasks' => 'Sub Tasks',
                     'timesheet-entries' => 'Timesheet Entries',
                 ],
             ],

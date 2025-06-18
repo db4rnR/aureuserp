@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\InvoiceResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Account\Enums\MoveState;
@@ -13,7 +14,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListInvoices extends ListRecords
+final class ListInvoices extends ListRecords
 {
     use HasTableViews;
 
@@ -48,13 +49,13 @@ class ListInvoices extends ListRecords
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('move_type', MoveType::IN_REFUND)),
             'to_check' => PresetView::make(__('accounts::filament/resources/invoice/pages/list-invoice.tabs.to-check'))
                 ->icon('heroicon-s-check-badge')
-                ->modifyQueryUsing(function (Builder $query) {
+                ->modifyQueryUsing(function (Builder $query): void {
                     $query->whereNot('state', MoveState::DRAFT)
                         ->where('checked', false);
                 }),
             'to_pay' => PresetView::make(__('accounts::filament/resources/invoice/pages/list-invoice.tabs.to-pay'))
                 ->icon('heroicon-s-banknotes')
-                ->modifyQueryUsing(function (Builder $query) {
+                ->modifyQueryUsing(function (Builder $query): void {
                     $query->whereNot('state', MoveState::POSTED)
                         ->whereIn('payment_state', [
                             PaymentState::NOT_PAID,
@@ -63,13 +64,13 @@ class ListInvoices extends ListRecords
                 }),
             'in_payment' => PresetView::make(__('accounts::filament/resources/invoice/pages/list-invoice.tabs.in-payment'))
                 ->icon('heroicon-s-banknotes')
-                ->modifyQueryUsing(function (Builder $query) {
+                ->modifyQueryUsing(function (Builder $query): void {
                     $query->whereNot('state', MoveState::POSTED)
                         ->where('payment_state', PaymentState::IN_PAYMENT);
                 }),
             'overdue' => PresetView::make(__('accounts::filament/resources/invoice/pages/list-invoice.tabs.overdue'))
                 ->icon('heroicon-s-banknotes')
-                ->modifyQueryUsing(function (Builder $query) {
+                ->modifyQueryUsing(function (Builder $query): void {
                     $query->whereNot('state', MoveState::POSTED)
                         ->where('payment_state', PaymentState::NOT_PAID)
                         ->where('invoice_date_due', '<', now());

@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageContacts as BaseManageContacts;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource;
 
-class ManageContacts extends BaseManageContacts
+final class ManageContacts extends BaseManageContacts
 {
     protected static string $resource = CustomerResource::class;
 
-    static function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -11,8 +13,6 @@ trait DatabaseTestingTrait
 {
     /**
      * Use an in-memory SQLite database for testing.
-     *
-     * @return void
      */
     protected function useInMemoryDatabase(): void
     {
@@ -22,8 +22,6 @@ trait DatabaseTestingTrait
 
     /**
      * Begin a database transaction.
-     *
-     * @return void
      */
     protected function beginDatabaseTransaction(): void
     {
@@ -32,8 +30,6 @@ trait DatabaseTestingTrait
 
     /**
      * Rollback a database transaction.
-     *
-     * @return void
      */
     protected function rollbackDatabaseTransaction(): void
     {
@@ -42,8 +38,6 @@ trait DatabaseTestingTrait
 
     /**
      * Commit a database transaction.
-     *
-     * @return void
      */
     protected function commitDatabaseTransaction(): void
     {
@@ -52,10 +46,6 @@ trait DatabaseTestingTrait
 
     /**
      * Create a database record.
-     *
-     * @param string $model
-     * @param array $attributes
-     * @return Model
      */
     protected function createRecord(string $model, array $attributes = []): Model
     {
@@ -64,11 +54,6 @@ trait DatabaseTestingTrait
 
     /**
      * Create multiple database records.
-     *
-     * @param string $model
-     * @param int $count
-     * @param array $attributes
-     * @return Collection
      */
     protected function createRecords(string $model, int $count = 3, array $attributes = []): Collection
     {
@@ -77,14 +62,10 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a database has a given table.
-     *
-     * @param string $table
-     * @param string|null $connection
-     * @return void
      */
     protected function assertDatabaseHasTable(string $table, ?string $connection = null): void
     {
-        $connection = $connection ?: config('database.default');
+        $connection = $connection !== null && $connection !== '' && $connection !== '0' ? $connection : config('database.default');
 
         $this->assertTrue(
             Schema::connection($connection)->hasTable($table),
@@ -94,14 +75,10 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a database does not have a given table.
-     *
-     * @param string $table
-     * @param string|null $connection
-     * @return void
      */
     protected function assertDatabaseDoesNotHaveTable(string $table, ?string $connection = null): void
     {
-        $connection = $connection ?: config('database.default');
+        $connection = $connection !== null && $connection !== '' && $connection !== '0' ? $connection : config('database.default');
 
         $this->assertFalse(
             Schema::connection($connection)->hasTable($table),
@@ -111,15 +88,10 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a table has a given column.
-     *
-     * @param string $table
-     * @param string $column
-     * @param string|null $connection
-     * @return void
      */
     protected function assertTableHasColumn(string $table, string $column, ?string $connection = null): void
     {
-        $connection = $connection ?: config('database.default');
+        $connection = $connection !== null && $connection !== '' && $connection !== '0' ? $connection : config('database.default');
 
         $this->assertTrue(
             Schema::connection($connection)->hasColumn($table, $column),
@@ -129,15 +101,10 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a table does not have a given column.
-     *
-     * @param string $table
-     * @param string $column
-     * @param string|null $connection
-     * @return void
      */
     protected function assertTableDoesNotHaveColumn(string $table, string $column, ?string $connection = null): void
     {
-        $connection = $connection ?: config('database.default');
+        $connection = $connection !== null && $connection !== '' && $connection !== '0' ? $connection : config('database.default');
 
         $this->assertFalse(
             Schema::connection($connection)->hasColumn($table, $column),
@@ -147,10 +114,6 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a model has a given attribute.
-     *
-     * @param Model $model
-     * @param string $attribute
-     * @return void
      */
     protected function assertModelHasAttribute(Model $model, string $attribute): void
     {
@@ -162,10 +125,6 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a model does not have a given attribute.
-     *
-     * @param Model $model
-     * @param string $attribute
-     * @return void
      */
     protected function assertModelDoesNotHaveAttribute(Model $model, string $attribute): void
     {
@@ -177,11 +136,6 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a model has a given relationship.
-     *
-     * @param Model $model
-     * @param string $relationship
-     * @param string $type
-     * @return void
      */
     protected function assertModelHasRelationship(Model $model, string $relationship, string $type): void
     {
@@ -201,10 +155,6 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a model has the expected attributes.
-     *
-     * @param Model $model
-     * @param array $attributes
-     * @return void
      */
     protected function assertModelAttributes(Model $model, array $attributes): void
     {
@@ -219,10 +169,6 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a model has the expected relationships.
-     *
-     * @param Model $model
-     * @param array $relationships
-     * @return void
      */
     protected function assertModelRelationships(Model $model, array $relationships): void
     {
@@ -233,29 +179,23 @@ trait DatabaseTestingTrait
 
     /**
      * Assert that a model has soft deletes.
-     *
-     * @param Model $model
-     * @return void
      */
     protected function assertModelHasSoftDeletes(Model $model): void
     {
         $this->assertTrue(
             method_exists($model, 'trashed'),
-            "Model does not use soft deletes."
+            'Model does not use soft deletes.'
         );
     }
 
     /**
      * Assert that a model has timestamps.
-     *
-     * @param Model $model
-     * @return void
      */
     protected function assertModelHasTimestamps(Model $model): void
     {
         $this->assertTrue(
             $model->timestamps,
-            "Model does not use timestamps."
+            'Model does not use timestamps.'
         );
     }
 }

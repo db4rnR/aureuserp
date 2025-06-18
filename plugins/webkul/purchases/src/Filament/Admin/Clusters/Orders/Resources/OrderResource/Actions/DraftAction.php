@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions;
 
 use Filament\Actions\Action;
@@ -9,13 +11,8 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-class DraftAction extends Action
+final class DraftAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'purchases.orders.draft';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,6 +31,11 @@ class DraftAction extends Action
                     ->success()
                     ->send();
             })
-            ->visible(fn () => $this->getRecord()->state == OrderState::CANCELED);
+            ->visible(fn (): bool => $this->getRecord()->state === OrderState::CANCELED);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'purchases.orders.draft';
     }
 }

@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource\Pages;
 
-use Webkul\Purchase\Enums\RequisitionType;
-use Webkul\Purchase\Enums\RequisitionState;
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\RequisitionState;
+use Webkul\Purchase\Enums\RequisitionType;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListPurchaseAgreements extends ListRecords
+final class ListPurchaseAgreements extends ListRecords
 {
     use HasTableViews;
 
@@ -57,9 +57,7 @@ class ListPurchaseAgreements extends ListRecords
             'archived' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.tabs.archived'))
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 

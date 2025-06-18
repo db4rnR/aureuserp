@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support;
 
 use Illuminate\Support\Facades\Schema;
@@ -8,7 +10,7 @@ use Webkul\Support\Console\Commands\InstallCommand;
 use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Models\Plugin;
 
-class Package extends BasePackage
+final class Package extends BasePackage
 {
     public ?Plugin $plugin = null;
 
@@ -23,6 +25,17 @@ class Package extends BasePackage
     public bool $runsSeeders = false;
 
     public array $seederClasses = [];
+
+    public static function getPackagePlugin(string $name): ?Plugin
+    {
+        return Plugin::where('name', $name)->first();
+    }
+
+    public static function isPluginInstalled(string $name): bool
+    {
+        return Schema::hasTable('plugins')
+            && (bool) self::getPackagePlugin($name)?->is_installed;
+    }
 
     public function hasInstallCommand($callable): static
     {
@@ -130,39 +143,28 @@ class Package extends BasePackage
         return $this->plugin = Plugin::updateOrCreate([
             'name' => $this->name,
         ], [
-            'author'         => $this->author ?? null,
-            'summary'        => $this->summary ?? null,
-            'description'    => $this->description ?? null,
+            'author' => $this->author ?? null,
+            'summary' => $this->summary ?? null,
+            'description' => $this->description ?? null,
             'latest_version' => $this->version ?? null,
-            'license'        => $this->license ?? null,
-            'sort'           => $this->sort ?? null,
-            'is_active'      => true,
-            'is_installed'   => true,
+            'license' => $this->license ?? null,
+            'sort' => $this->sort ?? null,
+            'is_active' => true,
+            'is_installed' => true,
         ]);
     }
 
     public function getPlugin(): ?Plugin
     {
-        if ($this->plugin) {
+        if ($this->plugin instanceof Plugin) {
             return $this->plugin;
         }
 
-        return $this->plugin = static::getPackagePlugin($this->name);
+        return $this->plugin = self::getPackagePlugin($this->name);
     }
 
     public function isInstalled(): bool
     {
-        return static::isPluginInstalled($this->name);
-    }
-
-    public static function getPackagePlugin(string $name): ?Plugin
-    {
-        return Plugin::where('name', $name)->first();
-    }
-
-    public static function isPluginInstalled(string $name): bool
-    {
-        return Schema::hasTable('plugins')
-            && (bool) static::getPackagePlugin($name)?->is_installed;
+        return self::isPluginInstalled($this->name);
     }
 }

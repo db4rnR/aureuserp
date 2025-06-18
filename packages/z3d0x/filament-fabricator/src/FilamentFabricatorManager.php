@@ -1,46 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator;
 
-use Exception;
-use InvalidArgumentException;
 use Closure;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Z3d0X\FilamentFabricator\Layouts\Layout;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Models\Page;
 use Z3d0X\FilamentFabricator\PageBlocks\PageBlock;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-class FilamentFabricatorManager
+final class FilamentFabricatorManager
 {
-    const ID = 'filament-fabricator';
+    public const ID = 'filament-fabricator';
 
     /** @var Collection<string,string> */
-    protected Collection $pageBlocks;
+    private Collection $pageBlocks;
 
     /** @var Collection<string,string> */
-    protected Collection $layouts;
+    private Collection $layouts;
 
-    protected array $schemaSlot = [];
+    private array $schemaSlot = [];
 
-    protected array $meta = [];
+    private array $meta = [];
 
-    protected array $scripts = [];
+    private array $scripts = [];
 
-    protected array $styles = [];
+    private array $styles = [];
 
-    protected ?string $favicon = 'favicon.ico';
+    private ?string $favicon = 'favicon.ico';
 
-    protected array $pageUrls = [];
+    private array $pageUrls = [];
 
     /**
      * @note It's only separated to not cause a major version change.
      * In the next major release, feel free to make it a constructor promoted property
      */
-    protected PageRoutesService $routesService;
+    private PageRoutesService $routesService;
 
     public function __construct(?PageRoutesService $routesService = null)
     {
@@ -63,8 +65,8 @@ class FilamentFabricatorManager
     public function registerComponent(string $class, string $baseClass): void
     {
         match ($baseClass) {
-            Layout::class => static::registerLayout($class),
-            PageBlock::class => static::registerPageBlock($class),
+            Layout::class => self::registerLayout($class),
+            PageBlock::class => self::registerPageBlock($class),
             default => throw new Exception('Invalid class type'),
         };
     }
@@ -73,7 +75,7 @@ class FilamentFabricatorManager
     public function registerLayout(string $layout): void
     {
         if (! is_subclass_of($layout, Layout::class)) {
-            throw new InvalidArgumentException("{$layout} must extend " . Layout::class);
+            throw new InvalidArgumentException("{$layout} must extend ".Layout::class);
         }
 
         $this->layouts->put($layout::getName(), $layout);
@@ -83,7 +85,7 @@ class FilamentFabricatorManager
     public function registerPageBlock(string $pageBlock): void
     {
         if (! is_subclass_of($pageBlock, PageBlock::class)) {
-            throw new InvalidArgumentException("{$pageBlock} must extend " . PageBlock::class);
+            throw new InvalidArgumentException("{$pageBlock} must extend ".PageBlock::class);
         }
 
         $this->pageBlocks->put($pageBlock::getName(), $pageBlock);
@@ -189,7 +191,7 @@ class FilamentFabricatorManager
             return $prefix;
         }
 
-        return rtrim($prefix, '/');
+        return mb_rtrim($prefix, '/');
     }
 
     public function getPageUrls(): array

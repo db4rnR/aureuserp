@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -7,7 +9,7 @@ use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource;
 use Webkul\Product\Filament\Resources\ProductResource\Pages\ListProducts as BaseListProducts;
 use Webkul\TableViews\Filament\Components\PresetView;
 
-class ListProducts extends BaseListProducts
+final class ListProducts extends BaseListProducts
 {
     protected static string $resource = ProductResource::class;
 

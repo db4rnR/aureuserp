@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters;
 
+use BackedEnum;
 use Filament\Clusters\Cluster;
 
-class Products extends Cluster
+final class Products extends Cluster
 {
     protected static ?string $slug = 'sale/products';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static ?int $navigationSort = 0;
 

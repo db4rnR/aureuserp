@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Resources\RoleResource\Pages;
 
-use Filament\Actions\CreateAction;
 use BezhanSalleh\FilamentShield\Resources\RoleResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListRoles extends ListRecords
+final class ListRoles extends ListRecords
 {
     protected static string $resource = RoleResource::class;
 

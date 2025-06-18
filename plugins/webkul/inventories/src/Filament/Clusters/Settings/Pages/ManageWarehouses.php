@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Settings\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Illuminate\Support\HtmlString;
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\HtmlString;
+use UnitEnum;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResource;
 use Webkul\Inventory\Models\OperationType;
@@ -19,21 +22,26 @@ use Webkul\Inventory\Models\Warehouse;
 use Webkul\Inventory\Settings\WarehouseSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-class ManageWarehouses extends SettingsPage
+final class ManageWarehouses extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-storefront';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-storefront';
 
     protected static ?string $slug = 'inventory/manage-warehouses';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Inventory';
+    protected static string|UnitEnum|null $navigationGroup = 'Inventory';
 
     protected static ?int $navigationSort = 3;
 
     protected static string $settings = WarehouseSettings::class;
 
     protected static ?string $cluster = Settings::class;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('inventories::filament/clusters/settings/pages/manage-warehouses.title');
+    }
 
     public function getBreadcrumbs(): array
     {
@@ -47,23 +55,18 @@ class ManageWarehouses extends SettingsPage
         return __('inventories::filament/clusters/settings/pages/manage-warehouses.title');
     }
 
-    public static function getNavigationLabel(): string
-    {
-        return __('inventories::filament/clusters/settings/pages/manage-warehouses.title');
-    }
-
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 Toggle::make('enable_locations')
                     ->label(__('inventories::filament/clusters/settings/pages/manage-warehouses.form.enable-locations'))
-                    ->afterStateUpdated(function (Set $set, Get $get) {
+                    ->afterStateUpdated(function (Set $set, Get $get): void {
                         if (! $get('enable_locations')) {
                             $set('enable_multi_steps_routes', false);
                         }
                     })
-                    ->helperText(function () {
+                    ->helperText(function (): HtmlString {
                         $routeBaseName = LocationResource::getRouteBaseName();
 
                         $url = '#';
@@ -77,7 +80,7 @@ class ManageWarehouses extends SettingsPage
                     ->live(),
                 Toggle::make('enable_multi_steps_routes')
                     ->label(__('inventories::filament/clusters/settings/pages/manage-warehouses.form.enable-multi-steps-routes'))
-                    ->afterStateUpdated(function (Set $set, Get $get) {
+                    ->afterStateUpdated(function (Set $set, Get $get): void {
                         if ($get('enable_multi_steps_routes')) {
                             $set('enable_locations', true);
                         }
@@ -87,7 +90,7 @@ class ManageWarehouses extends SettingsPage
             ]);
     }
 
-    protected function beforeSave(): void
+    private function beforeSave(): void
     {
         if (Warehouse::count() > 1) {
             Notification::make()
@@ -102,7 +105,7 @@ class ManageWarehouses extends SettingsPage
         }
     }
 
-    protected function afterSave(): void
+    private function afterSave(): void
     {
         foreach (Warehouse::all() as $warehouse) {
             OperationType::withTrashed()

@@ -6,17 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::table(config('filament-fabricator.table_name', 'pages'), function (Blueprint $table) {
+        Schema::table(config('filament-fabricator.table_name', 'pages'), function (Blueprint $table): void {
             $table->dropUnique(['slug']);
             $table->unique(['slug', 'parent_id']);
         });
     }
 
-    public function down()
+    public function down(): void
     {
-        Schema::table(config('filament-fabricator.table_name', 'pages'), function (Blueprint $table) {
+        Schema::table(config('filament-fabricator.table_name', 'pages'), function (Blueprint $table): void {
             $table->dropUnique(['slug', 'parent_id']);
             $table->unique(['slug']);
         });

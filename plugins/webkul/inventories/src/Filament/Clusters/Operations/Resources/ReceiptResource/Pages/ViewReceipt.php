@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\OperationState;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource;
 use Webkul\Inventory\Models\Receipt;
 
-class ViewReceipt extends ViewRecord
+final class ViewReceipt extends ViewRecord
 {
     protected static string $resource = ReceiptResource::class;
 
@@ -23,7 +23,7 @@ class ViewReceipt extends ViewRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             ActionGroup::make([
                 OperationActions\Print\PickingOperationAction::make(),
                 OperationActions\Print\DeliverySlipAction::make(),
@@ -35,13 +35,13 @@ class ViewReceipt extends ViewRecord
                 ->color('gray')
                 ->button(),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == OperationState::DONE)
-                ->action(function (DeleteAction $action, Receipt $record) {
+                ->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
+                ->action(function (DeleteAction $action, Receipt $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/receipt/pages/view-receipt.header-actions.delete.notification.error.title'))

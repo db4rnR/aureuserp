@@ -1,16 +1,18 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Product\Models\Tag;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Product\Models\Product;
+use Webkul\Product\Models\Tag;
 use Webkul\Security\Models\User;
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Tag model attributes and properties')]
-function tag_model_attributes_and_properties()
+function tag_model_attributes_and_properties(): void
 {
     // Create a test tag
     $tag = Tag::factory()->create([
@@ -23,14 +25,14 @@ function tag_model_attributes_and_properties()
     expect($tag->color)->toBe('#FF0000');
 
     // Test relationships
-    expect($tag->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($tag->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Tag model relationships with other models')]
-function tag_model_relationships_with_other_models()
+function tag_model_relationships_with_other_models(): void
 {
     // Create related models
     $user = User::factory()->create();
@@ -58,20 +60,20 @@ function tag_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Tag model traits')]
-function tag_model_traits()
+function tag_model_traits(): void
 {
     // Create a test tag
     $tag = Tag::factory()->create();
 
     // Test that the model uses the expected traits
-    expect($tag)->toBeInstanceOf(\Illuminate\Database\Eloquent\SoftDeletes::class);
+    expect($tag)->toBeInstanceOf(Illuminate\Database\Eloquent\SoftDeletes::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Tag model soft delete functionality')]
-function tag_model_soft_delete_functionality()
+function tag_model_soft_delete_functionality(): void
 {
     // Create a test tag
     $tag = Tag::factory()->create([
@@ -101,7 +103,7 @@ function tag_model_soft_delete_functionality()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Tag model many-to-many relationship with products from the Product side')]
-function tag_model_many_to_many_relationship_with_products_from_product_side()
+function tag_model_many_to_many_relationship_with_products_from_product_side(): void
 {
     // Create a tag
     $tag = Tag::factory()->create(['name' => 'Test Tag']);

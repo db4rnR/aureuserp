@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +15,7 @@ use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class WorkLocation extends Model
+final class WorkLocation extends Model
 {
     use HasCustomFields, HasFactory, SoftDeletes;
 
@@ -29,8 +31,8 @@ class WorkLocation extends Model
     ];
 
     protected $casts = [
-        'is_active'      => 'boolean',
-        'location_type'  => WorkLocationEnum::class,
+        'is_active' => 'boolean',
+        'location_type' => WorkLocationEnum::class,
     ];
 
     public function company(): BelongsTo

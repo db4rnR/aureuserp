@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -20,9 +22,14 @@ use Webkul\Security\Models\Scopes\UserPermissionScope;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Project extends Model implements Sortable
+final class Project extends Model implements Sortable
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -64,17 +71,12 @@ class Project extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'start_date'              => 'date',
-        'end_date'                => 'date',
-        'is_active'               => 'boolean',
-        'allow_timesheets'        => 'boolean',
-        'allow_milestones'        => 'boolean',
-        'start_date'              => 'date',
-        'end_date'                => 'date',
-        'tags'                    => 'array',
-        'is_active'               => 'boolean',
-        'allow_timesheets'        => 'boolean',
-        'allow_milestones'        => 'boolean',
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'tags' => 'array',
+        'is_active' => 'boolean',
+        'allow_timesheets' => 'boolean',
+        'allow_milestones' => 'boolean',
         'allow_task_dependencies' => 'boolean',
     ];
 
@@ -93,27 +95,12 @@ class Project extends Model implements Sortable
         'allow_milestones',
         'allow_task_dependencies',
         'is_active',
-        'stage.name'   => 'Stage',
+        'stage.name' => 'Stage',
         'partner.name' => 'Customer',
         'company.name' => 'Company',
-        'user.name'    => 'Project Manager',
+        'user.name' => 'Project Manager',
         'creator.name' => 'Creator',
     ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
-    ];
-
-    /**
-     * Get the user's first name.
-     */
-    protected function plannedDate(): Attribute
-    {
-        return Attribute::make(
-            get: fn (mixed $value, array $attributes) => $attributes['start_date'].' - '.$attributes['end_date'],
-        );
-    }
 
     public function partner(): BelongsTo
     {
@@ -175,13 +162,23 @@ class Project extends Model implements Sortable
         return $this->belongsToMany(Tag::class, 'projects_project_tag', 'project_id', 'tag_id');
     }
 
-    protected static function booted()
+    protected static function booted(): void
     {
-        static::addGlobalScope(new UserPermissionScope('user'));
+        self::addGlobalScope(new UserPermissionScope('user'));
     }
 
     protected static function newFactory(): ProjectFactory
     {
         return ProjectFactory::new();
+    }
+
+    /**
+     * Get the user's first name.
+     */
+    private function plannedDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes): string => $attributes['start_date'].' - '.$attributes['end_date'],
+        );
     }
 }

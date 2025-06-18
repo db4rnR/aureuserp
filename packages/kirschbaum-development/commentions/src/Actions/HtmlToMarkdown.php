@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Actions;
 
 use Closure;
 use League\HTMLToMarkdown\HtmlConverter;
 
-class HtmlToMarkdown
+final class HtmlToMarkdown
 {
     public function __invoke(string $html, ?Closure $mentionedCallback = null): string
     {
@@ -16,7 +18,12 @@ class HtmlToMarkdown
         return $markdown;
     }
 
-    protected function transformMentionsToMarkdown(string $markdown, ?Closure $mentionedCallback = null): string
+    public static function run(...$args)
+    {
+        return (new self())(...$args);
+    }
+
+    private function transformMentionsToMarkdown(string $markdown, ?Closure $mentionedCallback = null): string
     {
         if ($mentionedCallback) {
             return preg_replace_callback(
@@ -31,10 +38,5 @@ class HtmlToMarkdown
             '*@$2*',
             $markdown
         );
-    }
-
-    public static function run(...$args)
-    {
-        return (new static())(...$args);
     }
 }

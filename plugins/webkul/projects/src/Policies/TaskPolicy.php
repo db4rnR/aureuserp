@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -7,7 +9,7 @@ use Webkul\Project\Models\Task;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-class TaskPolicy
+final class TaskPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 
@@ -22,7 +24,7 @@ class TaskPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Task $task): bool
+    public function view(User $user): bool
     {
         return $user->can('view_task');
     }

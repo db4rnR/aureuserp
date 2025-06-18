@@ -1,47 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
+use BackedEnum;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Tabs\Tab;
-use Webkul\Invoice\Enums\InvoiceSendingMethod;
-use Webkul\Invoice\Enums\InvoiceFormat;
-use Filament\Schemas\Components\Utilities\Get;
-use Webkul\Invoice\Enums\PartyIdentificationScheme;
-use Filament\Forms\Components\TextInput;
-use Webkul\Invoice\Enums\AutoPostBills;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\RichEditor;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\RelationManagers\BankAccountsRelationManager;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ViewVendor;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\EditVendor;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageContacts;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageAddresses;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageBankAccounts;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ListVendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\CreateVendor;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Invoice\Enums;
+use Webkul\Invoice\Enums\AutoPostBills;
+use Webkul\Invoice\Enums\InvoiceFormat;
+use Webkul\Invoice\Enums\InvoiceSendingMethod;
+use Webkul\Invoice\Enums\PartyIdentificationScheme;
 use Webkul\Invoice\Filament\Clusters\Vendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\RelationManagers;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\CreateVendor;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\EditVendor;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ListVendors;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageAddresses;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageBankAccounts;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageContacts;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ViewVendor;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\RelationManagers\BankAccountsRelationManager;
 use Webkul\Invoice\Models\Partner;
 use Webkul\Partner\Filament\Resources\PartnerResource as BaseVendorResource;
 
-class VendorResource extends BaseVendorResource
+final class VendorResource extends BaseVendorResource
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $model = Partner::class;
 
@@ -53,7 +51,7 @@ class VendorResource extends BaseVendorResource
 
     protected static ?string $cluster = Vendors::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -160,12 +158,12 @@ class VendorResource extends BaseVendorResource
                                 Select::make('peppol_eas')
                                     ->label(__('invoices::filament/clusters/vendors/resources/vendor.form.tabs.invoicing.fields.peppol-eas'))
                                     ->live()
-                                    ->visible(fn (Get $get) => $get('invoice_edi_format_store') !== InvoiceFormat::FACTURX_X_CII->value && ! empty($get('invoice_edi_format_store')))
+                                    ->visible(fn (Get $get): bool => $get('invoice_edi_format_store') !== InvoiceFormat::FACTURX_X_CII->value && ! empty($get('invoice_edi_format_store')))
                                     ->options(PartyIdentificationScheme::class),
                                 TextInput::make('peppol_endpoint')
                                     ->label(__('invoices::filament/clusters/vendors/resources/vendor.form.tabs.invoicing.fields.endpoint'))
                                     ->live()
-                                    ->visible(fn (Get $get) => $get('invoice_edi_format_store') !== InvoiceFormat::FACTURX_X_CII->value && ! empty($get('invoice_edi_format_store'))),
+                                    ->visible(fn (Get $get): bool => $get('invoice_edi_format_store') !== InvoiceFormat::FACTURX_X_CII->value && ! empty($get('invoice_edi_format_store'))),
                             ])->columns(2),
                     ]),
 
@@ -205,9 +203,9 @@ class VendorResource extends BaseVendorResource
         $table = parent::table($table);
 
         $table->contentGrid([
-            'sm'  => 1,
-            'md'  => 2,
-            'xl'  => 3,
+            'sm' => 1,
+            'md' => 2,
+            'xl' => 3,
             '2xl' => 3,
         ]);
 
@@ -369,12 +367,12 @@ class VendorResource extends BaseVendorResource
     public static function getPages(): array
     {
         return [
-            'index'        => ListVendors::route('/'),
-            'create'       => CreateVendor::route('/create'),
-            'edit'         => EditVendor::route('/{record}/edit'),
-            'view'         => ViewVendor::route('/{record}'),
-            'contacts'     => ManageContacts::route('/{record}/contacts'),
-            'addresses'    => ManageAddresses::route('/{record}/addresses'),
+            'index' => ListVendors::route('/'),
+            'create' => CreateVendor::route('/create'),
+            'edit' => EditVendor::route('/{record}/edit'),
+            'view' => ViewVendor::route('/{record}'),
+            'contacts' => ManageContacts::route('/{record}/contacts'),
+            'addresses' => ManageAddresses::route('/{record}/addresses'),
             'bank-account' => ManageBankAccounts::route('/{record}/bank-accounts'),
         ];
     }

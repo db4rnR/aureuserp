@@ -1,17 +1,19 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Product\Models\Category;
-use Webkul\Product\Models\Product;
 use Webkul\Product\Models\PriceRuleItem;
+use Webkul\Product\Models\Product;
 use Webkul\Security\Models\User;
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Category model attributes and properties')]
-function category_model_attributes_and_properties()
+function category_model_attributes_and_properties(): void
 {
     // Create a test category
     $category = Category::factory()->create([
@@ -26,18 +28,18 @@ function category_model_attributes_and_properties()
     expect($category->parent_path)->toBe('/');
 
     // Test relationships
-    expect($category->parent())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($category->children())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($category->products())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($category->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($category->priceRuleItems())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($category->parent())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($category->children())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($category->products())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($category->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($category->priceRuleItems())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Category model relationships with other models')]
-function category_model_relationships_with_other_models()
+function category_model_relationships_with_other_models(): void
 {
     // Create related models
     $user = User::factory()->create();
@@ -74,7 +76,7 @@ function category_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Category model hierarchy and full_name generation')]
-function category_model_hierarchy_and_full_name_generation()
+function category_model_hierarchy_and_full_name_generation(): void
 {
     // Create a hierarchy of categories
     $grandparent = Category::factory()->create(['name' => 'Grandparent']);
@@ -106,7 +108,7 @@ function category_model_hierarchy_and_full_name_generation()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Category model validateNoRecursion method')]
-function category_model_validate_no_recursion_method()
+function category_model_validate_no_recursion_method(): void
 {
     // Create a category
     $category = Category::factory()->create(['name' => 'Test Category']);
@@ -115,26 +117,26 @@ function category_model_validate_no_recursion_method()
     $category->parent_id = $category->id;
 
     // This should throw an InvalidArgumentException
-    expect(function() use ($category) {
+    expect(function () use ($category): void {
         $category->save();
-    })->toThrow(\InvalidArgumentException::class, 'Circular reference detected in product category hierarchy');
+    })->toThrow(InvalidArgumentException::class, 'Circular reference detected in product category hierarchy');
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Category model traits')]
-function category_model_traits()
+function category_model_traits(): void
 {
     // Create a test category
     $category = Category::factory()->create();
 
     // Test that the model uses the expected traits
-    expect($category)->toBeInstanceOf(\Webkul\Chatter\Traits\HasChatter::class);
-    expect($category)->toBeInstanceOf(\Webkul\Chatter\Traits\HasLogActivity::class);
+    expect($category)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
+    expect($category)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
 
     // Test log attributes
-    $logAttributes = (new \ReflectionClass($category))->getProperty('logAttributes')->getValue($category);
+    $logAttributes = new ReflectionClass($category)->getProperty('logAttributes')->getValue($category);
     expect($logAttributes)->toBeArray();
     expect($logAttributes)->toContain('name');
     expect($logAttributes)->toContain('full_name');

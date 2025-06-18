@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
-use Webkul\Inventory\Enums\ScrapState;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,13 +13,13 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Webkul\Chatter\Traits\HasChatter;
 use Webkul\Chatter\Traits\HasLogActivity;
 use Webkul\Inventory\Database\Factories\ScrapFactory;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\ScrapState;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-class Scrap extends Model
+final class Scrap extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 
@@ -60,16 +61,16 @@ class Scrap extends Model
         'qty',
         'should_replenish',
         'closed_at',
-        'product.name'                  => 'Product',
-        'uom.name'                      => 'UOM',
-        'lot.name'                      => 'Lot',
-        'package.name'                  => 'Package',
-        'partner.name'                  => 'Partner',
-        'operation.name'                => 'Operation',
-        'sourceLocation.full_name'      => 'Source Location',
+        'product.name' => 'Product',
+        'uom.name' => 'UOM',
+        'lot.name' => 'Lot',
+        'package.name' => 'Package',
+        'partner.name' => 'Partner',
+        'operation.name' => 'Operation',
+        'sourceLocation.full_name' => 'Source Location',
         'destinationLocation.full_name' => 'Destination Location',
-        'company.name'                  => 'Company',
-        'creator.name'                  => 'Creator',
+        'company.name' => 'Company',
+        'creator.name' => 'Creator',
     ];
 
     /**
@@ -78,9 +79,9 @@ class Scrap extends Model
      * @var string
      */
     protected $casts = [
-        'state'            => ScrapState::class,
+        'state' => ScrapState::class,
         'should_replenish' => 'boolean',
-        'closed_at'        => 'datetime',
+        'closed_at' => 'datetime',
     ];
 
     public function product(): BelongsTo
@@ -149,23 +150,23 @@ class Scrap extends Model
     }
 
     /**
-     * Bootstrap any application services.
+     * Update the full name without triggering additional events
      */
-    protected static function boot()
+    public function updateName(): void
     {
-        parent::boot();
-
-        static::saving(function ($scrap) {
-            $scrap->updateName();
-        });
+        $this->name = 'SP/'.$this->id;
     }
 
     /**
-     * Update the full name without triggering additional events
+     * Bootstrap any application services.
      */
-    public function updateName()
+    protected static function boot(): void
     {
-        $this->name = 'SP/'.$this->id;
+        parent::boot();
+
+        self::saving(function ($scrap): void {
+            $scrap->updateName();
+        });
     }
 
     protected static function newFactory(): ScrapFactory

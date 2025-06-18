@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +14,7 @@ use Webkul\Chatter\Traits\HasLogActivity;
 use Webkul\Product\Database\Factories\CategoryFactory;
 use Webkul\Security\Models\User;
 
-class Category extends Model
+final class Category extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 
@@ -40,7 +42,7 @@ class Category extends Model
         'name',
         'full_name',
         'parent_path',
-        'parent.name'  => 'Parent Category',
+        'parent.name' => 'Parent Category',
         'creator.name' => 'Creator',
     ];
 
@@ -69,28 +71,33 @@ class Category extends Model
         return $this->hasMany(PriceRuleItem::class);
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::creating(function ($productCategory) {
-            if (! static::validateNoRecursion($productCategory)) {
+        self::creating(function ($productCategory): void {
+            if (! self::validateNoRecursion($productCategory)) {
                 throw new InvalidArgumentException('Circular reference detected in product category hierarchy');
             }
 
-            static::handleProductCategoryData($productCategory);
+            self::handleProductCategoryData($productCategory);
         });
 
-        static::updating(function ($productCategory) {
-            if (! static::validateNoRecursion($productCategory)) {
+        self::updating(function ($productCategory): void {
+            if (! self::validateNoRecursion($productCategory)) {
                 throw new InvalidArgumentException('Circular reference detected in product category hierarchy');
             }
 
-            static::handleProductCategoryData($productCategory);
+            self::handleProductCategoryData($productCategory);
         });
     }
 
-    protected static function validateNoRecursion($productCategory)
+    protected static function newFactory(): CategoryFactory
+    {
+        return CategoryFactory::new();
+    }
+
+    private static function validateNoRecursion($productCategory): bool
     {
         if (! $productCategory->parent_id) {
             return true;
@@ -98,7 +105,7 @@ class Category extends Model
 
         if (
             $productCategory->exists
-            && $productCategory->id == $productCategory->parent_id
+            && $productCategory->id === $productCategory->parent_id
         ) {
             return false;
         }
@@ -107,12 +114,12 @@ class Category extends Model
         $currentParentId = $productCategory->parent_id;
 
         while ($currentParentId) {
-            if (in_array($currentParentId, $visitedIds)) {
+            if (in_array($currentParentId, $visitedIds, true)) {
                 return false;
             }
 
             $visitedIds[] = $currentParentId;
-            $parent = static::find($currentParentId);
+            $parent = self::find($currentParentId);
 
             if (! $parent) {
                 break;
@@ -124,10 +131,10 @@ class Category extends Model
         return true;
     }
 
-    protected static function handleProductCategoryData($productCategory)
+    private static function handleProductCategoryData($productCategory): void
     {
         if ($productCategory->parent_id) {
-            $parent = static::find($productCategory->parent_id);
+            $parent = self::find($productCategory->parent_id);
 
             if ($parent) {
                 $productCategory->parent_path = $parent->parent_path.$parent->id.'/';
@@ -139,10 +146,10 @@ class Category extends Model
             $productCategory->parent_path = '/';
         }
 
-        $productCategory->full_name = static::getCompleteName($productCategory);
+        $productCategory->full_name = self::getCompleteName($productCategory);
     }
 
-    protected static function getCompleteName($productCategory)
+    private static function getCompleteName($productCategory): string
     {
         $names = [];
         $names[] = $productCategory->name;
@@ -150,7 +157,7 @@ class Category extends Model
         $currentProductCategory = $productCategory;
 
         while ($currentProductCategory->parent_id) {
-            $currentProductCategory = static::find($currentProductCategory->parent_id);
+            $currentProductCategory = self::find($currentProductCategory->parent_id);
 
             if ($currentProductCategory) {
                 array_unshift($names, $currentProductCategory->name);
@@ -160,10 +167,5 @@ class Category extends Model
         }
 
         return implode(' / ', $names);
-    }
-
-    protected static function newFactory(): CategoryFactory
-    {
-        return CategoryFactory::new();
     }
 }

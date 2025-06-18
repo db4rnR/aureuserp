@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('activity_plan_templates', function (Blueprint $table) {
+        Schema::create('activity_plan_templates', function (Blueprint $table): void {
             $table->id();
 
             $table->integer('sort')->nullable()->comment('Sort Order');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Widgets;
 
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
@@ -10,7 +12,7 @@ use Illuminate\Support\Carbon;
 use Webkul\Project\Enums\TaskState;
 use Webkul\Project\Models\Task;
 
-class TaskByStateChart extends ChartWidget
+final class TaskByStateChart extends ChartWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 
@@ -29,7 +31,7 @@ class TaskByStateChart extends ChartWidget
     {
         $datasets = [
             'datasets' => [],
-            'labels'   => [],
+            'labels' => [],
         ];
 
         foreach (TaskState::cases() as $state) {
@@ -40,13 +42,13 @@ class TaskByStateChart extends ChartWidget
             }
 
             if (! empty($this->pageFilters['selectedAssignees'])) {
-                $query->whereHas('users', function ($q) {
+                $query->whereHas('users', function ($q): void {
                     $q->whereIn('users.id', $this->pageFilters['selectedAssignees']);
                 });
             }
 
             if (! empty($this->pageFilters['selectedTags'])) {
-                $query->whereHas('tags', function ($q) {
+                $query->whereHas('tags', function ($q): void {
                     $q->whereIn('projects_task_tag.tag_id', $this->pageFilters['selectedTags']);
                 });
             }
@@ -55,13 +57,13 @@ class TaskByStateChart extends ChartWidget
                 $query->whereIn('parent_id', $this->pageFilters['selectedPartners']);
             }
 
-            $startDate = ! is_null($this->pageFilters['startDate'] ?? null) ?
-                Carbon::parse($this->pageFilters['startDate']) :
-                null;
+            $startDate = is_null($this->pageFilters['startDate'] ?? null) ?
+                null :
+                Carbon::parse($this->pageFilters['startDate']);
 
-            $endDate = ! is_null($this->pageFilters['endDate'] ?? null) ?
-                Carbon::parse($this->pageFilters['endDate']) :
-                now();
+            $endDate = is_null($this->pageFilters['endDate'] ?? null) ?
+                now() :
+                Carbon::parse($this->pageFilters['endDate']);
 
             $datasets['labels'][] = TaskState::options()[$state->value];
 
@@ -76,14 +78,14 @@ class TaskByStateChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'data'            => $datasets['datasets'],
+                    'data' => $datasets['datasets'],
                     'backgroundColor' => array_map(
-                        fn ($state) => match ($colors[$state] ?? 'gray') {
-                            'gray'    => '#a1a1aa',
+                        fn ($state): string => match ($colors[$state] ?? 'gray') {
+                            'gray' => '#a1a1aa',
                             'warning' => '#fbbf24',
                             'success' => '#22c55e',
-                            'danger'  => '#ef4444',
-                            default   => '#cccccc',
+                            'danger' => '#ef4444',
+                            default => '#cccccc',
                         },
                         array_keys(TaskState::options())
                     ),

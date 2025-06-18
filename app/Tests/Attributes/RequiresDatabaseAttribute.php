@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Attributes;
 
 use Attribute;
@@ -38,17 +40,16 @@ use Attribute;
  * ```
  */
 #[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
-class RequiresDatabaseAttribute
+final readonly class RequiresDatabaseAttribute
 {
     /**
      * Constructor.
      *
-     * @param bool $refreshAfterTest Whether to refresh the database after the test
-     * @param bool $useTransactions Whether to use database transactions for test isolation
+     * @param  bool  $refreshAfterTest  Whether to refresh the database after the test
+     * @param  bool  $useTransactions  Whether to use database transactions for test isolation
      */
     public function __construct(
-        public readonly bool $refreshAfterTest = true,
-        public readonly bool $useTransactions = true
-    ) {
-    }
+        public bool $refreshAfterTest = true,
+        public bool $useTransactions = true
+    ) {}
 }

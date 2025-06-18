@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'create' => [
@@ -7,7 +9,7 @@ return [
 
             'notification' => [
                 'title' => 'Delivery created',
-                'body'  => 'The delivery has been created successfully.',
+                'body' => 'The delivery has been created successfully.',
             ],
         ],
     ],

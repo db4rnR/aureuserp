@@ -1,11 +1,13 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Product\Models\ProductAttribute;
-use Webkul\Product\Models\Product;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Product\Models\Attribute;
 use Webkul\Product\Models\AttributeOption;
+use Webkul\Product\Models\Product;
+use Webkul\Product\Models\ProductAttribute;
 use Webkul\Product\Models\ProductAttributeValue;
 use Webkul\Security\Models\User;
 
@@ -13,7 +15,7 @@ use Webkul\Security\Models\User;
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductAttribute model attributes and properties')]
-function product_attribute_model_attributes_and_properties()
+function product_attribute_model_attributes_and_properties(): void
 {
     // Create a test product attribute
     $productAttribute = ProductAttribute::factory()->create([
@@ -24,18 +26,18 @@ function product_attribute_model_attributes_and_properties()
     expect($productAttribute->sort)->toBe(1);
 
     // Test relationships
-    expect($productAttribute->product())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($productAttribute->attribute())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($productAttribute->options())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
-    expect($productAttribute->values())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($productAttribute->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productAttribute->product())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productAttribute->attribute())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productAttribute->options())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($productAttribute->values())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($productAttribute->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductAttribute model relationships with other models')]
-function product_attribute_model_relationships_with_other_models()
+function product_attribute_model_relationships_with_other_models(): void
 {
     // Create related models
     $product = Product::factory()->create(['name' => 'Test Product']);
@@ -88,16 +90,16 @@ function product_attribute_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductAttribute model traits and interfaces')]
-function product_attribute_model_traits_and_interfaces()
+function product_attribute_model_traits_and_interfaces(): void
 {
     // Create a test product attribute
     $productAttribute = ProductAttribute::factory()->create();
 
     // Test that the model uses the expected traits and implements interfaces
-    expect($productAttribute)->toBeInstanceOf(\Spatie\EloquentSortable\Sortable::class);
+    expect($productAttribute)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
 
     // Test sortable configuration
-    $sortable = (new \ReflectionClass($productAttribute))->getProperty('sortable')->getValue($productAttribute);
+    $sortable = new ReflectionClass($productAttribute)->getProperty('sortable')->getValue($productAttribute);
     expect($sortable)->toBeArray();
     expect($sortable)->toHaveKey('order_column_name');
     expect($sortable['order_column_name'])->toBe('sort');
@@ -109,7 +111,7 @@ function product_attribute_model_traits_and_interfaces()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductAttribute model boot method for deleting variants')]
-function product_attribute_model_boot_method_for_deleting_variants()
+function product_attribute_model_boot_method_for_deleting_variants(): void
 {
     // Create a parent product
     $parentProduct = Product::factory()->create([

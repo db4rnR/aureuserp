@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\IncoTermResource\Pages\ListIncoTerms;
 use Webkul\Account\Filament\Resources\IncoTermResource as BaseIncoTermResource;
 use Webkul\Invoice\Filament\Clusters\Configuration;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\IncoTermResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\IncoTermResource\Pages\ListIncoTerms;
 use Webkul\Invoice\Models\Incoterm;
 
-class IncoTermResource extends BaseIncoTermResource
+final class IncoTermResource extends BaseIncoTermResource
 {
     protected static ?string $model = Incoterm::class;
 

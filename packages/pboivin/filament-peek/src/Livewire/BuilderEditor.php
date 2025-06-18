@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Livewire;
 
-use Pboivin\FilamentPeek\Support\Cache;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Contracts\View\View as ViewContract;
@@ -11,12 +12,12 @@ use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Livewire\Component;
 use Pboivin\FilamentPeek\CachedBuilderPreview;
-use Pboivin\FilamentPeek\Support;
+use Pboivin\FilamentPeek\Support\Cache;
 
 /**
  * @property \Filament\Schemas\Schema $form
  */
-class BuilderEditor extends Component implements HasForms
+final class BuilderEditor extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -36,16 +37,16 @@ class BuilderEditor extends Component implements HasForms
 
     public int $refreshCount = 1;
 
-    private bool $refreshRequested = false;
-
-    private ?array $previewData = null;
-
     protected $listeners = [
         'refreshBuilderPreview',
         'resetBuilderEditor',
         'closeBuilderEditor',
         'openBuilderEditor',
     ];
+
+    private bool $refreshRequested = false;
+
+    private ?array $previewData = null;
 
     public function mount(): void
     {

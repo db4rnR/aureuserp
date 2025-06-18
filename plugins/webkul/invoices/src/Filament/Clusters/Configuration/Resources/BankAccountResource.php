@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource\Pages\ListBankAccounts;
 use Webkul\Account\Filament\Resources\BankAccountResource as BaseBankAccountResource;
 use Webkul\Invoice\Filament\Clusters\Configuration;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource\Pages\ListBankAccounts;
 use Webkul\Invoice\Models\BankAccount;
 
-class BankAccountResource extends BaseBankAccountResource
+final class BankAccountResource extends BaseBankAccountResource
 {
     protected static ?string $model = BankAccount::class;
 
@@ -19,7 +20,7 @@ class BankAccountResource extends BaseBankAccountResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListBankAccounts::route('/'),
+            'index' => ListBankAccounts::route('/'),
         ];
     }
 }

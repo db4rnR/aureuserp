@@ -1,22 +1,24 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Description;
-use PHPUnit\Framework\Attributes\CoversClass;
+declare(strict_types=1);
+
 use App\Tests\Attributes\PluginTest;
-use Webkul\Product\Models\Product;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
+use Webkul\Product\Enums\ProductType;
 use Webkul\Product\Models\Category;
-use Webkul\Product\Models\Tag;
+use Webkul\Product\Models\PriceRuleItem;
+use Webkul\Product\Models\Product;
 use Webkul\Product\Models\ProductAttribute;
 use Webkul\Product\Models\ProductAttributeValue;
 use Webkul\Product\Models\ProductCombination;
-use Webkul\Product\Models\PriceRuleItem;
 use Webkul\Product\Models\ProductSupplier;
+use Webkul\Product\Models\Tag;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
-use Webkul\Product\Enums\ProductType;
 
 /**
  * Test Product model attributes and properties
@@ -30,7 +32,7 @@ use Webkul\Product\Enums\ProductType;
 #[PluginTest('Products')]
 #[CoversClass(Product::class)]
 #[Description('Test Product model attributes and properties')]
-function product_model_attributes_and_properties()
+function product_model_attributes_and_properties(): void
 {
     // Create a test product
     $product = Product::factory()->create([
@@ -74,19 +76,19 @@ function product_model_attributes_and_properties()
     expect($product->sort)->toBe(1);
 
     // Test relationships
-    expect($product->parent())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->uom())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->uomPO())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->category())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->tags())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
-    expect($product->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->attributes())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($product->attribute_values())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($product->variants())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($product->combinations())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($product->priceRuleItems())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($product->supplierInformation())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($product->parent())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->uom())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->uomPO())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->category())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->tags())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($product->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->attributes())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($product->attribute_values())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($product->variants())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($product->combinations())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($product->priceRuleItems())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($product->supplierInformation())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
 /**
@@ -102,7 +104,7 @@ function product_model_attributes_and_properties()
 #[PluginTest('Products')]
 #[CoversClass(Product::class)]
 #[Description('Test Product model relationships with other models')]
-function product_model_relationships_with_other_models()
+function product_model_relationships_with_other_models(): void
 {
     // Create related models
     $user = User::factory()->create();
@@ -174,19 +176,19 @@ function product_model_relationships_with_other_models()
 #[PluginTest('Products')]
 #[CoversClass(Product::class)]
 #[Description('Test Product model traits and interfaces')]
-function product_model_traits_and_interfaces()
+function product_model_traits_and_interfaces(): void
 {
     // Create a test product
     $product = Product::factory()->create();
 
     // Test that the model uses the expected traits and implements interfaces
-    expect($product)->toBeInstanceOf(\Webkul\Chatter\Traits\HasChatter::class);
-    expect($product)->toBeInstanceOf(\Webkul\Chatter\Traits\HasLogActivity::class);
-    expect($product)->toBeInstanceOf(\Illuminate\Database\Eloquent\SoftDeletes::class);
-    expect($product)->toBeInstanceOf(\Spatie\EloquentSortable\Sortable::class);
+    expect($product)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
+    expect($product)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
+    expect($product)->toBeInstanceOf(Illuminate\Database\Eloquent\SoftDeletes::class);
+    expect($product)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
 
     // Test log attributes
-    $logAttributes = (new \ReflectionClass($product))->getProperty('logAttributes')->getValue($product);
+    $logAttributes = new ReflectionClass($product)->getProperty('logAttributes')->getValue($product);
     expect($logAttributes)->toBeArray();
     expect($logAttributes)->toContain('type');
     expect($logAttributes)->toContain('name');
@@ -198,7 +200,7 @@ function product_model_traits_and_interfaces()
     expect($logAttributes)->toHaveKey('creator.name');
 
     // Test sortable configuration
-    $sortable = (new \ReflectionClass($product))->getProperty('sortable')->getValue($product);
+    $sortable = new ReflectionClass($product)->getProperty('sortable')->getValue($product);
     expect($sortable)->toBeArray();
     expect($sortable)->toHaveKey('order_column_name');
     expect($sortable['order_column_name'])->toBe('sort');
@@ -218,7 +220,7 @@ function product_model_traits_and_interfaces()
 #[PluginTest('Products')]
 #[CoversClass(Product::class)]
 #[Description('Test Product model casts')]
-function product_model_casts()
+function product_model_casts(): void
 {
     // Create a test product
     $product = Product::factory()->create([

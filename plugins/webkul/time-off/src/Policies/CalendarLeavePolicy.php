@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
-use Webkul\TimeOff\Models\CalendarLeave;
 
-class CalendarLeavePolicy
+final class CalendarLeavePolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class CalendarLeavePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CalendarLeave $calendarLeave): bool
+    public function view(User $user): bool
     {
         return $user->can('view_public::holiday');
     }
@@ -37,7 +38,7 @@ class CalendarLeavePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CalendarLeave $calendarLeave): bool
+    public function update(User $user): bool
     {
         return $user->can('update_public::holiday');
     }
@@ -45,7 +46,7 @@ class CalendarLeavePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CalendarLeave $calendarLeave): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_public::holiday');
     }
@@ -61,7 +62,7 @@ class CalendarLeavePolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, CalendarLeave $calendarLeave): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_public::holiday');
     }
@@ -77,7 +78,7 @@ class CalendarLeavePolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, CalendarLeave $calendarLeave): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_public::holiday');
     }
@@ -93,7 +94,7 @@ class CalendarLeavePolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, CalendarLeave $calendarLeave): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_public::holiday');
     }

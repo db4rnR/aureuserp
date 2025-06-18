@@ -1,18 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Contracts;
 
 interface Commenter
 {
     /**
      * Get the identifier key for the object. Usually the primary key.
-     *
-     * @return int|string|null
      */
-    public function getKey();
+    public function getKey(): int|string|null;
 
-    /**
-     * @return string
-     */
-    public function getMorphClass();
+    public function getMorphClass(): string;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Livewire;
 
 use Filament\Notifications\Notification;
@@ -12,7 +14,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
-class Comment extends Component
+final class Comment extends Component
 {
     use HasMentions;
 
@@ -39,7 +41,7 @@ class Comment extends Component
     }
 
     #[Renderless]
-    public function delete()
+    public function delete(): void
     {
         if (! auth()->user()?->can('delete', $this->comment)) {
             return;
@@ -88,7 +90,7 @@ class Comment extends Component
         $this->dispatch('comment:updated');
     }
 
-    public function updateComment()
+    public function updateComment(): void
     {
         if (! Config::resolveAuthenticatedUser()?->can('update', $this->comment)) {
             return;
@@ -101,7 +103,7 @@ class Comment extends Component
         $this->editing = false;
     }
 
-    public function cancelEditing()
+    public function cancelEditing(): void
     {
         $this->editing = false;
         $this->commentBody = '';

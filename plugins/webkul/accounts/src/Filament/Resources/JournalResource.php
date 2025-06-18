@@ -1,51 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Components\Section;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Schemas\Components\Grid;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\ColorEntry;
-use Webkul\Account\Filament\Resources\JournalResource\Pages\ListJournals;
-use Webkul\Account\Filament\Resources\JournalResource\Pages\CreateJournal;
-use Webkul\Account\Filament\Resources\JournalResource\Pages\ViewJournal;
-use Webkul\Account\Filament\Resources\JournalResource\Pages\EditJournal;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Enums\CommunicationStandard;
 use Webkul\Account\Enums\CommunicationType;
 use Webkul\Account\Enums\JournalType;
-use Webkul\Account\Filament\Resources\JournalResource\Pages;
+use Webkul\Account\Filament\Resources\JournalResource\Pages\CreateJournal;
+use Webkul\Account\Filament\Resources\JournalResource\Pages\EditJournal;
+use Webkul\Account\Filament\Resources\JournalResource\Pages\ListJournals;
+use Webkul\Account\Filament\Resources\JournalResource\Pages\ViewJournal;
 use Webkul\Account\Models\Journal;
 
-class JournalResource extends Resource
+final class JournalResource extends Resource
 {
     protected static ?string $model = Journal::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-book-open';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-book-open';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -66,14 +65,10 @@ class JournalResource extends Resource
                                                         Group::make()
                                                             ->schema([
                                                                 Toggle::make('refund_order')
-                                                                    ->hidden(function (Get $get) {
-                                                                        return ! in_array($get('type'), [JournalType::SALE->value, JournalType::PURCHASE->value]);
-                                                                    })
+                                                                    ->hidden(fn (Get $get): bool => ! in_array($get('type'), [JournalType::SALE->value, JournalType::PURCHASE->value], true))
                                                                     ->label(__('accounts::filament/resources/journal.form.tabs.journal-entries.field-set.accounting-information.fields.dedicated-credit-note-sequence')),
                                                                 Toggle::make('payment_order')
-                                                                    ->hidden(function (Get $get) {
-                                                                        return ! in_array($get('type'), [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value]);
-                                                                    })
+                                                                    ->hidden(fn (Get $get): bool => ! in_array($get('type'), [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value], true))
                                                                     ->label(__('accounts::filament/resources/journal.form.tabs.journal-entries.field-set.accounting-information.fields.dedicated-payment-sequence')),
                                                                 TextInput::make('code')
                                                                     ->label(__('accounts::filament/resources/journal.form.tabs.journal-entries.field-set.accounting-information.fields.sort-code'))
@@ -89,9 +84,7 @@ class JournalResource extends Resource
                                                             ]),
                                                     ]),
                                                 Fieldset::make(__('accounts::filament/resources/journal.form.tabs.journal-entries.field-set.bank-account-number.title'))
-                                                    ->visible(function (Get $get) {
-                                                        return $get('type') === JournalType::BANK->value;
-                                                    })
+                                                    ->visible(fn (Get $get): bool => $get('type') === JournalType::BANK->value)
                                                     ->schema([
                                                         Group::make()
                                                             ->schema([
@@ -104,28 +97,24 @@ class JournalResource extends Resource
                                                     ]),
                                             ]),
                                         Tab::make(__('accounts::filament/resources/journal.form.tabs.incoming-payments.title'))
-                                            ->visible(function (Get $get) {
-                                                return in_array($get('type'), [
-                                                    JournalType::BANK->value,
-                                                    JournalType::CASH->value,
-                                                    JournalType::BANK->value,
-                                                    JournalType::CREDIT_CARD->value,
-                                                ]);
-                                            })
+                                            ->visible(fn (Get $get): bool => in_array($get('type'), [
+                                                JournalType::BANK->value,
+                                                JournalType::CASH->value,
+                                                JournalType::BANK->value,
+                                                JournalType::CREDIT_CARD->value,
+                                            ], true))
                                             ->schema([
                                                 Textarea::make('relation_notes')
                                                     ->label(__('accounts::filament/resources/journal.form.tabs.incoming-payments.fields.relation-notes'))
                                                     ->placeholder(__('accounts::filament/resources/journal.form.tabs.incoming-payments.fields.relation-notes-placeholder')),
                                             ]),
                                         Tab::make(__('accounts::filament/resources/journal.form.tabs.outgoing-payments.title'))
-                                            ->visible(function (Get $get) {
-                                                return in_array($get('type'), [
-                                                    JournalType::BANK->value,
-                                                    JournalType::CASH->value,
-                                                    JournalType::BANK->value,
-                                                    JournalType::CREDIT_CARD->value,
-                                                ]);
-                                            })
+                                            ->visible(fn (Get $get): bool => in_array($get('type'), [
+                                                JournalType::BANK->value,
+                                                JournalType::CASH->value,
+                                                JournalType::BANK->value,
+                                                JournalType::CREDIT_CARD->value,
+                                            ], true))
                                             ->schema([
                                                 Textarea::make('relation_notes')
                                                     ->label('Relation Notes')
@@ -148,7 +137,7 @@ class JournalResource extends Resource
                                                             ]),
                                                     ]),
                                                 Fieldset::make(__('accounts::filament/resources/journal.form.tabs.advanced-settings.fields.payment-communication'))
-                                                    ->visible(fn (Get $get) => $get('type') === JournalType::SALE->value)
+                                                    ->visible(fn (Get $get): bool => $get('type') === JournalType::SALE->value)
                                                     ->schema([
                                                         Select::make('invoice_reference_type')
                                                             ->options(CommunicationType::options())
@@ -256,13 +245,13 @@ class JournalResource extends Resource
                                                     ->schema([
                                                         IconEntry::make('refund_order')
                                                             ->boolean()
-                                                            ->visible(fn ($record) => in_array($record->type, [JournalType::SALE->value, JournalType::PURCHASE->value]))
+                                                            ->visible(fn ($record): bool => in_array($record->type, [JournalType::SALE->value, JournalType::PURCHASE->value], true))
                                                             ->placeholder('-')
                                                             ->label(__('accounts::filament/resources/journal.infolist.tabs.journal-entries.field-set.accounting-information.entries.dedicated-credit-note-sequence')),
                                                         IconEntry::make('payment_order')
                                                             ->boolean()
                                                             ->placeholder('-')
-                                                            ->visible(fn ($record) => in_array($record->type, [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value]))
+                                                            ->visible(fn ($record): bool => in_array($record->type, [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value], true))
                                                             ->label(__('accounts::filament/resources/journal.infolist.tabs.journal-entries.field-set.accounting-information.entries.dedicated-payment-sequence')),
                                                         TextEntry::make('code')
                                                             ->placeholder('-')
@@ -275,7 +264,7 @@ class JournalResource extends Resource
                                                             ->label(__('accounts::filament/resources/journal.infolist.tabs.journal-entries.field-set.accounting-information.entries.color')),
                                                     ])->columns(2),
                                                 Section::make(__('accounts::filament/resources/journal.infolist.tabs.journal-entries.field-set.bank-account.title'))
-                                                    ->visible(fn ($record) => $record->type === JournalType::BANK->value)
+                                                    ->visible(fn ($record): bool => $record->type === JournalType::BANK->value)
                                                     ->schema([
                                                         TextEntry::make('bankAccount.account_number')
                                                             ->placeholder('-')
@@ -283,7 +272,7 @@ class JournalResource extends Resource
                                                     ]),
                                             ]),
                                         Tab::make(__('accounts::filament/resources/journal.infolist.tabs.incoming-payments.title'))
-                                            ->visible(fn ($record) => in_array($record->type, [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value]))
+                                            ->visible(fn ($record): bool => in_array($record->type, [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value], true))
                                             ->schema([
                                                 TextEntry::make('relation_notes')
                                                     ->placeholder('-')
@@ -291,7 +280,7 @@ class JournalResource extends Resource
                                                     ->markdown(),
                                             ]),
                                         Tab::make(__('accounts::filament/resources/journal.infolist.tabs.outgoing-payments.title'))
-                                            ->visible(fn ($record) => in_array($record->type, [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value]))
+                                            ->visible(fn ($record): bool => in_array($record->type, [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value], true))
                                             ->schema([
                                                 TextEntry::make('relation_notes')
                                                     ->placeholder('-')
@@ -312,7 +301,7 @@ class JournalResource extends Resource
                                                             ->label(__('accounts::filament/resources/journal.infolist.tabs.advanced-settings.entries.auto-check-on-post')),
                                                     ]),
                                                 Fieldset::make(__('accounts::filament/resources/journal.infolist.tabs.advanced-settings.payment-communication.title'))
-                                                    ->visible(fn ($record) => $record->type === JournalType::SALE->value)
+                                                    ->visible(fn ($record): bool => $record->type === JournalType::SALE->value)
                                                     ->schema([
                                                         TextEntry::make('invoice_reference_type')
                                                             ->placeholder('-')
@@ -349,10 +338,10 @@ class JournalResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListJournals::route('/'),
+            'index' => ListJournals::route('/'),
             'create' => CreateJournal::route('/create'),
-            'view'   => ViewJournal::route('/{record}'),
-            'edit'   => EditJournal::route('/{record}/edit'),
+            'view' => ViewJournal::route('/{record}'),
+            'edit' => EditJournal::route('/{record}/edit'),
         ];
     }
 }

@@ -1,37 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Forms\Components\ViewField;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\KeyValue;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Awcodes\Curator\Resources\MediaResource\ListMedia;
-use Awcodes\Curator\Resources\MediaResource\CreateMedia;
-use Awcodes\Curator\Resources\MediaResource\EditMedia;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\Layout\View;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Awcodes\Curator\Components\Forms\CuratorEditor;
 use Awcodes\Curator\Components\Forms\Uploader;
 use Awcodes\Curator\Components\Tables\CuratorColumn;
 use Awcodes\Curator\CuratorPlugin;
+use Awcodes\Curator\Resources\MediaResource\CreateMedia;
+use Awcodes\Curator\Resources\MediaResource\EditMedia;
+use Awcodes\Curator\Resources\MediaResource\ListMedia;
 use Exception;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Facades\Filament;
-use Filament\Forms;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\Layout\View;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\HtmlString;
@@ -39,7 +39,7 @@ use Illuminate\Support\Str;
 
 use function Awcodes\Curator\is_media_resizable;
 
-class MediaResource extends Resource
+final class MediaResource extends Resource
 {
     public static function getModel(): string
     {
@@ -48,7 +48,7 @@ class MediaResource extends Resource
 
     public static function isScopedToTenant(): bool
     {
-        return config('curator.is_tenant_aware') ?? static::$isScopedToTenant;
+        return config('curator.is_tenant_aware') ?? self::$isScopedToTenant;
     }
 
     public static function getTenantOwnershipRelationshipName(): string
@@ -68,7 +68,7 @@ class MediaResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return CuratorPlugin::get()->getNavigationLabel() ?? Str::title(static::getPluralModelLabel()) ?? Str::title(static::getModelLabel());
+        return CuratorPlugin::get()->getNavigationLabel() ?? Str::title(self::getPluralModelLabel()) ?? Str::title(self::getModelLabel());
     }
 
     public static function getNavigationIcon(): string
@@ -91,21 +91,10 @@ class MediaResource extends Resource
         return config('curator.resources.cluster');
     }
 
-    protected static function getNavigationBadgeCount(): int
-    {
-        if (Filament::hasTenancy() && Config::get('curator.is_tenant_aware')) {
-            return static::getEloquentQuery()
-                ->where(Config::get('curator.tenant_ownership_relationship_name') . '_id', Filament::getTenant()->id)
-                ->count();
-        }
-
-        return static::getModel()::count();
-    }
-
     public static function getNavigationBadge(): ?string
     {
         return CuratorPlugin::get()->getNavigationCountBadge()
-            ? number_format(static::getNavigationBadgeCount())
+            ? number_format(self::getNavigationBadgeCount())
             : null;
     }
 
@@ -123,10 +112,10 @@ class MediaResource extends Resource
                         Section::make(trans('curator::forms.sections.file'))
                             ->hiddenOn('edit')
                             ->schema([
-                                static::getUploaderField()
+                                self::getUploaderField()
                                     ->required()
                                     ->live()
-                                    ->afterStateUpdated(function (Set $set, Uploader $component, $state) {
+                                    ->afterStateUpdated(function (Set $set, Uploader $component, $state): void {
                                         $name = $component->getSuggestedFileName($state);
                                         $set('name', $name);
                                     })
@@ -145,7 +134,7 @@ class MediaResource extends Resource
                                             ->view('curator::components.forms.preview')
                                             ->hiddenLabel()
                                             ->dehydrated(false)
-                                            ->afterStateHydrated(function ($component, $state, $record) {
+                                            ->afterStateHydrated(function ($component, $state, $record): void {
                                                 $component->state($record);
                                             }),
                                     ]),
@@ -169,7 +158,7 @@ class MediaResource extends Resource
                                 Tab::make(trans('curator::forms.sections.upload_new'))
                                     ->visible(config('curator.tabs.display_upload_new'))
                                     ->schema([
-                                        static::getUploaderField()
+                                        self::getUploaderField()
                                             ->helperText(trans('curator::forms.sections.upload_new_helper')),
                                     ]),
                             ]),
@@ -180,7 +169,7 @@ class MediaResource extends Resource
                                     ->hiddenLabel()
                                     ->dehydrated(false)
                                     ->columnSpan('full')
-                                    ->afterStateHydrated(function ($component, $state, $record) {
+                                    ->afterStateHydrated(function ($component, $state, $record): void {
                                         $component->state($record);
                                     }),
                             ]),
@@ -205,7 +194,7 @@ class MediaResource extends Resource
                     ->schema([
                         Section::make(trans('curator::forms.sections.meta'))
                             ->schema(
-                                static::getAdditionalInformationFormSchema()
+                                self::getAdditionalInformationFormSchema()
                             ),
                     ])->columnSpan([
                         'md' => 'full',
@@ -226,8 +215,8 @@ class MediaResource extends Resource
         return $table
             ->columns(
                 $livewire->layoutView === 'grid'
-                    ? static::getDefaultGridTableColumns()
-                    : static::getDefaultTableColumns(),
+                    ? self::getDefaultGridTableColumns()
+                    : self::getDefaultTableColumns(),
             )
             ->recordActions([
                 EditAction::make(),
@@ -279,11 +268,11 @@ class MediaResource extends Resource
                 ->label(trans('curator::tables.columns.disk'))
                 ->icons([
                     'heroicon-o-server',
-                    'heroicon-o-cloud' => fn ($state): bool => in_array($state, config('curator.cloud_disks')),
+                    'heroicon-o-cloud' => fn ($state): bool => in_array($state, config('curator.cloud_disks'), true),
                 ])
                 ->colors([
                     'gray',
-                    'success' => fn ($state): bool => in_array($state, config('curator.cloud_disks')),
+                    'success' => fn ($state): bool => in_array($state, config('curator.cloud_disks'), true),
                 ]),
             TextColumn::make('directory')
                 ->label(trans('curator::tables.columns.directory'))
@@ -324,7 +313,7 @@ class MediaResource extends Resource
         return [
             TextInput::make('name')
                 ->label(trans('curator::forms.fields.name'))
-                ->required(fn ($operation): bool => $operation == 'edit')
+                ->required(fn ($operation): bool => $operation === 'edit')
                 ->dehydrateStateUsing(function ($component, $state) {
                     $slugged = Str::slug($state);
                     $component->state($slugged);
@@ -333,7 +322,7 @@ class MediaResource extends Resource
                 }),
             TextInput::make('alt')
                 ->label(trans('curator::forms.fields.alt'))
-                ->hint(fn (): HtmlString => new HtmlString('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" class="filament-link text-primary-500" target="_blank">' . trans('curator::forms.fields.alt_hint') . '</a>')),
+                ->hint(fn (): HtmlString => new HtmlString('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" class="filament-link text-primary-500" target="_blank">'.trans('curator::forms.fields.alt_hint').'</a>')),
             TextInput::make('title')
                 ->label(trans('curator::forms.fields.title')),
             Textarea::make('caption')
@@ -360,5 +349,16 @@ class MediaResource extends Resource
             ->preserveFilenames(config('curator.should_preserve_filenames'))
             ->visibility(config('curator.visibility'))
             ->storeFileNamesIn('originalFilename');
+    }
+
+    protected static function getNavigationBadgeCount(): int
+    {
+        if (Filament::hasTenancy() && Config::get('curator.is_tenant_aware')) {
+            return self::getEloquentQuery()
+                ->where(Config::get('curator.tenant_ownership_relationship_name').'_id', Filament::getTenant()->id)
+                ->count();
+        }
+
+        return self::getModel()::count();
     }
 }

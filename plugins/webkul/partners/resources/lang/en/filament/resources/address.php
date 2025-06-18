@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
         'partner' => 'Partner',
-        'name'    => 'Name',
-        'email'   => 'Email',
-        'phone'   => 'Phone',
-        'mobile'  => 'Mobile',
-        'type'    => 'Type',
+        'name' => 'Name',
+        'email' => 'Email',
+        'phone' => 'Phone',
+        'mobile' => 'Mobile',
+        'type' => 'Type',
         'address' => 'Address',
-        'city'    => 'City',
+        'city' => 'City',
         'street1' => 'Street 1',
         'street2' => 'Street 2',
-        'state'   => 'State',
-        'zip'     => 'Zip',
-        'code'    => 'Code',
+        'state' => 'State',
+        'zip' => 'Zip',
+        'code' => 'Code',
         'country' => 'Country',
     ],
 
@@ -25,20 +27,20 @@ return [
 
                 'notification' => [
                     'title' => 'Address created',
-                    'body'  => 'The address has been created successfully.',
+                    'body' => 'The address has been created successfully.',
                 ],
             ],
         ],
 
         'columns' => [
-            'type'    => 'Type',
-            'name'    => 'Contact Name',
+            'type' => 'Type',
+            'name' => 'Contact Name',
             'address' => 'Address',
-            'city'    => 'City',
+            'city' => 'City',
             'street1' => 'Street 1',
             'street2' => 'Street 2',
-            'state'   => 'State',
-            'zip'     => 'Zip',
+            'state' => 'State',
+            'zip' => 'Zip',
             'country' => 'Country',
         ],
 
@@ -46,14 +48,14 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Address updated',
-                    'body'  => 'The address has been updated successfully.',
+                    'body' => 'The address has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Address deleted',
-                    'body'  => 'The address has been deleted successfully.',
+                    'body' => 'The address has been deleted successfully.',
                 ],
             ],
         ],
@@ -62,7 +64,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Addresses deleted',
-                    'body'  => 'The addresses has been deleted successfully.',
+                    'body' => 'The addresses has been deleted successfully.',
                 ],
             ],
         ],

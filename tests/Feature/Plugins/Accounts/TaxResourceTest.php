@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Webkul\Account\Models\Tax;
 use Webkul\Account\Models\TaxGroup;
 use Webkul\Security\Models\User;
@@ -8,7 +10,7 @@ use Webkul\Security\Models\User;
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test tax listing page loads successfully')]
-function tax_listing_page_loads_successfully()
+function tax_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -27,7 +29,7 @@ function tax_listing_page_loads_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test tax creation page loads successfully')]
-function tax_creation_page_loads_successfully()
+function tax_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -46,7 +48,7 @@ function tax_creation_page_loads_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test tax can be created successfully')]
-function tax_can_be_created_successfully()
+function tax_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -81,7 +83,7 @@ function tax_can_be_created_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test tax can be updated successfully')]
-function tax_can_be_updated_successfully()
+function tax_can_be_updated_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -124,7 +126,7 @@ function tax_can_be_updated_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test tax can be added to a tax group')]
-function tax_can_be_added_to_tax_group()
+function tax_can_be_added_to_tax_group(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -164,7 +166,7 @@ function tax_can_be_added_to_tax_group()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test tax can be deleted successfully')]
-function tax_can_be_deleted_successfully()
+function tax_can_be_deleted_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

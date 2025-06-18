@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Refuse Reason',
 
@@ -10,10 +12,10 @@ return [
 
     'form' => [
         'fields' => [
-            'name'             => 'Name',
-            'template'         => [
-                'title'                    => 'Template',
-                'applicant-refuse'         => 'Applicant Refuse',
+            'name' => 'Name',
+            'template' => [
+                'title' => 'Template',
+                'applicant-refuse' => 'Applicant Refuse',
                 'applicant-not-interested' => 'Applicant Not Interested',
             ],
             'name-placeholder' => 'Enter the name of the refuse reason',
@@ -22,17 +24,17 @@ return [
 
     'table' => [
         'columns' => [
-            'id'         => 'ID',
-            'name'       => 'Name',
-            'template'   => 'Template',
+            'id' => 'ID',
+            'name' => 'Name',
+            'template' => 'Template',
             'created-by' => 'Created By',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
 
         'filters' => [
-            'name'       => 'Name',
-            'employee'   => 'Employee',
+            'name' => 'Name',
+            'employee' => 'Employee',
             'created-by' => 'Created By',
             'updated-at' => 'Updated At',
             'created-at' => 'Created At',
@@ -42,14 +44,14 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Refuse reason updated',
-                    'body'  => 'The refuse reason has been updated successfully.',
+                    'body' => 'The refuse reason has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Refuse reason deleted',
-                    'body'  => 'The refuse reason has been deleted successfully.',
+                    'body' => 'The refuse reason has been deleted successfully.',
                 ],
             ],
         ],
@@ -58,7 +60,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Refuse reasons deleted',
-                    'body'  => 'The refuse reasons has been deleted successfully.',
+                    'body' => 'The refuse reasons has been deleted successfully.',
                 ],
             ],
         ],
@@ -67,14 +69,14 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Refuse reason created',
-                    'body'  => 'The refuse reason has been created successfully.',
+                    'body' => 'The refuse reason has been created successfully.',
                 ],
             ],
         ],
     ],
 
     'infolist' => [
-        'name'       => 'Name',
-        'template'   => 'Template',
+        'name' => 'Name',
+        'template' => 'Template',
     ],
 ];

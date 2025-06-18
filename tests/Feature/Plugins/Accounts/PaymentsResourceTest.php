@@ -1,22 +1,24 @@
 <?php
 
-use Webkul\Account\Models\Payment;
-use Webkul\Account\Models\Move;
-use Webkul\Account\Models\Journal;
+declare(strict_types=1);
+
+use Webkul\Account\Enums\JournalType;
 use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Enums\MoveType;
-use Webkul\Account\Enums\JournalType;
 use Webkul\Account\Enums\PaymentState;
-use Webkul\Support\Models\Company;
-use Webkul\Support\Models\Currency;
+use Webkul\Account\Models\Journal;
+use Webkul\Account\Models\Move;
+use Webkul\Account\Models\Payment;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
+use Webkul\Support\Models\Company;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test payments listing page loads successfully')]
-function payments_listing_page_loads_successfully()
+function payments_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -35,7 +37,7 @@ function payments_listing_page_loads_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test payment creation page loads successfully')]
-function payment_creation_page_loads_successfully()
+function payment_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -54,7 +56,7 @@ function payment_creation_page_loads_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test payment can be created successfully')]
-function payment_can_be_created_successfully()
+function payment_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -87,7 +89,7 @@ function payment_can_be_created_successfully()
         'amount' => 1000,
         'payment_type' => 'inbound',
         'partner_type' => 'customer',
-        'communication' => 'Payment for invoice ' . $invoice->name,
+        'communication' => 'Payment for invoice '.$invoice->name,
         'invoice_ids' => [$invoice->id],
     ];
 
@@ -111,7 +113,7 @@ function payment_can_be_created_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test payment can be viewed successfully')]
-function payment_can_be_viewed_successfully()
+function payment_can_be_viewed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -137,7 +139,7 @@ function payment_can_be_viewed_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test payment can be cancelled successfully')]
-function payment_can_be_cancelled_successfully()
+function payment_can_be_cancelled_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

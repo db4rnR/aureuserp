@@ -1,45 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentFullCalendar\Data;
 
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 
-class EventData implements Arrayable
+final class EventData implements Arrayable
 {
-    protected int|string $id;
+    private int|string $id;
 
-    protected int|string|null $groupId = null;
+    private int|string|null $groupId = null;
 
-    protected int|string|null $resourceId = null;
+    private int|string|null $resourceId = null;
 
-    protected ?array $resourceIds = null;
+    private ?array $resourceIds = null;
 
-    protected bool $allDay = false;
+    private bool $allDay = false;
 
-    protected DateTimeInterface|string $start;
+    private DateTimeInterface|string $start;
 
-    protected DateTimeInterface|string|null $end = null;
+    private DateTimeInterface|string|null $end = null;
 
-    protected string $title;
+    private string $title;
 
-    protected ?string $url = null;
+    private ?string $url = null;
 
-    protected bool $shouldOpenUrlInNewTab = false;
+    private bool $shouldOpenUrlInNewTab = false;
 
-    protected ?string $backgroundColor = null;
+    private ?string $backgroundColor = null;
 
-    protected ?string $borderColor = null;
+    private ?string $borderColor = null;
 
-    protected ?string $textColor = null;
+    private ?string $textColor = null;
 
-    protected ?array $extendedProps = null;
+    private ?array $extendedProps = null;
 
-    protected array $extraProperties = [];
+    private array $extraProperties = [];
 
     public static function make(): static
     {
-        return new static();
+        return new self();
     }
 
     /**

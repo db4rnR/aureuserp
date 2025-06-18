@@ -6,7 +6,7 @@ namespace Dotswan\FilamentLaravelPulse\Widgets;
 
 use Filament\Widgets\Widget;
 
-class PulseSlowJobs extends Widget
+final class PulseSlowJobs extends Widget
 {
     protected string $view = 'filament-laravel-pulse::widgets.pulse-slow-jobs';
 

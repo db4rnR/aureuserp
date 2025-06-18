@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'entry'       => 'Journal Entry',
+    'entry' => 'Journal Entry',
     'out-invoice' => 'Customer Invoice',
-    'out-refund'  => 'Customer Credit Note',
-    'in-invoice'  => 'Vendor Bill',
-    'in-refund'   => 'Vendor Credit Note',
+    'out-refund' => 'Customer Credit Note',
+    'in-invoice' => 'Vendor Bill',
+    'in-refund' => 'Vendor Credit Note',
     'out-receipt' => 'Sales Receipt',
-    'in-receipt'  => 'Purchase Receipt',
+    'in-receipt' => 'Purchase Receipt',
 ];

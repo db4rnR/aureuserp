@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\TaxGroupResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Account\Filament\Resources\TaxGroupResource;
 
-class CreateTaxGroup extends CreateRecord
+final class CreateTaxGroup extends CreateRecord
 {
     protected static string $resource = TaxGroupResource::class;
 

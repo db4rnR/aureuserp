@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\PHPStan\Rules;
 
+use App\Tests\Attributes\PluginTest;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use App\Tests\Attributes\PluginTest;
 
 /**
  * PHPStan rule to enforce the presence of required PHP attributes in test classes.
@@ -18,7 +20,7 @@ use App\Tests\Attributes\PluginTest;
  * - #[CoversClass] - To indicate which class is being tested
  * - #[PluginTest] - To indicate which plugin is being tested
  */
-class TestClassAttributesRule implements Rule
+final class TestClassAttributesRule implements Rule
 {
     public function getNodeType(): string
     {
@@ -28,12 +30,12 @@ class TestClassAttributesRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         // Only apply this rule to test files
-        if (!str_contains($scope->getFile(), '/tests/')) {
+        if (! str_contains($scope->getFile(), '/tests/')) {
             return [];
         }
 
         // Only apply this rule to test functions (Pest style tests)
-        if (!str_starts_with($node->name->name, 'test_')) {
+        if (! str_starts_with((string) $node->name->name, 'test_')) {
             return [];
         }
 
@@ -57,19 +59,19 @@ class TestClassAttributesRule implements Rule
         }
 
         // Add errors for missing attributes
-        if (!$hasGroup) {
+        if (! $hasGroup) {
             $errors[] = RuleErrorBuilder::message(
                 'Test function should have a #[Group] attribute to categorize the test.'
             )->build();
         }
 
-        if (!$hasCoversClass) {
+        if (! $hasCoversClass) {
             $errors[] = RuleErrorBuilder::message(
                 'Test function should have a #[CoversClass] attribute to indicate which class is being tested.'
             )->build();
         }
 
-        if (!$hasPluginTest) {
+        if (! $hasPluginTest) {
             $errors[] = RuleErrorBuilder::message(
                 'Test function should have a #[PluginTest] attribute to indicate which plugin is being tested.'
             )->build();

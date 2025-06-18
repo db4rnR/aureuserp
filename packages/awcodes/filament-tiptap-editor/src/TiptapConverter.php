@@ -1,35 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor;
 
-use FilamentTiptapEditor\Extensions\Extensions\TextAlign;
 use FilamentTiptapEditor\Extensions\Extensions\ClassExtension;
+use FilamentTiptapEditor\Extensions\Extensions\Color;
 use FilamentTiptapEditor\Extensions\Extensions\IdExtension;
 use FilamentTiptapEditor\Extensions\Extensions\StyleExtension;
-use FilamentTiptapEditor\Extensions\Extensions\Color;
-use FilamentTiptapEditor\Extensions\Nodes\ListItem;
-use FilamentTiptapEditor\Extensions\Nodes\Lead;
-use FilamentTiptapEditor\Extensions\Nodes\Image;
-use FilamentTiptapEditor\Extensions\Nodes\CheckedList;
-use FilamentTiptapEditor\Extensions\Nodes\Details;
-use FilamentTiptapEditor\Extensions\Nodes\DetailsSummary;
-use FilamentTiptapEditor\Extensions\Nodes\DetailsContent;
-use FilamentTiptapEditor\Extensions\Nodes\Grid;
-use FilamentTiptapEditor\Extensions\Nodes\GridColumn;
-use FilamentTiptapEditor\Extensions\Nodes\GridBuilder;
-use FilamentTiptapEditor\Extensions\Nodes\GridBuilderColumn;
-use FilamentTiptapEditor\Extensions\Nodes\MergeTag;
-use FilamentTiptapEditor\Extensions\Nodes\Vimeo;
-use FilamentTiptapEditor\Extensions\Nodes\YouTube;
-use FilamentTiptapEditor\Extensions\Nodes\Video;
-use FilamentTiptapEditor\Extensions\Nodes\TiptapBlock;
-use FilamentTiptapEditor\Extensions\Nodes\Hurdle;
-use FilamentTiptapEditor\Extensions\Nodes\Mention;
+use FilamentTiptapEditor\Extensions\Extensions\TextAlign;
 use FilamentTiptapEditor\Extensions\Marks\Link;
 use FilamentTiptapEditor\Extensions\Marks\Small;
-use FilamentTiptapEditor\Extensions\Extensions;
-use FilamentTiptapEditor\Extensions\Marks;
-use FilamentTiptapEditor\Extensions\Nodes;
+use FilamentTiptapEditor\Extensions\Nodes\CheckedList;
+use FilamentTiptapEditor\Extensions\Nodes\Details;
+use FilamentTiptapEditor\Extensions\Nodes\DetailsContent;
+use FilamentTiptapEditor\Extensions\Nodes\DetailsSummary;
+use FilamentTiptapEditor\Extensions\Nodes\Grid;
+use FilamentTiptapEditor\Extensions\Nodes\GridBuilder;
+use FilamentTiptapEditor\Extensions\Nodes\GridBuilderColumn;
+use FilamentTiptapEditor\Extensions\Nodes\GridColumn;
+use FilamentTiptapEditor\Extensions\Nodes\Hurdle;
+use FilamentTiptapEditor\Extensions\Nodes\Image;
+use FilamentTiptapEditor\Extensions\Nodes\Lead;
+use FilamentTiptapEditor\Extensions\Nodes\ListItem;
+use FilamentTiptapEditor\Extensions\Nodes\Mention;
+use FilamentTiptapEditor\Extensions\Nodes\MergeTag;
+use FilamentTiptapEditor\Extensions\Nodes\TiptapBlock;
+use FilamentTiptapEditor\Extensions\Nodes\Video;
+use FilamentTiptapEditor\Extensions\Nodes\Vimeo;
+use FilamentTiptapEditor\Extensions\Nodes\YouTube;
 use Tiptap\Editor;
 use Tiptap\Extensions\StarterKit;
 use Tiptap\Marks\Highlight;
@@ -43,15 +42,15 @@ use Tiptap\Nodes\TableCell;
 use Tiptap\Nodes\TableHeader;
 use Tiptap\Nodes\TableRow;
 
-class TiptapConverter
+final class TiptapConverter
 {
-    protected Editor $editor;
+    private Editor $editor;
 
-    protected ?array $blocks = null;
+    private ?array $blocks = null;
 
-    protected bool $tableOfContents = false;
+    private bool $tableOfContents = false;
 
-    protected array $mergeTagsMap = [];
+    private array $mergeTagsMap = [];
 
     public function getEditor(): Editor
     {
@@ -131,7 +130,7 @@ class TiptapConverter
         return $this;
     }
 
-    public function asHTML(string | array | null $content, bool $toc = false, int $maxDepth = 3): string
+    public function asHTML(string|array|null $content, bool $toc = false, int $maxDepth = 3): string
     {
         if (! $content) {
             return '';
@@ -153,7 +152,7 @@ class TiptapConverter
         return str_replace('</code></pre></code></pre>', '</code></pre>', $editor->getHTML());
     }
 
-    public function asJSON(string | array | null $content, bool $decoded = false, bool $toc = false, int $maxDepth = 3): string | array
+    public function asJSON(string|array|null $content, bool $decoded = false, bool $toc = false, int $maxDepth = 3): string|array
     {
         if (! $content) {
             return '';
@@ -172,7 +171,7 @@ class TiptapConverter
         return $decoded ? json_decode($editor->getJSON(), true) : $editor->getJSON();
     }
 
-    public function asText(string | array | null $content): string
+    public function asText(string|array|null $content): string
     {
         if (! $content) {
             return '';
@@ -189,7 +188,7 @@ class TiptapConverter
         return $editor->getText();
     }
 
-    public function asTOC(string | array | null $content, int $maxDepth = 3, bool $array = false): string | array
+    public function asTOC(string|array|null $content, int $maxDepth = 3, bool $array = false): string|array
     {
         if (! $content) {
             return '';
@@ -212,7 +211,7 @@ class TiptapConverter
 
     public function parseHeadings(Editor $editor, int $maxDepth = 3): Editor
     {
-        $editor->descendants(function (&$node) use ($maxDepth) {
+        $editor->descendants(function (&$node) use ($maxDepth): void {
             if ($node->type !== 'heading') {
                 return;
             }
@@ -234,7 +233,7 @@ class TiptapConverter
                     [
                         'type' => 'link',
                         'attrs' => [
-                            'href' => '#' . $node->attrs->id,
+                            'href' => '#'.$node->attrs->id,
                         ],
                     ],
                 ],
@@ -275,7 +274,7 @@ class TiptapConverter
 
     public function parseMergeTags(Editor $editor): Editor
     {
-        $editor->descendants(function (&$node) {
+        $editor->descendants(function (&$node): void {
             if ($node->type !== 'mergeTag') {
                 return;
             }
@@ -295,7 +294,7 @@ class TiptapConverter
 
     public function parseMentionItems(Editor $editor): Editor
     {
-        $editor->descendants(function (&$node) {
+        $editor->descendants(function (&$node): void {
             if ($node->type !== 'mention') {
                 return;
             }
@@ -353,7 +352,7 @@ class TiptapConverter
             $prev <= $item['level'] ?: $result .= str_repeat('</ul>', $prev - $item['level']);
             $prev >= $item['level'] ?: $result .= '<ul>';
 
-            $result .= '<li><a href="#' . $item['id'] . '">' . $item['text'] . '</a></li>';
+            $result .= '<li><a href="#'.$item['id'].'">'.$item['text'].'</a></li>';
 
             $prev = $item['level'];
         }

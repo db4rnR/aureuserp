@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -14,7 +16,7 @@ enum OrderDisplayType: string implements HasLabel
     {
         return match ($this) {
             self::SECTION => __('sales::enums/order-display-type.section'),
-            self::NOTE    => __('sales::enums/order-display-type.note'),
+            self::NOTE => __('sales::enums/order-display-type.note'),
         };
     }
 
@@ -22,7 +24,7 @@ enum OrderDisplayType: string implements HasLabel
     {
         return [
             self::SECTION->value => __('sales::enums/order-display-type.section'),
-            self::NOTE->value    => __('sales::enums/order-display-type.note'),
+            self::NOTE->value => __('sales::enums/order-display-type.note'),
         ];
     }
 }

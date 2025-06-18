@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Inventory\Database\Factories\ProductQuantityRelocationFactory;
 use Webkul\Security\Models\User;
 
-class ProductQuantityRelocation extends Model
+final class ProductQuantityRelocation extends Model
 {
     use HasFactory;
 

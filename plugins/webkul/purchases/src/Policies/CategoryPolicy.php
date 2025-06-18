@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Purchase\Models\Category;
 use Webkul\Security\Models\User;
 
-class CategoryPolicy
+final class CategoryPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Category $category): bool
+    public function view(User $user): bool
     {
         return $user->can('view_product::category');
     }
@@ -37,7 +38,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Category $category): bool
+    public function update(User $user): bool
     {
         return $user->can('update_product::category');
     }
@@ -45,7 +46,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Category $category): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_product::category');
     }
@@ -61,7 +62,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Category $category): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_product::category');
     }
@@ -77,7 +78,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Category $category): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_product::category');
     }
@@ -93,7 +94,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Category $category): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_product::category');
     }

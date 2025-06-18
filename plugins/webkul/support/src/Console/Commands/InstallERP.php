@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Console\Commands;
 
 use BezhanSalleh\FilamentShield\Support\Utils;
@@ -15,7 +17,7 @@ use Webkul\Support\Models\Company;
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\text;
 
-class InstallERP extends Command
+final class InstallERP extends Command
 {
     /**
      * The name and signature of the console command.
@@ -34,7 +36,7 @@ class InstallERP extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('🚀 Starting ERP System Installation...');
 
@@ -56,7 +58,7 @@ class InstallERP extends Command
     /**
      * Run database migrations.
      */
-    protected function runMigrations(): void
+    private function runMigrations(): void
     {
         $this->info('⚙️ Running database migrations...');
 
@@ -68,7 +70,7 @@ class InstallERP extends Command
     /**
      * Run database seeders.
      */
-    protected function runSeeder()
+    private function runSeeder(): void
     {
         $this->info('⚙️ Running database seeders...');
 
@@ -80,7 +82,7 @@ class InstallERP extends Command
     /**
      * Generate roles and permissions using Filament Shield.
      */
-    protected function generateRolesAndPermissions(): void
+    private function generateRolesAndPermissions(): void
     {
         $this->info('🛡 Generating roles and permissions...');
 
@@ -97,7 +99,7 @@ class InstallERP extends Command
     /**
      * Create the initial Admin user with the Super Admin role.
      */
-    protected function createAdminUser(): void
+    private function createAdminUser(): void
     {
         $this->info('👤 Creating an Admin user...');
 
@@ -106,7 +108,7 @@ class InstallERP extends Command
         $userModel = app(config('filament-shield.auth_provider_model.fqcn'));
 
         $adminData = [
-            'name'  => text(
+            'name' => text(
                 'Name',
                 default: 'Example',
                 required: true
@@ -115,17 +117,17 @@ class InstallERP extends Command
                 'Email address',
                 default: 'admin@example.com',
                 required: true,
-                validate: fn ($email) => $this->validateAdminEmail($email, $userModel)
+                validate: fn ($email): ?string => $this->validateAdminEmail($email, $userModel)
             ),
             'password' => Hash::make(
                 password(
                     'Password',
                     required: true,
-                    validate: fn ($value) => $this->validateAdminPassword($value)
+                    validate: fn ($value): ?string => $this->validateAdminPassword($value)
                 )
             ),
             'resource_permission' => 'global',
-            'default_company_id'  => $defaultCompany->id,
+            'default_company_id' => $defaultCompany->id,
         ];
 
         $adminUser = $userModel::updateOrCreate(['email' => $adminData['email']], $adminData);
@@ -144,7 +146,7 @@ class InstallERP extends Command
     /**
      * Retrieve the Super Admin role name from the configuration.
      */
-    protected function getAdminRoleName(): string
+    private function getAdminRoleName(): string
     {
         return Utils::getPanelUserRoleName();
     }
@@ -152,7 +154,7 @@ class InstallERP extends Command
     /**
      * Validate the provided admin email.
      */
-    protected function validateAdminEmail(string $email, Model $userModel): ?string
+    private function validateAdminEmail(string $email, Model $userModel): ?string
     {
         if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return 'The email address must be valid.';
@@ -168,12 +170,12 @@ class InstallERP extends Command
     /**
      * Validate the provided admin password.
      */
-    protected function validateAdminPassword(string $password): ?string
+    private function validateAdminPassword(string $password): ?string
     {
-        return strlen($password) >= 8 ? null : 'The password must be at least 8 characters long.';
+        return mb_strlen($password) >= 8 ? null : 'The password must be at least 8 characters long.';
     }
 
-    protected function askToStarGithubRepository(): void
+    private function askToStarGithubRepository(): void
     {
         if (! $this->confirm('Would you like to star our repo on GitHub?')) {
             return;
@@ -181,20 +183,20 @@ class InstallERP extends Command
 
         $repoUrl = 'https://github.com/aureuserp/aureuserp';
 
-        if (PHP_OS_FAMILY == 'Darwin') {
+        if (PHP_OS_FAMILY === 'Darwin') {
             exec("open {$repoUrl}");
         }
 
-        if (PHP_OS_FAMILY == 'Windows') {
+        if (PHP_OS_FAMILY === 'Windows') {
             exec("start {$repoUrl}");
         }
 
-        if (PHP_OS_FAMILY == 'Linux') {
+        if (PHP_OS_FAMILY === 'Linux') {
             exec("xdg-open {$repoUrl}");
         }
     }
 
-    private function storageLink()
+    private function storageLink(): void
     {
         if (file_exists(public_path('storage'))) {
             return;

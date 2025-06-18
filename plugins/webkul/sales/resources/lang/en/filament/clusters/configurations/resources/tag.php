@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Tag',
 
@@ -10,7 +12,7 @@ return [
 
     'form' => [
         'fields' => [
-            'name'  => 'Name',
+            'name' => 'Name',
             'color' => 'Color',
         ],
     ],
@@ -18,21 +20,21 @@ return [
     'table' => [
         'columns' => [
             'created-by' => 'Created by',
-            'name'       => 'Name',
-            'color'      => 'Color',
+            'name' => 'Name',
+            'color' => 'Color',
         ],
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Product Tag updated',
-                    'body'  => 'The product Tag has been updated successfully.',
+                    'body' => 'The product Tag has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Product Tag deleted',
-                    'body'  => 'The product Tag has been deleted successfully.',
+                    'body' => 'The product Tag has been deleted successfully.',
                 ],
             ],
         ],
@@ -40,7 +42,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Product Tag deleted',
-                    'body'  => 'The product Tag has been deleted successfully.',
+                    'body' => 'The product Tag has been deleted successfully.',
                 ],
             ],
         ],
@@ -48,7 +50,7 @@ return [
 
     'infolist' => [
         'entries' => [
-            'name'  => 'Name',
+            'name' => 'Name',
             'color' => 'Color',
         ],
     ],

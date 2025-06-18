@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -7,7 +9,7 @@ use Webkul\Account\Filament\Resources\PaymentsResource\Pages\ListPayments as Bas
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 
-class ListPayments extends BaseListPayments
+final class ListPayments extends BaseListPayments
 {
     protected static string $resource = PaymentsResource::class;
 

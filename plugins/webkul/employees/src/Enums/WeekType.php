@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Enums;
 
 enum WeekType: string
@@ -13,9 +15,9 @@ enum WeekType: string
     public static function options(): array
     {
         return [
-            self::All->value  => __('employees::enums/week-type.all'),
+            self::All->value => __('employees::enums/week-type.all'),
             self::Even->value => __('employees::enums/week-type.even'),
-            self::Odd->value  => __('employees::enums/week-type.odd'),
+            self::Odd->value => __('employees::enums/week-type.odd'),
         ];
     }
 }

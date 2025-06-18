@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
+use BackedEnum;
 use Filament\Actions\CreateAction;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -16,13 +17,13 @@ use Webkul\Product\Models\ProductSupplier;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource;
 
-class ManageVendors extends ManageRelatedRecords
+final class ManageVendors extends ManageRelatedRecords
 {
     protected static string $resource = ProductResource::class;
 
     protected static string $relationship = 'supplierInformation';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     public static function getNavigationLabel(): string
     {
@@ -76,7 +77,7 @@ class ManageVendors extends ManageRelatedRecords
 
                         return $data;
                     })
-                    ->action(function (array $data) {
+                    ->action(function (array $data): void {
                         if ($this->getOwnerRecord()->is_configurable) {
                             ProductSupplier::create($data);
                         } else {

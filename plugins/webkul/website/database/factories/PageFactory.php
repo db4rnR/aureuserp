@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -8,7 +10,7 @@ use Webkul\Website\Models\Page;
 /**
  * @extends Factory<Page>
  */
-class PageFactory extends Factory
+final class PageFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

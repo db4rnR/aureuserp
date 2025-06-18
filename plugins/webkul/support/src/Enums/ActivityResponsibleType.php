@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Enums;
 
 enum ActivityResponsibleType: string
@@ -21,10 +23,10 @@ enum ActivityResponsibleType: string
     {
         return [
             self::ON_DEMAND->value => __('support::enums/activity-responsible-type.on-demand'),
-            self::OTHER->value     => __('support::enums/activity-responsible-type.other'),
-            self::COACH->value     => __('support::enums/activity-responsible-type.coach'),
-            self::MANAGER->value   => __('support::enums/activity-responsible-type.manager'),
-            self::EMPLOYEE->value  => __('support::enums/activity-responsible-type.employee'),
+            self::OTHER->value => __('support::enums/activity-responsible-type.other'),
+            self::COACH->value => __('support::enums/activity-responsible-type.coach'),
+            self::MANAGER->value => __('support::enums/activity-responsible-type.manager'),
+            self::EMPLOYEE->value => __('support::enums/activity-responsible-type.employee'),
         ];
     }
 }

@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Clusters;
 
-use Filament\Panel;
+use BackedEnum;
 use Filament\Clusters\Cluster;
+use Filament\Panel;
 
-class Configurations extends Cluster
+final class Configurations extends Cluster
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
 
     protected static ?int $navigationSort = 4;
 

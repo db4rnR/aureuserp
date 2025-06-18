@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'print' => [
@@ -10,12 +12,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Order Deleted',
-                    'body'  => 'The order has been deleted successfully.',
+                    'body' => 'The order has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Order could not be deleted',
-                    'body'  => 'The order cannot be deleted because it is currently in use.',
+                    'body' => 'The order cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

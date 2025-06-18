@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-class Hurdle extends Node
+final class Hurdle extends Node
 {
     public static $name = 'hurdle';
 

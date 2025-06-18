@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Feature;
 
 use Livewire\Livewire;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\ListPages;
 use Pboivin\FilamentPeek\Tests\Models\Page;
 
-it('can open preview modal for a list item', function () {
+it('can open preview modal for a list item', function (): void {
     $page = Page::factory()->create(['title' => 'Test Page']);
 
     Livewire::test(ListPages::class)
@@ -15,7 +17,7 @@ it('can open preview modal for a list item', function () {
         ->assertDispatched('open-preview-modal');
 });
 
-it('can set initial preview modal data', function () {
+it('can set initial preview modal data', function (): void {
     $page = Page::factory()->create(['title' => 'Test Page']);
 
     $livewire = Livewire::test(ListPages::class);

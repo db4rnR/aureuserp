@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Actions;
 
 use Exception;
@@ -10,13 +12,8 @@ use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Facades\SaleOrder;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource;
 
-class ConfirmAction extends Action
+final class ConfirmAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'orders.sales.confirm';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -24,8 +21,8 @@ class ConfirmAction extends Action
         $this
             ->color('primary')
             ->label(__('sales::filament/clusters/orders/resources/quotation/actions/confirm.title'))
-            ->hidden(fn ($record) => $record->state != OrderState::DRAFT)
-            ->action(function ($record, $livewire) {
+            ->hidden(fn ($record): bool => $record->state !== OrderState::DRAFT)
+            ->action(function ($record, $livewire): void {
                 try {
                     $record = SaleOrder::confirmSaleOrder($record);
                 } catch (Exception $e) {
@@ -48,5 +45,10 @@ class ConfirmAction extends Action
                     ->body(__('sales::filament/clusters/orders/resources/quotation/actions/confirm.notification.confirmed.body'))
                     ->send();
             });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'orders.sales.confirm';
     }
 }

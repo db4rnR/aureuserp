@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages;
 
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Forms\Components\TextInput;
-use Webkul\Inventory\Enums\ProductTracking;
-use Webkul\Inventory\Enums\LocationType;
-use Filament\Actions;
-use Filament\Forms;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\LocationType;
+use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource;
 use Webkul\Inventory\Models\Location;
 use Webkul\Inventory\Models\Product;
@@ -23,7 +22,7 @@ use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
 use Webkul\Product\Filament\Resources\ProductResource\Pages\EditProduct as BaseEditProduct;
 
-class EditProduct extends BaseEditProduct
+final class EditProduct extends BaseEditProduct
 {
     protected static string $resource = ProductResource::class;
 
@@ -40,7 +39,7 @@ class EditProduct extends BaseEditProduct
                         ->options($record->variants->pluck('name', 'id'))
                         ->searchable()
                         ->live()
-                        ->afterStateUpdated(function (Get $get, Set $set) {
+                        ->afterStateUpdated(function (Get $get, Set $set): void {
                             $product = Product::find($get('product_id'));
 
                             $set('quantity', $product?->on_hand_quantity ?? 0);
@@ -52,7 +51,7 @@ class EditProduct extends BaseEditProduct
                         ->maxValue(99999999999)
                         ->required()
                         ->live()
-                        ->default(fn () => ! $record->is_configurable ? $record->on_hand_quantity : 0),
+                        ->default(fn () => $record->is_configurable ? 0 : $record->on_hand_quantity),
                 ])
                 ->modalSubmitActionLabel(__('inventories::filament/clusters/products/resources/product/pages/edit-product.header-actions.update-quantity.modal-submit-action-label'))
                 ->visible($this->getRecord()->is_storable)
@@ -67,7 +66,7 @@ class EditProduct extends BaseEditProduct
                         || $warehouseSettings->enable_locations
                         || (
                             $traceabilitySettings->enable_lots_serial_numbers
-                            && $record->tracking != ProductTracking::QTY
+                            && $record->tracking !== ProductTracking::QTY
                         )
                     ) {
                         return redirect()->to(ProductResource::getUrl('quantities', ['record' => $record]));
@@ -80,7 +79,7 @@ class EditProduct extends BaseEditProduct
 
                     $previousQuantity = $record->on_hand_quantity;
 
-                    if ($previousQuantity == $data['quantity']) {
+                    if ($previousQuantity === $data['quantity']) {
                         return;
                     }
 
@@ -110,15 +109,15 @@ class EditProduct extends BaseEditProduct
                         $productQuantity->update(['quantity' => $data['quantity']]);
                     } else {
                         $productQuantity = ProductQuantity::create([
-                            'product_id'        => $record->id,
-                            'company_id'        => $record->company_id,
-                            'location_id'       => $data['location_id'] ?? $warehouse->lot_stock_location_id,
-                            'package_id'        => $data['package_id'] ?? null,
-                            'lot_id'            => $data['lot_id'] ?? null,
-                            'quantity'          => $data['quantity'],
+                            'product_id' => $record->id,
+                            'company_id' => $record->company_id,
+                            'location_id' => $data['location_id'] ?? $warehouse->lot_stock_location_id,
+                            'package_id' => $data['package_id'] ?? null,
+                            'lot_id' => $data['lot_id'] ?? null,
+                            'quantity' => $data['quantity'],
                             'reserved_quantity' => 0,
-                            'incoming_at'       => now(),
-                            'creator_id'        => Auth::id(),
+                            'incoming_at' => now(),
+                            'creator_id' => Auth::id(),
                         ]);
                     }
 

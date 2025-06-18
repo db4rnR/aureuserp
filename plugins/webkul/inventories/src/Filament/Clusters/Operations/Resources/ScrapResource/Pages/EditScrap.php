@@ -1,23 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\ScrapResource\Pages;
 
 use Filament\Actions\Action;
-use Webkul\Inventory\Enums\ScrapState;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\ScrapState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ScrapResource;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource;
 use Webkul\Inventory\Models\ProductQuantity;
 use Webkul\Inventory\Models\Scrap;
 
-class EditScrap extends EditRecord
+final class EditScrap extends EditRecord
 {
     protected static string $resource = ScrapResource::class;
 
@@ -38,11 +38,11 @@ class EditScrap extends EditRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             Action::make('validate')
                 ->label(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.validate.label'))
                 ->color('gray')
-                ->action(function (Scrap $record) {
+                ->action(function (Scrap $record): void {
                     $locationQuantity = ProductQuantity::where('location_id', $record->source_location_id)
                         ->where('product_id', $record->product_id)
                         ->where('package_id', $record->package_id ?? null)
@@ -70,25 +70,25 @@ class EditScrap extends EditRecord
 
                     if ($destinationQuantity) {
                         $destinationQuantity->update([
-                            'quantity'                => $destinationQuantity->quantity + $record->qty,
-                            'reserved_quantity'       => $destinationQuantity->reserved_quantity + $record->qty,
+                            'quantity' => $destinationQuantity->quantity + $record->qty,
+                            'reserved_quantity' => $destinationQuantity->reserved_quantity + $record->qty,
                             'inventory_diff_quantity' => $destinationQuantity->inventory_diff_quantity - $record->qty,
                         ]);
                     } else {
                         ProductQuantity::create([
-                            'product_id'              => $record->product_id,
-                            'location_id'             => $record->destination_location_id,
-                            'quantity'                => $record->qty,
-                            'reserved_quantity'       => $record->qty,
+                            'product_id' => $record->product_id,
+                            'location_id' => $record->destination_location_id,
+                            'quantity' => $record->qty,
+                            'reserved_quantity' => $record->qty,
                             'inventory_diff_quantity' => -$record->qty,
-                            'incoming_at'             => now(),
-                            'creator_id'              => Auth::id(),
-                            'company_id'              => $record->destinationLocation->company_id,
+                            'incoming_at' => now(),
+                            'creator_id' => Auth::id(),
+                            'company_id' => $record->destinationLocation->company_id,
                         ]);
                     }
 
                     $record->update([
-                        'state'     => ScrapState::DONE,
+                        'state' => ScrapState::DONE,
                         'closed_at' => now(),
                     ]);
 
@@ -98,15 +98,15 @@ class EditScrap extends EditRecord
                         'scrap_id' => $record->id,
                     ]);
                 })
-                ->hidden(fn () => $this->getRecord()->state == ScrapState::DONE),
+                ->hidden(fn (): bool => $this->getRecord()->state === ScrapState::DONE),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == ScrapState::DONE)
-                ->action(function (DeleteAction $action, Scrap $record) {
+                ->hidden(fn (): bool => $this->getRecord()->state === ScrapState::DONE)
+                ->action(function (DeleteAction $action, Scrap $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.delete.notification.error.title'))

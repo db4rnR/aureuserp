@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\InvoiceResource\Actions;
 
 use Filament\Actions\Action;
@@ -8,13 +10,8 @@ use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Models\Move;
 
-class ResetToDraftAction extends Action
+final class ResetToDraftAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'customers.invoice.reset-to-draft';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,10 +27,12 @@ class ResetToDraftAction extends Action
 
                 $livewire->refreshFormData(['state', 'parent_state']);
             })
-            ->visible(function (Move $record) {
-                return
-                    $record->state == MoveState::CANCEL
-                    || $record->state == MoveState::POSTED;
-            });
+            ->visible(fn (Move $record): bool => $record->state === MoveState::CANCEL
+            || $record->state === MoveState::POSTED);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'customers.invoice.reset-to-draft';
     }
 }

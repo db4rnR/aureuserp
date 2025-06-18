@@ -1,19 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\ScrapResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\ScrapState;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\ScrapState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ScrapResource;
 use Webkul\Inventory\Models\Scrap;
 
-class ViewScrap extends ViewRecord
+final class ViewScrap extends ViewRecord
 {
     protected static string $resource = ScrapResource::class;
 
@@ -21,15 +21,15 @@ class ViewScrap extends ViewRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == ScrapState::DONE)
-                ->action(function (DeleteAction $action, Scrap $record) {
+                ->hidden(fn (): bool => $this->getRecord()->state === ScrapState::DONE)
+                ->action(function (DeleteAction $action, Scrap $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/scrap/pages/view-scrap.header-actions.delete.notification.error.title'))

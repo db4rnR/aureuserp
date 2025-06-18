@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Journal',
 
@@ -20,14 +22,14 @@ return [
 
                 'field-set' => [
                     'accounting-information' => [
-                        'title'  => 'Accounting Information',
+                        'title' => 'Accounting Information',
                         'fields' => [
                             'dedicated-credit-note-sequence' => 'Dedicated Credit Note Sequence',
-                            'dedicated-payment-sequence'     => 'Dedicated Payment Sequence',
-                            'sort-code-placeholder'          => 'Enter the journal code',
-                            'sort-code'                      => 'Sort',
-                            'currency'                       => 'Currency',
-                            'color'                          => 'Color',
+                            'dedicated-payment-sequence' => 'Dedicated Payment Sequence',
+                            'sort-code-placeholder' => 'Enter the journal code',
+                            'sort-code' => 'Sort',
+                            'currency' => 'Currency',
+                            'color' => 'Color',
                         ],
                     ],
                     'bank-account-number' => [
@@ -39,7 +41,7 @@ return [
                 'title' => 'Incoming Payments',
 
                 'fields' => [
-                    'relation-notes'             => 'Relation Notes',
+                    'relation-notes' => 'Relation Notes',
                     'relation-notes-placeholder' => 'Enter any relation details',
                 ],
             ],
@@ -47,18 +49,18 @@ return [
                 'title' => 'Outgoing Payments',
 
                 'fields' => [
-                    'relation-notes'             => 'Relation Notes',
+                    'relation-notes' => 'Relation Notes',
                     'relation-notes-placeholder' => 'Enter any relation details',
                 ],
             ],
             'advanced-settings' => [
-                'title'  => 'Advanced Settings',
+                'title' => 'Advanced Settings',
                 'fields' => [
-                    'allowed-accounts'       => 'Allowed Accounts',
-                    'control-access'         => 'Control Access',
-                    'payment-communication'  => 'Payment Communication',
-                    'auto-check-on-post'     => 'Auto Check on Post',
-                    'communication-type'     => 'Communication Type',
+                    'allowed-accounts' => 'Allowed Accounts',
+                    'control-access' => 'Control Access',
+                    'payment-communication' => 'Payment Communication',
+                    'auto-check-on-post' => 'Auto Check on Post',
+                    'communication-type' => 'Communication Type',
                     'communication-standard' => 'Communication Standard',
                 ],
             ],
@@ -68,8 +70,8 @@ return [
             'title' => 'General Information',
 
             'fields' => [
-                'name'    => 'Name',
-                'type'    => 'Type',
+                'name' => 'Name',
+                'type' => 'Type',
                 'company' => 'Company',
             ],
         ],
@@ -77,19 +79,19 @@ return [
 
     'table' => [
         'columns' => [
-            'name'       => 'Name',
-            'type'       => 'Type',
-            'code'       => 'Code',
-            'currency'   => 'Currency',
+            'name' => 'Name',
+            'type' => 'Type',
+            'code' => 'Code',
+            'currency' => 'Currency',
             'created-by' => 'Created By',
-            'status'     => 'Status',
+            'status' => 'Status',
         ],
 
         'actions' => [
             'delete' => [
                 'notification' => [
                     'title' => 'Incoterm deleted',
-                    'body'  => 'The incoterm has been deleted successfully.',
+                    'body' => 'The incoterm has been deleted successfully.',
                 ],
             ],
         ],
@@ -98,7 +100,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Journal deleted',
-                    'body'  => 'The journal has been deleted successfully.',
+                    'body' => 'The journal has been deleted successfully.',
                 ],
             ],
         ],
@@ -111,14 +113,14 @@ return [
 
                 'field-set' => [
                     'accounting-information' => [
-                        'title'   => 'Accounting Information',
+                        'title' => 'Accounting Information',
                         'entries' => [
                             'dedicated-credit-note-sequence' => 'Dedicated Credit Note Sequence',
-                            'dedicated-payment-sequence'     => 'Dedicated Payment Sequence',
-                            'sort-code-placeholder'          => 'Enter the journal code',
-                            'sort-code'                      => 'Sort',
-                            'currency'                       => 'Currency',
-                            'color'                          => 'Color',
+                            'dedicated-payment-sequence' => 'Dedicated Payment Sequence',
+                            'sort-code-placeholder' => 'Enter the journal code',
+                            'sort-code' => 'Sort',
+                            'currency' => 'Currency',
+                            'color' => 'Color',
                         ],
                     ],
                     'bank-account-number' => [
@@ -130,7 +132,7 @@ return [
                 'title' => 'Incoming Payments',
 
                 'entries' => [
-                    'relation-notes'             => 'Relation Notes',
+                    'relation-notes' => 'Relation Notes',
                     'relation-notes-placeholder' => 'Enter any relation details',
                 ],
             ],
@@ -138,18 +140,18 @@ return [
                 'title' => 'Outgoing Payments',
 
                 'entries' => [
-                    'relation-notes'             => 'Relation Notes',
+                    'relation-notes' => 'Relation Notes',
                     'relation-notes-placeholder' => 'Enter any relation details',
                 ],
             ],
             'advanced-settings' => [
-                'title'   => 'Advanced Settings',
+                'title' => 'Advanced Settings',
                 'entries' => [
-                    'allowed-accounts'       => 'Allowed Accounts',
-                    'control-access'         => 'Control Access',
-                    'payment-communication'  => 'Payment Communication',
-                    'auto-check-on-post'     => 'Auto Check on Post',
-                    'communication-type'     => 'Communication Type',
+                    'allowed-accounts' => 'Allowed Accounts',
+                    'control-access' => 'Control Access',
+                    'payment-communication' => 'Payment Communication',
+                    'auto-check-on-post' => 'Auto Check on Post',
+                    'communication-type' => 'Communication Type',
                     'communication-standard' => 'Communication Standard',
                 ],
             ],
@@ -159,8 +161,8 @@ return [
             'title' => 'General Information',
 
             'entries' => [
-                'name'    => 'Name',
-                'type'    => 'Type',
+                'name' => 'Name',
+                'type' => 'Type',
                 'company' => 'Company',
             ],
         ],

@@ -1,32 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\Filter;
-use Filament\Schemas\Components\Grid;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
+use BackedEnum;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages\ListVendorPrices;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages\CreateVendorPrice;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages\ViewVendorPrice;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages\EditVendorPrice;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,15 +31,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages\CreateVendorPrice;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages\EditVendorPrice;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages\ListVendorPrices;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages\ViewVendorPrice;
 use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource\Pages\ManageVendors;
 use Webkul\Purchase\Models\ProductSupplier;
 
-class VendorPriceResource extends Resource
+final class VendorPriceResource extends Resource
 {
     protected static ?string $model = ProductSupplier::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-archive-box';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-archive-box';
 
     protected static ?int $navigationSort = 10;
 
@@ -266,17 +266,15 @@ class VendorPriceResource extends Resource
                             ])
                             ->columns(2),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['price_from'],
-                                fn (Builder $query, $price): Builder => $query->where('price', '>=', $price),
-                            )
-                            ->when(
-                                $data['price_to'],
-                                fn (Builder $query, $price): Builder => $query->where('price', '<=', $price),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['price_from'],
+                            fn (Builder $query, $price): Builder => $query->where('price', '>=', $price),
+                        )
+                        ->when(
+                            $data['price_to'],
+                            fn (Builder $query, $price): Builder => $query->where('price', '<=', $price),
+                        )),
 
                 Filter::make('min_qty_range')
                     ->schema([
@@ -293,17 +291,15 @@ class VendorPriceResource extends Resource
                             ])
                             ->columns(2),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['min_qty_from'],
-                                fn (Builder $query, $qty): Builder => $query->where('min_qty', '>=', $qty),
-                            )
-                            ->when(
-                                $data['min_qty_to'],
-                                fn (Builder $query, $qty): Builder => $query->where('min_qty', '<=', $qty),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['min_qty_from'],
+                            fn (Builder $query, $qty): Builder => $query->where('min_qty', '>=', $qty),
+                        )
+                        ->when(
+                            $data['min_qty_to'],
+                            fn (Builder $query, $qty): Builder => $query->where('min_qty', '<=', $qty),
+                        )),
 
                 Filter::make('validity_period')
                     ->schema([
@@ -318,17 +314,15 @@ class VendorPriceResource extends Resource
                             ])
                             ->columns(2),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['starts_from'],
-                                fn (Builder $query, $date): Builder => $query->where('starts_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['ends_before'],
-                                fn (Builder $query, $date): Builder => $query->where('ends_at', '<=', $date),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['starts_from'],
+                            fn (Builder $query, $date): Builder => $query->where('starts_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['ends_before'],
+                            fn (Builder $query, $date): Builder => $query->where('ends_at', '<=', $date),
+                        )),
 
                 Filter::make('created_at')
                     ->schema([
@@ -343,26 +337,24 @@ class VendorPriceResource extends Resource
                             ])
                             ->columns(2),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['created_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['created_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                        )),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make()
-                    ->action(function (ProductSupplier $record) {
+                    ->action(function (ProductSupplier $record): void {
                         try {
                             $record->delete();
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('purchases::filament/admin/clusters/configurations/resources/vendor-price.table.actions.delete.notification.error.title'))
@@ -379,10 +371,10 @@ class VendorPriceResource extends Resource
             ])
             ->toolbarActions([
                 DeleteBulkAction::make()
-                    ->action(function (Collection $records) {
+                    ->action(function (Collection $records): void {
                         try {
                             $records->each(fn (Model $record) => $record->delete());
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('purchases::filament/admin/clusters/configurations/resources/vendor-price.table.bulk-actions.delete.notification.error.title'))
@@ -520,10 +512,10 @@ class VendorPriceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListVendorPrices::route('/'),
+            'index' => ListVendorPrices::route('/'),
             'create' => CreateVendorPrice::route('/create'),
-            'view'   => ViewVendorPrice::route('/{record}'),
-            'edit'   => EditVendorPrice::route('/{record}/edit'),
+            'view' => ViewVendorPrice::route('/{record}'),
+            'edit' => EditVendorPrice::route('/{record}/edit'),
         ];
     }
 }

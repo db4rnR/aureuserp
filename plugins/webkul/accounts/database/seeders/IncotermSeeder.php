@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class IncotermSeeder extends Seeder
+final class IncotermSeeder extends Seeder
 {
     /**
      * Run the database seeds.

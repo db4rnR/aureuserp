@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Account\Models\Move;
 use Webkul\Account\Models\Partner as BasePartner;
 
-class Partner extends BasePartner
+final class Partner extends BasePartner
 {
     public function orders(): HasMany
     {

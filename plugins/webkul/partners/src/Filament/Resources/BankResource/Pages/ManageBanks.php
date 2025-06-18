@@ -1,19 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Filament\Resources\BankResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\BankResource;
 use Webkul\Support\Models\Bank;
 
-class ManageBanks extends ManageRecords
+final class ManageBanks extends ManageRecords
 {
     protected static string $resource = BankResource::class;
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make(__('partners::filament/resources/bank/pages/manage-banks.tabs.all'))
+                ->badge(Bank::count()),
+            'archived' => Tab::make(__('partners::filament/resources/bank/pages/manage-banks.tabs.archived'))
+                ->badge(Bank::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
+        ];
+    }
 
     protected function getHeaderActions(): array
     {
@@ -32,19 +44,6 @@ class ManageBanks extends ManageRecords
                         ->title(__('partners::filament/resources/bank/pages/manage-banks.header-actions.create.notification.title'))
                         ->body(__('partners::filament/resources/bank/pages/manage-banks.header-actions.create.notification.body')),
                 ),
-        ];
-    }
-
-    public function getTabs(): array
-    {
-        return [
-            'all' => Tab::make(__('partners::filament/resources/bank/pages/manage-banks.tabs.all'))
-                ->badge(Bank::count()),
-            'archived' => Tab::make(__('partners::filament/resources/bank/pages/manage-banks.tabs.archived'))
-                ->badge(Bank::onlyTrashed()->count())
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
         ];
     }
 }

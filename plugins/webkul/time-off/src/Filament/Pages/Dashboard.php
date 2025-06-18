@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Pages;
 
+use BackedEnum;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Webkul\TimeOff\Filament\Clusters\MyTime;
 use Webkul\TimeOff\Filament\Widgets\CalendarWidget;
 use Webkul\TimeOff\Filament\Widgets\MyTimeOffWidget;
 
-class Dashboard extends BaseDashboard
+final class Dashboard extends BaseDashboard
 {
     protected static string $routePath = 'time-off';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
 
     protected static ?string $cluster = MyTime::class;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Lewati toolbar',
     'align_center' => 'Ratakan teks ke tengah',

@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Models;
 
-use Webkul\Sale\Enums\OrderState;
-use Webkul\Sale\Enums\QtyDeliveredMethod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -17,15 +17,21 @@ use Webkul\Inventory\Models\Route;
 use Webkul\Inventory\Models\Warehouse;
 use Webkul\Partner\Models\Partner;
 use Webkul\Product\Models\Packaging;
-use Webkul\Sale\Enums;
+use Webkul\Sale\Enums\OrderState;
+use Webkul\Sale\Enums\QtyDeliveredMethod;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 use Webkul\Support\Models\UOM;
 
-class OrderLine extends Model implements Sortable
+final class OrderLine extends Model implements Sortable
 {
     use SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'sales_order_lines';
 
@@ -77,13 +83,8 @@ class OrderLine extends Model implements Sortable
     ];
 
     protected $casts = [
-        'cast'                 => OrderState::class,
+        'cast' => OrderState::class,
         'qty_delivered_method' => QtyDeliveredMethod::class,
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function order()

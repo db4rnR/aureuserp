@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'radio'  => 'Radio',
+    'radio' => 'Radio',
     'select' => 'Select',
-    'color'  => 'Color',
+    'color' => 'Color',
 ];

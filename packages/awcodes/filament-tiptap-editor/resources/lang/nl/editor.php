@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Werkbalk overslaan',
     'align_center' => 'Tekst centreren',

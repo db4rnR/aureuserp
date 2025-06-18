@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Tax Groups',
 
@@ -16,9 +18,9 @@ return [
     'form' => [
         'sections' => [
             'fields' => [
-                'company'            => 'Company',
-                'country'            => 'Country',
-                'name'               => 'Name',
+                'company' => 'Company',
+                'country' => 'Country',
+                'name' => 'Name',
                 'preceding-subtotal' => 'Preceding Subtotal',
             ],
         ],
@@ -26,19 +28,19 @@ return [
 
     'table' => [
         'columns' => [
-            'company'            => 'Company',
-            'country'            => 'Country',
-            'created-by'         => 'Created By',
-            'name'               => 'Name',
+            'company' => 'Company',
+            'country' => 'Country',
+            'created-by' => 'Created By',
+            'name' => 'Name',
             'preceding-subtotal' => 'Preceding Subtotal',
-            'created-at'         => 'Created At',
-            'updated-at'         => 'Updated At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'name'       => 'Name',
-            'company'    => 'Company',
-            'country'    => 'Country',
+            'name' => 'Name',
+            'company' => 'Company',
+            'country' => 'Country',
             'created-by' => 'Created By',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
@@ -48,7 +50,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Payment Term deleted',
-                    'body'  => 'The payment term has been deleted successfully.',
+                    'body' => 'The payment term has been deleted successfully.',
                 ],
             ],
         ],
@@ -57,7 +59,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Tax Groups deleted',
-                    'body'  => 'The tax Groups has been deleted successfully.',
+                    'body' => 'The tax Groups has been deleted successfully.',
                 ],
             ],
         ],
@@ -66,9 +68,9 @@ return [
     'infolist' => [
         'sections' => [
             'entries' => [
-                'company'            => 'Company',
-                'country'            => 'Country',
-                'name'               => 'Name',
+                'company' => 'Company',
+                'country' => 'Country',
+                'name' => 'Name',
                 'preceding-subtotal' => 'Preceding Subtotal',
             ],
         ],

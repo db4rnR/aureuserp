@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,9 +20,14 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-class Product extends Model implements Sortable
+final class Product extends Model implements Sortable
 {
     use HasChatter, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -67,12 +74,12 @@ class Product extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'type'            => ProductType::class,
-        'enable_sales'    => 'boolean',
+        'type' => ProductType::class,
+        'enable_sales' => 'boolean',
         'enable_purchase' => 'boolean',
-        'is_favorite'     => 'boolean',
+        'is_favorite' => 'boolean',
         'is_configurable' => 'boolean',
-        'images'          => 'array',
+        'images' => 'array',
     ];
 
     protected array $logAttributes = [
@@ -92,15 +99,10 @@ class Product extends Model implements Sortable
         'enable_purchase',
         'is_favorite',
         'is_configurable',
-        'parent.name'   => 'Parent',
+        'parent.name' => 'Parent',
         'category.name' => 'Category',
-        'company.name'  => 'Company',
-        'creator.name'  => 'Creator',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'company.name' => 'Company',
+        'creator.name' => 'Creator',
     ];
 
     public function parent(): BelongsTo
@@ -168,9 +170,10 @@ class Product extends Model implements Sortable
         if ($this->is_configurable) {
             return $this->hasMany(ProductSupplier::class)
                 ->orWhereIn('product_id', $this->variants()->pluck('id'));
-        } else {
-            return $this->hasMany(ProductSupplier::class);
         }
+
+        return $this->hasMany(ProductSupplier::class);
+
     }
 
     protected static function newFactory(): ProductFactory

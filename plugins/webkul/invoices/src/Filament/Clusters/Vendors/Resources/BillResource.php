@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\ViewBill;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\EditBill;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\ListBills;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\CreateBill;
 use Filament\Resources\Pages\Page;
 use Webkul\Account\Filament\Resources\BillResource as BaseBillResource;
 use Webkul\Invoice\Filament\Clusters\Vendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\CreateBill;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\EditBill;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\ListBills;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\ViewBill;
 use Webkul\Invoice\Models\Bill;
 
-class BillResource extends BaseBillResource
+final class BillResource extends BaseBillResource
 {
     protected static ?string $model = Bill::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-credit-card';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-credit-card';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -25,7 +27,7 @@ class BillResource extends BaseBillResource
 
     protected static ?string $cluster = Vendors::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationGroup(): ?string
     {
@@ -53,10 +55,10 @@ class BillResource extends BaseBillResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListBills::route('/'),
+            'index' => ListBills::route('/'),
             'create' => CreateBill::route('/create'),
-            'edit'   => EditBill::route('/{record}/edit'),
-            'view'   => ViewBill::route('/{record}'),
+            'edit' => EditBill::route('/{record}/edit'),
+            'view' => ViewBill::route('/{record}'),
         ];
     }
 }

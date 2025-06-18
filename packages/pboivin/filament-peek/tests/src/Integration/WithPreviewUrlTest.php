@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Integration;
 
-use Pboivin\FilamentPeek\Support\Cache;
 use Livewire\Livewire;
 use Pboivin\FilamentPeek\CachedPreview;
 use Pboivin\FilamentPeek\Livewire\BuilderEditor;
-use Pboivin\FilamentPeek\Support;
+use Pboivin\FilamentPeek\Support\Cache;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\EditPage;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\EditPost;
 use Pboivin\FilamentPeek\Tests\Models\Page;
@@ -15,7 +16,7 @@ use Pboivin\FilamentPeek\Tests\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
-it('can access preview url if enabled', function () {
+it('can access preview url if enabled', function (): void {
     actingAs(User::factory()->create());
 
     CachedPreview::make(EditPost::class, 'preview-data', ['KEY' => 'VALUE'])
@@ -26,7 +27,7 @@ it('can access preview url if enabled', function () {
         ->assertSee('KEY:VALUE');
 });
 
-it('can access preview data as json', function () {
+it('can access preview data as json', function (): void {
     actingAs(User::factory()->create());
 
     CachedPreview::make(EditPost::class, 'preview-data', ['KEY' => 'VALUE'])
@@ -37,7 +38,7 @@ it('can access preview data as json', function () {
         ->assertJson(['KEY' => 'VALUE']);
 });
 
-it('can use internal preview url for page preview', function () {
+it('can use internal preview url for page preview', function (): void {
     $this->mock(Cache::class)
         ->shouldReceive('createPreviewToken')
         ->andReturn('test');
@@ -54,7 +55,7 @@ it('can use internal preview url for page preview', function () {
         );
 });
 
-it('can use internal preview url for builder preview', function () {
+it('can use internal preview url for builder preview', function (): void {
     $this->mock(Cache::class)
         ->shouldReceive('createPreviewToken')
         ->andReturn('test');
@@ -71,7 +72,7 @@ it('can use internal preview url for builder preview', function () {
         );
 });
 
-it('sets the isPeekPreviewModal flag', function () {
+it('sets the isPeekPreviewModal flag', function (): void {
     $this->mock(Cache::class)
         ->shouldReceive('createPreviewToken')
         ->andReturn('test');

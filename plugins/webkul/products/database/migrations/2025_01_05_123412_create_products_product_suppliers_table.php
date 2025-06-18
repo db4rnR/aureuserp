@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_product_suppliers', function (Blueprint $table) {
+        Schema::create('products_product_suppliers', function (Blueprint $table): void {
             $table->id();
             $table->integer('sort')->nullable();
             $table->integer('delay')->default(0);

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Tax updated',
-        'body'  => 'The tax has been updated successfully.',
+        'body' => 'The tax has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -11,12 +13,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Tax deleted',
-                    'body'  => 'The tax has been deleted successfully.',
+                    'body' => 'The tax has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Tax could not be deleted',
-                    'body'  => 'The tax cannot be deleted because it is currently in use.',
+                    'body' => 'The tax cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Toolbar überspringen',
     'align_center' => 'Text zentrieren',

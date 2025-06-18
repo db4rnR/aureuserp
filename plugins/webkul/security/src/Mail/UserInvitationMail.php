@@ -1,29 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Mail;
 
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\URL;
 use Webkul\Security\Models\Invitation;
 
-class UserInvitationMail extends Mailable
+final class UserInvitationMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    private Invitation $invitation;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Invitation $invitation)
-    {
-        $this->invitation = $invitation;
-    }
+    public function __construct(private Invitation $invitation) {}
 
     /**
      * Get the message envelope.

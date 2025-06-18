@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Enums;
 
 enum Colors: string
@@ -17,9 +19,9 @@ enum Colors: string
     public static function options(): array
     {
         return [
-            self::Danger->value  => __('employees::enums/colors.danger'),
-            self::Gray->value    => __('employees::enums/colors.gray'),
-            self::Info->value    => __('employees::enums/colors.info'),
+            self::Danger->value => __('employees::enums/colors.danger'),
+            self::Gray->value => __('employees::enums/colors.gray'),
+            self::Info->value => __('employees::enums/colors.info'),
             self::Success->value => __('employees::enums/colors.success'),
             self::Warning->value => __('employees::enums/colors.warning'),
         ];

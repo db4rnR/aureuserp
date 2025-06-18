@@ -1,22 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Actions;
 
-use Webkul\Inventory\Enums\OperationState;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Livewire\Component;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Facades\Inventory;
 use Webkul\Inventory\Models\Operation;
 
-class TodoAction extends Action
+final class TodoAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'inventories.operations.todo';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -45,6 +41,11 @@ class TodoAction extends Action
                     ->success()
                     ->send();
             })
-            ->hidden(fn () => $this->getRecord()->state !== OperationState::DRAFT);
+            ->hidden(fn (): bool => $this->getRecord()->state !== OperationState::DRAFT);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'inventories.operations.todo';
     }
 }

@@ -1,35 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Clusters\Reportings\Resources;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Grouping\Group;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use BackedEnum;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\ViewAction;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Panel;
-use Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource\Pages\ListEmployeeSkills;
-use Filament\Infolists;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Webkul\Employee\Filament\Clusters\Reportings;
-use Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource\Pages;
+use Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource\Pages\ListEmployeeSkills;
 use Webkul\Employee\Models\EmployeeSkill;
 use Webkul\Support\Filament\Tables as CustomTables;
 
-class EmployeeSkillResource extends Resource
+final class EmployeeSkillResource extends Resource
 {
     protected static ?string $model = EmployeeSkill::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-academic-cap';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
 
     protected static ?string $pluralModelLabel = 'Skills';
 
@@ -64,12 +64,12 @@ class EmployeeSkillResource extends Resource
                 TextColumn::make('skillLevel.name')
                     ->label(__('employees::filament/clusters/reportings/resources/employee-skill.table.columns.skill-level'))
                     ->badge()
-                    ->color(fn ($record) => match ($record->skillLevel->name) {
-                        'Beginner'     => 'gray',
+                    ->color(fn ($record): string => match ($record->skillLevel->name) {
+                        'Beginner' => 'gray',
                         'Intermediate' => 'warning',
-                        'Advanced'     => 'success',
-                        'Expert'       => 'primary',
-                        default        => 'secondary'
+                        'Advanced' => 'success',
+                        'Expert' => 'primary',
+                        default => 'secondary'
                     }),
                 CustomTables\Columns\ProgressBarEntry::make('skill_level_percentage')
                     ->label(__('employees::filament/clusters/reportings/resources/employee-skill.table.columns.proficiency'))

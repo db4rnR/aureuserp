@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -7,7 +9,7 @@ use Webkul\Chatter\Traits\HasChatter;
 use Webkul\Product\Models\Category as BaseCategory;
 use Webkul\Security\Models\User;
 
-class Category extends BaseCategory
+final class Category extends BaseCategory
 {
     use HasChatter;
 

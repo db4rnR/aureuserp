@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -7,7 +9,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-class EmployeePolicy
+final class EmployeePolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 
@@ -22,7 +24,7 @@ class EmployeePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Employee $employee): bool
+    public function view(User $user): bool
     {
         return $user->can('view_employee');
     }

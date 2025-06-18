@@ -1,27 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Moves',
 
     'table' => [
         'columns' => [
-            'date'                 => 'Date',
-            'reference'            => 'Reference',
-            'product'              => 'Product',
-            'package'              => 'Package',
-            'lot'                  => 'Lot / Serial Numbers',
-            'source-location'      => 'Source Location',
+            'date' => 'Date',
+            'reference' => 'Reference',
+            'product' => 'Product',
+            'package' => 'Package',
+            'lot' => 'Lot / Serial Numbers',
+            'source-location' => 'Source Location',
             'destination-location' => 'Destination Location',
-            'quantity'             => 'Quantity',
-            'state'                => 'State',
-            'done-by'              => 'Done By',
+            'quantity' => 'Quantity',
+            'state' => 'State',
+            'done-by' => 'Done By',
         ],
 
         'actions' => [
             'delete' => [
                 'notification' => [
                     'title' => 'Move deleted',
-                    'body'  => 'The move has been deleted successfully.',
+                    'body' => 'The move has been deleted successfully.',
                 ],
             ],
         ],

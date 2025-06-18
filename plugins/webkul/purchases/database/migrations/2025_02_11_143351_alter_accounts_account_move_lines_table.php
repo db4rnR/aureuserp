@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('accounts_account_move_lines', function (Blueprint $table) {
+        Schema::table('accounts_account_move_lines', function (Blueprint $table): void {
             $table->foreignId('purchase_order_line_id')
                 ->nullable()
                 ->constrained('purchases_order_lines')
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_account_move_lines', function (Blueprint $table) {
+        Schema::table('accounts_account_move_lines', function (Blueprint $table): void {
             $table->dropForeign(['purchase_order_line_id']);
 
             $table->dropColumn('purchase_order_line_id');

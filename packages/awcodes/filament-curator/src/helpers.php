@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator;
 
 use Awcodes\Curator\Models\Media;
@@ -14,12 +16,12 @@ if (! function_exists('is_media_resizable')) {
             return false;
         }
 
-        return in_array($type, ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp']);
+        return in_array($type, ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'], true);
     }
 }
 
 if (! function_exists('get_media_items')) {
-    function get_media_items(array | Media | int $ids): Collection | array
+    function get_media_items(array|Media|int $ids): Collection|array
     {
         if ($ids instanceof Media) {
             return [$ids];
@@ -35,7 +37,7 @@ if (! function_exists('get_media_items')) {
             return app(Media::class)::whereIn('id', $ids)
                 ->get()
                 ->sortBy(function ($model) use ($ids) {
-                    return array_search($model->id, $ids);
+                    return array_search($model->id, $ids, true);
                 });
         }
 

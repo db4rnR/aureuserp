@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\EmployeeCategory;
 use Webkul\Security\Models\User;
 
-class EmployeeCategoryFactory extends Factory
+final class EmployeeCategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -23,8 +25,8 @@ class EmployeeCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'    => $this->faker->name,
-            'color'   => $this->faker->hexColor,
+            'name' => $this->faker->name,
+            'color' => $this->faker->hexColor,
             'user_id' => User::factory(),
         ];
     }

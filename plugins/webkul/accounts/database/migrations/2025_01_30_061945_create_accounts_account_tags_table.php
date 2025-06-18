@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_account_tags', function (Blueprint $table) {
+        Schema::create('accounts_account_tags', function (Blueprint $table): void {
             $table->id();
             $table->string('color')->nullable()->comment('Color');
             $table->foreignId('country_id')->nullable()->comment('Country ID')->constrained('countries')->nullOnDelete();

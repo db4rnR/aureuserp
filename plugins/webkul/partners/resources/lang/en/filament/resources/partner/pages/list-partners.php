@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Contacts',
 
@@ -11,8 +13,8 @@ return [
 
     'tabs' => [
         'individuals' => 'Individuals',
-        'companies'   => 'Companies',
-        'employees'   => 'Employees',
-        'archived'    => 'Archived',
+        'companies' => 'Companies',
+        'employees' => 'Employees',
+        'archived' => 'Archived',
     ],
 ];

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'create' => [
@@ -7,13 +9,13 @@ return [
 
             'notification' => [
                 'title' => 'Bank created',
-                'body'  => 'The bank has been created successfully.',
+                'body' => 'The bank has been created successfully.',
             ],
         ],
     ],
 
     'tabs' => [
-        'all'      => 'All',
+        'all' => 'All',
         'archived' => 'Archived',
     ],
 ];

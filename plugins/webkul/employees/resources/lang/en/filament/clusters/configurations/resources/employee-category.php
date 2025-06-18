@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Tags',
 
@@ -9,7 +11,7 @@ return [
     ],
 
     'groups' => [
-        'status'     => 'Status',
+        'status' => 'Status',
         'created-by' => 'Created By',
         'created-at' => 'Created At',
         'updated-at' => 'Updated At',
@@ -17,23 +19,23 @@ return [
 
     'form' => [
         'fields' => [
-            'name'  => 'Name',
+            'name' => 'Name',
             'color' => 'Color',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'id'         => 'ID',
-            'name'       => 'Name',
-            'color'      => 'Color',
+            'id' => 'ID',
+            'name' => 'Name',
+            'color' => 'Color',
             'created-by' => 'Created By',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
 
         'filters' => [
-            'name'       => 'Name',
+            'name' => 'Name',
             'created-by' => 'Created By',
             'updated-by' => 'Updated By',
             'updated-at' => 'Updated At',
@@ -41,26 +43,26 @@ return [
         ],
 
         'groups' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'job-position' => 'Job Position',
-            'color'        => 'Color',
-            'created-by'   => 'Created By',
-            'created-at'   => 'Created At',
-            'updated-at'   => 'Updated At',
+            'color' => 'Color',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Tag updated',
-                    'body'  => 'The tag has been updated successfully.',
+                    'body' => 'The tag has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Tag deleted',
-                    'body'  => 'The tag has been deleted successfully.',
+                    'body' => 'The tag has been deleted successfully.',
                 ],
             ],
         ],
@@ -69,7 +71,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Tags deleted',
-                    'body'  => 'The tags has been deleted successfully.',
+                    'body' => 'The tags has been deleted successfully.',
                 ],
             ],
         ],
@@ -78,14 +80,14 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Tag created',
-                    'body'  => 'The tag has been created successfully.',
+                    'body' => 'The tag has been created successfully.',
                 ],
             ],
         ],
     ],
 
     'infolist' => [
-        'name'  => 'Name',
+        'name' => 'Name',
         'color' => 'Color',
     ],
 ];

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Scrap updated',
-        'body'  => 'The scrap has been updated successfully.',
+        'body' => 'The scrap has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -13,12 +15,12 @@ return [
             'notification' => [
                 'warning' => [
                     'title' => 'Insufficient stock',
-                    'body'  => 'The scrap has insufficient stock to validate.',
+                    'body' => 'The scrap has insufficient stock to validate.',
                 ],
 
                 'success' => [
                     'title' => 'Scrap marked as done',
-                    'body'  => 'The scrap has been marked as done successfully.',
+                    'body' => 'The scrap has been marked as done successfully.',
                 ],
             ],
         ],
@@ -27,12 +29,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Scrap deleted',
-                    'body'  => 'The scrap has been deleted successfully.',
+                    'body' => 'The scrap has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Scraps could not be deleted',
-                    'body'  => 'The scraps cannot be deleted because they are currently in use.',
+                    'body' => 'The scraps cannot be deleted because they are currently in use.',
                 ],
             ],
         ],

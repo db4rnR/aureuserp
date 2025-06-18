@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\PaymentsResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -8,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Filament\Resources\PaymentsResource;
 
-class CreatePayments extends CreateRecord
+final class CreatePayments extends CreateRecord
 {
     protected static string $resource = PaymentsResource::class;
 

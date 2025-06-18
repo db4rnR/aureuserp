@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories_product_quantities', function (Blueprint $table) {
+        Schema::create('inventories_product_quantities', function (Blueprint $table): void {
             $table->id();
             $table->decimal('quantity', 15, 4)->nullable()->default(0);
             $table->decimal('reserved_quantity', 15, 4)->default(0);

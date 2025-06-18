@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Inventory\Database\Factories\StorageCategoryCapacityFactory;
 use Webkul\Security\Models\User;
 
-class StorageCategoryCapacity extends Model
+final class StorageCategoryCapacity extends Model
 {
     /**
      * Table name.
@@ -49,7 +51,7 @@ class StorageCategoryCapacity extends Model
         return $this->belongsTo(User::class);
     }
 
-    protected static function newFactory(): StorageCategoryCapacityFactory
+    private static function newFactory(): StorageCategoryCapacityFactory
     {
         return StorageCategoryCapacityFactory::new();
     }

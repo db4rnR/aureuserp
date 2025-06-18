@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Invitation extends Model
+final class Invitation extends Model
 {
     use HasFactory;
 

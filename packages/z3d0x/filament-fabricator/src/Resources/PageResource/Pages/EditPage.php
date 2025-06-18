@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
 
-use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\Concerns\HasPreviewModal;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\Action;
-use Filament\Pages\Actions;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 use Pboivin\FilamentPeek\Pages\Actions\PreviewAction;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\Concerns\HasPreviewModal;
 
-class EditPage extends EditRecord
+final class EditPage extends EditRecord
 {
     use HasPreviewModal;
 
@@ -21,7 +22,7 @@ class EditPage extends EditRecord
 
     public static function getResource(): string
     {
-        return config('filament-fabricator.page-resource') ?? static::$resource;
+        return config('filament-fabricator.page-resource') ?? self::$resource;
     }
 
     protected function getActions(): array

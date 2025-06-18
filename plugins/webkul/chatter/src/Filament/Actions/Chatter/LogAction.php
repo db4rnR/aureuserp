@@ -1,28 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Filament\Actions\Chatter;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Actions;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Hidden;
 use Exception;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 
-class LogAction extends Action
+final class LogAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'log.action';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,7 +26,7 @@ class LogAction extends Action
         $this
             ->color('gray')
             ->outlined()
-            ->mountUsing(function (Schema $schema) {
+            ->mountUsing(function (Schema $schema): void {
                 $schema->fill();
             })
             ->schema(
@@ -38,10 +34,8 @@ class LogAction extends Action
                     Group::make([
                         Actions::make([
                             Action::make('add_subject')
-                                ->label(function ($get) {
-                                    return $get('showSubject') ? __('chatter::filament/resources/actions/chatter/log-action.setup.form.fields.hide-subject') : __('chatter::filament/resources/actions/chatter/log-action.setup.form.fields.add-subject');
-                                })
-                                ->action(function ($set, $get) {
+                                ->label(fn ($get) => $get('showSubject') ? __('chatter::filament/resources/actions/chatter/log-action.setup.form.fields.hide-subject') : __('chatter::filament/resources/actions/chatter/log-action.setup.form.fields.add-subject'))
+                                ->action(function ($set, $get): void {
                                     if ($get('showSubject')) {
                                         $set('showSubject', false);
 
@@ -52,7 +46,7 @@ class LogAction extends Action
                                 })
                                 ->link()
                                 ->size('sm')
-                                ->icon(fn (Get $get) => ! $get('showSubject') ? 'heroicon-s-plus' : 'heroicon-s-minus'),
+                                ->icon(fn (Get $get): string => $get('showSubject') ? 'heroicon-s-minus' : 'heroicon-s-plus'),
                         ])
                             ->columnSpan('full')
                             ->alignRight(),
@@ -94,7 +88,7 @@ class LogAction extends Action
                 ])
                     ->columns(1)
             )
-            ->action(function (array $data, ?Model $record = null) {
+            ->action(function (array $data, ?Model $record = null): void {
                 try {
                     $user = filament()->auth()->user();
 
@@ -129,10 +123,15 @@ class LogAction extends Action
             ->label(__('chatter::filament/resources/actions/chatter/log-action.setup.title'))
             ->icon('heroicon-o-chat-bubble-oval-left')
             ->modalIcon('heroicon-o-chat-bubble-oval-left')
-            ->modalSubmitAction(function ($action) {
+            ->modalSubmitAction(function ($action): void {
                 $action->label(__('chatter::filament/resources/actions/chatter/log-action.setup.submit-title'));
                 $action->icon('heroicon-m-paper-airplane');
             })
             ->slideOver(false);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'log.action';
     }
 }

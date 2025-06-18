@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Models;
 
 use Filament\Models\Contracts\FilamentUser;
@@ -21,7 +23,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\State;
 
-class Partner extends Authenticatable implements FilamentUser
+final class Partner extends Authenticatable implements FilamentUser
 {
     use HasChatter, HasFactory, HasLogActivity, Notifiable, SoftDeletes;
 
@@ -72,7 +74,7 @@ class Partner extends Authenticatable implements FilamentUser
      */
     protected $casts = [
         'account_type' => AccountType::class,
-        'is_active'    => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -85,10 +87,8 @@ class Partner extends Authenticatable implements FilamentUser
 
     /**
      * Get image url for the product image.
-     *
-     * @return string
      */
-    public function getAvatarUrlAttribute()
+    public function getAvatarUrlAttribute(): string
     {
         if (! $this->avatar) {
             return;

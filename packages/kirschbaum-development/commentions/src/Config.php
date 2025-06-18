@@ -1,29 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions;
 
 use Closure;
 use InvalidArgumentException;
 use Kirschbaum\Commentions\Contracts\Commenter;
 
-class Config
+final class Config
 {
-    protected static ?string $guard = null;
+    private static ?string $guard = null;
 
-    protected static ?Closure $resolveAuthenticatedUser = null;
+    private static ?Closure $resolveAuthenticatedUser = null;
 
     public static function resolveAuthenticatedUserUsing(Closure $callback): void
     {
-        static::$resolveAuthenticatedUser = $callback;
+        self::$resolveAuthenticatedUser = $callback;
     }
 
     public static function resolveAuthenticatedUser(): ?Commenter
     {
-        $resolver = static::$resolveAuthenticatedUser;
-        $user = $resolver ? call_user_func($resolver) : auth()->guard(static::$guard)->user();
+        $resolver = self::$resolveAuthenticatedUser;
+        $user = $resolver ? call_user_func($resolver) : auth()->guard(self::$guard)->user();
 
         if ($user !== null && ! ($user instanceof Commenter)) {
-            throw new InvalidArgumentException('Resolved user must implement ' . Commenter::class);
+            throw new InvalidArgumentException('Resolved user must implement '.Commenter::class);
         }
 
         return $user;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Deployer;
 
 require 'recipe/laravel.php';
@@ -38,7 +40,7 @@ host('staging')
     ->set('deploy_path', '/var/www/staging');
 
 // Tasks
-task('build', function () {
+task('build', function (): void {
     run('cd {{release_path}} && npm ci');
     run('cd {{release_path}} && npm run build');
 });

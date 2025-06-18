@@ -1,25 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TableViews\Filament\Actions;
 
-use Filament\Forms\Components\TextInput;
-use Guava\FilamentIconPicker\Forms\IconPicker;
-use Filament\Forms\Components\Toggle;
-use Filament\Support\Enums\Width;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\CanCustomizeProcess;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Support\Enums\Width;
+use Guava\FilamentIconPicker\Forms\IconPicker;
 use Webkul\TableViews\Models\TableView;
 use Webkul\TableViews\Models\TableViewFavorite;
 
-class CreateViewAction extends Action
+final class CreateViewAction extends Action
 {
     use CanCustomizeProcess;
-
-    public static function getDefaultName(): ?string
-    {
-        return 'table_views.save.action';
-    }
 
     protected function setUp(): void
     {
@@ -54,11 +50,11 @@ class CreateViewAction extends Action
                     $record->save();
 
                     TableViewFavorite::create([
-                        'view_type'       => 'saved',
-                        'view_key'        => $record->id,
+                        'view_type' => 'saved',
+                        'view_key' => $record->id,
                         'filterable_type' => $record->filterable_type,
-                        'user_id'         => auth()->id(),
-                        'is_favorite'     => $data['is_favorite'],
+                        'user_id' => auth()->id(),
+                        'is_favorite' => $data['is_favorite'],
                     ]);
 
                     return $record;
@@ -73,5 +69,10 @@ class CreateViewAction extends Action
             ->successNotificationTitle(__('table-views::filament/actions/create-view.form.notification.created'))
             ->modalHeading(__('table-views::filament/actions/create-view.form.modal.title'))
             ->modalWidth(Width::Medium);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'table_views.save.action';
     }
 }

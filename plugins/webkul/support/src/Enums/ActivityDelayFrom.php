@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Enums;
 
 enum ActivityDelayFrom: string
@@ -14,7 +16,7 @@ enum ActivityDelayFrom: string
     {
         return [
             self::PREVIOUS_ACTIVITY->value => __('support::enums/activity-delay-from.previous-activity'),
-            self::CURRENT_DATE->value      => __('support::enums/activity-delay-from.current-date'),
+            self::CURRENT_DATE->value => __('support::enums/activity-delay-from.current-date'),
         ];
     }
 }

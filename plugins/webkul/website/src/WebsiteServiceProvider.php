@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website;
 
 use Filament\Support\Assets\Css;
@@ -11,7 +13,7 @@ use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 use Webkul\Website\Http\Responses\LogoutResponse;
 
-class WebsiteServiceProvider extends PackageServiceProvider
+final class WebsiteServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'website';
 
@@ -19,7 +21,7 @@ class WebsiteServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasViews()
             ->hasTranslations()
             ->hasMigrations([
@@ -27,8 +29,8 @@ class WebsiteServiceProvider extends PackageServiceProvider
                 '2025_03_10_064655_alter_partners_partners_table',
             ])
             ->runsMigrations()
-            ->hasSeeder('Webkul\\Website\\Database\Seeders\\DatabaseSeeder')
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasSeeder(Database\Seeders\DatabaseSeeder::class)
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations()
@@ -38,7 +40,7 @@ class WebsiteServiceProvider extends PackageServiceProvider
                 '2025_03_10_094021_create_website_contact_settings',
             ])
             ->runsSettings()
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 
     public function packageBooted(): void
@@ -48,9 +50,7 @@ class WebsiteServiceProvider extends PackageServiceProvider
         ], 'website');
 
         if (! Package::isPluginInstalled(self::$name)) {
-            Route::get('/', function () {
-                return redirect()->route('filament.admin..');
-            });
+            Route::get('/', fn () => redirect()->route('filament.admin..'));
         }
     }
 

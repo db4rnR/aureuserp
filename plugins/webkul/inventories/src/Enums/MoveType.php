@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -14,7 +16,7 @@ enum MoveType: string implements HasLabel
     {
         return match ($this) {
             self::DIRECT => __('inventories::enums/move-type.direct'),
-            self::ONE    => __('inventories::enums/move-type.one'),
+            self::ONE => __('inventories::enums/move-type.one'),
         };
     }
 }

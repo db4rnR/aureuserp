@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Product updated',
-        'body'  => 'The product has been updated successfully.',
+        'body' => 'The product has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -13,13 +15,13 @@ return [
             'form' => [
                 'fields' => [
                     'quantity' => 'Number of Labels',
-                    'format'   => 'Format',
+                    'format' => 'Format',
 
                     'format-options' => [
-                        'dymo'       => 'Dymo',
-                        '2x7_price'  => '2x7 with price',
-                        '4x7_price'  => '4x7 with price',
-                        '4x12'       => '4x12',
+                        'dymo' => 'Dymo',
+                        '2x7_price' => '2x7 with price',
+                        '4x7_price' => '4x7 with price',
+                        '4x12' => '4x12',
                         '4x12_price' => '4x12 with price',
                     ],
                 ],
@@ -29,7 +31,7 @@ return [
         'delete' => [
             'notification' => [
                 'title' => 'Product deleted',
-                'body'  => 'The product has been deleted successfully.',
+                'body' => 'The product has been deleted successfully.',
             ],
         ],
     ],

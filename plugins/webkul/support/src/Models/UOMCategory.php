@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Security\Models\User;
 use Webkul\Support\Database\Factories\UOMCategoryFactory;
 
-class UOMCategory extends Model
+final class UOMCategory extends Model
 {
     use HasFactory;
 

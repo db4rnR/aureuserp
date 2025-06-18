@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_price_rule_items', function (Blueprint $table) {
+        Schema::create('products_price_rule_items', function (Blueprint $table): void {
             $table->id();
             $table->string('apply_to');
             $table->string('display_apply_to');

@@ -1,39 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
-use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\ListCashRounding;
-use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\CreateCashRounding;
-use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\ViewCashRounding;
-use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\EditCashRounding;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Webkul\Account\Enums\RoundingMethod;
 use Webkul\Account\Enums\RoundingStrategy;
-use Webkul\Account\Filament\Resources\CashRoundingResource\Pages;
+use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\CreateCashRounding;
+use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\EditCashRounding;
+use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\ListCashRounding;
+use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\ViewCashRounding;
 use Webkul\Account\Models\CashRounding;
 
-class CashRoundingResource extends Resource
+final class CashRoundingResource extends Resource
 {
     protected static ?string $model = CashRounding::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-adjustments-horizontal';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-adjustments-horizontal';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -167,10 +167,10 @@ class CashRoundingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListCashRounding::route('/'),
+            'index' => ListCashRounding::route('/'),
             'create' => CreateCashRounding::route('/create'),
-            'view'   => ViewCashRounding::route('/{record}'),
-            'edit'   => EditCashRounding::route('/{record}/edit'),
+            'view' => ViewCashRounding::route('/{record}'),
+            'edit' => EditCashRounding::route('/{record}/edit'),
         ];
     }
 }

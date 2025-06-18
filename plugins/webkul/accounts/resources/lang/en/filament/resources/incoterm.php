@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
         'fields' => [
@@ -10,8 +12,8 @@ return [
 
     'table' => [
         'columns' => [
-            'code'       => 'Code',
-            'name'       => 'Name',
+            'code' => 'Code',
+            'name' => 'Name',
             'created-by' => 'Created By',
         ],
 
@@ -24,21 +26,21 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Incoterm updated',
-                    'body'  => 'The incoterm has been updated successfully.',
+                    'body' => 'The incoterm has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Incoterm deleted',
-                    'body'  => 'The incoterm has been deleted successfully.',
+                    'body' => 'The incoterm has been deleted successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Incoterm restored',
-                    'body'  => 'The incoterm has been restored successfully.',
+                    'body' => 'The incoterm has been restored successfully.',
                 ],
             ],
         ],
@@ -47,21 +49,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Incoterms restored',
-                    'body'  => 'The incoterms has been restored successfully.',
+                    'body' => 'The incoterms has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Incoterms deleted',
-                    'body'  => 'The incoterms has been deleted successfully.',
+                    'body' => 'The incoterms has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Incoterms force deleted',
-                    'body'  => 'The incoterms has been force deleted successfully.',
+                    'body' => 'The incoterms has been force deleted successfully.',
                 ],
             ],
         ],

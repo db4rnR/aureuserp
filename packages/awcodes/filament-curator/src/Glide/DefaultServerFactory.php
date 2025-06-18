@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Glide;
 
 use League\Glide\Responses\SymfonyResponseFactory;
 use League\Glide\Server;
 use League\Glide\ServerFactory;
 
-class DefaultServerFactory implements Contracts\ServerFactory
+final class DefaultServerFactory implements Contracts\ServerFactory
 {
-    public function getFactory(): ServerFactory | Server
+    public function getFactory(): ServerFactory|Server
     {
         return ServerFactory::create([
             'driver' => 'gd',

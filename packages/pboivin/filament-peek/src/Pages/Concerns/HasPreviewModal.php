@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Pages\Concerns;
 
-use Pboivin\FilamentPeek\Support\Html;
-use Pboivin\FilamentPeek\Support\Cache;
 use Filament\Support\Exceptions\Halt;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 use Pboivin\FilamentPeek\CachedPreview;
 use Pboivin\FilamentPeek\Exceptions\PreviewModalException;
-use Pboivin\FilamentPeek\Support;
+use Pboivin\FilamentPeek\Support\Cache;
+use Pboivin\FilamentPeek\Support\Html;
 
 trait HasPreviewModal
 {
@@ -23,83 +24,11 @@ trait HasPreviewModal
 
     protected bool $shouldDehydrateBeforePreview = true;
 
-    protected function getPreviewModalUrl(): ?string
-    {
-        return null;
-    }
-
-    protected function getPreviewModalView(): ?string
-    {
-        return null;
-    }
-
-    protected function getPreviewModalTitle(): string
-    {
-        return __('filament-peek::ui.preview-modal-title');
-    }
-
-    protected function getPreviewModalDataRecordKey(): string
-    {
-        return 'record';
-    }
-
-    protected function mutatePreviewModalData(array $data): array
-    {
-        return $data;
-    }
-
-    protected function getShouldCallHooksBeforePreview(): bool
-    {
-        return $this->shouldCallHooksBeforePreview;
-    }
-
-    protected function getShouldDehydrateBeforePreview(): bool
-    {
-        return $this->shouldDehydrateBeforePreview;
-    }
-
     /** @internal */
     public static function renderPreviewModalView(?string $view, array $data): string
     {
         return Html::injectPreviewModalStyle(
             view($view, $data)->render()
-        );
-    }
-
-    /** @internal */
-    protected function preparePreviewModalData(): array
-    {
-        $shouldCallHooks = $this->getShouldCallHooksBeforePreview();
-        $shouldDehydrate = $this->getShouldDehydrateBeforePreview();
-        $record = null;
-
-        if ($this->previewableRecord) {
-            $record = $this->previewableRecord;
-        } elseif (method_exists($this, 'mutateFormDataBeforeCreate')) {
-            if (! $shouldCallHooks && $shouldDehydrate) {
-                $this->form->validate();
-                $this->form->callBeforeStateDehydrated();
-            }
-            $data = $this->mutateFormDataBeforeCreate($this->form->getState($shouldCallHooks));
-            $record = $this->getModel()::make($data);
-        } elseif (method_exists($this, 'mutateFormDataBeforeSave')) {
-            if (! $shouldCallHooks && $shouldDehydrate) {
-                $this->form->validate();
-                $this->form->callBeforeStateDehydrated();
-            }
-            $data = $this->mutateFormDataBeforeSave($this->form->getState($shouldCallHooks));
-            $record = $this->getRecord();
-            $record->fill($data);
-        } elseif (method_exists($this, 'getRecord')) {
-            $record = $this->getRecord();
-        }
-
-        return array_merge(
-            $this->initialPreviewModalData,
-            [
-                $this->getPreviewModalDataRecordKey() => $record,
-                'isPeekPreviewModal' => true,
-            ]
         );
     }
 
@@ -189,5 +118,77 @@ trait HasPreviewModal
     public function initialPreviewModalData(array $data): void
     {
         $this->initialPreviewModalData = $data;
+    }
+
+    protected function getPreviewModalUrl(): ?string
+    {
+        return null;
+    }
+
+    protected function getPreviewModalView(): ?string
+    {
+        return null;
+    }
+
+    protected function getPreviewModalTitle(): string
+    {
+        return __('filament-peek::ui.preview-modal-title');
+    }
+
+    protected function getPreviewModalDataRecordKey(): string
+    {
+        return 'record';
+    }
+
+    protected function mutatePreviewModalData(array $data): array
+    {
+        return $data;
+    }
+
+    protected function getShouldCallHooksBeforePreview(): bool
+    {
+        return $this->shouldCallHooksBeforePreview;
+    }
+
+    protected function getShouldDehydrateBeforePreview(): bool
+    {
+        return $this->shouldDehydrateBeforePreview;
+    }
+
+    /** @internal */
+    protected function preparePreviewModalData(): array
+    {
+        $shouldCallHooks = $this->getShouldCallHooksBeforePreview();
+        $shouldDehydrate = $this->getShouldDehydrateBeforePreview();
+        $record = null;
+
+        if ($this->previewableRecord) {
+            $record = $this->previewableRecord;
+        } elseif (method_exists($this, 'mutateFormDataBeforeCreate')) {
+            if (! $shouldCallHooks && $shouldDehydrate) {
+                $this->form->validate();
+                $this->form->callBeforeStateDehydrated();
+            }
+            $data = $this->mutateFormDataBeforeCreate($this->form->getState($shouldCallHooks));
+            $record = $this->getModel()::make($data);
+        } elseif (method_exists($this, 'mutateFormDataBeforeSave')) {
+            if (! $shouldCallHooks && $shouldDehydrate) {
+                $this->form->validate();
+                $this->form->callBeforeStateDehydrated();
+            }
+            $data = $this->mutateFormDataBeforeSave($this->form->getState($shouldCallHooks));
+            $record = $this->getRecord();
+            $record->fill($data);
+        } elseif (method_exists($this, 'getRecord')) {
+            $record = $this->getRecord();
+        }
+
+        return array_merge(
+            $this->initialPreviewModalData,
+            [
+                $this->getPreviewModalDataRecordKey() => $record,
+                'isPeekPreviewModal' => true,
+            ]
+        );
     }
 }

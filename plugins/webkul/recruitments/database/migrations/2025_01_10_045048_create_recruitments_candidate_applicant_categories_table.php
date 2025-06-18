@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recruitments_candidate_applicant_categories', function (Blueprint $table) {
+        Schema::create('recruitments_candidate_applicant_categories', function (Blueprint $table): void {
             $table->unsignedBigInteger('candidate_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
 

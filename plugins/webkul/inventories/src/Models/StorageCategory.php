@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +15,14 @@ use Webkul\Inventory\Enums\AllowNewProduct;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class StorageCategory extends Model implements Sortable
+final class StorageCategory extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -46,11 +53,6 @@ class StorageCategory extends Model implements Sortable
      */
     protected $casts = [
         'allow_new_products' => AllowNewProduct::class,
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function storageCategoryCapacities(): HasMany

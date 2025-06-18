@@ -1,25 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TableViews\Filament\Actions;
 
-use Filament\Forms\Components\TextInput;
-use Guava\FilamentIconPicker\Forms\IconPicker;
-use Filament\Forms\Components\Toggle;
-use Filament\Support\Enums\Width;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\CanCustomizeProcess;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Support\Enums\Width;
+use Guava\FilamentIconPicker\Forms\IconPicker;
 use Webkul\TableViews\Models\TableView;
 use Webkul\TableViews\Models\TableViewFavorite;
 
-class EditViewAction extends Action
+final class EditViewAction extends Action
 {
     use CanCustomizeProcess;
-
-    public static function getDefaultName(): ?string
-    {
-        return 'table_views.update.action';
-    }
 
     protected function setUp(): void
     {
@@ -36,11 +32,11 @@ class EditViewAction extends Action
                     ->first();
 
                 return [
-                    'name'        => $arguments['view_model']['name'],
-                    'color'       => $arguments['view_model']['color'],
-                    'icon'        => $arguments['view_model']['icon'],
+                    'name' => $arguments['view_model']['name'],
+                    'color' => $arguments['view_model']['color'],
+                    'icon' => $arguments['view_model']['icon'],
                     'is_favorite' => $tableViewFavorite?->is_favorite ?? false,
-                    'is_public'   => $arguments['view_model']['is_public'],
+                    'is_public' => $arguments['view_model']['is_public'],
                 ];
             })
             ->schema([
@@ -71,10 +67,10 @@ class EditViewAction extends Action
 
                     TableViewFavorite::updateOrCreate(
                         [
-                            'view_type'       => 'saved',
-                            'view_key'        => $arguments['view_model']['id'],
+                            'view_type' => 'saved',
+                            'view_key' => $arguments['view_model']['id'],
                             'filterable_type' => $record->filterable_type,
-                            'user_id'         => auth()->id(),
+                            'user_id' => auth()->id(),
                         ], [
                             'is_favorite' => $data['is_favorite'],
                         ]
@@ -92,5 +88,10 @@ class EditViewAction extends Action
             ->icon('heroicon-s-pencil-square')
             ->modalHeading(__('table-views::filament/actions/edit-view.form.modal.title'))
             ->modalWidth(Width::Medium);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'table_views.update.action';
     }
 }

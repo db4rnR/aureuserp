@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Filament\Resources\PartnerResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,7 +13,7 @@ use Webkul\Partner\Filament\Resources\PartnerResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListPartners extends ListRecords
+final class ListPartners extends ListRecords
 {
     use HasTableViews;
 
@@ -21,15 +22,6 @@ class ListPartners extends ListRecords
     public function getTitle(): string|Htmlable
     {
         return __('partners::filament/resources/partner/pages/list-partners.title');
-    }
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make()
-                ->label(__('partners::filament/resources/partner/pages/list-partners.header-actions.create.label'))
-                ->icon('heroicon-o-plus-circle'),
-        ];
     }
 
     public function getPresetTableViews(): array
@@ -49,6 +41,15 @@ class ListPartners extends ListRecords
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
                 ->modifyQueryUsing(fn (Builder $query) => $query->onlyTrashed()),
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make()
+                ->label(__('partners::filament/resources/partner/pages/list-partners.header-actions.create.label'))
+                ->icon('heroicon-o-plus-circle'),
         ];
     }
 }

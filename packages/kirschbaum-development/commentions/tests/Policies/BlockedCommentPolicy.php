@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Policies;
 
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\Contracts\Commenter;
 use Kirschbaum\Commentions\Policies\CommentPolicy;
 
-class BlockedCommentPolicy extends CommentPolicy
+final class BlockedCommentPolicy extends CommentPolicy
 {
     public function create(Commenter $user): bool
     {

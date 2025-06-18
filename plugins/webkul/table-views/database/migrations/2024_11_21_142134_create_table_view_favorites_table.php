@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_view_favorites', function (Blueprint $table) {
+        Schema::create('table_view_favorites', function (Blueprint $table): void {
             $table->id();
             $table->boolean('is_favorite')->default(1);
             $table->string('view_type');

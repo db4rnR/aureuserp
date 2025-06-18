@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions;
 
 use Filament\Models\Contracts\HasName;
 use Kirschbaum\Commentions\Contracts\Commenter;
 
-class Manager
+final class Manager
 {
     public static function getName(Commenter $mentionable)
     {

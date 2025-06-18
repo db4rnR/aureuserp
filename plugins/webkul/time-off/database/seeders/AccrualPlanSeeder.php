@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -7,14 +9,12 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class AccrualPlanSeeder extends Seeder
+final class AccrualPlanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('time_off_leave_accrual_plans')->delete();
 
@@ -24,16 +24,16 @@ class AccrualPlanSeeder extends Seeder
 
         $leaveAccrualPlans = [
             [
-                'company_id'        => $company?->id,
-                'creator_id'        => $user?->id,
-                'name'              => 'Seniority Plan',
-                'transition_mode'   => 'immediately',
+                'company_id' => $company?->id,
+                'creator_id' => $user?->id,
+                'name' => 'Seniority Plan',
+                'transition_mode' => 'immediately',
                 'accrued_gain_time' => 'end',
-                'carryover_date'    => 'year_start',
-                'carryover_month'   => 'jan',
-                'is_active'         => true,
-                'created_at'        => now(),
-                'updated_at'        => now(),
+                'carryover_date' => 'year_start',
+                'carryover_month' => 'jan',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ];
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Console\Commands;
 
 use Closure;
@@ -9,33 +11,33 @@ use Illuminate\Support\Str;
 use Webkul\Support\Models\Plugin;
 use Webkul\Support\Package;
 
-class InstallCommand extends Command
+final class InstallCommand extends Command
 {
-    protected Package $package;
-
     public ?Closure $startWith = null;
-
-    protected array $publishes = [];
-
-    protected bool $askToInstallDependencies = false;
-
-    protected bool $askToRunMigrations = false;
-
-    protected bool $askToRunSeeders = false;
-
-    protected bool $installDependencies = false;
-
-    protected bool $runsMigrations = false;
-
-    protected bool $runsSeeders = false;
-
-    protected bool $copyServiceProviderInApp = false;
-
-    protected ?string $starRepo = null;
 
     public ?Closure $endWith = null;
 
     public $hidden = true;
+
+    private readonly Package $package;
+
+    private array $publishes = [];
+
+    private bool $askToInstallDependencies = false;
+
+    private bool $askToRunMigrations = false;
+
+    private bool $askToRunSeeders = false;
+
+    private bool $installDependencies = false;
+
+    private bool $runsMigrations = false;
+
+    private bool $runsSeeders = false;
+
+    private bool $copyServiceProviderInApp = false;
+
+    private ?string $starRepo = null;
 
     public function __construct(Package $package)
     {
@@ -50,7 +52,7 @@ class InstallCommand extends Command
 
     public function handle()
     {
-        if ($this->startWith) {
+        if ($this->startWith instanceof Closure) {
             ($this->startWith)($this);
         }
 
@@ -88,7 +90,7 @@ class InstallCommand extends Command
             } else {
                 $this->error('Please install the dependencies first.');
 
-                return;
+                return null;
             }
         } elseif ($this->installDependencies) {
             $this->info("🚀 Installing <comment>{$this->package->shortName()}</comment> dependencies...");
@@ -139,19 +141,16 @@ class InstallCommand extends Command
             $this->copyServiceProviderInApp();
         }
 
-        if ($this->starRepo) {
-            if ($this->confirm('Would you like to star our repo on GitHub?')) {
-                $repoUrl = "https://github.com/{$this->starRepo}";
-
-                if (PHP_OS_FAMILY == 'Darwin') {
-                    exec("open {$repoUrl}");
-                }
-                if (PHP_OS_FAMILY == 'Windows') {
-                    exec("start {$repoUrl}");
-                }
-                if (PHP_OS_FAMILY == 'Linux') {
-                    exec("xdg-open {$repoUrl}");
-                }
+        if ($this->starRepo && $this->confirm('Would you like to star our repo on GitHub?')) {
+            $repoUrl = "https://github.com/{$this->starRepo}";
+            if (PHP_OS_FAMILY === 'Darwin') {
+                exec("open {$repoUrl}");
+            }
+            if (PHP_OS_FAMILY === 'Windows') {
+                exec("start {$repoUrl}");
+            }
+            if (PHP_OS_FAMILY === 'Linux') {
+                exec("xdg-open {$repoUrl}");
             }
         }
 
@@ -163,11 +162,13 @@ class InstallCommand extends Command
             $package->dependencies()->syncWithoutDetaching($dependency);
         }
 
-        if ($this->endWith) {
+        if ($this->endWith instanceof Closure) {
             ($this->endWith)($this);
         }
 
         $this->info("🎉 Package <comment>{$this->package->shortName()}</comment> has been installed!");
+
+        return null;
     }
 
     public function publish(string ...$tag): self
@@ -352,21 +353,21 @@ class InstallCommand extends Command
         return $this;
     }
 
-    public function askToStarRepoOnGitHub($vendorSlashRepoName): self
+    public function askToStarRepoOnGitHub(?string $vendorSlashRepoName): self
     {
         $this->starRepo = $vendorSlashRepoName;
 
         return $this;
     }
 
-    public function startWith($callable): self
+    public function startWith(?Closure $callable): self
     {
         $this->startWith = $callable;
 
         return $this;
     }
 
-    public function endWith($callable): self
+    public function endWith(?Closure $callable): self
     {
         $this->endWith = $callable;
 
@@ -380,11 +381,11 @@ class InstallCommand extends Command
             ->exists();
     }
 
-    protected function copyServiceProviderInApp(): self
+    private function copyServiceProviderInApp(): self
     {
         $providerName = $this->package->publishableProviderName;
 
-        if (! $providerName) {
+        if ($providerName === null || $providerName === '' || $providerName === '0') {
             return $this;
         }
 
@@ -392,7 +393,7 @@ class InstallCommand extends Command
 
         $namespace = Str::replaceLast('\\', '', $this->laravel->getNamespace());
 
-        if (intval(app()->version()) < 11 || ! file_exists(base_path('bootstrap/providers.php'))) {
+        if ((int) (app()->version()) < 11 || ! file_exists(base_path('bootstrap/providers.php'))) {
             $appConfig = file_get_contents(config_path('app.php'));
         } else {
             $appConfig = file_get_contents(base_path('bootstrap/providers.php'));
@@ -404,7 +405,7 @@ class InstallCommand extends Command
             return $this;
         }
 
-        if (intval(app()->version()) < 11 || ! file_exists(base_path('bootstrap/providers.php'))) {
+        if ((int) (app()->version()) < 11 || ! file_exists(base_path('bootstrap/providers.php'))) {
             file_put_contents(config_path('app.php'), str_replace(
                 "{$namespace}\\Providers\\BroadcastServiceProvider::class,",
                 "{$namespace}\\Providers\\BroadcastServiceProvider::class,".PHP_EOL."        {$namespace}{$class},",

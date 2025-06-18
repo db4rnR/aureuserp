@@ -62,30 +62,30 @@ return [
     ],
 
     'remove' => [
-        \SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class,
-        \SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
-        \PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer::class,
-        \SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff::class,
-        \SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
-        \NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,
-        \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class,
-        \PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff::class,
-        \SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff::class,
-        \SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class,
-        \PhpCsFixer\Fixer\Import\OrderedImportsFixer::class,
-        \PHP_CodeSniffer\Standards\PSR12\Sniffs\Files\FileHeaderSniff::class,
+        SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class,
+        SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
+        PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer::class,
+        SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff::class,
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
+        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class,
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff::class,
+        SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff::class,
+        SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class,
+        PhpCsFixer\Fixer\Import\OrderedImportsFixer::class,
+        PHP_CodeSniffer\Standards\PSR12\Sniffs\Files\FileHeaderSniff::class,
     ],
 
     'config' => [
-        \NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class => [
+        NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class => [
             'maxComplexity' => 10,
         ],
-        \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 120,
             'absoluteLineLimit' => 160,
             'ignoreComments' => true,
         ],
-        \PhpCsFixer\Fixer\Import\OrderedImportsFixer::class => [
+        PhpCsFixer\Fixer\Import\OrderedImportsFixer::class => [
             'imports_order' => ['class', 'function', 'const'],
             'sort_algorithm' => 'alpha',
         ],

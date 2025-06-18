@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Send By Email',
 
@@ -9,17 +11,17 @@ return [
 
     'form' => [
         'fields' => [
-            'partners'    => 'Partners',
-            'subject'     => 'Subject',
+            'partners' => 'Partners',
+            'subject' => 'Subject',
             'description' => 'Description',
-            'attachment'  => 'Attachment',
+            'attachment' => 'Attachment',
         ],
     ],
 
     'actions' => [
         'notification' => [
             'title' => 'Quotation sent',
-            'body'  => 'Quotation has been sent successfully.',
+            'body' => 'Quotation has been sent successfully.',
         ],
     ],
 ];

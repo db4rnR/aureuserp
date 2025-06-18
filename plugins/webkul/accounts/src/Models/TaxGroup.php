@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,9 +12,14 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 
-class TaxGroup extends Model implements Sortable
+final class TaxGroup extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'accounts_tax_groups';
 
@@ -23,11 +30,6 @@ class TaxGroup extends Model implements Sortable
         'creator_id',
         'name',
         'preceding_subtotal',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function company()

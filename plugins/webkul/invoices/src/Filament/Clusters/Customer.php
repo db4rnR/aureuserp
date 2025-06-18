@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters;
 
+use BackedEnum;
 use Filament\Clusters\Cluster;
 
-class Customer extends Cluster
+final class Customer extends Cluster
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     public static function getNavigationLabel(): string
     {

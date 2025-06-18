@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class JournalAccount extends Model
+final class JournalAccount extends Model
 {
     protected $table = 'accounts_journal_accounts';
 

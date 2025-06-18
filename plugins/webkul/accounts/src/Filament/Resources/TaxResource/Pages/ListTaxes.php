@@ -1,31 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\TaxResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Webkul\Account\Enums\TypeTaxUse;
-use Webkul\Account\Enums\TaxScope;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\TaxScope;
+use Webkul\Account\Enums\TypeTaxUse;
 use Webkul\Account\Filament\Resources\TaxResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListTaxes extends ListRecords
+final class ListTaxes extends ListRecords
 {
     use HasTableViews;
 
     protected static string $resource = TaxResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
-        ];
-    }
 
     public function getPresetTableViews(): array
     {
@@ -60,6 +52,14 @@ class ListTaxes extends ListRecords
                 ->favorite()
                 ->label(__('accounts::filament/resources/tax/pages/list-tax.tabs.in-active'))
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('is_active', false)),
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make()
+                ->icon('heroicon-o-plus-circle'),
         ];
     }
 }

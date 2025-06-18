@@ -1,57 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\BulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
-use Filament\Schemas\Components\Grid;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\ViewPackage;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\EditPackage;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\ManageProducts;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\ManageOperations;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\RelationManagers\ProductsRelationManager;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\ListPackages;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\CreatePackage;
+use BackedEnum;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource;
 use Webkul\Inventory\Filament\Clusters\Products;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\RelationManagers;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\CreatePackage;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\EditPackage;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\ListPackages;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\ManageOperations;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\ManageProducts;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\ViewPackage;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\RelationManagers\ProductsRelationManager;
 use Webkul\Inventory\Models\Package;
 use Webkul\Inventory\Settings\OperationSettings;
 
-class PackageResource extends Resource
+final class PackageResource extends Resource
 {
     protected static ?string $model = Package::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cube';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cube';
 
     protected static ?string $cluster = Products::class;
 
@@ -59,7 +58,7 @@ class PackageResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function isDiscovered(): bool
     {
@@ -169,10 +168,10 @@ class PackageResource extends Resource
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make()
-                        ->action(function (Package $record) {
+                        ->action(function (Package $record): void {
                             try {
                                 $record->delete();
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('inventories::filament/clusters/products/resources/package.table.actions.delete.notification.error.title'))
@@ -194,13 +193,13 @@ class PackageResource extends Resource
                         ->label(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.print-without-content.label'))
                         ->icon('heroicon-o-printer')
                         ->action(function ($records) {
-                            $pdf = PDF::loadView('inventories::filament.clusters.products.packages.actions.print-without-content', [
+                            $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-without-content', [
                                 'records' => $records,
                             ]);
 
                             $pdf->setPaper('a4', 'portrait');
 
-                            return response()->streamDownload(function () use ($pdf) {
+                            return response()->streamDownload(function () use ($pdf): void {
                                 echo $pdf->output();
                             }, 'Package-Barcode.pdf');
                         }),
@@ -208,21 +207,21 @@ class PackageResource extends Resource
                         ->label(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.print-with-content.label'))
                         ->icon('heroicon-o-printer')
                         ->action(function ($records) {
-                            $pdf = PDF::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
+                            $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
                                 'records' => $records,
                             ]);
 
                             $pdf->setPaper('a4', 'portrait');
 
-                            return response()->streamDownload(function () use ($pdf) {
+                            return response()->streamDownload(function () use ($pdf): void {
                                 echo $pdf->output();
                             }, 'Package-Barcode.pdf');
                         }),
                     DeleteBulkAction::make()
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->delete());
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.delete.notification.error.title'))
@@ -326,11 +325,11 @@ class PackageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'      => ListPackages::route('/'),
-            'create'     => CreatePackage::route('/create'),
-            'edit'       => EditPackage::route('/{record}/edit'),
-            'view'       => ViewPackage::route('/{record}/view'),
-            'products'   => ManageProducts::route('/{record}/products'),
+            'index' => ListPackages::route('/'),
+            'create' => CreatePackage::route('/create'),
+            'edit' => EditPackage::route('/{record}/edit'),
+            'view' => ViewPackage::route('/{record}/view'),
+            'products' => ManageProducts::route('/{record}/products'),
             'operations' => ManageOperations::route('/{record}/operations'),
         ];
     }

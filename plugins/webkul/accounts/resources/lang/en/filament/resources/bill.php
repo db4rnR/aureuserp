@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Invoice',
 
@@ -9,26 +11,26 @@ return [
     ],
 
     'global-search' => [
-        'number'           => 'Number',
-        'customer'         => 'Customer',
-        'invoice-date'     => 'Invoice Date',
+        'number' => 'Number',
+        'customer' => 'Customer',
+        'invoice-date' => 'Invoice Date',
         'invoice-due-date' => 'Invoice Due Date',
     ],
 
     'form' => [
         'section' => [
             'general' => [
-                'title'  => 'General',
+                'title' => 'General',
                 'fields' => [
-                    'vendor-bill'       => 'Vendor Bill',
-                    'vendor'            => 'Vendor',
-                    'bill-date'         => 'Bill Date',
-                    'bill-reference'    => 'Bill Reference',
-                    'accounting-date'   => 'Accounting Date',
+                    'vendor-bill' => 'Vendor Bill',
+                    'vendor' => 'Vendor',
+                    'bill-date' => 'Bill Date',
+                    'bill-reference' => 'Bill Reference',
+                    'accounting-date' => 'Accounting Date',
                     'payment-reference' => 'Payment Reference',
-                    'recipient-bank'    => 'Recipient Bank',
-                    'due-date'          => 'Due Date',
-                    'payment-term'      => 'Payment Term',
+                    'recipient-bank' => 'Recipient Bank',
+                    'due-date' => 'Due Date',
+                    'payment-term' => 'Payment Term',
                 ],
             ],
         ],
@@ -39,47 +41,47 @@ return [
 
                 'repeater' => [
                     'products' => [
-                        'title'       => 'Products',
+                        'title' => 'Products',
                         'add-product' => 'Add Product',
 
                         'fields' => [
-                            'product'             => 'Product',
-                            'quantity'            => 'Quantity',
-                            'unit'                => 'Unit',
-                            'taxes'               => 'Taxes',
+                            'product' => 'Product',
+                            'quantity' => 'Quantity',
+                            'unit' => 'Unit',
+                            'taxes' => 'Taxes',
                             'discount-percentage' => 'Discount Percentage',
-                            'unit-price'          => 'Unit Price',
-                            'sub-total'           => 'Sub Total',
+                            'unit-price' => 'Unit Price',
+                            'sub-total' => 'Sub Total',
                         ],
                     ],
                 ],
             ],
 
             'other-information' => [
-                'title'    => 'Other Information',
+                'title' => 'Other Information',
                 'fieldset' => [
                     'accounting' => [
                         'title' => 'Accounting',
 
                         'fields' => [
-                            'incoterm'          => 'Incoterm',
+                            'incoterm' => 'Incoterm',
                             'incoterm-location' => 'Incoterm Location',
                         ],
                     ],
 
                     'secured' => [
-                        'title'  => 'Secured',
+                        'title' => 'Secured',
                         'fields' => [
                             'payment-method' => 'Payment Method',
-                            'auto-post'      => 'Auto Post',
-                            'checked'        => 'Checked',
+                            'auto-post' => 'Auto Post',
+                            'checked' => 'Checked',
                         ],
                     ],
 
                     'additional-information' => [
-                        'title'  => 'Additional Information',
+                        'title' => 'Additional Information',
                         'fields' => [
-                            'company'  => 'Company',
+                            'company' => 'Company',
                             'currency' => 'Currency',
                         ],
                     ],
@@ -95,17 +97,17 @@ return [
     'infolist' => [
         'section' => [
             'general' => [
-                'title'   => 'General',
+                'title' => 'General',
                 'entries' => [
-                    'vendor-invoice'    => 'Vendor Invoice',
-                    'vendor'            => 'Vendor',
-                    'bill-date'         => 'Bill Date',
-                    'bill-reference'    => 'Bill Reference',
-                    'accounting-date'   => 'Accounting Date',
+                    'vendor-invoice' => 'Vendor Invoice',
+                    'vendor' => 'Vendor',
+                    'bill-date' => 'Bill Date',
+                    'bill-reference' => 'Bill Reference',
+                    'accounting-date' => 'Accounting Date',
                     'payment-reference' => 'Payment Reference',
-                    'recipient-bank'    => 'Recipient Bank',
-                    'due-date'          => 'Due Date',
-                    'payment-term'      => 'Payment Term',
+                    'recipient-bank' => 'Recipient Bank',
+                    'due-date' => 'Due Date',
+                    'payment-term' => 'Payment Term',
                 ],
             ],
         ],
@@ -116,47 +118,47 @@ return [
 
                 'repeater' => [
                     'products' => [
-                        'title'       => 'Products',
+                        'title' => 'Products',
                         'add-product' => 'Add Product',
 
                         'entries' => [
-                            'product'             => 'Product',
-                            'quantity'            => 'Quantity',
-                            'unit'                => 'Unit',
-                            'taxes'               => 'Taxes',
+                            'product' => 'Product',
+                            'quantity' => 'Quantity',
+                            'unit' => 'Unit',
+                            'taxes' => 'Taxes',
                             'discount-percentage' => 'Discount Percentage',
-                            'unit-price'          => 'Unit Price',
-                            'sub-total'           => 'Sub Total',
+                            'unit-price' => 'Unit Price',
+                            'sub-total' => 'Sub Total',
                         ],
                     ],
                 ],
             ],
 
             'other-information' => [
-                'title'    => 'Other Information',
+                'title' => 'Other Information',
                 'fieldset' => [
                     'accounting' => [
                         'title' => 'Accounting',
 
                         'entries' => [
-                            'incoterm'          => 'Incoterm',
+                            'incoterm' => 'Incoterm',
                             'incoterm-location' => 'Incoterm Location',
                         ],
                     ],
 
                     'secured' => [
-                        'title'   => 'Secured',
+                        'title' => 'Secured',
                         'entries' => [
                             'payment-method' => 'Payment Method',
-                            'auto-post'      => 'Auto Post',
-                            'checked'        => 'Checked',
+                            'auto-post' => 'Auto Post',
+                            'checked' => 'Checked',
                         ],
                     ],
 
                     'additional-information' => [
-                        'title'   => 'Additional Information',
+                        'title' => 'Additional Information',
                         'entries' => [
-                            'company'  => 'Company',
+                            'company' => 'Company',
                             'currency' => 'Currency',
                         ],
                     ],

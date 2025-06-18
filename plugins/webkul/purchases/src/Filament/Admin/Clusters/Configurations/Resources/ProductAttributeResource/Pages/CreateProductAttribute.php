@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource\Pages;
 
 use Webkul\Product\Filament\Resources\AttributeResource\Pages\CreateAttribute;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource;
 
-class CreateProductAttribute extends CreateAttribute
+final class CreateProductAttribute extends CreateAttribute
 {
     protected static string $resource = ProductAttributeResource::class;
 }

@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup\Components;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Actions\Action;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,7 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\Models\BackupDestination;
 use Spatie\Backup\BackupDestination\Backup;
 use Spatie\Backup\BackupDestination\BackupDestination as SpatieBackupDestination;
 
-class BackupDestinationListRecords extends Component implements HasForms, HasTable
+final class BackupDestinationListRecords extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
@@ -82,7 +83,7 @@ class BackupDestinationListRecords extends Component implements HasForms, HasTab
                     ->requiresConfirmation()
                     ->color('danger')
                     ->modalIcon('heroicon-o-trash')
-                    ->action(function (BackupDestination $record) {
+                    ->action(function (BackupDestination $record): void {
                         SpatieBackupDestination::create($record->disk, config('backup.backup.name'))
                             ->backups()
                             ->first(function (Backup $backup) use ($record) {

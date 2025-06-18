@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers;
 
-use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Partner\Filament\Resources\AddressResource;
 
-class AddressesRelationManager extends RelationManager
+final class AddressesRelationManager extends RelationManager
 {
     protected static string $relationship = 'addresses';
 

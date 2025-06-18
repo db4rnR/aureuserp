@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Product updated',
-        'body'  => 'The product has been updated successfully.',
+        'body' => 'The product has been updated successfully.',
     ],
 
     'header-actions' => [
         'update-quantity' => [
-            'label'                     => 'Update Quantity',
-            'modal-heading'             => 'Update Product Quantity',
+            'label' => 'Update Quantity',
+            'modal-heading' => 'Update Product Quantity',
             'modal-submit-action-label' => 'Update',
 
             'form' => [
@@ -22,7 +24,7 @@ return [
         'delete' => [
             'notification' => [
                 'title' => 'Product deleted',
-                'body'  => 'The product has been deleted successfully.',
+                'body' => 'The product has been deleted successfully.',
             ],
         ],
     ],

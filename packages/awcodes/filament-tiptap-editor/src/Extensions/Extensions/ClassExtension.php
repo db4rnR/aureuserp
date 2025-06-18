@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Extensions;
 
 use Tiptap\Core\Extension;
 
-class ClassExtension extends Extension
+final class ClassExtension extends Extension
 {
     public static $name = 'classExtension';
 

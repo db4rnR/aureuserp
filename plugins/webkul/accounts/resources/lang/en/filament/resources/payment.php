@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Payment',
 
@@ -11,13 +13,13 @@ return [
     'form' => [
         'sections' => [
             'fields' => [
-                'payment-type'          => 'Payment Type',
-                'memo'                  => 'Memo',
-                'date'                  => 'Date',
-                'amount'                => 'Amount',
-                'payment-method'        => 'Payment Method',
-                'customer'              => 'Customer',
-                'journal'               => 'Journal',
+                'payment-type' => 'Payment Type',
+                'memo' => 'Memo',
+                'date' => 'Date',
+                'amount' => 'Amount',
+                'payment-method' => 'Payment Method',
+                'customer' => 'Customer',
+                'journal' => 'Journal',
                 'customer-bank-account' => 'Customer Bank Account',
             ],
         ],
@@ -25,49 +27,49 @@ return [
 
     'table' => [
         'columns' => [
-            'name'                             => 'Name',
-            'company'                          => 'Company',
-            'bank-account-holder'              => 'Bank Account Holder',
+            'name' => 'Name',
+            'company' => 'Company',
+            'bank-account-holder' => 'Bank Account Holder',
             'paired-internal-transfer-payment' => 'Paired Internal Transfer Payment',
-            'payment-method-line'              => 'Payment Method Line',
-            'payment-method'                   => 'Payment Method',
-            'currency'                         => 'Currency',
-            'partner'                          => 'Partner',
-            'outstanding-amount'               => 'Outstanding Amount',
-            'destination-account'              => 'Destination Account',
-            'created-by'                       => 'Created By',
-            'payment-transaction'              => 'Payment Transaction',
+            'payment-method-line' => 'Payment Method Line',
+            'payment-method' => 'Payment Method',
+            'currency' => 'Currency',
+            'partner' => 'Partner',
+            'outstanding-amount' => 'Outstanding Amount',
+            'destination-account' => 'Destination Account',
+            'created-by' => 'Created By',
+            'payment-transaction' => 'Payment Transaction',
         ],
 
         'groups' => [
-            'name'                             => 'Name',
-            'company'                          => 'Company',
-            'partner'                          => 'Partner',
-            'payment-method-line'              => 'Payment Method Line',
-            'payment-method'                   => 'Payment Method',
-            'partner-bank-account'             => 'Partner Bank Account',
+            'name' => 'Name',
+            'company' => 'Company',
+            'partner' => 'Partner',
+            'payment-method-line' => 'Payment Method Line',
+            'payment-method' => 'Payment Method',
+            'partner-bank-account' => 'Partner Bank Account',
             'paired-internal-transfer-payment' => 'Paired Internal Transfer Payment',
-            'created-at'                       => 'Created At',
-            'updated-at'                       => 'Updated At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'filters' => [
-            'company'                          => 'Company',
-            'customer-bank-account'            => 'Customer Bank Account',
+            'company' => 'Company',
+            'customer-bank-account' => 'Customer Bank Account',
             'paired-internal-transfer-payment' => 'Paired Internal Transfer Payment',
-            'payment-method'                   => 'Payment Method',
-            'currency'                         => 'Currency',
-            'partner'                          => 'Partner',
-            'partner-method-line'              => 'Partner Method Line',
-            'created-at'                       => 'Created At',
-            'updated-at'                       => 'Updated At',
+            'payment-method' => 'Payment Method',
+            'currency' => 'Currency',
+            'partner' => 'Partner',
+            'partner-method-line' => 'Partner Method Line',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'actions' => [
             'delete' => [
                 'notification' => [
                     'title' => 'Payment deleted',
-                    'body'  => 'The payment has been deleted successfully.',
+                    'body' => 'The payment has been deleted successfully.',
                 ],
             ],
         ],
@@ -76,7 +78,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Payments deleted',
-                    'body'  => 'The payments has been deleted successfully.',
+                    'body' => 'The payments has been deleted successfully.',
                 ],
             ],
         ],
@@ -85,27 +87,27 @@ return [
     'infolist' => [
         'sections' => [
             'payment-information' => [
-                'title'   => 'Payment Information',
+                'title' => 'Payment Information',
                 'entries' => [
-                    'state'                 => 'State',
-                    'payment-type'          => 'Payment Type',
-                    'journal'               => 'Journal',
+                    'state' => 'State',
+                    'payment-type' => 'Payment Type',
+                    'journal' => 'Journal',
                     'customer-bank-account' => 'Customer Bank Account',
-                    'customer'              => 'Customer',
+                    'customer' => 'Customer',
                 ],
             ],
 
             'payment-details' => [
-                'title'   => 'Payment Details',
+                'title' => 'Payment Details',
                 'entries' => [
                     'amount' => 'Amount',
-                    'date'   => 'Date',
-                    'memo'   => 'Memo',
+                    'date' => 'Date',
+                    'memo' => 'Memo',
                 ],
             ],
 
             'payment-method' => [
-                'title'   => 'Payment Method',
+                'title' => 'Payment Method',
                 'entries' => [
                     'payment-method' => 'Payment Method',
                 ],

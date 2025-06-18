@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyAllocationResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -8,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyAllocationResource;
 
-class CreateMyAllocation extends CreateRecord
+final class CreateMyAllocation extends CreateRecord
 {
     protected static string $resource = MyAllocationResource::class;
 

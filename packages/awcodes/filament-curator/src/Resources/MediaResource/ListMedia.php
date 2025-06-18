@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Resources\MediaResource;
 
 use Awcodes\Curator\Actions\MultiUploadAction;
@@ -10,9 +12,19 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Str;
 
-class ListMedia extends ListRecords
+final class ListMedia extends ListRecords
 {
     public string $layoutView;
+
+    protected $listeners = [
+        'changeLayoutView' => 'changeLayoutView',
+        'layoutViewChanged' => '$refresh',
+    ];
+
+    public static function getResource(): string
+    {
+        return CuratorPlugin::get()->getResource();
+    }
 
     public function mount(): void
     {
@@ -20,20 +32,10 @@ class ListMedia extends ListRecords
         $this->layoutView = CuratorPlugin::get()->getDefaultListView();
     }
 
-    protected $listeners = [
-        'changeLayoutView' => 'changeLayoutView',
-        'layoutViewChanged' => '$refresh',
-    ];
-
     public function changeLayoutView(): void
     {
         $this->layoutView = $this->layoutView === 'list' ? 'grid' : 'list';
         $this->dispatch('layoutViewChanged', $this->layoutView);
-    }
-
-    public static function getResource(): string
-    {
-        return CuratorPlugin::get()->getResource();
     }
 
     public function getTitle(): string

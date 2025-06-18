@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -19,24 +21,6 @@ enum CarryoverMonth: string implements HasLabel
     case NOV = 'nov';
     case DEC = 'dec';
 
-    public function getLabel(): ?string
-    {
-        return match ($this) {
-            self::JAN => __('time-off::enums/carry-over-month.jan'),
-            self::FEB => __('time-off::enums/carry-over-month.feb'),
-            self::MAR => __('time-off::enums/carry-over-month.mar'),
-            self::APR => __('time-off::enums/carry-over-month.apr'),
-            self::MAY => __('time-off::enums/carry-over-month.may'),
-            self::JUN => __('time-off::enums/carry-over-month.jun'),
-            self::JUL => __('time-off::enums/carry-over-month.jul'),
-            self::AUG => __('time-off::enums/carry-over-month.aug'),
-            self::SEP => __('time-off::enums/carry-over-month.sep'),
-            self::OCT => __('time-off::enums/carry-over-month.oct'),
-            self::NOV => __('time-off::enums/carry-over-month.nov'),
-            self::DEC => __('time-off::enums/carry-over-month.dec'),
-        };
-    }
-
     public static function options(): array
     {
         return [
@@ -53,5 +37,23 @@ enum CarryoverMonth: string implements HasLabel
             self::NOV->value => __('time-off::enums/carry-over-month.nov'),
             self::DEC->value => __('time-off::enums/carry-over-month.dec'),
         ];
+    }
+
+    public function getLabel(): ?string
+    {
+        return match ($this) {
+            self::JAN => __('time-off::enums/carry-over-month.jan'),
+            self::FEB => __('time-off::enums/carry-over-month.feb'),
+            self::MAR => __('time-off::enums/carry-over-month.mar'),
+            self::APR => __('time-off::enums/carry-over-month.apr'),
+            self::MAY => __('time-off::enums/carry-over-month.may'),
+            self::JUN => __('time-off::enums/carry-over-month.jun'),
+            self::JUL => __('time-off::enums/carry-over-month.jul'),
+            self::AUG => __('time-off::enums/carry-over-month.aug'),
+            self::SEP => __('time-off::enums/carry-over-month.sep'),
+            self::OCT => __('time-off::enums/carry-over-month.oct'),
+            self::NOV => __('time-off::enums/carry-over-month.nov'),
+            self::DEC => __('time-off::enums/carry-over-month.dec'),
+        };
     }
 }

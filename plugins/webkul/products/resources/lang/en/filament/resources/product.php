@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
         'sections' => [
@@ -7,10 +9,10 @@ return [
                 'title' => 'General',
 
                 'fields' => [
-                    'name'             => 'Name',
+                    'name' => 'Name',
                     'name-placeholder' => 'eg. T-shirt',
-                    'description'      => 'Description',
-                    'tags'             => 'Tags',
+                    'description' => 'Description',
+                    'tags' => 'Tags',
                 ],
             ],
 
@@ -39,11 +41,11 @@ return [
                 'title' => 'Settings',
 
                 'fields' => [
-                    'type'      => 'Type',
+                    'type' => 'Type',
                     'reference' => 'Reference',
-                    'barcode'   => 'Barcode',
-                    'category'  => 'Category',
-                    'company'   => 'Company',
+                    'barcode' => 'Barcode',
+                    'category' => 'Category',
+                    'company' => 'Company',
                 ],
             ],
 
@@ -52,7 +54,7 @@ return [
 
                 'fields' => [
                     'price' => 'Price',
-                    'cost'  => 'Cost',
+                    'cost' => 'Cost',
                 ],
             ],
 
@@ -64,61 +66,61 @@ return [
 
     'table' => [
         'columns' => [
-            'name'        => 'Name',
-            'variants'    => 'Variants',
-            'images'      => 'Images',
-            'type'        => 'Type',
-            'reference'   => 'Reference',
+            'name' => 'Name',
+            'variants' => 'Variants',
+            'images' => 'Images',
+            'type' => 'Type',
+            'reference' => 'Reference',
             'responsible' => 'Responsible',
-            'barcode'     => 'Barcode',
-            'category'    => 'Category',
-            'company'     => 'Company',
-            'price'       => 'Price',
-            'cost'        => 'Cost',
-            'on-hand'     => 'On Hand',
-            'tags'        => 'Tags',
-            'deleted-at'  => 'Deleted At',
-            'created-at'  => 'Created At',
-            'updated-at'  => 'Updated At',
+            'barcode' => 'Barcode',
+            'category' => 'Category',
+            'company' => 'Company',
+            'price' => 'Price',
+            'cost' => 'Cost',
+            'on-hand' => 'On Hand',
+            'tags' => 'Tags',
+            'deleted-at' => 'Deleted At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'type'       => 'Type',
-            'category'   => 'Category',
+            'type' => 'Type',
+            'category' => 'Category',
             'created-at' => 'Created At',
         ],
 
         'filters' => [
-            'name'        => 'Name',
-            'type'        => 'Type',
-            'reference'   => 'Reference',
-            'barcode'     => 'Barcode',
-            'category'    => 'Category',
-            'company'     => 'Company',
-            'price'       => 'Price',
-            'cost'        => 'Cost',
+            'name' => 'Name',
+            'type' => 'Type',
+            'reference' => 'Reference',
+            'barcode' => 'Barcode',
+            'category' => 'Category',
+            'company' => 'Company',
+            'price' => 'Price',
+            'cost' => 'Cost',
             'is-favorite' => 'Is Favorite',
-            'weight'      => 'Weight',
-            'volume'      => 'Volume',
-            'tags'        => 'Tags',
+            'weight' => 'Weight',
+            'volume' => 'Volume',
+            'tags' => 'Tags',
             'responsible' => 'Responsible',
-            'created-at'  => 'Created At',
-            'updated-at'  => 'Updated At',
-            'creator'     => 'Creator',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
+            'creator' => 'Creator',
         ],
 
         'actions' => [
             'restore' => [
                 'notification' => [
                     'title' => 'Product restored',
-                    'body'  => 'The product has been restored successfully.',
+                    'body' => 'The product has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Product deleted',
-                    'body'  => 'The product has been deleted successfully.',
+                    'body' => 'The product has been deleted successfully.',
                 ],
             ],
 
@@ -126,12 +128,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Product force deleted',
-                        'body'  => 'The product has been force deleted successfully.',
+                        'body' => 'The product has been force deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Product could not be deleted',
-                        'body'  => 'The product cannot be deleted because it is currently in use.',
+                        'body' => 'The product cannot be deleted because it is currently in use.',
                     ],
                 ],
             ],
@@ -144,13 +146,13 @@ return [
                 'form' => [
                     'fields' => [
                         'quantity' => 'Number of Labels',
-                        'format'   => 'Format',
+                        'format' => 'Format',
 
                         'format-options' => [
-                            'dymo'       => 'Dymo',
-                            '2x7_price'  => '2x7 with price',
-                            '4x7_price'  => '4x7 with price',
-                            '4x12'       => '4x12',
+                            'dymo' => 'Dymo',
+                            '2x7_price' => '2x7 with price',
+                            '4x7_price' => '4x7 with price',
+                            '4x12' => '4x12',
                             '4x12_price' => '4x12 with price',
                         ],
                     ],
@@ -160,14 +162,14 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Products restored',
-                    'body'  => 'The products has been restored successfully.',
+                    'body' => 'The products has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Products deleted',
-                    'body'  => 'The products has been deleted successfully.',
+                    'body' => 'The products has been deleted successfully.',
                 ],
             ],
 
@@ -175,12 +177,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Products force deleted',
-                        'body'  => 'The products has been force deleted successfully.',
+                        'body' => 'The products has been force deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Products could not be deleted',
-                        'body'  => 'The products cannot be deleted because they are currently in use.',
+                        'body' => 'The products cannot be deleted because they are currently in use.',
                     ],
                 ],
             ],
@@ -193,10 +195,10 @@ return [
                 'title' => 'General',
 
                 'entries' => [
-                    'name'             => 'Name',
+                    'name' => 'Name',
                     'name-placeholder' => 'eg. T-shirt',
-                    'description'      => 'Description',
-                    'tags'             => 'Tags',
+                    'description' => 'Description',
+                    'tags' => 'Tags',
                 ],
             ],
 
@@ -210,11 +212,11 @@ return [
                 'title' => 'Settings',
 
                 'entries' => [
-                    'type'      => 'Type',
+                    'type' => 'Type',
                     'reference' => 'Reference',
-                    'barcode'   => 'Barcode',
-                    'category'  => 'Category',
-                    'company'   => 'Company',
+                    'barcode' => 'Barcode',
+                    'category' => 'Category',
+                    'company' => 'Company',
                 ],
             ],
 
@@ -223,7 +225,7 @@ return [
 
                 'entries' => [
                     'price' => 'Price',
-                    'cost'  => 'Cost',
+                    'cost' => 'Cost',
                 ],
             ],
 

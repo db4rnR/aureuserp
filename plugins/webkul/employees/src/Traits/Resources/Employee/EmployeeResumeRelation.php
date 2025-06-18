@@ -1,35 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Traits\Resources\Employee;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Hidden;
 use Filament\Actions\Action;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\DatePicker;
-use Webkul\Employee\Enums\ResumeDisplayType;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\Filter;
-use Filament\Actions\CreateAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Employee\Enums;
+use Webkul\Employee\Enums\ResumeDisplayType;
 
 trait EmployeeResumeRelation
 {
@@ -61,12 +60,10 @@ trait EmployeeResumeRelation
                                         ->required(),
                                 ])->columns(2),
                         ])
-                        ->createOptionAction(function (Action $action) {
-                            return $action
-                                ->modalHeading(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.create-type'))
-                                ->modalSubmitActionLabel(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.create-type'))
-                                ->modalWidth('2xl');
-                        }),
+                        ->createOptionAction(fn (Action $action): Action => $action
+                            ->modalHeading(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.create-type'))
+                            ->modalSubmitActionLabel(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.create-type'))
+                            ->modalWidth('2xl')),
                     Fieldset::make(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.duration'))
                         ->schema([
                             DatePicker::make('start_date')
@@ -74,7 +71,7 @@ trait EmployeeResumeRelation
                                 ->required()
                                 ->native(false)
                                 ->reactive(),
-                            Forms\Components\Datepicker::make('end_date')
+                            DatePicker::make('end_date')
                                 ->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.end-date'))
                                 ->native(false)
                                 ->reactive(),
@@ -157,17 +154,15 @@ trait EmployeeResumeRelation
                         DatePicker::make('end')
                             ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.start-date-to')),
                     ])
-                    ->query(function ($query, array $data) {
-                        return $query
-                            ->when(
-                                $data['start'],
-                                fn ($query, $start) => $query->whereDate('start_date', '>=', $start)
-                            )
-                            ->when(
-                                $data['end'],
-                                fn ($query, $end) => $query->whereDate('start_date', '<=', $end)
-                            );
-                    }),
+                    ->query(fn ($query, array $data) => $query
+                        ->when(
+                            $data['start'],
+                            fn ($query, $start) => $query->whereDate('start_date', '>=', $start)
+                        )
+                        ->when(
+                            $data['end'],
+                            fn ($query, $end) => $query->whereDate('start_date', '<=', $end)
+                        )),
 
                 Filter::make('created_at')
                     ->schema([
@@ -176,17 +171,15 @@ trait EmployeeResumeRelation
                         DatePicker::make('to')
                             ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.created-to')),
                     ])
-                    ->query(function ($query, array $data) {
-                        return $query
-                            ->when(
-                                $data['from'],
-                                fn ($query, $from) => $query->whereDate('created_at', '>=', $from)
-                            )
-                            ->when(
-                                $data['to'],
-                                fn ($query, $to) => $query->whereDate('created_at', '<=', $to)
-                            );
-                    }),
+                    ->query(fn ($query, array $data) => $query
+                        ->when(
+                            $data['from'],
+                            fn ($query, $from) => $query->whereDate('created_at', '>=', $from)
+                        )
+                        ->when(
+                            $data['to'],
+                            fn ($query, $to) => $query->whereDate('created_at', '<=', $to)
+                        )),
             ])
             ->headerActions([
                 CreateAction::make()

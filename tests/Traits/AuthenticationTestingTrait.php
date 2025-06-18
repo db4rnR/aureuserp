@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Traits;
 
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -10,21 +12,17 @@ trait AuthenticationTestingTrait
 {
     /**
      * The currently authenticated user.
-     *
-     * @var Authenticatable|null
      */
     protected ?Authenticatable $user = null;
 
     /**
      * Act as a user.
      *
-     * @param Authenticatable|null $user
-     * @param string|null $guard
      * @return $this
      */
     protected function actingAs(?Authenticatable $user = null, ?string $guard = null): self
     {
-        $this->user = $user ?: User::factory()->create();
+        $this->user = $user instanceof Authenticatable ? $user : User::factory()->create();
 
         $this->be($this->user, $guard);
 
@@ -34,8 +32,6 @@ trait AuthenticationTestingTrait
     /**
      * Act as an admin user.
      *
-     * @param array $attributes
-     * @param string|null $guard
      * @return $this
      */
     protected function actingAsAdmin(array $attributes = [], ?string $guard = null): self
@@ -65,12 +61,10 @@ trait AuthenticationTestingTrait
 
     /**
      * Get a bearer token for the current user.
-     *
-     * @return string
      */
     protected function getBearerToken(): string
     {
-        if (!$this->user) {
+        if (! $this->user) {
             $this->actingAs();
         }
 
@@ -81,8 +75,6 @@ trait AuthenticationTestingTrait
 
     /**
      * Get authorization headers for the current user.
-     *
-     * @return array
      */
     protected function getAuthHeaders(): array
     {
@@ -94,9 +86,6 @@ trait AuthenticationTestingTrait
 
     /**
      * Assert that the user is authenticated.
-     *
-     * @param string|null $guard
-     * @return void
      */
     protected function assertAuthenticated(?string $guard = null): void
     {
@@ -105,9 +94,6 @@ trait AuthenticationTestingTrait
 
     /**
      * Assert that the user is not authenticated.
-     *
-     * @param string|null $guard
-     * @return void
      */
     protected function assertGuest(?string $guard = null): void
     {
@@ -116,10 +102,6 @@ trait AuthenticationTestingTrait
 
     /**
      * Assert that the current user is the given user.
-     *
-     * @param Authenticatable $user
-     * @param string|null $guard
-     * @return void
      */
     protected function assertAuthenticatedAs(Authenticatable $user, ?string $guard = null): void
     {
@@ -132,9 +114,7 @@ trait AuthenticationTestingTrait
     /**
      * Assert that the user has the given ability.
      *
-     * @param string $ability
-     * @param array|mixed $arguments
-     * @return void
+     * @param  array|mixed  $arguments
      */
     protected function assertCan(string $ability, $arguments = []): void
     {
@@ -147,9 +127,7 @@ trait AuthenticationTestingTrait
     /**
      * Assert that the user does not have the given ability.
      *
-     * @param string $ability
-     * @param array|mixed $arguments
-     * @return void
+     * @param  array|mixed  $arguments
      */
     protected function assertCannot(string $ability, $arguments = []): void
     {
@@ -162,8 +140,7 @@ trait AuthenticationTestingTrait
     /**
      * Assert that the response requires authentication.
      *
-     * @param \Illuminate\Testing\TestResponse $response
-     * @return void
+     * @param  \Illuminate\Testing\TestResponse  $response
      */
     protected function assertResponseRequiresAuthentication($response): void
     {
@@ -173,8 +150,7 @@ trait AuthenticationTestingTrait
     /**
      * Assert that the response requires authorization.
      *
-     * @param \Illuminate\Testing\TestResponse $response
-     * @return void
+     * @param  \Illuminate\Testing\TestResponse  $response
      */
     protected function assertResponseRequiresAuthorization($response): void
     {

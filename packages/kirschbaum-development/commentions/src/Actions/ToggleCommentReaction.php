@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Actions;
 
 use Kirschbaum\Commentions\Comment;
@@ -8,7 +10,7 @@ use Kirschbaum\Commentions\Config;
 use Kirschbaum\Commentions\Contracts\Commenter;
 use Kirschbaum\Commentions\Events\CommentWasReactedEvent;
 
-class ToggleCommentReaction
+final class ToggleCommentReaction
 {
     public static function run(Comment $comment, string $reaction, ?Commenter $user = null): void
     {
@@ -16,7 +18,7 @@ class ToggleCommentReaction
             return;
         }
 
-        if (! in_array($reaction, Config::getAllowedReactions())) {
+        if (! in_array($reaction, Config::getAllowedReactions(), true)) {
             return;
         }
 

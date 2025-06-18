@@ -1,7 +1,9 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Product\Models\Packaging;
 use Webkul\Product\Models\Product;
 use Webkul\Security\Models\User;
@@ -11,7 +13,7 @@ use Webkul\Support\Models\Company;
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Packaging model attributes and properties')]
-function packaging_model_attributes_and_properties()
+function packaging_model_attributes_and_properties(): void
 {
     // Create a test packaging
     $packaging = Packaging::factory()->create([
@@ -28,16 +30,16 @@ function packaging_model_attributes_and_properties()
     expect($packaging->sort)->toBe(1);
 
     // Test relationships
-    expect($packaging->product())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($packaging->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($packaging->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($packaging->product())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($packaging->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($packaging->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Packaging model relationships with other models')]
-function packaging_model_relationships_with_other_models()
+function packaging_model_relationships_with_other_models(): void
 {
     // Create related models
     $product = Product::factory()->create(['name' => 'Test Product']);
@@ -62,16 +64,16 @@ function packaging_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Packaging model traits and interfaces')]
-function packaging_model_traits_and_interfaces()
+function packaging_model_traits_and_interfaces(): void
 {
     // Create a test packaging
     $packaging = Packaging::factory()->create();
 
     // Test that the model uses the expected traits and implements interfaces
-    expect($packaging)->toBeInstanceOf(\Spatie\EloquentSortable\Sortable::class);
+    expect($packaging)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
 
     // Test sortable configuration
-    $sortable = (new \ReflectionClass($packaging))->getProperty('sortable')->getValue($packaging);
+    $sortable = new ReflectionClass($packaging)->getProperty('sortable')->getValue($packaging);
     expect($sortable)->toBeArray();
     expect($sortable)->toHaveKey('order_column_name');
     expect($sortable['order_column_name'])->toBe('sort');
@@ -83,7 +85,7 @@ function packaging_model_traits_and_interfaces()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Packaging model with soft deleted product')]
-function packaging_model_with_soft_deleted_product()
+function packaging_model_with_soft_deleted_product(): void
 {
     // Create a product
     $product = Product::factory()->create(['name' => 'Test Product']);

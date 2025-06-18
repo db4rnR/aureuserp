@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DegreeResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DegreeResource;
 
-class ListDegrees extends ListRecords
+final class ListDegrees extends ListRecords
 {
     protected static string $resource = DegreeResource::class;
 

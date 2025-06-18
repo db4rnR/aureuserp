@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Actions;
 
-class ParseComment
+final class ParseComment
 {
     public function __invoke(string $body)
     {
@@ -11,7 +13,12 @@ class ParseComment
         return $body;
     }
 
-    protected function parseMentions(string $body)
+    public static function run(...$args)
+    {
+        return (new self())(...$args);
+    }
+
+    private function parseMentions(string $body)
     {
         return preg_replace_callback(
             // 1) Match <span>
@@ -34,10 +41,5 @@ class ParseComment
             },
             $body
         );
-    }
-
-    public static function run(...$args)
-    {
-        return (new static())(...$args);
     }
 }

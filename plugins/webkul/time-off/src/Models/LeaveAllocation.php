@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +13,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class LeaveAllocation extends Model
+final class LeaveAllocation extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 
@@ -46,32 +48,32 @@ class LeaveAllocation extends Model
     ];
 
     protected array $logAttributes = [
-        'holidayStatus.name'                => 'Time Off Type',
-        'employee.name'                     => 'Employee',
-        'employeeCompany.name'              => 'Employee Company',
-        'approver.name'                     => 'Approver',
-        'secondApprover.name'               => 'Second Approver',
-        'department.name'                   => 'Department',
-        'accrualPlan.name'                  => 'Accrual Plan',
-        'createdBy.name'                    => 'Created By',
-        'name'                              => 'Name',
-        'state'                             => 'State',
-        'allocation_type'                   => 'Allocation Type',
-        'date_from'                         => 'Date From',
-        'date_to'                           => 'Date To',
-        'last_executed_carryover_date'      => 'Last Executed Carryover Date',
-        'last_called'                       => 'Last Called',
-        'actual_last_called'                => 'Actual Last Called',
-        'next_call'                         => 'Next Call',
+        'holidayStatus.name' => 'Time Off Type',
+        'employee.name' => 'Employee',
+        'employeeCompany.name' => 'Employee Company',
+        'approver.name' => 'Approver',
+        'secondApprover.name' => 'Second Approver',
+        'department.name' => 'Department',
+        'accrualPlan.name' => 'Accrual Plan',
+        'createdBy.name' => 'Created By',
+        'name' => 'Name',
+        'state' => 'State',
+        'allocation_type' => 'Allocation Type',
+        'date_from' => 'Date From',
+        'date_to' => 'Date To',
+        'last_executed_carryover_date' => 'Last Executed Carryover Date',
+        'last_called' => 'Last Called',
+        'actual_last_called' => 'Actual Last Called',
+        'next_call' => 'Next Call',
         'carried_over_days_expiration_date' => 'Carried Over Days Expiration Date',
-        'notes'                             => 'Notes',
-        'already_accrued'                   => 'Already Accrued',
-        'number_of_days'                    => 'Number Of Days',
-        'number_of_hours_display'           => 'Number Of Hours Display',
-        'yearly_accrued_amount'             => 'Yearly Accrued Amount',
-        'expiring_carryover_days'           => 'Expiring Carryover Days',
-        'created_at'                        => 'Created At',
-        'updated_at'                        => 'Updated At',
+        'notes' => 'Notes',
+        'already_accrued' => 'Already Accrued',
+        'number_of_days' => 'Number Of Days',
+        'number_of_hours_display' => 'Number Of Hours Display',
+        'yearly_accrued_amount' => 'Yearly Accrued Amount',
+        'expiring_carryover_days' => 'Expiring Carryover Days',
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
     ];
 
     public function employee()

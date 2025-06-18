@@ -1,19 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\TagResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\TagResource;
 use Webkul\Blog\Models\Tag;
 
-class ManageTags extends ManageRecords
+final class ManageTags extends ManageRecords
 {
     protected static string $resource = TagResource::class;
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make(__('blogs::filament/admin/clusters/configurations/resources/tag/pages/manage-tags.tabs.all'))
+                ->badge(Tag::count()),
+            'archived' => Tab::make(__('blogs::filament/admin/clusters/configurations/resources/tag/pages/manage-tags.tabs.archived'))
+                ->badge(Tag::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
+        ];
+    }
 
     protected function getHeaderActions(): array
     {
@@ -33,19 +45,6 @@ class ManageTags extends ManageRecords
                         ->title(__('blogs::filament/admin/clusters/configurations/resources/tag/pages/manage-tags.header-actions.create.notification.title'))
                         ->body(__('blogs::filament/admin/clusters/configurations/resources/tag/pages/manage-tags.header-actions.create.notification.body')),
                 ),
-        ];
-    }
-
-    public function getTabs(): array
-    {
-        return [
-            'all' => Tab::make(__('blogs::filament/admin/clusters/configurations/resources/tag/pages/manage-tags.tabs.all'))
-                ->badge(Tag::count()),
-            'archived' => Tab::make(__('blogs::filament/admin/clusters/configurations/resources/tag/pages/manage-tags.tabs.archived'))
-                ->badge(Tag::onlyTrashed()->count())
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
         ];
     }
 }

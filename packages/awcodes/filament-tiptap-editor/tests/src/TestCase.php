@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -18,9 +20,23 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
     use LazilyRefreshDatabase;
+
+    public function getEnvironmentSetUp($app): void
+    {
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('view.paths', [
+            ...$app['config']->get('view.paths'),
+            __DIR__.'/../resources/views',
+        ]);
+
+        /*
+        $migration = include __DIR__.'/../database/migrations/create_filament-extras_table.php.stub';
+        $migration->up();
+        */
+    }
 
     protected function getPackageProviders($app): array
     {
@@ -44,20 +60,6 @@ class TestCase extends Orchestra
 
     protected function defineDatabaseMigrations(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-    }
-
-    public function getEnvironmentSetUp($app): void
-    {
-        $app['config']->set('database.default', 'testing');
-        $app['config']->set('view.paths', [
-            ...$app['config']->get('view.paths'),
-            __DIR__ . '/../resources/views',
-        ]);
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-extras_table.php.stub';
-        $migration->up();
-        */
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }

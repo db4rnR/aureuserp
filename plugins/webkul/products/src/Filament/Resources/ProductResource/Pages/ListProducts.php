@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,7 +13,7 @@ use Webkul\Product\Filament\Resources\ProductResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListProducts extends ListRecords
+final class ListProducts extends ListRecords
 {
     use HasTableViews;
 
@@ -21,7 +22,7 @@ class ListProducts extends ListRecords
     public function table(Table $table): Table
     {
         return parent::table($table)
-            ->modifyQueryUsing(function (Builder $query) {
+            ->modifyQueryUsing(function (Builder $query): void {
                 $query->whereNull('parent_id');
             });
     }
@@ -48,9 +49,7 @@ class ListProducts extends ListRecords
             'archived_products' => PresetView::make(__('products::filament/resources/product/pages/list-products.tabs.archived'))
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 

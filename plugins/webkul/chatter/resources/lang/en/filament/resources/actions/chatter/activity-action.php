@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'setup' => [
-        'title'               => 'Schedule Activity',
+        'title' => 'Schedule Activity',
         'submit-action-title' => 'Schedule',
 
         'form' => [
             'fields' => [
                 'activity-plan' => 'Activity Plan',
-                'plan-date'     => 'Plan Date',
-                'plan-summary'  => 'Plan Summary',
+                'plan-date' => 'Plan Date',
+                'plan-summary' => 'Plan Summary',
                 'activity-type' => 'Activity Type',
-                'due-date'      => 'Due Date',
-                'summary'       => 'Summary',
-                'assigned-to'   => 'Assigned To',
-                'log-note'      => 'Log note',
+                'due-date' => 'Due Date',
+                'summary' => 'Summary',
+                'assigned-to' => 'Assigned To',
+                'log-note' => 'Log note',
             ],
         ],
 
@@ -22,17 +24,17 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Activity Created',
-                    'body'  => 'The activity has been created.',
+                    'body' => 'The activity has been created.',
                 ],
 
-                'warning'  => [
+                'warning' => [
                     'title' => 'No new files',
-                    'body'  => 'All files have already been uploaded.',
+                    'body' => 'All files have already been uploaded.',
                 ],
 
                 'error' => [
                     'title' => 'Activity creation failed',
-                    'body'  => 'Failed to create activity ',
+                    'body' => 'Failed to create activity ',
                 ],
             ],
         ],

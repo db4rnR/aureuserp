@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Packagings',
@@ -8,7 +10,7 @@ return [
 
     'form' => [
         'package-type' => 'Package Type',
-        'routes'       => 'Routes',
+        'routes' => 'Routes',
     ],
 
     'table' => [
@@ -37,7 +39,7 @@ return [
                 'title' => 'Routing Information',
 
                 'entries' => [
-                    'routes'     => 'Warehouse Routes',
+                    'routes' => 'Warehouse Routes',
                     'route_name' => 'Route Name',
                 ],
             ],

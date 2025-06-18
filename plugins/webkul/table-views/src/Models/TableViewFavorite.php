@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TableViews\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-class TableViewFavorite extends Model
+final class TableViewFavorite extends Model
 {
     /**
      * Fillable.

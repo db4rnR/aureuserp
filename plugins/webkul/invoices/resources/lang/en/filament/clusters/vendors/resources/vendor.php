@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Vendors',
 
@@ -9,26 +11,26 @@ return [
 
     'form' => [
         'fields' => [
-            'sales-person'       => 'Sales Person',
-            'payment-terms'      => 'Payment Terms',
-            'payment-method'     => 'Payment Method',
-            'fiscal-position'    => 'Fiscal Position',
-            'purchase'           => 'Purchase',
+            'sales-person' => 'Sales Person',
+            'payment-terms' => 'Payment Terms',
+            'payment-method' => 'Payment Method',
+            'fiscal-position' => 'Fiscal Position',
+            'purchase' => 'Purchase',
             'fiscal-information' => 'Fiscal Information',
         ],
         'tabs' => [
             'invoicing' => [
-                'title'  => 'Invoicing',
+                'title' => 'Invoicing',
                 'fields' => [
-                    'customer-invoices'              => 'Customer Invoices',
-                    'invoice-sending-method'         => 'Invoice Sending Method',
-                    'invoice-edi-format-store'       => 'eInvoice Format',
-                    'peppol-eas'                     => 'Peppol Address',
-                    'endpoint'                       => 'Endpoint',
-                    'auto-post-bills'                => 'Auto Post Bills',
-                    'automation'                     => 'Automation',
+                    'customer-invoices' => 'Customer Invoices',
+                    'invoice-sending-method' => 'Invoice Sending Method',
+                    'invoice-edi-format-store' => 'eInvoice Format',
+                    'peppol-eas' => 'Peppol Address',
+                    'endpoint' => 'Endpoint',
+                    'auto-post-bills' => 'Auto Post Bills',
+                    'automation' => 'Automation',
                     'ignore-abnormal-invoice-amount' => 'Ignore Abnormal Invoice Amount',
-                    'ignore-abnormal-invoice-date'   => 'Ignore Abnormal Invoice Date',
+                    'ignore-abnormal-invoice-date' => 'Ignore Abnormal Invoice Date',
                 ],
             ],
             'internal-notes' => [
@@ -39,26 +41,26 @@ return [
 
     'infolist' => [
         'entries' => [
-            'sales-person'       => 'Sales Person',
-            'payment-terms'      => 'Payment Terms',
-            'payment-method'     => 'Payment Method',
-            'fiscal-position'    => 'Fiscal Position',
-            'purchase'           => 'Purchase',
+            'sales-person' => 'Sales Person',
+            'payment-terms' => 'Payment Terms',
+            'payment-method' => 'Payment Method',
+            'fiscal-position' => 'Fiscal Position',
+            'purchase' => 'Purchase',
             'fiscal-information' => 'Fiscal Information',
         ],
         'tabs' => [
             'invoicing' => [
-                'title'   => 'Invoicing',
+                'title' => 'Invoicing',
                 'entries' => [
-                    'customer-invoices'              => 'Customer Invoices',
-                    'invoice-sending-method'         => 'Invoice Sending Method',
-                    'invoice-edi-format-store'       => 'eInvoice Format',
-                    'peppol-eas'                     => 'Peppol Address',
-                    'endpoint'                       => 'Endpoint',
-                    'auto-post-bills'                => 'Auto Post Bills',
-                    'automation'                     => 'Automation',
+                    'customer-invoices' => 'Customer Invoices',
+                    'invoice-sending-method' => 'Invoice Sending Method',
+                    'invoice-edi-format-store' => 'eInvoice Format',
+                    'peppol-eas' => 'Peppol Address',
+                    'endpoint' => 'Endpoint',
+                    'auto-post-bills' => 'Auto Post Bills',
+                    'automation' => 'Automation',
                     'ignore-abnormal-invoice-amount' => 'Ignore Abnormal Invoice Amount',
-                    'ignore-abnormal-invoice-date'   => 'Ignore Abnormal Invoice Date',
+                    'ignore-abnormal-invoice-date' => 'Ignore Abnormal Invoice Date',
                 ],
             ],
             'internal-notes' => [

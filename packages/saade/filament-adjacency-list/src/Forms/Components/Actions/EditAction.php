@@ -1,19 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList\Forms\Components\Actions;
 
 use Filament\Actions\Action;
-use Filament\Support\Enums\Size;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Size;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-class EditAction extends Action
+final class EditAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'edit';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -54,5 +51,10 @@ class EditAction extends Action
         $this->visible(
             fn (AdjacencyList $component): bool => $component->isEditable()
         );
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'edit';
     }
 }

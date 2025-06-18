@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Resources\EmployeeResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Employee\Filament\Resources\EmployeeResource;
 use Webkul\Support\Models\ActivityPlan;
 
-class ViewEmployee extends ViewRecord
+final class ViewEmployee extends ViewRecord
 {
     protected static string $resource = EmployeeResource::class;
 
@@ -18,7 +19,7 @@ class ViewEmployee extends ViewRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource)
+                ->setResource(self::$resource)
                 ->setActivityPlans($this->getActivityPlans()),
             DeleteAction::make()
                 ->successNotification(
@@ -30,11 +31,6 @@ class ViewEmployee extends ViewRecord
         ];
     }
 
-    private function getActivityPlans(): mixed
-    {
-        return ActivityPlan::where('plugin', 'employees')->pluck('name', 'id');
-    }
-
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $partner = $this->record->partner;
@@ -43,5 +39,10 @@ class ViewEmployee extends ViewRecord
             ...$data,
             ...$partner ? $partner->toArray() : [],
         ];
+    }
+
+    private function getActivityPlans(): mixed
+    {
+        return ActivityPlan::where('plugin', 'employees')->pluck('name', 'id');
     }
 }

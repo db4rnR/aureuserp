@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('accounts_account_move_lines', function (Blueprint $table) {
+        Schema::table('accounts_account_move_lines', function (Blueprint $table): void {
             $table->foreignId('full_reconcile_id')->nullable()->after('reconcile_id')->constrained('accounts_full_reconciles')->nullOnDelete();
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_moves_lines', function (Blueprint $table) {
+        Schema::table('accounts_moves_lines', function (Blueprint $table): void {
             //
         });
     }

@@ -1,41 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
+use BackedEnum;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\OperationState;
 use Filament\Actions\DeleteBulkAction;
-use Webkul\Inventory\Enums\OperationType;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\ViewInternal;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\EditInternal;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\ManageMoves;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\ListInternals;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\CreateInternal;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
+use Webkul\Inventory\Enums\OperationType;
 use Webkul\Inventory\Filament\Clusters\Operations;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\CreateInternal;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\EditInternal;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\ListInternals;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\ManageMoves;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\ViewInternal;
 use Webkul\Inventory\Models\InternalTransfer;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-class InternalResource extends Resource
+final class InternalResource extends Resource
 {
     protected static ?string $model = InternalTransfer::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrows-right-left';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-right-left';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -43,7 +43,7 @@ class InternalResource extends Resource
 
     protected static ?string $cluster = Operations::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function isDiscovered(): bool
     {
@@ -82,11 +82,11 @@ class InternalResource extends Resource
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make()
-                        ->hidden(fn (InternalTransfer $record): bool => $record->state == OperationState::DONE)
-                        ->action(function (InternalTransfer $record) {
+                        ->hidden(fn (InternalTransfer $record): bool => $record->state === OperationState::DONE)
+                        ->action(function (InternalTransfer $record): void {
                             try {
                                 $record->delete();
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('inventories::filament/clusters/operations/resources/internal.table.actions.delete.notification.error.title'))
@@ -104,10 +104,10 @@ class InternalResource extends Resource
             ])
             ->toolbarActions([
                 DeleteBulkAction::make()
-                    ->action(function (Collection $records) {
+                    ->action(function (Collection $records): void {
                         try {
                             $records->each(fn (Model $record) => $record->delete());
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('inventories::filament/clusters/operations/resources/internal.table.bulk-actions.delete.notification.error.title'))
@@ -122,11 +122,9 @@ class InternalResource extends Resource
                             ->body(__('inventories::filament/clusters/operations/resources/internal.table.bulk-actions.delete.notification.success.body')),
                     ),
             ])
-            ->modifyQueryUsing(function (Builder $query) {
-                return $query->whereHas('operationType', function (Builder $query) {
-                    $query->where('type', OperationType::INTERNAL);
-                });
-            });
+            ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('operationType', function (Builder $query): void {
+                $query->where('type', OperationType::INTERNAL);
+            }));
     }
 
     public static function infolist(Schema $schema): Schema
@@ -146,11 +144,11 @@ class InternalResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListInternals::route('/'),
+            'index' => ListInternals::route('/'),
             'create' => CreateInternal::route('/create'),
-            'view'   => ViewInternal::route('/{record}/view'),
-            'edit'   => EditInternal::route('/{record}/edit'),
-            'moves'  => ManageMoves::route('/{record}/moves'),
+            'view' => ViewInternal::route('/{record}/view'),
+            'edit' => EditInternal::route('/{record}/edit'),
+            'moves' => ManageMoves::route('/{record}/moves'),
         ];
     }
 }

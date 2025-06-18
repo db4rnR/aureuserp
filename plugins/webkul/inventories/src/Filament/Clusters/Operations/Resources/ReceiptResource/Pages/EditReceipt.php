@@ -1,23 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\OperationState;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource;
 use Webkul\Inventory\Models\Receipt;
 
-class EditReceipt extends EditRecord
+final class EditReceipt extends EditRecord
 {
     protected static string $resource = ReceiptResource::class;
+
+    public function updateForm(): void
+    {
+        $this->fillForm();
+    }
 
     protected function getRedirectUrl(): string
     {
@@ -36,7 +41,7 @@ class EditReceipt extends EditRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             OperationActions\TodoAction::make(),
             OperationActions\ValidateAction::make(),
             OperationActions\CancelAction::make(),
@@ -52,13 +57,13 @@ class EditReceipt extends EditRecord
                 ->color('gray')
                 ->button(),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == OperationState::DONE)
-                ->action(function (DeleteAction $action, Receipt $record) {
+                ->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
+                ->action(function (DeleteAction $action, Receipt $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/receipt/pages/edit-receipt.header-actions.delete.notification.error.title'))
@@ -75,10 +80,5 @@ class EditReceipt extends EditRecord
                         ->body(__('inventories::filament/clusters/operations/resources/receipt/pages/edit-receipt.header-actions.delete.notification.success.body')),
                 ),
         ];
-    }
-
-    public function updateForm(): void
-    {
-        $this->fillForm();
     }
 }

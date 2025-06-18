@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentFullCalendar;
 
 if (! function_exists('Saade\FilamentFullCalendar\array_merge_recursive_unique')) {

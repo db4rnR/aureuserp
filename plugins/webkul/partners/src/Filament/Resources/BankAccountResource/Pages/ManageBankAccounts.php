@@ -1,19 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Filament\Resources\BankAccountResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\BankAccountResource;
 use Webkul\Partner\Models\BankAccount;
 
-class ManageBankAccounts extends ManageRecords
+final class ManageBankAccounts extends ManageRecords
 {
     protected static string $resource = BankAccountResource::class;
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.tabs.all'))
+                ->badge(BankAccount::count()),
+            'archived' => Tab::make(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.tabs.archived'))
+                ->badge(BankAccount::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
+        ];
+    }
 
     protected function getHeaderActions(): array
     {
@@ -32,19 +44,6 @@ class ManageBankAccounts extends ManageRecords
                         ->title(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.header-actions.create.notification.title'))
                         ->body(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.header-actions.create.notification.body')),
                 ),
-        ];
-    }
-
-    public function getTabs(): array
-    {
-        return [
-            'all' => Tab::make(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.tabs.all'))
-                ->badge(BankAccount::count()),
-            'archived' => Tab::make(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.tabs.archived'))
-                ->badge(BankAccount::onlyTrashed()->count())
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
         ];
     }
 }

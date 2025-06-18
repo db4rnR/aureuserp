@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_order_lines', function (Blueprint $table) {
+        Schema::create('sales_order_lines', function (Blueprint $table): void {
             $table->id();
             $table->integer('sort')->nullable()->comment('Sort Order');
             $table->foreignId('order_id')->comment('Order Reference')->constrained('sales_orders')->cascadeOnDelete();

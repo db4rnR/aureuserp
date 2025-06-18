@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -10,7 +12,7 @@ use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Facades\SaleOrder;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 
-class CreateQuotation extends CreateRecord
+final class CreateQuotation extends CreateRecord
 {
     protected static string $resource = QuotationResource::class;
 
@@ -48,7 +50,7 @@ class CreateQuotation extends CreateRecord
         return $data;
     }
 
-    protected function afterCreate(): void
+    private function afterCreate(): void
     {
         SaleOrder::computeSaleOrder($this->getRecord());
     }

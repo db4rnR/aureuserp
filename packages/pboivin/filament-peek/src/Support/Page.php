@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Support;
 
 use Livewire\Component;
 use Pboivin\FilamentPeek\Exceptions\PreviewModalException;
 
-class Page
+final class Page
 {
     public static function supportsPreviewModal(Component $page): bool
     {
@@ -14,7 +16,7 @@ class Page
 
     public static function ensurePreviewModalSupport(Component $page): void
     {
-        if (! static::supportsPreviewModal($page)) {
+        if (! self::supportsPreviewModal($page)) {
             $basename = class_basename($page);
             throw new PreviewModalException("`{$basename}` class is missing the `HasPreviewModal` trait.");
         }
@@ -22,14 +24,14 @@ class Page
 
     public static function supportsBuilderPreview(Component $page): bool
     {
-        return static::supportsPreviewModal($page) && method_exists($page, 'openPreviewModalForBuidler');
+        return self::supportsPreviewModal($page) && method_exists($page, 'openPreviewModalForBuidler');
     }
 
     public static function ensureBuilderPreviewSupport(Component $page): void
     {
-        static::ensurePreviewModalSupport($page);
+        self::ensurePreviewModalSupport($page);
 
-        if (! static::supportsBuilderPreview($page)) {
+        if (! self::supportsBuilderPreview($page)) {
             $basename = class_basename($page);
             throw new PreviewModalException("`{$basename}` class is missing the `HasBuilderPreview` trait.");
         }

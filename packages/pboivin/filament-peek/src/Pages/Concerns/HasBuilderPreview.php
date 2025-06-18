@@ -1,44 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Pages\Concerns;
 
-use Filament\Schemas\Components\Component;
 use Filament\Forms\Components\Builder;
+use Filament\Schemas\Components\Component;
 use InvalidArgumentException;
 use Pboivin\FilamentPeek\Support\Html;
 
 trait HasBuilderPreview
 {
-    protected function getListeners(): array
-    {
-        return array_merge($this->listeners, [
-            'updateBuilderFieldWithEditorData' => 'updateBuilderFieldWithEditorData',
-        ]);
-    }
-
-    protected function getBuilderEditorTitle(): string
-    {
-        return __('filament-peek::ui.builder-editor-title');
-    }
-
-    protected function getBuilderPreviewUrl(string $builderName): ?string
-    {
-        return null;
-    }
-
-    protected function getBuilderPreviewView(string $builderName): ?string
-    {
-        return null;
-    }
-
     public static function getBuilderEditorSchema(string $builderName): Component|array
     {
         return [];
-    }
-
-    protected function mutateInitialBuilderEditorData(string $builderName, array $editorData): array
-    {
-        return $editorData;
     }
 
     public static function mutateBuilderPreviewData(string $builderName, array $editorData, array $previewData): array
@@ -55,28 +30,6 @@ trait HasBuilderPreview
     }
 
     /** @internal */
-    public function updateBuilderFieldWithEditorData(string $builderName, array $editorData): void
-    {
-        if (array_key_exists($builderName, $editorData)) {
-            $this->data[$builderName] = $editorData[$builderName];
-        }
-
-        if (class_exists('\FilamentTiptapEditor\TiptapEditor')) {
-            $this->dispatch('refresh-tiptap-editors');
-        }
-    }
-
-    /** @internal */
-    protected function prepareBuilderEditorData(string $builderName): array
-    {
-        if (array_key_exists($builderName, $this->data)) {
-            return $this->form->getStateOnly([$builderName]);
-        }
-
-        return [];
-    }
-
-    /** @internal */
     public static function prepareBuilderPreviewData(array $data): array
     {
         $data['isPeekPreviewModal'] = true;
@@ -90,6 +43,18 @@ trait HasBuilderPreview
         $schema = static::getBuilderEditorSchema($builderName);
 
         return $schema instanceof Builder;
+    }
+
+    /** @internal */
+    public function updateBuilderFieldWithEditorData(string $builderName, array $editorData): void
+    {
+        if (array_key_exists($builderName, $editorData)) {
+            $this->data[$builderName] = $editorData[$builderName];
+        }
+
+        if (class_exists('\FilamentTiptapEditor\TiptapEditor')) {
+            $this->dispatch('refresh-tiptap-editors');
+        }
     }
 
     /** @internal */
@@ -112,6 +77,43 @@ trait HasBuilderPreview
             builderName: $builderName,
             pageClass: static::class,
         );
+    }
+
+    protected function getListeners(): array
+    {
+        return array_merge($this->listeners, [
+            'updateBuilderFieldWithEditorData' => 'updateBuilderFieldWithEditorData',
+        ]);
+    }
+
+    protected function getBuilderEditorTitle(): string
+    {
+        return __('filament-peek::ui.builder-editor-title');
+    }
+
+    protected function getBuilderPreviewUrl(string $builderName): ?string
+    {
+        return null;
+    }
+
+    protected function getBuilderPreviewView(string $builderName): ?string
+    {
+        return null;
+    }
+
+    protected function mutateInitialBuilderEditorData(string $builderName, array $editorData): array
+    {
+        return $editorData;
+    }
+
+    /** @internal */
+    protected function prepareBuilderEditorData(string $builderName): array
+    {
+        if (array_key_exists($builderName, $this->data)) {
+            return $this->form->getStateOnly([$builderName]);
+        }
+
+        return [];
     }
 
     private function checkCustomListener(): void

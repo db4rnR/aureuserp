@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Filament\Customer\Pages;
 
-use Filament\Panel;
 use Filament\Pages\Page;
+use Filament\Panel;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Website\Models\Page as PageModel;
 
-class Homepage extends Page
+final class Homepage extends Page
 {
-    protected static string $routePath = '/';
-
     protected static ?int $navigationSort = -2;
 
     /**
      * @var view-string
      */
     protected string $view = 'website::filament.customer.pages.homepage';
+
+    private static string $routePath = '/';
 
     public static function getNavigationLabel(): string
     {
@@ -25,7 +27,7 @@ class Homepage extends Page
 
     public static function getRoutePath(Panel $panel): string
     {
-        return static::$routePath;
+        return self::$routePath;
     }
 
     public function getTitle(): string|Htmlable

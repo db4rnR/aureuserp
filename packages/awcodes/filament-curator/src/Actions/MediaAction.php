@@ -1,22 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Actions;
 
-use Filament\Actions\Action;
 use Awcodes\Curator\Models\Media;
+use Filament\Actions\Action;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-class MediaAction extends Action
+final class MediaAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'filament_tiptap_media';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -25,7 +22,7 @@ class MediaAction extends Action
             ->arguments([
                 'src' => '',
             ])
-            ->action(function (TiptapEditor $component, Component $livewire, array $arguments) {
+            ->action(function (TiptapEditor $component, Component $livewire, array $arguments): void {
 
                 $selected = $arguments['src'] !== ''
                     ? [App::get(Media::class)->firstWhere('name', Str::of($arguments['src'])->afterLast('/')->beforeLast('.'))]
@@ -47,7 +44,7 @@ class MediaAction extends Action
                     'maxItems' => 1,
                     'maxSize' => $component->getMaxSize(),
                     'minSize' => $component->getMinSize(),
-                    'modalId' => $component->getLivewire()->getId() . '-form-component-action',
+                    'modalId' => $component->getLivewire()->getId().'-form-component-action',
                     'pathGenerator' => Config::get('curator.path_generator'),
                     'rules' => [],
                     'selected' => $selected,
@@ -57,5 +54,10 @@ class MediaAction extends Action
                     'visibility' => $component->getVisibility(),
                 ]);
             });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'filament_tiptap_media';
     }
 }

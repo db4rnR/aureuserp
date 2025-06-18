@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'Cập nhật thành công',
     'update_error' => 'Có lỗi xảy ra trong quá tình cập nhật, vui lòng thử lại.',

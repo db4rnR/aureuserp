@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class TaskSettings extends Settings
+final class TaskSettings extends Settings
 {
     public bool $enable_recurring_tasks;
 

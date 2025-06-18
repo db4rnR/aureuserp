@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Models;
 
 use App\Models\User as BaseUser;
@@ -11,15 +13,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Kirschbaum\Commentions\Contracts\Commentable;
+use Kirschbaum\Commentions\Contracts\Commenter;
+use Kirschbaum\Commentions\HasComments;
 use Spatie\Permission\Traits\HasRoles;
 use Webkul\Employee\Models\Department;
 use Webkul\Employee\Models\Employee;
 use Webkul\Partner\Models\Partner;
 use Webkul\Support\Models\Company;
 
-class User extends BaseUser implements FilamentUser
+final class User extends BaseUser implements Commentable, Commenter, FilamentUser
 {
-    use HasRoles, SoftDeletes;
+    use HasComments, HasRoles, SoftDeletes;
 
     /**
      * The attributes that should be cast.
@@ -39,11 +44,9 @@ class User extends BaseUser implements FilamentUser
     }
 
     /**
-     * Get image url for the product image.
-     *
-     * @return string
+     * Get image url for the avatar image.
      */
-    public function getAvatarUrlAttribute()
+    public function getAvatarUrlAttribute(): string
     {
         return $this->partner?->avatar_url;
     }
@@ -98,11 +101,11 @@ class User extends BaseUser implements FilamentUser
     /**
      * Bootstrap the model and its traits.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::saved(function ($user) {
+        self::saved(function ($user): void {
             if (! $user->partner_id) {
                 $user->handlePartnerCreation($user);
             } else {
@@ -114,12 +117,12 @@ class User extends BaseUser implements FilamentUser
     /**
      * Handle the creation of a partner.
      */
-    private function handlePartnerCreation(self $user)
+    private function handlePartnerCreation(self $user): void
     {
         $partner = $user->partner()->create([
             'creator_id' => Auth::user()->id ?? $user->id,
-            'user_id'    => $user->id,
-            'sub_type'   => 'partner',
+            'user_id' => $user->id,
+            'sub_type' => 'partner',
             ...Arr::except($user->toArray(), ['id']),
         ]);
 
@@ -130,14 +133,14 @@ class User extends BaseUser implements FilamentUser
     /**
      * Handle the updation of a partner.
      */
-    private function handlePartnerUpdation(self $user)
+    private function handlePartnerUpdation(self $user): void
     {
         $partner = Partner::updateOrCreate(
             ['id' => $user->partner_id],
             [
                 'creator_id' => Auth::user()->id ?? $user->id,
-                'user_id'    => $user->id,
-                'sub_type'   => 'partner',
+                'user_id' => $user->id,
+                'sub_type' => 'partner',
                 ...Arr::except($user->toArray(), ['id']),
             ]
         );

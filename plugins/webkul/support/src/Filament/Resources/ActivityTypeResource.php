@@ -1,59 +1,59 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
+use BackedEnum;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\RichEditor;
-use Guava\FilamentIconPicker\Forms\IconPicker;
-use Filament\Schemas\Components\Utilities\Get;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Tables\Filters\Filter;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Schemas\Components\Grid;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
-use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\ListActivityTypes;
-use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\CreateActivityType;
-use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\ViewActivityType;
-use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\EditActivityType;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Guava\FilamentIconPicker\Forms\IconPicker;
 use Webkul\Security\Models\User;
 use Webkul\Support\Enums\ActivityChainingType;
 use Webkul\Support\Enums\ActivityDecorationType;
 use Webkul\Support\Enums\ActivityDelayFrom;
 use Webkul\Support\Enums\ActivityDelayUnit;
 use Webkul\Support\Enums\ActivityTypeAction;
-use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages;
+use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\CreateActivityType;
+use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\EditActivityType;
+use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\ListActivityTypes;
+use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\ViewActivityType;
 use Webkul\Support\Models\ActivityType;
 
-class ActivityTypeResource extends Resource
+final class ActivityTypeResource extends Resource
 {
     protected static ?string $model = ActivityType::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $slug = 'settings/activity-types';
 
@@ -139,19 +139,19 @@ class ActivityTypeResource extends Resource
                                             ->live()
                                             ->required()
                                             ->native(false)
-                                            ->hidden(fn (Get $get) => $get('category') === 'upload_file'),
+                                            ->hidden(fn (Get $get): bool => $get('category') === 'upload_file'),
                                         Select::make('activity_type_suggestions')
                                             ->multiple()
                                             ->relationship('suggestedActivityTypes', 'name')
                                             ->searchable()
                                             ->preload()
                                             ->label(__('support::filament/resources/activity-type.form.sections.advanced-information.fields.suggest'))
-                                            ->hidden(fn (Get $get) => $get('chaining_type') === 'trigger' || $get('category') === 'upload_file'),
+                                            ->hidden(fn (Get $get): bool => $get('chaining_type') === 'trigger' || $get('category') === 'upload_file'),
                                         Select::make('triggered_next_type_id')
                                             ->relationship('triggeredNextType', 'name')
                                             ->label(__('support::filament/resources/activity-type.form.sections.advanced-information.fields.trigger'))
                                             ->native(false)
-                                            ->hidden(fn (Get $get) => $get('chaining_type') === 'suggest' && $get('category') !== 'upload_file'),
+                                            ->hidden(fn (Get $get): bool => $get('chaining_type') === 'suggest' && $get('category') !== 'upload_file'),
                                     ]),
                                 Section::make(__('support::filament/resources/activity-type.form.sections.status-and-configuration-information.title'))
                                     ->schema([
@@ -184,9 +184,7 @@ class ActivityTypeResource extends Resource
                     ->sortable(),
                 TextColumn::make('delay_count')
                     ->label(__('support::filament/resources/activity-type.table.columns.planned-in'))
-                    ->formatStateUsing(function ($record) {
-                        return $record->delay_count ? "{$record->delay_count} {$record->delay_unit}" : 'No Delay';
-                    }),
+                    ->formatStateUsing(fn ($record): string => $record->delay_count ? "{$record->delay_count} {$record->delay_unit}" : 'No Delay'),
                 TextColumn::make('delay_from')
                     ->label(__('support::filament/resources/activity-type.table.columns.type'))
                     ->formatStateUsing(fn ($state) => ActivityDelayFrom::options()[$state])
@@ -418,10 +416,10 @@ class ActivityTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListActivityTypes::route('/'),
+            'index' => ListActivityTypes::route('/'),
             'create' => CreateActivityType::route('/create'),
-            'view'   => ViewActivityType::route('/{record}'),
-            'edit'   => EditActivityType::route('/{record}/edit'),
+            'view' => ViewActivityType::route('/{record}'),
+            'edit' => EditActivityType::route('/{record}/edit'),
         ];
     }
 }

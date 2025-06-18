@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hugomyb\FilamentMediaAction\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -12,21 +14,31 @@ use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
+use Hugomyb\FilamentMediaAction\FilamentMediaActionServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Hugomyb\FilamentMediaAction\FilamentMediaActionServiceProvider;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Hugomyb\\FilamentMediaAction\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Hugomyb\\FilamentMediaAction\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+    }
+
+    public function getEnvironmentSetUp($app): void
+    {
+        config()->set('database.default', 'testing');
+
+        /*
+        $migration = include __DIR__.'/../database/migrations/create_filament-media-action_table.php.stub';
+        $migration->up();
+        */
     }
 
     protected function getPackageProviders($app)
@@ -46,15 +58,5 @@ class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             FilamentMediaActionServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-media-action_table.php.stub';
-        $migration->up();
-        */
     }
 }

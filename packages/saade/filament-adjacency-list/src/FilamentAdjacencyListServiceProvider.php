@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList;
 
 use Filament\Support\Assets\AlpineComponent;
@@ -10,7 +12,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentAdjacencyListServiceProvider extends PackageServiceProvider
+final class FilamentAdjacencyListServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-adjacency-list';
 
@@ -18,8 +20,8 @@ class FilamentAdjacencyListServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        $package->name(static::$name)
-            ->hasInstallCommand(function (InstallCommand $command) {
+        $package->name(self::$name)
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->publishConfigFile()
                     ->askToStarRepoOnGitHub('saade/filament-adjacency-list');
@@ -36,13 +38,11 @@ class FilamentAdjacencyListServiceProvider extends PackageServiceProvider
         }
 
         if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
+            $package->hasViews(self::$viewNamespace);
         }
     }
 
-    public function packageRegistered(): void
-    {
-    }
+    public function packageRegistered(): void {}
 
     public function packageBooted(): void
     {
@@ -64,8 +64,8 @@ class FilamentAdjacencyListServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            AlpineComponent::make('filament-adjacency-list', __DIR__ . '/../resources/dist/filament-adjacency-list.js'),
-            Css::make('filament-adjacency-list-styles', __DIR__ . '/../resources/dist/filament-adjacency-list.css'),
+            AlpineComponent::make('filament-adjacency-list', __DIR__.'/../resources/dist/filament-adjacency-list.js'),
+            Css::make('filament-adjacency-list-styles', __DIR__.'/../resources/dist/filament-adjacency-list.css'),
         ];
     }
 }

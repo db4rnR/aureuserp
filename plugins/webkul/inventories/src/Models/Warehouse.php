@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,9 +19,14 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Warehouse extends Model implements Sortable
+final class Warehouse extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -70,12 +77,7 @@ class Warehouse extends Model implements Sortable
      */
     protected $casts = [
         'reception_steps' => ReceptionStep::class,
-        'delivery_steps'  => DeliveryStep::class,
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'delivery_steps' => DeliveryStep::class,
     ];
 
     public function locations(): HasMany
@@ -201,7 +203,7 @@ class Warehouse extends Model implements Sortable
     public function suppliedWarehouses(): BelongsToMany
     {
         return $this->belongsToMany(
-            Warehouse::class,
+            self::class,
             'inventories_warehouse_resupplies',
             'supplier_warehouse_id',
             'supplied_warehouse_id'
@@ -211,7 +213,7 @@ class Warehouse extends Model implements Sortable
     public function supplierWarehouses(): BelongsToMany
     {
         return $this->belongsToMany(
-            Warehouse::class,
+            self::class,
             'inventories_warehouse_resupplies',
             'supplied_warehouse_id',
             'supplier_warehouse_id'
@@ -221,11 +223,11 @@ class Warehouse extends Model implements Sortable
     /**
      * Bootstrap any application services.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::updated(function ($warehouse) {
+        self::updated(function ($warehouse): void {
             if ($warehouse->wasChanged('code')) {
                 $warehouse->viewLocation->update(['name' => $warehouse->code]);
             }

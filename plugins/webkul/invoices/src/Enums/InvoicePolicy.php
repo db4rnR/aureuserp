@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -13,16 +15,16 @@ enum InvoicePolicy: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::ORDER       => __('invoices::enums/invoice-policy.order'),
-            self::DELIVERY    => __('invoices::enums/invoice-policy.delivery'),
+            self::ORDER => __('invoices::enums/invoice-policy.order'),
+            self::DELIVERY => __('invoices::enums/invoice-policy.delivery'),
         };
     }
 
     public function options(): array
     {
         return [
-            self::ORDER->value       => __('invoices::enums/invoice-policy.order'),
-            self::DELIVERY->value    => __('invoices::enums/invoice-policy.delivery'),
+            self::ORDER->value => __('invoices::enums/invoice-policy.order'),
+            self::DELIVERY->value => __('invoices::enums/invoice-policy.delivery'),
         ];
     }
 }

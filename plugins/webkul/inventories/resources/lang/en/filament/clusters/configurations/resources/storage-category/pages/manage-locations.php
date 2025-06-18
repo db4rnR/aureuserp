@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Locations',
 
@@ -10,7 +12,7 @@ return [
 
                 'notification' => [
                     'title' => 'Location Created',
-                    'body'  => 'The location has been created.',
+                    'body' => 'The location has been created.',
                 ],
             ],
         ],

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource;
 
-class CreateQuotationTemplate extends CreateRecord
+final class CreateQuotationTemplate extends CreateRecord
 {
     protected static string $resource = QuotationTemplateResource::class;
 

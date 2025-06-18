@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Confirm',
 
@@ -7,12 +9,12 @@ return [
         'notification' => [
             'customer-validation' => [
                 'title' => 'Customer validation',
-                'body'  => 'Please provide a valid Customer to proceed with the Customer Invoice validation.',
+                'body' => 'Please provide a valid Customer to proceed with the Customer Invoice validation.',
             ],
 
             'move-line-validation' => [
                 'title' => 'Move Line validation',
-                'body'  => 'Please add at least one line to the invoice.',
+                'body' => 'Please add at least one line to the invoice.',
             ],
         ],
     ],

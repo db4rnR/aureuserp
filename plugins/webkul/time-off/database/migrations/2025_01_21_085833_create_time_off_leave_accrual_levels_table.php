@@ -17,7 +17,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('time_off_leave_accrual_levels', function (Blueprint $table) {
+        Schema::create('time_off_leave_accrual_levels', function (Blueprint $table): void {
             $table->id();
             $table->integer('sort')->nullable()->comment('Sort order');
             $table->foreignId('accrual_plan_id')->constrained('time_off_leave_accrual_plans')->cascadeOnDelete();

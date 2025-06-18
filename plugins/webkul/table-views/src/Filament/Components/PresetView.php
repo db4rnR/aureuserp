@@ -1,31 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TableViews\Filament\Components;
 
-use Filament\Schemas\Components\Tabs\Tab;
 use Closure;
+use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\TableViews\Models\TableViewFavorite;
 
 class PresetView extends Tab
 {
     protected string|Closure|null $id = null;
 
-    protected string|Closure|null $color = null;
+    private string|Closure|null $color = null;
 
-    protected bool|Closure $isDefault = false;
+    private bool|Closure $isDefault = false;
 
-    protected bool|Closure $isFavorite = false;
+    private bool|Closure $isFavorite = false;
 
-    protected bool|Closure $isEditable = false;
+    private bool|Closure $isEditable = false;
 
-    protected bool|Closure $isReplaceable = false;
+    private bool|Closure $isReplaceable = false;
 
-    protected bool|Closure $isDeletable = false;
+    private bool|Closure $isDeletable = false;
 
-    protected static mixed $cachedFavoriteTableViews;
+    private static mixed $cachedFavoriteTableViews;
 
     /**
-     * @return array<string|int, \Filament\Schemas\Components\Tabs\Tab>
+     * @return array<string|int, Tab>
      */
     public function getFavoriteTableViews(): mixed
     {
@@ -46,7 +48,7 @@ class PresetView extends Tab
         return $this;
     }
 
-    public function getModel()
+    public function getModel(): ?string
     {
         return null;
     }

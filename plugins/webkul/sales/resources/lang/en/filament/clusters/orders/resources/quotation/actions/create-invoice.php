@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Create Invoice',
 
@@ -10,12 +12,12 @@ return [
     'notification' => [
         'invoice-created' => [
             'title' => 'Invoice created',
-            'body'  => 'Invoice has been created successfully.',
+            'body' => 'Invoice has been created successfully.',
         ],
 
         'no-invoiceable-lines' => [
             'title' => 'No invoiceable lines',
-            'body'  => 'There is no invoiceable line, please make sure that a quantity has been received.',
+            'body' => 'There is no invoiceable line, please make sure that a quantity has been received.',
         ],
     ],
 

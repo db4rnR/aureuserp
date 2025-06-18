@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Inventory\Enums\LocationType;
@@ -11,7 +12,7 @@ use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListPackages extends ListRecords
+final class ListPackages extends ListRecords
 {
     use HasTableViews;
 
@@ -24,11 +25,9 @@ class ListPackages extends ListRecords
                 ->favorite()
                 ->default()
                 ->icon('heroicon-s-map-pin')
-                ->modifyQueryUsing(function ($query) {
-                    return $query->whereHas('location', function (Builder $query) {
-                        $query->where('type', LocationType::INTERNAL);
-                    });
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->whereHas('location', function (Builder $query): void {
+                    $query->where('type', LocationType::INTERNAL);
+                })),
         ];
     }
 

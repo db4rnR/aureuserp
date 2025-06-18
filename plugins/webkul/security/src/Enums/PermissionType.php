@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Enums;
 
 enum PermissionType: string
@@ -13,9 +15,9 @@ enum PermissionType: string
     public static function options(): array
     {
         return [
-            self::GROUP->value      => __('security::enums/permission-type.group'),
+            self::GROUP->value => __('security::enums/permission-type.group'),
             self::INDIVIDUAL->value => __('security::enums/permission-type.individual'),
-            self::GLOBAL->value     => __('security::enums/permission-type.global'),
+            self::GLOBAL->value => __('security::enums/permission-type.global'),
         ];
     }
 }

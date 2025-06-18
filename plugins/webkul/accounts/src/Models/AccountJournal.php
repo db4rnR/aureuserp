@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AccountJournal extends Model
+final class AccountJournal extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'accounts_account_journals';
 
     protected $fillable = [
         'account_id',
         'journal_id',
     ];
-
-    public $timestamps = false;
 
     public function account()
     {

@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\PaymentTermResource\Pages;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Account\Filament\Resources\PaymentTermResource;
 
-class EditPaymentTerm extends EditRecord
+final class EditPaymentTerm extends EditRecord
 {
     protected static string $resource = PaymentTermResource::class;
 
-    static function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

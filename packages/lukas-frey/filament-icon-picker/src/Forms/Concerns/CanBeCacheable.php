@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Guava\FilamentIconPicker\Forms\Concerns;
 
 use Closure;
@@ -9,7 +11,6 @@ use Illuminate\Support\Facades\Cache;
 
 trait CanBeCacheable
 {
-
     protected null|bool|Closure $cacheable = null;
 
     protected null|int|DateInterval|DateTimeInterface|Closure $cacheDuration = null;
@@ -44,11 +45,10 @@ trait CanBeCacheable
 
     protected function tryCache(string $key, Closure $callback)
     {
-        if (!$this->getCacheable()) {
+        if (! $this->getCacheable()) {
             return $callback->call($this);
         }
 
         return Cache::remember($key, $this->getCacheDuration(), $callback);
     }
-
 }

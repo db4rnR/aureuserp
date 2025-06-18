@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tabs' => [
-        'all'        => 'All',
-        'internal'   => 'Internal',
-        'customer'   => 'Customer',
+        'all' => 'All',
+        'internal' => 'Internal',
+        'customer' => 'Customer',
         'production' => 'Production',
-        'vendor'     => 'Vendor',
-        'archived'   => 'Archived',
+        'vendor' => 'Vendor',
+        'archived' => 'Archived',
     ],
 
     'header-actions' => [
@@ -16,7 +18,7 @@ return [
 
             'notification' => [
                 'title' => 'Location created',
-                'body'  => 'The location has been created successfully.',
+                'body' => 'The location has been created successfully.',
             ],
         ],
     ],

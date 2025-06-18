@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategoryResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategoryResource;
 
-class ListEmployeeCategories extends ListRecords
+final class ListEmployeeCategories extends ListRecords
 {
     protected static string $resource = EmployeeCategoryResource::class;
 
@@ -19,7 +20,7 @@ class ListEmployeeCategories extends ListRecords
                 ->icon('heroicon-o-plus-circle')
                 ->label(__('employees::filament/clusters/configurations/resources/employee-category/pages/list-employee-category.header-actions.create.label'))
                 ->mutateDataUsing(function (array $data): array {
-                    $data['color'] = $data['color'] ?? fake()->hexColor();
+                    $data['color'] ??= fake()->hexColor();
 
                     return $data;
                 })

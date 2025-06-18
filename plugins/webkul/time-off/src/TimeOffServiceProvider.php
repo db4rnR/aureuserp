@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff;
 
 use Webkul\Support\Console\Commands\InstallCommand;
@@ -7,7 +9,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class TimeOffServiceProvider extends PackageServiceProvider
+final class TimeOffServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'time-off';
 
@@ -15,7 +17,7 @@ class TimeOffServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasTranslations()
             ->hasMigrations([
                 '2025_01_17_080711_create_time_off_leave_types_table',
@@ -30,12 +32,12 @@ class TimeOffServiceProvider extends PackageServiceProvider
                 'employees',
             ])
             ->runsMigrations()
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 }

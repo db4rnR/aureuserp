@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Support\Models\Currency;
 
-class PartialReconcile extends Model
+final class PartialReconcile extends Model
 {
     use HasFactory;
 

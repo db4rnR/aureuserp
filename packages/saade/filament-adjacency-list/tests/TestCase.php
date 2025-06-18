@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -20,15 +22,25 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Saade\FilamentAdjacencyList\FilamentAdjacencyListServiceProvider;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Saade\\FilamentAdjacencyList\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Saade\\FilamentAdjacencyList\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+    }
+
+    public function getEnvironmentSetUp($app): void
+    {
+        config()->set('database.default', 'testing');
+
+        /*
+        $migration = include __DIR__.'/../database/migrations/create_filament-adjacency-list_table.php.stub';
+        $migration->up();
+        */
     }
 
     protected function getPackageProviders($app)
@@ -50,15 +62,5 @@ class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             FilamentAdjacencyListServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-adjacency-list_table.php.stub';
-        $migration->up();
-        */
     }
 }

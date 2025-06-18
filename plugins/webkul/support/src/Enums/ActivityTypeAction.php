@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Enums;
 
 enum ActivityTypeAction: string
@@ -17,11 +19,11 @@ enum ActivityTypeAction: string
     public static function options(): array
     {
         return [
-            self::NONE->value        => __('support::enums/activity-type-action.none'),
+            self::NONE->value => __('support::enums/activity-type-action.none'),
             self::UPLOAD_FILE->value => __('support::enums/activity-type-action.upload-file'),
-            self::DEFAULT->value     => __('support::enums/activity-type-action.default'),
-            self::PHONE_CALL->value  => __('support::enums/activity-type-action.phone-call'),
-            self::MEETING->value     => __('support::enums/activity-type-action.meeting'),
+            self::DEFAULT->value => __('support::enums/activity-type-action.default'),
+            self::PHONE_CALL->value => __('support::enums/activity-type-action.phone-call'),
+            self::MEETING->value => __('support::enums/activity-type-action.meeting'),
         ];
     }
 }

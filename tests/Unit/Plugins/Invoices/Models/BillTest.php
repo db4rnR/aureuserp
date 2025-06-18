@@ -1,20 +1,22 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Invoice\Models\Bill;
-use Webkul\Account\Enums\MoveType;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Account\Enums\MoveState;
-use Webkul\Support\Models\Currency;
-use Webkul\Security\Models\User;
-use Webkul\Partner\Models\Partner;
+use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Models\Journal;
+use Webkul\Invoice\Models\Bill;
+use Webkul\Partner\Models\Partner;
+use Webkul\Security\Models\User;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Bill model attributes and relationships')]
-function bill_model_attributes_and_relationships()
+function bill_model_attributes_and_relationships(): void
 {
     // Create a test bill
     $bill = Bill::factory()->create([
@@ -47,18 +49,18 @@ function bill_model_attributes_and_relationships()
     expect($bill->amount_residual)->toBe(1200.00);
 
     // Test relationships
-    expect($bill->journal())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($bill->partner())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($bill->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($bill->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($bill->lines())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($bill->journal())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($bill->partner())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($bill->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($bill->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($bill->lines())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Bill model relationships with other models')]
-function bill_model_relationships_with_other_models()
+function bill_model_relationships_with_other_models(): void
 {
     // Create related models
     $currency = Currency::factory()->create();
@@ -85,7 +87,7 @@ function bill_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Bill model methods')]
-function bill_model_methods()
+function bill_model_methods(): void
 {
     // Create a test bill
     $bill = Bill::factory()->create([

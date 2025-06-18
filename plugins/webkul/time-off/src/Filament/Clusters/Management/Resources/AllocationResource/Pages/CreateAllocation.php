@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource;
 
-class CreateAllocation extends CreateRecord
+final class CreateAllocation extends CreateRecord
 {
     protected static string $resource = AllocationResource::class;
 

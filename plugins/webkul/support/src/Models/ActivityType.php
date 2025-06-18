@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,9 +14,14 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 
-class ActivityType extends Model implements Sortable
+final class ActivityType extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'activity_types';
 
@@ -42,11 +49,6 @@ class ActivityType extends Model implements Sortable
     protected $casts = [
         'is_active' => 'boolean',
         'keep_done' => 'boolean',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function activityPlan(): BelongsTo

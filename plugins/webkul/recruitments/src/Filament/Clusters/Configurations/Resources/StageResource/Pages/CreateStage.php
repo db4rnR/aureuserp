@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\StageResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\StageResource;
 
-class CreateStage extends CreateRecord
+final class CreateStage extends CreateRecord
 {
     protected static string $resource = StageResource::class;
 

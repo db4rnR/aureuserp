@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Models;
 
-use Webkul\Product\Enums\PriceRuleApplyTo;
-use Webkul\Product\Enums\PriceRuleBase;
-use Webkul\Product\Enums\PriceRuleType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Product\Database\Factories\PriceRuleItemFactory;
-use Webkul\Product\Enums;
+use Webkul\Product\Enums\PriceRuleApplyTo;
+use Webkul\Product\Enums\PriceRuleBase;
+use Webkul\Product\Enums\PriceRuleType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-class PriceRuleItem extends Model
+final class PriceRuleItem extends Model
 {
     use HasFactory;
 
@@ -61,10 +62,10 @@ class PriceRuleItem extends Model
      */
     protected $casts = [
         'starts_at' => 'datetime',
-        'ends_at'   => 'datetime',
-        'apply_to'  => PriceRuleApplyTo::class,
-        'base'      => PriceRuleBase::class,
-        'type'      => PriceRuleType::class,
+        'ends_at' => 'datetime',
+        'apply_to' => PriceRuleApplyTo::class,
+        'base' => PriceRuleBase::class,
+        'type' => PriceRuleType::class,
     ];
 
     public function priceRule(): BelongsTo

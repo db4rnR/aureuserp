@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\RefundResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Account\Filament\Resources\RefundResource;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
-class EditRefund extends EditRecord
+final class EditRefund extends EditRecord
 {
     protected static string $resource = RefundResource::class;
 
@@ -45,7 +46,7 @@ class EditRefund extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $user = Auth::user();
+        Auth::user();
 
         $record = $this->getRecord();
 
@@ -58,7 +59,7 @@ class EditRefund extends EditRecord
         return $data;
     }
 
-    protected function afterSave(): void
+    private function afterSave(): void
     {
         Account::computeAccountMove($this->getRecord());
     }

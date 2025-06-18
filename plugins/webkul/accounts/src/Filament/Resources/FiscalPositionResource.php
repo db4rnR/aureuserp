@@ -1,47 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Schemas\Components\Grid;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
-use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\ViewFiscalPosition;
-use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\EditFiscalPosition;
-use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\ManageFiscalPositionTax;
-use Webkul\Account\Filament\Resources\FiscalPositionResource\RelationManagers\FiscalPositionTaxRelationManager;
-use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\ListFiscalPositions;
-use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\CreateFiscalPosition;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages;
-use Webkul\Account\Filament\Resources\FiscalPositionResource\RelationManagers;
+use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\CreateFiscalPosition;
+use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\EditFiscalPosition;
+use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\ListFiscalPositions;
+use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\ManageFiscalPositionTax;
+use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\ViewFiscalPosition;
+use Webkul\Account\Filament\Resources\FiscalPositionResource\RelationManagers\FiscalPositionTaxRelationManager;
 use Webkul\Account\Models\FiscalPosition;
 
-class FiscalPositionResource extends Resource
+final class FiscalPositionResource extends Resource
 {
     protected static ?string $model = FiscalPosition::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-uturn-left';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-uturn-left';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -223,10 +221,10 @@ class FiscalPositionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'               => ListFiscalPositions::route('/'),
-            'create'              => CreateFiscalPosition::route('/create'),
-            'view'                => ViewFiscalPosition::route('/{record}'),
-            'edit'                => EditFiscalPosition::route('/{record}/edit'),
+            'index' => ListFiscalPositions::route('/'),
+            'create' => CreateFiscalPosition::route('/create'),
+            'view' => ViewFiscalPosition::route('/{record}'),
+            'edit' => EditFiscalPosition::route('/{record}/edit'),
             'fiscal-position-tax' => ManageFiscalPositionTax::route('/{record}/fiscal-position-tax'),
         ];
     }

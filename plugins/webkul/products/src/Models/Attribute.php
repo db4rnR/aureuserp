@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +15,14 @@ use Webkul\Product\Database\Factories\AttributeFactory;
 use Webkul\Product\Enums\AttributeType;
 use Webkul\Security\Models\User;
 
-class Attribute extends Model implements Sortable
+final class Attribute extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -43,11 +50,6 @@ class Attribute extends Model implements Sortable
      */
     protected $casts = [
         'type' => AttributeType::class,
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function options(): HasMany

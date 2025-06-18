@@ -1,22 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Traits;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
-use Webkul\Account\Enums\DueTermValue;
-use Filament\Forms\Components\TextInput;
-use Webkul\Account\Enums\DelayType;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\CreateAction;
-use Filament\Forms;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\DelayType;
+use Webkul\Account\Enums\DueTermValue;
 
 trait PaymentDueTerm
 {

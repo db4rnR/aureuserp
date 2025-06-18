@@ -1,22 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\TaxResource\Pages;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Account\Filament\Resources\TaxResource;
 use Webkul\Account\Models\Tax;
 
-class ViewTax extends ViewRecord
+final class ViewTax extends ViewRecord
 {
     protected static string $resource = TaxResource::class;
 
-    static function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }
@@ -26,10 +27,10 @@ class ViewTax extends ViewRecord
         return [
             EditAction::make(),
             DeleteAction::make()
-                ->action(function (Tax $record) {
+                ->action(function (Tax $record): void {
                     try {
                         $record->delete();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('accounts::filament/resources/tax/pages/view-tax.header-actions.delete.notification.error.title'))

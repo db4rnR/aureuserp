@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Manage Operations',
 
@@ -8,7 +10,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Internal Transfer created',
-                    'body'  => 'The internal transfer has been created successfully.',
+                    'body' => 'The internal transfer has been created successfully.',
                 ],
             ],
         ],

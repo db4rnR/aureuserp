@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,9 +12,14 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 
-class FiscalPosition extends Model implements Sortable
+final class FiscalPosition extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'accounts_fiscal_positions';
 
@@ -29,11 +36,6 @@ class FiscalPosition extends Model implements Sortable
         'notes',
         'auto_reply',
         'vat_required',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function company()

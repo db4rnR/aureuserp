@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class CashRoundingSeeder extends Seeder
+final class CashRoundingSeeder extends Seeder
 {
     /**
      * Run the database seeds.

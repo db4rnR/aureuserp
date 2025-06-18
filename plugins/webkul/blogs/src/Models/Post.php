@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Webkul\Blog\Database\Factories\PostFactory;
 use Webkul\Security\Models\User;
 
-class Post extends Model
+final class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -58,10 +60,8 @@ class Post extends Model
 
     /**
      * Get image url for the product image.
-     *
-     * @return string
      */
-    public function getImageUrlAttribute()
+    public function getImageUrlAttribute(): string
     {
         if (! $this->image) {
             return null;
@@ -70,7 +70,7 @@ class Post extends Model
         return Storage::url($this->image);
     }
 
-    public function getReadingTimeAttribute()
+    public function getReadingTimeAttribute(): string
     {
         $wordCount = str_word_count(strip_tags($this->content));
 

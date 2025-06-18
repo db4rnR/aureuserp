@@ -1,11 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
-use Webkul\Purchase\Enums\OrderState;
-use Webkul\Purchase\Enums\OrderInvoiceStatus;
-use Webkul\Purchase\Enums\OrderReceiptStatus;
-use Webkul\Chatter\Models\Message;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,18 +13,21 @@ use Webkul\Account\Models\FiscalPosition;
 use Webkul\Account\Models\Incoterm;
 use Webkul\Account\Models\Partner;
 use Webkul\Account\Models\PaymentTerm;
+use Webkul\Chatter\Models\Message;
 use Webkul\Chatter\Traits\HasChatter;
 use Webkul\Chatter\Traits\HasLogActivity;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Inventory\Models\Operation;
 use Webkul\Inventory\Models\OperationType;
 use Webkul\Purchase\Database\Factories\OrderFactory;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\OrderInvoiceStatus;
+use Webkul\Purchase\Enums\OrderReceiptStatus;
+use Webkul\Purchase\Enums\OrderState;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-class Order extends Model
+final class Order extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity;
 
@@ -86,18 +87,18 @@ class Order extends Model
      * @var string
      */
     protected $casts = [
-        'state'                    => OrderState::class,
-        'invoice_status'           => OrderInvoiceStatus::class,
-        'receipt_status'           => OrderReceiptStatus::class,
-        'mail_reminder_confirmed'  => 'boolean',
+        'state' => OrderState::class,
+        'invoice_status' => OrderInvoiceStatus::class,
+        'receipt_status' => OrderReceiptStatus::class,
+        'mail_reminder_confirmed' => 'boolean',
         'mail_reception_confirmed' => 'boolean',
-        'mail_reception_declined'  => 'boolean',
-        'report_grids'             => 'boolean',
-        'ordered_at'               => 'datetime',
-        'approved_at'              => 'datetime',
-        'planned_at'               => 'datetime',
-        'calendar_start_at'        => 'datetime',
-        'effective_date'           => 'datetime',
+        'mail_reception_declined' => 'boolean',
+        'report_grids' => 'boolean',
+        'ordered_at' => 'datetime',
+        'approved_at' => 'datetime',
+        'planned_at' => 'datetime',
+        'calendar_start_at' => 'datetime',
+        'effective_date' => 'datetime',
     ];
 
     protected array $logAttributes = [
@@ -117,15 +118,15 @@ class Order extends Model
         'calendar_start_at',
         'incoterm_location',
         'effective_date',
-        'requisition.name'    => 'Requisition',
-        'partner.name'        => 'Vendor',
-        'currency.name'       => 'Currency',
-        'fiscalPosition'      => 'Fiscal Position',
-        'paymentTerm.name'    => 'Payment Term',
-        'incoterm.name'       => 'Buyer',
-        'user.name'           => 'Buyer',
-        'company.name'        => 'Company',
-        'creator.name'        => 'Creator',
+        'requisition.name' => 'Requisition',
+        'partner.name' => 'Vendor',
+        'currency.name' => 'Currency',
+        'fiscalPosition' => 'Fiscal Position',
+        'paymentTerm.name' => 'Payment Term',
+        'incoterm.name' => 'Buyer',
+        'user.name' => 'Buyer',
+        'company.name' => 'Company',
+        'creator.name' => 'Creator',
     ];
 
     /**
@@ -216,11 +217,11 @@ class Order extends Model
         $user = filament()->auth()->user();
 
         $message->fill(array_merge([
-            'creator_id'       => $user?->id,
-            'date_deadline'    => $data['date_deadline'] ?? now(),
-            'company_id'       => $data['company_id'] ?? ($user->defaultCompany?->id ?? null),
-            'messageable_type' => Order::class,
-            'messageable_id'   => $this->id,
+            'creator_id' => $user?->id,
+            'date_deadline' => $data['date_deadline'] ?? now(),
+            'company_id' => $data['company_id'] ?? ($user->defaultCompany?->id ?? null),
+            'messageable_type' => self::class,
+            'messageable_id' => $this->id,
         ], $data));
 
         $message->save();
@@ -229,27 +230,27 @@ class Order extends Model
     }
 
     /**
-     * Bootstrap any application services.
+     * Update the full name without triggering additional events
      */
-    protected static function boot()
+    public function updateName(): void
     {
-        parent::boot();
-
-        static::saving(function ($order) {
-            $order->updateName();
-        });
-
-        static::created(function ($order) {
-            $order->update(['name' => $order->name]);
-        });
+        $this->name = 'PO/'.$this->id;
     }
 
     /**
-     * Update the full name without triggering additional events
+     * Bootstrap any application services.
      */
-    public function updateName()
+    protected static function boot(): void
     {
-        $this->name = 'PO/'.$this->id;
+        parent::boot();
+
+        self::saving(function ($order): void {
+            $order->updateName();
+        });
+
+        self::created(function ($order): void {
+            $order->update(['name' => $order->name]);
+        });
     }
 
     protected static function newFactory(): OrderFactory

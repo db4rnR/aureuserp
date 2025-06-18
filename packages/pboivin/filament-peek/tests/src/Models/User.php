@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Models;
 
 use Filament\Models\Contracts\FilamentUser;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Pboivin\FilamentPeek\Tests\Database\Factories\UserFactory;
 
-class User extends Authenticatable implements FilamentUser
+final class User extends Authenticatable implements FilamentUser
 {
     use HasFactory;
 

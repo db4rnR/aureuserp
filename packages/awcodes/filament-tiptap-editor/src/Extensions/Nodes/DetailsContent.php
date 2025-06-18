@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-class DetailsContent extends Node
+final class DetailsContent extends Node
 {
     public static $name = 'detailsContent';
 
@@ -26,7 +28,7 @@ class DetailsContent extends Node
             [
                 'tag' => 'div[data-type]',
                 'getAttrs' => function ($value) {
-                    return (bool) $value == 'details-content';
+                    return (bool) $value === 'details-content';
                 },
             ],
         ];

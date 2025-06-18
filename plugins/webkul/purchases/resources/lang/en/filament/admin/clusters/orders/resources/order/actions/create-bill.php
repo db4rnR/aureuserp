@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'label' => 'Create Bill',
 
@@ -7,12 +9,12 @@ return [
         'notification' => [
             'warning' => [
                 'title' => 'No invoiceable lines',
-                'body'  => 'There is no invoiceable line, please make sure that a quantity has been received.',
+                'body' => 'There is no invoiceable line, please make sure that a quantity has been received.',
             ],
 
             'success' => [
                 'title' => 'Bill created',
-                'body'  => 'The bill has been created successfully.',
+                'body' => 'The bill has been created successfully.',
             ],
         ],
     ],

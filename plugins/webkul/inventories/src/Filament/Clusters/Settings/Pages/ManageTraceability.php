@@ -1,37 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Settings\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Toggle;
-use Illuminate\Support\HtmlString;
-use Filament\Schemas\Components\Utilities\Get;
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\HtmlString;
+use UnitEnum;
 use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource;
 use Webkul\Inventory\Models\Product;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-class ManageTraceability extends SettingsPage
+final class ManageTraceability extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-magnifying-glass-circle';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-magnifying-glass-circle';
 
     protected static ?string $slug = 'inventory/manage-traceability';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Inventory';
+    protected static string|UnitEnum|null $navigationGroup = 'Inventory';
 
     protected static ?int $navigationSort = 4;
 
     protected static string $settings = TraceabilitySettings::class;
 
     protected static ?string $cluster = Settings::class;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('inventories::filament/clusters/settings/pages/manage-traceability.title');
+    }
 
     public function getBreadcrumbs(): array
     {
@@ -45,18 +53,13 @@ class ManageTraceability extends SettingsPage
         return __('inventories::filament/clusters/settings/pages/manage-traceability.title');
     }
 
-    public static function getNavigationLabel(): string
-    {
-        return __('inventories::filament/clusters/settings/pages/manage-traceability.title');
-    }
-
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 Toggle::make('enable_lots_serial_numbers')
                     ->label(__('inventories::filament/clusters/settings/pages/manage-traceability.form.enable-lots-serial-numbers'))
-                    ->helperText(function () {
+                    ->helperText(function (): HtmlString {
                         $routeBaseName = LotResource::getRouteBaseName();
 
                         $url = '#';
@@ -71,12 +74,12 @@ class ManageTraceability extends SettingsPage
                 Toggle::make('display_on_delivery_slips')
                     ->label(__('inventories::filament/clusters/settings/pages/manage-traceability.form.display-on-delivery-slips'))
                     ->helperText(__('inventories::filament/clusters/settings/pages/manage-traceability.form.display-on-delivery-slips-helper-text'))
-                    ->visible(fn (Get $get) => $get('enable_lots_serial_numbers'))
+                    ->visible(fn (Get $get): mixed => $get('enable_lots_serial_numbers'))
                     ->live(),
             ]);
     }
 
-    protected function beforeSave(): void
+    private function beforeSave(): void
     {
         if (Product::whereIn('tracking', [ProductTracking::SERIAL, ProductTracking::LOT])->exists()) {
             Notification::make()

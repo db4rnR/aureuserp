@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup\Pages;
 
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -10,16 +13,11 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\Enums\Option;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelBackup\Jobs\CreateBackupJob;
 
-class Backups extends Page
+final class Backups extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog';
 
     protected string $view = 'filament-spatie-backup::pages.backups';
-
-    public function getHeading(): string | Htmlable
-    {
-        return __('filament-spatie-backup::backup.pages.backups.heading');
-    }
 
     public static function getNavigationGroup(): ?string
     {
@@ -31,14 +29,14 @@ class Backups extends Page
         return __('filament-spatie-backup::backup.pages.backups.navigation.label');
     }
 
-    protected function getActions(): array
+    public static function canAccess(): bool
     {
-        return [
-            Action::make('Create Backup')
-                ->button()
-                ->label(__('filament-spatie-backup::backup.pages.backups.actions.create_backup'))
-                ->action('openOptionModal'),
-        ];
+        return FilamentSpatieLaravelBackupPlugin::get()->isAuthorized();
+    }
+
+    public function getHeading(): string|Htmlable
+    {
+        return __('filament-spatie-backup::backup.pages.backups.heading');
     }
 
     public function openOptionModal(): void
@@ -71,8 +69,13 @@ class Backups extends Page
         return $plugin->hasStatusListRecordsTable();
     }
 
-    public static function canAccess(): bool
+    protected function getActions(): array
     {
-        return FilamentSpatieLaravelBackupPlugin::get()->isAuthorized();
+        return [
+            Action::make('Create Backup')
+                ->button()
+                ->label(__('filament-spatie-backup::backup.pages.backups.actions.create_backup'))
+                ->action('openOptionModal'),
+        ];
     }
 }

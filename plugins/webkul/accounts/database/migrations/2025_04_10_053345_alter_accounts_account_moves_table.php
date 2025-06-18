@@ -23,7 +23,7 @@ return new class extends Migration
         DB::table('accounts_account_moves')->whereNull('is_manually_modified')->update(['is_manually_modified' => 0]);
         DB::table('accounts_account_moves')->whereNull('is_move_sent')->update(['is_move_sent' => 0]);
 
-        Schema::table('accounts_account_moves', function (Blueprint $table) {
+        Schema::table('accounts_account_moves', function (Blueprint $table): void {
             $table->string('state')->default(MoveState::DRAFT)->comment('State')->change();
             $table->string('payment_state')->default(PaymentState::NOT_PAID)->nullable()->comment('Payment State')->change();
 
@@ -42,7 +42,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_account_moves', function (Blueprint $table) {
+        Schema::table('accounts_account_moves', function (Blueprint $table): void {
             $table->string('state')->default(null)->comment('State')->change();
             $table->string('payment_state')->default(null)->nullable()->comment('Payment State');
 

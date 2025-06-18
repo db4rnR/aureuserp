@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Job Position',
 
@@ -10,7 +12,7 @@ return [
 
     'table' => [
         'columns' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'manager-name' => 'Manager',
             'company-name' => 'Company',
         ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\FullReconcile>
  */
-class FullReconcileFactory extends Factory
+final class FullReconcileFactory extends Factory
 {
     /**
      * Define the model's default state.

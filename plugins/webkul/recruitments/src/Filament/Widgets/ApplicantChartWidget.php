@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
@@ -7,18 +9,18 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Carbon;
 use Webkul\Recruitment\Models\Applicant;
 
-class ApplicantChartWidget extends ChartWidget
+final class ApplicantChartWidget extends ChartWidget
 {
-    public function getHeading(): string|Htmlable|null
-    {
-        return __('recruitments::filament/widgets/applicant.overview.label');
-    }
-
     protected static ?int $sort = 2;
 
     protected int|string|array $columnSpan = 'full';
 
     protected ?string $maxHeight = '400px';
+
+    public function getHeading(): string|Htmlable|null
+    {
+        return __('recruitments::filament/widgets/applicant.overview.label');
+    }
 
     protected function getData(): array
     {
@@ -67,14 +69,14 @@ class ApplicantChartWidget extends ChartWidget
         ')->first();
 
         $data = match ($this->pageFilters['status'] ?? 'all') {
-            'ongoing'  => ['Ongoing' => $stats->ongoing ?? 0],
-            'hired'    => ['Hired' => $stats->hired ?? 0],
-            'refused'  => ['Refused' => $stats->refused ?? 0],
+            'ongoing' => ['Ongoing' => $stats->ongoing ?? 0],
+            'hired' => ['Hired' => $stats->hired ?? 0],
+            'refused' => ['Refused' => $stats->refused ?? 0],
             'archived' => ['Archived' => $stats->archived ?? 0],
-            default    => [
-                'Ongoing'  => $stats->ongoing ?? 0,
-                'Hired'    => $stats->hired ?? 0,
-                'Refused'  => $stats->refused ?? 0,
+            default => [
+                'Ongoing' => $stats->ongoing ?? 0,
+                'Hired' => $stats->hired ?? 0,
+                'Refused' => $stats->refused ?? 0,
                 'Archived' => $stats->archived ?? 0,
             ],
         };
@@ -82,12 +84,12 @@ class ApplicantChartWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label'           => __('recruitments::filament/widgets/applicant.overview.label'),
-                    'data'            => array_values($data),
-                    'backgroundColor' => array_map(fn ($key) => match ($key) {
-                        __('recruitments::filament/widgets/applicant.ongoing')  => '#3b82f6',
-                        __('recruitments::filament/widgets/applicant.hired')    => '#22c55e',
-                        __('recruitments::filament/widgets/applicant.refused')  => '#ef4444',
+                    'label' => __('recruitments::filament/widgets/applicant.overview.label'),
+                    'data' => array_values($data),
+                    'backgroundColor' => array_map(fn ($key): string => match ($key) {
+                        __('recruitments::filament/widgets/applicant.ongoing') => '#3b82f6',
+                        __('recruitments::filament/widgets/applicant.hired') => '#22c55e',
+                        __('recruitments::filament/widgets/applicant.refused') => '#ef4444',
                         __('recruitments::filament/widgets/applicant.archived') => '#94a3b8',
                     }, array_keys($data)),
                 ],

@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'delete' => [
             'notification' => [
                 'success' => [
                     'title' => 'Scrap Deleted',
-                    'body'  => 'The scrap has been deleted successfully.',
+                    'body' => 'The scrap has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Scraps could not be deleted',
-                    'body'  => 'The scraps cannot be deleted because they are currently in use.',
+                    'body' => 'The scraps cannot be deleted because they are currently in use.',
                 ],
             ],
         ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Widgets;
 
 use Filament\Support\Colors\Color;
@@ -11,7 +13,7 @@ use Webkul\TimeOff\Models\Leave;
 use Webkul\TimeOff\Models\LeaveAllocation;
 use Webkul\TimeOff\Models\LeaveType;
 
-class MyTimeOffWidget extends BaseWidget
+final class MyTimeOffWidget extends BaseWidget
 {
     protected function getStats(): array
     {
@@ -39,7 +41,7 @@ class MyTimeOffWidget extends BaseWidget
         return $stats;
     }
 
-    protected function calculateAvailableDays($employeeId, $leaveTypeId, $endDate)
+    private function calculateAvailableDays($employeeId, $leaveTypeId, $endDate): array
     {
         $allocation = LeaveAllocation::where('employee_id', $employeeId)
             ->where('holiday_status_id', $leaveTypeId)
@@ -52,7 +54,7 @@ class MyTimeOffWidget extends BaseWidget
         ];
     }
 
-    protected function calculatePendingRequests($employeeId)
+    private function calculatePendingRequests($employeeId)
     {
         return Leave::where('employee_id', $employeeId)
             ->where('state', 'confirm')

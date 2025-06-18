@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\PageBlocks;
 
 use Filament\Forms\Components\Builder\Block;
@@ -11,21 +13,21 @@ abstract class PageBlock
 
     abstract public static function getBlockSchema(): Block;
 
-    public static function getComponent(): string
+    final public static function getComponent(): string
     {
         if (isset(static::$component)) {
             return static::$component;
         }
 
-        return 'filament-fabricator.page-blocks.' . static::getName();
+        return 'filament-fabricator.page-blocks.'.static::getName();
     }
 
-    public static function getName(): string
+    final public static function getName(): string
     {
         return static::getBlockSchema()->getName();
     }
 
-    public static function mutateData(array $data): array
+    final public static function mutateData(array $data): array
     {
         return $data;
     }
@@ -39,5 +41,5 @@ abstract class PageBlock
      *     data: array,
      * })[]  $blocks  - The array of blocks' data for the given page and the given block type
      */
-    public static function preloadRelatedData(Page $page, array &$blocks): void {}
+    final public static function preloadRelatedData(Page $page, array &$blocks): void {}
 }

@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase;
 
-use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Navigation\NavigationItem;
 use Filament\Panel;
+use ReflectionClass;
 use Webkul\Purchase\Filament\Admin\Clusters\Settings\Pages\ManageProducts;
 use Webkul\Support\Package;
 
-class PurchasePlugin implements Plugin
+final class PurchasePlugin implements Plugin
 {
+    public static function make(): static
+    {
+        return app(self::class);
+    }
+
     public function getId(): string
     {
         return 'purchases';
-    }
-
-    public static function make(): static
-    {
-        return app(static::class);
     }
 
     public function register(Panel $panel): void
@@ -28,14 +30,14 @@ class PurchasePlugin implements Plugin
         }
 
         $panel
-            ->when($panel->getId() == 'customer', function (Panel $panel) {
+            ->when($panel->getId() === 'customer', function (Panel $panel): void {
                 $panel
                     ->discoverResources(in: $this->getPluginBasePath('/Filament/Customer/Resources'), for: 'Webkul\\Purchase\\Filament\\Customer\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Customer/Pages'), for: 'Webkul\\Purchase\\Filament\\Customer\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Customer/Clusters'), for: 'Webkul\\Purchase\\Filament\\Customer\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Customer/Widgets'), for: 'Webkul\\Purchase\\Filament\\Customer\\Widgets');
             })
-            ->when($panel->getId() == 'admin', function (Panel $panel) {
+            ->when($panel->getId() === 'admin', function (Panel $panel): void {
                 $panel
                     ->discoverResources(in: $this->getPluginBasePath('/Filament/Admin/Resources'), for: 'Webkul\\Purchase\\Filament\\Admin\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Admin/Pages'), for: 'Webkul\\Purchase\\Filament\\Admin\\Pages')
@@ -44,7 +46,7 @@ class PurchasePlugin implements Plugin
                     ->navigationItems([
                         NavigationItem::make('settings')
                             ->label('Settings')
-                            ->url(fn () => ManageProducts::getUrl())
+                            ->url(fn (): string => ManageProducts::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Purchase')
                             ->sort(4),
@@ -57,9 +59,9 @@ class PurchasePlugin implements Plugin
         //
     }
 
-    protected function getPluginBasePath($path = null): string
+    private function getPluginBasePath($path = null): string
     {
-        $reflector = new ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(self::class);
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

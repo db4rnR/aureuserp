@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions;
 
 use Filament\Actions\Action;
@@ -10,13 +12,8 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-class CancelAction extends Action
+final class CancelAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'purchases.orders.cancel';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -26,7 +23,7 @@ class CancelAction extends Action
             ->color('gray')
             ->requiresConfirmation()
             ->action(function (Order $record, Component $livewire): void {
-                $record->lines->each(function ($move) {
+                $record->lines->each(function ($move): void {
                     if ($move->qty_received > 0) {
                         Notification::make()
                             ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.warning.receipts.title'))
@@ -38,7 +35,7 @@ class CancelAction extends Action
                     }
                 });
 
-                $record->accountMoves->each(function ($move) {
+                $record->accountMoves->each(function ($move): void {
                     if ($move->state !== MoveState::CANCEL) {
                         Notification::make()
                             ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.warning.bills.title'))
@@ -60,9 +57,14 @@ class CancelAction extends Action
                     ->success()
                     ->send();
             })
-            ->visible(fn () => ! in_array($this->getRecord()->state, [
+            ->visible(fn (): bool => ! in_array($this->getRecord()->state, [
                 OrderState::DONE,
                 OrderState::CANCELED,
-            ]));
+            ], true));
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'purchases.orders.cancel';
     }
 }

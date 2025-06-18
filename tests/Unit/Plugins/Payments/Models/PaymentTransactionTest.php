@@ -1,15 +1,17 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Description;
-use Webkul\Payment\Models\PaymentTransaction;
+declare(strict_types=1);
+
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\Group;
+use Webkul\Payment\Models\PaymentTransaction;
 
 #[Test]
 #[Group('unit')]
 #[Group('payments')]
 #[Description('Test PaymentTransaction model basic properties')]
-function payment_transaction_model_basic_properties()
+function payment_transaction_model_basic_properties(): void
 {
     // Create a test payment transaction
     $paymentTransaction = new PaymentTransaction();
@@ -19,14 +21,14 @@ function payment_transaction_model_basic_properties()
     expect($paymentTransaction)->toBeInstanceOf(Model::class);
 
     // Test that the model uses the HasFactory trait
-    expect($paymentTransaction)->toBeInstanceOf(\Illuminate\Database\Eloquent\Factories\HasFactory::class);
+    expect($paymentTransaction)->toBeInstanceOf(Illuminate\Database\Eloquent\Factories\HasFactory::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('payments')]
 #[Description('Test PaymentTransaction model table name')]
-function payment_transaction_model_table_name()
+function payment_transaction_model_table_name(): void
 {
     // Create a test payment transaction
     $paymentTransaction = new PaymentTransaction();

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects_project_stages', function (Blueprint $table) {
+        Schema::create('projects_project_stages', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->json('tags')->nullable();

@@ -1,11 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
-use Webkul\Inventory\Enums\RuleAction;
-use Webkul\Inventory\Enums\GroupPropagation;
-use Webkul\Inventory\Enums\RuleAuto;
-use Webkul\Inventory\Enums\ProcureMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,14 +11,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Inventory\Database\Factories\RuleFactory;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\GroupPropagation;
+use Webkul\Inventory\Enums\ProcureMethod;
+use Webkul\Inventory\Enums\RuleAction;
+use Webkul\Inventory\Enums\RuleAuto;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Rule extends Model implements Sortable
+final class Rule extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -65,18 +71,13 @@ class Rule extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'action'                   => RuleAction::class,
+        'action' => RuleAction::class,
         'group_propagation_option' => GroupPropagation::class,
-        'auto'                     => RuleAuto::class,
-        'procure_method'           => ProcureMethod::class,
-        'location_dest_from_rule'  => 'boolean',
-        'propagate_cancel'         => 'boolean',
-        'propagate_carrier'        => 'boolean',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'auto' => RuleAuto::class,
+        'procure_method' => ProcureMethod::class,
+        'location_dest_from_rule' => 'boolean',
+        'propagate_cancel' => 'boolean',
+        'propagate_carrier' => 'boolean',
     ];
 
     public function sourceLocation(): BelongsTo

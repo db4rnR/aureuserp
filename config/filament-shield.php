@@ -1,32 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'shield_resource' => [
         'should_register_navigation' => true,
-        'slug'                       => 'shield/roles',
-        'navigation_sort'            => -1,
-        'navigation_badge'           => false,
-        'navigation_group'           => true,
-        'is_globally_searchable'     => false,
-        'show_model_path'            => false,
-        'is_scoped_to_tenant'        => true,
-        'cluster'                    => null,
+        'slug' => 'shield/roles',
+        'navigation_sort' => -1,
+        'navigation_badge' => false,
+        'navigation_group' => true,
+        'is_globally_searchable' => false,
+        'show_model_path' => false,
+        'is_scoped_to_tenant' => true,
+        'cluster' => null,
     ],
 
     'auth_provider_model' => [
-        'fqcn' => 'Webkul\\Security\\Models\\User',
+        'fqcn' => Webkul\Security\Models\User::class,
     ],
 
     'super_admin' => [
-        'enabled'         => false,
-        'name'            => 'super_admin',
+        'enabled' => false,
+        'name' => 'super_admin',
         'define_via_gate' => false,
-        'intercept_gate'  => 'before',
+        'intercept_gate' => 'before',
     ],
 
     'panel_user' => [
         'enabled' => true,
-        'name'    => 'admin',
+        'name' => 'admin',
     ],
 
     'permission_prefixes' => [
@@ -45,19 +47,19 @@ return [
             'force_delete_any',
         ],
 
-        'page'   => 'page',
+        'page' => 'page',
         'widget' => 'widget',
     ],
 
     'entities' => [
-        'pages'              => true,
-        'widgets'            => true,
-        'resources'          => true,
+        'pages' => true,
+        'widgets' => true,
+        'resources' => true,
         'custom_permissions' => false,
     ],
 
     'generator' => [
-        'option'           => 'policies_and_permissions',
+        'option' => 'policies_and_permissions',
         'policy_directory' => 'Policies',
         'policy_namespace' => 'Policies',
     ],
@@ -79,8 +81,8 @@ return [
 
     'discovery' => [
         'discover_all_resources' => false,
-        'discover_all_widgets'   => false,
-        'discover_all_pages'     => false,
+        'discover_all_widgets' => false,
+        'discover_all_pages' => false,
     ],
 
     'register_role_policy' => [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentFullCalendar;
 
 use Filament\Support\Assets\AlpineComponent;
@@ -8,7 +10,7 @@ use Filament\Support\Facades\FilamentAsset;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentFullCalendarServiceProvider extends PackageServiceProvider
+final class FilamentFullCalendarServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-fullcalendar';
 
@@ -17,7 +19,7 @@ class FilamentFullCalendarServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name(static::$name)
+            ->name(self::$name)
             ->hasViews();
     }
 
@@ -40,8 +42,8 @@ class FilamentFullCalendarServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            AlpineComponent::make('filament-fullcalendar-alpine', __DIR__ . '/../dist/filament-fullcalendar.js'),
-            Css::make('filament-fullcalendar-styles', __DIR__ . '/../dist/filament-fullcalendar.css'),
+            AlpineComponent::make('filament-fullcalendar-alpine', __DIR__.'/../dist/filament-fullcalendar.js'),
+            Css::make('filament-fullcalendar-styles', __DIR__.'/../dist/filament-fullcalendar.css'),
         ];
     }
 }

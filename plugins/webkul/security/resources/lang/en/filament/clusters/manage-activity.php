@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'breadcrumb' => 'Manage Activities',
-    'title'      => 'Manage Activities',
-    'group'      => 'General',
+    'title' => 'Manage Activities',
+    'group' => 'General',
 
     'navigation' => [
         'label' => 'Manage Activities',
@@ -11,7 +13,7 @@ return [
 
     'form' => [
         'activity-description' => [
-            'label'   => 'Activities',
+            'label' => 'Activities',
             'content' => 'Configure your activity types.',
         ],
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Z3d0X\FilamentFabricator\Commands\ClearRoutesCacheCommand;
@@ -8,18 +10,18 @@ use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
 use function Pest\Laravel\artisan;
 
-describe(ClearRoutesCacheCommand::class, function () {
-    beforeEach(function () {
+describe(ClearRoutesCacheCommand::class, function (): void {
+    beforeEach(function (): void {
         Config::set('filament-fabricator.routing.prefix', null);
     });
 
-    it('can be resolved through the container', function () {
+    it('can be resolved through the container', function (): void {
         $command = resolve(ClearRoutesCacheCommand::class);
 
         expect($command)->toBeInstanceOf(ClearRoutesCacheCommand::class);
     });
 
-    it('clears all route caches', function () {
+    it('clears all route caches', function (): void {
         /**
          * @var PageRoutesService $service
          */
@@ -63,7 +65,7 @@ describe(ClearRoutesCacheCommand::class, function () {
         )->toBeTrue();
     });
 
-    it('refreshes the cache properly', function (string $flag, string $newPrefix) {
+    it('refreshes the cache properly', function (string $flag, string $newPrefix): void {
         /**
          * @var PageRoutesService $service
          */

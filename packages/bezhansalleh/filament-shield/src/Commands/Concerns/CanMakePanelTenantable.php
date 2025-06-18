@@ -14,7 +14,7 @@ trait CanMakePanelTenantable
         if (filled($tenantModelClass) && ! $panel->hasTenancy()) {
 
             Stringer::for($panelPath)
-                ->prepend('->discoverResources', '->tenant(' . $tenantModelClass . ')')
+                ->prepend('->discoverResources', '->tenant('.$tenantModelClass.')')
                 ->save();
             $this->activateTenancy($panelPath);
 

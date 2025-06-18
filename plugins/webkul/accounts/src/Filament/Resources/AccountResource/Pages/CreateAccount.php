@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\AccountResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Account\Filament\Resources\AccountResource;
 
-class CreateAccount extends CreateRecord
+final class CreateAccount extends CreateRecord
 {
     protected static string $resource = AccountResource::class;
 

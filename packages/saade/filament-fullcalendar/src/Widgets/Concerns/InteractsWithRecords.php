@@ -1,36 +1,27 @@
 <?php
 
-namespace Saade\FilamentFullCalendar\Widgets\Concerns;
+declare(strict_types=1);
 
-use function Filament\Support\get_model_label;
+namespace Saade\FilamentFullCalendar\Widgets\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Livewire\Attributes\Locked;
 
+use function Filament\Support\get_model_label;
+
 trait InteractsWithRecords
 {
     #[Locked]
-    public Model | string | null $model = null;
+    public Model|string|null $model = null;
+
+    #[Locked]
+    public Model|int|string|null $record;
 
     protected ?string $modelLabel = null;
 
-    #[Locked]
-    public Model | int | string | null $record;
-
     protected static ?string $recordRouteKeyName = null;
-
-    protected function resolveRecord(int | string $key): Model
-    {
-        $record = $this->resolveRecordRouteBinding($key);
-
-        if ($record === null) {
-            throw (new ModelNotFoundException())->setModel($this->getModel(), [$key]);
-        }
-
-        return $record;
-    }
 
     public function getModel(): ?string
     {
@@ -62,11 +53,22 @@ trait InteractsWithRecords
         return null;
     }
 
-    public function resolveRecordRouteBinding(int | string $key): ?Model
+    public function resolveRecordRouteBinding(int|string $key): ?Model
     {
         return app($this->getModel())
             ->resolveRouteBindingQuery($this->getEloquentQuery(), $key, $this->getRecordRouteKeyName())
             ->first();
+    }
+
+    protected function resolveRecord(int|string $key): Model
+    {
+        $record = $this->resolveRecordRouteBinding($key);
+
+        if ($record === null) {
+            throw (new ModelNotFoundException())->setModel($this->getModel(), [$key]);
+        }
+
+        return $record;
     }
 
     protected function getEloquentQuery(): Builder

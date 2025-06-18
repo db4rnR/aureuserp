@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tabs' => [
-        'my-projects'          => 'My Projects',
+        'my-projects' => 'My Projects',
         'my-favorite-projects' => 'My Favorites',
-        'unassigned-projects'  => 'Unassigned Projects',
-        'archived-projects'    => 'Archived Projects',
+        'unassigned-projects' => 'Unassigned Projects',
+        'archived-projects' => 'Archived Projects',
     ],
 
     'header-actions' => [

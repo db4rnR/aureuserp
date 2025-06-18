@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Kirschbaum\Commentions\Comment as CommentModel;
@@ -15,13 +17,13 @@ use Tests\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
 
-beforeEach(function () {
+beforeEach(function (): void {
     config(['commentions.reactions.allowed' => ['👍', '❤️', '😂', '😮', '😢', '🤔']]);
     Config::resolveAuthenticatedUserUsing(fn () => Auth::user());
     Event::fake();
 });
 
-test('user can add configured reactions to a comment', function (string $reactionEmoji) {
+test('user can add configured reactions to a comment', function (string $reactionEmoji): void {
     /** @var User $user */
     $user = User::factory()->create();
     actingAs($user);
@@ -50,7 +52,7 @@ test('user can add configured reactions to a comment', function (string $reactio
     expect($comment->reactions->first()->reaction)->toBe($reactionEmoji);
 })->with(['👍', '❤️']);
 
-test('user can add a reaction when it already has a reaction', function (string $reactionEmoji) {
+test('user can add a reaction when it already has a reaction', function (string $reactionEmoji): void {
     /** @var User $user */
     $user = User::factory()->create();
     actingAs($user);
@@ -80,7 +82,7 @@ test('user can add a reaction when it already has a reaction', function (string 
     expect($comment->reactions->contains('reaction', $reactionEmoji))->toBeTrue();
 })->with(['👍', '❤️', '😮', '😢', '🤔']);
 
-test('user can remove their reaction from a comment', function (string $reactionEmoji) {
+test('user can remove their reaction from a comment', function (string $reactionEmoji): void {
     /** @var User $user */
     $user = User::factory()->create();
     actingAs($user);
@@ -112,7 +114,7 @@ test('user can remove their reaction from a comment', function (string $reaction
     expect($comment->refresh()->reactions)->toHaveCount(0);
 })->with(['👍', '❤️']);
 
-test('user cannot add a non-configured reaction via toggleReaction', function () {
+test('user cannot add a non-configured reaction via toggleReaction', function (): void {
     /** @var User $user */
     $user = User::factory()->create();
     actingAs($user);
@@ -135,7 +137,7 @@ test('user cannot add a non-configured reaction via toggleReaction', function ()
     expect($comment->refresh()->reactions)->toHaveCount(0);
 });
 
-test('reaction summary handles multiple different reactions', function () {
+test('reaction summary handles multiple different reactions', function (): void {
     /** @var User $user1 */
     $user1 = User::factory()->create();
     /** @var User $user2 */
@@ -167,13 +169,13 @@ test('reaction summary handles multiple different reactions', function () {
 
     // Check Blade rendering simulation (simplified)
     $component
-        ->assertSeeHtml('wire:key="inline-reaction-button-👍-' . $comment->getId() . '"') // Count exists for 👍
+        ->assertSeeHtml('wire:key="inline-reaction-button-👍-'.$comment->getId().'"') // Count exists for 👍
         ->assertSeeHtml('>2</span>') // Correct count for 👍
-        ->assertSeeHtml('wire:key="inline-reaction-button-❤️-' . $comment->getId() . '"') // Count exists for ❤️
+        ->assertSeeHtml('wire:key="inline-reaction-button-❤️-'.$comment->getId().'"') // Count exists for ❤️
         ->assertSeeHtml('>1</span>'); // Correct count for ❤️
 });
 
-test('guest cannot add reactions', function (string $reactionEmoji) {
+test('guest cannot add reactions', function (string $reactionEmoji): void {
     /** @var User $user */
     $user = User::factory()->create();
     $post = Post::factory()->create();

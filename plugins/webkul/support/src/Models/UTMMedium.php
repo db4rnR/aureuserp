@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-class UTMMedium extends Model
+final class UTMMedium extends Model
 {
     protected $table = 'utm_mediums';
 

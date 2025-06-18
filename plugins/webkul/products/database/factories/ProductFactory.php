@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -12,7 +14,7 @@ use Webkul\Support\Models\Company;
 /**
  * @extends Factory<Product>
  */
-class ProductFactory extends Factory
+final class ProductFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -29,21 +31,21 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'type'                 => ProductType::GOODS,
-            'name'                 => fake()->name(),
-            'barcode'              => fake()->ean13(),
-            'price'                => fake()->randomFloat(2, 0, 100),
-            'cost'                 => fake()->randomFloat(2, 0, 100),
-            'volume'               => fake()->randomFloat(2, 0, 100),
-            'weight'               => fake()->randomFloat(2, 0, 100),
-            'description'          => fake()->sentence(),
+            'type' => ProductType::GOODS,
+            'name' => fake()->name(),
+            'barcode' => fake()->ean13(),
+            'price' => fake()->randomFloat(2, 0, 100),
+            'cost' => fake()->randomFloat(2, 0, 100),
+            'volume' => fake()->randomFloat(2, 0, 100),
+            'weight' => fake()->randomFloat(2, 0, 100),
+            'description' => fake()->sentence(),
             'description_purchase' => fake()->sentence(),
-            'description_sale'     => fake()->sentence(),
-            'enable_sales'         => true,
-            'sort'                 => fake()->randomNumber(),
-            'category_id'          => Category::factory(),
-            'creator_id'           => User::factory(),
-            'company_id'           => Company::factory(),
+            'description_sale' => fake()->sentence(),
+            'enable_sales' => true,
+            'sort' => fake()->randomNumber(),
+            'category_id' => Category::factory(),
+            'creator_id' => User::factory(),
+            'company_id' => Company::factory(),
         ];
     }
 }

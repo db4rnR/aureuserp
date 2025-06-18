@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentFullCalendar\Widgets\Concerns;
 
 use Closure;
@@ -17,6 +19,18 @@ trait InteractsWithModalActions
     public function bootedInteractsWithModalActions(): void
     {
         $this->cacheModalActions();
+    }
+
+    /**
+     * @return array<Action | ActionGroup>
+     */
+    public function getCachedModalActions(): array
+    {
+        if (! $this->getModel()) {
+            return [];
+        }
+
+        return $this->cachedModalActions;
     }
 
     protected function cacheModalActions(): void
@@ -41,24 +55,12 @@ trait InteractsWithModalActions
             }
 
             if (! $action instanceof Action) {
-                throw new InvalidArgumentException('Modal actions must be an instance of ' . Action::class . ', or ' . ActionGroup::class . '.');
+                throw new InvalidArgumentException('Modal actions must be an instance of '.Action::class.', or '.ActionGroup::class.'.');
             }
 
             $this->cacheAction($action);
             $this->cachedModalActions[] = $action;
         }
-    }
-
-    /**
-     * @return array<Action | ActionGroup>
-     */
-    public function getCachedModalActions(): array
-    {
-        if (! $this->getModel()) {
-            return [];
-        }
-
-        return $this->cachedModalActions;
     }
 
     /**

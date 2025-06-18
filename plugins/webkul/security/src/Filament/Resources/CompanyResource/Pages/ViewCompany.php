@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources\CompanyResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Security\Filament\Resources\CompanyResource;
 
-class ViewCompany extends ViewRecord
+final class ViewCompany extends ViewRecord
 {
     protected static string $resource = CompanyResource::class;
 

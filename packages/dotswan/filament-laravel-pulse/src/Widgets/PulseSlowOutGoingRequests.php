@@ -6,7 +6,7 @@ namespace Dotswan\FilamentLaravelPulse\Widgets;
 
 use Filament\Widgets\Widget;
 
-class PulseSlowOutGoingRequests extends Widget
+final class PulseSlowOutGoingRequests extends Widget
 {
     protected string $view = 'filament-laravel-pulse::widgets.pulse-slow-outgoing-requests';
 

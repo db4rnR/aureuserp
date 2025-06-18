@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -10,7 +12,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<AttributeOption>
  */
-class AttributeOptionFactory extends Factory
+final class AttributeOptionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -27,12 +29,12 @@ class AttributeOptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'         => fake()->name(),
-            'full_name'    => fake()->name(),
-            'sort'         => fake()->randomNumber(),
-            'extra_price'  => fake()->randomFloat(2, 0, 100),
+            'name' => fake()->name(),
+            'full_name' => fake()->name(),
+            'sort' => fake()->randomNumber(),
+            'extra_price' => fake()->randomFloat(2, 0, 100),
             'attribute_id' => Attribute::factory(),
-            'creator_id'   => User::factory(),
+            'creator_id' => User::factory(),
         ];
     }
 }

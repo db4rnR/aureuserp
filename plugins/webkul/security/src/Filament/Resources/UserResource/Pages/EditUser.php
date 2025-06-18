@@ -1,23 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources\UserResource\Pages;
 
 use Filament\Actions\Action;
-use Webkul\Security\Settings\UserSettings;
-use Filament\Forms\Components\TextInput;
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
-use Filament\Forms;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Webkul\Security\Filament\Resources\UserResource;
 use Webkul\Security\Models\User;
-use Webkul\Security\Settings;
+use Webkul\Security\Settings\UserSettings;
 
-class EditUser extends EditRecord
+final class EditUser extends EditRecord
 {
     protected static string $resource = UserResource::class;
 
@@ -39,7 +38,7 @@ class EditUser extends EditRecord
         return [
             Action::make('changePassword')
                 ->label(__('security::filament/resources/user/pages/edit-user.header-actions.change-password.label'))
-                ->visible(fn (UserSettings $userSettings) => $userSettings->enable_reset_password)
+                ->visible(fn (UserSettings $userSettings): bool => $userSettings->enable_reset_password)
                 ->action(function (User $record, array $data): void {
                     $record->update([
                         'password' => Hash::make($data['new_password']),
@@ -60,7 +59,7 @@ class EditUser extends EditRecord
                     TextInput::make('new_password_confirmation')
                         ->password()
                         ->label(__('security::filament/resources/user/pages/edit-user.header-actions.change-password.form.confirm-new-password'))
-                        ->rule('required', fn ($get) => (bool) $get('new_password'))
+                        ->rule('required', fn ($get): bool => (bool) $get('new_password'))
                         ->same('new_password'),
                 ])
                 ->icon('heroicon-o-key'),

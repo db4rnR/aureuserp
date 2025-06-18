@@ -6,10 +6,10 @@ declare(strict_types=1);
 
 namespace BezhanSalleh\FilamentShield;
 
-use RuntimeException;
 use Illuminate\Support\Traits\Conditionable;
+use RuntimeException;
 
-class Stringer
+final class Stringer
 {
     use Conditionable;
 
@@ -25,7 +25,7 @@ class Stringer
 
     public function __construct(string $filePath)
     {
-        $this->filePath = static::normalizePath($filePath);
+        $this->filePath = self::normalizePath($filePath);
         $content = file_get_contents($this->filePath);
 
         if ($content === false) {
@@ -39,88 +39,9 @@ class Stringer
     public static function for(string $filePath): static
     {
         // Normalize file path for cross-OS compatibility
-        $filePath = static::normalizePath($filePath);
+        $filePath = self::normalizePath($filePath);
 
-        return app(static::class, ['filePath' => $filePath]);
-    }
-
-    /**
-     * Normalize file path for cross-OS compatibility
-     */
-    protected static function normalizePath(string $path): string
-    {
-        // First, normalize directory separators to the current OS
-        $normalizedPath = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
-
-        // Try to resolve the path using realpath for existing files
-        $realPath = realpath($normalizedPath);
-        if ($realPath !== false) {
-            return $realPath;
-        }
-
-        // If realpath failed (file doesn't exist yet), manually clean the path
-        // Remove duplicate separators
-        $normalizedPath = preg_replace('/[\\\\\/]+/', DIRECTORY_SEPARATOR, $normalizedPath);
-
-        // Handle current directory references (./)
-        $normalizedPath = str_replace(DIRECTORY_SEPARATOR . '.' . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $normalizedPath);
-
-        // Handle parent directory references (../) by splitting and processing parts
-        $parts = explode(DIRECTORY_SEPARATOR, $normalizedPath);
-        $normalizedParts = [];
-
-        foreach ($parts as $part) {
-            if ($part === '..') {
-                // Remove the last directory from the stack if it's not empty and not '..'
-                if (! empty($normalizedParts) && end($normalizedParts) !== '..') {
-                    array_pop($normalizedParts);
-                } else {
-                    $normalizedParts[] = $part;
-                }
-            } elseif ($part !== '.' && $part !== '') {
-                $normalizedParts[] = $part;
-            }
-        }
-
-        $normalizedPath = implode(DIRECTORY_SEPARATOR, $normalizedParts);
-
-        // Preserve absolute path indicators for different OS
-        if (PHP_OS_FAMILY === 'Windows') {
-            // On Windows, preserve drive letter (e.g., C:)
-            if (preg_match('/^[a-zA-Z]:/', $path) && ! preg_match('/^[a-zA-Z]:/', $normalizedPath)) {
-                $driveLetter = substr($path, 0, 2);
-                $normalizedPath = $driveLetter . DIRECTORY_SEPARATOR . ltrim($normalizedPath, DIRECTORY_SEPARATOR);
-            }
-        } else {
-            // On Unix-like systems, preserve leading slash for absolute paths
-            if (str_starts_with($path, '/') && ! str_starts_with($normalizedPath, DIRECTORY_SEPARATOR)) {
-                $normalizedPath = DIRECTORY_SEPARATOR . $normalizedPath;
-            }
-        }
-
-        return $normalizedPath;
-    }
-
-    protected function findLine(string $needle): ?array
-    {
-        // Search for the needle and return the line and its indentation
-        $startPos = strpos($this->content, $needle);
-        if ($startPos === false) {
-            return null; // Not found
-        }
-
-        // Get the start of the line and calculate indentation
-        $lineStartPos = strrpos(substr($this->content, 0, $startPos), "\n") ?: 0;
-        $lineEndPos = strpos($this->content, "\n", $startPos) ?: strlen($this->content);
-
-        $line = substr($this->content, $lineStartPos, $lineEndPos - $lineStartPos);
-        $indentation = preg_replace('/\S.*/', '', $line); // Capture indentation
-
-        return [
-            'start' => $lineStartPos,
-            'end' => $lineEndPos,
-            'indentation' => $indentation,
-        ];
+        return app(self::class, ['filePath' => $filePath]);
     }
 
     public function prepend(string $needle, string $contentToPrepend, bool $beforeBlock = false): static
@@ -131,13 +52,13 @@ class Stringer
 
         if ($beforeBlock) {
             // Find the starting position of the method
-            $startPos = strpos($this->content, $needle);
+            $startPos = mb_strpos($this->content, $needle);
             if ($startPos === false) {
                 return $this; // Needle not found
             }
 
             // Find the opening parenthesis position
-            $openingParenPos = strpos($this->content, '(', $startPos);
+            $openingParenPos = mb_strpos($this->content, '(', $startPos);
             if ($openingParenPos === false) {
                 return $this; // No opening parenthesis found
             }
@@ -150,12 +71,12 @@ class Stringer
 
             // Get the line indentation
             $lineInfo = $this->findLine($needle);
-            $indentation = $lineInfo['indentation'] . $this->getIndentation();
+            $indentation = $lineInfo['indentation'].$this->getIndentation();
 
             // Format the new content based on the newLine flag
             $formattedReplacement = $this->addNewLine
-                ? "\n" . $indentation . trim($contentToPrepend)
-                : $indentation . trim($contentToPrepend);
+                ? "\n".$indentation.mb_trim($contentToPrepend)
+                : $indentation.mb_trim($contentToPrepend);
 
             $this->addNewLine = false; // Reset flag
 
@@ -165,9 +86,9 @@ class Stringer
             // Normal prepend logic
             if ($lineInfo = $this->findLine($needle)) {
                 // Prepend the content with proper indentation
-                $newContent = $lineInfo['indentation'] . $this->getIndentation() . trim($contentToPrepend);
+                $newContent = $lineInfo['indentation'].$this->getIndentation().mb_trim($contentToPrepend);
                 if ($this->addNewLine) {
-                    $newContent = "\n" . $newContent;
+                    $newContent = "\n".$newContent;
                     $this->addNewLine = false; // Reset the flag
                 }
                 $this->content = substr_replace(
@@ -190,13 +111,13 @@ class Stringer
 
         if ($afterBlock) {
             // Find the starting position of the method
-            $startPos = strpos($this->content, $needle);
+            $startPos = mb_strpos($this->content, $needle);
             if ($startPos === false) {
                 return $this; // Needle not found
             }
 
             // Find the opening parenthesis position
-            $openingParenPos = strpos($this->content, '(', $startPos);
+            $openingParenPos = mb_strpos($this->content, '(', $startPos);
             if ($openingParenPos === false) {
                 return $this; // No opening parenthesis found
             }
@@ -209,12 +130,12 @@ class Stringer
 
             // Get the line indentation
             $lineInfo = $this->findLine($needle);
-            $indentation = $lineInfo['indentation'] . $this->getIndentation();
+            $indentation = $lineInfo['indentation'].$this->getIndentation();
 
             // Format the new content based on the newLine flag
             $formattedReplacement = $this->addNewLine
-                ? $indentation . trim($contentToAppend) . "\n"
-                : $indentation . trim($contentToAppend);
+                ? $indentation.mb_trim($contentToAppend)."\n"
+                : $indentation.mb_trim($contentToAppend);
 
             $this->addNewLine = false; // Reset flag
 
@@ -222,11 +143,11 @@ class Stringer
             if ($this->content[$closingParenPos + 1] === ';') {
                 $this->content = substr_replace(
                     $this->content,
-                    "\n" . $indentation . ';',
+                    "\n".$indentation.';',
                     $closingParenPos + 1,
                     0
                 );
-                $closingParenPos += strlen("\n" . $indentation . ';'); // Adjust closing position
+                $closingParenPos += mb_strlen("\n".$indentation.';'); // Adjust closing position
             }
 
             // Insert the formatted replacement after the closing parenthesis
@@ -235,9 +156,9 @@ class Stringer
             // Normal append logic
             if ($lineInfo = $this->findLine($needle)) {
                 // Append the content with proper indentation
-                $newContent = $lineInfo['indentation'] . $this->getIndentation() . trim($contentToAppend);
+                $newContent = $lineInfo['indentation'].$this->getIndentation().mb_trim($contentToAppend);
                 if ($this->addNewLine) {
-                    $newContent = $newContent . "\n";
+                    $newContent = $newContent."\n";
                     $this->addNewLine = false; // Reset the flag
                 }
                 $this->content = substr_replace(
@@ -252,34 +173,15 @@ class Stringer
         return $this;
     }
 
-    protected function findClosingParen(int $openingParenPos): ?int
-    {
-        $stack = 0;
-        $length = strlen($this->content);
-
-        for ($i = $openingParenPos; $i < $length; $i++) {
-            if ($this->content[$i] === '(') {
-                $stack++;
-            } elseif ($this->content[$i] === ')') {
-                $stack--;
-                if ($stack === 0) {
-                    return $i; // Found the closing parenthesis
-                }
-            }
-        }
-
-        return null; // Closing parenthesis not found
-    }
-
     public function replace(string $needle, string $replacement): static
     {
         if ($lineInfo = $this->findLine($needle)) {
             // Replace the entire line containing the needle
             $this->content = substr_replace(
                 $this->content,
-                $lineInfo['indentation'] . trim($replacement),
+                $lineInfo['indentation'].mb_trim($replacement),
                 $lineInfo['start'],
-                strlen(substr($this->content, $lineInfo['start'], $lineInfo['end'] - $lineInfo['start']))
+                mb_strlen(mb_substr($this->content, $lineInfo['start'], $lineInfo['end'] - $lineInfo['start']))
             );
         }
 
@@ -312,13 +214,14 @@ class Stringer
 
         if ($isPartialMatch) {
             // Strip the `*` characters for partial matching
-            $needle = trim($needle, '*');
+            $needle = mb_trim($needle, '*');
 
-            return (bool) preg_match('/' . preg_quote($needle, '/') . '/', $this->content);
-        } else {
-            // Perform an exact search
-            return str_contains($this->content, $needle);
+            return (bool) preg_match('/'.preg_quote($needle, '/').'/', $this->content);
         }
+
+        // Perform an exact search
+        return str_contains($this->content, $needle);
+
     }
 
     public function save(): bool
@@ -341,92 +244,32 @@ class Stringer
 
     public function prependBeforeLast(string $needle, string $replacement): static
     {
-        $lastPos = strrpos($this->content, $needle);
+        $lastPos = mb_strrpos($this->content, $needle);
 
         if ($lastPos !== false) {
-            $lineStartPos = strrpos(substr($this->content, 0, $lastPos), "\n") ?: 0;
-            $line = substr($this->content, $lineStartPos, $lastPos - $lineStartPos);
+            $lineStartPos = mb_strrpos(mb_substr($this->content, 0, $lastPos), "\n") ?: 0;
+            $line = mb_substr($this->content, $lineStartPos, $lastPos - $lineStartPos);
 
             preg_match('/^\s*/', $line, $matches);
             $originalIndentation = $matches[0] ?? '';
 
-            $formattedReplacement = $this->getIndentation() . trim($replacement);
+            $formattedReplacement = $this->getIndentation().mb_trim($replacement);
             if ($this->addNewLine) {
-                $formattedReplacement = "\n" . $formattedReplacement . "\n";
+                $formattedReplacement = "\n".$formattedReplacement."\n";
             }
 
             $this->addNewLine = false;
 
-            $this->content = substr_replace($this->content, $originalIndentation . $formattedReplacement, $lineStartPos, 0);
+            $this->content = substr_replace($this->content, $originalIndentation.$formattedReplacement, $lineStartPos, 0);
         }
 
         return $this;
     }
 
-    protected function findMethodDeclaration(string $needle): ?array
-    {
-        $lines = explode("\n", $this->content);
-        $normalizedNeedle = preg_replace('/\s+/', ' ', trim($needle));
-
-        for ($i = 0; $i < count($lines); $i++) {
-            $currentLine = trim($lines[$i]);
-            $nextLine = isset($lines[$i + 1]) ? trim($lines[$i + 1]) : '';
-
-            // Check if current line contains the method declaration
-            // and next line contains the opening brace
-            if (str_contains(preg_replace('/\s+/', ' ', $currentLine), $normalizedNeedle)
-                && str_contains($nextLine, '{')) {
-
-                $startPos = 0;
-                for ($j = 0; $j < $i; $j++) {
-                    $startPos += strlen($lines[$j]) + 1; // +1 for \n
-                }
-
-                $endPos = $startPos + strlen($lines[$i]) + 1 + strlen($lines[$i + 1]);
-                $indentation = preg_replace('/\S.*/', '', $lines[$i]);
-
-                // Find the closing brace position
-                $braceLevel = 0;
-                $methodEndLine = $i + 1;
-                for ($j = $i + 1; $j < count($lines); $j++) {
-                    if (str_contains($lines[$j], '{')) {
-                        $braceLevel++;
-                    }
-                    if (str_contains($lines[$j], '}')) {
-                        $braceLevel--;
-                        if ($braceLevel === 0) {
-                            $methodEndLine = $j;
-
-                            break;
-                        }
-                    }
-                }
-
-                $methodEndPos = $startPos;
-                for ($j = $i; $j <= $methodEndLine; $j++) {
-                    $methodEndPos += strlen($lines[$j]) + 1; // +1 for \n
-                }
-
-                return [
-                    'start' => $startPos,
-                    'end' => $endPos,
-                    'method_end' => $methodEndPos,
-                    'indentation' => $indentation,
-                    'is_method' => true,
-                    'opening_brace_line' => $i + 1,
-                    'closing_brace_line' => $methodEndLine,
-                ];
-            }
-        }
-
-        // Fallback to regular findLine if method declaration pattern isn't found
-        return $this->findLine($needle);
-    }
-
     public function findChainedBlock(string $block): ?array
     {
         // Normalize the search block by removing extra whitespace
-        $normalizedBlock = preg_replace('/\s+/', ' ', trim($block));
+        $normalizedBlock = preg_replace('/\s+/', ' ', mb_trim($block));
 
         // Split the block into individual method calls
         $methodCalls = array_map('trim', explode('->', $normalizedBlock));
@@ -442,11 +285,11 @@ class Stringer
 
             // Try to match all method calls in sequence
             while ($currentMethodIndex < count($methodCalls) && $endLine < $contentLength) {
-                $currentLine = trim($lines[$endLine]);
+                $currentLine = mb_trim($lines[$endLine]);
                 $normalizedLine = preg_replace('/\s+/', ' ', $currentLine);
 
                 // Check if current line contains the current method call
-                if (str_contains($normalizedLine, trim($methodCalls[$currentMethodIndex]))) {
+                if (str_contains($normalizedLine, mb_trim($methodCalls[$currentMethodIndex]))) {
                     $currentMethodIndex++;
                     $endLine++;
                 } elseif (! empty($currentLine)) {
@@ -464,12 +307,12 @@ class Stringer
                 // Calculate positions
                 $startPos = 0;
                 for ($j = 0; $j < $startLine; $j++) {
-                    $startPos += strlen($lines[$j]) + 1; // +1 for \n
+                    $startPos += mb_strlen($lines[$j]) + 1; // +1 for \n
                 }
 
                 $endPos = $startPos;
                 for ($j = $startLine; $j < $endLine; $j++) {
-                    $endPos += strlen($lines[$j]) + 1; // +1 for \n
+                    $endPos += mb_strlen($lines[$j]) + 1; // +1 for \n
                 }
 
                 $indentation = preg_replace('/\S.*/', '', $lines[$startLine]);
@@ -510,44 +353,44 @@ class Stringer
 
             // Calculate proper indentation
             $methodIndent = $lineInfo['indentation'];
-            $contentIndent = $methodIndent . str_repeat(' ', 4); // One level deeper than method
+            $contentIndent = $methodIndent.str_repeat(' ', 4); // One level deeper than method
 
             // Format the content to append
-            $contentLines = explode("\n", trim($contentToAppend));
+            $contentLines = explode("\n", mb_trim($contentToAppend));
             $formattedContent = '';
             foreach ($contentLines as $index => $line) {
-                $trimmedLine = trim($line);
+                $trimmedLine = mb_trim($line);
                 if (empty($trimmedLine)) {
                     continue;
                 }
 
-                $formattedContent .= ($index > 0 ? "\n" . $methodIndent : '') . $contentIndent . $trimmedLine;
+                $formattedContent .= ($index > 0 ? "\n".$methodIndent : '').$contentIndent.$trimmedLine;
             }
 
             // Add new line if flag is set
             if ($this->addNewLine) {
-                $formattedContent = $formattedContent . "\n";
+                $formattedContent = $formattedContent."\n";
                 $this->addNewLine = false;
             }
 
             // Find position after opening brace
             $insertPos = 0;
             for ($i = 0; $i <= $lineInfo['opening_brace_line']; $i++) {
-                $insertPos += strlen($lines[$i]) + 1; // +1 for \n
+                $insertPos += mb_strlen($lines[$i]) + 1; // +1 for \n
             }
 
             // Insert the formatted content
             $this->content = substr_replace(
                 $this->content,
-                $formattedContent . "\n\n",
+                $formattedContent."\n\n",
                 $insertPos,
                 0
             );
         } else {
             // Original append logic
-            $newContent = $lineInfo['indentation'] . $this->getIndentation() . trim($contentToAppend);
+            $newContent = $lineInfo['indentation'].$this->getIndentation().mb_trim($contentToAppend);
             if ($this->addNewLine) {
-                $newContent = "\n" . $newContent;
+                $newContent = "\n".$newContent;
                 $this->addNewLine = false;
             }
 
@@ -574,5 +417,163 @@ class Stringer
         }
 
         return $this;
+    }
+
+    /**
+     * Normalize file path for cross-OS compatibility
+     */
+    protected static function normalizePath(string $path): string
+    {
+        // First, normalize directory separators to the current OS
+        $normalizedPath = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+
+        // Try to resolve the path using realpath for existing files
+        $realPath = realpath($normalizedPath);
+        if ($realPath !== false) {
+            return $realPath;
+        }
+
+        // If realpath failed (file doesn't exist yet), manually clean the path
+        // Remove duplicate separators
+        $normalizedPath = preg_replace('/[\\\\\/]+/', DIRECTORY_SEPARATOR, $normalizedPath);
+
+        // Handle current directory references (./)
+        $normalizedPath = str_replace(DIRECTORY_SEPARATOR.'.'.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $normalizedPath);
+
+        // Handle parent directory references (../) by splitting and processing parts
+        $parts = explode(DIRECTORY_SEPARATOR, $normalizedPath);
+        $normalizedParts = [];
+
+        foreach ($parts as $part) {
+            if ($part === '..') {
+                // Remove the last directory from the stack if it's not empty and not '..'
+                if (! empty($normalizedParts) && end($normalizedParts) !== '..') {
+                    array_pop($normalizedParts);
+                } else {
+                    $normalizedParts[] = $part;
+                }
+            } elseif ($part !== '.' && $part !== '') {
+                $normalizedParts[] = $part;
+            }
+        }
+
+        $normalizedPath = implode(DIRECTORY_SEPARATOR, $normalizedParts);
+
+        // Preserve absolute path indicators for different OS
+        if (PHP_OS_FAMILY === 'Windows') {
+            // On Windows, preserve drive letter (e.g., C:)
+            if (preg_match('/^[a-zA-Z]:/', $path) && ! preg_match('/^[a-zA-Z]:/', $normalizedPath)) {
+                $driveLetter = mb_substr($path, 0, 2);
+                $normalizedPath = $driveLetter.DIRECTORY_SEPARATOR.mb_ltrim($normalizedPath, DIRECTORY_SEPARATOR);
+            }
+        } else {
+            // On Unix-like systems, preserve leading slash for absolute paths
+            if (str_starts_with($path, '/') && ! str_starts_with($normalizedPath, DIRECTORY_SEPARATOR)) {
+                $normalizedPath = DIRECTORY_SEPARATOR.$normalizedPath;
+            }
+        }
+
+        return $normalizedPath;
+    }
+
+    protected function findLine(string $needle): ?array
+    {
+        // Search for the needle and return the line and its indentation
+        $startPos = mb_strpos($this->content, $needle);
+        if ($startPos === false) {
+            return null; // Not found
+        }
+
+        // Get the start of the line and calculate indentation
+        $lineStartPos = mb_strrpos(mb_substr($this->content, 0, $startPos), "\n") ?: 0;
+        $lineEndPos = mb_strpos($this->content, "\n", $startPos) ?: mb_strlen($this->content);
+
+        $line = mb_substr($this->content, $lineStartPos, $lineEndPos - $lineStartPos);
+        $indentation = preg_replace('/\S.*/', '', $line); // Capture indentation
+
+        return [
+            'start' => $lineStartPos,
+            'end' => $lineEndPos,
+            'indentation' => $indentation,
+        ];
+    }
+
+    protected function findClosingParen(int $openingParenPos): ?int
+    {
+        $stack = 0;
+        $length = mb_strlen($this->content);
+
+        for ($i = $openingParenPos; $i < $length; $i++) {
+            if ($this->content[$i] === '(') {
+                $stack++;
+            } elseif ($this->content[$i] === ')') {
+                $stack--;
+                if ($stack === 0) {
+                    return $i; // Found the closing parenthesis
+                }
+            }
+        }
+
+        return null; // Closing parenthesis not found
+    }
+
+    protected function findMethodDeclaration(string $needle): ?array
+    {
+        $lines = explode("\n", $this->content);
+        $normalizedNeedle = preg_replace('/\s+/', ' ', mb_trim($needle));
+
+        for ($i = 0; $i < count($lines); $i++) {
+            $currentLine = mb_trim($lines[$i]);
+            $nextLine = isset($lines[$i + 1]) ? mb_trim($lines[$i + 1]) : '';
+
+            // Check if current line contains the method declaration
+            // and next line contains the opening brace
+            if (str_contains(preg_replace('/\s+/', ' ', $currentLine), $normalizedNeedle)
+                && str_contains($nextLine, '{')) {
+
+                $startPos = 0;
+                for ($j = 0; $j < $i; $j++) {
+                    $startPos += mb_strlen($lines[$j]) + 1; // +1 for \n
+                }
+
+                $endPos = $startPos + mb_strlen($lines[$i]) + 1 + mb_strlen($lines[$i + 1]);
+                $indentation = preg_replace('/\S.*/', '', $lines[$i]);
+
+                // Find the closing brace position
+                $braceLevel = 0;
+                $methodEndLine = $i + 1;
+                for ($j = $i + 1; $j < count($lines); $j++) {
+                    if (str_contains($lines[$j], '{')) {
+                        $braceLevel++;
+                    }
+                    if (str_contains($lines[$j], '}')) {
+                        $braceLevel--;
+                        if ($braceLevel === 0) {
+                            $methodEndLine = $j;
+
+                            break;
+                        }
+                    }
+                }
+
+                $methodEndPos = $startPos;
+                for ($j = $i; $j <= $methodEndLine; $j++) {
+                    $methodEndPos += mb_strlen($lines[$j]) + 1; // +1 for \n
+                }
+
+                return [
+                    'start' => $startPos,
+                    'end' => $endPos,
+                    'method_end' => $methodEndPos,
+                    'indentation' => $indentation,
+                    'is_method' => true,
+                    'opening_brace_line' => $i + 1,
+                    'closing_brace_line' => $methodEndLine,
+                ];
+            }
+        }
+
+        // Fallback to regular findLine if method declaration pattern isn't found
+        return $this->findLine($needle);
     }
 }

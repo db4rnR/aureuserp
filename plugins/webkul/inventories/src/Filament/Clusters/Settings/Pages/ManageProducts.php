@@ -1,33 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Settings\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Toggle;
-use Illuminate\Support\HtmlString;
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
+use Filament\Forms\Components\Toggle;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\HtmlString;
+use UnitEnum;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackagingResource;
 use Webkul\Inventory\Settings\ProductSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-class ManageProducts extends SettingsPage
+final class ManageProducts extends SettingsPage
 {
     use HasPageShield;
 
     protected static ?string $slug = 'inventory/manage-products';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cube';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cube';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Inventory';
+    protected static string|UnitEnum|null $navigationGroup = 'Inventory';
 
     protected static ?int $navigationSort = 2;
 
     protected static string $settings = ProductSettings::class;
 
     protected static ?string $cluster = Settings::class;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('inventories::filament/clusters/settings/pages/manage-products.title');
+    }
 
     public function getBreadcrumbs(): array
     {
@@ -37,11 +45,6 @@ class ManageProducts extends SettingsPage
     }
 
     public function getTitle(): string
-    {
-        return __('inventories::filament/clusters/settings/pages/manage-products.title');
-    }
-
-    public static function getNavigationLabel(): string
     {
         return __('inventories::filament/clusters/settings/pages/manage-products.title');
     }
@@ -58,7 +61,7 @@ class ManageProducts extends SettingsPage
                     ->helperText(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-uom-helper-text')),
                 Toggle::make('enable_packagings')
                     ->label(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-packagings'))
-                    ->helperText(function () {
+                    ->helperText(function (): HtmlString {
                         $routeBaseName = PackagingResource::getRouteBaseName();
 
                         $url = '#';

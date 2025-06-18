@@ -1,5 +1,112 @@
 # 2. Documentation Standards
+# 2. Documentation Standards
 
+## 2.1. Core Communication Principle
+
+**All documents and responses should be clear, actionable, and suitable for a junior developer to understand and implement.**
+
+This principle applies to all documentation, code comments, commit messages, pull request descriptions, and any other written communication within the project.
+
+### 2.1.1. Guidelines for Junior Developer-Focused Documentation
+
+- **Use clear, simple language** - Avoid complex sentence structures and jargon
+- **Be explicit** - Don't assume prior knowledge of the codebase or technologies
+- **Provide examples** - Include concrete examples for abstract concepts
+- **Define terms** - Explain technical terms and acronyms on first use
+- **Break down complexity** - Divide complex concepts into simpler parts
+- **Include context** - Explain the 'why' behind decisions, not just the 'what'
+- **Use visuals** - Diagrams and screenshots can clarify complex relationships
+- **Link to resources** - Provide references to further learning materials
+
+## 2.2. Documentation Structure
+
+### 2.2.1. File Organization
+
+- Store documentation in appropriate directories based on purpose
+- Use consistent naming conventions
+- Maintain a clear hierarchy with main index documents
+
+### 2.2.2. Document Types
+
+- **README.md** - Project overview and quick start guide
+- **CONTRIBUTING.md** - Guidelines for contributing to the project
+- **SECURITY.md** - Security policies and procedures
+- **LICENSE.md** - License information
+- **CHANGELOG.md** - Version history and changes
+- **docs/** - Detailed documentation organized by topic
+
+## 2.3. Content Guidelines
+
+### 2.3.1. Formatting Standards
+
+- Use Markdown for all documentation
+- Follow consistent heading structure (H1 for title, H2 for sections, etc.)
+- Use lists for steps or options
+- Use code blocks with appropriate language specification
+- Use emphasis (bold, italic) purposefully
+- Keep line length under 100 characters for better readability
+
+### 2.3.2. Writing Style
+
+- Write in present tense
+- Use active voice
+- Be concise but complete
+- Avoid ambiguity
+- Use imperative mood for instructions
+- Maintain consistent terminology
+
+## 2.4. Code Documentation
+
+### 2.4.1. Comments
+
+- Document 'why' rather than 'what' (code should be self-explanatory)
+- Add comments for complex logic
+- Use DocBlocks for classes, methods, and functions
+- Keep comments up-to-date with code changes
+- Include examples for non-obvious usage
+
+### 2.4.2. Type Annotations and Attributes
+
+- Use PHP 8 attributes instead of PHPDoc annotations where applicable
+- Include type declarations for parameters and return types
+- Document exceptions that may be thrown
+- Document breaking changes in methods
+
+## 2.5. API Documentation
+
+### 2.5.1. Endpoint Documentation
+
+- Document all API endpoints with:  
+  - URL and method
+  - Request parameters
+  - Request body structure
+  - Response format
+  - Authentication requirements
+  - Example requests and responses
+  - Error handling
+
+### 2.5.2. Schema Documentation
+
+- Document data models
+- Include field descriptions
+- Note required fields
+- Document validation rules
+- Include relationships between models
+
+## 2.6. Maintenance
+
+### 2.6.1. Review Process
+
+- Regularly review documentation for accuracy
+- Update documentation when code changes
+- Remove outdated documentation
+- Encourage feedback on documentation clarity
+
+### 2.6.2. Version Control
+
+- Include documentation changes in the same PR as code changes
+- Maintain changelog entries for significant documentation updates
+- Use version tags to mark documentation for specific releases
 ## 2.1. Structure and Organization
 
 ### 2.1.1. Hierarchical Numbering
@@ -54,6 +161,12 @@ When multiple documents are required:
 - Organize exercises in dedicated `888-exercises` folder
 - Organize answers in `888-sample-answers` folder
 - Ensure consistency between exercise files and sample answer files
+
+### 2.1.5. Document Navigation
+
+- Where appropriate, ensure navigation links, `previous`/`next`, in the footer of each document
+- This helps users navigate through related documentation in a logical sequence
+- Navigation links should be consistent with the sequence defined in the index files
 
 ## 2.2. Content Formatting
 

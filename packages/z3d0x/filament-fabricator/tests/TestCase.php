@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -12,15 +14,27 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Z3d0X\FilamentFabricator\FilamentFabricatorServiceProvider;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Z3d0X\\FilamentFabricator\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Z3d0X\\FilamentFabricator\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+    }
+
+    public function getEnvironmentSetUp($app): void
+    {
+        config()->set('database.default', 'testing');
+
+        $migration = include __DIR__.'/../database/migrations/create_pages_table.php.stub';
+        $migration->up();
+
+        $migration = include __DIR__.'/../database/migrations/fix_slug_unique_constraint_on_pages_table.php.stub';
+        $migration->up();
+
     }
 
     protected function getPackageProviders($app)
@@ -35,17 +49,5 @@ class TestCase extends Orchestra
 
             FilamentFabricatorServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
-
-        $migration = include __DIR__ . '/../database/migrations/create_pages_table.php.stub';
-        $migration->up();
-
-        $migration = include __DIR__ . '/../database/migrations/fix_slug_unique_constraint_on_pages_table.php.stub';
-        $migration->up();
-
     }
 }

@@ -1,7 +1,9 @@
 <?php
 
-use Filament\Schemas\Schema;
+declare(strict_types=1);
+
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
 use FilamentTiptapEditor\Enums\TiptapOutput;
 use FilamentTiptapEditor\Tests\Fixtures\Livewire as LivewireFixture;
 use FilamentTiptapEditor\Tests\Models\Page;
@@ -11,14 +13,14 @@ use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Contracts\View\View;
 use Livewire\Livewire;
 
-it('has editor field', function () {
+it('has editor field', function (): void {
     Livewire::test(TestComponentWithForm::class)
         ->assertFormFieldExists('html_content')
         ->assertFormFieldExists('json_content')
         ->assertFormFieldExists('text_content');
 });
 
-it('creates record', function () {
+it('creates record', function (): void {
     $page = Page::factory()->make();
 
     Livewire::test(CreatePage::class)
@@ -42,7 +44,7 @@ it('creates record', function () {
         ->json_content->toBe($page->json_content);
 });
 
-it('updates record', function () {
+it('updates record', function (): void {
     $page = Page::factory()->create();
     $newData = Page::factory()->make();
 
@@ -68,7 +70,7 @@ it('updates record', function () {
         ->json_content->toBe($newData->json_content);
 });
 
-it('can create null record', function () {
+it('can create null record', function (): void {
     $page = Page::factory()->make();
 
     Livewire::test(CreatePage::class)
@@ -92,7 +94,7 @@ it('can create null record', function () {
         ->json_content->toBeNull();
 });
 
-class TestComponentWithForm extends LivewireFixture
+final class TestComponentWithForm extends LivewireFixture
 {
     public function form(Schema $schema): Schema
     {

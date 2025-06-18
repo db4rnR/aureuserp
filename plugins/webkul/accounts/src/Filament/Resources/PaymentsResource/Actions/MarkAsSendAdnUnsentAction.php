@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\PaymentsResource\Actions;
 
 use Filament\Actions\Action;
@@ -7,13 +9,8 @@ use Livewire\Component;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Models\Payment;
 
-class MarkAsSendAdnUnsentAction extends Action
+final class MarkAsSendAdnUnsentAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'customers.payment.mark-as-sent-or-unsent';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,9 +24,12 @@ class MarkAsSendAdnUnsentAction extends Action
 
                 $livewire->refreshFormData(['state']);
             })
-            ->hidden(function (Payment $record) {
-                return $record->state !== PaymentStatus::IN_PROCESS->value
-                    || ($record->paymentMethodLine?->paymentMethod?->code ?? '') !== 'manual';
-            });
+            ->hidden(fn (Payment $record): bool => $record->state !== PaymentStatus::IN_PROCESS->value
+                || ($record->paymentMethodLine?->paymentMethod?->code ?? '') !== 'manual');
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'customers.payment.mark-as-sent-or-unsent';
     }
 }

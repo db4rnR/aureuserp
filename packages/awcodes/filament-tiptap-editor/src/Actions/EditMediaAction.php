@@ -1,28 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Actions;
 
 use Filament\Actions\Action;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\View;
-use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\View;
+use Filament\Schemas\Schema;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
-class EditMediaAction extends Action
+final class EditMediaAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'filament_tiptap_edit_media';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,9 +34,9 @@ class EditMediaAction extends Action
                 'lazy' => null,
             ])
             ->modalWidth('md')
-            ->mountUsing(function (TiptapEditor $component, Schema $schema, array $arguments) {
+            ->mountUsing(function (TiptapEditor $component, Schema $schema, array $arguments): void {
                 $source = $arguments['src'] !== ''
-                    ? $component->getDirectory() . Str::of($arguments['src'])
+                    ? $component->getDirectory().Str::of($arguments['src'])
                         ->after($component->getDirectory())
                     : null;
 
@@ -55,7 +52,7 @@ class EditMediaAction extends Action
             ->modalHeading(function (TiptapEditor $component, array $arguments) {
                 $context = blank($arguments['src'] ?? null) ? 'insert' : 'update';
 
-                return trans('filament-tiptap-editor::media-modal.heading.' . $context);
+                return trans('filament-tiptap-editor::media-modal.heading.'.$context);
             })
             ->form(function (TiptapEditor $component, array $arguments) {
                 return [
@@ -84,7 +81,7 @@ class EditMediaAction extends Action
                         ->imageResizeTargetHeight($component->getImageResizeTargetHeight())
                         ->required()
                         ->live()
-                        ->afterStateUpdated(function (TemporaryUploadedFile $state, callable $set) {
+                        ->afterStateUpdated(function (TemporaryUploadedFile $state, callable $set): void {
                             if (Str::contains($state->getMimeType(), 'image')) {
                                 $set('type', 'image');
                             } else {
@@ -101,21 +98,21 @@ class EditMediaAction extends Action
                             $storeMethod = $component->getVisibility() === 'public' ? 'storePubliclyAs' : 'storeAs';
                             $extension = $file->getClientOriginalExtension();
 
-                            if (Storage::disk($component->getDiskName())->exists(ltrim($component->getDirectory() . '/' . $filename . '.' . $extension, '/'))) {
-                                $filename = $filename . '-' . time();
+                            if (Storage::disk($component->getDiskName())->exists(mb_ltrim($component->getDirectory().'/'.$filename.'.'.$extension, '/'))) {
+                                $filename = $filename.'-'.time();
                             }
 
-                            $upload = $file->{$storeMethod}($component->getDirectory(), $filename . '.' . $extension, $component->getDiskName());
+                            $upload = $file->{$storeMethod}($component->getDirectory(), $filename.'.'.$extension, $component->getDiskName());
 
                             return Storage::disk($component->getDiskName())->url($upload);
                         }),
                     TextInput::make('link_text')
                         ->label(trans('filament-tiptap-editor::media-modal.labels.link_text'))
                         ->required()
-                        ->visible(fn (callable $get) => $get('type') == 'document'),
+                        ->visible(fn (callable $get) => $get('type') === 'document'),
                     TextInput::make('alt')
                         ->label(trans('filament-tiptap-editor::media-modal.labels.alt'))
-                        ->hidden(fn (callable $get) => $get('type') == 'document')
+                        ->hidden(fn (callable $get) => $get('type') === 'document')
                         ->hintAction(
                             Action::make('alt_hint_action')
                                 ->label('?')
@@ -135,7 +132,7 @@ class EditMediaAction extends Action
                         ->default('document'),
                 ];
             })
-            ->action(function (TiptapEditor $component, array $arguments, $data) {
+            ->action(function (TiptapEditor $component, array $arguments, $data): void {
                 if ($this->isUsingCurator()) {
                     $source = $arguments['src'];
                 } elseif (config('filament-tiptap-editor.use_relative_paths')) {
@@ -164,6 +161,11 @@ class EditMediaAction extends Action
                     ],
                 );
             });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'filament_tiptap_edit_media';
     }
 
     private function isUsingCurator(): bool

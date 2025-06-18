@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions;
 
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +13,7 @@ use Kirschbaum\Commentions\Contracts\Commenter;
  * @property-read Comment $comment
  * @property-read Commenter $reactor
  */
-class CommentReaction extends Model
+final class CommentReaction extends Model
 {
     protected $fillable = [
         'comment_id',

@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield;
 
-use BezhanSalleh\FilamentShield\Concerns\HasAboutCommand;
 use BezhanSalleh\FilamentShield\Commands\GenerateCommand;
 use BezhanSalleh\FilamentShield\Commands\InstallCommand;
 use BezhanSalleh\FilamentShield\Commands\PublishCommand;
 use BezhanSalleh\FilamentShield\Commands\SeederCommand;
 use BezhanSalleh\FilamentShield\Commands\SetupCommand;
 use BezhanSalleh\FilamentShield\Commands\SuperAdminCommand;
+use BezhanSalleh\FilamentShield\Concerns\HasAboutCommand;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use Illuminate\Support\Facades\Gate;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentShieldServiceProvider extends PackageServiceProvider
+final class FilamentShieldServiceProvider extends PackageServiceProvider
 {
     use HasAboutCommand;
 
@@ -54,7 +56,7 @@ class FilamentShieldServiceProvider extends PackageServiceProvider
         }
 
         if (Utils::isRolePolicyRegistered()) {
-            Gate::policy(Utils::getRoleModel(), 'App\\' . Utils::getPolicyNamespace() . '\\RolePolicy');
+            Gate::policy(Utils::getRoleModel(), 'App\\'.Utils::getPolicyNamespace().'\\RolePolicy');
         }
     }
 

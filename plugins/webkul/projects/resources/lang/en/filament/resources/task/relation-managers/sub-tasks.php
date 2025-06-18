@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'table' => [
         'header-actions' => [
@@ -8,7 +10,7 @@ return [
 
                 'notification' => [
                     'title' => 'Task created',
-                    'body'  => 'The task has been created successfully.',
+                    'body' => 'The task has been created successfully.',
                 ],
             ],
         ],
@@ -17,21 +19,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Task restored',
-                    'body'  => 'The task has been restored successfully.',
+                    'body' => 'The task has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Task deleted',
-                    'body'  => 'The task has been deleted successfully.',
+                    'body' => 'The task has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Task force deleted',
-                    'body'  => 'The task has been force deleted successfully.',
+                    'body' => 'The task has been force deleted successfully.',
                 ],
             ],
         ],

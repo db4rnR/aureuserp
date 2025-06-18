@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ViewProductCategory;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\EditProductCategory;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ManageProducts;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ListProductCategories;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\CreateProductCategory;
 use Filament\Resources\Pages\Page;
 use Webkul\Product\Filament\Resources\CategoryResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations;
-use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\CreateProductCategory;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\EditProductCategory;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ListProductCategories;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ManageProducts;
+use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ViewProductCategory;
 use Webkul\Purchase\Models\Category;
 
-class ProductCategoryResource extends CategoryResource
+final class ProductCategoryResource extends CategoryResource
 {
     protected static ?string $model = Category::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-folder';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -42,7 +44,7 @@ class ProductCategoryResource extends CategoryResource
     {
         $route = request()->route()?->getName() ?? session('current_route');
 
-        if ($route && $route != 'livewire.update') {
+        if ($route && $route !== 'livewire.update') {
             session(['current_route' => $route]);
         } else {
             $route = session('current_route');
@@ -67,10 +69,10 @@ class ProductCategoryResource extends CategoryResource
     public static function getPages(): array
     {
         return [
-            'index'    => ListProductCategories::route('/'),
-            'create'   => CreateProductCategory::route('/create'),
-            'view'     => ViewProductCategory::route('/{record}'),
-            'edit'     => EditProductCategory::route('/{record}/edit'),
+            'index' => ListProductCategories::route('/'),
+            'create' => CreateProductCategory::route('/create'),
+            'view' => ViewProductCategory::route('/{record}'),
+            'edit' => EditProductCategory::route('/{record}/edit'),
             'products' => ManageProducts::route('/{record}/products'),
         ];
     }

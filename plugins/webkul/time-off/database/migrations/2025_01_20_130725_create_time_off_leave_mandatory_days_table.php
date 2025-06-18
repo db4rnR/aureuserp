@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('time_off_leave_mandatory_days', function (Blueprint $table) {
+        Schema::create('time_off_leave_mandatory_days', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('company_id')->nullable()->constrained('companies')->restrictOnDelete();

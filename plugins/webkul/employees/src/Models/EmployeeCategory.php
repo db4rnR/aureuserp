@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +10,7 @@ use Webkul\Employee\Database\Factories\EmployeeCategoryFactory;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-class EmployeeCategory extends Model
+final class EmployeeCategory extends Model
 {
     use HasCustomFields, HasFactory;
 

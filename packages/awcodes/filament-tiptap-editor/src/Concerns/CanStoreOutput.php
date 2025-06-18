@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Concerns;
 
 use FilamentTiptapEditor\Enums\TiptapOutput;
@@ -31,7 +33,7 @@ trait CanStoreOutput
         return TiptapConverter::asText($this->getState());
     }
 
-    public function getJSON(bool $decoded = false): string | array
+    public function getJSON(bool $decoded = false): string|array
     {
         return TiptapConverter::asJSON($this->getState(), decoded: $decoded);
     }

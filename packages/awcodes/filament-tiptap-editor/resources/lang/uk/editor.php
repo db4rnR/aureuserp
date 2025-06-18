@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Пропустити панель інструментів',
     'align_center' => 'Вирівняти текст по центру',

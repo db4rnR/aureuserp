@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +15,7 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Candidate extends Model
+final class Candidate extends Model
 {
     use HasChatter, HasLogActivity, SoftDeletes;
 
@@ -39,17 +41,17 @@ class Candidate extends Model
     ];
 
     protected array $logAttributes = [
-        'company.name'     => 'Company',
-        'partner.name'     => 'Contact',
-        'degree.name'      => 'Degree',
-        'user.name'        => 'Manager',
-        'employee.name'    => 'Employee',
-        'creator.name'     => 'Created By',
-        'phone_sanitized'  => 'Phone',
+        'company.name' => 'Company',
+        'partner.name' => 'Contact',
+        'degree.name' => 'Degree',
+        'user.name' => 'Manager',
+        'employee.name' => 'Employee',
+        'creator.name' => 'Created By',
+        'phone_sanitized' => 'Phone',
         'email_normalized' => 'Email',
-        'email_cc'         => 'Email CC',
-        'name'             => 'Candidate Name',
-        'email_from'       => 'Email From',
+        'email_cc' => 'Email CC',
+        'name' => 'Candidate Name',
+        'email_from' => 'Email From',
         'phone',
         'linkedin_profile',
         'availability_date',
@@ -103,15 +105,14 @@ class Candidate extends Model
     public function createEmployee()
     {
         $employee = $this->employee()->create([
-            'name'          => $this->name,
-            'user_id'       => $this->user_id,
+            'name' => $this->name,
+            'user_id' => $this->user_id,
             'department_id' => $this->department_id,
-            'company_id'    => $this->company_id,
-            'partner_id'    => $this->partner_id,
-            'company_id'    => $this->company_id,
-            'work_email'    => $this->email_from,
-            'mobile_phone'  => $this->phone,
-            'is_active'     => true,
+            'partner_id' => $this->partner_id,
+            'company_id' => $this->company_id,
+            'work_email' => $this->email_from,
+            'mobile_phone' => $this->phone,
+            'is_active' => true,
         ]);
 
         $this->update([
@@ -124,11 +125,11 @@ class Candidate extends Model
     /**
      * Bootstrap the model and its traits.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::saved(function (self $candidate) {
+        self::saved(function (self $candidate): void {
             if (! $candidate->partner_id) {
                 $candidate->handlePartnerCreation($candidate);
             } else {
@@ -140,15 +141,15 @@ class Candidate extends Model
     /**
      * Handle the creation of a partner.
      */
-    private function handlePartnerCreation(self $candidate)
+    private function handlePartnerCreation(self $candidate): void
     {
         $partner = $candidate->partner()->create([
             'creator_id' => Auth::user()->id ?? $candidate->id,
-            'sub_type'   => 'partner',
+            'sub_type' => 'partner',
             'company_id' => $candidate->company_id,
-            'phone'      => $candidate->phone,
-            'email'      => $candidate->email_from,
-            'name'       => $candidate->name,
+            'phone' => $candidate->phone,
+            'email' => $candidate->email_from,
+            'name' => $candidate->name,
         ]);
 
         $candidate->partner_id = $partner->id;
@@ -158,17 +159,17 @@ class Candidate extends Model
     /**
      * Handle the updation of a partner.
      */
-    private function handlePartnerUpdation(self $candidate)
+    private function handlePartnerUpdation(self $candidate): void
     {
         $partner = Partner::updateOrCreate(
             ['id' => $candidate->partner_id],
             [
                 'creator_id' => Auth::user()->id ?? $candidate->id,
-                'sub_type'   => 'partner',
+                'sub_type' => 'partner',
                 'company_id' => $candidate->company_id,
-                'phone'      => $candidate->phone,
-                'email'      => $candidate->email_from,
-                'name'       => $candidate->name,
+                'phone' => $candidate->phone,
+                'email' => $candidate->email_from,
+                'name' => $candidate->name,
             ]
         );
 

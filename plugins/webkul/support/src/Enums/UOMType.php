@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -16,8 +18,8 @@ enum UOMType: string implements HasLabel
     {
         return match ($this) {
             self::REFERENCE => __('support::enums/uom-type.reference'),
-            self::BIGGER    => __('support::enums/uom-type.bigger'),
-            self::SMALLER   => __('support::enums/uom-type.smaller'),
+            self::BIGGER => __('support::enums/uom-type.bigger'),
+            self::SMALLER => __('support::enums/uom-type.smaller'),
         };
     }
 }

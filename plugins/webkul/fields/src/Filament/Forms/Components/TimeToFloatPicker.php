@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Filament\Forms\Components;
 
 use Carbon\Carbon;
 use Filament\Forms\Components\TimePicker;
 
-class TimeToFloatPicker extends TimePicker
+final class TimeToFloatPicker extends TimePicker
 {
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->dehydrateStateUsing(function ($state) {
+        $this->dehydrateStateUsing(function ($state): ?float {
             if (! $state) {
                 return null;
             }
@@ -23,10 +25,10 @@ class TimeToFloatPicker extends TimePicker
             $hours = $time->format('H');
             $minutes = $time->format('i');
 
-            return floatval($hours) + (floatval($minutes) / 60);
+            return (float) $hours + ((float) $minutes / 60);
         });
 
-        $this->afterStateHydrated(function ($state) {
+        $this->afterStateHydrated(function ($state): ?string {
             if (! $state) {
                 return null;
             }

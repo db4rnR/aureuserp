@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Security\Models\User;
 
-class EmployeeJobPositionPolicy
+final class EmployeeJobPositionPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class EmployeeJobPositionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, EmployeeJobPosition $employeeJobPosition): bool
+    public function view(User $user): bool
     {
         return $user->can('view_job::position');
     }
@@ -37,7 +38,7 @@ class EmployeeJobPositionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, EmployeeJobPosition $employeeJobPosition): bool
+    public function update(User $user): bool
     {
         return $user->can('update_job::position');
     }
@@ -45,7 +46,7 @@ class EmployeeJobPositionPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, EmployeeJobPosition $employeeJobPosition): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_job::position');
     }
@@ -61,7 +62,7 @@ class EmployeeJobPositionPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, EmployeeJobPosition $employeeJobPosition): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_job::position');
     }
@@ -77,7 +78,7 @@ class EmployeeJobPositionPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, EmployeeJobPosition $employeeJobPosition): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_job::position');
     }
@@ -93,7 +94,7 @@ class EmployeeJobPositionPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, EmployeeJobPosition $employeeJobPosition): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_job::position');
     }

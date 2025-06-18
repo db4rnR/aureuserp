@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'Kayıt başarıyla güncellendi.',
     'update_error' => 'Kayıt güncellenirken bir hata oluştu.',

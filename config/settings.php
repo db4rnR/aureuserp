@@ -1,12 +1,14 @@
 <?php
 
-use Webkul\Security\Settings\UserSettings;
-use Spatie\LaravelSettings\SettingsRepositories\DatabaseSettingsRepository;
-use Spatie\LaravelSettings\SettingsRepositories\RedisSettingsRepository;
-use Spatie\LaravelSettings\SettingsCasts\DateTimeInterfaceCast;
-use Spatie\LaravelSettings\SettingsCasts\DateTimeZoneCast;
+declare(strict_types=1);
+
 use Spatie\LaravelData\Data;
 use Spatie\LaravelSettings\SettingsCasts\DataCast;
+use Spatie\LaravelSettings\SettingsCasts\DateTimeInterfaceCast;
+use Spatie\LaravelSettings\SettingsCasts\DateTimeZoneCast;
+use Spatie\LaravelSettings\SettingsRepositories\DatabaseSettingsRepository;
+use Spatie\LaravelSettings\SettingsRepositories\RedisSettingsRepository;
+use Webkul\Security\Settings\UserSettings;
 
 return [
 
@@ -43,15 +45,15 @@ return [
      */
     'repositories' => [
         'database' => [
-            'type'       => DatabaseSettingsRepository::class,
-            'model'      => null,
-            'table'      => null,
+            'type' => DatabaseSettingsRepository::class,
+            'model' => null,
+            'table' => null,
             'connection' => null,
         ],
         'redis' => [
-            'type'       => RedisSettingsRepository::class,
+            'type' => RedisSettingsRepository::class,
             'connection' => null,
-            'prefix'     => null,
+            'prefix' => null,
         ],
     ],
 
@@ -70,9 +72,9 @@ return [
      */
     'cache' => [
         'enabled' => env('SETTINGS_CACHE_ENABLED', false),
-        'store'   => null,
-        'prefix'  => null,
-        'ttl'     => null,
+        'store' => null,
+        'prefix' => null,
+        'ttl' => null,
     ],
 
     /*
@@ -81,7 +83,7 @@ return [
      */
     'global_casts' => [
         DateTimeInterface::class => DateTimeInterfaceCast::class,
-        DateTimeZone::class      => DateTimeZoneCast::class,
+        DateTimeZone::class => DateTimeZoneCast::class,
         //        Spatie\DataTransferObject\DataTransferObject::class => Spatie\LaravelSettings\SettingsCasts\DtoCast::class,
         Data::class => DataCast::class,
     ],

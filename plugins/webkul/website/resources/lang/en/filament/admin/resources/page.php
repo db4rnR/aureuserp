@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Pages',
@@ -12,10 +14,10 @@ return [
                 'title' => 'General',
 
                 'fields' => [
-                    'title'             => 'Title',
+                    'title' => 'Title',
                     'title-placeholder' => 'Page title ...',
-                    'slug'              => 'Slug',
-                    'content'           => 'Content',
+                    'slug' => 'Slug',
+                    'content' => 'Content',
                 ],
             ],
 
@@ -23,8 +25,8 @@ return [
                 'title' => 'SEO',
 
                 'fields' => [
-                    'meta-title'       => 'Meta Title',
-                    'meta-keywords'    => 'Meta Keywords',
+                    'meta-title' => 'Meta Title',
+                    'meta-keywords' => 'Meta Keywords',
                     'meta-description' => 'Meta Description',
                 ],
             ],
@@ -42,14 +44,14 @@ return [
 
     'table' => [
         'columns' => [
-            'title'             => 'Title',
-            'slug'              => 'Slug',
-            'creator'           => 'Created By',
-            'is-published'      => 'Is Published',
+            'title' => 'Title',
+            'slug' => 'Slug',
+            'creator' => 'Created By',
+            'is-published' => 'Is Published',
             'is-header-visible' => 'Is Visible Header Menu',
             'is-footer-visible' => 'Is Visible Footer Menu',
-            'created-at'        => 'Created At',
-            'updated-at'        => 'Updated At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
@@ -58,35 +60,35 @@ return [
 
         'filters' => [
             'is-published' => 'Is Published',
-            'creator'      => 'Created By',
+            'creator' => 'Created By',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Page updated',
-                    'body'  => 'The page has been updated successfully.',
+                    'body' => 'The page has been updated successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Page restored',
-                    'body'  => 'The page has been restored successfully.',
+                    'body' => 'The page has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Page deleted',
-                    'body'  => 'The page has been deleted successfully.',
+                    'body' => 'The page has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Page force deleted',
-                    'body'  => 'The page has been force deleted successfully.',
+                    'body' => 'The page has been force deleted successfully.',
                 ],
             ],
         ],
@@ -95,21 +97,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Pages restored',
-                    'body'  => 'The pages has been restored successfully.',
+                    'body' => 'The pages has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Pages deleted',
-                    'body'  => 'The pages has been deleted successfully.',
+                    'body' => 'The pages has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Pages force deleted',
-                    'body'  => 'The pages has been force deleted successfully.',
+                    'body' => 'The pages has been force deleted successfully.',
                 ],
             ],
         ],
@@ -121,10 +123,10 @@ return [
                 'title' => 'General',
 
                 'entries' => [
-                    'title'   => 'Title',
-                    'slug'    => 'Slug',
+                    'title' => 'Title',
+                    'slug' => 'Slug',
                     'content' => 'Content',
-                    'banner'  => 'Banner',
+                    'banner' => 'Banner',
                 ],
             ],
 
@@ -132,8 +134,8 @@ return [
                 'title' => 'SEO',
 
                 'entries' => [
-                    'meta-title'       => 'Meta Title',
-                    'meta-keywords'    => 'Meta Keywords',
+                    'meta-title' => 'Meta Title',
+                    'meta-keywords' => 'Meta Keywords',
                     'meta-description' => 'Meta Description',
                 ],
             ],
@@ -142,12 +144,12 @@ return [
                 'title' => 'Record Information',
 
                 'entries' => [
-                    'author'          => 'Author',
-                    'created-by'      => 'Created By',
-                    'published-at'    => 'Published At',
+                    'author' => 'Author',
+                    'created-by' => 'Created By',
+                    'published-at' => 'Published At',
                     'last-updated-by' => 'Last Updated By',
-                    'last-updated'    => 'Last Updated At',
-                    'created-at'      => 'Created At',
+                    'last-updated' => 'Last Updated At',
+                    'created-at' => 'Created At',
                 ],
             ],
 

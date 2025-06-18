@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Services;
 
 use Illuminate\Database\Eloquent\Model;
@@ -19,11 +21,11 @@ use Z3d0X\FilamentFabricator\Models\Contracts\Page;
 // and hiding/encapsulating implementation details.
 //
 // It relies on the extension points defined by Z3d0X\FilamentFabricator\Models\Contracts\HasPageUrls
-class PageRoutesService
+final class PageRoutesService
 {
-    protected const URI_TO_ID_MAPPING = 'filament-fabricator::PageRoutesService::uri-to-id';
+    private const URI_TO_ID_MAPPING = 'filament-fabricator::PageRoutesService::uri-to-id';
 
-    protected const ID_TO_URI_MAPPING = 'filament-fabricator::PageRoutesService::id-to-uri';
+    private const ID_TO_URI_MAPPING = 'filament-fabricator::PageRoutesService::id-to-uri';
 
     /**
      * Get the ID of the Page model to which the given URI is associated, -1 if non matches
@@ -71,7 +73,7 @@ class PageRoutesService
         // in an environment where only unrelated pages can be modified by separate
         // users at the same time, which is a responsibility the library users
         // should enforce themselves.
-        FilamentFabricator::getPageModel()::withoutEvents(function () use ($page) {
+        FilamentFabricator::getPageModel()::withoutEvents(function () use ($page): void {
             $mapping = $this->getUriToIdMapping();
             $this->updateUrlsAndDescendantsOf($page, $mapping);
             $this->replaceUriToIdMapping($mapping);
@@ -139,12 +141,12 @@ class PageRoutesService
      *
      * @return array<string, int|string>
      */
-    protected function getUriToIdMapping(): array
+    private function getUriToIdMapping(): array
     {
         // The mapping will be cached for most requests.
         // The very first person hitting the cache when it's not readily available
         // will sadly have to recompute the whole thing.
-        return Cache::rememberForever(static::URI_TO_ID_MAPPING, function () {
+        return Cache::rememberForever(self::URI_TO_ID_MAPPING, function () {
             // Even though we technically have 2 separate caches
             // we want them to not really be independent.
             // Here we ensure our initial state depends on the other
@@ -168,7 +170,7 @@ class PageRoutesService
      *
      * @return array<int|string, string[]>
      */
-    protected function getIdToUrisMapping(): array
+    private function getIdToUrisMapping(): array
     {
         // The mapping will be cached for most requests.
         // The very first person hitting the cache when it's not readily available
@@ -176,7 +178,7 @@ class PageRoutesService
         // This could be a critical section and bottleneck depending on the use cases.
         // Any optimization to this can greatly improve the entire package's performances
         // in one fell swoop.
-        return Cache::rememberForever(static::ID_TO_URI_MAPPING, function () {
+        return Cache::rememberForever(self::ID_TO_URI_MAPPING, function () {
             $mapping = FilamentFabricator::getPageModel()::query()
                 ->with('parent')
                 ->get()
@@ -197,7 +199,7 @@ class PageRoutesService
      *
      * @return string[]
      */
-    protected function getUrisForPage(Page $page): array
+    private function getUrisForPage(Page $page): array
     {
         $mapping = $this->getIdToUrisMapping();
 
@@ -208,9 +210,8 @@ class PageRoutesService
      * Update routine for the given page
      *
      * @param  array  $uriToIdMapping  - The URI -> ID mapping (as a reference, to be modified in-place)
-     * @return void
      */
-    protected function updateUrlsAndDescendantsOf(Page&Model $page, array &$uriToIdMapping)
+    private function updateUrlsAndDescendantsOf(Page&Model $page, array &$uriToIdMapping): void
     {
         // First ensure consistency by removing any trace of the old URLs
         // for the given page. Whether local or in the URI to ID mapping.
@@ -258,9 +259,8 @@ class PageRoutesService
      * Remove old URLs of the given page from the cached mappings
      *
      * @param  array  $uriToIdMapping  - The URI -> ID mapping (as a reference, to be modified in-place)
-     * @return void
      */
-    protected function unsetOldUrlsOf(Page $page, array &$uriToIdMapping)
+    private function unsetOldUrlsOf(Page $page, array &$uriToIdMapping): void
     {
         // When we're hitting this path, caches haven't been invalidated yet.
         // Thus, we don't need to query the mappings to get the old URLs.
@@ -297,7 +297,7 @@ class PageRoutesService
     /**
      * Forget all URL caches tied to the page (cf. Page::getAllUrlCacheKeys)
      */
-    protected function forgetPageLocalCache(Page $page)
+    private function forgetPageLocalCache(Page $page): void
     {
         // The page local caches are simply those behind the
         // URL cache keys. Compute the keys, forget the caches.
@@ -312,20 +312,20 @@ class PageRoutesService
      *
      * @param  array<int|string, string[]>  $idToUriMapping
      */
-    protected function replaceIdToUriMapping(array $idToUriMapping): void
+    private function replaceIdToUriMapping(array $idToUriMapping): void
     {
         if (empty($idToUriMapping)) {
             // If the new mapping is empty, that means we've been
             // cleaning the last entries. Therefore we must
             // forget the cached data to properly clear it out
             // and also allow proper cache invalidation
-            Cache::forget(static::ID_TO_URI_MAPPING);
+            Cache::forget(self::ID_TO_URI_MAPPING);
         } else {
             // Replace the ID -> URI[] mapping with the given one.
             // This is done "atomically" with regards to the cache.
             // Note that concurrent read and writes can result in lost updates.
             // And thus in an invalid state.
-            Cache::forever(static::ID_TO_URI_MAPPING, $idToUriMapping);
+            Cache::forever(self::ID_TO_URI_MAPPING, $idToUriMapping);
         }
     }
 
@@ -334,20 +334,20 @@ class PageRoutesService
      *
      * @param  array<string, int|string>  $uriToIdMapping
      */
-    protected function replaceUriToIdMapping(array $uriToIdMapping): void
+    private function replaceUriToIdMapping(array $uriToIdMapping): void
     {
         if (empty($uriToIdMapping)) {
             // If the new mapping is empty, that means we've been
             // cleaning the last entries. Therefore we must
             // forget the cached data to properly clear it out
             // and also allow proper cache invalidation
-            Cache::forget(static::URI_TO_ID_MAPPING);
+            Cache::forget(self::URI_TO_ID_MAPPING);
         } else {
             // Replace the URI -> ID mapping with the given one.
             // This is done "atomically" with regards to the cache.
             // Note that concurrent read and writes can result in lost updates.
             // And thus in an invalid state.
-            Cache::forever(static::URI_TO_ID_MAPPING, $uriToIdMapping);
+            Cache::forever(self::URI_TO_ID_MAPPING, $uriToIdMapping);
         }
     }
 }

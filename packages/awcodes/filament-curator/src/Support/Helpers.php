@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Support;
 
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
-class Helpers
+final class Helpers
 {
     public static function getUrl(?string $disk, ?string $path): string
     {

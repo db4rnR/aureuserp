@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner;
 
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class PartnerServiceProvider extends PackageServiceProvider
+final class PartnerServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'partners';
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->isCore()
             ->hasTranslations()
             ->hasMigrations([

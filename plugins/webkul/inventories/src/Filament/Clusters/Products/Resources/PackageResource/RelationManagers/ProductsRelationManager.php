@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\RelationManagers;
 
-use Filament\Tables\Columns\TextColumn;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ProductsRelationManager extends RelationManager
+final class ProductsRelationManager extends RelationManager
 {
     protected static string $relationship = 'quantities';
 

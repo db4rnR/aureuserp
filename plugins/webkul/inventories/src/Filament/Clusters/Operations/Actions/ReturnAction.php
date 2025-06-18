@@ -1,22 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Actions;
 
-use Webkul\Inventory\Enums\OperationState;
 use Filament\Actions\Action;
 use Livewire\Component;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Facades\Inventory;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Inventory\Models\Operation;
 
-class ReturnAction extends Action
+final class ReturnAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'inventories.operations.return';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -32,6 +28,11 @@ class ReturnAction extends Action
 
                 return redirect()->to(OperationResource::getUrl('edit', ['record' => $newRecord]));
             })
-            ->visible(fn () => $this->getRecord()->state == OperationState::DONE);
+            ->visible(fn (): bool => $this->getRecord()->state === OperationState::DONE);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'inventories.operations.return';
     }
 }

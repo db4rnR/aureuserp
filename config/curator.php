@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Awcodes\Curator\Curations\ThumbnailPreset;
 use Awcodes\Curator\Glide\DefaultServerFactory;
 use Awcodes\Curator\Models\Media;

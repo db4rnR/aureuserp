@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelHealth\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -8,7 +10,7 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthServiceProvider;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
     use LazilyRefreshDatabase;
 
@@ -17,8 +19,13 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'ShuvroRoy\\FilamentSpatieLaravelHealth\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'ShuvroRoy\\FilamentSpatieLaravelHealth\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+    }
+
+    public function getEnvironmentSetUp($app): void
+    {
+        config()->set('database.default', 'testing');
     }
 
     protected function getPackageProviders($app)
@@ -27,10 +34,5 @@ class TestCase extends Orchestra
             FilamentSpatieLaravelHealthServiceProvider::class,
             LivewireServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
     }
 }

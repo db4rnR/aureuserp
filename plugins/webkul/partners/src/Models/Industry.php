@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Partner\Database\Factories\IndustryFactory;
 use Webkul\Security\Models\User;
 
-class Industry extends Model
+final class Industry extends Model
 {
     use HasFactory, SoftDeletes;
 

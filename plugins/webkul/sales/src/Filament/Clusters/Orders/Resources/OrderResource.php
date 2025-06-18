@@ -1,34 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ViewOrder;
-use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\EditOrder;
-use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ManageInvoices;
-use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ManageDeliveries;
-use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ListOrders;
-use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\CreateOrder;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Filament\Clusters\Orders;
-use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages;
+use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\CreateOrder;
+use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\EditOrder;
+use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ListOrders;
+use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ManageDeliveries;
+use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ManageInvoices;
+use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ViewOrder;
 use Webkul\Sale\Models\Order;
 
-class OrderResource extends Resource
+final class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static ?string $cluster = Orders::class;
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -48,7 +50,7 @@ class OrderResource extends Resource
     public static function table(Table $table): Table
     {
         return QuotationResource::table($table)
-            ->modifyQueryUsing(function ($query) {
+            ->modifyQueryUsing(function ($query): void {
                 $query->where('state', OrderState::SALE);
             });
     }
@@ -71,11 +73,11 @@ class OrderResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'      => ListOrders::route('/'),
-            'create'     => CreateOrder::route('/create'),
-            'view'       => ViewOrder::route('/{record}'),
-            'edit'       => EditOrder::route('/{record}/edit'),
-            'invoices'   => ManageInvoices::route('/{record}/invoices'),
+            'index' => ListOrders::route('/'),
+            'create' => CreateOrder::route('/create'),
+            'view' => ViewOrder::route('/{record}'),
+            'edit' => EditOrder::route('/{record}/edit'),
+            'invoices' => ManageInvoices::route('/{record}/invoices'),
             'deliveries' => ManageDeliveries::route('/{record}/deliveries'),
         ];
     }

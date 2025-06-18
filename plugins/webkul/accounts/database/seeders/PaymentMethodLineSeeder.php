@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class PaymentMethodLineSeeder extends Seeder
+final class PaymentMethodLineSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,48 +23,48 @@ class PaymentMethodLineSeeder extends Seeder
 
         $paymentMethodLines = [
             [
-                'id'                 => 1,
-                'sort'               => 1,
-                'payment_method_id'  => 1,
+                'id' => 1,
+                'sort' => 1,
+                'payment_method_id' => 1,
                 'payment_account_id' => null,
-                'journal_id'         => 6,
-                'creator_id'         => $user?->id,
-                'name'               => 'Manual Payment',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'journal_id' => 6,
+                'creator_id' => $user?->id,
+                'name' => 'Manual Payment',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'id'                 => 2,
-                'sort'               => 2,
-                'payment_method_id'  => 2,
+                'id' => 2,
+                'sort' => 2,
+                'payment_method_id' => 2,
                 'payment_account_id' => null,
-                'journal_id'         => 6,
-                'creator_id'         => $user?->id,
-                'name'               => 'Manual Payment',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'journal_id' => 6,
+                'creator_id' => $user?->id,
+                'name' => 'Manual Payment',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'id'                 => 3,
-                'sort'               => 3,
-                'payment_method_id'  => 2,
+                'id' => 3,
+                'sort' => 3,
+                'payment_method_id' => 2,
                 'payment_account_id' => null,
-                'journal_id'         => 6,
-                'creator_id'         => $user?->id,
-                'name'               => 'Manual Payment',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'journal_id' => 6,
+                'creator_id' => $user?->id,
+                'name' => 'Manual Payment',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'id'                 => 4,
-                'sort'               => 4,
-                'payment_method_id'  => 1,
+                'id' => 4,
+                'sort' => 4,
+                'payment_method_id' => 1,
                 'payment_account_id' => null,
-                'journal_id'         => 6,
-                'creator_id'         => $user?->id,
-                'name'               => 'Manual Payment',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'journal_id' => 6,
+                'creator_id' => $user?->id,
+                'name' => 'Manual Payment',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
         ];
 

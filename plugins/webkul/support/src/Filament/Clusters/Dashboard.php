@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Filament\Clusters;
 
-use Filament\Panel;
+use BackedEnum;
 use Filament\Clusters\Cluster;
 use Filament\Facades\Filament;
+use Filament\Panel;
 use Filament\Widgets\Widget;
 
-class Dashboard extends Cluster
+final class Dashboard extends Cluster
 {
     protected static ?string $slug = '/';
 
-    protected static string $routePath = '/';
-
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
 
     protected static ?int $navigationSort = 0;
 
@@ -22,9 +23,11 @@ class Dashboard extends Cluster
      */
     protected string $view = 'filament-panels::pages.dashboard';
 
+    private static string $routePath = '/';
+
     public static function getRoutePath(Panel $panel): string
     {
-        return static::$routePath;
+        return self::$routePath;
     }
 
     /**

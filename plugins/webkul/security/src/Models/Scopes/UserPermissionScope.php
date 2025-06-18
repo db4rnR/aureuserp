@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Models\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -8,17 +10,12 @@ use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Security\Enums\PermissionType;
 
-class UserPermissionScope implements Scope
+final readonly class UserPermissionScope implements Scope
 {
-    protected $ownerRelation;
-
     /**
      * Create a new scope instance.
      */
-    public function __construct(string $ownerRelation)
-    {
-        $this->ownerRelation = $ownerRelation;
-    }
+    public function __construct(private string $ownerRelation) {}
 
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -32,11 +29,11 @@ class UserPermissionScope implements Scope
         }
 
         if ($user->resource_permission === PermissionType::INDIVIDUAL->value) {
-            $builder->whereHas($this->ownerRelation, function ($q) use ($user) {
+            $builder->whereHas($this->ownerRelation, function ($q) use ($user): void {
                 $q->where('users.id', $user->id);
             });
 
-            $builder->orWhereHas('followers', function ($q) use ($user) {
+            $builder->orWhereHas('followers', function ($q) use ($user): void {
                 $q->where('chatter_followers.partner_id', $user->partner_id);
             });
         }
@@ -44,7 +41,7 @@ class UserPermissionScope implements Scope
         if ($user->resource_permission === PermissionType::GROUP->value) {
             $teamIds = $user->teams()->pluck('id');
 
-            $builder->whereHas("$this->ownerRelation.teams", function ($q) use ($teamIds) {
+            $builder->whereHas("$this->ownerRelation.teams", function ($q) use ($teamIds): void {
                 $q->whereIn('teams.id', $teamIds);
             });
         }

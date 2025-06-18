@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
 use Webkul\Product\Models\Attribute as BaseAttribute;
 
-class Attribute extends BaseAttribute {}
+final class Attribute extends BaseAttribute {}

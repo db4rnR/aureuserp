@@ -1,40 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Facades\Cache;
 
-class ImageCacheController
+final class ImageCacheController
 {
     /**
-     * Cache template
-     *
-     * @var string
-     */
-    protected $template;
-
-    /**
      * Logo
-     *
-     * @var string
      */
-    const AUREUS_LOGO = 'https://updates.aureuserp.com/aureus.png';
+    public const string AUREUS_LOGO = 'https://updates.aureuserp.com/aureus.png';
 
     /**
      * Get HTTP response of template applied image file
-     *
-     * @param  string  $filename
-     * @return Illuminate\Http\Response
      */
-    public function getImage($filename)
+    public function getImage(): Illuminate\Http\Response
     {
         try {
-            $content = Cache::remember('aureus-logo', 10080, function () {
-                return base64_encode($this->getImageFromUrl(self::AUREUS_LOGO));
-            });
-        } catch (Exception $e) {
+            $content = Cache::remember('aureus-logo', 10080, fn (): string => base64_encode($this->getImageFromUrl(self::AUREUS_LOGO)));
+        } catch (Exception) {
             $content = '';
         }
 
@@ -43,19 +31,16 @@ class ImageCacheController
 
     /**
      * Init from given URL
-     *
-     * @param  string  $url
-     * @return string
      */
-    public function getImageFromUrl($url)
+    public function getImageFromUrl(string $url): string
     {
         $domain = config('app.url');
 
         $options = [
             'http' => [
-                'method'           => 'GET',
+                'method' => 'GET',
                 'protocol_version' => 1.1, // force use HTTP 1.1 for service mesh environment with envoy
-                'header'           => "Accept-language: en\r\n".
+                'header' => "Accept-language: en\r\n".
                 "Domain: $domain\r\n".
                 "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36\r\n",
             ],
@@ -76,11 +61,10 @@ class ImageCacheController
      * Builds HTTP response from given image data
      *
      * @param  string  $content
-     * @return Illuminate\Http\Response
      */
-    protected function buildResponse($content)
+    private function buildResponse($content): Illuminate\Http\Response
     {
-        $decodedContent = base64_decode($content);
+        $decodedContent = base64_decode($content, true);
 
         /**
          * Define mime type
@@ -92,7 +76,7 @@ class ImageCacheController
          */
         $eTag = md5($decodedContent);
 
-        $notModified = isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $eTag;
+        $notModified = isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $eTag;
 
         $responseContent = $notModified ? null : $decodedContent;
 
@@ -102,10 +86,10 @@ class ImageCacheController
          * Return http response
          */
         return new IlluminateResponse($responseContent, $statusCode, [
-            'Content-Type'   => $mime,
-            'Cache-Control'  => 'max-age=10080, public',
-            'Content-Length' => strlen($responseContent),
-            'Etag'           => $eTag,
+            'Content-Type' => $mime,
+            'Cache-Control' => 'max-age=10080, public',
+            'Content-Length' => mb_strlen($responseContent),
+            'Etag' => $eTag,
         ]);
     }
 }

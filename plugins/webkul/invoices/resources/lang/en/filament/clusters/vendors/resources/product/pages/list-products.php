@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tabs' => [
-        'goods'                => 'Goods',
-        'services'             => 'Services',
-        'favorites'            => 'Favorites',
-        'archived'             => 'Archived',
+        'goods' => 'Goods',
+        'services' => 'Services',
+        'favorites' => 'Favorites',
+        'archived' => 'Archived',
     ],
 
     'header-actions' => [
@@ -14,7 +16,7 @@ return [
 
             'notification' => [
                 'title' => 'Product created',
-                'body'  => 'The product has been created successfully.',
+                'body' => 'The product has been created successfully.',
             ],
         ],
     ],

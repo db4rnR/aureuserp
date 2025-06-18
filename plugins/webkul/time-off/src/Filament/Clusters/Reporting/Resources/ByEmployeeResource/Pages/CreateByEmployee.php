@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource;
 
-class CreateByEmployee extends CreateRecord
+final class CreateByEmployee extends CreateRecord
 {
     protected static string $resource = ByEmployeeResource::class;
 

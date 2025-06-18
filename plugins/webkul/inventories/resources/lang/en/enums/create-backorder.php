@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'ask'    => 'Ask',
+    'ask' => 'Ask',
     'always' => 'Always',
-    'never'  => 'Never',
+    'never' => 'Never',
 ];

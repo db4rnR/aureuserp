@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield;
 
-use InvalidArgumentException;
 use BezhanSalleh\FilamentShield\Commands\GenerateCommand;
 use BezhanSalleh\FilamentShield\Commands\InstallCommand;
 use BezhanSalleh\FilamentShield\Commands\PublishCommand;
@@ -18,63 +19,17 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
-class FilamentShield
+final class FilamentShield
 {
     use EvaluatesClosures;
 
-    protected ?Closure $configurePermissionIdentifierUsing = null;
-
     public ?Collection $customPermissions = null;
 
-    public function configurePermissionIdentifierUsing(Closure $callback): static
-    {
-        $this->configurePermissionIdentifierUsing = $callback;
-
-        return $this;
-    }
-
-    public function getPermissionIdentifier(string $resource): string
-    {
-        if ($this->configurePermissionIdentifierUsing) {
-
-            $identifier = $this->evaluate(
-                value: $this->configurePermissionIdentifierUsing,
-                namedInjections: [
-                    'resource' => $resource,
-                ]
-            );
-
-            if (Str::contains($identifier, '_')) {
-                throw new InvalidArgumentException("Permission identifier `$identifier` for `$resource` cannot contain underscores.");
-            }
-
-            return $identifier;
-        }
-
-        return $this->getDefaultPermissionIdentifier($resource);
-    }
-
-    public function generateForResource(array $entity): void
-    {
-        $resourceByFQCN = $entity['fqcn'];
-        $permissionPrefixes = Utils::getResourcePermissionPrefixes($resourceByFQCN);
-
-        if (Utils::isResourceEntityEnabled()) {
-            $permissions = collect();
-            collect($permissionPrefixes)
-                ->each(function ($prefix) use ($entity, $permissions) {
-                    $permissions->push(Utils::getPermissionModel()::firstOrCreate(
-                        ['name' => $prefix . '_' . $entity['resource']],
-                        ['guard_name' => Utils::getFilamentAuthGuard()]
-                    ));
-                });
-
-            static::giveSuperAdminPermission($permissions);
-        }
-    }
+    protected ?Closure $configurePermissionIdentifierUsing = null;
 
     public static function generateForPage(string $page): void
     {
@@ -84,7 +39,7 @@ class FilamentShield
                 ['guard_name' => Utils::getFilamentAuthGuard()]
             )->name;
 
-            static::giveSuperAdminPermission($permission);
+            self::giveSuperAdminPermission($permission);
         }
     }
 
@@ -96,22 +51,11 @@ class FilamentShield
                 ['guard_name' => Utils::getFilamentAuthGuard()]
             )->name;
 
-            static::giveSuperAdminPermission($permission);
+            self::giveSuperAdminPermission($permission);
         }
     }
 
-    protected static function giveSuperAdminPermission(string | array | Collection $permissions): void
-    {
-        if (! Utils::isSuperAdminDefinedViaGate() && Utils::isSuperAdminEnabled()) {
-            $superAdmin = static::createRole();
-
-            $superAdmin->givePermissionTo($permissions);
-
-            app(PermissionRegistrar::class)->forgetCachedPermissions();
-        }
-    }
-
-    public static function createRole(?string $name = null, int | string | null $tenantId = null): Role
+    public static function createRole(?string $name = null, int|string|null $tenantId = null): Role
     {
         if (Utils::isTenancyEnabled()) {
             return Utils::getRoleModel()::firstOrCreate(
@@ -127,44 +71,6 @@ class FilamentShield
             ['name' => $name ?? Utils::getSuperAdminName()],
             ['guard_name' => Utils::getFilamentAuthGuard()]
         );
-    }
-
-    /**
-     * Transform filament resources to key value pair for shield
-     */
-    public function getResources(): ?array
-    {
-        $resources = Filament::getResources();
-        if (Utils::discoverAllResources()) {
-            $resources = [];
-            foreach (Filament::getPanels() as $panel) {
-                $resources = array_merge($resources, $panel->getResources());
-            }
-            $resources = array_unique($resources);
-        }
-
-        return collect($resources)
-            ->reject(function ($resource) {
-                if (Utils::isGeneralExcludeEnabled()) {
-                    return in_array(
-                        Str::of($resource)->afterLast('\\'),
-                        Utils::getExcludedResouces()
-                    );
-                }
-            })
-            ->mapWithKeys(function ($resource) {
-                $name = $this->getPermissionIdentifier($resource);
-
-                return [
-                    $name => [
-                        'resource' => "{$name}",
-                        'model' => str($resource::getModel())->afterLast('\\')->toString(),
-                        'fqcn' => $resource,
-                    ],
-                ];
-            })
-            ->sortKeys()
-            ->toArray();
     }
 
     /**
@@ -221,12 +127,12 @@ class FilamentShield
 
         return collect($pages)
             ->reject(function ($page) use ($clusters) {
-                if (in_array($page, $clusters)) {
+                if (in_array($page, $clusters, true)) {
                     return true;
                 }
 
                 if (Utils::isGeneralExcludeEnabled()) {
-                    return in_array(Str::afterLast($page, '\\'), Utils::getExcludedPages());
+                    return in_array(Str::afterLast($page, '\\'), Utils::getExcludedPages(), true);
                 }
             })
             ->mapWithKeys(function ($page) {
@@ -284,7 +190,7 @@ class FilamentShield
                         )
                             ->afterLast('\\')
                             ->toString(),
-                        haystack: Utils::getExcludedWidgets()
+                        haystack: Utils::getExcludedWidgets(), true
                     );
                 }
             })
@@ -324,28 +230,102 @@ class FilamentShield
         };
     }
 
-    private static function hasValidHeading($widgetInstance): bool
+    /**
+     * Indicate if destructive Shield commands should be prohibited.
+     *
+     * Prohibits: shield:setup, shield:install, and shield:generate
+     */
+    public static function prohibitDestructiveCommands(bool $prohibit = true): void
     {
-        return $widgetInstance instanceof Widget
-            && method_exists($widgetInstance, 'getHeading')
-            && filled(invade($widgetInstance)->getHeading());
+        GenerateCommand::prohibit($prohibit);
+        InstallCommand::prohibit($prohibit);
+        PublishCommand::prohibit($prohibit);
+        SetupCommand::prohibit($prohibit);
     }
 
-    protected function getDefaultPermissionIdentifier(string $resource): string
+    public function configurePermissionIdentifierUsing(Closure $callback): static
     {
-        return Str::of($resource)
-            ->afterLast('Resources\\')
-            ->beforeLast('Resource')
-            ->replace('\\', '')
-            ->snake()
-            ->replace('_', '::');
+        $this->configurePermissionIdentifierUsing = $callback;
+
+        return $this;
     }
 
-    protected static function getWidgetInstanceFromWidgetConfiguration(string | WidgetConfiguration $widget): string
+    public function getPermissionIdentifier(string $resource): string
     {
-        return $widget instanceof WidgetConfiguration
-            ? $widget->widget
-            : $widget;
+        if ($this->configurePermissionIdentifierUsing) {
+
+            $identifier = $this->evaluate(
+                value: $this->configurePermissionIdentifierUsing,
+                namedInjections: [
+                    'resource' => $resource,
+                ]
+            );
+
+            if (Str::contains($identifier, '_')) {
+                throw new InvalidArgumentException("Permission identifier `$identifier` for `$resource` cannot contain underscores.");
+            }
+
+            return $identifier;
+        }
+
+        return $this->getDefaultPermissionIdentifier($resource);
+    }
+
+    public function generateForResource(array $entity): void
+    {
+        $resourceByFQCN = $entity['fqcn'];
+        $permissionPrefixes = Utils::getResourcePermissionPrefixes($resourceByFQCN);
+
+        if (Utils::isResourceEntityEnabled()) {
+            $permissions = collect();
+            collect($permissionPrefixes)
+                ->each(function ($prefix) use ($entity, $permissions): void {
+                    $permissions->push(Utils::getPermissionModel()::firstOrCreate(
+                        ['name' => $prefix.'_'.$entity['resource']],
+                        ['guard_name' => Utils::getFilamentAuthGuard()]
+                    ));
+                });
+
+            static::giveSuperAdminPermission($permissions);
+        }
+    }
+
+    /**
+     * Transform filament resources to key value pair for shield
+     */
+    public function getResources(): ?array
+    {
+        $resources = Filament::getResources();
+        if (Utils::discoverAllResources()) {
+            $resources = [];
+            foreach (Filament::getPanels() as $panel) {
+                $resources = array_merge($resources, $panel->getResources());
+            }
+            $resources = array_unique($resources);
+        }
+
+        return collect($resources)
+            ->reject(function ($resource) {
+                if (Utils::isGeneralExcludeEnabled()) {
+                    return in_array(
+                        Str::of($resource)->afterLast('\\'),
+                        Utils::getExcludedResouces(), true
+                    );
+                }
+            })
+            ->mapWithKeys(function ($resource) {
+                $name = $this->getPermissionIdentifier($resource);
+
+                return [
+                    $name => [
+                        'resource' => "{$name}",
+                        'model' => str($resource::getModel())->afterLast('\\')->toString(),
+                        'fqcn' => $resource,
+                    ],
+                ];
+            })
+            ->sortKeys()
+            ->toArray();
     }
 
     public function getAllResourcePermissions(): array
@@ -356,7 +336,7 @@ class FilamentShield
                     Utils::getResourcePermissionPrefixes($resourceEntity['fqcn'])
                 )
                     ->flatMap(function ($permission) use ($resourceEntity) {
-                        $name = $permission . '_' . $resourceEntity['resource'];
+                        $name = $permission.'_'.$resourceEntity['resource'];
                         $permissionLabel = FilamentShieldPlugin::get()->hasLocalizedPermissionLabels()
                             ? str(static::getLocalizedResourcePermissionLabel($permission))
                                 ->prepend(
@@ -396,6 +376,34 @@ class FilamentShield
         return $this->customPermissions;
     }
 
+    protected static function giveSuperAdminPermission(string|array|Collection $permissions): void
+    {
+        if (! Utils::isSuperAdminDefinedViaGate() && Utils::isSuperAdminEnabled()) {
+            $superAdmin = static::createRole();
+
+            $superAdmin->givePermissionTo($permissions);
+
+            app(PermissionRegistrar::class)->forgetCachedPermissions();
+        }
+    }
+
+    protected static function getWidgetInstanceFromWidgetConfiguration(string|WidgetConfiguration $widget): string
+    {
+        return $widget instanceof WidgetConfiguration
+            ? $widget->widget
+            : $widget;
+    }
+
+    protected function getDefaultPermissionIdentifier(string $resource): string
+    {
+        return Str::of($resource)
+            ->afterLast('Resources\\')
+            ->beforeLast('Resource')
+            ->replace('\\', '')
+            ->snake()
+            ->replace('_', '::');
+    }
+
     protected function getEntitiesPermissions(): ?array
     {
         return collect($this->getAllResourcePermissions())->keys()
@@ -407,18 +415,10 @@ class FilamentShield
             ->toArray();
     }
 
-    /**
-     * Indicate if destructive Shield commands should be prohibited.
-     *
-     * Prohibits: shield:setup, shield:install, and shield:generate
-     *
-     * @return void
-     */
-    public static function prohibitDestructiveCommands(bool $prohibit = true)
+    private static function hasValidHeading($widgetInstance): bool
     {
-        GenerateCommand::prohibit($prohibit);
-        InstallCommand::prohibit($prohibit);
-        PublishCommand::prohibit($prohibit);
-        SetupCommand::prohibit($prohibit);
+        return $widgetInstance instanceof Widget
+            && method_exists($widgetInstance, 'getHeading')
+            && filled(invade($widgetInstance)->getHeading());
     }
 }

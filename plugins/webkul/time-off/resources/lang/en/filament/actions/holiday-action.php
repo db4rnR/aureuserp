@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Holidays',
-    'form'  => [
+    'form' => [
         'placeholders' => [
-            'public-holiday'    => 'Public Holidays',
+            'public-holiday' => 'Public Holidays',
             'mandatory-holiday' => 'Mandatory Holidays',
         ],
     ],

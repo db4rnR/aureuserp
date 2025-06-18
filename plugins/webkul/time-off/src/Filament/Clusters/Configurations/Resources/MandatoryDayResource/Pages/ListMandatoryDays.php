@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources\MandatoryDayResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Auth;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\MandatoryDayResource;
 
-class ListMandatoryDays extends ListRecords
+final class ListMandatoryDays extends ListRecords
 {
     protected static string $resource = MandatoryDayResource::class;
 
@@ -25,7 +26,7 @@ class ListMandatoryDays extends ListRecords
                         ->title(__('time-off::filament/clusters/configurations/resources/mandatory-days/pages/list-mandatory-days.header-actions.create.notification.created.title'))
                         ->body(__('time-off::filament/clusters/configurations/resources/mandatory-days/pages/list-mandatory-days.header-actions.create.notification.created.body'))
                 )
-                ->mutateDataUsing(function ($data) {
+                ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
 
                     $data['company_id'] = $user->default_company_id;

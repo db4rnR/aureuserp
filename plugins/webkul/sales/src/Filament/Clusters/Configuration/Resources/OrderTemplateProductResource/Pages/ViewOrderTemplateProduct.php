@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\OrderTemplateProductResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\OrderTemplateProductResource;
 
-class ViewOrderTemplateProduct extends ViewRecord
+final class ViewOrderTemplateProduct extends ViewRecord
 {
     protected static string $resource = OrderTemplateProductResource::class;
 

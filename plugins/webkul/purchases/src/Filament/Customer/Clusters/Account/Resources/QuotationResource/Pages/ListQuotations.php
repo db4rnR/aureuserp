@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResource\Pages;
 
 use Filament\Resources\Pages\ListRecords;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResource;
 
-class ListQuotations extends ListRecords
+final class ListQuotations extends ListRecords
 {
     protected static string $resource = QuotationResource::class;
 

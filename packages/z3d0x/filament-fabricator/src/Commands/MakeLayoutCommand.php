@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Commands;
 
 use Filament\Support\Commands\Concerns\CanManipulateFiles;
@@ -8,7 +10,7 @@ use Illuminate\Support\Str;
 
 use function Laravel\Prompts\text;
 
-class MakeLayoutCommand extends Command
+final class MakeLayoutCommand extends Command
 {
     use CanManipulateFiles;
 
@@ -64,12 +66,12 @@ class MakeLayoutCommand extends Command
         $files = [$path, $viewPath];
 
         if (! $this->option('force') && $this->checkForCollision($files)) {
-            return static::INVALID;
+            return self::INVALID;
         }
 
         $this->copyStubToApp('Layout', $path, [
             'class' => $layoutClass,
-            'namespace' => 'App\\Filament\\Fabricator\\Layouts' . ($layoutNamespace !== '' ? "\\{$layoutNamespace}" : ''),
+            'namespace' => 'App\\Filament\\Fabricator\\Layouts'.($layoutNamespace !== '' ? "\\{$layoutNamespace}" : ''),
             'shortName' => $shortName,
         ]);
 
@@ -77,6 +79,6 @@ class MakeLayoutCommand extends Command
 
         $this->info("Successfully created {$layout}!");
 
-        return static::SUCCESS;
+        return self::SUCCESS;
     }
 }

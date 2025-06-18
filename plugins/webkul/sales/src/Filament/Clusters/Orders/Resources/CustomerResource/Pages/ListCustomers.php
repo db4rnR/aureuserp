@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Partner\Filament\Resources\PartnerResource\Pages\ListPartners as BaseListCustomers;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource;
 
-class ListCustomers extends BaseListCustomers
+final class ListCustomers extends BaseListCustomers
 {
     protected static string $resource = CustomerResource::class;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,9 +16,14 @@ use Webkul\Inventory\Database\Factories\RouteFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Route extends Model implements Sortable
+final class Route extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -50,15 +57,10 @@ class Route extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'product_selectable'          => 'boolean',
+        'product_selectable' => 'boolean',
         'product_category_selectable' => 'boolean',
-        'warehouse_selectable'        => 'boolean',
-        'packaging_selectable'        => 'boolean',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'warehouse_selectable' => 'boolean',
+        'packaging_selectable' => 'boolean',
     ];
 
     public function suppliedWarehouse(): BelongsTo
@@ -88,7 +90,7 @@ class Route extends Model implements Sortable
 
     public function packagings(): BelongsToMany
     {
-        return $this->belongsToMany(Route::class, 'inventories_route_packagings', 'route_id', 'packaging_id');
+        return $this->belongsToMany(self::class, 'inventories_route_packagings', 'route_id', 'packaging_id');
     }
 
     public function rules(): HasMany

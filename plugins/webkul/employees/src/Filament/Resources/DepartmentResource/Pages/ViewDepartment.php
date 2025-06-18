@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Resources\DepartmentResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Employee\Filament\Resources\DepartmentResource;
 
-class ViewDepartment extends ViewRecord
+final class ViewDepartment extends ViewRecord
 {
     protected static string $resource = DepartmentResource::class;
 
@@ -18,7 +19,7 @@ class ViewDepartment extends ViewRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             EditAction::make(),
             DeleteAction::make()
                 ->successNotification(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -8,7 +10,7 @@ use Webkul\Product\Enums\ProductType;
 use Webkul\Product\Filament\Resources\ProductResource\Pages\ListProducts as BaseListProducts;
 use Webkul\TableViews\Filament\Components\PresetView;
 
-class ListProducts extends BaseListProducts
+final class ListProducts extends BaseListProducts
 {
     protected static string $resource = ProductResource::class;
 
@@ -31,9 +33,7 @@ class ListProducts extends BaseListProducts
             'archived_products' => PresetView::make(__('invoices::filament/clusters/vendors/resources/product/pages/list-products.tabs.archived'))
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }

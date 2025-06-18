@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +21,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\State;
 
-class Employee extends Model
+final class Employee extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes;
 
@@ -109,9 +111,9 @@ class Employee extends Model
      * @var array
      */
     protected $casts = [
-        'is_active'                      => 'boolean',
-        'is_flexible'                    => 'boolean',
-        'is_fully_flexible'              => 'boolean',
+        'is_active' => 'boolean',
+        'is_flexible' => 'boolean',
+        'is_fully_flexible' => 'boolean',
         'work_permit_scheduled_activity' => 'boolean',
     ];
 
@@ -220,14 +222,6 @@ class Employee extends Model
         return $this->hasMany(EmployeeResume::class, 'employee_id');
     }
 
-    /**
-     * Get the factory instance for the model.
-     */
-    protected static function newFactory(): EmployeeFactory
-    {
-        return EmployeeFactory::new();
-    }
-
     public function leaveManager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'leave_manager_id');
@@ -244,13 +238,21 @@ class Employee extends Model
     }
 
     /**
+     * Get the factory instance for the model.
+     */
+    protected static function newFactory(): EmployeeFactory
+    {
+        return EmployeeFactory::new();
+    }
+
+    /**
      * Bootstrap the model and its traits.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::saved(function (self $employee) {
+        self::saved(function (self $employee): void {
             if (! $employee->partner_id) {
                 $employee->handlePartnerCreation($employee);
             } else {
@@ -266,17 +268,17 @@ class Employee extends Model
     {
         $partner = $employee->partner()->create([
             'account_type' => 'individual',
-            'sub_type'     => 'employee',
-            'creator_id'   => Auth::id(),
-            'name'         => $employee?->name,
-            'email'        => $employee?->work_email ?? $employee?->private_email,
-            'job_title'    => $employee?->job_title,
-            'phone'        => $employee?->work_phone,
-            'mobile'       => $employee?->mobile_phone,
-            'color'        => $employee?->color,
-            'parent_id'    => $employee?->parent_id,
-            'company_id'   => $employee?->company_id,
-            'user_id'      => $employee?->user_id,
+            'sub_type' => 'employee',
+            'creator_id' => Auth::id(),
+            'name' => $employee?->name,
+            'email' => $employee?->work_email ?? $employee?->private_email,
+            'job_title' => $employee?->job_title,
+            'phone' => $employee?->work_phone,
+            'mobile' => $employee?->mobile_phone,
+            'color' => $employee?->color,
+            'parent_id' => $employee?->parent_id,
+            'company_id' => $employee?->company_id,
+            'user_id' => $employee?->user_id,
         ]);
 
         $employee->partner_id = $partner->id;
@@ -292,17 +294,17 @@ class Employee extends Model
             ['id' => $employee->partner_id],
             [
                 'account_type' => 'individual',
-                'sub_type'     => 'employee',
-                'creator_id'   => Auth::id(),
-                'name'         => $employee?->name,
-                'email'        => $employee?->work_email ?? $employee?->private_email,
-                'job_title'    => $employee?->job_title,
-                'phone'        => $employee?->work_phone,
-                'mobile'       => $employee?->mobile_phone,
-                'color'        => $employee?->color,
-                'parent_id'    => $employee?->parent_id,
-                'company_id'   => $employee?->company_id,
-                'user_id'      => $employee?->user_id,
+                'sub_type' => 'employee',
+                'creator_id' => Auth::id(),
+                'name' => $employee?->name,
+                'email' => $employee?->work_email ?? $employee?->private_email,
+                'job_title' => $employee?->job_title,
+                'phone' => $employee?->work_phone,
+                'mobile' => $employee?->mobile_phone,
+                'color' => $employee?->color,
+                'parent_id' => $employee?->parent_id,
+                'company_id' => $employee?->company_id,
+                'user_id' => $employee?->user_id,
             ]
         );
 

@@ -1,58 +1,58 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Filament\Admin\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Utilities\Set;
+use BackedEnum;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
-use Filament\Support\Enums\FontWeight;
 use Filament\Infolists\Components\IconEntry;
-use Webkul\Website\Filament\Admin\Resources\PageResource\Pages\ViewPage;
-use Webkul\Website\Filament\Admin\Resources\PageResource\Pages\EditPage;
-use Webkul\Website\Filament\Admin\Resources\PageResource\Pages\ListPages;
-use Webkul\Website\Filament\Admin\Resources\PageResource\Pages\CreatePage;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use Webkul\Website\Filament\Admin\Resources\PageResource\Pages;
+use Webkul\Website\Filament\Admin\Resources\PageResource\Pages\CreatePage;
+use Webkul\Website\Filament\Admin\Resources\PageResource\Pages\EditPage;
+use Webkul\Website\Filament\Admin\Resources\PageResource\Pages\ListPages;
+use Webkul\Website\Filament\Admin\Resources\PageResource\Pages\ViewPage;
 use Webkul\Website\Models\Page as PageModel;
 
-class PageResource extends Resource
+final class PageResource extends Resource
 {
     protected static ?string $model = PageModel::class;
 
     protected static ?string $slug = 'website/pages';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-window';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-window';
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -80,7 +80,7 @@ class PageResource extends Resource
                                     ->live(onBlur: true)
                                     ->placeholder(__('website::filament/admin/resources/page.form.sections.general.fields.title-placeholder'))
                                     ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;'])
-                                    ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                                 TextInput::make('slug')
                                     ->disabled()
                                     ->dehydrated()
@@ -321,10 +321,10 @@ class PageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListPages::route('/'),
+            'index' => ListPages::route('/'),
             'create' => CreatePage::route('/create'),
-            'view'   => ViewPage::route('/{record}'),
-            'edit'   => EditPage::route('/{record}/edit'),
+            'view' => ViewPage::route('/{record}'),
+            'edit' => EditPage::route('/{record}/edit'),
         ];
     }
 }

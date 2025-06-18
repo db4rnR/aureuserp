@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Enums;
 
 use Filament\Support\Contracts\HasColor;
@@ -18,30 +20,30 @@ enum RequisitionState: string implements HasColor, HasLabel
     public static function options(): array
     {
         return [
-            self::DRAFT->value     => __('purchases::enums/requisition-state.draft'),
+            self::DRAFT->value => __('purchases::enums/requisition-state.draft'),
             self::CONFIRMED->value => __('purchases::enums/requisition-state.confirmed'),
-            self::CLOSED->value    => __('purchases::enums/requisition-state.closed'),
-            self::CANCELED->value  => __('purchases::enums/requisition-state.canceled'),
+            self::CLOSED->value => __('purchases::enums/requisition-state.closed'),
+            self::CANCELED->value => __('purchases::enums/requisition-state.canceled'),
         ];
     }
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::DRAFT     => __('purchases::enums/requisition-state.draft'),
+            self::DRAFT => __('purchases::enums/requisition-state.draft'),
             self::CONFIRMED => __('purchases::enums/requisition-state.confirmed'),
-            self::CLOSED    => __('purchases::enums/requisition-state.closed'),
-            self::CANCELED  => __('purchases::enums/requisition-state.canceled'),
+            self::CLOSED => __('purchases::enums/requisition-state.closed'),
+            self::CANCELED => __('purchases::enums/requisition-state.canceled'),
         };
     }
 
     public function getColor(): string
     {
         return match ($this) {
-            self::DRAFT     => 'gray',
+            self::DRAFT => 'gray',
             self::CONFIRMED => 'blue',
-            self::CLOSED    => 'success',
-            self::CANCELED  => 'danger',
+            self::CLOSED => 'success',
+            self::CANCELED => 'danger',
         };
     }
 }

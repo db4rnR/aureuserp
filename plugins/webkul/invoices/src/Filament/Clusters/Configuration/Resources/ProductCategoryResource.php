@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ViewProductCategory;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\EditProductCategory;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ManageProducts;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ListProductCategories;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\CreateProductCategory;
 use Filament\Resources\Pages\Page;
 use Webkul\Invoice\Filament\Clusters\Configuration;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\CreateProductCategory;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\EditProductCategory;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ListProductCategories;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ManageProducts;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ViewProductCategory;
 use Webkul\Invoice\Models\Category;
 use Webkul\Product\Filament\Resources\CategoryResource as BaseProductCategoryResource;
 
-class ProductCategoryResource extends BaseProductCategoryResource
+final class ProductCategoryResource extends BaseProductCategoryResource
 {
     protected static ?string $model = Category::class;
 
@@ -36,7 +37,7 @@ class ProductCategoryResource extends BaseProductCategoryResource
     {
         $route = request()->route()?->getName() ?? session('current_route');
 
-        if ($route && $route != 'livewire.update') {
+        if ($route && $route !== 'livewire.update') {
             session(['current_route' => $route]);
         } else {
             $route = session('current_route');
@@ -61,10 +62,10 @@ class ProductCategoryResource extends BaseProductCategoryResource
     public static function getPages(): array
     {
         return [
-            'index'    => ListProductCategories::route('/'),
-            'create'   => CreateProductCategory::route('/create'),
-            'view'     => ViewProductCategory::route('/{record}'),
-            'edit'     => EditProductCategory::route('/{record}/edit'),
+            'index' => ListProductCategories::route('/'),
+            'create' => CreateProductCategory::route('/create'),
+            'view' => ViewProductCategory::route('/{record}'),
+            'edit' => EditProductCategory::route('/{record}/edit'),
             'products' => ManageProducts::route('/{record}/products'),
         ];
     }

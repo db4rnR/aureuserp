@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\InvoiceResource\Pages;
 
-use Webkul\Account\Enums\MoveType;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\InvoiceResource;
 
-class CreateInvoice extends CreateRecord
+final class CreateInvoice extends CreateRecord
 {
     protected static string $resource = InvoiceResource::class;
 
@@ -35,7 +36,7 @@ class CreateInvoice extends CreateRecord
         return $data;
     }
 
-    protected function afterCreate(): void
+    private function afterCreate(): void
     {
         Account::computeAccountMove($this->getRecord());
     }

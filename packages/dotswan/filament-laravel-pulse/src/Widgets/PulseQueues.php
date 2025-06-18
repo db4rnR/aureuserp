@@ -6,7 +6,7 @@ namespace Dotswan\FilamentLaravelPulse\Widgets;
 
 use Filament\Widgets\Widget;
 
-class PulseQueues extends Widget
+final class PulseQueues extends Widget
 {
     protected string $view = 'filament-laravel-pulse::widgets.pulse-queues';
 

@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector;
 use Rector\TypeDeclaration\Rector\Property\AddPropertyTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictConstructorRector;
@@ -19,9 +21,9 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__.'/database',
         __DIR__.'/routes',
         __DIR__.'/tests',
-        __DIR__.'/resources',
-        __DIR__.'/packages/s-a-c/ai-prompt-addenda/src',
-        __DIR__.'/packages/s-a-c/ai-prompt-addenda/tests',
+        __DIR__.'/packages/**/src',
+        __DIR__.'/packages/**/tests',
+        __DIR__.'/plugins',
     ]);
 
     // Standardized exclude paths across all tools
@@ -35,6 +37,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__.'/public',
         // Skip migration files to avoid breaking changes to schema definitions
         __DIR__.'/database/migrations',
+        __DIR__.'/plugins/**/database/migrations',
         // Skip rector cache files to avoid processing them
         __DIR__.'/reports/rector/cache',
     ]);
@@ -58,6 +61,8 @@ return static function (RectorConfig $rectorConfig): void {
         AddReturnTypeDeclarationRector::class,
         AddVoidReturnTypeWhereNoReturnRector::class,
         ReturnTypeFromStrictNativeCallRector::class,
+        AddParamTypeDeclarationRector::class,
+        ReturnNeverTypeRector::class,
 
         // Add property types
         AddPropertyTypeDeclarationRector::class,

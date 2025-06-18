@@ -1,21 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'label'        => 'Generate Variants',
+    'label' => 'Generate Variants',
     'notification' => [
         'empty' => [
             'title' => 'No attributes found',
-            'body'  => 'Please add attributes to generate variants.',
+            'body' => 'Please add attributes to generate variants.',
         ],
 
         'success' => [
             'title' => 'Variants generated successfully',
-            'body'  => 'All product variants have been generated.',
+            'body' => 'All product variants have been generated.',
         ],
 
         'error' => [
             'title' => 'Error generating variants',
-            'body'  => 'An error occurred while generating product variants.',
+            'body' => 'An error occurred while generating product variants.',
         ],
     ],
 ];

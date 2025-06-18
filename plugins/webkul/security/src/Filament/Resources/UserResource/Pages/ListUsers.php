@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources\UserResource\Pages;
 
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Actions\CreateAction;
-use Filament\Actions\Action;
 use Exception;
-use Filament\Actions;
+use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Mail;
 use Webkul\Security\Filament\Resources\UserResource;
 use Webkul\Security\Mail\UserInvitationMail;
@@ -17,7 +18,7 @@ use Webkul\Security\Models\Invitation;
 use Webkul\Security\Models\User;
 use Webkul\Security\Settings\UserSettings;
 
-class ListUsers extends ListRecords
+final class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
 
@@ -28,9 +29,7 @@ class ListUsers extends ListRecords
                 ->badge(User::count()),
             'archived' => Tab::make(__('security::filament/resources/user/pages/list-user.tabs.archived'))
                 ->badge(User::onlyTrashed()->count())
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 
@@ -45,15 +44,15 @@ class ListUsers extends ListRecords
                 ->icon('heroicon-o-envelope')
                 ->modalIcon('heroicon-o-envelope')
                 ->modalSubmitActionLabel(__('security::filament/resources/user/pages/list-user.header-actions.invite.modal.submit-action-label'))
-                ->visible(fn (UserSettings $userSettings) => $userSettings->enable_user_invitation)
+                ->visible(fn (UserSettings $userSettings): bool => $userSettings->enable_user_invitation)
                 ->schema([
                     TextInput::make('email')
                         ->email()
                         ->label(__('security::filament/resources/user/pages/list-user.header-actions.invite.form.email'))
                         ->required(),
                 ])
-                ->action(function ($data) {
-                    if (! isset(app(UserSettings::class)->default_company_id)) {
+                ->action(function (array $data): void {
+                    if (app(UserSettings::class)->default_company_id === null) {
                         Notification::make('invitedFailed')
                             ->title(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.default-company-error.title'))
                             ->body(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.default-company-error.body'))

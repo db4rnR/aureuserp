@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource\Pages;
 
 use Webkul\Account\Filament\Resources\PaymentsResource\Pages\EditPayments as BaseEditPayments;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource;
 
-class EditPayments extends BaseEditPayments
+final class EditPayments extends BaseEditPayments
 {
     protected static string $resource = PaymentsResource::class;
 }

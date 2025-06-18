@@ -1,20 +1,21 @@
 <?php
 
-use Webkul\Invoice\Models\Payment;
-use Webkul\Account\Enums\MoveState;
-use Webkul\Account\Models\Journal;
+declare(strict_types=1);
+
 use Webkul\Account\Enums\JournalType;
-use Webkul\Support\Models\Company;
-use Webkul\Support\Models\Currency;
+use Webkul\Account\Models\Account;
+use Webkul\Account\Models\Journal;
+use Webkul\Invoice\Models\Payment;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
-use Webkul\Account\Models\Account;
+use Webkul\Support\Models\Company;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payments listing page loads successfully')]
-function payments_listing_page_loads_successfully()
+function payments_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -33,7 +34,7 @@ function payments_listing_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payment creation page loads successfully')]
-function payment_creation_page_loads_successfully()
+function payment_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -52,7 +53,7 @@ function payment_creation_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payment can be created successfully')]
-function payment_can_be_created_successfully()
+function payment_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -97,7 +98,7 @@ function payment_can_be_created_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payment can be viewed successfully')]
-function payment_can_be_viewed_successfully()
+function payment_can_be_viewed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -122,7 +123,7 @@ function payment_can_be_viewed_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payment can be edited successfully')]
-function payment_can_be_edited_successfully()
+function payment_can_be_edited_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

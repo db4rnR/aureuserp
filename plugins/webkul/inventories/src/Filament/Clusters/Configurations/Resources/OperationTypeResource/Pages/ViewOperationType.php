@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource\Pages;
 
 use Filament\Actions\EditAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource;
 
-class ViewOperationType extends ViewRecord
+final class ViewOperationType extends ViewRecord
 {
     protected static string $resource = OperationTypeResource::class;
 

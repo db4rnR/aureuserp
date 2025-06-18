@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products_products', function (Blueprint $table) {
+        Schema::table('products_products', function (Blueprint $table): void {
             $table->integer('sale_delay')->nullable();
             $table->string('tracking')->nullable()->default(ProductTracking::QTY);
             $table->text('description_picking')->nullable();
@@ -37,7 +37,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products_products', function (Blueprint $table) {
+        Schema::table('products_products', function (Blueprint $table): void {
             if (Schema::hasColumn('products_products', 'responsible_id')) {
                 $table->dropForeign(['responsible_id']);
 

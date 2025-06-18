@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_orders', function (Blueprint $table) {
+        Schema::create('sales_orders', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('utm_source_id')->nullable()->comment('UTM source')->constrained('utm_sources')->nullOnDelete();
             $table->foreignId('campaign_id')->nullable()->comment('Campaign')->constrained('utm_campaigns')->nullOnDelete();

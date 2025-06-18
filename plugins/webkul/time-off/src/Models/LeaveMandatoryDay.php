@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class LeaveMandatoryDay extends Model
+final class LeaveMandatoryDay extends Model
 {
     use HasFactory;
 
@@ -22,7 +24,7 @@ class LeaveMandatoryDay extends Model
         'end_date',
     ];
 
-    protected $dates = [
+    private array $dates = [
         'start_date',
         'end_date',
     ];

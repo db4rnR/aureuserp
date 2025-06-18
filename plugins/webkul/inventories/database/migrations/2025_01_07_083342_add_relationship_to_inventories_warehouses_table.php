@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('inventories_warehouses', function (Blueprint $table) {
+        Schema::table('inventories_warehouses', function (Blueprint $table): void {
             $table->foreignId('view_location_id')
                 ->constrained('inventories_locations')
                 ->restrictOnDelete();
@@ -112,7 +112,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('inventories_warehouses', function (Blueprint $table) {
+        Schema::table('inventories_warehouses', function (Blueprint $table): void {
             $columnsToDrop = [
                 'view_location_id',
                 'lot_stock_location_id',

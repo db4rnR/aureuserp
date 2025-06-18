@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Resources\PageResource\Pages\Concerns;
 
 use Exception;

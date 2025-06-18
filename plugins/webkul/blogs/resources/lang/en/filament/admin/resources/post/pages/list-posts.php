@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tabs' => [
         'my-posts' => 'My Posts',
@@ -12,7 +14,7 @@ return [
 
             'notification' => [
                 'title' => 'Post created',
-                'body'  => 'The post has been created successfully.',
+                'body' => 'The post has been created successfully.',
             ],
         ],
     ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Support;
 
 use Filament\Facades\Filament;
@@ -7,7 +9,7 @@ use Filament\Panel as FilamentPanel;
 use Pboivin\FilamentPeek\Exceptions\PreviewModalException;
 use Pboivin\FilamentPeek\FilamentPeekPlugin;
 
-class Panel
+final class Panel
 {
     public static function pluginIsLoaded(): bool
     {
@@ -19,7 +21,7 @@ class Panel
 
     public static function ensurePluginIsLoaded(): void
     {
-        if (! static::pluginIsLoaded()) {
+        if (! self::pluginIsLoaded()) {
             throw new PreviewModalException('The `FilamentPeekPlugin` class is not registered in the current Panel.');
         }
     }

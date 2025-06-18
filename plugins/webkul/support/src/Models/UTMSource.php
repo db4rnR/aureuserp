@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-class UTMSource extends Model
+final class UTMSource extends Model
 {
     protected $table = 'utm_sources';
 

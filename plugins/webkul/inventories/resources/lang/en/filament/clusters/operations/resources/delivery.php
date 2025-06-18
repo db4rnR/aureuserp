@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Deliveries',
@@ -12,12 +14,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Delivery deleted',
-                        'body'  => 'The delivery ras been deleted successfully.',
+                        'body' => 'The delivery ras been deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Delivery could not be deleted',
-                        'body'  => 'The delivery cannot be deleted because it is currently in use.',
+                        'body' => 'The delivery cannot be deleted because it is currently in use.',
                     ],
                 ],
             ],
@@ -28,12 +30,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Deliveries deleted',
-                        'body'  => 'The deliveries has been deleted successfully.',
+                        'body' => 'The deliveries has been deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Deliveries could not be deleted',
-                        'body'  => 'The deliveries cannot be deleted because they are currently in use.',
+                        'body' => 'The deliveries cannot be deleted because they are currently in use.',
                     ],
                 ],
             ],

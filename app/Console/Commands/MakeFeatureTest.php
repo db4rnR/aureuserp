@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class MakeFeatureTest extends Command
+final class MakeFeatureTest extends Command
 {
     /**
      * The name and signature of the console command.
@@ -28,14 +30,14 @@ class MakeFeatureTest extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $resourceName = $this->argument('name');
         $pluginName = $this->option('plugin') ?? $this->ask('What is the plugin name?');
         $path = $this->option('path') ?? "tests/Feature/Plugins/{$pluginName}";
 
         // Create the directory if it doesn't exist
-        if (!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             File::makeDirectory($path, 0755, true);
         }
 
@@ -53,11 +55,10 @@ class MakeFeatureTest extends Command
         // Create the test file
         $testPath = "{$path}/{$resourceName}ResourceTest.php";
 
-        if (File::exists($testPath)) {
-            if (!$this->confirm("The file {$testPath} already exists. Do you want to overwrite it?")) {
-                $this->info('Command canceled.');
-                return;
-            }
+        if (File::exists($testPath) && ! $this->confirm("The file {$testPath} already exists. Do you want to overwrite it?")) {
+            $this->info('Command canceled.');
+
+            return;
         }
 
         File::put($testPath, $content);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -8,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\Contracts\Commenter;
 
-class UserWasMentionedEvent
+final class UserWasMentionedEvent
 {
     use Dispatchable;
     use InteractsWithSockets;

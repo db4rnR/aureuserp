@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasDescription;
@@ -16,18 +18,18 @@ enum ReceptionStep: string implements HasDescription, HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::ONE_STEP       => __('inventories::enums/reception-step.one-step.name'),
-            self::TWO_STEPS      => __('inventories::enums/reception-step.two-steps.name'),
-            self::THREE_STEPS    => __('inventories::enums/reception-step.three-steps.name'),
+            self::ONE_STEP => __('inventories::enums/reception-step.one-step.name'),
+            self::TWO_STEPS => __('inventories::enums/reception-step.two-steps.name'),
+            self::THREE_STEPS => __('inventories::enums/reception-step.three-steps.name'),
         };
     }
 
     public function getDescription(): string
     {
         return match ($this) {
-            self::ONE_STEP       => __('inventories::enums/reception-step.one-step.description'),
-            self::TWO_STEPS      => __('inventories::enums/reception-step.two-steps.description'),
-            self::THREE_STEPS    => __('inventories::enums/reception-step.three-steps.description'),
+            self::ONE_STEP => __('inventories::enums/reception-step.one-step.description'),
+            self::TWO_STEPS => __('inventories::enums/reception-step.two-steps.description'),
+            self::THREE_STEPS => __('inventories::enums/reception-step.three-steps.description'),
         };
     }
 }

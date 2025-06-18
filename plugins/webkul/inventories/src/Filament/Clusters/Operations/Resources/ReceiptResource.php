@@ -1,40 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
+use BackedEnum;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\OperationState;
 use Filament\Actions\DeleteBulkAction;
-use Webkul\Inventory\Enums\OperationType;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\ViewReceipt;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\EditReceipt;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\ManageMoves;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\ListReceipts;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\CreateReceipt;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
+use Webkul\Inventory\Enums\OperationType;
 use Webkul\Inventory\Filament\Clusters\Operations;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\CreateReceipt;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\EditReceipt;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\ListReceipts;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\ManageMoves;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\ViewReceipt;
 use Webkul\Inventory\Models\Receipt;
 
-class ReceiptResource extends Resource
+final class ReceiptResource extends Resource
 {
     protected static ?string $model = Receipt::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-down-tray';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-down-tray';
 
     protected static ?int $navigationSort = 1;
 
@@ -42,7 +42,7 @@ class ReceiptResource extends Resource
 
     protected static ?string $cluster = Operations::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -72,11 +72,11 @@ class ReceiptResource extends Resource
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make()
-                        ->hidden(fn (Receipt $record): bool => $record->state == OperationState::DONE)
-                        ->action(function (Receipt $record) {
+                        ->hidden(fn (Receipt $record): bool => $record->state === OperationState::DONE)
+                        ->action(function (Receipt $record): void {
                             try {
                                 $record->delete();
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('inventories::filament/clusters/operations/resources/receipt.table.actions.delete.notification.error.title'))
@@ -94,10 +94,10 @@ class ReceiptResource extends Resource
             ])
             ->toolbarActions([
                 DeleteBulkAction::make()
-                    ->action(function (Collection $records) {
+                    ->action(function (Collection $records): void {
                         try {
                             $records->each(fn (Model $record) => $record->delete());
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('inventories::filament/clusters/operations/resources/receipt.table.bulk-actions.delete.notification.error.title'))
@@ -112,11 +112,9 @@ class ReceiptResource extends Resource
                             ->body(__('inventories::filament/clusters/operations/resources/receipt.table.bulk-actions.delete.notification.success.body')),
                     ),
             ])
-            ->modifyQueryUsing(function (Builder $query) {
-                return $query->whereHas('operationType', function (Builder $query) {
-                    $query->where('type', OperationType::INCOMING);
-                });
-            });
+            ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('operationType', function (Builder $query): void {
+                $query->where('type', OperationType::INCOMING);
+            }));
     }
 
     public static function infolist(Schema $schema): Schema
@@ -136,11 +134,11 @@ class ReceiptResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListReceipts::route('/'),
+            'index' => ListReceipts::route('/'),
             'create' => CreateReceipt::route('/create'),
-            'edit'   => EditReceipt::route('/{record}/edit'),
-            'view'   => ViewReceipt::route('/{record}/view'),
-            'moves'  => ManageMoves::route('/{record}/moves'),
+            'edit' => EditReceipt::route('/{record}/edit'),
+            'view' => ViewReceipt::route('/{record}/view'),
+            'moves' => ManageMoves::route('/{record}/moves'),
         ];
     }
 }

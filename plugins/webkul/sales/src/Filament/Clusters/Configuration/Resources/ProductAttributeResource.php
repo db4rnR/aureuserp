@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\ListProductAttributes;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\CreateProductAttribute;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\ViewProductAttribute;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\EditProductAttribute;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductAttributeResource as BaseProductAttributeResource;
 use Webkul\Sale\Filament\Clusters\Configuration;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\CreateProductAttribute;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\EditProductAttribute;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\ListProductAttributes;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\ViewProductAttribute;
 use Webkul\Sale\Models\Attribute;
 
-class ProductAttributeResource extends BaseProductAttributeResource
+final class ProductAttributeResource extends BaseProductAttributeResource
 {
     protected static ?string $model = Attribute::class;
 
@@ -36,10 +37,10 @@ class ProductAttributeResource extends BaseProductAttributeResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListProductAttributes::route('/'),
+            'index' => ListProductAttributes::route('/'),
             'create' => CreateProductAttribute::route('/create'),
-            'view'   => ViewProductAttribute::route('/{record}'),
-            'edit'   => EditProductAttribute::route('/{record}/edit'),
+            'view' => ViewProductAttribute::route('/{record}'),
+            'edit' => EditProductAttribute::route('/{record}/edit'),
         ];
     }
 }

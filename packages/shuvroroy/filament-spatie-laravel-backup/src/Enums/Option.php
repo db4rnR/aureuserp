@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup\Enums;
 
 enum Option: string

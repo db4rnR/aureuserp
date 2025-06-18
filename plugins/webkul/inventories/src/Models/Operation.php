@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
-use Webkul\Inventory\Enums\OperationState;
-use Webkul\Inventory\Enums\MoveType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,14 +14,15 @@ use Webkul\Chatter\Traits\HasChatter;
 use Webkul\Chatter\Traits\HasLogActivity;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Inventory\Database\Factories\OperationFactory;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\MoveType;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Partner\Models\Partner;
 use Webkul\Purchase\Models\Order as PurchaseOrder;
 use Webkul\Sale\Models\Order as SaleOrder;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Operation extends Model
+final class Operation extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity;
 
@@ -69,15 +70,15 @@ class Operation extends Model
      * @var string
      */
     protected $casts = [
-        'state'              => OperationState::class,
-        'move_type'          => MoveType::class,
-        'is_favorite'        => 'boolean',
+        'state' => OperationState::class,
+        'move_type' => MoveType::class,
+        'is_favorite' => 'boolean',
         'has_deadline_issue' => 'boolean',
-        'is_printed'         => 'boolean',
-        'is_locked'          => 'boolean',
-        'deadline'           => 'datetime',
-        'scheduled_at'       => 'datetime',
-        'closed_at'          => 'datetime',
+        'is_printed' => 'boolean',
+        'is_locked' => 'boolean',
+        'deadline' => 'datetime',
+        'scheduled_at' => 'datetime',
+        'closed_at' => 'datetime',
     ];
 
     protected array $logAttributes = [
@@ -93,16 +94,16 @@ class Operation extends Model
         'deadline',
         'scheduled_at',
         'closed_at',
-        'user.name'                     => 'User',
-        'owner.name'                    => 'Owner',
-        'operationType.name'            => 'Operation Type',
-        'sourceLocation.full_name'      => 'Source Location',
+        'user.name' => 'User',
+        'owner.name' => 'Owner',
+        'operationType.name' => 'Operation Type',
+        'sourceLocation.full_name' => 'Source Location',
         'destinationLocation.full_name' => 'Destination Location',
-        'backOrder.name'                => 'Back Order',
-        'return.name'                   => 'Return',
-        'partner.name'                  => 'Partner',
-        'company.name'                  => 'Company',
-        'creator.name'                  => 'Creator',
+        'backOrder.name' => 'Back Order',
+        'return.name' => 'Return',
+        'partner.name' => 'Partner',
+        'company.name' => 'Company',
+        'creator.name' => 'Creator',
     ];
 
     public function user(): BelongsTo
@@ -181,31 +182,9 @@ class Operation extends Model
     }
 
     /**
-     * Bootstrap any application services.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($operation) {
-            $operation->updateName();
-        });
-
-        static::created(function ($operation) {
-            $operation->update(['name' => $operation->name]);
-        });
-
-        static::updated(function ($operation) {
-            if ($operation->wasChanged('operation_type_id')) {
-                $operation->updateChildrenNames();
-            }
-        });
-    }
-
-    /**
      * Update the full name without triggering additional events
      */
-    public function updateName()
+    public function updateName(): void
     {
         if (! $this->operationType->warehouse) {
             $this->name = $this->operationType->sequence_code.'/'.$this->id;
@@ -223,6 +202,28 @@ class Operation extends Model
         foreach ($this->moveLines as $moveLine) {
             $moveLine->update(['name' => $this->name]);
         }
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::saving(function ($operation): void {
+            $operation->updateName();
+        });
+
+        self::created(function ($operation): void {
+            $operation->update(['name' => $operation->name]);
+        });
+
+        self::updated(function ($operation): void {
+            if ($operation->wasChanged('operation_type_id')) {
+                $operation->updateChildrenNames();
+            }
+        });
     }
 
     protected static function newFactory(): OperationFactory

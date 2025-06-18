@@ -1,29 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
 use Webkul\Product\Filament\Resources\ProductResource;
 
-class ManageVariants extends ManageRelatedRecords
+final class ManageVariants extends ManageRelatedRecords
 {
     protected static string $resource = ProductResource::class;
 
     protected static string $relationship = 'variants';
 
-    static function getSubNavigationPosition(): SubNavigationPosition
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
+
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }
-
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function getNavigationLabel(): string
     {
@@ -58,14 +60,12 @@ class ManageVariants extends ManageRelatedRecords
         $table->columns([
             TextColumn::make('combinations')
                 ->label(__('products::filament/resources/product/pages/manage-variants.table.columns.variant-values'))
-                ->state(function ($record) {
-                    return $record->combinations->map(function ($combination) {
-                        $attributeName = $combination->productAttributeValue?->attribute?->name;
-                        $optionName = $combination->productAttributeValue?->attributeOption?->name;
+                ->state(fn ($record) => $record->combinations->map(function ($combination) {
+                    $attributeName = $combination->productAttributeValue?->attribute?->name;
+                    $optionName = $combination->productAttributeValue?->attributeOption?->name;
 
-                        return $attributeName && $optionName ? "{$attributeName}: {$optionName}" : $optionName;
-                    });
-                })
+                    return $attributeName && $optionName ? "{$attributeName}: {$optionName}" : $optionName;
+                }))
                 ->badge()
                 ->sortable(),
             ...$table->getColumns(),

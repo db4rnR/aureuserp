@@ -1,64 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
+use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Grid;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\ListJobPositions;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\CreateJobPosition;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\EditJobPosition;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\ViewJobPosition;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Employee\Filament\Resources\DepartmentResource;
 use Webkul\Employee\Models\Department;
 use Webkul\Partner\Filament\Resources\IndustryResource;
 use Webkul\Recruitment\Filament\Clusters\Configurations;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\CreateJobPosition;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\EditJobPosition;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\ListJobPositions;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\ViewJobPosition;
 use Webkul\Recruitment\Models\JobPosition;
 use Webkul\Security\Filament\Resources\CompanyResource;
 use Webkul\Security\Filament\Resources\UserResource;
 
-class JobPositionResource extends Resource
+final class JobPositionResource extends Resource
 {
     protected static ?string $model = JobPosition::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
 
     protected static ?int $navigationSort = 2;
 
@@ -72,11 +72,11 @@ class JobPositionResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('recruitments::filament/clusters/configurations/resources/job-position.global-search.name')            => $record->name ?? '—',
-            __('recruitments::filament/clusters/configurations/resources/job-position.global-search.department')      => $record->department?->name ?? '—',
+            __('recruitments::filament/clusters/configurations/resources/job-position.global-search.name') => $record->name ?? '—',
+            __('recruitments::filament/clusters/configurations/resources/job-position.global-search.department') => $record->department?->name ?? '—',
             __('recruitments::filament/clusters/configurations/resources/job-position.global-search.employment-type') => $record->employmentType?->name ?? '—',
-            __('recruitments::filament/clusters/configurations/resources/job-position.global-search.company')         => $record->company?->name ?? '—',
-            __('recruitments::filament/clusters/configurations/resources/job-position.global-search.created-by')      => $record->createdBy?->name ?? '—',
+            __('recruitments::filament/clusters/configurations/resources/job-position.global-search.company') => $record->company?->name ?? '—',
+            __('recruitments::filament/clusters/configurations/resources/job-position.global-search.created-by') => $record->createdBy?->name ?? '—',
         ];
     }
 
@@ -103,7 +103,7 @@ class JobPositionResource extends Resource
                                             ->preload()
                                             ->live()
                                             ->reactive()
-                                            ->afterStateUpdated(function (Set $set, Get $get, $state) {
+                                            ->afterStateUpdated(function (Set $set, Get $get, $state): void {
                                                 $department = Department::find($state);
 
                                                 if (
@@ -120,11 +120,9 @@ class JobPositionResource extends Resource
                                                     $set('company_id', $department->company_id);
                                                 }
                                             })
-                                            ->createOptionForm(fn (Schema $schema) => DepartmentResource::form($schema))
-                                            ->createOptionAction(function (Action $action) {
-                                                return $action
-                                                    ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'));
-                                            }),
+                                            ->createOptionForm(fn (Schema $schema): Schema => DepartmentResource::form($schema))
+                                            ->createOptionAction(fn (Action $action): Action => $action
+                                                ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'))),
                                         Select::make('manager_id')
                                             ->label(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.manager'))
                                             ->relationship(name: 'manager', titleAttribute: 'name')
@@ -138,24 +136,20 @@ class JobPositionResource extends Resource
                                             ->searchable()
                                             ->preload()
                                             ->live()
-                                            ->createOptionForm(fn (Schema $schema) => CompanyResource::form($schema))
-                                            ->createOptionAction(function (Action $action) {
-                                                return $action
-                                                    ->modalIcon('heroicon-o-building-office')
-                                                    ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.company-modal-title'));
-                                            }),
+                                            ->createOptionForm(fn (Schema $schema): Schema => CompanyResource::form($schema))
+                                            ->createOptionAction(fn (Action $action): Action => $action
+                                                ->modalIcon('heroicon-o-building-office')
+                                                ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.company-modal-title'))),
                                         Select::make('recruiter_id')
                                             ->label(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.recruiter'))
                                             ->relationship(name: 'recruiter', titleAttribute: 'name')
                                             ->searchable()
                                             ->preload()
                                             ->live()
-                                            ->createOptionForm(fn (Schema $schema) => CompanyResource::form($schema))
-                                            ->createOptionAction(function (Action $action) {
-                                                return $action
-                                                    ->modalIcon('heroicon-o-building-office')
-                                                    ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.company-modal-title'));
-                                            }),
+                                            ->createOptionForm(fn (Schema $schema): Schema => CompanyResource::form($schema))
+                                            ->createOptionAction(fn (Action $action): Action => $action
+                                                ->modalIcon('heroicon-o-building-office')
+                                                ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.company-modal-title'))),
                                         Select::make('recruitments_job_position_interviewers')
                                             ->label(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.interviewers'))
                                             ->relationship(name: 'interviewers', titleAttribute: 'name')
@@ -163,24 +157,22 @@ class JobPositionResource extends Resource
                                             ->multiple()
                                             ->preload()
                                             ->live()
-                                            ->createOptionForm(fn (Schema $schema) => UserResource::form($schema)),
+                                            ->createOptionForm(fn (Schema $schema): Schema => UserResource::form($schema)),
                                         Select::make('address_id')
                                             ->label(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.job-location'))
                                             ->relationship(name: 'address', titleAttribute: 'name')
                                             ->searchable()
                                             ->preload()
-                                            ->createOptionForm(fn (Schema $schema) => DepartmentResource::form($schema))
-                                            ->createOptionAction(function (Action $action) {
-                                                return $action
-                                                    ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'))
-                                                    ->modalSubmitActionLabel(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'))
-                                                    ->modalWidth('2xl');
-                                            }),
+                                            ->createOptionForm(fn (Schema $schema): Schema => DepartmentResource::form($schema))
+                                            ->createOptionAction(fn (Action $action): Action => $action
+                                                ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'))
+                                                ->modalSubmitActionLabel(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'))
+                                                ->modalWidth('2xl')),
                                         Select::make('industry_id')
                                             ->label(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.industry'))
                                             ->relationship('industry', 'name')
                                             ->searchable()
-                                            ->createOptionForm(fn ($form) => IndustryResource::form($form)->columns(2))
+                                            ->createOptionForm(fn ($form): Schema => IndustryResource::form($form)->columns(2))
                                             ->preload(),
                                     ])->columns(2),
                                 Section::make()
@@ -559,10 +551,10 @@ class JobPositionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListJobPositions::route('/'),
+            'index' => ListJobPositions::route('/'),
             'create' => CreateJobPosition::route('/create'),
-            'edit'   => EditJobPosition::route('/{record}/edit'),
-            'view'   => ViewJobPosition::route('/{record}'),
+            'edit' => EditJobPosition::route('/{record}/edit'),
+            'view' => ViewJobPosition::route('/{record}'),
         ];
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'IN/OUT',
 
     'tabs' => [
-        'todo'     => 'To Do',
-        'done'     => 'Done',
+        'todo' => 'To Do',
+        'done' => 'Done',
         'incoming' => 'Incoming',
         'outgoing' => 'Outgoing',
         'internal' => 'Internal',
@@ -13,23 +15,23 @@ return [
 
     'table' => [
         'columns' => [
-            'date'                 => 'Date',
-            'reference'            => 'Reference',
-            'product'              => 'Product',
-            'package'              => 'Package',
-            'lot'                  => 'Lot / Serial Numbers',
-            'source-location'      => 'Source Location',
+            'date' => 'Date',
+            'reference' => 'Reference',
+            'product' => 'Product',
+            'package' => 'Package',
+            'lot' => 'Lot / Serial Numbers',
+            'source-location' => 'Source Location',
             'destination-location' => 'Destination Location',
-            'quantity'             => 'Quantity',
-            'state'                => 'State',
-            'done-by'              => 'Done By',
+            'quantity' => 'Quantity',
+            'state' => 'State',
+            'done-by' => 'Done By',
         ],
 
         'actions' => [
             'delete' => [
                 'notification' => [
                     'title' => 'Move deleted',
-                    'body'  => 'The move has been deleted successfully.',
+                    'body' => 'The move has been deleted successfully.',
                 ],
             ],
         ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -7,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource;
 
-class CreateRoute extends CreateRecord
+final class CreateRoute extends CreateRecord
 {
     protected static string $resource = RouteResource::class;
 
@@ -28,7 +30,7 @@ class CreateRoute extends CreateRecord
     {
         $data['creator_id'] = Auth::id();
 
-        $data['company_id'] = $data['company_id'] ?? Auth::user()->default_company_id;
+        $data['company_id'] ??= Auth::user()->default_company_id;
 
         return $data;
     }

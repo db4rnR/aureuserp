@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -33,13 +35,13 @@ trait HasApplicationStatus
     {
         $statuses = is_array($status) ? $status : [$status];
 
-        return $query->where(function ($query) use ($statuses) {
+        return $query->where(function ($query) use ($statuses): void {
             foreach ($statuses as $status) {
                 match ($status) {
-                    ApplicationStatus::REFUSED->value  => $query->orWhere('refuse_reason_id', '!=', null),
-                    ApplicationStatus::HIRED->value    => $query->orWhere('date_closed', '!=', null),
+                    ApplicationStatus::REFUSED->value => $query->orWhere('refuse_reason_id', '!=', null),
+                    ApplicationStatus::HIRED->value => $query->orWhere('date_closed', '!=', null),
                     ApplicationStatus::ARCHIVED->value => $query->onlyTrashed(),
-                    ApplicationStatus::ONGOING->value  => $query->orWhere(function ($q) {
+                    ApplicationStatus::ONGOING->value => $query->orWhere(function ($q): void {
                         $q->whereNull('refuse_reason_id')
                             ->whereNull('date_closed');
                     }),
@@ -61,34 +63,32 @@ trait HasApplicationStatus
             $updates = match ($newStatus) {
                 ApplicationStatus::REFUSED => [
                     'refuse_reason_id' => $attributes['refuse_reason_id'] ?? null,
-                    'refuse_date'      => now(),
-                    'date_closed'      => null,
-                    'is_active'        => false,
+                    'refuse_date' => now(),
+                    'date_closed' => null,
+                    'is_active' => false,
                 ],
                 ApplicationStatus::HIRED => [
-                    'date_closed'      => now(),
+                    'date_closed' => now(),
                     'refuse_reason_id' => null,
-                    'refuse_date'      => null,
+                    'refuse_date' => null,
                 ],
                 ApplicationStatus::ONGOING => [
-                    'date_closed'      => null,
+                    'date_closed' => null,
                     'refuse_reason_id' => null,
-                    'refuse_date'      => null,
-                    'is_active'        => true,
-                    'stage_id'         => Stage::where('is_default', 1)->first()->id ?? null,
+                    'refuse_date' => null,
+                    'is_active' => true,
+                    'stage_id' => Stage::where('is_default', 1)->first()->id ?? null,
                 ],
                 ApplicationStatus::ARCHIVED => [
-                    'date_closed'      => null,
+                    'date_closed' => null,
                     'refuse_reason_id' => null,
-                    'refuse_date'      => null,
-                    'is_active'        => false,
-                    'deleted_at'       => now(),
+                    'refuse_date' => null,
+                    'is_active' => false,
+                    'deleted_at' => now(),
                 ],
             };
 
-            $updated = $this->update($updates);
-
-            return $updated;
+            return $this->update($updates);
         });
     }
 

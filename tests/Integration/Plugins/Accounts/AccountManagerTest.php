@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 use Webkul\Account\AccountManager;
-use Webkul\Account\Models\Move;
-use Webkul\Account\Models\MoveLine;
-use Webkul\Account\Models\Account;
-use Webkul\Account\Models\Journal;
+use Webkul\Account\Enums\JournalType;
 use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Enums\MoveType;
-use Webkul\Account\Enums\JournalType;
+use Webkul\Account\Models\Account;
+use Webkul\Account\Models\Journal;
+use Webkul\Account\Models\Move;
+use Webkul\Account\Models\MoveLine;
+use Webkul\Partner\Models\Partner;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
-use Webkul\Partner\Models\Partner;
 
 #[Test]
 #[Group('integration')]
 #[Group('accounts')]
 #[Description('Test AccountManager state management methods')]
-function account_manager_state_management_methods()
+function account_manager_state_management_methods(): void
 {
     // Create dependencies
     $journal = Journal::factory()->create(['type' => JournalType::SALE]);
@@ -54,7 +56,7 @@ function account_manager_state_management_methods()
 #[Group('integration')]
 #[Group('accounts')]
 #[Description('Test AccountManager computation methods')]
-function account_manager_computation_methods()
+function account_manager_computation_methods(): void
 {
     // Create dependencies
     $journal = Journal::factory()->create(['type' => JournalType::SALE]);
@@ -108,7 +110,7 @@ function account_manager_computation_methods()
 #[Group('integration')]
 #[Group('accounts')]
 #[Description('Test AccountManager invoice date due computation')]
-function account_manager_invoice_date_due_computation()
+function account_manager_invoice_date_due_computation(): void
 {
     // Create dependencies
     $journal = Journal::factory()->create(['type' => JournalType::SALE]);
@@ -136,7 +138,7 @@ function account_manager_invoice_date_due_computation()
 
     // Verify due date computation
     expect($moveWithDueDate->invoice_date_due)->not->toBeNull();
-    expect($moveWithDueDate->invoice_date_due)->toBeInstanceOf(\Carbon\Carbon::class);
+    expect($moveWithDueDate->invoice_date_due)->toBeInstanceOf(Carbon\Carbon::class);
 
     // The due date should be after or equal to the invoice date
     expect($moveWithDueDate->invoice_date_due->timestamp)->toBeGreaterThanOrEqual($moveWithDueDate->invoice_date->timestamp);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +15,14 @@ use Webkul\Sale\Database\Factories\TeamFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Team extends Model implements Sortable
+final class Team extends Model implements Sortable
 {
     use HasChatter, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'sales_teams';
 
@@ -30,17 +37,12 @@ class Team extends Model implements Sortable
         'invoiced_target',
     ];
 
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
-    ];
-
     protected array $logAttributes = [
         'name',
-        'company.name'    => 'Company',
-        'user.name'       => 'Team Leader',
-        'creator.name'    => 'Creator',
-        'is_active'       => 'Status',
+        'company.name' => 'Company',
+        'user.name' => 'Team Leader',
+        'creator.name' => 'Creator',
+        'is_active' => 'Status',
         'invoiced_target' => 'Invoiced Target',
     ];
 

@@ -1,34 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Filament\Infolists\Components;
 
-use Filament\Schemas\Components\Component;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\Entry;
-use Filament\Support\Enums\TextSize;
-use Filament\Infolists;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Illuminate\Support\Collection;
 use Webkul\Field\Models\Field;
 
-class CustomEntries extends Component
+final class CustomEntries extends Component
 {
-    protected array $include = [];
+    private array $include = [];
 
-    protected array $exclude = [];
+    private array $exclude = [];
 
-    protected ?string $resourceClass = null;
-
-    final public function __construct(string $resource)
-    {
-        $this->resourceClass = $resource;
-    }
+    final public function __construct(private readonly ?string $resourceClass) {}
 
     public static function make(string $resource): static
     {
-        $static = app(static::class, ['resource' => $resource]);
+        $static = app(self::class, ['resource' => $resource]);
 
         $static->configure();
 
@@ -49,43 +45,41 @@ class CustomEntries extends Component
         return $this;
     }
 
-    protected function getResourceClass(): string
-    {
-        return $this->resourceClass;
-    }
-
     public function getSchema(): array
     {
         $fields = $this->getFields();
 
-        return $fields->map(function ($field) {
-            return $this->createEntry($field);
-        })->toArray();
+        return $fields->map(fn ($field): Component => $this->createEntry($field))->toArray();
     }
 
-    protected function getFields(): Collection
+    private function getResourceClass(): string
+    {
+        return $this->resourceClass;
+    }
+
+    private function getFields(): Collection
     {
         $query = Field::query()
-            ->where('customizable_type', $this->getResourceClass()::getModel());
+            ->where('customizable_type', $this->resourceClass::getModel());
 
-        if (! empty($this->include)) {
+        if ($this->include !== []) {
             $query->whereIn('code', $this->include);
         }
 
-        if (! empty($this->exclude)) {
+        if ($this->exclude !== []) {
             $query->whereNotIn('code', $this->exclude);
         }
 
         return $query->orderBy('sort')->get();
     }
 
-    protected function createEntry(Field $field): Component
+    private function createEntry(Field $field): Component
     {
         $entryClass = match ($field->type) {
             'text', 'textarea', 'select', 'radio' => TextEntry::class,
             'checkbox', 'toggle' => IconEntry::class,
             'checkbox_list' => TextEntry::class,
-            'datetime'      => TextEntry::class,
+            'datetime' => TextEntry::class,
             'editor', 'markdown' => TextEntry::class,
             'color' => ColorEntry::class,
             default => TextEntry::class,
@@ -103,16 +97,16 @@ class CustomEntries extends Component
         return $entry;
     }
 
-    protected function applySetting(Entry $column, array $setting): void
+    private function applySetting(Entry $column, array $setting): void
     {
         $name = $setting['setting'];
         $value = $setting['value'] ?? null;
 
         if (method_exists($column, $name)) {
             if ($value !== null) {
-                if ($name == 'weight') {
+                if ($name === 'weight') {
                     $column->{$name}(constant(FontWeight::class."::$value"));
-                } elseif ($name == 'size') {
+                } elseif ($name === 'size') {
                     $column->{$name}(constant(TextSize::class."::$value"));
                 } else {
                     $column->{$name}($value);

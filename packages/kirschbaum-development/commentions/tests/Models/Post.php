@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +10,7 @@ use Kirschbaum\Commentions\Contracts\Commentable;
 use Kirschbaum\Commentions\HasComments;
 use Tests\Database\Factories\PostFactory;
 
-class Post extends Model implements Commentable
+final class Post extends Model implements Commentable
 {
     use HasComments;
     use HasFactory;

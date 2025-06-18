@@ -1,12 +1,14 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Description;
-use PHPUnit\Framework\Attributes\CoversClass;
+declare(strict_types=1);
+
 use App\Tests\Attributes\PluginTest;
-use Webkul\Payment\Models\Payment;
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
+use Webkul\Payment\Models\Payment;
 
 /**
  * Test Payment model basic properties
@@ -20,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 #[PluginTest('Payments')]
 #[CoversClass(Payment::class)]
 #[Description('Test Payment model basic properties')]
-function payment_model_basic_properties()
+function payment_model_basic_properties(): void
 {
     // Create a test payment
     $payment = new Payment();
@@ -30,7 +32,7 @@ function payment_model_basic_properties()
     expect($payment)->toBeInstanceOf(Model::class);
 
     // Test that the model uses the HasFactory trait
-    expect($payment)->toBeInstanceOf(\Illuminate\Database\Eloquent\Factories\HasFactory::class);
+    expect($payment)->toBeInstanceOf(Illuminate\Database\Eloquent\Factories\HasFactory::class);
 }
 
 /**
@@ -45,7 +47,7 @@ function payment_model_basic_properties()
 #[PluginTest('Payments')]
 #[CoversClass(Payment::class)]
 #[Description('Test Payment model table name')]
-function payment_model_table_name()
+function payment_model_table_name(): void
 {
     // Create a test payment
     $payment = new Payment();

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Country extends Model
+final class Country extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -29,25 +31,21 @@ class Country extends Model
      */
     protected $casts = [
         'state_required' => 'boolean',
-        'zip_required'   => 'boolean',
+        'zip_required' => 'boolean',
     ];
 
     /**
      * Get the currency associated with the country.
-     *
-     * @return BelongsTo
      */
-    public function currency()
+    public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class, 'currency_id');
     }
 
     /**
      * Get all states for the country.
-     *
-     * @return HasMany
      */
-    public function states()
+    public function states(): HasMany
     {
         return $this->hasMany(State::class, 'country_id');
     }

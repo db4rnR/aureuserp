@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Products',
@@ -12,18 +14,18 @@ return [
                 'title' => 'General',
 
                 'fields' => [
-                    'name'             => 'Name',
+                    'name' => 'Name',
                     'name-placeholder' => 'eg. T-shirt',
-                    'description'      => 'Description',
-                    'tags'             => 'Tags',
-                    'sales'            => 'Sales',
-                    'purchase'         => 'Purchase',
+                    'description' => 'Description',
+                    'tags' => 'Tags',
+                    'sales' => 'Sales',
+                    'purchase' => 'Purchase',
                 ],
             ],
 
             'invoice-policy' => [
-                'title'            => 'Invoice Policy',
-                'ordered-policy'   => 'You can invoice goods before they are delivered.',
+                'title' => 'Invoice Policy',
+                'ordered-policy' => 'You can invoice goods before they are delivered.',
                 'delivered-policy' => 'Invoice after delivery, based on quantities delivered, not ordered.',
             ],
 
@@ -35,11 +37,11 @@ return [
                 'title' => 'Settings',
 
                 'fields' => [
-                    'type'      => 'Type',
+                    'type' => 'Type',
                     'reference' => 'Reference',
-                    'barcode'   => 'Barcode',
-                    'category'  => 'Category',
-                    'company'   => 'Company',
+                    'barcode' => 'Barcode',
+                    'category' => 'Category',
+                    'company' => 'Company',
                 ],
             ],
 
@@ -48,7 +50,7 @@ return [
 
                 'fields' => [
                     'category' => 'Category',
-                    'tags'     => 'Tags',
+                    'tags' => 'Tags',
                 ],
             ],
 
@@ -57,7 +59,7 @@ return [
 
                 'fields' => [
                     'price' => 'Price',
-                    'cost'  => 'Cost',
+                    'cost' => 'Cost',
                 ],
             ],
 
@@ -69,66 +71,66 @@ return [
 
     'table' => [
         'columns' => [
-            'name'        => 'Name',
-            'images'      => 'Images',
-            'type'        => 'Type',
-            'reference'   => 'Reference',
+            'name' => 'Name',
+            'images' => 'Images',
+            'type' => 'Type',
+            'reference' => 'Reference',
             'responsible' => 'Responsible',
-            'barcode'     => 'Barcode',
-            'category'    => 'Category',
-            'company'     => 'Company',
-            'price'       => 'Price',
-            'cost'        => 'Cost',
-            'tags'        => 'Tags',
-            'deleted-at'  => 'Deleted At',
-            'created-at'  => 'Created At',
-            'updated-at'  => 'Updated At',
+            'barcode' => 'Barcode',
+            'category' => 'Category',
+            'company' => 'Company',
+            'price' => 'Price',
+            'cost' => 'Cost',
+            'tags' => 'Tags',
+            'deleted-at' => 'Deleted At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'type'       => 'Type',
-            'category'   => 'Category',
+            'type' => 'Type',
+            'category' => 'Category',
             'created-at' => 'Created At',
         ],
 
         'filters' => [
-            'name'        => 'Name',
-            'type'        => 'Type',
-            'reference'   => 'Reference',
-            'barcode'     => 'Barcode',
-            'category'    => 'Category',
-            'company'     => 'Company',
-            'price'       => 'Price',
-            'cost'        => 'Cost',
+            'name' => 'Name',
+            'type' => 'Type',
+            'reference' => 'Reference',
+            'barcode' => 'Barcode',
+            'category' => 'Category',
+            'company' => 'Company',
+            'price' => 'Price',
+            'cost' => 'Cost',
             'is-favorite' => 'Is Favorite',
-            'weight'      => 'Weight',
-            'volume'      => 'Volume',
-            'tags'        => 'Tags',
+            'weight' => 'Weight',
+            'volume' => 'Volume',
+            'tags' => 'Tags',
             'responsible' => 'Responsible',
-            'created-at'  => 'Created At',
-            'updated-at'  => 'Updated At',
-            'creator'     => 'Creator',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
+            'creator' => 'Creator',
         ],
 
         'actions' => [
             'restore' => [
                 'notification' => [
                     'title' => 'Product restored',
-                    'body'  => 'The product has been restored successfully.',
+                    'body' => 'The product has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Product deleted',
-                    'body'  => 'The product has been deleted successfully.',
+                    'body' => 'The product has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Product force deleted',
-                    'body'  => 'The product has been force deleted successfully.',
+                    'body' => 'The product has been force deleted successfully.',
                 ],
             ],
         ],
@@ -137,21 +139,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Products restored',
-                    'body'  => 'The products has been restored successfully.',
+                    'body' => 'The products has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Products deleted',
-                    'body'  => 'The products has been deleted successfully.',
+                    'body' => 'The products has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Products force deleted',
-                    'body'  => 'The products has been force deleted successfully.',
+                    'body' => 'The products has been force deleted successfully.',
                 ],
             ],
         ],
@@ -163,10 +165,10 @@ return [
                 'title' => 'General',
 
                 'entries' => [
-                    'name'             => 'Name',
+                    'name' => 'Name',
                     'name-placeholder' => 'eg. T-shirt',
-                    'description'      => 'Description',
-                    'tags'             => 'Tags',
+                    'description' => 'Description',
+                    'tags' => 'Tags',
                 ],
             ],
 
@@ -180,11 +182,11 @@ return [
                 'title' => 'Settings',
 
                 'entries' => [
-                    'type'      => 'Type',
+                    'type' => 'Type',
                     'reference' => 'Reference',
-                    'barcode'   => 'Barcode',
-                    'category'  => 'Category',
-                    'company'   => 'Company',
+                    'barcode' => 'Barcode',
+                    'category' => 'Category',
+                    'company' => 'Company',
                 ],
             ],
 
@@ -193,7 +195,7 @@ return [
 
                 'entries' => [
                     'price' => 'Price',
-                    'cost'  => 'Cost',
+                    'cost' => 'Cost',
                 ],
             ],
 
@@ -208,7 +210,7 @@ return [
 
                         'entries' => [
                             'track-inventory' => 'Track Inventory',
-                            'track-by'        => 'Track By',
+                            'track-by' => 'Track By',
                             'expiration-date' => 'Expiration Date',
                         ],
                     ],
@@ -226,9 +228,9 @@ return [
 
                         'entries' => [
                             'responsible' => 'Responsible',
-                            'weight'      => 'Weight',
-                            'volume'      => 'Volume',
-                            'sale-delay'  => 'Customer Lead Time (Days)',
+                            'weight' => 'Weight',
+                            'volume' => 'Volume',
+                            'sale-delay' => 'Customer Lead Time (Days)',
                         ],
                     ],
 
@@ -236,10 +238,10 @@ return [
                         'title' => 'Traceability',
 
                         'entries' => [
-                            'expiration-date'  => 'Expiration Date (Days)',
+                            'expiration-date' => 'Expiration Date (Days)',
                             'best-before-date' => 'Best Before Date (Days)',
-                            'removal-date'     => 'Removal Date (Days)',
-                            'alert-date'       => 'Alert Date (Days)',
+                            'removal-date' => 'Removal Date (Days)',
+                            'alert-date' => 'Alert Date (Days)',
                         ],
                     ],
                 ],

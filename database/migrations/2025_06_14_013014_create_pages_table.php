@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create(config('filament-fabricator.table_name', 'pages'), function (Blueprint $table) {
+        Schema::create(config('filament-fabricator.table_name', 'pages'), function (Blueprint $table): void {
             $table->id();
             $table->string('title')->index();
             $table->string('slug')->unique();
@@ -19,7 +19,7 @@ return new class extends Migration
         });
     }
     
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists(config('filament-fabricator.table_name', 'pages'));
     }    

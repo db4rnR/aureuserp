@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Facades;
 
 use Closure;
@@ -26,7 +28,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \BezhanSalleh\FilamentShield\FilamentShield
  */
-class FilamentShield extends Facade
+final class FilamentShield extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

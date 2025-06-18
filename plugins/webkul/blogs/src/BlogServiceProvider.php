@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog;
 
 use Filament\Support\Assets\Css;
@@ -9,7 +11,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class BlogServiceProvider extends PackageServiceProvider
+final class BlogServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'blogs';
 
@@ -17,7 +19,7 @@ class BlogServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasViews()
             ->hasTranslations()
             ->hasMigrations([
@@ -33,12 +35,12 @@ class BlogServiceProvider extends PackageServiceProvider
             ->hasDependencies([
                 'website',
             ])
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 
     public function packageBooted(): void

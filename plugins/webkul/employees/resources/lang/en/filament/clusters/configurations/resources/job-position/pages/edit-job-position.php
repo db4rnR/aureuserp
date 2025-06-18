@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Job Position updated',
-        'body'  => 'The job position has been updated successfully.',
+        'body' => 'The job position has been updated successfully.',
     ],
 
     'header-actions' => [
         'delete' => [
             'notification' => [
                 'title' => 'Job Position deleted',
-                'body'  => 'The job position has been deleted successfully.',
+                'body' => 'The job position has been deleted successfully.',
             ],
         ],
     ],

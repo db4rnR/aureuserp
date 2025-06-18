@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Post updated',
-        'body'  => 'The post has been updated successfully.',
+        'body' => 'The post has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -12,7 +14,7 @@ return [
 
             'notification' => [
                 'title' => 'Post set as draft',
-                'body'  => 'The post has been set as draft successfully.',
+                'body' => 'The post has been set as draft successfully.',
             ],
         ],
 
@@ -21,14 +23,14 @@ return [
 
             'notification' => [
                 'title' => 'Post published',
-                'body'  => 'The post has been published successfully.',
+                'body' => 'The post has been published successfully.',
             ],
         ],
 
         'delete' => [
             'notification' => [
                 'title' => 'Post deleted',
-                'body'  => 'The post has been deleted successfully.',
+                'body' => 'The post has been deleted successfully.',
             ],
         ],
     ],

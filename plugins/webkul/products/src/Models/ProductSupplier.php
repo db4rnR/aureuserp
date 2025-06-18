@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -11,9 +13,14 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-class ProductSupplier extends Model implements Sortable
+final class ProductSupplier extends Model implements Sortable
 {
     use SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -46,12 +53,7 @@ class ProductSupplier extends Model implements Sortable
 
     protected $casts = [
         'starts_at' => 'date',
-        'ends_at'   => 'date',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'ends_at' => 'date',
     ];
 
     public function product(): BelongsTo

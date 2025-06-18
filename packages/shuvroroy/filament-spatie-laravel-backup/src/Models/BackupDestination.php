@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +12,7 @@ use Sushi\Sushi;
  * @property string $path
  * @property string $disk
  */
-class BackupDestination extends Model
+final class BackupDestination extends Model
 {
     use Sushi;
 

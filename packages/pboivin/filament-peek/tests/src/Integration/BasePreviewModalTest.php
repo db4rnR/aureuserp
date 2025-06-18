@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Integration;
 
 use Pboivin\FilamentPeek\Tests\Models\Page;
@@ -8,7 +10,7 @@ use Pboivin\FilamentPeek\Tests\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
-it('sees preview modal assets by default', function () {
+it('sees preview modal assets by default', function (): void {
     actingAs(User::factory()->create());
 
     get('/admin')
@@ -17,7 +19,7 @@ it('sees preview modal assets by default', function () {
         ->assertSee('filament-peek.js');
 });
 
-it('does not see preview modal on dashboard', function () {
+it('does not see preview modal on dashboard', function (): void {
     actingAs(User::factory()->create());
 
     get('/admin')
@@ -25,7 +27,7 @@ it('does not see preview modal on dashboard', function () {
         ->assertDontSee('x-ref="previewModalBody"', escape: false);
 });
 
-it('sees preview modal when creating a page', function () {
+it('sees preview modal when creating a page', function (): void {
     actingAs(User::factory()->create());
 
     get('/admin/pages/create')
@@ -35,7 +37,7 @@ it('sees preview modal when creating a page', function () {
         ->assertDontSee('x-ref="builderEditor"', escape: false);
 });
 
-it('sees preview modal when editing a page', function () {
+it('sees preview modal when editing a page', function (): void {
     actingAs(User::factory()->create());
 
     $page = Page::factory()->create();

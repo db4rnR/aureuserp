@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Carbon;
@@ -14,7 +15,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
 
-class EditTimeOff extends EditRecord
+final class EditTimeOff extends EditRecord
 {
     protected static string $resource = TimeOffResource::class;
 
@@ -35,7 +36,7 @@ class EditTimeOff extends EditRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             ViewAction::make(),
             DeleteAction::make()
                 ->successNotification(
@@ -52,11 +53,7 @@ class EditTimeOff extends EditRecord
         if (isset($data['employee_id'])) {
             $employee = Employee::find($data['employee_id']);
 
-            if ($employee->department) {
-                $data['department_id'] = $employee->department?->id;
-            } else {
-                $data['department_id'] = null;
-            }
+            $data['department_id'] = $employee->department ? $employee->department?->id : null;
 
             if ($employee->calendar) {
                 $data['calendar_id'] = $employee->calendar->id;

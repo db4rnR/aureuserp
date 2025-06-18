@@ -1,49 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Filament\Resources;
 
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Utilities\Get;
+use BackedEnum;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Webkul\Field\Filament\Resources\FieldResource\Pages\ListFields;
-use Webkul\Field\Filament\Resources\FieldResource\Pages\CreateField;
-use Webkul\Field\Filament\Resources\FieldResource\Pages\EditField;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Support\Enums\TextSize;
-use Filament\Facades\Filament;
-use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
-use Filament\Tables;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Schema;
 use Webkul\Field\FieldsColumnManager;
-use Webkul\Field\Filament\Resources\FieldResource\Pages;
+use Webkul\Field\Filament\Resources\FieldResource\Pages\CreateField;
+use Webkul\Field\Filament\Resources\FieldResource\Pages\EditField;
+use Webkul\Field\Filament\Resources\FieldResource\Pages\ListFields;
 use Webkul\Field\Models\Field;
 
-class FieldResource extends Resource
+final class FieldResource extends Resource
 {
     protected static ?string $model = Field::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-puzzle-piece';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-puzzle-piece';
 
     protected static ?int $navigationSort = 5;
 
@@ -101,7 +101,7 @@ class FieldResource extends Resource
                                 'select',
                                 'checkbox_list',
                                 'radio',
-                            ]))
+                            ], true))
                             ->schema([
                                 Repeater::make('options')
                                     ->hiddenLabel()
@@ -116,15 +116,15 @@ class FieldResource extends Resource
                         Section::make(__('fields::filament/resources/field.form.sections.form-settings.title'))
                             ->schema([
                                 Group::make()
-                                    ->schema(static::getFormSettingsSchema())
+                                    ->schema(self::getFormSettingsSchema())
                                     ->statePath('form_settings'),
                             ]),
 
                         Section::make(__('fields::filament/resources/field.form.sections.table-settings.title'))
-                            ->schema(static::getTableSettingsSchema()),
+                            ->schema(self::getTableSettingsSchema()),
 
                         Section::make(__('fields::filament/resources/field.form.sections.infolist-settings.title'))
-                            ->schema(static::getInfolistSettingsSchema()),
+                            ->schema(self::getInfolistSettingsSchema()),
                     ])
                     ->columnSpan(['lg' => 2]),
 
@@ -140,38 +140,38 @@ class FieldResource extends Resource
                                     ->native(false)
                                     ->live()
                                     ->options([
-                                        'text'          => __('fields::filament/resources/field.form.sections.settings.fields.type-options.text'),
-                                        'textarea'      => __('fields::filament/resources/field.form.sections.settings.fields.type-options.textarea'),
-                                        'select'        => __('fields::filament/resources/field.form.sections.settings.fields.type-options.select'),
-                                        'checkbox'      => __('fields::filament/resources/field.form.sections.settings.fields.type-options.checkbox'),
-                                        'radio'         => __('fields::filament/resources/field.form.sections.settings.fields.type-options.radio'),
-                                        'toggle'        => __('fields::filament/resources/field.form.sections.settings.fields.type-options.toggle'),
+                                        'text' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.text'),
+                                        'textarea' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.textarea'),
+                                        'select' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.select'),
+                                        'checkbox' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.checkbox'),
+                                        'radio' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.radio'),
+                                        'toggle' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.toggle'),
                                         'checkbox_list' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.checkbox-list'),
-                                        'datetime'      => __('fields::filament/resources/field.form.sections.settings.fields.type-options.datetime'),
-                                        'editor'        => __('fields::filament/resources/field.form.sections.settings.fields.type-options.editor'),
-                                        'markdown'      => __('fields::filament/resources/field.form.sections.settings.fields.type-options.markdown'),
-                                        'color'         => __('fields::filament/resources/field.form.sections.settings.fields.type-options.color'),
+                                        'datetime' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.datetime'),
+                                        'editor' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.editor'),
+                                        'markdown' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.markdown'),
+                                        'color' => __('fields::filament/resources/field.form.sections.settings.fields.type-options.color'),
                                     ]),
                                 Select::make('input_type')
                                     ->label(__('fields::filament/resources/field.form.sections.settings.fields.input-type'))
                                     ->required()
                                     ->disabledOn('edit')
                                     ->native(false)
-                                    ->visible(fn (Get $get): bool => $get('type') == 'text')
+                                    ->visible(fn (Get $get): bool => $get('type') === 'text')
                                     ->options([
-                                        'text'     => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.text'),
-                                        'email'    => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.email'),
-                                        'numeric'  => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.numeric'),
-                                        'integer'  => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.integer'),
+                                        'text' => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.text'),
+                                        'email' => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.email'),
+                                        'numeric' => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.numeric'),
+                                        'integer' => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.integer'),
                                         'password' => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.password'),
-                                        'tel'      => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.tel'),
-                                        'url'      => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.url'),
-                                        'color'    => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.color'),
+                                        'tel' => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.tel'),
+                                        'url' => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.url'),
+                                        'color' => __('fields::filament/resources/field.form.sections.settings.fields.input-type-options.color'),
                                     ]),
                                 Toggle::make('is_multiselect')
                                     ->label(__('fields::filament/resources/field.form.sections.settings.fields.is-multiselect'))
                                     ->required()
-                                    ->visible(fn (Get $get): bool => $get('type') == 'select')
+                                    ->visible(fn (Get $get): bool => $get('type') === 'select')
                                     ->live(),
                                 TextInput::make('sort')
                                     ->label(__('fields::filament/resources/field.form.sections.settings.fields.sort-order'))
@@ -188,7 +188,7 @@ class FieldResource extends Resource
                                     ->searchable()
                                     ->native(false)
                                     ->disabledOn('edit')
-                                    ->options(fn () => collect(Filament::getResources())->filter(fn ($resource) => in_array('Webkul\Field\Filament\Traits\HasCustomFields', class_uses($resource)))->mapWithKeys(fn ($resource) => [
+                                    ->options(fn () => collect(Filament::getResources())->filter(fn ($resource): bool => in_array(\Webkul\Field\Filament\Traits\HasCustomFields::class, class_uses($resource), true))->mapWithKeys(fn ($resource) => [
                                         $resource::getModel() => str($resource)->afterLast('\\')->toString(),
                                     ])),
                             ]),
@@ -225,21 +225,21 @@ class FieldResource extends Resource
                 SelectFilter::make('type')
                     ->label(__('fields::filament/resources/field.table.filters.type'))
                     ->options([
-                        'text'          => __('fields::filament/resources/field.table.filters.type-options.text'),
-                        'textarea'      => __('fields::filament/resources/field.table.filters.type-options.textarea'),
-                        'select'        => __('fields::filament/resources/field.table.filters.type-options.select'),
-                        'checkbox'      => __('fields::filament/resources/field.table.filters.type-options.checkbox'),
-                        'radio'         => __('fields::filament/resources/field.table.filters.type-options.radio'),
-                        'toggle'        => __('fields::filament/resources/field.table.filters.type-options.toggle'),
+                        'text' => __('fields::filament/resources/field.table.filters.type-options.text'),
+                        'textarea' => __('fields::filament/resources/field.table.filters.type-options.textarea'),
+                        'select' => __('fields::filament/resources/field.table.filters.type-options.select'),
+                        'checkbox' => __('fields::filament/resources/field.table.filters.type-options.checkbox'),
+                        'radio' => __('fields::filament/resources/field.table.filters.type-options.radio'),
+                        'toggle' => __('fields::filament/resources/field.table.filters.type-options.toggle'),
                         'checkbox_list' => __('fields::filament/resources/field.table.filters.type-options.checkbox-list'),
-                        'datetime'      => __('fields::filament/resources/field.table.filters.type-options.datetime'),
-                        'editor'        => __('fields::filament/resources/field.table.filters.type-options.editor'),
-                        'markdown'      => __('fields::filament/resources/field.table.filters.type-options.markdown'),
-                        'color'         => __('fields::filament/resources/field.table.filters.type-options.color'),
+                        'datetime' => __('fields::filament/resources/field.table.filters.type-options.datetime'),
+                        'editor' => __('fields::filament/resources/field.table.filters.type-options.editor'),
+                        'markdown' => __('fields::filament/resources/field.table.filters.type-options.markdown'),
+                        'color' => __('fields::filament/resources/field.table.filters.type-options.color'),
                     ]),
                 SelectFilter::make('customizable_type')
                     ->label(__('fields::filament/resources/field.table.filters.resource'))
-                    ->options(fn () => collect(Filament::getResources())->filter(fn ($resource) => in_array('Webkul\Field\Filament\Traits\HasCustomFields', class_uses($resource)))->mapWithKeys(fn ($resource) => [
+                    ->options(fn () => collect(Filament::getResources())->filter(fn ($resource): bool => in_array(\Webkul\Field\Filament\Traits\HasCustomFields::class, class_uses($resource), true))->mapWithKeys(fn ($resource) => [
                         $resource::getModel() => str($resource)->afterLast('\\')->toString(),
                     ])),
             ])
@@ -262,7 +262,7 @@ class FieldResource extends Resource
                                 ->body(__('fields::filament/resources/field.table.actions.delete.notification.body')),
                         ),
                     ForceDeleteAction::make()
-                        ->before(function ($record) {
+                        ->before(function ($record): void {
                             FieldsColumnManager::deleteColumn($record);
                         })
                         ->successNotification(
@@ -290,7 +290,7 @@ class FieldResource extends Resource
                                 ->body(__('fields::filament/resources/field.table.bulk-actions.delete.notification.body')),
                         ),
                     ForceDeleteBulkAction::make()
-                        ->before(function ($records) {
+                        ->before(function ($records): void {
                             foreach ($records as $record) {
                                 FieldsColumnManager::deleteColumn($record);
                             }
@@ -309,9 +309,9 @@ class FieldResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListFields::route('/'),
+            'index' => ListFields::route('/'),
             'create' => CreateField::route('/create'),
-            'edit'   => EditField::route('/{record}/edit'),
+            'edit' => EditField::route('/{record}/edit'),
         ];
     }
 
@@ -329,7 +329,7 @@ class FieldResource extends Resource
                                 ->required()
                                 ->distinct()
                                 ->live()
-                                ->options(fn (Get $get): array => static::getTypeFormValidations($get('../../../type'))),
+                                ->options(fn (Get $get): array => self::getTypeFormValidations($get('../../../type'))),
                             TextInput::make('field')
                                 ->label(__('fields::filament/resources/field.form.sections.form-settings.field-sets.validations.fields.field'))
                                 ->required()
@@ -338,7 +338,7 @@ class FieldResource extends Resource
                                     'prohibitedUnless',
                                     'requiredIf',
                                     'requiredUnless',
-                                ])),
+                                ], true)),
                             TextInput::make('value')
                                 ->label(__('fields::filament/resources/field.form.sections.form-settings.field-sets.validations.fields.value'))
                                 ->required()
@@ -374,13 +374,13 @@ class FieldResource extends Resource
                                     'rules',
                                     'same',
                                     'startsWith',
-                                ])),
+                                ], true)),
                         ])
                         ->addActionLabel(__('fields::filament/resources/field.form.sections.form-settings.field-sets.validations.fields.add-validation'))
                         ->columns(3)
                         ->collapsible()
                         ->itemLabel(function (array $state, Get $get): ?string {
-                            $validations = static::getTypeFormValidations($get('../type'));
+                            $validations = self::getTypeFormValidations($get('../type'));
 
                             return $validations[$state['validation']] ?? null;
                         }),
@@ -398,7 +398,7 @@ class FieldResource extends Resource
                                 ->distinct()
                                 ->searchable()
                                 ->live()
-                                ->options(fn (Get $get): array => static::getTypeFormSettings($get('../../../type'))),
+                                ->options(fn (Get $get): array => self::getTypeFormSettings($get('../../../type'))),
                             TextInput::make('value')
                                 ->label(__('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.value'))
                                 ->required()
@@ -428,7 +428,7 @@ class FieldResource extends Resource
                                     'suffix',
                                     'suffixIcon',
                                     'timezone',
-                                ])),
+                                ], true)),
                             TextInput::make('value')
                                 ->label(__('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.value'))
                                 ->required()
@@ -449,7 +449,7 @@ class FieldResource extends Resource
                                     'seconds',
                                     'secondsStep',
                                     'step',
-                                ])),
+                                ], true)),
                             Select::make('value')
                                 ->label(__('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color'))
                                 ->required()
@@ -459,47 +459,43 @@ class FieldResource extends Resource
                                     'suffixIconColor',
                                     'onColor',
                                     'offColor',
-                                ]))
+                                ], true))
                                 ->options([
-                                    'danger'    => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.danger'),
-                                    'info'      => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.info'),
-                                    'primary'   => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.primary'),
+                                    'danger' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.danger'),
+                                    'info' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.info'),
+                                    'primary' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.primary'),
                                     'secondary' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.secondary'),
-                                    'warning'   => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.warning'),
-                                    'success'   => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.success'),
+                                    'warning' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.warning'),
+                                    'success' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.color-options.success'),
                                 ]),
                             Select::make('value')
                                 ->label(__('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.value'))
                                 ->required()
-                                ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                                    'gridDirection',
-                                ]))
+                                ->visible(fn (Get $get): bool => $get('setting') === 'gridDirection')
                                 ->options([
-                                    'row'    => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.grid-options.row'),
+                                    'row' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.grid-options.row'),
                                     'column' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.grid-options.column'),
                                 ]),
                             Select::make('value')
                                 ->label(__('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.value'))
                                 ->required()
-                                ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                                    'inputMode',
-                                ]))
+                                ->visible(fn (Get $get): bool => $get('setting') === 'inputMode')
                                 ->options([
-                                    'none'    => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.none'),
-                                    'text'    => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.text'),
+                                    'none' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.none'),
+                                    'text' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.text'),
                                     'numeric' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.numeric'),
                                     'decimal' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.decimal'),
-                                    'tel'     => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.tel'),
-                                    'search'  => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.search'),
-                                    'email'   => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.email'),
-                                    'url'     => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.url'),
+                                    'tel' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.tel'),
+                                    'search' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.search'),
+                                    'email' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.email'),
+                                    'url' => __('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.input-modes.url'),
                                 ]),
                         ])
                         ->addActionLabel(__('fields::filament/resources/field.form.sections.form-settings.field-sets.additional-settings.fields.add-setting'))
                         ->columns(2)
                         ->collapsible()
                         ->itemLabel(function (array $state, Get $get): ?string {
-                            $settings = static::getTypeFormSettings($get('../type'));
+                            $settings = self::getTypeFormSettings($get('../type'));
 
                             return $settings[$state['setting']] ?? null;
                         }),
@@ -515,64 +511,64 @@ class FieldResource extends Resource
         }
 
         $commonValidations = [
-            'gt'                 => __('fields::filament/resources/field.form.sections.form-settings.validations.common.gt'),
-            'gte'                => __('fields::filament/resources/field.form.sections.form-settings.validations.common.gte'),
-            'lt'                 => __('fields::filament/resources/field.form.sections.form-settings.validations.common.lt'),
-            'lte'                => __('fields::filament/resources/field.form.sections.form-settings.validations.common.lte'),
-            'maxSize'            => __('fields::filament/resources/field.form.sections.form-settings.validations.common.max-size'),
-            'minSize'            => __('fields::filament/resources/field.form.sections.form-settings.validations.common.min-size'),
-            'multipleOf'         => __('fields::filament/resources/field.form.sections.form-settings.validations.common.multiple-of'),
-            'nullable'           => __('fields::filament/resources/field.form.sections.form-settings.validations.common.nullable'),
-            'prohibited'         => __('fields::filament/resources/field.form.sections.form-settings.validations.common.prohibited'),
-            'prohibitedIf'       => __('fields::filament/resources/field.form.sections.form-settings.validations.common.prohibited-if'),
-            'prohibitedUnless'   => __('fields::filament/resources/field.form.sections.form-settings.validations.common.prohibited-unless'),
-            'prohibits'          => __('fields::filament/resources/field.form.sections.form-settings.validations.common.prohibits'),
-            'required'           => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required'),
-            'requiredIf'         => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-if'),
+            'gt' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.gt'),
+            'gte' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.gte'),
+            'lt' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.lt'),
+            'lte' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.lte'),
+            'maxSize' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.max-size'),
+            'minSize' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.min-size'),
+            'multipleOf' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.multiple-of'),
+            'nullable' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.nullable'),
+            'prohibited' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.prohibited'),
+            'prohibitedIf' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.prohibited-if'),
+            'prohibitedUnless' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.prohibited-unless'),
+            'prohibits' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.prohibits'),
+            'required' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required'),
+            'requiredIf' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-if'),
             'requiredIfAccepted' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-if-accepted'),
-            'requiredUnless'     => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-unless'),
-            'requiredWith'       => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-with'),
-            'requiredWithAll'    => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-with-all'),
-            'requiredWithout'    => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-without'),
+            'requiredUnless' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-unless'),
+            'requiredWith' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-with'),
+            'requiredWithAll' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-with-all'),
+            'requiredWithout' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-without'),
             'requiredWithoutAll' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.required-without-all'),
-            'rules'              => __('fields::filament/resources/field.form.sections.form-settings.validations.common.rules'),
-            'unique'             => __('fields::filament/resources/field.form.sections.form-settings.validations.common.unique'),
+            'rules' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.rules'),
+            'unique' => __('fields::filament/resources/field.form.sections.form-settings.validations.common.unique'),
         ];
 
         $typeValidations = match ($type) {
             'text' => [
-                'alphaDash'       => __('fields::filament/resources/field.form.sections.form-settings.validations.text.alpha-dash'),
-                'alphaNum'        => __('fields::filament/resources/field.form.sections.form-settings.validations.text.alpha-num'),
-                'ascii'           => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ascii'),
-                'doesntEndWith'   => __('fields::filament/resources/field.form.sections.form-settings.validations.text.doesnt-end-with'),
+                'alphaDash' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.alpha-dash'),
+                'alphaNum' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.alpha-num'),
+                'ascii' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ascii'),
+                'doesntEndWith' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.doesnt-end-with'),
                 'doesntStartWith' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.doesnt-start-with'),
-                'endsWith'        => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ends-with'),
-                'filled'          => __('fields::filament/resources/field.form.sections.form-settings.validations.text.filled'),
-                'ip'              => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ip'),
-                'ipv4'            => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ipv4'),
-                'ipv6'            => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ipv6'),
-                'length'          => __('fields::filament/resources/field.form.sections.form-settings.validations.text.length'),
-                'macAddress'      => __('fields::filament/resources/field.form.sections.form-settings.validations.text.mac-address'),
-                'maxLength'       => __('fields::filament/resources/field.form.sections.form-settings.validations.text.max-length'),
-                'minLength'       => __('fields::filament/resources/field.form.sections.form-settings.validations.text.min-length'),
-                'regex'           => __('fields::filament/resources/field.form.sections.form-settings.validations.text.regex'),
-                'startsWith'      => __('fields::filament/resources/field.form.sections.form-settings.validations.text.starts-with'),
-                'ulid'            => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ulid'),
-                'uuid'            => __('fields::filament/resources/field.form.sections.form-settings.validations.text.uuid'),
+                'endsWith' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ends-with'),
+                'filled' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.filled'),
+                'ip' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ip'),
+                'ipv4' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ipv4'),
+                'ipv6' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ipv6'),
+                'length' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.length'),
+                'macAddress' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.mac-address'),
+                'maxLength' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.max-length'),
+                'minLength' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.min-length'),
+                'regex' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.regex'),
+                'startsWith' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.starts-with'),
+                'ulid' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.ulid'),
+                'uuid' => __('fields::filament/resources/field.form.sections.form-settings.validations.text.uuid'),
             ],
 
             'textarea' => [
-                'filled'    => __('fields::filament/resources/field.form.sections.form-settings.validations.textarea.filled'),
+                'filled' => __('fields::filament/resources/field.form.sections.form-settings.validations.textarea.filled'),
                 'maxLength' => __('fields::filament/resources/field.form.sections.form-settings.validations.textarea.max-length'),
                 'minLength' => __('fields::filament/resources/field.form.sections.form-settings.validations.textarea.min-length'),
             ],
 
             'select' => [
                 'different' => __('fields::filament/resources/field.form.sections.form-settings.validations.select.different'),
-                'exists'    => __('fields::filament/resources/field.form.sections.form-settings.validations.select.exists'),
-                'in'        => __('fields::filament/resources/field.form.sections.form-settings.validations.select.in'),
-                'notIn'     => __('fields::filament/resources/field.form.sections.form-settings.validations.select.not-in'),
-                'same'      => __('fields::filament/resources/field.form.sections.form-settings.validations.select.same'),
+                'exists' => __('fields::filament/resources/field.form.sections.form-settings.validations.select.exists'),
+                'in' => __('fields::filament/resources/field.form.sections.form-settings.validations.select.in'),
+                'notIn' => __('fields::filament/resources/field.form.sections.form-settings.validations.select.not-in'),
+                'same' => __('fields::filament/resources/field.form.sections.form-settings.validations.select.same'),
             ],
 
             'radio' => [],
@@ -588,26 +584,26 @@ class FieldResource extends Resource
             ],
 
             'checkbox_list' => [
-                'in'       => __('fields::filament/resources/field.form.sections.form-settings.validations.checkbox-list.in'),
+                'in' => __('fields::filament/resources/field.form.sections.form-settings.validations.checkbox-list.in'),
                 'maxItems' => __('fields::filament/resources/field.form.sections.form-settings.validations.checkbox-list.max-items'),
                 'minItems' => __('fields::filament/resources/field.form.sections.form-settings.validations.checkbox-list.min-items'),
             ],
 
             'datetime' => [
-                'after'         => __('fields::filament/resources/field.form.sections.form-settings.validations.datetime.after'),
-                'afterOrEqual'  => __('fields::filament/resources/field.form.sections.form-settings.validations.datetime.after-or-equal'),
-                'before'        => __('fields::filament/resources/field.form.sections.form-settings.validations.datetime.before'),
+                'after' => __('fields::filament/resources/field.form.sections.form-settings.validations.datetime.after'),
+                'afterOrEqual' => __('fields::filament/resources/field.form.sections.form-settings.validations.datetime.after-or-equal'),
+                'before' => __('fields::filament/resources/field.form.sections.form-settings.validations.datetime.before'),
                 'beforeOrEqual' => __('fields::filament/resources/field.form.sections.form-settings.validations.datetime.before-or-equal'),
             ],
 
             'editor' => [
-                'filled'    => __('fields::filament/resources/field.form.sections.form-settings.validations.editor.filled'),
+                'filled' => __('fields::filament/resources/field.form.sections.form-settings.validations.editor.filled'),
                 'maxLength' => __('fields::filament/resources/field.form.sections.form-settings.validations.editor.max-length'),
                 'minLength' => __('fields::filament/resources/field.form.sections.form-settings.validations.editor.min-length'),
             ],
 
             'markdown' => [
-                'filled'    => __('fields::filament/resources/field.form.sections.form-settings.validations.markdown.filled'),
+                'filled' => __('fields::filament/resources/field.form.sections.form-settings.validations.markdown.filled'),
                 'maxLength' => __('fields::filament/resources/field.form.sections.form-settings.validations.markdown.max-length'),
                 'minLength' => __('fields::filament/resources/field.form.sections.form-settings.validations.markdown.min-length'),
             ],
@@ -630,208 +626,208 @@ class FieldResource extends Resource
 
         return match ($type) {
             'text' => [
-                'autocapitalize'  => __('fields::filament/resources/field.form.sections.form-settings.settings.text.autocapitalize'),
-                'autocomplete'    => __('fields::filament/resources/field.form.sections.form-settings.settings.text.autocomplete'),
-                'autofocus'       => __('fields::filament/resources/field.form.sections.form-settings.settings.text.autofocus'),
-                'default'         => __('fields::filament/resources/field.form.sections.form-settings.settings.text.default'),
-                'disabled'        => __('fields::filament/resources/field.form.sections.form-settings.settings.text.disabled'),
-                'helperText'      => __('fields::filament/resources/field.form.sections.form-settings.settings.text.helper-text'),
-                'hint'            => __('fields::filament/resources/field.form.sections.form-settings.settings.text.hint'),
-                'hintColor'       => __('fields::filament/resources/field.form.sections.form-settings.settings.text.hint-color'),
-                'hintIcon'        => __('fields::filament/resources/field.form.sections.form-settings.settings.text.hint-icon'),
-                'id'              => __('fields::filament/resources/field.form.sections.form-settings.settings.text.id'),
-                'inputMode'       => __('fields::filament/resources/field.form.sections.form-settings.settings.text.input-mode'),
-                'mask'            => __('fields::filament/resources/field.form.sections.form-settings.settings.text.mask'),
-                'placeholder'     => __('fields::filament/resources/field.form.sections.form-settings.settings.text.placeholder'),
-                'prefix'          => __('fields::filament/resources/field.form.sections.form-settings.settings.text.prefix'),
-                'prefixIcon'      => __('fields::filament/resources/field.form.sections.form-settings.settings.text.prefix-icon'),
+                'autocapitalize' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.autocapitalize'),
+                'autocomplete' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.autocomplete'),
+                'autofocus' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.autofocus'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.disabled'),
+                'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.helper-text'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.hint-icon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.id'),
+                'inputMode' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.input-mode'),
+                'mask' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.mask'),
+                'placeholder' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.placeholder'),
+                'prefix' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.prefix'),
+                'prefixIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.prefix-icon'),
                 'prefixIconColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.prefix-icon-color'),
-                'readOnly'        => __('fields::filament/resources/field.form.sections.form-settings.settings.text.read-only'),
-                'step'            => __('fields::filament/resources/field.form.sections.form-settings.settings.text.step'),
-                'suffix'          => __('fields::filament/resources/field.form.sections.form-settings.settings.text.suffix'),
-                'suffixIcon'      => __('fields::filament/resources/field.form.sections.form-settings.settings.text.suffix-icon'),
+                'readOnly' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.read-only'),
+                'step' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.step'),
+                'suffix' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.suffix'),
+                'suffixIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.suffix-icon'),
                 'suffixIconColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.text.suffix-icon-color'),
             ],
 
             'textarea' => [
-                'autofocus'   => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.autofocus'),
-                'autosize'    => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.autosize'),
-                'cols'        => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.cols'),
-                'default'     => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.default'),
-                'disabled'    => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.disabled'),
-                'helperText'  => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.helper-text'),
-                'hint'        => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.hint'),
-                'hintColor'   => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.hint-color'),
-                'hintIcon'    => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.hinticon'),
-                'id'          => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.id'),
+                'autofocus' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.autofocus'),
+                'autosize' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.autosize'),
+                'cols' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.cols'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.disabled'),
+                'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.helper-text'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.hinticon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.id'),
                 'placeholder' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.placeholder'),
-                'readOnly'    => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.read-only'),
-                'rows'        => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.rows'),
+                'readOnly' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.read-only'),
+                'rows' => __('fields::filament/resources/field.form.sections.form-settings.settings.textarea.rows'),
             ],
 
             'select' => [
-                'default'                => __('fields::filament/resources/field.form.sections.form-settings.settings.select.default'),
-                'disabled'               => __('fields::filament/resources/field.form.sections.form-settings.settings.select.disabled'),
-                'helperText'             => __('fields::filament/resources/field.form.sections.form-settings.settings.select.helper-text'),
-                'hint'                   => __('fields::filament/resources/field.form.sections.form-settings.settings.select.hint'),
-                'hintColor'              => __('fields::filament/resources/field.form.sections.form-settings.settings.select.hint-color'),
-                'hintIcon'               => __('fields::filament/resources/field.form.sections.form-settings.settings.select.hint-icon'),
-                'id'                     => __('fields::filament/resources/field.form.sections.form-settings.settings.select.id'),
-                'loadingMessage'         => __('fields::filament/resources/field.form.sections.form-settings.settings.select.loading-message'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.disabled'),
+                'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.helper-text'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.hint-icon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.id'),
+                'loadingMessage' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.loading-message'),
                 'noSearchResultsMessage' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.no-search-results-message'),
-                'optionsLimit'           => __('fields::filament/resources/field.form.sections.form-settings.settings.select.options-limit'),
-                'preload'                => __('fields::filament/resources/field.form.sections.form-settings.settings.select.preload'),
-                'searchable'             => __('fields::filament/resources/field.form.sections.form-settings.settings.select.searchable'),
-                'searchDebounce'         => __('fields::filament/resources/field.form.sections.form-settings.settings.select.search-debounce'),
-                'searchingMessage'       => __('fields::filament/resources/field.form.sections.form-settings.settings.select.searching-message'),
-                'searchPrompt'           => __('fields::filament/resources/field.form.sections.form-settings.settings.select.search-prompt'),
+                'optionsLimit' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.options-limit'),
+                'preload' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.preload'),
+                'searchable' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.searchable'),
+                'searchDebounce' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.search-debounce'),
+                'searchingMessage' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.searching-message'),
+                'searchPrompt' => __('fields::filament/resources/field.form.sections.form-settings.settings.select.search-prompt'),
             ],
 
             'radio' => [
-                'default'    => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.default'),
-                'disabled'   => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.disabled'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.disabled'),
                 'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.helper-text'),
-                'hint'       => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.hint'),
-                'hintColor'  => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.hint-color'),
-                'hintIcon'   => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.hint-icon'),
-                'id'         => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.id'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.hint-icon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.radio.id'),
             ],
 
             'checkbox' => [
-                'default'    => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.default'),
-                'disabled'   => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.disabled'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.disabled'),
                 'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.helper-text'),
-                'hint'       => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.hint'),
-                'hintColor'  => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.hint-color'),
-                'hintIcon'   => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.hint-icon'),
-                'id'         => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.id'),
-                'inline'     => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.inline'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.hint-icon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.id'),
+                'inline' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox.inline'),
             ],
 
             'toggle' => [
-                'default'    => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.default'),
-                'disabled'   => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.disabled'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.disabled'),
                 'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.helper-text'),
-                'hint'       => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.hint'),
-                'hintColor'  => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.hint-color'),
-                'hintIcon'   => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.hint-icon'),
-                'id'         => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.id'),
-                'offColor'   => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.off-color'),
-                'offIcon'    => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.off-icon'),
-                'onColor'    => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.on-color'),
-                'onIcon'     => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.on-icon'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.hint-icon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.id'),
+                'offColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.off-color'),
+                'offIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.off-icon'),
+                'onColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.on-color'),
+                'onIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.toggle.on-icon'),
             ],
 
             'checkbox_list' => [
-                'bulkToggleable'         => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.bulk-toggleable'),
-                'columns'                => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.columns'),
-                'default'                => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.default'),
-                'disabled'               => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.disabled'),
-                'gridDirection'          => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.grid-direction'),
-                'helperText'             => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.helper-text'),
-                'hint'                   => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.hint'),
-                'hintColor'              => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.hint-color'),
-                'hintIcon'               => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.hint-icon'),
-                'id'                     => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.id'),
-                'maxItems'               => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.max-items'),
-                'minItems'               => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.min-items'),
+                'bulkToggleable' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.bulk-toggleable'),
+                'columns' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.columns'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.disabled'),
+                'gridDirection' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.grid-direction'),
+                'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.helper-text'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.hint-icon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.id'),
+                'maxItems' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.max-items'),
+                'minItems' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.min-items'),
                 'noSearchResultsMessage' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.no-search-results-message'),
-                'searchable'             => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.searchable'),
+                'searchable' => __('fields::filament/resources/field.form.sections.form-settings.settings.checkbox-list.searchable'),
             ],
 
             'datetime' => [
-                'closeOnDateSelection'   => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.close-on-date-selection'),
-                'default'                => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.default'),
-                'disabled'               => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.disabled'),
-                'disabledDates'          => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.disabled-dates'),
-                'displayFormat'          => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.display-format'),
-                'firstDayOfWeek'         => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.first-day-of-week'),
-                'format'                 => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.format'),
-                'helperText'             => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.helper-text'),
-                'hint'                   => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.hint'),
-                'hintColor'              => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.hint-color'),
-                'hintIcon'               => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.hint-icon'),
-                'hoursStep'              => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.hours-step'),
-                'id'                     => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.id'),
-                'locale'                 => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.locale'),
-                'minutesStep'            => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.minutes-step'),
-                'seconds'                => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.seconds'),
-                'secondsStep'            => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.seconds-step'),
-                'timezone'               => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.timezone'),
-                'weekStartsOnMonday'     => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.week-starts-on-monday'),
-                'weekStartsOnSunday'     => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.week-starts-on-sunday'),
+                'closeOnDateSelection' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.close-on-date-selection'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.disabled'),
+                'disabledDates' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.disabled-dates'),
+                'displayFormat' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.display-format'),
+                'firstDayOfWeek' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.first-day-of-week'),
+                'format' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.format'),
+                'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.helper-text'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.hint-icon'),
+                'hoursStep' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.hours-step'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.id'),
+                'locale' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.locale'),
+                'minutesStep' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.minutes-step'),
+                'seconds' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.seconds'),
+                'secondsStep' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.seconds-step'),
+                'timezone' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.timezone'),
+                'weekStartsOnMonday' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.week-starts-on-monday'),
+                'weekStartsOnSunday' => __('fields::filament/resources/field.form.sections.form-settings.settings.datetime.week-starts-on-sunday'),
             ],
 
             'editor' => [
-                'default'     => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.default'),
-                'disabled'    => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.disabled'),
-                'helperText'  => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.helper-text'),
-                'hint'        => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.hint'),
-                'hintColor'   => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.hint-color'),
-                'hintIcon'    => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.hint-icon'),
-                'id'          => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.id'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.disabled'),
+                'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.helper-text'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.hint-icon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.id'),
                 'placeholder' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.placeholder'),
-                'readOnly'    => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.read-only'),
+                'readOnly' => __('fields::filament/resources/field.form.sections.form-settings.settings.editor.read-only'),
             ],
 
             'markdown' => [
-                'default'     => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.default'),
-                'disabled'    => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.disabled'),
-                'helperText'  => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.helper-text'),
-                'hint'        => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.hint'),
-                'hintColor'   => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.hint-color'),
-                'hintIcon'    => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.hint-icon'),
-                'id'          => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.id'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.disabled'),
+                'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.helper-text'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.hint-icon'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.id'),
                 'placeholder' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.placeholder'),
-                'readOnly'    => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.read-only'),
+                'readOnly' => __('fields::filament/resources/field.form.sections.form-settings.settings.markdown.read-only'),
             ],
 
             'color' => [
-                'default'    => __('fields::filament/resources/field.form.sections.form-settings.settings.color.default'),
-                'disabled'   => __('fields::filament/resources/field.form.sections.form-settings.settings.color.disabled'),
+                'default' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.default'),
+                'disabled' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.disabled'),
                 'helperText' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.helper-text'),
-                'hint'       => __('fields::filament/resources/field.form.sections.form-settings.settings.color.hint'),
-                'hintColor'  => __('fields::filament/resources/field.form.sections.form-settings.settings.color.hint-color'),
-                'hintIcon'   => __('fields::filament/resources/field.form.sections.form-settings.settings.color.hint-icon'),
-                'hsl'        => __('fields::filament/resources/field.form.sections.form-settings.settings.color.hsl'),
-                'id'         => __('fields::filament/resources/field.form.sections.form-settings.settings.color.id'),
-                'rgb'        => __('fields::filament/resources/field.form.sections.form-settings.settings.color.rgb'),
-                'rgba'       => __('fields::filament/resources/field.form.sections.form-settings.settings.color.rgba'),
+                'hint' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.hint'),
+                'hintColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.hint-color'),
+                'hintIcon' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.hint-icon'),
+                'hsl' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.hsl'),
+                'id' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.id'),
+                'rgb' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.rgb'),
+                'rgba' => __('fields::filament/resources/field.form.sections.form-settings.settings.color.rgba'),
             ],
 
             'file' => [
-                'acceptedFileTypes'                => __('fields::filament/resources/field.form.sections.form-settings.settings.file.accepted-file-types'),
-                'appendFiles'                      => __('fields::filament/resources/field.form.sections.form-settings.settings.file.append-files'),
-                'deletable'                        => __('fields::filament/resources/field.form.sections.form-settings.settings.file.deletable'),
-                'directory'                        => __('fields::filament/resources/field.form.sections.form-settings.settings.file.directory'),
-                'downloadable'                     => __('fields::filament/resources/field.form.sections.form-settings.settings.file.downloadable'),
-                'fetchFileInformation'             => __('fields::filament/resources/field.form.sections.form-settings.settings.file.fetch-file-information'),
-                'fileAttachmentsDirectory'         => __('fields::filament/resources/field.form.sections.form-settings.settings.file.file-attachment-directory'),
-                'fileAttachmentsVisibility'        => __('fields::filament/resources/field.form.sections.form-settings.settings.file.file-attachments-visibility'),
-                'image'                            => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image'),
-                'imageCropAspectRatio'             => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-crop-aspect-ratio'),
-                'imageEditor'                      => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-editor'),
-                'imageEditorAspectRatios'          => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-editor-aspect-ratios'),
-                'imageEditorEmptyFillColor'        => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-editor-empty-fill-color'),
-                'imageEditorMode'                  => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-editor-mode'),
-                'imagePreviewHeight'               => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-preview-height'),
-                'imageResizeMode'                  => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-resize-mode'),
-                'imageResizeTargetHeight'          => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-resize-target-height'),
-                'imageResizeTargetWidth'           => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-resize-target-width'),
-                'loadingIndicatorPosition'         => __('fields::filament/resources/field.form.sections.form-settings.settings.file.loading-indicator-position'),
-                'moveFiles'                        => __('fields::filament/resources/field.form.sections.form-settings.settings.file.move-files'),
-                'openable'                         => __('fields::filament/resources/field.form.sections.form-settings.settings.file.openable'),
-                'orientImagesFromExif'             => __('fields::filament/resources/field.form.sections.form-settings.settings.file.orient-images-from-exif'),
-                'panelAspectRatio'                 => __('fields::filament/resources/field.form.sections.form-settings.settings.file.panel-aspect-ratio'),
-                'panelLayout'                      => __('fields::filament/resources/field.form.sections.form-settings.settings.file.panel-layout'),
-                'previewable'                      => __('fields::filament/resources/field.form.sections.form-settings.settings.file.previewable'),
+                'acceptedFileTypes' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.accepted-file-types'),
+                'appendFiles' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.append-files'),
+                'deletable' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.deletable'),
+                'directory' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.directory'),
+                'downloadable' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.downloadable'),
+                'fetchFileInformation' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.fetch-file-information'),
+                'fileAttachmentsDirectory' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.file-attachment-directory'),
+                'fileAttachmentsVisibility' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.file-attachments-visibility'),
+                'image' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image'),
+                'imageCropAspectRatio' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-crop-aspect-ratio'),
+                'imageEditor' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-editor'),
+                'imageEditorAspectRatios' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-editor-aspect-ratios'),
+                'imageEditorEmptyFillColor' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-editor-empty-fill-color'),
+                'imageEditorMode' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-editor-mode'),
+                'imagePreviewHeight' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-preview-height'),
+                'imageResizeMode' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-resize-mode'),
+                'imageResizeTargetHeight' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-resize-target-height'),
+                'imageResizeTargetWidth' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.image-resize-target-width'),
+                'loadingIndicatorPosition' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.loading-indicator-position'),
+                'moveFiles' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.move-files'),
+                'openable' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.openable'),
+                'orientImagesFromExif' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.orient-images-from-exif'),
+                'panelAspectRatio' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.panel-aspect-ratio'),
+                'panelLayout' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.panel-layout'),
+                'previewable' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.previewable'),
                 'removeUploadedFileButtonPosition' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.remove-uploaded-file-button-position'),
-                'reorderable'                      => __('fields::filament/resources/field.form.sections.form-settings.settings.file.reorderable'),
-                'storeFiles'                       => __('fields::filament/resources/field.form.sections.form-settings.settings.file.store-files'),
-                'uploadButtonPosition'             => __('fields::filament/resources/field.form.sections.form-settings.settings.file.upload-button-position'),
-                'uploadingMessage'                 => __('fields::filament/resources/field.form.sections.form-settings.settings.file.uploading-message'),
-                'uploadProgressIndicatorPosition'  => __('fields::filament/resources/field.form.sections.form-settings.settings.file.upload-progress-indicator-position'),
-                'visibility'                       => __('fields::filament/resources/field.form.sections.form-settings.settings.file.visibility'),
+                'reorderable' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.reorderable'),
+                'storeFiles' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.store-files'),
+                'uploadButtonPosition' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.upload-button-position'),
+                'uploadingMessage' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.uploading-message'),
+                'uploadProgressIndicatorPosition' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.upload-progress-indicator-position'),
+                'visibility' => __('fields::filament/resources/field.form.sections.form-settings.settings.file.visibility'),
             ],
         };
     }
@@ -853,7 +849,7 @@ class FieldResource extends Resource
                         ->required()
                         ->distinct()
                         ->live()
-                        ->options(fn (Get $get): array => static::getTypeTableSettings($get('../../type'))),
+                        ->options(fn (Get $get): array => self::getTypeTableSettings($get('../../type'))),
                     TextInput::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.value'))
                         ->required()
@@ -870,7 +866,7 @@ class FieldResource extends Resource
                             'suffix',
                             'tooltip',
                             'width',
-                        ])),
+                        ], true)),
 
                     Select::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.color'))
@@ -878,14 +874,14 @@ class FieldResource extends Resource
                         ->visible(fn (Get $get): bool => in_array($get('setting'), [
                             'color',
                             'iconColor',
-                        ]))
+                        ], true))
                         ->options([
-                            'danger'    => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.danger'),
-                            'info'      => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.info'),
-                            'primary'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.primary'),
+                            'danger' => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.danger'),
+                            'info' => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.info'),
+                            'primary' => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.primary'),
                             'secondary' => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.secondary'),
-                            'warning'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.warning'),
-                            'success'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.success'),
+                            'warning' => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.warning'),
+                            'success' => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.success'),
                         ]),
 
                     Select::make('value')
@@ -894,13 +890,13 @@ class FieldResource extends Resource
                         ->visible(fn (Get $get): bool => in_array($get('setting'), [
                             'alignment',
                             'verticalAlignment',
-                        ]))
+                        ], true))
                         ->options([
-                            Alignment::Start->value   => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.start'),
-                            Alignment::Left->value    => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.left'),
-                            Alignment::Center->value  => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.center'),
-                            Alignment::End->value     => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.end'),
-                            Alignment::Right->value   => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.right'),
+                            Alignment::Start->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.start'),
+                            Alignment::Left->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.left'),
+                            Alignment::Center->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.center'),
+                            Alignment::End->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.end'),
+                            Alignment::Right->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.right'),
                             Alignment::Justify->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.justify'),
                             Alignment::Between->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.between'),
                         ]),
@@ -908,43 +904,37 @@ class FieldResource extends Resource
                     Select::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.font-weight'))
                         ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'weight',
-                        ]))
+                        ->visible(fn (Get $get): bool => $get('setting') === 'weight')
                         ->options([
-                            FontWeight::Thin->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.thin'),
+                            FontWeight::Thin->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.thin'),
                             FontWeight::ExtraLight->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.extra-light'),
-                            FontWeight::Light->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.light'),
-                            FontWeight::Normal->name     => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.normal'),
-                            FontWeight::Medium->name     => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.medium'),
-                            FontWeight::SemiBold->name   => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.semi-bold'),
-                            FontWeight::Bold->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.bold'),
-                            FontWeight::ExtraBold->name  => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.extra-bold'),
-                            FontWeight::Black->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.black'),
+                            FontWeight::Light->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.light'),
+                            FontWeight::Normal->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.normal'),
+                            FontWeight::Medium->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.medium'),
+                            FontWeight::SemiBold->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.semi-bold'),
+                            FontWeight::Bold->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.bold'),
+                            FontWeight::ExtraBold->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.extra-bold'),
+                            FontWeight::Black->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.black'),
                         ]),
 
                     Select::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.icon-position'))
                         ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'iconPosition',
-                        ]))
+                        ->visible(fn (Get $get): bool => $get('setting') === 'iconPosition')
                         ->options([
                             IconPosition::Before->value => __('fields::filament/resources/field.form.sections.table-settings.fields.icon-position-options.before'),
-                            IconPosition::After->value  => __('fields::filament/resources/field.form.sections.table-settings.fields.icon-position-options.after'),
+                            IconPosition::After->value => __('fields::filament/resources/field.form.sections.table-settings.fields.icon-position-options.after'),
                         ]),
 
                     Select::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.size'))
                         ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'size',
-                        ]))
+                        ->visible(fn (Get $get): bool => $get('setting') === 'size')
                         ->options([
-                            TextSize::ExtraSmall->name  => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.extra-small'),
-                            TextSize::Small->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.small'),
-                            TextSize::Medium->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.medium'),
-                            TextSize::Large->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.large'),
+                            TextSize::ExtraSmall->name => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.extra-small'),
+                            TextSize::Small->name => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.small'),
+                            TextSize::Medium->name => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.medium'),
+                            TextSize::Large->name => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.large'),
                         ]),
 
                     TextInput::make('value')
@@ -958,13 +948,13 @@ class FieldResource extends Resource
                             'words',
                             'lineClamp',
                             'copyMessageDuration',
-                        ])),
+                        ], true)),
                 ])
                 ->addActionLabel(__('fields::filament/resources/field.form.sections.table-settings.fields.add-setting'))
                 ->columns(2)
                 ->collapsible()
                 ->itemLabel(function (array $state, Get $get): ?string {
-                    $settings = static::getTypeTableSettings($get('type'));
+                    $settings = self::getTypeTableSettings($get('type'));
 
                     return $settings[$state['setting']] ?? null;
                 }),
@@ -978,48 +968,48 @@ class FieldResource extends Resource
         }
 
         $commonSettings = [
-            'alignEnd'             => __('fields::filament/resources/field.form.sections.table-settings.settings.common.align-end'),
-            'alignment'            => __('fields::filament/resources/field.form.sections.table-settings.settings.common.alignment'),
-            'alignStart'           => __('fields::filament/resources/field.form.sections.table-settings.settings.common.align-start'),
-            'badge'                => __('fields::filament/resources/field.form.sections.table-settings.settings.common.badge'),
-            'boolean'              => __('fields::filament/resources/field.form.sections.table-settings.settings.common.boolean'),
-            'color'                => __('fields::filament/resources/field.form.sections.table-settings.settings.common.color'),
-            'copyable'             => __('fields::filament/resources/field.form.sections.table-settings.settings.common.copyable'),
-            'copyMessage'          => __('fields::filament/resources/field.form.sections.table-settings.settings.common.copy-message'),
-            'copyMessageDuration'  => __('fields::filament/resources/field.form.sections.table-settings.settings.common.copy-message-duration'),
-            'default'              => __('fields::filament/resources/field.form.sections.table-settings.settings.common.default'),
-            'filterable'           => __('fields::filament/resources/field.form.sections.table-settings.settings.common.filterable'),
-            'groupable'            => __('fields::filament/resources/field.form.sections.table-settings.settings.common.groupable'),
-            'grow'                 => __('fields::filament/resources/field.form.sections.table-settings.settings.common.grow'),
-            'icon'                 => __('fields::filament/resources/field.form.sections.table-settings.settings.common.icon'),
-            'iconColor'            => __('fields::filament/resources/field.form.sections.table-settings.settings.common.icon-color'),
-            'iconPosition'         => __('fields::filament/resources/field.form.sections.table-settings.settings.common.icon-position'),
-            'label'                => __('fields::filament/resources/field.form.sections.table-settings.settings.common.label'),
-            'limit'                => __('fields::filament/resources/field.form.sections.table-settings.settings.common.limit'),
-            'lineClamp'            => __('fields::filament/resources/field.form.sections.table-settings.settings.common.line-clamp'),
-            'money'                => __('fields::filament/resources/field.form.sections.table-settings.settings.common.money'),
-            'placeholder'          => __('fields::filament/resources/field.form.sections.table-settings.settings.common.placeholder'),
-            'prefix'               => __('fields::filament/resources/field.form.sections.table-settings.settings.common.prefix'),
-            'searchable'           => __('fields::filament/resources/field.form.sections.table-settings.settings.common.searchable'),
-            'size'                 => __('fields::filament/resources/field.form.sections.table-settings.settings.common.size'),
-            'sortable'             => __('fields::filament/resources/field.form.sections.table-settings.settings.common.sortable'),
-            'suffix'               => __('fields::filament/resources/field.form.sections.table-settings.settings.common.suffix'),
-            'toggleable'           => __('fields::filament/resources/field.form.sections.table-settings.settings.common.toggleable'),
-            'tooltip'              => __('fields::filament/resources/field.form.sections.table-settings.settings.common.tooltip'),
-            'verticalAlignment'    => __('fields::filament/resources/field.form.sections.table-settings.settings.common.vertical-alignment'),
+            'alignEnd' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.align-end'),
+            'alignment' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.alignment'),
+            'alignStart' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.align-start'),
+            'badge' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.badge'),
+            'boolean' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.boolean'),
+            'color' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.color'),
+            'copyable' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.copyable'),
+            'copyMessage' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.copy-message'),
+            'copyMessageDuration' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.copy-message-duration'),
+            'default' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.default'),
+            'filterable' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.filterable'),
+            'groupable' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.groupable'),
+            'grow' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.grow'),
+            'icon' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.icon'),
+            'iconColor' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.icon-color'),
+            'iconPosition' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.icon-position'),
+            'label' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.label'),
+            'limit' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.limit'),
+            'lineClamp' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.line-clamp'),
+            'money' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.money'),
+            'placeholder' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.placeholder'),
+            'prefix' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.prefix'),
+            'searchable' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.searchable'),
+            'size' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.size'),
+            'sortable' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.sortable'),
+            'suffix' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.suffix'),
+            'toggleable' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.toggleable'),
+            'tooltip' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.tooltip'),
+            'verticalAlignment' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.vertical-alignment'),
             'verticallyAlignStart' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.vertically-align-start'),
-            'weight'               => __('fields::filament/resources/field.form.sections.table-settings.settings.common.weight'),
-            'width'                => __('fields::filament/resources/field.form.sections.table-settings.settings.common.width'),
-            'words'                => __('fields::filament/resources/field.form.sections.table-settings.settings.common.words'),
-            'wrapHeader'           => __('fields::filament/resources/field.form.sections.table-settings.settings.common.wrap-header'),
+            'weight' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.weight'),
+            'width' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.width'),
+            'words' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.words'),
+            'wrapHeader' => __('fields::filament/resources/field.form.sections.table-settings.settings.common.wrap-header'),
         ];
 
         $typeSettings = match ($type) {
             'datetime' => [
-                'date'            => __('fields::filament/resources/field.form.sections.table-settings.settings.datetime.date'),
-                'dateTime'        => __('fields::filament/resources/field.form.sections.table-settings.settings.datetime.date-time'),
+                'date' => __('fields::filament/resources/field.form.sections.table-settings.settings.datetime.date'),
+                'dateTime' => __('fields::filament/resources/field.form.sections.table-settings.settings.datetime.date-time'),
                 'dateTimeTooltip' => __('fields::filament/resources/field.form.sections.table-settings.settings.datetime.date-time-tooltip'),
-                'since'           => __('fields::filament/resources/field.form.sections.table-settings.settings.datetime.since'),
+                'since' => __('fields::filament/resources/field.form.sections.table-settings.settings.datetime.since'),
             ],
 
             default => [],
@@ -1040,7 +1030,7 @@ class FieldResource extends Resource
                         ->required()
                         ->distinct()
                         ->live()
-                        ->options(fn (Get $get): array => static::getTypeInfolistSettings($get('../../type'))),
+                        ->options(fn (Get $get): array => self::getTypeInfolistSettings($get('../../type'))),
                     TextInput::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.value'))
                         ->required()
@@ -1060,7 +1050,7 @@ class FieldResource extends Resource
                             'separator',
                             'trueIcon',
                             'falseIcon',
-                        ])),
+                        ], true)),
 
                     Select::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.color'))
@@ -1071,55 +1061,49 @@ class FieldResource extends Resource
                             'hintColor',
                             'trueColor',
                             'falseColor',
-                        ]))
+                        ], true))
                         ->options([
-                            'danger'    => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.danger'),
-                            'info'      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.info'),
-                            'primary'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.primary'),
+                            'danger' => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.danger'),
+                            'info' => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.info'),
+                            'primary' => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.primary'),
                             'secondary' => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.secondary'),
-                            'warning'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.warning'),
-                            'success'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.success'),
+                            'warning' => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.warning'),
+                            'success' => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.success'),
                         ]),
 
                     Select::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight'))
                         ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'weight',
-                        ]))
+                        ->visible(fn (Get $get): bool => $get('setting') === 'weight')
                         ->options([
-                            FontWeight::Thin->name       => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.thin'),
+                            FontWeight::Thin->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.thin'),
                             FontWeight::ExtraLight->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.extra-light'),
-                            FontWeight::Light->name      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.light'),
-                            FontWeight::Normal->name     => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.normal'),
-                            FontWeight::Medium->name     => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.medium'),
-                            FontWeight::SemiBold->name   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.semi-bold'),
-                            FontWeight::Bold->name       => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.bold'),
-                            FontWeight::ExtraBold->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.extra-bold'),
-                            FontWeight::Black->name      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.black'),
+                            FontWeight::Light->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.light'),
+                            FontWeight::Normal->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.normal'),
+                            FontWeight::Medium->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.medium'),
+                            FontWeight::SemiBold->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.semi-bold'),
+                            FontWeight::Bold->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.bold'),
+                            FontWeight::ExtraBold->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.extra-bold'),
+                            FontWeight::Black->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.black'),
                         ]),
 
                     Select::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position'))
                         ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'iconPosition',
-                        ]))
+                        ->visible(fn (Get $get): bool => $get('setting') === 'iconPosition')
                         ->options([
                             IconPosition::Before->value => __('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position-options.before'),
-                            IconPosition::After->value  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position-options.after'),
+                            IconPosition::After->value => __('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position-options.after'),
                         ]),
 
                     Select::make('value')
                         ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.size'))
                         ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'size',
-                        ]))
+                        ->visible(fn (Get $get): bool => $get('setting') === 'size')
                         ->options([
-                            TextSize::Small->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.small'),
+                            TextSize::Small->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.small'),
                             TextSize::Medium->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.medium'),
-                            TextSize::Large->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.large'),
+                            TextSize::Large->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.large'),
                         ]),
 
                     TextInput::make('value')
@@ -1135,13 +1119,13 @@ class FieldResource extends Resource
                             'copyMessageDuration',
                             'columnSpan',
                             'limitList',
-                        ])),
+                        ], true)),
                 ])
                 ->addActionLabel(__('fields::filament/resources/field.form.sections.infolist-settings.fields.add-setting'))
                 ->columns(2)
                 ->collapsible()
                 ->itemLabel(function (array $state, Get $get): ?string {
-                    $settings = static::getTypeInfolistSettings($get('type'));
+                    $settings = self::getTypeInfolistSettings($get('type'));
 
                     return $settings[$state['setting']] ?? null;
                 }),
@@ -1155,68 +1139,68 @@ class FieldResource extends Resource
         }
 
         $commonSettings = [
-            'badge'               => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.badge'),
-            'color'               => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.color'),
-            'copyable'            => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.copyable'),
-            'copyMessage'         => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.copy-message'),
+            'badge' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.badge'),
+            'color' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.color'),
+            'copyable' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.copyable'),
+            'copyMessage' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.copy-message'),
             'copyMessageDuration' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.copy-message-duration'),
-            'default'             => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.default'),
-            'icon'                => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.icon'),
-            'iconColor'           => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.icon-color'),
-            'iconPosition'        => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.icon-position'),
-            'label'               => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.label'),
-            'limit'               => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.limit'),
-            'lineClamp'           => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.line-clamp'),
-            'money'               => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.money'),
-            'placeholder'         => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.placeholder'),
-            'size'                => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.size'),
-            'tooltip'             => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.tooltip'),
-            'weight'              => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.weight'),
-            'words'               => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.words'),
-            'columnSpan'          => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.column-span'),
-            'helperText'          => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.helper-text'),
-            'hint'                => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.hint'),
-            'hintColor'           => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.hint-color'),
-            'hintIcon'            => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.hint-icon'),
+            'default' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.default'),
+            'icon' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.icon'),
+            'iconColor' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.icon-color'),
+            'iconPosition' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.icon-position'),
+            'label' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.label'),
+            'limit' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.limit'),
+            'lineClamp' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.line-clamp'),
+            'money' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.money'),
+            'placeholder' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.placeholder'),
+            'size' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.size'),
+            'tooltip' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.tooltip'),
+            'weight' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.weight'),
+            'words' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.words'),
+            'columnSpan' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.column-span'),
+            'helperText' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.helper-text'),
+            'hint' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.hint'),
+            'hintColor' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.hint-color'),
+            'hintIcon' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.common.hint-icon'),
         ];
 
         $typeSettings = match ($type) {
             'datetime' => [
-                'date'            => __('fields::filament/resources/field.form.sections.infolist-settings.settings.datetime.date'),
-                'dateTime'        => __('fields::filament/resources/field.form.sections.infolist-settings.settings.datetime.date-time'),
+                'date' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.datetime.date'),
+                'dateTime' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.datetime.date-time'),
                 'dateTimeTooltip' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.datetime.date-time-tooltip'),
-                'since'           => __('fields::filament/resources/field.form.sections.infolist-settings.settings.datetime.since'),
+                'since' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.datetime.since'),
             ],
 
             'checkbox_list' => [
-                'separator'             => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.separator'),
-                'listWithLineBreaks'    => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.list-with-line-breaks'),
-                'bulleted'              => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.bulleted'),
-                'limitList'             => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.limit-list'),
+                'separator' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.separator'),
+                'listWithLineBreaks' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.list-with-line-breaks'),
+                'bulleted' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.bulleted'),
+                'limitList' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.limit-list'),
                 'expandableLimitedList' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox-list.expandable-limited-list'),
             ],
 
             'select' => [
-                'separator'             => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.separator'),
-                'listWithLineBreaks'    => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.list-with-line-breaks'),
-                'bulleted'              => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.bulleted'),
-                'limitList'             => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.limit-list'),
+                'separator' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.separator'),
+                'listWithLineBreaks' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.list-with-line-breaks'),
+                'bulleted' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.bulleted'),
+                'limitList' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.limit-list'),
                 'expandableLimitedList' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.select.expandable-limited-list'),
             ],
 
             'checkbox' => [
-                'boolean'    => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.boolean'),
-                'falseIcon'  => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.false-icon'),
-                'trueIcon'   => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.true-icon'),
-                'trueColor'  => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.true-color'),
+                'boolean' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.boolean'),
+                'falseIcon' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.false-icon'),
+                'trueIcon' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.true-icon'),
+                'trueColor' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.true-color'),
                 'falseColor' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.checkbox.false-color'),
             ],
 
             'toggle' => [
-                'boolean'    => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.boolean'),
-                'falseIcon'  => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.false-icon'),
-                'trueIcon'   => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.true-icon'),
-                'trueColor'  => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.true-color'),
+                'boolean' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.boolean'),
+                'falseIcon' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.false-icon'),
+                'trueIcon' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.true-icon'),
+                'trueColor' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.true-color'),
                 'falseColor' => __('fields::filament/resources/field.form.sections.infolist-settings.settings.toggle.false-color'),
             ],
 

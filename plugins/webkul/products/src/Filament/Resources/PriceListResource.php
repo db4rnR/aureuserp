@@ -1,29 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Webkul\Product\Filament\Resources\PriceListResource\Pages\ListPriceLists;
-use Webkul\Product\Filament\Resources\PriceListResource\Pages\CreatePriceList;
-use Webkul\Product\Filament\Resources\PriceListResource\Pages\ViewPriceList;
-use Webkul\Product\Filament\Resources\PriceListResource\Pages\EditPriceList;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Product\Filament\Resources\PriceListResource\Pages;
+use Webkul\Product\Filament\Resources\PriceListResource\Pages\CreatePriceList;
+use Webkul\Product\Filament\Resources\PriceListResource\Pages\EditPriceList;
+use Webkul\Product\Filament\Resources\PriceListResource\Pages\ListPriceLists;
+use Webkul\Product\Filament\Resources\PriceListResource\Pages\ViewPriceList;
 use Webkul\Product\Models\PriceList;
 
-class PriceListResource extends Resource
+final class PriceListResource extends Resource
 {
     protected static ?string $model = PriceList::class;
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-list-bullet';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-list-bullet';
 
     public static function getNavigationLabel(): string
     {
@@ -68,10 +69,10 @@ class PriceListResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListPriceLists::route('/'),
+            'index' => ListPriceLists::route('/'),
             'create' => CreatePriceList::route('/create'),
-            'view'   => ViewPriceList::route('/{record}'),
-            'edit'   => EditPriceList::route('/{record}/edit'),
+            'view' => ViewPriceList::route('/{record}'),
+            'edit' => EditPriceList::route('/{record}/edit'),
         ];
     }
 }

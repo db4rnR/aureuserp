@@ -1,23 +1,25 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Product\Models\PriceRuleItem;
-use Webkul\Product\Models\PriceRule;
-use Webkul\Product\Models\Product;
-use Webkul\Product\Models\Category;
-use Webkul\Security\Models\User;
-use Webkul\Support\Models\Company;
-use Webkul\Support\Models\Currency;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Product\Enums\PriceRuleApplyTo;
 use Webkul\Product\Enums\PriceRuleBase;
 use Webkul\Product\Enums\PriceRuleType;
+use Webkul\Product\Models\Category;
+use Webkul\Product\Models\PriceRule;
+use Webkul\Product\Models\PriceRuleItem;
+use Webkul\Product\Models\Product;
+use Webkul\Security\Models\User;
+use Webkul\Support\Models\Company;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test PriceRuleItem model attributes and properties')]
-function price_rule_item_model_attributes_and_properties()
+function price_rule_item_model_attributes_and_properties(): void
 {
     // Create a test price rule item
     $priceRuleItem = PriceRuleItem::factory()->create([
@@ -52,20 +54,20 @@ function price_rule_item_model_attributes_and_properties()
     expect($priceRuleItem->ends_at->format('Y-m-d'))->toBe(now()->addDays(30)->format('Y-m-d'));
 
     // Test relationships
-    expect($priceRuleItem->priceRule())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($priceRuleItem->basePriceRule())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($priceRuleItem->product())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($priceRuleItem->category())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($priceRuleItem->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($priceRuleItem->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($priceRuleItem->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($priceRuleItem->priceRule())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($priceRuleItem->basePriceRule())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($priceRuleItem->product())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($priceRuleItem->category())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($priceRuleItem->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($priceRuleItem->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($priceRuleItem->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test PriceRuleItem model relationships with other models')]
-function price_rule_item_model_relationships_with_other_models()
+function price_rule_item_model_relationships_with_other_models(): void
 {
     // Create related models
     $priceRule = PriceRule::factory()->create(['name' => 'Test Price Rule']);
@@ -102,7 +104,7 @@ function price_rule_item_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test PriceRuleItem model enum casts')]
-function price_rule_item_model_enum_casts()
+function price_rule_item_model_enum_casts(): void
 {
     // Create price rule items with different enum values
     $productItem = PriceRuleItem::factory()->create(['apply_to' => PriceRuleApplyTo::PRODUCT]);
@@ -157,7 +159,7 @@ function price_rule_item_model_enum_casts()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test PriceRuleItem model date casts')]
-function price_rule_item_model_date_casts()
+function price_rule_item_model_date_casts(): void
 {
     // Create a price rule item with date fields
     $startDate = now()->subDays(5);
@@ -169,8 +171,8 @@ function price_rule_item_model_date_casts()
     ]);
 
     // Test that the dates are correctly cast to Carbon instances
-    expect($priceRuleItem->starts_at)->toBeInstanceOf(\Carbon\Carbon::class);
-    expect($priceRuleItem->ends_at)->toBeInstanceOf(\Carbon\Carbon::class);
+    expect($priceRuleItem->starts_at)->toBeInstanceOf(Carbon\Carbon::class);
+    expect($priceRuleItem->ends_at)->toBeInstanceOf(Carbon\Carbon::class);
 
     // Test date values
     expect($priceRuleItem->starts_at->format('Y-m-d'))->toBe($startDate->format('Y-m-d'));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Bỏ qua thanh công cụ',
     'align_center' => 'Căn giữa',

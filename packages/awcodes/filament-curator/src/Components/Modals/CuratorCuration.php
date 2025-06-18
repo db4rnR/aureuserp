@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Components\Modals;
 
 use Awcodes\Curator\Models\Media;
@@ -9,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Livewire\Component;
 
-class CuratorCuration extends Component
+final class CuratorCuration extends Component
 {
     public Media $media;
 
@@ -59,18 +61,18 @@ class CuratorCuration extends Component
             ->encode($extension, $data['quality'] ?? 60);
 
         // save image to directory base on media
-        $curationPath = $this->media->directory . '/' . $this->media->name . '/' . $data['key'] . '.' . $extension;
+        $curationPath = $this->media->directory.'/'.$this->media->name.'/'.$data['key'].'.'.$extension;
 
         Storage::disk($this->media->disk)->put($curationPath, $image->stream(), [
             'visibility' => $this->media->visibility,
         ]);
 
         $curation = [
-            'key' => $data['key'] ?? $aspectWidth . 'x' . $aspectHeight,
+            'key' => $data['key'] ?? $aspectWidth.'x'.$aspectHeight,
             'disk' => $this->media->disk,
             'directory' => $this->media->name,
             'visibility' => $this->media->visibility,
-            'name' => ($data['key'] ?? $aspectWidth . 'x' . $aspectHeight) . '.' . $extension,
+            'name' => ($data['key'] ?? $aspectWidth.'x'.$aspectHeight).'.'.$extension,
             'path' => $curationPath,
             'width' => $aspectWidth,
             'height' => $aspectHeight,

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PaymentMethodSeeder extends Seeder
+final class PaymentMethodSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,22 +23,22 @@ class PaymentMethodSeeder extends Seeder
 
         $paymentMethods = [
             [
-                'id'           => 1,
-                'code'         => 'manual',
+                'id' => 1,
+                'code' => 'manual',
                 'payment_type' => 'inbound',
-                'name'         => 'Manual Payment',
-                'created_by'   => $user?->id,
-                'created_at'   => $now,
-                'updated_at'   => $now,
+                'name' => 'Manual Payment',
+                'created_by' => $user?->id,
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'id'           => 2,
-                'code'         => 'manual',
+                'id' => 2,
+                'code' => 'manual',
                 'payment_type' => 'outbound',
-                'name'         => 'Manual Payment',
-                'created_by'   => $user?->id,
-                'created_at'   => $now,
-                'updated_at'   => $now,
+                'name' => 'Manual Payment',
+                'created_by' => $user?->id,
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
         ];
 

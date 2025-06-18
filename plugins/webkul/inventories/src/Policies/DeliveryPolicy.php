@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -7,7 +9,7 @@ use Webkul\Inventory\Models\Delivery;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-class DeliveryPolicy
+final class DeliveryPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 
@@ -22,7 +24,7 @@ class DeliveryPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Delivery $delivery): bool
+    public function view(User $user): bool
     {
         return $user->can('view_delivery');
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Models;
 
 use Awcodes\Curator\Concerns\HasPackageFactory;
@@ -39,9 +41,14 @@ use function Awcodes\Curator\is_media_resizable;
  * @property string $size_for_humans
  * @property string $pretty_name
  */
-class Media extends Model
+final class Media extends Model
 {
     use HasPackageFactory;
+
+    /**
+     * A prefix to identify base64 encoded strings in exif data
+     */
+    protected const BASE64_PREFIX = 'encoded@base64:';
 
     protected $guarded = [];
 
@@ -62,10 +69,60 @@ class Media extends Model
         'pretty_name',
     ];
 
-    /**
-     * A prefix to identify base64 encoded strings in exif data
-     */
-    protected const BASE64_PREFIX = 'encoded@base64:';
+    public function getPrettyName(): string
+    {
+        if (filled($this->title)) {
+            return $this->title;
+        }
+
+        return $this->name.'.'.$this->ext;
+    }
+
+    public function getSizeForHumans(int $precision = 1): string
+    {
+        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+        $size = $this->size;
+        for ($i = 0; $size > 1024; $i++) {
+            $size /= 1024;
+        }
+
+        return round($size, $precision).' '.$units[$i];
+    }
+
+    public function getSignedUrl(array $params = [], bool $force = false): string
+    {
+        if (! $force) {
+            if (
+                ! $this->resizable ||
+                in_array($this->disk, config('curator.cloud_disks'), true) ||
+                ! Storage::disk($this->disk)->exists($this->path)
+            ) {
+                return $this->url;
+            }
+        }
+
+        $routeBasePath = Str::of(config('curator.glide.route_path', 'curator'))
+            ->trim('/')
+            ->prepend('/')
+            ->append('/')
+            ->toString();
+
+        $urlBuilder = UrlBuilderFactory::create($routeBasePath, config('app.key'));
+
+        return $urlBuilder->getUrl($this->path, $params);
+    }
+
+    public function getCuration(string $key): array
+    {
+        return Arr::first(collect($this->curations)->filter(function ($item) use ($key) {
+            return $item['curation']['key'] === $key;
+        }))['curation'] ?? [];
+    }
+
+    public function hasCuration(string $key): bool
+    {
+        return filled($this->getCuration($key));
+    }
 
     protected function url(): Attribute
     {
@@ -136,61 +193,6 @@ class Media extends Model
         );
     }
 
-    public function getPrettyName(): string
-    {
-        if (filled($this->title)) {
-            return $this->title;
-        }
-
-        return $this->name . '.' . $this->ext;
-    }
-
-    public function getSizeForHumans(int $precision = 1): string
-    {
-        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
-        $size = $this->size;
-        for ($i = 0; $size > 1024; $i++) {
-            $size /= 1024;
-        }
-
-        return round($size, $precision) . ' ' . $units[$i];
-    }
-
-    public function getSignedUrl(array $params = [], bool $force = false): string
-    {
-        if (! $force) {
-            if (
-                ! $this->resizable ||
-                in_array($this->disk, config('curator.cloud_disks')) ||
-                ! Storage::disk($this->disk)->exists($this->path)
-            ) {
-                return $this->url;
-            }
-        }
-
-        $routeBasePath = Str::of(config('curator.glide.route_path', 'curator'))
-            ->trim('/')
-            ->prepend('/')
-            ->append('/')
-            ->toString();
-
-        $urlBuilder = UrlBuilderFactory::create($routeBasePath, config('app.key'));
-
-        return $urlBuilder->getUrl($this->path, $params);
-    }
-
-    public function getCuration(string $key): array
-    {
-        return Arr::first(collect($this->curations)->filter(function ($item) use ($key) {
-            return $item['curation']['key'] === $key;
-        }))['curation'] ?? [];
-    }
-
-    public function hasCuration(string $key): bool
-    {
-        return filled($this->getCuration($key));
-    }
-
     /**
      * Recursively encode exif data safely, dealing with any non-utf8 characters
      */
@@ -204,7 +206,7 @@ class Media extends Model
             return array_map(fn ($item) => $this->encodeExif($item), $value);
         }
 
-        return $this->needsBase64($value) ? self::BASE64_PREFIX . base64_encode($value) : $value;
+        return $this->needsBase64($value) ? self::BASE64_PREFIX.base64_encode($value) : $value;
     }
 
     /**
@@ -221,7 +223,7 @@ class Media extends Model
         }
 
         if (str_starts_with($value, self::BASE64_PREFIX)) {
-            return base64_decode(substr($value, strlen(self::BASE64_PREFIX)));
+            return base64_decode(mb_substr($value, mb_strlen(self::BASE64_PREFIX)), true);
         }
 
         return $value;
@@ -244,6 +246,6 @@ class Media extends Model
         // encode as base64 if there are any non-printable characters
         $nonPrintable = preg_replace('/[[:print:]\s]/u', '', $value);
 
-        return strlen($nonPrintable) > strlen($value);
+        return mb_strlen($nonPrintable) > mb_strlen($value);
     }
 }

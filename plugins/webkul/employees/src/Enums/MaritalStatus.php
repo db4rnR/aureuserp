@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Enums;
 
 enum MaritalStatus: string
@@ -15,10 +17,10 @@ enum MaritalStatus: string
     public static function options(): array
     {
         return [
-            self::Single->value   => __('employees::enums/marital-status.single'),
-            self::Married->value  => __('employees::enums/marital-status.married'),
+            self::Single->value => __('employees::enums/marital-status.single'),
+            self::Married->value => __('employees::enums/marital-status.married'),
             self::Divorced->value => __('employees::enums/marital-status.divorced'),
-            self::Widowed->value  => __('employees::enums/marital-status.widowed'),
+            self::Widowed->value => __('employees::enums/marital-status.widowed'),
         ];
     }
 }

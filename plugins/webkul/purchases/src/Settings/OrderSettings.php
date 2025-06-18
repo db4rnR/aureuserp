@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class OrderSettings extends Settings
+final class OrderSettings extends Settings
 {
     public bool $enable_order_approval;
 

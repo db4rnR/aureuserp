@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recruitments_candidates', function (Blueprint $table) {
+        Schema::create('recruitments_candidates', function (Blueprint $table): void {
             $table->id();
 
             $table->integer('message_bounced')->nullable()->default(0)->comment('Message Bounced');

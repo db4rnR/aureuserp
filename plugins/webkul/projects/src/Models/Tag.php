@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Project\Database\Factories\TagFactory;
 use Webkul\Security\Models\User;
 
-class Tag extends Model
+final class Tag extends Model
 {
     use HasFactory, SoftDeletes;
 

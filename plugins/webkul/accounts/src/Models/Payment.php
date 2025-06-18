@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +16,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-class Payment extends Model
+final class Payment extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 
@@ -52,19 +54,19 @@ class Payment extends Model
 
     protected array $logAttributes = [
         'name',
-        'move.name'          => 'Move',
-        'company.name'       => 'Company',
-        'partner.name'       => 'Partner',
-        'partner_type'       => 'Partner Type',
+        'move.name' => 'Move',
+        'company.name' => 'Company',
+        'partner.name' => 'Partner',
+        'partner_type' => 'Partner Type',
         'paymentMethod.name' => 'Payment Method',
-        'currency.name'      => 'Currency',
+        'currency.name' => 'Currency',
         'paymentToken',
-        'sourcePayment.name'      => 'Source Payment',
+        'sourcePayment.name' => 'Source Payment',
         'paymentTransaction.name' => 'Payment Transaction',
         'destinationAccount.name' => 'Destination Account',
         'outstandingAccount.name' => 'Outstanding Account',
-        'is_sent'                 => 'Is Sent',
-        'state'                   => 'State',
+        'is_sent' => 'Is Sent',
+        'state' => 'State',
     ];
 
     public function move()

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Product\Models\Category as BaseCategory;
 
-class Category extends BaseCategory
+final class Category extends BaseCategory
 {
     /**
      * Create a new Eloquent model instance.

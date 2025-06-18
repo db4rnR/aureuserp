@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Invoice\Models\Refund;
 use Webkul\Security\Models\User;
 
-class RefundPolicy
+final class RefundPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class RefundPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Refund $refund): bool
+    public function view(User $user): bool
     {
         return $user->can('view_refund');
     }
@@ -37,7 +38,7 @@ class RefundPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Refund $refund): bool
+    public function update(User $user): bool
     {
         return $user->can('update_refund');
     }
@@ -45,7 +46,7 @@ class RefundPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Refund $refund): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_refund');
     }
@@ -61,7 +62,7 @@ class RefundPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Refund $refund): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_refund');
     }
@@ -77,7 +78,7 @@ class RefundPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Refund $refund): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_refund');
     }
@@ -93,7 +94,7 @@ class RefundPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Refund $refund): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_refund');
     }

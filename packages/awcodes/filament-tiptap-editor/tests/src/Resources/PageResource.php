@@ -1,31 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Tests\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\CreateAction;
-use FilamentTiptapEditor\Tests\Resources\PageResource\Pages\ListPages;
-use FilamentTiptapEditor\Tests\Resources\PageResource\Pages\CreatePage;
-use FilamentTiptapEditor\Tests\Resources\PageResource\Pages\EditPage;
-use Filament\Forms;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use FilamentTiptapEditor\Enums\TiptapOutput;
 use FilamentTiptapEditor\Tests\Models\Page;
-use FilamentTiptapEditor\Tests\Resources\PageResource\Pages;
+use FilamentTiptapEditor\Tests\Resources\PageResource\Pages\CreatePage;
+use FilamentTiptapEditor\Tests\Resources\PageResource\Pages\EditPage;
+use FilamentTiptapEditor\Tests\Resources\PageResource\Pages\ListPages;
 use FilamentTiptapEditor\TiptapEditor;
 
-class PageResource extends Resource
+final class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Schema $schema): Schema
     {

@@ -1,6 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'goods'   => 'Goods',
+    'goods' => 'Goods',
     'service' => 'Service',
 ];

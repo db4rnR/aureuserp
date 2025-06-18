@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\CategoryResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Filament\Resources\CategoryResource;
 
-class ListCategories extends ListRecords
+final class ListCategories extends ListRecords
 {
     protected static string $resource = CategoryResource::class;
 
@@ -19,7 +20,7 @@ class ListCategories extends ListRecords
             CreateAction::make()
                 ->label(__('products::filament/resources/category/pages/list-categories.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
-                ->mutateDataUsing(function ($data) {
+                ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
 
                     $data['creator_id'] = $user->id;

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('analytic_records', function (Blueprint $table) {
+        Schema::create('analytic_records', function (Blueprint $table): void {
             $table->id();
             $table->string('type');
             $table->string('name')->nullable();

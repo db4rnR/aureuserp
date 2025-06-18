@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources;
 
 use Filament\Panel;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\ListDepartments;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\CreateDepartment;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\EditDepartment;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\ViewDepartment;
 use Filament\Tables\Table;
 use Webkul\Employee\Filament\Resources\DepartmentResource as BaseDepartmentResource;
 use Webkul\Recruitment\Filament\Clusters\Configurations;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\CreateDepartment;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\EditDepartment;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\ListDepartments;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\ViewDepartment;
 use Webkul\Recruitment\Models\Department;
 
-class DepartmentResource extends BaseDepartmentResource
+final class DepartmentResource extends BaseDepartmentResource
 {
     protected static ?string $model = Department::class;
 
@@ -41,10 +42,10 @@ class DepartmentResource extends BaseDepartmentResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListDepartments::route('/'),
+            'index' => ListDepartments::route('/'),
             'create' => CreateDepartment::route('/create'),
-            'edit'   => EditDepartment::route('/{record}/edit'),
-            'view'   => ViewDepartment::route('/{record}'),
+            'edit' => EditDepartment::route('/{record}/edit'),
+            'view' => ViewDepartment::route('/{record}'),
         ];
     }
 }

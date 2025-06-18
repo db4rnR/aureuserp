@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Blocks;
 
-use Filament\Schemas\Components\Group;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
+use Filament\Schemas\Components\Group;
 use FilamentTiptapEditor\TiptapBlock;
 use Illuminate\Support\Str;
 
-class VideoBlock extends TiptapBlock
+final class VideoBlock extends TiptapBlock
 {
     public string $preview = 'filament-tiptap-editor::components.blocks.previews.video';
 
@@ -25,7 +27,7 @@ class VideoBlock extends TiptapBlock
                 ->label(trans('filament-tiptap-editor::oembed-modal.labels.url'))
                 ->live(onBlur: true)
                 ->required()
-                ->afterStateUpdated(function ($state, callable $set) {
+                ->afterStateUpdated(function ($state, callable $set): void {
                     $set('url', $this->convertUrl($state));
                 }),
             CheckboxList::make('native_options')
@@ -73,7 +75,7 @@ class VideoBlock extends TiptapBlock
                         }
 
                         $state = CarbonInterval::seconds($state)->cascade();
-                        $component->state(Carbon::parse($state->h . ':' . $state->i . ':' . $state->s)->format('Y-m-d H:i:s'));
+                        $component->state(Carbon::parse($state->h.':'.$state->i.':'.$state->s)->format('Y-m-d H:i:s'));
                     })
                     ->dehydrateStateUsing(function ($state): int {
                         if (! $state) {
@@ -89,7 +91,7 @@ class VideoBlock extends TiptapBlock
                 ->default(true)
                 ->reactive()
                 ->label(trans('filament-tiptap-editor::oembed-modal.labels.responsive'))
-                ->afterStateUpdated(function (callable $set, $state) {
+                ->afterStateUpdated(function (callable $set, $state): void {
                     if ($state) {
                         $set('width', '16');
                         $set('height', '9');

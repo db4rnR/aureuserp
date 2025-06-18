@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Order updated',
-        'body'  => 'The order has been updated successfully.',
+        'body' => 'The order has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -27,12 +29,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Order deleted',
-                    'body'  => 'The order has been deleted successfully.',
+                    'body' => 'The order has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Order could not be deleted',
-                    'body'  => 'The order cannot be deleted because it is currently in use.',
+                    'body' => 'The order cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

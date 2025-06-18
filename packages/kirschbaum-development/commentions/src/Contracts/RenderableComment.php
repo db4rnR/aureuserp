@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Contracts;
 
-use DateTime;
 use Carbon\Carbon;
+use DateTimeImmutable;
 
 interface RenderableComment
 {
@@ -19,9 +21,9 @@ interface RenderableComment
 
     public function getParsedBody(): string;
 
-    public function getCreatedAt(): DateTime|Carbon;
+    public function getCreatedAt(): DateTimeImmutable|Carbon;
 
-    public function getUpdatedAt(): DateTime|Carbon;
+    public function getUpdatedAt(): DateTimeImmutable|Carbon;
 
     public function getLabel(): ?string;
 

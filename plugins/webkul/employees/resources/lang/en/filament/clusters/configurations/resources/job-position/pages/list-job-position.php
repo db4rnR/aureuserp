@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tabs' => [
         'my-department' => 'My Department',
-        'archived'      => 'Archived',
+        'archived' => 'Archived',
     ],
 
     'header-actions' => [

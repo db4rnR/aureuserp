@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_accounts_move_line_taxes', function (Blueprint $table) {
+        Schema::create('accounts_accounts_move_line_taxes', function (Blueprint $table): void {
             $table->foreignId('move_line_id')
                 ->constrained('accounts_account_move_lines')
                 ->cascadeOnDelete();

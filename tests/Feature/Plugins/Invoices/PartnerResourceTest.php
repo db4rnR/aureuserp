@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 use Webkul\Invoice\Models\Partner;
 use Webkul\Partner\Enums\AccountType;
+use Webkul\Partner\Models\Industry;
+use Webkul\Partner\Models\Title;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\State;
-use Webkul\Partner\Models\Title;
-use Webkul\Partner\Models\Industry;
 
 #[Test]
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test partners listing page loads successfully')]
-function partners_listing_page_loads_successfully()
+function partners_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -32,7 +34,7 @@ function partners_listing_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test partner creation page loads successfully')]
-function partner_creation_page_loads_successfully()
+function partner_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -51,7 +53,7 @@ function partner_creation_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test partner can be created successfully')]
-function partner_can_be_created_successfully()
+function partner_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -103,7 +105,7 @@ function partner_can_be_created_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test partner can be viewed successfully')]
-function partner_can_be_viewed_successfully()
+function partner_can_be_viewed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -128,7 +130,7 @@ function partner_can_be_viewed_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test partner can be edited successfully')]
-function partner_can_be_edited_successfully()
+function partner_can_be_edited_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

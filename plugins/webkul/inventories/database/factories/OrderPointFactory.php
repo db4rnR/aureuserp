@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -9,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<OrderPoint>
  */
-class OrderPointFactory extends Factory
+final class OrderPointFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

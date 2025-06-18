@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('recruitments_stages', function (Blueprint $table) {
+        Schema::table('recruitments_stages', function (Blueprint $table): void {
             $table->boolean('is_default')->default(false)->comment('Is Default')->after('id');
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('recruitments_stages', function (Blueprint $table) {
+        Schema::table('recruitments_stages', function (Blueprint $table): void {
             $table->dropColumn('is_default');
         });
     }

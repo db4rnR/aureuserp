@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'table' => [
         'columns' => [
-            'reference'         => 'Reference',
-            'total-amount'      => 'Total Amount',
+            'reference' => 'Reference',
+            'total-amount' => 'Total Amount',
             'confirmation-date' => 'Confirmation Date',
-            'status'            => 'Status',
+            'status' => 'Status',
         ],
     ],
 
@@ -22,7 +24,7 @@ return [
 
                     'notification' => [
                         'title' => 'Quotation Accepted',
-                        'body'  => 'The RFQ has been acknowledged successfully.',
+                        'body' => 'The RFQ has been acknowledged successfully.',
                     ],
 
                     'message' => [
@@ -35,7 +37,7 @@ return [
 
                     'notification' => [
                         'title' => 'Quotation Declined',
-                        'body'  => 'The RFQ has been declined successfully.',
+                        'body' => 'The RFQ has been declined successfully.',
                     ],
 
                     'message' => [
@@ -51,16 +53,16 @@ return [
 
         'general' => [
             'entries' => [
-                'purchase-order'        => 'Purchase Order #:id',
-                'quotation'             => 'Request for Quotation #:id',
-                'order-date'            => 'Order Date',
-                'from'                  => 'From',
-                'confirmation-date'     => 'Confirmation Date',
-                'receipt-date'          => 'Receipt Date',
-                'products'              => 'Products',
-                'untaxed-amount'        => 'Untaxed Amount',
-                'tax-amount'            => 'Tax Amount',
-                'total'                 => 'Total',
+                'purchase-order' => 'Purchase Order #:id',
+                'quotation' => 'Request for Quotation #:id',
+                'order-date' => 'Order Date',
+                'from' => 'From',
+                'confirmation-date' => 'Confirmation Date',
+                'receipt-date' => 'Receipt Date',
+                'products' => 'Products',
+                'untaxed-amount' => 'Untaxed Amount',
+                'tax-amount' => 'Tax Amount',
+                'total' => 'Total',
                 'communication-history' => 'Communication History',
             ],
         ],

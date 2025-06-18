@@ -1,28 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Livewire;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\DatePicker;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\RichEditor;
-use Filament\Schemas\Components\Section;
 use Carbon\Carbon;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Infolists\Concerns\InteractsWithInfolists;
 use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
@@ -45,7 +46,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\ActivityPlan;
 use Webkul\Support\Models\ActivityType;
 
-class ChatterPanel extends Component implements HasActions, HasForms, HasInfolists
+final class ChatterPanel extends Component implements HasActions, HasForms, HasInfolists
 {
     use InteractsWithActions, InteractsWithForms, InteractsWithInfolists, WithFileUploads;
 
@@ -148,7 +149,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->record($this->record);
     }
 
-    public function removeFollower($partnerId)
+    public function removeFollower($partnerId): void
     {
         $partner = Partner::findOrFail($partnerId);
 
@@ -162,7 +163,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->color('success')
             ->modalIcon('heroicon-o-check-circle')
             ->label(__('chatter::livewire/chatter-panel.mark-as-done.title'))
-            ->schema(fn (Schema $schema) => $schema->components([
+            ->schema(fn (Schema $schema): Schema => $schema->components([
                 TextInput::make('feedback')
                     ->label(__('chatter::livewire/chatter-panel.mark-as-done.form.fields.feedback')),
                 Hidden::make('type'),
@@ -172,7 +173,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                     ->icon('heroicon-o-arrow-uturn-right')
                     ->label(__('chatter::livewire/chatter-panel.mark-as-done.footer-actions.label'))
                     ->modalIcon('heroicon-o-arrow-uturn-right')
-                    ->action(function () use ($livewire, $arguments) {
+                    ->action(function () use ($livewire, $arguments): void {
                         $this->processMessage($arguments['id'], $livewire->mountedActionsData[0]['feedback'] ?? null);
 
                         $this->replaceMountedAction('activity');
@@ -188,7 +189,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                     ->icon('heroicon-o-check-circle')
                     ->label('Done')
                     ->modalIcon('heroicon-o-check-circle')
-                    ->action(function () use ($livewire, $arguments) {
+                    ->action(function () use ($livewire, $arguments): void {
                         $this->processMessage($arguments['id'], $livewire->mountedActionsData[0]['feedback'] ?? null);
 
                         Notification::make()
@@ -201,30 +202,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ]);
     }
 
-    /**
-     * Process the message, add a comment, and delete the message.
-     */
-    protected function processMessage(int $messageId, ?string $feedback): void
-    {
-        $message = Message::find($messageId);
-
-        if (! $message) {
-            return;
-        }
-
-        $this->record->addMessage([
-            'type' => 'comment',
-            'body' => collect([
-                $message->activityType?->name ? $message->activityType?->name.' done' : null,
-                $message->summary ? $message->summary : null,
-                $message->body ? __('chatter::livewire/chatter-panel.process-message.original-note', ['body' => $message->body]) : null,
-                $feedback ? __('chatter::livewire/chatter-panel.process-message.feedback', ['feedback' => $feedback]) : null,
-            ])->filter()->implode(''),
-        ]);
-
-        $message->delete();
-    }
-
     public function editActivityAction(): Action
     {
         return Action::make('editActivity')
@@ -232,7 +209,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->modalIcon('heroicon-o-pencil-square')
             ->color('primary')
             ->label(__('chatter::livewire/chatter-panel.edit-activity.title'))
-            ->mountUsing(function (Schema $schema, $livewire) {
+            ->mountUsing(function (Schema $schema, $livewire): void {
                 $activityId = $livewire->mountedActionsArguments[0]['id'];
 
                 $record = Message::find($activityId);
@@ -240,94 +217,92 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                 $schema->fill([
                     'activity_plan_id' => $record->activity_plan_id,
                     'activity_type_id' => $record->activity_type_id,
-                    'date_deadline'    => $record->date_deadline,
-                    'summary'          => $record->summary,
-                    'assigned_to'      => $record->assigned_to,
-                    'body'             => $record->body,
-                    'type'             => $record->type ?? 'activity',
+                    'date_deadline' => $record->date_deadline,
+                    'summary' => $record->summary,
+                    'assigned_to' => $record->assigned_to,
+                    'body' => $record->body,
+                    'type' => $record->type ?? 'activity',
                 ]);
             })
-            ->schema(function (Schema $schema) {
-                return $schema->components([
-                    Group::make()
-                        ->schema([
-                            Group::make()
-                                ->schema([
-                                    Select::make('activity_plan_id')
-                                        ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.activity-plan'))
-                                        ->options($this->activityPlans)
-                                        ->searchable()
-                                        ->preload()
-                                        ->live(),
-                                    DatePicker::make('date_deadline')
-                                        ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.plan-date'))
-                                        ->hidden(fn (Get $get) => ! $get('activity_plan_id'))
-                                        ->live()
-                                        ->native(false),
-                                ])
-                                ->columns(2),
+            ->schema(fn (Schema $schema): Schema => $schema->components([
+                Group::make()
+                    ->schema([
+                        Group::make()
+                            ->schema([
+                                Select::make('activity_plan_id')
+                                    ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.activity-plan'))
+                                    ->options($this->activityPlans)
+                                    ->searchable()
+                                    ->preload()
+                                    ->live(),
+                                DatePicker::make('date_deadline')
+                                    ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.plan-date'))
+                                    ->hidden(fn (Get $get): bool => ! $get('activity_plan_id'))
+                                    ->live()
+                                    ->native(false),
+                            ])
+                            ->columns(2),
 
-                            Group::make()
-                                ->schema([
-                                    Placeholder::make('plan_summary')
-                                        ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.plan-summary'))
-                                        ->content(function (Get $get) {
-                                            if (! $get('activity_plan_id')) {
-                                                return null;
-                                            }
+                        Group::make()
+                            ->schema([
+                                Placeholder::make('plan_summary')
+                                    ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.plan-summary'))
+                                    ->content(function (Get $get): ?HtmlString {
+                                        if (! $get('activity_plan_id')) {
+                                            return null;
+                                        }
 
-                                            $activityPlanTemplates = ActivityPlan::find($get('activity_plan_id'))
-                                                ->activityPlanTemplates;
+                                        $activityPlanTemplates = ActivityPlan::find($get('activity_plan_id'))
+                                            ->activityPlanTemplates;
 
-                                            $html = '<div class="space-y-2">';
-                                            foreach ($activityPlanTemplates as $activityPlanTemplate) {
-                                                $planDate = $get('date_deadline') ? Carbon::parse($get('date_deadline'))->format('m/d/Y') : '';
-                                                $html .= '<div class="flex items-center space-x-2" style="margin-left: 20px;">
+                                        $html = '<div class="space-y-2">';
+                                        foreach ($activityPlanTemplates as $activityPlanTemplate) {
+                                            $planDate = $get('date_deadline') ? Carbon::parse($get('date_deadline'))->format('m/d/Y') : '';
+                                            $html .= '<div class="flex items-center space-x-2" style="margin-left: 20px;">
                                                             <span>•</span>
-                                                            <span style="margin-left:2px;">'.$activityPlanTemplate->summary.($planDate ? ' ('.$planDate.')' : '').'</span>
+                                                            <span style="margin-left:2px;">'.$activityPlanTemplate->summary.($planDate !== '' && $planDate !== '0' ? ' ('.$planDate.')' : '').'</span>
                                                           </div>';
-                                            }
-                                            $html .= '</div>';
+                                        }
+                                        $html .= '</div>';
 
-                                            return new HtmlString($html);
-                                        })->hidden(fn (Get $get) => ! $get('activity_plan_id')),
-                                    Select::make('activity_type_id')
-                                        ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.activity-type'))
-                                        ->options(ActivityType::pluck('name', 'id'))
-                                        ->searchable()
-                                        ->preload()
-                                        ->live()
-                                        ->required()
-                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
-                                    DatePicker::make('date_deadline')
-                                        ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.due-date'))
-                                        ->native(false)
-                                        ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))?->category == 'meeting' : false)
-                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
-                                    TextInput::make('summary')
-                                        ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.summary'))
-                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
-                                    Select::make('assigned_to')
-                                        ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.assigned-to'))
-                                        ->searchable()
-                                        ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))?->category == 'meeting' : false)
-                                        ->live()
-                                        ->visible(fn (Get $get) => ! $get('activity_plan_id'))
-                                        ->options(User::all()->pluck('name', 'id')->toArray())
-                                        ->required(),
-                                ])->columns(2),
-                            RichEditor::make('body')
-                                ->hiddenLabel()
-                                ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))?->category == 'meeting' : false)
-                                ->visible(fn (Get $get) => ! $get('activity_plan_id'))
-                                ->label(__('chatter::app.filament.actions.chatter.activity.form.type-your-message-here'))
-                                ->visible(fn (Get $get) => ! $get('activity_plan_id')),
-                            Hidden::make('type')
-                                ->default('activity'),
-                        ]),
-                ]);
-            })
-            ->action(function (array $data, $livewire) {
+                                        return new HtmlString($html);
+                                    })->hidden(fn (Get $get): bool => ! $get('activity_plan_id')),
+                                Select::make('activity_type_id')
+                                    ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.activity-type'))
+                                    ->options(ActivityType::pluck('name', 'id'))
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    ->required()
+                                    ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
+                                DatePicker::make('date_deadline')
+                                    ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.due-date'))
+                                    ->native(false)
+                                    ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))?->category === 'meeting')
+                                    ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
+                                TextInput::make('summary')
+                                    ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.summary'))
+                                    ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
+                                Select::make('assigned_to')
+                                    ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.assigned-to'))
+                                    ->searchable()
+                                    ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))?->category === 'meeting')
+                                    ->live()
+                                    ->visible(fn (Get $get): bool => ! $get('activity_plan_id'))
+                                    ->options(User::all()->pluck('name', 'id')->toArray())
+                                    ->required(),
+                            ])->columns(2),
+                        RichEditor::make('body')
+                            ->hiddenLabel()
+                            ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))?->category === 'meeting')
+                            ->visible(fn (Get $get): bool => ! $get('activity_plan_id'))
+                            ->label(__('chatter::app.filament.actions.chatter.activity.form.type-your-message-here'))
+                            ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
+                        Hidden::make('type')
+                            ->default('activity'),
+                    ]),
+            ]))
+            ->action(function (array $data, $livewire): void {
                 $activityId = $livewire->mountedActionsArguments[0]['id'];
 
                 $record = Message::find($activityId);
@@ -386,7 +361,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     {
         return $schema
             ->record($this->record)
-            ->components(function () {
+            ->components(function (): array {
 
                 if ($this->record->activities->isEmpty()) {
                     return [];
@@ -411,7 +386,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             });
     }
 
-    public function placeholder()
+    public function placeholder(): string
     {
         return <<<'HTML'
             <div class="flex items-center justify-center w-full">
@@ -428,5 +403,29 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public function render(): View
     {
         return view('chatter::livewire.chatter-panel');
+    }
+
+    /**
+     * Process the message, add a comment, and delete the message.
+     */
+    private function processMessage(int $messageId, ?string $feedback): void
+    {
+        $message = Message::find($messageId);
+
+        if (! $message) {
+            return;
+        }
+
+        $this->record->addMessage([
+            'type' => 'comment',
+            'body' => collect([
+                $message->activityType?->name ? $message->activityType?->name.' done' : null,
+                $message->summary ?: null,
+                $message->body ? __('chatter::livewire/chatter-panel.process-message.original-note', ['body' => $message->body]) : null,
+                $feedback !== null && $feedback !== '' && $feedback !== '0' ? __('chatter::livewire/chatter-panel.process-message.feedback', ['feedback' => $feedback]) : null,
+            ])->filter()->implode(''),
+        ]);
+
+        $message->delete();
     }
 }

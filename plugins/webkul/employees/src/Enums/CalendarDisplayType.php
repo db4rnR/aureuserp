@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Enums;
 
 enum CalendarDisplayType: string
@@ -14,7 +16,7 @@ enum CalendarDisplayType: string
     {
         return [
             self::Working->value => __('employees::enums/calendar-display-type.working'),
-            self::Off->value     => __('employees::enums/calendar-display-type.off'),
+            self::Off->value => __('employees::enums/calendar-display-type.off'),
             self::Holiday->value => __('employees::enums/calendar-display-type.holiday'),
         ];
     }

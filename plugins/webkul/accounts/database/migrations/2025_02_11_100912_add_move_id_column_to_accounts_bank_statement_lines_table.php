@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('accounts_bank_statement_lines', function (Blueprint $table) {
+        Schema::table('accounts_bank_statement_lines', function (Blueprint $table): void {
             $table->foreignId('move_id')->after('partner_id')->nullable()->comment('Journal Entry')->constrained('accounts_account_moves')->cascadeOnDelete();
         });
     }
@@ -21,10 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::hasTable('accounts_bank_statement_lines', function (Blueprint $table) {
-            $table->dropForeign(['move_id']);
-
-            $table->dropColumn('move_id');
-        });
+        Schema::hasTable('accounts_bank_statement_lines');
     }
 };

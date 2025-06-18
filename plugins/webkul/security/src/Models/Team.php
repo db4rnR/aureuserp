@@ -1,12 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Kirschbaum\Commentions\Contracts\Commentable;
+use Kirschbaum\Commentions\HasComments;
 
-class Team extends Model
+final class Team extends Model implements Commentable
 {
+    use HasComments, SoftDeletes;
+
     /**
      * Fillable.
      *

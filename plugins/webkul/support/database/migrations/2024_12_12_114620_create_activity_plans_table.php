@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('activity_plans', function (Blueprint $table) {
+        Schema::create('activity_plans', function (Blueprint $table): void {
             $table->id();
 
             $table->string('plugin')->nullable()->comment('Plugin name');

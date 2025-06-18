@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Pages;
 
-use Filament\Actions\ViewAction;
+use BackedEnum;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Livewire\Livewire;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 use Webkul\Support\Package;
 
-class ManageDeliveries extends ManageRelatedRecords
+final class ManageDeliveries extends ManageRelatedRecords
 {
     protected static string $resource = QuotationResource::class;
 
     protected static string $relationship = 'operations';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-truck';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
 
     /**
      * @param  array<string, mixed>  $parameters
@@ -49,11 +51,11 @@ class ManageDeliveries extends ManageRelatedRecords
         return OperationResource::table($table)
             ->recordActions([
                 ViewAction::make()
-                    ->url(fn ($record) => OperationResource::getUrl('view', ['record' => $record]))
+                    ->url(fn ($record): string => OperationResource::getUrl('view', ['record' => $record]))
                     ->openUrlInNewTab(false),
 
                 EditAction::make()
-                    ->url(fn ($record) => OperationResource::getUrl('edit', ['record' => $record]))
+                    ->url(fn ($record): string => OperationResource::getUrl('edit', ['record' => $record]))
                     ->openUrlInNewTab(false),
             ])
             ->toolbarActions([]);

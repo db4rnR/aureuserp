@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Manage Pricing',
 
@@ -11,10 +13,10 @@ return [
 
     'form' => [
         'fields' => [
-            'discount'      => 'Discount',
+            'discount' => 'Discount',
             'discount-help' => 'Enable discount on products.',
-            'margins'       => 'Margins',
-            'margins-help'  => 'Show margins on orders.',
+            'margins' => 'Margins',
+            'margins-help' => 'Show margins on orders.',
         ],
     ],
 ];

@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Group;
-use Webkul\Account\Models\Move;
-use Webkul\Account\Models\MoveLine;
-use Webkul\Account\Models\Account;
-use Webkul\Account\Models\Journal;
-use Webkul\Account\Models\Tax;
 use Webkul\Account\Enums\DisplayType;
 use Webkul\Account\Enums\MoveState;
+use Webkul\Account\Models\Account;
+use Webkul\Account\Models\Journal;
+use Webkul\Account\Models\Move;
+use Webkul\Account\Models\MoveLine;
+use Webkul\Account\Models\Tax;
+use Webkul\Invoice\Models\Product;
+use Webkul\Partner\Models\Partner;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
-use Webkul\Partner\Models\Partner;
-use Webkul\Invoice\Models\Product;
 
 #[Test]
 #[Group('unit')]
 #[Group('accounts')]
 #[Description('Test MoveLine model attributes and relationships')]
-function move_line_model_attributes_and_relationships()
+function move_line_model_attributes_and_relationships(): void
 {
     // Create a test move line
     $moveLine = MoveLine::factory()->create([
@@ -50,21 +52,21 @@ function move_line_model_attributes_and_relationships()
     expect($moveLine->parent_state)->toBe(MoveState::DRAFT);
 
     // Test relationships
-    expect($moveLine->move())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($moveLine->journal())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($moveLine->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($moveLine->account())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($moveLine->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($moveLine->partner())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($moveLine->taxes())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
-    expect($moveLine->product())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($moveLine->move())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($moveLine->journal())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($moveLine->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($moveLine->account())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($moveLine->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($moveLine->partner())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($moveLine->taxes())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($moveLine->product())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('accounts')]
 #[Description('Test MoveLine model relationships with other models')]
-function move_line_model_relationships_with_other_models()
+function move_line_model_relationships_with_other_models(): void
 {
     // Create related models
     $move = Move::factory()->create();
@@ -108,7 +110,7 @@ function move_line_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('accounts')]
 #[Description('Test MoveLine model financial calculations')]
-function move_line_model_financial_calculations()
+function move_line_model_financial_calculations(): void
 {
     // Create a move line with financial data
     $moveLine = MoveLine::factory()->create([

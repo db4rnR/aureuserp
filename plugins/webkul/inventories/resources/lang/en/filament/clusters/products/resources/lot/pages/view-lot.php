@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'print' => [
@@ -10,12 +12,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Lot Deleted',
-                    'body'  => 'The lot has been deleted successfully.',
+                    'body' => 'The lot has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Lot could not be deleted',
-                    'body'  => 'The lot cannot be deleted because it is currently in use.',
+                    'body' => 'The lot cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

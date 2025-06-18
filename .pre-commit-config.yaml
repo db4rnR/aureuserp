@@ -1,35 +1,48 @@
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
-    hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-added-large-files
-
   - repo: local
     hooks:
-      - id: pint
-        name: Laravel Pint
-        entry: vendor/bin/pint
-        language: system
-        types: [php]
-
       - id: phpstan
         name: PHPStan
-        entry: vendor/bin/phpstan analyse
+        description: 'Runs PHPStan static analysis on PHP files'
+        entry: vendor/bin/phpstan analyze
         language: system
-        types: [php]
+        pass_filenames: false
+        files: '^(app|bin|bootstrap|config|database|routes|tests|packages|plugins)/.+\.php$'
+        exclude: '^(vendor|node_modules|storage|bootstrap/cache|public|database/migrations|plugins/.*/database/migrations|reports/rector/cache)/.*$'
 
       - id: rector
-        name: Rector
-        entry: vendor/bin/rector process
+        name: Rector Type Safety
+        description: 'Checks for type safety issues with Rector'
+        entry: vendor/bin/rector process --dry-run --config=rector-type-safety.php
         language: system
-        types: [php]
-
-      - id: pest
-        name: Pest
-        entry: vendor/bin/pest
-        language: system
-        types: [php]
         pass_filenames: false
+        files: '^(app|bin|bootstrap|config|database|routes|tests|packages|plugins)/.+\.php$'
+        exclude: '^(vendor|node_modules|storage|bootstrap/cache|public|database/migrations|plugins/.*/database/migrations|reports/rector/cache)/.*$'
+
+      - id: pint
+        name: Laravel Pint
+        description: 'Runs Laravel Pint PHP code style fixer'
+        entry: vendor/bin/pint --test
+        language: system
+        pass_filenames: false
+        files: '^(app|bin|bootstrap|config|database|routes|tests|packages|plugins)/.+\.php$'
+        exclude: '^(vendor|node_modules|storage|bootstrap/cache|public|database/migrations|plugins/.*/database/migrations|reports/rector/cache)/.*$'
+
+      - id: typescript-check
+        name: TypeScript Check
+        description: 'Runs TypeScript compiler for type checking'
+        entry: pnpm tsc --noEmit
+        language: system
+        pass_filenames: false
+        files: '\.(ts|tsx)$'
+        exclude: '^(node_modules|vendor|public|storage|dist|build)/.*$'
+
+      - id: eslint
+        name: ESLint
+        description: 'Runs ESLint for TypeScript files'
+        entry: pnpm eslint
+        language: system
+        args: ['--ext', '.ts,.tsx', 'resources/js']
+        pass_filenames: false
+        files: '\.(ts|tsx)$'
+        exclude: '^(node_modules|vendor|public|storage|dist|build)/.*$'

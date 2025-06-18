@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Resources\EmployeeResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Employee\Filament\Resources\EmployeeResource;
 use Webkul\Support\Models\ActivityPlan;
 
-class EditEmployee extends EditRecord
+final class EditEmployee extends EditRecord
 {
     protected static string $resource = EmployeeResource::class;
 
@@ -32,7 +33,7 @@ class EditEmployee extends EditRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource)
+                ->setResource(self::$resource)
                 ->setActivityPlans($this->getActivityPlans()),
             DeleteAction::make()
                 ->successNotification(
@@ -42,11 +43,6 @@ class EditEmployee extends EditRecord
                         ->body(__('employees::filament/resources/employee/pages/edit-employee.header-actions.delete.notification.body')),
                 ),
         ];
-    }
-
-    private function getActivityPlans(): mixed
-    {
-        return ActivityPlan::where('plugin', 'employees')->pluck('name', 'id');
     }
 
     protected function mutateFormDataBeforeFill(array $data): array
@@ -65,5 +61,10 @@ class EditEmployee extends EditRecord
             ...$data,
             'creator_id' => Auth::user()->id,
         ];
+    }
+
+    private function getActivityPlans(): mixed
+    {
+        return ActivityPlan::where('plugin', 'employees')->pluck('name', 'id');
     }
 }

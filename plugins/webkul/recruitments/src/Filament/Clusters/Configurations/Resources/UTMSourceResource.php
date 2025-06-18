@@ -1,35 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources;
 
-use Filament\Schemas\Schema;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
+use Filament\Panel;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Panel;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMSourceResource\Pages\ListUTMSources;
-use Filament\Forms;
-use Filament\Infolists;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Webkul\Recruitment\Filament\Clusters\Configurations;
-use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMSourceResource\Pages;
+use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMSourceResource\Pages\ListUTMSources;
 use Webkul\Recruitment\Models\UTMSource;
 
-class UTMSourceResource extends Resource
+final class UTMSourceResource extends Resource
 {
     protected static ?string $model = UTMSource::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-globe-americas';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-globe-americas';
 
     protected static ?string $cluster = Configurations::class;
 

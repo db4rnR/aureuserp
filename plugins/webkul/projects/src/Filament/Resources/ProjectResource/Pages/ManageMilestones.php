@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources\ProjectResource\Pages;
 
-use Filament\Schemas\Schema;
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\MilestoneResource;
 use Webkul\Project\Filament\Resources\ProjectResource;
 use Webkul\Project\Settings\TaskSettings;
 
-class ManageMilestones extends ManageRelatedRecords
+final class ManageMilestones extends ManageRelatedRecords
 {
     protected static string $resource = ProjectResource::class;
 
     protected static string $relationship = 'milestones';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-flag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-flag';
 
     /**
      * @param  array<string, mixed>  $parameters

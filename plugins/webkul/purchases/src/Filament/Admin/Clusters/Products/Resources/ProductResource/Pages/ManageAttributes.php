@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource\Pages;
 
 use Webkul\Product\Filament\Resources\ProductResource\Pages\ManageAttributes as BaseManageAttributes;
 use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource;
 use Webkul\Purchase\Settings\ProductSettings;
 
-class ManageAttributes extends BaseManageAttributes
+final class ManageAttributes extends BaseManageAttributes
 {
     protected static string $resource = ProductResource::class;
 

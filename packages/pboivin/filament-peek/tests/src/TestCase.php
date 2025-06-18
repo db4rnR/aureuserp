@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -17,9 +19,9 @@ use Pboivin\FilamentPeek\FilamentPeekServiceProvider;
 use Pboivin\FilamentPeek\Tests\Models\User;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
-    protected function configurePackageProviders($app)
+    protected function configurePackageProviders($app): void
     {
         TestPanelProvider::$should_load_plugin_assets = true;
     }

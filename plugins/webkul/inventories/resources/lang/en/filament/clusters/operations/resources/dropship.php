@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Dropships',
@@ -12,12 +14,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Dropship deleted',
-                        'body'  => 'The dropship ras been deleted successfully.',
+                        'body' => 'The dropship ras been deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Dropship could not be deleted',
-                        'body'  => 'The dropship cannot be deleted because it is currently in use.',
+                        'body' => 'The dropship cannot be deleted because it is currently in use.',
                     ],
                 ],
             ],
@@ -28,12 +30,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Dropships deleted',
-                        'body'  => 'The dropships has been deleted successfully.',
+                        'body' => 'The dropships has been deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Dropships could not be deleted',
-                        'body'  => 'The dropships cannot be deleted because they are currently in use.',
+                        'body' => 'The dropships cannot be deleted because they are currently in use.',
                     ],
                 ],
             ],

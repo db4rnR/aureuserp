@@ -1,34 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class ContactSettings extends Settings
+final class ContactSettings extends Settings
 {
-    public ?string $email;
+    public ?string $email = null;
 
-    public ?string $phone;
+    public ?string $phone = null;
 
-    public ?string $twitter;
+    public ?string $twitter = null;
 
-    public ?string $facebook;
+    public ?string $facebook = null;
 
-    public ?string $instagram;
+    public ?string $instagram = null;
 
-    public ?string $whatsapp;
+    public ?string $whatsapp = null;
 
-    public ?string $youtube;
+    public ?string $youtube = null;
 
-    public ?string $linkedin;
+    public ?string $linkedin = null;
 
-    public ?string $pinterest;
+    public ?string $pinterest = null;
 
-    public ?string $tiktok;
+    public ?string $tiktok = null;
 
-    public ?string $github;
+    public ?string $github = null;
 
-    public ?string $slack;
+    public ?string $slack = null;
 
     public static function group(): string
     {

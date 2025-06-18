@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Resources\EmployeeResource\Pages;
 
+use BackedEnum;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Webkul\Employee\Filament\Resources\EmployeeResource;
 use Webkul\Employee\Traits\Resources\Employee\EmployeeResumeRelation;
 
-class ManageResume extends ManageRelatedRecords
+final class ManageResume extends ManageRelatedRecords
 {
     use EmployeeResumeRelation;
 
@@ -14,7 +17,7 @@ class ManageResume extends ManageRelatedRecords
 
     protected static string $relationship = 'resumes';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function getNavigationLabel(): string
     {

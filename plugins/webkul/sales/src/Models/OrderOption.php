@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,9 +10,14 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\UOM;
 
-class OrderOption extends Model implements Sortable
+final class OrderOption extends Model implements Sortable
 {
     use SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'sales_order_options';
 
@@ -25,11 +32,6 @@ class OrderOption extends Model implements Sortable
         'quantity',
         'price_unit',
         'discount',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function order()

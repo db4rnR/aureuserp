@@ -1,53 +1,53 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Management\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ActionGroup;
+use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\ListTimeOffs;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\CreateTimeOff;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\EditTimeOff;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\ViewTimeOff;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
 use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Enums\RequestDateFromPeriod;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management;
-use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages;
+use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\CreateTimeOff;
+use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\EditTimeOff;
+use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\ListTimeOffs;
+use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\ViewTimeOff;
 use Webkul\TimeOff\Models\Leave;
 use Webkul\TimeOff\Models\LeaveType;
 
-class TimeOffResource extends Resource
+final class TimeOffResource extends Resource
 {
     protected static ?string $model = Leave::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $cluster = Management::class;
 
@@ -76,7 +76,7 @@ class TimeOffResource extends Resource
                                     ->searchable()
                                     ->preload()
                                     ->live()
-                                    ->afterStateUpdated(function (Get $get, Set $set, $state) {
+                                    ->afterStateUpdated(function (Get $get, Set $set, $state): void {
                                         if ($state) {
                                             $employee = Employee::find($state);
 
@@ -106,9 +106,10 @@ class TimeOffResource extends Resource
                                     ->label(function (Get $get) {
                                         if ($get('request_unit_half')) {
                                             return __('time-off::filament/clusters/management/resources/time-off.form.fields.date');
-                                        } else {
-                                            return __('time-off::filament/clusters/management/resources/time-off.form.fields.dates');
                                         }
+
+                                        return __('time-off::filament/clusters/management/resources/time-off.form.fields.dates');
+
                                     })
                                     ->live()
                                     ->schema([
@@ -121,14 +122,14 @@ class TimeOffResource extends Resource
                                             ->native(false)
                                             ->default(now())
                                             ->label(__('time-off::filament/clusters/management/resources/time-off.form.fields.request-date-to'))
-                                            ->hidden(fn (Get $get) => $get('request_unit_half'))
+                                            ->hidden(fn (Get $get): mixed => $get('request_unit_half'))
                                             ->required(),
                                         Select::make('request_date_from_period')
                                             ->label(__('time-off::filament/clusters/management/resources/time-off.form.fields.period'))
                                             ->options(RequestDateFromPeriod::class)
                                             ->default(RequestDateFromPeriod::MORNING->value)
                                             ->native(false)
-                                            ->visible(fn (Get $get) => $get('request_unit_half'))
+                                            ->visible(fn (Get $get): mixed => $get('request_unit_half'))
                                             ->required(),
                                     ]),
                                 Toggle::make('request_unit_half')
@@ -228,13 +229,9 @@ class TimeOffResource extends Resource
                     Action::make('approve')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->hidden(fn ($record) => $record->state === State::VALIDATE_TWO->value)
-                        ->action(function ($record) {
-                            if ($record->state === State::VALIDATE_ONE->value) {
-                                $record->update(['state' => State::VALIDATE_TWO->value]);
-                            } else {
-                                $record->update(['state' => State::VALIDATE_TWO->value]);
-                            }
+                        ->hidden(fn ($record): bool => $record->state === State::VALIDATE_TWO->value)
+                        ->action(function ($record): void {
+                            $record->update(['state' => State::VALIDATE_TWO->value]);
 
                             Notification::make()
                                 ->success()
@@ -245,15 +242,16 @@ class TimeOffResource extends Resource
                         ->label(function ($record) {
                             if ($record->state === State::VALIDATE_ONE->value) {
                                 return __('time-off::filament/clusters/management/resources/time-off.table.actions.approve.title.validate');
-                            } else {
-                                return __('time-off::filament/clusters/management/resources/time-off.table.actions.approve.title.approve');
                             }
+
+                            return __('time-off::filament/clusters/management/resources/time-off.table.actions.approve.title.approve');
+
                         }),
                     Action::make('refuse')
                         ->icon('heroicon-o-x-circle')
-                        ->hidden(fn ($record) => $record->state === State::REFUSE->value)
+                        ->hidden(fn ($record): bool => $record->state === State::REFUSE->value)
                         ->color('danger')
-                        ->action(function ($record) {
+                        ->action(function ($record): void {
                             $record->update(['state' => State::REFUSE->value]);
 
                             Notification::make()
@@ -290,10 +288,10 @@ class TimeOffResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListTimeOffs::route('/'),
+            'index' => ListTimeOffs::route('/'),
             'create' => CreateTimeOff::route('/create'),
-            'edit'   => EditTimeOff::route('/{record}/edit'),
-            'view'   => ViewTimeOff::route('/{record}'),
+            'edit' => EditTimeOff::route('/{record}/edit'),
+            'view' => ViewTimeOff::route('/{record}'),
         ];
     }
 
@@ -311,7 +309,7 @@ class TimeOffResource extends Resource
 
                                 TextEntry::make('request_unit_half')
                                     ->label(__('time-off::filament/clusters/my-time/resources/my-time-off.infolist.entries.half-day'))
-                                    ->formatStateUsing(fn ($record) => $record->request_unit_half ? 'Yes' : 'No')
+                                    ->formatStateUsing(fn ($record): string => $record->request_unit_half ? 'Yes' : 'No')
                                     ->icon('heroicon-o-clock'),
 
                                 TextEntry::make('request_date_from')

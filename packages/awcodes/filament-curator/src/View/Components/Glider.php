@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\View\Components;
 
 use Awcodes\Curator\Models\Media;
@@ -10,7 +12,7 @@ use Illuminate\View\Component;
 use League\Glide\Urls\UrlBuilderFactory;
 use stdClass;
 
-class Glider extends Component
+final class Glider extends Component
 {
     public string $source;
 
@@ -19,7 +21,7 @@ class Glider extends Component
     protected ?string $basePath = null;
 
     public function __construct(
-        public int | Media | stdClass | null $media,
+        public int|Media|stdClass|null $media,
         public ?string $glide = null,
         public ?array $srcset = null,
         public ?string $sizes = null,
@@ -134,7 +136,7 @@ class Glider extends Component
                     $height = floor($width * ($this->media->height / $this->media->width));
                 }
 
-                $srcset .= $this->buildGlideSource(['w' => $width, 'h' => $height]) . ' ' . $s . ', ';
+                $srcset .= $this->buildGlideSource(['w' => $width, 'h' => $height]).' '.$s.', ';
             }
 
             return Str::of($srcset)->rtrim(', ');
@@ -162,10 +164,10 @@ class Glider extends Component
             ->first();
     }
 
-    public function render(): View | Closure | string
+    public function render(): View|Closure|string
     {
         if ($this->glide) {
-            $this->source = $this->media->resizable ? $this->basePath . $this->media->path . '?' . $this->glide : $this->media->url;
+            $this->source = $this->media->resizable ? $this->basePath.$this->media->path.'?'.$this->glide : $this->media->url;
         } else {
             $this->source = $this->buildGlideSource();
         }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Purchase\Database\Factories\OrderGroupFactory;
 use Webkul\Security\Models\User;
 
-class OrderGroup extends Model
+final class OrderGroup extends Model
 {
     use HasFactory;
 
@@ -36,7 +38,7 @@ class OrderGroup extends Model
     protected $casts = [
     ];
 
-    protected array $logAttributes = [
+    private array $logAttributes = [
     ];
 
     public function creator(): BelongsTo

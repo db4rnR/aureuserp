@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Guava\FilamentIconPicker\Layout;
 
 return [
@@ -19,12 +21,12 @@ return [
     |
     */
     'sets' => null,
-//     example:
-//     'sets' => 'heroicons',
-//     'sets' => [
-//        'heroicons',
-//        'fontawesome-solid',
-//    ],
+    //     example:
+    //     'sets' => 'heroicons',
+    //     'sets' => [
+    //        'heroicons',
+    //        'fontawesome-solid',
+    //    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -39,12 +41,12 @@ return [
     |
     */
     'columns' => 1,
-//     example:
-//    'columns' => [
-//        'default' => 1,
-//        'lg' => 3,
-//        '2xl' => 5,
-//    ],
+    //     example:
+    //    'columns' => [
+    //        'default' => 1,
+    //        'lg' => 3,
+    //        '2xl' => 5,
+    //    ],
 
     /*
     |--------------------------------------------------------------------------

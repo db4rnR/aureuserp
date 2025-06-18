@@ -1,35 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Settings\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Toggle;
-use Illuminate\Support\HtmlString;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\HtmlString;
+use UnitEnum;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-class ManageOperations extends SettingsPage
+final class ManageOperations extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrows-right-left';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-right-left';
 
     protected static ?string $slug = 'inventory/manage-operations';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Inventory';
+    protected static string|UnitEnum|null $navigationGroup = 'Inventory';
 
     protected static ?int $navigationSort = 1;
 
     protected static string $settings = OperationSettings::class;
 
     protected static ?string $cluster = Settings::class;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('inventories::filament/clusters/settings/pages/manage-operations.title');
+    }
 
     public function getBreadcrumbs(): array
     {
@@ -43,18 +51,13 @@ class ManageOperations extends SettingsPage
         return __('inventories::filament/clusters/settings/pages/manage-operations.title');
     }
 
-    public static function getNavigationLabel(): string
-    {
-        return __('inventories::filament/clusters/settings/pages/manage-operations.title');
-    }
-
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 Toggle::make('enable_packages')
                     ->label(__('inventories::filament/clusters/settings/pages/manage-operations.form.enable-packages'))
-                    ->helperText(function () {
+                    ->helperText(function (): HtmlString {
                         $routeBaseName = PackageResource::getRouteBaseName();
 
                         $url = '#';
@@ -75,15 +78,15 @@ class ManageOperations extends SettingsPage
                 Select::make('annual_inventory_month')
                     ->label(__('inventories::filament/clusters/settings/pages/manage-operations.form.annual-inventory-month'))
                     ->options([
-                        1  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.january'),
-                        2  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.february'),
-                        3  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.march'),
-                        4  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.april'),
-                        5  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.may'),
-                        6  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.june'),
-                        7  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.july'),
-                        8  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.august'),
-                        9  => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.september'),
+                        1 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.january'),
+                        2 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.february'),
+                        3 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.march'),
+                        4 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.april'),
+                        5 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.may'),
+                        6 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.june'),
+                        7 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.july'),
+                        8 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.august'),
+                        9 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.september'),
                         10 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.october'),
                         11 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.november'),
                         12 => __('inventories::filament/clusters/settings/pages/manage-operations.form.months.december'),

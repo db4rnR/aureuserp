@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Models;
 
 use Illuminate\Auth\Authenticatable;
@@ -10,7 +12,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Kirschbaum\Commentions\Contracts\Commenter;
 use Tests\Database\Factories\UserFactory;
 
-class User extends Model implements AuthenticatableContract, Commenter
+final class User extends Model implements AuthenticatableContract, Commenter
 {
     use Authenticatable;
     use Authorizable;

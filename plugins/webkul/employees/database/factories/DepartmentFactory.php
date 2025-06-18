@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -7,7 +9,7 @@ use Webkul\Employee\Models\Department;
 use Webkul\Employee\Models\Employee;
 use Webkul\Support\Models\Company;
 
-class DepartmentFactory extends Factory
+final class DepartmentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -24,10 +26,10 @@ class DepartmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'       => $this->faker->name,
+            'name' => $this->faker->name,
             'manager_id' => Employee::factory(),
             'company_id' => Company::factory(),
-            'color'      => $this->faker->hexColor,
+            'color' => $this->faker->hexColor,
         ];
     }
 }

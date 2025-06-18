@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class MoveReversal extends Model
+final class MoveReversal extends Model
 {
     protected $table = 'accounts_accounts_move_reversals';
 

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_partial_reconciles', function (Blueprint $table) {
+        Schema::create('accounts_partial_reconciles', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('debit_move_id')->nullable()->comment('Debit move')->constrained('accounts_account_moves')->restrictOnDelete();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -8,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource;
 use Webkul\Inventory\Models\Location;
 
-class CreateLocation extends CreateRecord
+final class CreateLocation extends CreateRecord
 {
     protected static string $resource = LocationResource::class;
 

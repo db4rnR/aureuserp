@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -10,19 +12,19 @@ enum RequiresAllocation: string implements HasLabel
 
     case NO = 'no';
 
-    public function getLabel(): ?string
-    {
-        return match ($this) {
-            self::YES => __('time-off::enums/requires-allocation.yes'),
-            self::NO  => __('time-off::enums/requires-allocation.no'),
-        };
-    }
-
     public static function options(): array
     {
         return [
             self::YES->value => __('time-off::enums/requires-allocation.yes'),
-            self::NO->value  => __('time-off::enums/requires-allocation.no'),
+            self::NO->value => __('time-off::enums/requires-allocation.no'),
         ];
+    }
+
+    public function getLabel(): ?string
+    {
+        return match ($this) {
+            self::YES => __('time-off::enums/requires-allocation.yes'),
+            self::NO => __('time-off::enums/requires-allocation.no'),
+        };
     }
 }

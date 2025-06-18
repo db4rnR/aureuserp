@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource;
 
-class ListVendorPrices extends ListRecords
+final class ListVendorPrices extends ListRecords
 {
     protected static string $resource = VendorPriceResource::class;
 
@@ -25,7 +26,7 @@ class ListVendorPrices extends ListRecords
             CreateAction::make()
                 ->label(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/list-vendor-prices.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
-                ->mutateDataUsing(function ($data) {
+                ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
 
                     $data['creator_id'] = $user->id;

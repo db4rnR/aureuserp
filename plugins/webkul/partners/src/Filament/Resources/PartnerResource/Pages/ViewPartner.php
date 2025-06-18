@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Filament\Resources\PartnerResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 
-class ViewPartner extends ViewRecord
+final class ViewPartner extends ViewRecord
 {
     protected static string $resource = PartnerResource::class;
 
@@ -24,7 +25,7 @@ class ViewPartner extends ViewRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             EditAction::make(),
             DeleteAction::make()
                 ->successNotification(

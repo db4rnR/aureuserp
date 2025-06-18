@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,9 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
-class Field extends Model implements Sortable
+final class Field extends Model implements Sortable
 {
     use SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -24,10 +31,10 @@ class Field extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'is_multiselect'    => 'boolean',
-        'options'           => 'array',
-        'form_settings'     => 'array',
-        'table_settings'    => 'array',
+        'is_multiselect' => 'boolean',
+        'options' => 'array',
+        'form_settings' => 'array',
+        'table_settings' => 'array',
         'infolist_settings' => 'array',
     ];
 
@@ -50,10 +57,5 @@ class Field extends Model implements Sortable
         'infolist_settings',
         'sort',
         'customizable_type',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 }

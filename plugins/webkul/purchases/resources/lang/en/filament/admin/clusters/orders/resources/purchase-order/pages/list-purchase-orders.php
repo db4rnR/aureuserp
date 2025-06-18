@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Orders',
     ],
 
     'tabs' => [
-        'my-orders'      => 'My Orders',
-        'starred'        => 'Starred',
-        'waiting-bills'  => 'Waiting Bills',
+        'my-orders' => 'My Orders',
+        'starred' => 'Starred',
+        'waiting-bills' => 'Waiting Bills',
         'received-bills' => 'Bills Received',
     ],
 
@@ -18,7 +20,7 @@ return [
 
             'notification' => [
                 'title' => 'Order created',
-                'body'  => 'The order has been created successfully.',
+                'body' => 'The order has been created successfully.',
             ],
         ],
     ],

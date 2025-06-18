@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +12,7 @@ use Webkul\Partner\Database\Factories\BankAccountFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Bank;
 
-class BankAccount extends Model
+final class BankAccount extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -42,7 +44,7 @@ class BankAccount extends Model
      * @var string
      */
     protected $casts = [
-        'is_active'      => 'boolean',
+        'is_active' => 'boolean',
         'can_send_money' => 'boolean',
     ];
 
@@ -64,15 +66,15 @@ class BankAccount extends Model
     /**
      * Bootstrap any application services.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::creating(function ($bankAccount) {
+        self::creating(function ($bankAccount): void {
             $bankAccount->account_holder_name = $bankAccount->partner->name;
         });
 
-        static::updating(function ($bankAccount) {
+        self::updating(function ($bankAccount): void {
             $bankAccount->account_holder_name = $bankAccount->partner->name;
         });
     }

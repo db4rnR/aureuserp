@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanResource\RelationManagers;
 
 use Filament\Resources\RelationManagers\RelationManager;
 use Webkul\TimeOff\Traits\LeaveAccrualPlan;
 
-class MilestoneRelationManager extends RelationManager
+final class MilestoneRelationManager extends RelationManager
 {
     use LeaveAccrualPlan;
 

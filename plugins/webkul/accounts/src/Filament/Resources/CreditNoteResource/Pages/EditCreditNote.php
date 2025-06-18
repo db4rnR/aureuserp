@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\CreditNoteResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -9,7 +11,7 @@ use Webkul\Account\Filament\Resources\CreditNoteResource;
 use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\EditInvoice as EditRecord;
 
-class EditCreditNote extends EditRecord
+final class EditCreditNote extends EditRecord
 {
     protected static string $resource = CreditNoteResource::class;
 
@@ -30,13 +32,11 @@ class EditCreditNote extends EditRecord
     {
         $predefinedActions = parent::getHeaderActions();
 
-        $predefinedActions = collect($predefinedActions)->filter(function ($action) {
-            return ! in_array($action->getName(), [
-                'customers.invoice.set-as-checked',
-                'customers.invoice.credit-note',
-            ]);
-        })->map(function ($action) {
-            if ($action->getName() == 'customers.invoice.preview') {
+        return collect($predefinedActions)->filter(fn ($action): bool => ! in_array($action->getName(), [
+            'customers.invoice.set-as-checked',
+            'customers.invoice.credit-note',
+        ], true))->map(function ($action): BaseActions\PreviewAction|\Filament\Actions\Action|\Filament\Actions\ActionGroup {
+            if ($action->getName() === 'customers.invoice.preview') {
                 return BaseActions\PreviewAction::make()
                     ->modalHeading(__('accounts::filament/resources/credit-note/pages/edit-credit-note.header-actions.preview.modal-heading'))
                     ->setTemplate('accounts::credit-note/actions/preview.index');
@@ -44,13 +44,11 @@ class EditCreditNote extends EditRecord
 
             return $action;
         })->toArray();
-
-        return $predefinedActions;
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $user = Auth::user();
+        Auth::user();
 
         $record = $this->getRecord();
 

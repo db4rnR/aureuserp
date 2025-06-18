@@ -1,40 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Grouping\Group;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Infolists\Components\TextEntry;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\ListTaxGroups;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\CreateTaxGroup;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\ViewTaxGroup;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\EditTaxGroup;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages;
+use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\CreateTaxGroup;
+use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\EditTaxGroup;
+use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\ListTaxGroups;
+use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\ViewTaxGroup;
 use Webkul\Account\Models\TaxGroup;
 
-class TaxGroupResource extends Resource
+final class TaxGroupResource extends Resource
 {
     protected static ?string $model = TaxGroup::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-group';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-group';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -119,10 +118,10 @@ class TaxGroupResource extends Resource
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make()
-                    ->action(function (TaxGroup $record) {
+                    ->action(function (TaxGroup $record): void {
                         try {
                             $record->delete();
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('accounts::filament/resources/tax-group.table.actions.delete.notification.error.title'))
@@ -139,10 +138,10 @@ class TaxGroupResource extends Resource
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->delete());
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('accounts::filament/resources/tax-group.table.bulk-actions.delete.notification.error.title'))
@@ -188,10 +187,10 @@ class TaxGroupResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListTaxGroups::route('/'),
+            'index' => ListTaxGroups::route('/'),
             'create' => CreateTaxGroup::route('/create'),
-            'view'   => ViewTaxGroup::route('/{record}'),
-            'edit'   => EditTaxGroup::route('/{record}/edit'),
+            'view' => ViewTaxGroup::route('/{record}'),
+            'edit' => EditTaxGroup::route('/{record}/edit'),
         ];
     }
 }

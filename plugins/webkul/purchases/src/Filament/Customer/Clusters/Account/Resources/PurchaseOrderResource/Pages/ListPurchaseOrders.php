@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\PurchaseOrderResource\Pages;
 
 use Filament\Resources\Pages\ListRecords;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\PurchaseOrderResource;
 
-class ListPurchaseOrders extends ListRecords
+final class ListPurchaseOrders extends ListRecords
 {
     protected static string $resource = PurchaseOrderResource::class;
 

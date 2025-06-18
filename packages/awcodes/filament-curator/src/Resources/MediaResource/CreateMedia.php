@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Resources\MediaResource;
 
 use Awcodes\Curator\CuratorPlugin;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateMedia extends CreateRecord
+final class CreateMedia extends CreateRecord
 {
     public static function getResource(): string
     {

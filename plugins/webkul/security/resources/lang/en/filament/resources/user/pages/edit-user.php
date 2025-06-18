@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'User updated',
-        'body'  => 'The user has been updated successfully.',
+        'body' => 'The user has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -12,11 +14,11 @@ return [
 
             'notification' => [
                 'title' => 'Password changed',
-                'body'  => 'The password has been changed successfully.',
+                'body' => 'The password has been changed successfully.',
             ],
 
             'form' => [
-                'new-password'         => 'New Password',
+                'new-password' => 'New Password',
                 'confirm-new-password' => 'Confirm New Password',
             ],
         ],
@@ -24,7 +26,7 @@ return [
         'delete' => [
             'notification' => [
                 'title' => 'User deleted',
-                'body'  => 'The user has been deleted successfully.',
+                'body' => 'The user has been deleted successfully.',
             ],
         ],
     ],

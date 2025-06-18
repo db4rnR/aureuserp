@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class UtmStageSeeder extends Seeder
+final class UtmStageSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,32 +24,32 @@ class UtmStageSeeder extends Seeder
 
         $utmStages = [
             [
-                'sort'       => 1,
-                'name'       => 'New',
+                'sort' => 1,
+                'name' => 'New',
                 'created_by' => $user?->id,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
 
             [
-                'sort'       => 2,
-                'name'       => 'Schedule',
+                'sort' => 2,
+                'name' => 'Schedule',
                 'created_by' => $user?->id,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
 
             [
-                'sort'       => 3,
-                'name'       => 'Design',
+                'sort' => 3,
+                'name' => 'Design',
                 'created_by' => $user?->id,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
 
             [
-                'sort'       => 3,
-                'name'       => 'Sent',
+                'sort' => 3,
+                'name' => 'Sent',
                 'created_by' => $user?->id,
                 'created_at' => $now,
                 'updated_at' => $now,

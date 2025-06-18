@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
-class CustomerPurchaseOrder extends Order {}
+final class CustomerPurchaseOrder extends Order {}

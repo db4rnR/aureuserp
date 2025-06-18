@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Employee updated',
-        'body'  => 'The employee has been updated successfully.',
+        'body' => 'The employee has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -12,7 +14,7 @@ return [
 
             'notification' => [
                 'title' => 'Employee deleted',
-                'body'  => 'The employee has been deleted successfully.',
+                'body' => 'The employee has been deleted successfully.',
             ],
         ],
     ],

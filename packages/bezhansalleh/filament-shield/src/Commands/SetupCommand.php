@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Commands;
 
 use BezhanSalleh\FilamentShield\Commands\Concerns\CanBeProhibitable;
@@ -17,7 +19,7 @@ use Throwable;
 use function Laravel\Prompts\confirm;
 
 #[AsCommand(name: 'shield:setup', description: 'Setup and install core requirements for Shield')]
-class SetupCommand extends Command
+final class SetupCommand extends Command
 {
     use CanBeProhibitable;
     use CanManipulateFiles;
@@ -123,7 +125,7 @@ class SetupCommand extends Command
             }
 
             $shieldConfig
-                ->append('tenant_model', "'tenant_model' => '" . get_class($tenantModel) . "',")
+                ->append('tenant_model', "'tenant_model' => '".get_class($tenantModel)."',")
                 ->deleteLine('tenant_model')
                 ->deleteLine("'tenant_model' => null,")
                 ->save();
@@ -141,11 +143,11 @@ class SetupCommand extends Command
 
             config()->set('permission.teams', true);
 
-            $source = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Support' . DIRECTORY_SEPARATOR;
+            $source = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Support'.DIRECTORY_SEPARATOR;
             $destination = app_path('Models');
 
-            $this->copy($source . 'Role.php', $destination . DIRECTORY_SEPARATOR . 'Role.php');
-            $this->copy($source . 'Permission.php', $destination . DIRECTORY_SEPARATOR . 'Permission.php');
+            $this->copy($source.'Role.php', $destination.DIRECTORY_SEPARATOR.'Role.php');
+            $this->copy($source.'Permission.php', $destination.DIRECTORY_SEPARATOR.'Permission.php');
 
             $appServiceProvider = Stringer::for(app_path('Providers/AppServiceProvider.php'));
             if (
@@ -187,7 +189,7 @@ class SetupCommand extends Command
             try {
                 Schema::disableForeignKeyConstraints();
                 DB::table('migrations')->where('migration', 'like', '%_create_permission_tables')->delete();
-                $this->getTables()->each(fn ($table) => DB::statement('DROP TABLE IF EXISTS ' . $table));
+                $this->getTables()->each(fn ($table) => DB::statement('DROP TABLE IF EXISTS '.$table));
                 Schema::enableForeignKeyConstraints();
             } catch (Throwable $e) {
                 $this->components->info($e);

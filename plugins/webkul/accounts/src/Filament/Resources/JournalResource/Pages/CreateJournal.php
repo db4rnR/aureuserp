@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\JournalResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -9,7 +11,7 @@ use Webkul\Account\Enums\CommunicationStandard;
 use Webkul\Account\Enums\CommunicationType;
 use Webkul\Account\Filament\Resources\JournalResource;
 
-class CreateJournal extends CreateRecord
+final class CreateJournal extends CreateRecord
 {
     protected static string $resource = JournalResource::class;
 
@@ -30,8 +32,8 @@ class CreateJournal extends CreateRecord
     {
         $data['creator_id'] = Auth::user()->id;
 
-        $data['invoice_reference_type'] = $data['invoice_reference_type'] ?? CommunicationType::INVOICE->value;
-        $data['invoice_reference_model'] = $data['invoice_reference_model'] ?? CommunicationStandard::AUREUS->value;
+        $data['invoice_reference_type'] ??= CommunicationType::INVOICE->value;
+        $data['invoice_reference_model'] ??= CommunicationStandard::AUREUS->value;
 
         return $data;
     }

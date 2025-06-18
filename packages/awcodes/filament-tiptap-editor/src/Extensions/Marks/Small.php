@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Marks;
 
 use Tiptap\Core\Mark;
 use Tiptap\Utils\HTML;
 
-class Small extends Mark
+final class Small extends Mark
 {
     public static $name = 'small';
 

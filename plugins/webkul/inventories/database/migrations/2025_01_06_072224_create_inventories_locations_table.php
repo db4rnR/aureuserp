@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories_locations', function (Blueprint $table) {
+        Schema::create('inventories_locations', function (Blueprint $table): void {
             $table->id();
             $table->integer('position_x')->nullable()->default(0)->comment('Corridor X');
             $table->integer('position_y')->nullable()->default(0)->comment('Shelves Y');

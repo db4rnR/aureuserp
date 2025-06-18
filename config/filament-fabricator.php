@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Z3d0X\FilamentFabricator\Models\Page;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
 

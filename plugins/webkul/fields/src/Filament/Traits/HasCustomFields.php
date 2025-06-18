@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Filament\Traits;
 
 use Webkul\Field\Filament\Forms\Components\CustomFields;

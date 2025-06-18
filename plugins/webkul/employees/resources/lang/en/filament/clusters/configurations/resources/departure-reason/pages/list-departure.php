@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'create' => [
@@ -7,7 +9,7 @@ return [
 
             'notification' => [
                 'title' => 'Departure Reason created',
-                'body'  => 'The departure reason has been created successfully.',
+                'body' => 'The departure reason has been created successfully.',
             ],
         ],
     ],

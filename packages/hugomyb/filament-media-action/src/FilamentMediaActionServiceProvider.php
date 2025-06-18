@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hugomyb\FilamentMediaAction;
 
 use Filament\Support\Assets\Asset;
@@ -10,7 +12,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentMediaActionServiceProvider extends PackageServiceProvider
+final class FilamentMediaActionServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-media-action';
 
@@ -18,9 +20,9 @@ class FilamentMediaActionServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasCommands($this->getCommands())
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->askToStarRepoOnGitHub('hugomyb/filament-media-action');
             });
@@ -30,13 +32,11 @@ class FilamentMediaActionServiceProvider extends PackageServiceProvider
         }
 
         if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
+            $package->hasViews(self::$viewNamespace);
         }
     }
 
-    public function packageRegistered(): void
-    {
-    }
+    public function packageRegistered(): void {}
 
     public function packageBooted(): void
     {
@@ -56,7 +56,7 @@ class FilamentMediaActionServiceProvider extends PackageServiceProvider
 
         // Handle Stubs
         if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
+            foreach (app(Filesystem::class)->files(__DIR__.'/../stubs/') as $file) {
                 $this->publishes([
                     $file->getRealPath() => base_path("stubs/filament-media-action/{$file->getFilename()}"),
                 ], 'filament-media-action-stubs');

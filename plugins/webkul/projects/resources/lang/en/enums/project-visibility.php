@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'private'  => 'Private',
+    'private' => 'Private',
     'internal' => 'Internal',
-    'public'   => 'Public',
+    'public' => 'Public',
 ];

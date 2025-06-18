@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-class PageRoutesObserver
+final class PageRoutesObserver
 {
     public function __construct(
         protected PageRoutesService $pageRoutesService

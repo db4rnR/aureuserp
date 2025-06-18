@@ -2,24 +2,46 @@ parameters:
     level: 8
     paths:
         - app
-        - bootstrap/app.php
+        - bin
+        - bootstrap
         - config
         - database
         - routes
         - tests
+        - packages/**/src
+        - packages/**/tests
+        - plugins
     excludePaths:
-        - app/Console/Kernel.php
-        - app/Exceptions/Handler.php
-        - app/Http/Middleware/Authenticate.php
-        - app/Http/Middleware/RedirectIfAuthenticated.php
-        - app/Providers/BroadcastServiceProvider.php
-        - bootstrap/cache/*
-        - database/migrations/*
-        - database/seeders/*
-        - tests/TestCase.php
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
+        - vendor
+        - vendor/*
+        - vendor/**/*
+        - node_modules
+        - storage
+        - bootstrap/cache
+        - public
+        - database/migrations
+        - plugins/**/database/migrations
+        - reports/rector/cache
+    tmpDir: reports/phpstan
+    checkMissingIterableValueType: true
+    checkGenericClassInNonGenericObjectType: true
+    checkExplicitMixed: true
+    checkImplicitMixed: true
+    checkMissingCallableSignature: true
+    reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false
+    # Discourage PHPDoc over native types
+    reportMissingPhpDocTypeInParameter: false
+    reportMissingPhpDocTypeInReturn: false
+    preferNativeTypes: true
+    # PHP 8.4 specific settings
+    phpVersion: 80400
+    # Performance settings consistent with Rector
+    parallel:
+        maximumNumberOfProcesses: 8
     ignoreErrors:
+        # Ignore errors in migration files if they're not excluded above
+        - '#.*database/migrations/.*#'
         - '#PHPDoc tag @var#'
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::middleware\(\)#'
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::validate\(\)#'
@@ -54,4 +76,3 @@ parameters:
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertSoftDeleted\(\)#'
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertModelExists\(\)#'
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::assertModelMissing\(\)#'
-    reportUnmatchedIgnoredErrors: false

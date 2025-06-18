@@ -1,34 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Filament\Tables\Columns;
 
-use Filament\Tables\Columns\Column;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ColorColumn;
-use Filament\Support\Enums\TextSize;
 use Filament\Support\Components\Component;
 use Filament\Support\Enums\FontWeight;
-use Filament\Tables;
+use Filament\Support\Enums\TextSize;
+use Filament\Tables\Columns\ColorColumn;
+use Filament\Tables\Columns\Column;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Collection;
 use Webkul\Field\Models\Field;
 
-class CustomColumns extends Component
+final class CustomColumns extends Component
 {
-    protected array $include = [];
+    private array $include = [];
 
-    protected array $exclude = [];
+    private array $exclude = [];
 
-    protected ?string $resourceClass = null;
-
-    final public function __construct(string $resource)
-    {
-        $this->resourceClass = $resource;
-    }
+    final public function __construct(private readonly ?string $resourceClass) {}
 
     public static function make(string $resource): static
     {
-        $static = app(static::class, ['resource' => $resource]);
+        $static = app(self::class, ['resource' => $resource]);
 
         $static->configure();
 
@@ -53,40 +49,38 @@ class CustomColumns extends Component
     {
         $fields = $this->getFields();
 
-        return $fields->map(function ($field) {
-            return $this->createColumn($field);
-        })->toArray();
+        return $fields->map(fn ($field): Column => $this->createColumn($field))->toArray();
     }
 
-    protected function getFields(): Collection
+    private function getFields(): Collection
     {
         $query = Field::query()
-            ->where('customizable_type', $this->getResourceClass()::getModel())
+            ->where('customizable_type', $this->resourceClass::getModel())
             ->where('use_in_table', true);
 
-        if (! empty($this->include)) {
+        if ($this->include !== []) {
             $query->whereIn('code', $this->include);
         }
 
-        if (! empty($this->exclude)) {
+        if ($this->exclude !== []) {
             $query->whereNotIn('code', $this->exclude);
         }
 
         return $query->orderBy('sort')->get();
     }
 
-    protected function getResourceClass(): string
+    private function getResourceClass(): string
     {
         return $this->resourceClass;
     }
 
-    protected function createColumn(Field $field): Column
+    private function createColumn(Field $field): Column
     {
         $columnClass = match ($field->type) {
             'text', 'textarea', 'select', 'radio' => TextColumn::class,
             'checkbox', 'toggle' => IconColumn::class,
             'checkbox_list' => TextColumn::class,
-            'datetime'      => TextColumn::class,
+            'datetime' => TextColumn::class,
             'editor', 'markdown' => TextColumn::class,
             'color' => ColorColumn::class,
             default => TextColumn::class,
@@ -104,16 +98,16 @@ class CustomColumns extends Component
         return $column;
     }
 
-    protected function applySetting(Column $column, array $setting): void
+    private function applySetting(Column $column, array $setting): void
     {
         $name = $setting['setting'];
         $value = $setting['value'] ?? null;
 
         if (method_exists($column, $name)) {
             if ($value !== null) {
-                if ($name == 'weight') {
+                if ($name === 'weight') {
                     $column->{$name}(constant(FontWeight::class."::$value"));
-                } elseif ($name == 'size') {
+                } elseif ($name === 'size') {
                     $column->{$name}(constant(TextSize::class."::$value"));
                 } else {
                     $column->{$name}($value);

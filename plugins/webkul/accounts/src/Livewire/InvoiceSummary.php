@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Livewire;
 
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
-class InvoiceSummary extends Component
+final class InvoiceSummary extends Component
 {
     #[Reactive]
     public $products = [];
@@ -21,9 +23,9 @@ class InvoiceSummary extends Component
     public $amountTax = 0;
 
     #[Reactive]
-    public $currency = null;
+    public $currency;
 
-    public function mount($currency, $products)
+    public function mount($currency, $products): void
     {
         $this->currency = $currency;
 

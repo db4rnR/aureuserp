@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasColor;
@@ -22,24 +24,24 @@ enum MoveState: string implements HasColor, HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::DRAFT              => __('inventories::enums/move-state.draft'),
-            self::CONFIRMED          => __('inventories::enums/move-state.confirmed'),
-            self::ASSIGNED           => __('inventories::enums/move-state.assigned'),
+            self::DRAFT => __('inventories::enums/move-state.draft'),
+            self::CONFIRMED => __('inventories::enums/move-state.confirmed'),
+            self::ASSIGNED => __('inventories::enums/move-state.assigned'),
             self::PARTIALLY_ASSIGNED => __('inventories::enums/move-state.partially-assigned'),
-            self::DONE               => __('inventories::enums/move-state.done'),
-            self::CANCELED           => __('inventories::enums/move-state.canceled'),
+            self::DONE => __('inventories::enums/move-state.done'),
+            self::CANCELED => __('inventories::enums/move-state.canceled'),
         };
     }
 
     public function getColor(): string
     {
         return match ($this) {
-            self::DRAFT              => 'gray',
-            self::CONFIRMED          => 'warning',
-            self::ASSIGNED           => 'primary',
+            self::DRAFT => 'gray',
+            self::CONFIRMED => 'warning',
+            self::ASSIGNED => 'primary',
             self::PARTIALLY_ASSIGNED => 'primary',
-            self::DONE               => 'success',
-            self::CANCELED           => 'danger',
+            self::DONE => 'success',
+            self::CANCELED => 'danger',
         };
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyTimeOffResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -10,7 +12,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyTimeOffResource;
 
-class CreateMyTimeOff extends CreateRecord
+final class CreateMyTimeOff extends CreateRecord
 {
     protected static string $resource = MyTimeOffResource::class;
 

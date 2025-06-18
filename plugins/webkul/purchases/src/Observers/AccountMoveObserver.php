@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Observers;
 
 use Webkul\Purchase\Models\AccountMove;
 
-class AccountMoveObserver
+final class AccountMoveObserver
 {
     /**
      * Handle the User "updated" event.

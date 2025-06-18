@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Marks;
 
 use Tiptap\Marks\Link as BaseLink;
 
-class Link extends BaseLink
+final class Link extends BaseLink
 {
     public function addOptions(): array
     {
@@ -75,7 +77,7 @@ class Link extends BaseLink
                     return null;
                 },
                 'renderHTML' => function ($attributes) {
-                    if (! property_exists($attributes, 'button_theme') || strlen($attributes->button_theme ?? '') === 0) {
+                    if (! property_exists($attributes, 'button_theme') || mb_strlen($attributes->button_theme ?? '') === 0) {
                         return null;
                     }
 

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources\UserResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Security\Filament\Resources\UserResource;
 
-class CreateUser extends CreateRecord
+final class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
 

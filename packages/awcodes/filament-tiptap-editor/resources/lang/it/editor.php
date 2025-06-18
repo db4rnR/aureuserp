@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Salta la barra degli strumenti',
     'align_center' => 'Allinea testo al centro',

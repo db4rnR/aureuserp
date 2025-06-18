@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Enums;
 
 enum DistanceUnit: string
@@ -12,7 +14,7 @@ enum DistanceUnit: string
     {
         return [
             self::KILOMETER->value => __('employees::enums/distance-unit.kilometer'),
-            self::METER->value     => __('employees::enums/distance-unit.meter'),
+            self::METER->value => __('employees::enums/distance-unit.meter'),
         ];
     }
 }

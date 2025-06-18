@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale;
 
 use Illuminate\Foundation\AliasLoader;
@@ -11,7 +13,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class SaleServiceProvider extends PackageServiceProvider
+final class SaleServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'sales';
 
@@ -19,7 +21,7 @@ class SaleServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasViews()
             ->hasTranslations()
             ->hasMigrations([
@@ -56,14 +58,14 @@ class SaleServiceProvider extends PackageServiceProvider
                 'invoices',
                 'payments',
             ])
-            ->hasSeeder('Webkul\\Sale\\Database\Seeders\\DatabaseSeeder')
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasSeeder(Database\Seeders\DatabaseSeeder::class)
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 
     public function packageBooted(): void

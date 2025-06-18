@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +10,7 @@ use Webkul\Account\Enums\AccountType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Currency;
 
-class Account extends Model
+final class Account extends Model
 {
     use HasFactory;
 
@@ -27,9 +29,9 @@ class Account extends Model
     ];
 
     protected $casts = [
-        'deprecated'   => 'boolean',
-        'reconcile'    => 'boolean',
-        'non_trade'    => 'boolean',
+        'deprecated' => 'boolean',
+        'reconcile' => 'boolean',
+        'non_trade' => 'boolean',
         'account_type' => AccountType::class,
     ];
 

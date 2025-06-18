@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor;
 
 use Filament\Support\Assets\AlpineComponent;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Vite;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentTiptapEditorServiceProvider extends PackageServiceProvider
+final class FilamentTiptapEditorServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -33,8 +35,8 @@ class FilamentTiptapEditorServiceProvider extends PackageServiceProvider
         });
 
         $assets = [
-            AlpineComponent::make('tiptap', __DIR__ . '/../resources/dist/filament-tiptap-editor.js'),
-            Css::make('tiptap', __DIR__ . '/../resources/dist/filament-tiptap-editor.css')->loadedOnRequest(),
+            AlpineComponent::make('tiptap', __DIR__.'/../resources/dist/filament-tiptap-editor.js'),
+            Css::make('tiptap', __DIR__.'/../resources/dist/filament-tiptap-editor.css')->loadedOnRequest(),
         ];
 
         if (config('filament-tiptap-editor.extensions_script')) {

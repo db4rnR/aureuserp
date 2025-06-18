@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +13,7 @@ use Webkul\Employee\Database\Factories\SkillTypeFactory;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-class SkillType extends Model
+final class SkillType extends Model
 {
     use HasCustomFields, HasFactory, SoftDeletes;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Araç Çubuğunu Atla',
     'align_center' => 'Metni Ortala',

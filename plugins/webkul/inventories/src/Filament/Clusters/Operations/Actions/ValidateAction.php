@@ -1,41 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Actions;
 
-use Webkul\Inventory\Enums\OperationState;
-use Webkul\Inventory\Enums\CreateBackorder;
-use Webkul\Inventory\Enums\ProductTracking;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Livewire\Component;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\CreateBackorder;
+use Webkul\Inventory\Enums\OperationState;
+use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Inventory\Facades\Inventory;
 use Webkul\Inventory\Models\Operation;
 use Webkul\Inventory\Models\ProductQuantity;
 
-class ValidateAction extends Action
+final class ValidateAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'inventories.operations.validate';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->label(__('inventories::filament/clusters/operations/actions/validate.label'))
-            ->color(function ($record) {
-                if (in_array($record->state, [OperationState::DRAFT, OperationState::CONFIRMED])) {
+            ->color(function ($record): string {
+                if (in_array($record->state, [OperationState::DRAFT, OperationState::CONFIRMED], true)) {
                     return 'gray';
                 }
 
                 return 'primary';
             })
-            ->requiresConfirmation(function (Operation $record) {
-                return $record->operationType->create_backorder === CreateBackorder::ASK
-                    && Inventory::canCreateBackOrder($record);
-            })
+            ->requiresConfirmation(fn (Operation $record): bool => $record->operationType->create_backorder === CreateBackorder::ASK
+                && Inventory::canCreateBackOrder($record))
             ->configureModal($this->getRecord())
             ->action(function (Operation $record, Component $livewire): void {
                 if ($this->hasMoveErrors($record)) {
@@ -48,13 +42,18 @@ class ValidateAction extends Action
 
                 $livewire->updateForm();
             })
-            ->hidden(fn () => in_array($this->getRecord()->state, [
+            ->hidden(fn (): bool => in_array($this->getRecord()->state, [
                 OperationState::DONE,
                 OperationState::CANCELED,
-            ]));
+            ], true));
     }
 
-    protected function configureModal(Operation $record): self
+    public static function getDefaultName(): ?string
+    {
+        return 'inventories.operations.validate';
+    }
+
+    private function configureModal(Operation $record): self
     {
         if (
             $record->operationType->create_backorder === CreateBackorder::ASK
@@ -81,7 +80,7 @@ class ValidateAction extends Action
         return $this;
     }
 
-    protected function hasMoveErrors(Operation $record): bool
+    private function hasMoveErrors(Operation $record): bool
     {
         $record = Inventory::computeTransfer($record);
 
@@ -113,14 +112,14 @@ class ValidateAction extends Action
         }
 
         foreach ($move->lines as $line) {
-            if ($line->package_id && $line->result_package_id && $line->package_id == $line->result_package_id) {
+            if ($line->package_id && $line->result_package_id && $line->package_id === $line->result_package_id) {
                 $sourceQuantity = ProductQuantity::where('product_id', $line->product_id)
                     ->where('location_id', $line->source_location_id)
                     ->where('lot_id', $line->lot_id)
                     ->where('package_id', $line->package_id)
                     ->first();
 
-                if ($sourceQuantity && $sourceQuantity->quantity != $line->qty) {
+                if ($sourceQuantity && $sourceQuantity->quantity !== $line->qty) {
                     $this->sendNotification(
                         'inventories::filament/clusters/operations/actions/validate.notification.warning.partial-package.title',
                         'inventories::filament/clusters/operations/actions/validate.notification.warning.partial-package.body',
@@ -132,9 +131,9 @@ class ValidateAction extends Action
             }
         }
 
-        $isLotTracking = $move->product->tracking == ProductTracking::LOT || $move->product->tracking == ProductTracking::SERIAL;
+        $isLotTracking = $move->product->tracking === ProductTracking::LOT || $move->product->tracking === ProductTracking::SERIAL;
 
-        if ($isLotTracking && $move->lines->contains(fn ($line) => ! $line->lot_id)) {
+        if ($isLotTracking && $move->lines->contains(fn ($line): bool => ! $line->lot_id)) {
             $this->sendNotification(
                 'inventories::filament/clusters/operations/actions/validate.notification.warning.lot-missing.title',
                 'inventories::filament/clusters/operations/actions/validate.notification.warning.lot-missing.body',
@@ -144,10 +143,10 @@ class ValidateAction extends Action
             return true;
         }
 
-        $isSerialTracking = $move->product->tracking == ProductTracking::SERIAL;
+        $isSerialTracking = $move->product->tracking === ProductTracking::SERIAL;
 
         if ($isSerialTracking) {
-            if ($move->lines->contains(fn ($line) => $line->qty != 1)) {
+            if ($move->lines->contains(fn ($line): bool => $line->qty !== 1)) {
                 $this->sendNotification(
                     'inventories::filament/clusters/operations/actions/validate.notification.warning.serial-qty.title',
                     'inventories::filament/clusters/operations/actions/validate.notification.warning.serial-qty.body',

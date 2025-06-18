@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek;
 
 use Filament\Contracts\Plugin;
@@ -10,17 +12,22 @@ use Filament\Support\Facades\FilamentAsset;
 use Livewire\Livewire;
 use Pboivin\FilamentPeek\Livewire\BuilderEditor;
 
-class FilamentPeekPlugin implements Plugin
+final class FilamentPeekPlugin implements Plugin
 {
-    const PACKAGE = 'pboivin/filament-peek';
+    public const PACKAGE = 'pboivin/filament-peek';
 
-    const ID = 'filament-peek';
+    public const ID = 'filament-peek';
 
-    const VERSION = '2.4.0';
+    public const VERSION = '2.4.0';
 
-    protected bool $shouldLoadPluginScripts = true;
+    private bool $shouldLoadPluginScripts = true;
 
-    protected bool $shouldLoadPluginStyles = true;
+    private bool $shouldLoadPluginStyles = true;
+
+    public static function make(): static
+    {
+        return app(self::class);
+    }
 
     public function disablePluginScripts(): self
     {
@@ -44,11 +51,6 @@ class FilamentPeekPlugin implements Plugin
     public function shouldLoadPluginStyles(): bool
     {
         return $this->shouldLoadPluginStyles;
-    }
-
-    public static function make(): static
-    {
-        return app(static::class);
     }
 
     public function getId(): string

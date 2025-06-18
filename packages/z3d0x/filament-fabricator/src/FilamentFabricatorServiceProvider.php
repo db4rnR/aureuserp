@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator;
 
-use Z3d0X\FilamentFabricator\Commands\MakeLayoutCommand;
-use Z3d0X\FilamentFabricator\Commands\MakePageBlockCommand;
-use Z3d0X\FilamentFabricator\Commands\ClearRoutesCacheCommand;
 use Illuminate\Console\Events\CommandFinished;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Event;
@@ -15,6 +14,9 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Symfony\Component\Finder\SplFileInfo;
+use Z3d0X\FilamentFabricator\Commands\ClearRoutesCacheCommand;
+use Z3d0X\FilamentFabricator\Commands\MakeLayoutCommand;
+use Z3d0X\FilamentFabricator\Commands\MakePageBlockCommand;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Layouts\Layout;
 use Z3d0X\FilamentFabricator\Listeners\OptimizeWithLaravel;
@@ -22,7 +24,7 @@ use Z3d0X\FilamentFabricator\Observers\PageRoutesObserver;
 use Z3d0X\FilamentFabricator\PageBlocks\PageBlock;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-class FilamentFabricatorServiceProvider extends PackageServiceProvider
+final class FilamentFabricatorServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -36,7 +38,7 @@ class FilamentFabricatorServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasTranslations()
             ->hasCommands($this->getCommands())
-            ->hasInstallCommand(function (InstallCommand $installCommand) {
+            ->hasInstallCommand(function (InstallCommand $installCommand): void {
                 $installCommand
                     ->startWith(fn (InstallCommand $installCommand) => $installCommand->call('filament:upgrade'))
                     ->publishConfigFile()
@@ -44,29 +46,6 @@ class FilamentFabricatorServiceProvider extends PackageServiceProvider
                     ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('z3d0x/filament-fabricator');
             });
-    }
-
-    protected function getCommands(): array
-    {
-        $commands = [
-            MakeLayoutCommand::class,
-            MakePageBlockCommand::class,
-            ClearRoutesCacheCommand::class,
-        ];
-
-        $aliases = [];
-
-        foreach ($commands as $command) {
-            $class = 'Z3d0X\\FilamentFabricator\\Commands\\Aliases\\' . class_basename($command);
-
-            if (! class_exists($class)) {
-                continue;
-            }
-
-            $aliases[] = $class;
-        }
-
-        return array_merge($commands, $aliases);
     }
 
     public function packageRegistered(): void
@@ -106,7 +85,7 @@ class FilamentFabricatorServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function packageBooted()
+    public function packageBooted(): void
     {
         parent::packageBooted();
 
@@ -115,6 +94,29 @@ class FilamentFabricatorServiceProvider extends PackageServiceProvider
         if ((bool) config('filament-fabricator.hook-to-commands')) {
             Event::listen(CommandFinished::class, OptimizeWithLaravel::class);
         }
+    }
+
+    protected function getCommands(): array
+    {
+        $commands = [
+            MakeLayoutCommand::class,
+            MakePageBlockCommand::class,
+            ClearRoutesCacheCommand::class,
+        ];
+
+        $aliases = [];
+
+        foreach ($commands as $command) {
+            $class = 'Z3d0X\\FilamentFabricator\\Commands\\Aliases\\'.class_basename($command);
+
+            if (! class_exists($class)) {
+                continue;
+            }
+
+            $aliases[] = $class;
+        }
+
+        return array_merge($commands, $aliases);
     }
 
     protected function registerComponentsFromDirectory(string $baseClass, array $register, ?string $directory, ?string $namespace): void
@@ -136,7 +138,7 @@ class FilamentFabricatorServiceProvider extends PackageServiceProvider
             collect($filesystem->allFiles($directory))
                 ->map(function (SplFileInfo $file) use ($namespace): string {
                     $variableNamespace = $namespace->contains('*') ? str_ireplace(
-                        ['\\' . $namespace->before('*'), $namespace->after('*')],
+                        ['\\'.$namespace->before('*'), $namespace->after('*')],
                         ['', ''],
                         Str::of($file->getPath())
                             ->after(base_path())

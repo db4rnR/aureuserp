@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Filament\Resources\FieldResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Field\FieldsColumnManager;
 use Webkul\Field\Filament\Resources\FieldResource;
 
-class EditField extends EditRecord
+final class EditField extends EditRecord
 {
     protected static string $resource = FieldResource::class;
 
@@ -28,13 +29,13 @@ class EditField extends EditRecord
         ];
     }
 
-    protected function afterSave(): void
-    {
-        FieldsColumnManager::updateColumn($this->record);
-    }
-
     protected function getRedirectUrl(): string
     {
         return $this->previousUrl ?? $this->getResource()::getUrl('index');
+    }
+
+    private function afterSave(): void
+    {
+        FieldsColumnManager::updateColumn($this->record);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'lock'   => 'Lock',
+    'lock' => 'Lock',
     'unlock' => 'Unlock',
 ];

@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions;
 
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\FileUpload;
 use Exception;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -17,13 +18,8 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-class SendPOEmailAction extends Action
+final class SendPOEmailAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'purchases.orders.send-po-email';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -43,7 +39,7 @@ class SendPOEmailAction extends Action
                     ->multiple()
                     ->searchable()
                     ->preload()
-                    ->default(fn () => [$this->getRecord()->partner_id]),
+                    ->default(fn (): array => [$this->getRecord()->partner_id]),
                 TextInput::make('subject')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order/actions/send-po-email.form.fields.subject'))
                     ->required()
@@ -68,13 +64,11 @@ MD),
                 FileUpload::make('attachment')
                     ->hiddenLabel()
                     ->disk('public')
-                    ->default(function () {
-                        return PurchaseOrder::generatePurchaseOrderPdf($this->getRecord());
-                    })
+                    ->default(fn () => PurchaseOrder::generatePurchaseOrderPdf($this->getRecord()))
                     ->downloadable()
                     ->openable(),
             ])
-            ->action(function (array $data, Order $record, Component $livewire) {
+            ->action(function (array $data, Order $record, Component $livewire): void {
                 try {
                     $record = PurchaseOrder::sendPurchaseOrder($record, $data);
                 } catch (Exception $e) {
@@ -95,6 +89,11 @@ MD),
                     ->send();
             })
             ->color(fn (): string => $this->getRecord()->state === OrderState::DRAFT ? 'primary' : 'gray')
-            ->visible(fn () => $this->getRecord()->state == OrderState::PURCHASE);
+            ->visible(fn (): bool => $this->getRecord()->state === OrderState::PURCHASE);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'purchases.orders.send-po-email';
     }
 }

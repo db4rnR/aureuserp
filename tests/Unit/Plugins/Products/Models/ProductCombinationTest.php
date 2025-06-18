@@ -1,33 +1,35 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Product\Models\ProductCombination;
-use Webkul\Product\Models\Product;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Product\Models\Attribute;
 use Webkul\Product\Models\AttributeOption;
+use Webkul\Product\Models\Product;
 use Webkul\Product\Models\ProductAttribute;
 use Webkul\Product\Models\ProductAttributeValue;
+use Webkul\Product\Models\ProductCombination;
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductCombination model attributes and properties')]
-function product_combination_model_attributes_and_properties()
+function product_combination_model_attributes_and_properties(): void
 {
     // Create a test product combination
     $productCombination = ProductCombination::factory()->create();
 
     // Test relationships
-    expect($productCombination->product())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($productCombination->productAttributeValue())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productCombination->product())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productCombination->productAttributeValue())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductCombination model relationships with other models')]
-function product_combination_model_relationships_with_other_models()
+function product_combination_model_relationships_with_other_models(): void
 {
     // Create a parent product
     $parentProduct = Product::factory()->create([
@@ -79,7 +81,7 @@ function product_combination_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductCombination model with multiple combinations')]
-function product_combination_model_with_multiple_combinations()
+function product_combination_model_with_multiple_combinations(): void
 {
     // Create a parent product
     $parentProduct = Product::factory()->create([
@@ -209,8 +211,8 @@ function product_combination_model_with_multiple_combinations()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductCombination model HasFactory trait')]
-function product_combination_model_has_factory_trait()
+function product_combination_model_has_factory_trait(): void
 {
     // Test that the model uses the HasFactory trait
-    expect(ProductCombination::factory())->toBeInstanceOf(\Illuminate\Database\Eloquent\Factories\Factory::class);
+    expect(ProductCombination::factory())->toBeInstanceOf(Illuminate\Database\Eloquent\Factories\Factory::class);
 }

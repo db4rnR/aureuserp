@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice;
 
-use ReflectionClass;
 use Filament\Contracts\Plugin;
 use Filament\Navigation\NavigationItem;
 use Filament\Panel;
+use ReflectionClass;
 use Webkul\Invoice\Filament\Clusters\Settings\Pages\Products;
 use Webkul\Support\Package;
 
-class InvoicePlugin implements Plugin
+final class InvoicePlugin implements Plugin
 {
+    public static function make(): static
+    {
+        return app(self::class);
+    }
+
     public function getId(): string
     {
         return 'invoices';
-    }
-
-    public static function make(): static
-    {
-        return app(static::class);
     }
 
     public function register(Panel $panel): void
@@ -28,7 +30,7 @@ class InvoicePlugin implements Plugin
         }
 
         $panel
-            ->when($panel->getId() == 'admin', function (Panel $panel) {
+            ->when($panel->getId() === 'admin', function (Panel $panel): void {
                 $panel->discoverResources(in: $this->getPluginBasePath('/Filament/Resources'), for: 'Webkul\\Invoice\\Filament\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Invoice\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Invoice\\Filament\\Clusters')
@@ -36,7 +38,7 @@ class InvoicePlugin implements Plugin
                     ->navigationItems([
                         NavigationItem::make('settings')
                             ->label('Settings')
-                            ->url(fn () => Products::getUrl())
+                            ->url(fn (): string => Products::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Invoices')
                             ->sort(4),
@@ -49,9 +51,9 @@ class InvoicePlugin implements Plugin
         //
     }
 
-    protected function getPluginBasePath($path = null): string
+    private function getPluginBasePath($path = null): string
     {
-        $reflector = new ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(self::class);
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

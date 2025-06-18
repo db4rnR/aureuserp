@@ -1,57 +1,59 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
         'fields' => [
-            'color'         => 'Color',
-            'country'       => 'Country',
+            'color' => 'Color',
+            'country' => 'Country',
             'applicability' => 'Applicability',
-            'name'          => 'Name',
-            'status'        => 'Status',
-            'tax-negate'    => 'Tax Negate',
+            'name' => 'Name',
+            'status' => 'Status',
+            'tax-negate' => 'Tax Negate',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'color'         => 'Color',
-            'country'       => 'Country',
-            'created-by'    => 'Created By',
+            'color' => 'Color',
+            'country' => 'Country',
+            'created-by' => 'Created By',
             'applicability' => 'Applicability',
-            'name'          => 'Name',
-            'status'        => 'Status',
-            'tax-negate'    => 'Tax Negate',
-            'created-at'    => 'Created At',
-            'updated-at'    => 'Updated At',
-            'deleted-at'    => 'Deleted At',
+            'name' => 'Name',
+            'status' => 'Status',
+            'tax-negate' => 'Tax Negate',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
+            'deleted-at' => 'Deleted At',
         ],
 
         'filters' => [
-            'bank'           => 'Bank',
+            'bank' => 'Bank',
             'account-holder' => 'Account Holder',
-            'creator'        => 'Creator',
+            'creator' => 'Creator',
             'can-send-money' => 'Can Send Money',
         ],
 
         'groups' => [
-            'country'       => 'Country',
-            'created-by'    => 'Created By',
+            'country' => 'Country',
+            'created-by' => 'Created By',
             'applicability' => 'Applicability',
-            'name'          => 'Name',
+            'name' => 'Name',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Account Tag updated',
-                    'body'  => 'The account Tag has been updated successfully.',
+                    'body' => 'The account Tag has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Account Tag deleted',
-                    'body'  => 'The account Tag has been deleted successfully.',
+                    'body' => 'The account Tag has been deleted successfully.',
                 ],
             ],
         ],
@@ -60,7 +62,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Account Tags deleted',
-                    'body'  => 'The account Tags has been deleted successfully.',
+                    'body' => 'The account Tags has been deleted successfully.',
                 ],
             ],
         ],
@@ -68,12 +70,12 @@ return [
 
     'infolist' => [
         'entries' => [
-            'color'         => 'Color',
-            'country'       => 'Country',
+            'color' => 'Color',
+            'country' => 'Country',
             'applicability' => 'Applicability',
-            'name'          => 'Name',
-            'status'        => 'Status',
-            'tax-negate'    => 'Tax Negate',
+            'name' => 'Name',
+            'status' => 'Status',
+            'tax-negate' => 'Tax Negate',
         ],
     ],
 ];

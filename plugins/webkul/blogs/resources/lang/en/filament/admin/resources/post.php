@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Blog Posts',
@@ -12,12 +14,12 @@ return [
                 'title' => 'General',
 
                 'fields' => [
-                    'title'             => 'Title',
-                    'sub-title'         => 'Sub Title',
+                    'title' => 'Title',
+                    'sub-title' => 'Sub Title',
                     'title-placeholder' => 'Post title ...',
-                    'slug'              => 'Slug',
-                    'content'           => 'Content',
-                    'banner'            => 'Banner',
+                    'slug' => 'Slug',
+                    'content' => 'Content',
+                    'banner' => 'Banner',
                 ],
             ],
 
@@ -25,8 +27,8 @@ return [
                 'title' => 'SEO',
 
                 'fields' => [
-                    'meta-title'       => 'Meta Title',
-                    'meta-keywords'    => 'Meta Keywords',
+                    'meta-title' => 'Meta Title',
+                    'meta-keywords' => 'Meta Keywords',
                     'meta-description' => 'Meta Description',
                 ],
             ],
@@ -35,10 +37,10 @@ return [
                 'title' => 'Settings',
 
                 'fields' => [
-                    'category'     => 'Category',
-                    'tags'         => 'Tags',
-                    'name'         => 'Name',
-                    'color'        => 'Color',
+                    'category' => 'Category',
+                    'tags' => 'Tags',
+                    'name' => 'Name',
+                    'color' => 'Color',
                     'is-published' => 'Is Published',
                 ],
             ],
@@ -47,56 +49,56 @@ return [
 
     'table' => [
         'columns' => [
-            'title'        => 'Title',
-            'slug'         => 'Slug',
-            'author'       => 'Author',
-            'category'     => 'Category',
-            'creator'      => 'Created By',
+            'title' => 'Title',
+            'slug' => 'Slug',
+            'author' => 'Author',
+            'category' => 'Category',
+            'creator' => 'Created By',
             'is-published' => 'Is Published',
-            'created-at'   => 'Created At',
-            'updated-at'   => 'Updated At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'category'   => 'Category',
-            'author'     => 'Author',
+            'category' => 'Category',
+            'author' => 'Author',
             'created-at' => 'Created At',
         ],
 
         'filters' => [
             'is-published' => 'Is Published',
-            'author'       => 'Author',
-            'creator'      => 'Created By',
-            'category'     => 'Category',
-            'tags'         => 'Tags',
+            'author' => 'Author',
+            'creator' => 'Created By',
+            'category' => 'Category',
+            'tags' => 'Tags',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Post updated',
-                    'body'  => 'The post has been updated successfully.',
+                    'body' => 'The post has been updated successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Post restored',
-                    'body'  => 'The post has been restored successfully.',
+                    'body' => 'The post has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Post deleted',
-                    'body'  => 'The post has been deleted successfully.',
+                    'body' => 'The post has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Post force deleted',
-                    'body'  => 'The post has been force deleted successfully.',
+                    'body' => 'The post has been force deleted successfully.',
                 ],
             ],
         ],
@@ -105,21 +107,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Posts restored',
-                    'body'  => 'The posts has been restored successfully.',
+                    'body' => 'The posts has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Posts deleted',
-                    'body'  => 'The posts has been deleted successfully.',
+                    'body' => 'The posts has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Posts force deleted',
-                    'body'  => 'The posts has been force deleted successfully.',
+                    'body' => 'The posts has been force deleted successfully.',
                 ],
             ],
         ],
@@ -131,10 +133,10 @@ return [
                 'title' => 'General',
 
                 'entries' => [
-                    'title'   => 'Title',
-                    'slug'    => 'Slug',
+                    'title' => 'Title',
+                    'slug' => 'Slug',
                     'content' => 'Content',
-                    'banner'  => 'Banner',
+                    'banner' => 'Banner',
                 ],
             ],
 
@@ -142,8 +144,8 @@ return [
                 'title' => 'SEO',
 
                 'entries' => [
-                    'meta-title'       => 'Meta Title',
-                    'meta-keywords'    => 'Meta Keywords',
+                    'meta-title' => 'Meta Title',
+                    'meta-keywords' => 'Meta Keywords',
                     'meta-description' => 'Meta Description',
                 ],
             ],
@@ -152,12 +154,12 @@ return [
                 'title' => 'Record Information',
 
                 'entries' => [
-                    'author'          => 'Author',
-                    'created-by'      => 'Created By',
-                    'published-at'    => 'Published At',
+                    'author' => 'Author',
+                    'created-by' => 'Created By',
+                    'published-at' => 'Published At',
                     'last-updated-by' => 'Last Updated By',
-                    'last-updated'    => 'Last Updated At',
-                    'created-at'      => 'Created At',
+                    'last-updated' => 'Last Updated At',
+                    'created-at' => 'Created At',
                 ],
             ],
 
@@ -165,10 +167,10 @@ return [
                 'title' => 'Settings',
 
                 'entries' => [
-                    'category'     => 'Category',
-                    'tags'         => 'Tags',
-                    'name'         => 'Name',
-                    'color'        => 'Color',
+                    'category' => 'Category',
+                    'tags' => 'Tags',
+                    'name' => 'Name',
+                    'color' => 'Color',
                     'is-published' => 'Is Published',
                 ],
             ],

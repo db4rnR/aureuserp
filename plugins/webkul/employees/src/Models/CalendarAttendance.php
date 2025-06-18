@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,9 +11,14 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Employee\Database\Factories\CalendarAttendanceFactory;
 use Webkul\Security\Models\User;
 
-class CalendarAttendance extends Model implements Sortable
+final class CalendarAttendance extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'employees_calendar_attendances';
 
@@ -29,11 +36,6 @@ class CalendarAttendance extends Model implements Sortable
         'duration_days',
         'calendar_id',
         'creator_id',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function calendar()

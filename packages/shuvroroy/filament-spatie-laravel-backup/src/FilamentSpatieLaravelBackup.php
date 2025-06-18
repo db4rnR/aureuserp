@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup;
 
 use Illuminate\Support\Facades\Cache;
@@ -10,7 +12,7 @@ use Spatie\Backup\Helpers\Format;
 use Spatie\Backup\Tasks\Monitor\BackupDestinationStatus;
 use Spatie\Backup\Tasks\Monitor\BackupDestinationStatusFactory;
 
-class FilamentSpatieLaravelBackup
+final class FilamentSpatieLaravelBackup
 {
     public static function getDisks(): array
     {
@@ -19,7 +21,7 @@ class FilamentSpatieLaravelBackup
 
     public static function getDisk(): string
     {
-        $defaultDisks = static::getDisks();
+        $defaultDisks = self::getDisks();
 
         return request('tableFilters.disk.value', reset($defaultDisks));
     }
@@ -28,7 +30,7 @@ class FilamentSpatieLaravelBackup
     {
         $result = [];
 
-        foreach (static::getDisks() as $value) {
+        foreach (self::getDisks() as $value) {
             $result[$value] = ucfirst($value);
         }
 
@@ -37,7 +39,7 @@ class FilamentSpatieLaravelBackup
 
     public static function getBackupDestinationData(string $disk): array
     {
-        return Cache::remember('backups-' . $disk, now()->addSeconds(4), function () use ($disk) {
+        return Cache::remember('backups-'.$disk, now()->addSeconds(4), function () use ($disk) {
             return BackupDestination::create($disk, config('backup.backup.name'))
                 ->backups()
                 ->map(function (Backup $backup) use ($disk) {
@@ -60,7 +62,7 @@ class FilamentSpatieLaravelBackup
                 : config('backup.monitor_backups');
 
             return BackupDestinationStatusFactory::createForMonitorConfig($config)
-                ->map(function (BackupDestinationStatus $backupDestinationStatus, int | string $key) {
+                ->map(function (BackupDestinationStatus $backupDestinationStatus, int|string $key) {
                     return [
                         'id' => $key,
                         'name' => $backupDestinationStatus->backupDestination()->backupName(),

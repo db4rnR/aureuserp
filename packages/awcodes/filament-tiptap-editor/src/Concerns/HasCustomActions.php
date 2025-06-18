@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Concerns;
 
-use Filament\Actions\Action;
 use Closure;
+use Filament\Actions\Action;
 
 trait HasCustomActions
 {
@@ -17,21 +19,21 @@ trait HasCustomActions
 
     public ?string $oembedAction = null;
 
-    public function linkAction(string | Closure $action): static
+    public function linkAction(string|Closure $action): static
     {
         $this->linkAction = $action;
 
         return $this;
     }
 
-    public function mediaAction(string | Closure $action): static
+    public function mediaAction(string|Closure $action): static
     {
         $this->mediaAction = $action;
 
         return $this;
     }
 
-    public function oembedAction(string | Closure $action): static
+    public function oembedAction(string|Closure $action): static
     {
         $this->oembedAction = $action;
 
@@ -52,7 +54,7 @@ trait HasCustomActions
         return $action::make();
     }
 
-    public function editMediaAction(string | Closure $action): static
+    public function editMediaAction(string|Closure $action): static
     {
         $this->editMediaAction = $action;
 
@@ -66,7 +68,7 @@ trait HasCustomActions
         return $action::make();
     }
 
-    public function gridBuilderAction(string | Closure $action): static
+    public function gridBuilderAction(string|Closure $action): static
     {
         $this->gridBuilderAction = $action;
 

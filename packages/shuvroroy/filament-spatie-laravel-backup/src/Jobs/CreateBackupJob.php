@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup\Jobs;
 
 use Illuminate\Bus\Queueable;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 use ShuvroRoy\FilamentSpatieLaravelBackup\Enums\Option;
 use Spatie\Backup\Commands\BackupCommand;
 
-class CreateBackupJob implements ShouldQueue
+final class CreateBackupJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -28,8 +30,8 @@ class CreateBackupJob implements ShouldQueue
             '--only-files' => $this->option === Option::ONLY_FILES,
             '--filename' => match ($this->option) {
                 Option::ALL => null,
-                default => str_replace('_', '-', $this->option->value) .
-                    '-' . date('Y-m-d-H-i-s') . '.zip'
+                default => str_replace('_', '-', $this->option->value).
+                    '-'.date('Y-m-d-H-i-s').'.zip'
             },
             '--timeout' => $this->timeout,
         ]);

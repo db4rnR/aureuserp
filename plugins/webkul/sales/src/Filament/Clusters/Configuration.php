@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters;
 
+use BackedEnum;
 use Filament\Clusters\Cluster;
 
-class Configuration extends Cluster
+final class Configuration extends Cluster
 {
     protected static ?string $slug = 'sale/configurations';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
 
     protected static ?int $navigationSort = 1;
 

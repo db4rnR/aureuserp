@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList\Forms\Components\Concerns;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
 use Closure;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
 
 trait HasForm
 {
-    protected bool | Closure $hasModal = true;
+    protected bool|Closure $hasModal = true;
 
-    protected array | Closure | null $form = null;
+    protected array|Closure|null $form = null;
 
-    public function form(array | Closure | null $form): static
+    public function form(array|Closure|null $form): static
     {
         $this->form = $form;
 
@@ -50,7 +51,7 @@ trait HasForm
         return $modifiedForm;
     }
 
-    public function modal(bool | Closure $condition = true): static
+    public function modal(bool|Closure $condition = true): static
     {
         $this->hasModal = $condition;
 

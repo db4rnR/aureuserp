@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Employee\Models\WorkLocation;
 use Webkul\Security\Models\User;
 
-class WorkLocationPolicy
+final class WorkLocationPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class WorkLocationPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, WorkLocation $workLocation): bool
+    public function view(User $user): bool
     {
         return $user->can('view_work::location');
     }
@@ -37,7 +38,7 @@ class WorkLocationPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, WorkLocation $workLocation): bool
+    public function update(User $user): bool
     {
         return $user->can('update_work::location');
     }
@@ -45,7 +46,7 @@ class WorkLocationPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, WorkLocation $workLocation): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_work::location');
     }
@@ -61,7 +62,7 @@ class WorkLocationPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, WorkLocation $workLocation): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_work::location');
     }
@@ -77,7 +78,7 @@ class WorkLocationPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, WorkLocation $workLocation): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_work::location');
     }
@@ -93,7 +94,7 @@ class WorkLocationPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, WorkLocation $workLocation): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_work::location');
     }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('activity_plans', function (Blueprint $table) {
+        Schema::table('activity_plans', function (Blueprint $table): void {
             $table->foreignId('department_id')->nullable()->constrained('employees_departments')->onDelete('set null');
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('activity_plans', function (Blueprint $table) {
+        Schema::table('activity_plans', function (Blueprint $table): void {
             $table->dropForeign(['department_id']);
             $table->dropColumn('department_id');
         });

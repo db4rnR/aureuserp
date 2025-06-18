@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
-use Webkul\Purchase\Enums\QtyReceivedMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,15 +18,20 @@ use Webkul\Inventory\Models\OrderPoint;
 use Webkul\Partner\Models\Partner;
 use Webkul\Product\Models\Packaging;
 use Webkul\Purchase\Database\Factories\OrderLineFactory;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\QtyReceivedMethod;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 use Webkul\Support\Models\UOM;
 
-class OrderLine extends Model implements Sortable
+final class OrderLine extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -81,14 +87,9 @@ class OrderLine extends Model implements Sortable
      */
     protected $casts = [
         'qty_received_method' => QtyReceivedMethod::class,
-        'planned_at'          => 'datetime',
-        'is_downpayment'      => 'boolean',
-        'propagate_cancel'    => 'boolean',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'planned_at' => 'datetime',
+        'is_downpayment' => 'boolean',
+        'propagate_cancel' => 'boolean',
     ];
 
     public function order(): BelongsTo

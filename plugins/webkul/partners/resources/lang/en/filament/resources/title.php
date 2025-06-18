@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
-        'name'       => 'Name',
+        'name' => 'Name',
         'short-name' => 'Short Name',
     ],
 
     'table' => [
         'columns' => [
-            'name'       => 'Name',
+            'name' => 'Name',
             'short-name' => 'Short Name',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
@@ -22,14 +24,14 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Title updated',
-                    'body'  => 'The Title has been updated successfully.',
+                    'body' => 'The Title has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Title deleted',
-                    'body'  => 'The title has been deleted successfully.',
+                    'body' => 'The title has been deleted successfully.',
                 ],
             ],
         ],
@@ -38,7 +40,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Titles deleted',
-                    'body'  => 'The titles has been deleted successfully.',
+                    'body' => 'The titles has been deleted successfully.',
                 ],
             ],
         ],

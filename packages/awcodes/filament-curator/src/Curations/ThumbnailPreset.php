@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Curations;
 
-class ThumbnailPreset extends CurationPreset
+final class ThumbnailPreset extends CurationPreset
 {
     public function getKey(): string
     {

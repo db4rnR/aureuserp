@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Commands;
 
 use Filament\Support\Commands\Concerns\CanManipulateFiles;
@@ -8,7 +10,7 @@ use Illuminate\Support\Str;
 
 use function Laravel\Prompts\text;
 
-class MakePageBlockCommand extends Command
+final class MakePageBlockCommand extends Command
 {
     use CanManipulateFiles;
 
@@ -64,12 +66,12 @@ class MakePageBlockCommand extends Command
         $files = [$path, $viewPath];
 
         if (! $this->option('force') && $this->checkForCollision($files)) {
-            return static::INVALID;
+            return self::INVALID;
         }
 
         $this->copyStubToApp('PageBlock', $path, [
             'class' => $pageBlockClass,
-            'namespace' => 'App\\Filament\\Fabricator\\PageBlocks' . ($pageBlockNamespace !== '' ? "\\{$pageBlockNamespace}" : ''),
+            'namespace' => 'App\\Filament\\Fabricator\\PageBlocks'.($pageBlockNamespace !== '' ? "\\{$pageBlockNamespace}" : ''),
             'shortName' => $shortName,
         ]);
 
@@ -77,6 +79,6 @@ class MakePageBlockCommand extends Command
 
         $this->info("Successfully created {$pageBlock}!");
 
-        return static::SUCCESS;
+        return self::SUCCESS;
     }
 }

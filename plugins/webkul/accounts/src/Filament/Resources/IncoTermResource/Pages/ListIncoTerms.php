@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\IncoTermResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Account\Filament\Resources\IncoTermResource;
 
-class ListIncoTerms extends ListRecords
+final class ListIncoTerms extends ListRecords
 {
     protected static string $resource = IncoTermResource::class;
 

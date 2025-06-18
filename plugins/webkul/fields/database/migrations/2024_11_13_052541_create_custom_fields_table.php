@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('custom_fields', function (Blueprint $table) {
+        Schema::create('custom_fields', function (Blueprint $table): void {
             $table->id();
             $table->string('code');
             $table->string('name');

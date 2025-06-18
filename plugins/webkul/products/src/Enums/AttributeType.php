@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -15,9 +17,9 @@ enum AttributeType: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::RADIO  => __('products::enums/attribute-type.radio'),
+            self::RADIO => __('products::enums/attribute-type.radio'),
             self::SELECT => __('products::enums/attribute-type.select'),
-            self::COLOR  => __('products::enums/attribute-type.color'),
+            self::COLOR => __('products::enums/attribute-type.color'),
         };
     }
 }

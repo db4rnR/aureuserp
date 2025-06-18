@@ -1,15 +1,17 @@
 <?php
 
-use Webkul\Invoice\Models\Invoice;
+declare(strict_types=1);
+
+use Webkul\Account\Enums\JournalType;
 use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Enums\MoveType;
+use Webkul\Account\Models\Account;
 use Webkul\Account\Models\Journal;
-use Webkul\Account\Enums\JournalType;
-use Webkul\Support\Models\Company;
-use Webkul\Support\Models\Currency;
+use Webkul\Invoice\Models\Invoice;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
-use Webkul\Account\Models\Account;
+use Webkul\Support\Models\Company;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('feature')]
@@ -19,7 +21,7 @@ use Webkul\Account\Models\Account;
 #[Group('auth')]
 #[Group('billing')]
 #[Description('Test invoice listing page loads successfully')]
-function invoice_listing_page_loads_successfully()
+function invoice_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -38,7 +40,7 @@ function invoice_listing_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test invoice creation page loads successfully')]
-function invoice_creation_page_loads_successfully()
+function invoice_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -62,7 +64,7 @@ function invoice_creation_page_loads_successfully()
 #[Group('billing')]
 #[Group('critical-path')]
 #[Description('Test invoice can be created successfully')]
-function invoice_can_be_created_successfully()
+function invoice_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -115,7 +117,7 @@ function invoice_can_be_created_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test invoice can be viewed successfully')]
-function invoice_can_be_viewed_successfully()
+function invoice_can_be_viewed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -141,7 +143,7 @@ function invoice_can_be_viewed_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test invoice can be edited successfully')]
-function invoice_can_be_edited_successfully()
+function invoice_can_be_edited_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -187,7 +189,7 @@ function invoice_can_be_edited_successfully()
 #[Group('billing')]
 #[Group('critical-path')]
 #[Description('Test invoice can be confirmed successfully')]
-function invoice_can_be_confirmed_successfully()
+function invoice_can_be_confirmed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -216,7 +218,7 @@ function invoice_can_be_confirmed_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test invoice can be cancelled successfully')]
-function invoice_can_be_cancelled_successfully()
+function invoice_can_be_cancelled_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

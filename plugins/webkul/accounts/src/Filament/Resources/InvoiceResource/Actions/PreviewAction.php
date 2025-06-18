@@ -1,18 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\InvoiceResource\Actions;
 
-use InvalidArgumentException;
 use Filament\Actions\Action;
+use InvalidArgumentException;
 use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Models\Move;
 use Webkul\Support\Traits\PDFHandler;
 
-class PreviewAction extends Action
+final class PreviewAction extends Action
 {
     use PDFHandler;
 
-    protected string $template = '';
+    private string $template = '';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this
+            ->label(__('accounts::filament/resources/invoice/actions/preview.title'))
+            ->color('gray')
+            ->visible(fn (Move $record): bool => $record->state === MoveState::POSTED)
+            ->icon('heroicon-o-viewfinder-circle')
+            ->modalHeading(__('accounts::filament/resources/invoice/actions/preview.modal.title'))
+            ->modalSubmitAction(false)
+            ->modalContent(fn ($record) => view($this->template, ['record' => $record]));
+    }
 
     public static function getDefaultName(): ?string
     {
@@ -21,7 +37,7 @@ class PreviewAction extends Action
 
     public function getTemplate(): string
     {
-        return (string) $this->template;
+        return $this->template;
     }
 
     public function setTemplate(string $template): static
@@ -33,21 +49,5 @@ class PreviewAction extends Action
         $this->template = $template;
 
         return $this;
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this
-            ->label(__('accounts::filament/resources/invoice/actions/preview.title'))
-            ->color('gray')
-            ->visible(fn (Move $record) => $record->state == MoveState::POSTED)
-            ->icon('heroicon-o-viewfinder-circle')
-            ->modalHeading(__('accounts::filament/resources/invoice/actions/preview.modal.title'))
-            ->modalSubmitAction(false)
-            ->modalContent(function ($record) {
-                return view($this->getTemplate(), ['record' => $record]);
-            });
     }
 }

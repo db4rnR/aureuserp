@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\IncoTermResource\Pages;
 
 use Webkul\Account\Filament\Resources\IncoTermResource\Pages\ListIncoTerms as BaseListIncoTerms;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\IncoTermResource;
 
-class ListIncoTerms extends BaseListIncoTerms
+final class ListIncoTerms extends BaseListIncoTerms
 {
     protected static string $resource = IncoTermResource::class;
 }

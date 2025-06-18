@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Feature;
 
 use Livewire\Livewire;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\EditPage;
 use Pboivin\FilamentPeek\Tests\Models\Page;
 
-it('can set initial preview modal data', function () {
+it('can set initial preview modal data', function (): void {
     $page = Page::factory()->create(['title' => 'Test Page']);
 
     ($livewire = Livewire::test(EditPage::class, ['record' => $page->id]))

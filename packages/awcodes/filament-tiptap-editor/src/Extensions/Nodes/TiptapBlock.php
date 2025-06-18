@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use FilamentTiptapEditor\TiptapEditor;
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-class TiptapBlock extends Node
+final class TiptapBlock extends Node
 {
     public static $name = 'tiptapBlock';
 

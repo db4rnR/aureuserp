@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class TimeSettings extends Settings
+final class TimeSettings extends Settings
 {
     public bool $enable_timesheets;
 

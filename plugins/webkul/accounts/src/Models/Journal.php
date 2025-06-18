@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
-use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Partner\Models\BankAccount;
@@ -14,9 +16,14 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-class Journal extends Model implements Sortable
+final class Journal extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'accounts_journals';
 
@@ -44,11 +51,6 @@ class Journal extends Model implements Sortable
         'refund_order',
         'payment_order',
         'show_on_dashboard',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function bankAccount()
@@ -103,9 +105,9 @@ class Journal extends Model implements Sortable
         }
 
         return match ($paymentType) {
-            'inbound'  => $this->inboundPaymentMethodLines,
+            'inbound' => $this->inboundPaymentMethodLines,
             'outbound' => $this->outboundPaymentMethodLines,
-            default    => throw new InvalidArgumentException('Invalid payment type'),
+            default => throw new InvalidArgumentException('Invalid payment type'),
         };
     }
 
@@ -121,28 +123,28 @@ class Journal extends Model implements Sortable
 
     public function computeInboundPaymentMethodLines(): void
     {
-        if (! in_array($this->type, ['bank', 'cash', 'credit'])) {
+        if (! in_array($this->type, ['bank', 'cash', 'credit'], true)) {
             $this->inboundPaymentMethodLines()->delete();
 
             return;
         }
 
-        DB::transaction(function () {
+        DB::transaction(function (): void {
             $this->inboundPaymentMethodLines()->delete();
 
             $defaultMethods = $this->getDefaultInboundPaymentMethods();
 
             foreach ($defaultMethods as $method) {
                 $this->inboundPaymentMethodLines()->create([
-                    'name'              => $method->name,
+                    'name' => $method->name,
                     'payment_method_id' => $method->id,
-                    'type'              => 'inbound',
+                    'type' => 'inbound',
                 ]);
             }
         });
     }
 
-    protected function getDefaultInboundPaymentMethods(): mixed
+    private function getDefaultInboundPaymentMethods(): mixed
     {
         return PaymentMethod::where('type', 'inbound')
             ->where('active', true)

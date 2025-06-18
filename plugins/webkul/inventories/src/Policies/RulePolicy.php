@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Inventory\Models\Rule;
 use Webkul\Security\Models\User;
 
-class RulePolicy
+final class RulePolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class RulePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Rule $rule): bool
+    public function view(User $user): bool
     {
         return $user->can('view_rule');
     }
@@ -37,7 +38,7 @@ class RulePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Rule $rule): bool
+    public function update(User $user): bool
     {
         return $user->can('update_rule');
     }
@@ -45,7 +46,7 @@ class RulePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Rule $rule): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_rule');
     }
@@ -61,7 +62,7 @@ class RulePolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Rule $rule): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_rule');
     }
@@ -77,7 +78,7 @@ class RulePolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Rule $rule): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_rule');
     }
@@ -93,7 +94,7 @@ class RulePolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Rule $rule): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_rule');
     }

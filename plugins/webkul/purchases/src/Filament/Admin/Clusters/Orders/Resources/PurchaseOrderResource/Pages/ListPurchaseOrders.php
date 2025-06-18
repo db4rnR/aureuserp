@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrderResource\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -9,7 +11,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrderResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 
-class ListPurchaseOrders extends ListOrders
+final class ListPurchaseOrders extends ListOrders
 {
     protected static string $resource = PurchaseOrderResource::class;
 
@@ -29,20 +31,16 @@ class ListPurchaseOrders extends ListOrders
             'waiting-bills' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/purchase-order/pages/list-purchase-orders.tabs.waiting-bills'))
                 ->icon('heroicon-o-clock')
                 ->favorite()
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query
-                        ->where('state', OrderState::SENT)
-                        ->where('ordered_at', '<', now());
-                }),
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->where('state', OrderState::SENT)
+                    ->where('ordered_at', '<', now())),
 
             'received-bills' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/purchase-order/pages/list-purchase-orders.tabs.received-bills'))
                 ->icon('heroicon-o-document-check')
                 ->favorite()
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query
-                        ->whereIn('state', [OrderState::PURCHASE, OrderState::DONE])
-                        ->where('invoice_status', 'invoiced');
-                }),
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->whereIn('state', [OrderState::PURCHASE, OrderState::DONE])
+                    ->where('invoice_status', 'invoiced')),
         ];
     }
 }

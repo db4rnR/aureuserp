@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Concerns;
 
 use Illuminate\Support\Str;
@@ -11,10 +13,10 @@ trait CanNormalizePaths
         // normalization /path//to/dir/ --> path/to/dir
         $path = preg_replace('#/+#', '/', $path);
         if (Str::startsWith($path, '/')) {
-            $path = substr($path, 1);
+            $path = mb_substr($path, 1);
         }
         if (Str::endsWith($path, '/')) {
-            $path = substr($path, 0, strlen($path) - 1);
+            $path = mb_substr($path, 0, mb_strlen($path) - 1);
         }
 
         return $path;

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class ApplicantCategorySeeder extends Seeder
+final class ApplicantCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,29 +21,29 @@ class ApplicantCategorySeeder extends Seeder
 
         $degrees = [
             [
-                'name'       => 'Sales',
-                'color'      => '#FF0000',
+                'name' => 'Sales',
+                'color' => '#FF0000',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'Manager',
-                'color'      => '#00FF00',
+                'name' => 'Manager',
+                'color' => '#00FF00',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'IT',
-                'color'      => '#0000FF',
+                'name' => 'IT',
+                'color' => '#0000FF',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'Reserve',
-                'color'      => '#FFFF00',
+                'name' => 'Reserve',
+                'color' => '#FFFF00',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),

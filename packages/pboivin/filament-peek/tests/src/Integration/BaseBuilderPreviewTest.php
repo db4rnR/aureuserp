@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Integration;
 
 use Pboivin\FilamentPeek\Tests\Models\Category;
@@ -9,7 +11,7 @@ use Pboivin\FilamentPeek\Tests\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
-it('sees builder editor when creating a post', function () {
+it('sees builder editor when creating a post', function (): void {
     actingAs(User::factory()->create());
 
     get('/admin/posts/create')
@@ -18,7 +20,7 @@ it('sees builder editor when creating a post', function () {
         ->assertSee('x-ref="builderEditor"', escape: false);
 });
 
-it('sees builder editor when editing a post', function () {
+it('sees builder editor when editing a post', function (): void {
     actingAs(User::factory()->create());
 
     $post = Post::factory()

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Capacity By Packages',
 
     'form' => [
         'package-type' => 'Package Type',
-        'qty'          => 'Quantity',
+        'qty' => 'Quantity',
     ],
 
     'table' => [
@@ -15,28 +17,28 @@ return [
 
                 'notification' => [
                     'title' => 'Package Type Capacity created',
-                    'body'  => 'The package type capacity been added successfully.',
+                    'body' => 'The package type capacity been added successfully.',
                 ],
             ],
         ],
 
         'columns' => [
             'package-type' => 'Package Type',
-            'qty'          => 'Quantity',
+            'qty' => 'Quantity',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Package Type Capacity updated',
-                    'body'  => 'The package type capacity has been updated successfully.',
+                    'body' => 'The package type capacity has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Package Type Capacity deleted',
-                    'body'  => 'The package type capacity has been deleted successfully.',
+                    'body' => 'The package type capacity has been deleted successfully.',
                 ],
             ],
         ],

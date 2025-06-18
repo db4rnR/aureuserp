@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Group;
-use Webkul\Account\Models\Move;
-use Webkul\Account\Models\MoveLine;
-use Webkul\Account\Models\Journal;
 use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Enums\MoveType;
+use Webkul\Account\Models\Journal;
+use Webkul\Account\Models\Move;
+use Webkul\Account\Models\MoveLine;
+use Webkul\Partner\Models\Partner;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
-use Webkul\Partner\Models\Partner;
 
 #[Test]
 #[Group('unit')]
 #[Group('accounts')]
 #[Description('Test Move model attributes and relationships')]
-function move_model_attributes_and_relationships()
+function move_model_attributes_and_relationships(): void
 {
     // Create a test move
     $move = Move::factory()->create([
@@ -39,18 +41,18 @@ function move_model_attributes_and_relationships()
     expect($move->auto_post)->toBeFalse();
 
     // Test relationships
-    expect($move->journal())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($move->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($move->partner())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($move->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($move->lines())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($move->journal())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($move->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($move->partner())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($move->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($move->lines())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('accounts')]
 #[Description('Test Move model relationships with other models')]
-function move_model_relationships_with_other_models()
+function move_model_relationships_with_other_models(): void
 {
     // Create related models
     $journal = Journal::factory()->create();
@@ -95,7 +97,7 @@ function move_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('accounts')]
 #[Description('Test Move model type determination methods')]
-function move_model_type_determination_methods()
+function move_model_type_determination_methods(): void
 {
     // Create moves with different types
     $entryMove = Move::factory()->create(['move_type' => MoveType::ENTRY]);

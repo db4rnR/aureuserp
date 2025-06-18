@@ -1,18 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList\Forms\Components\Actions;
 
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-class DeleteAction extends Action
+final class DeleteAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'delete';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -43,5 +40,10 @@ class DeleteAction extends Action
         $this->visible(
             fn (AdjacencyList $component): bool => $component->isDeletable()
         );
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'delete';
     }
 }

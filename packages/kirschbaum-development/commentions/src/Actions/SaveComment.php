@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Actions;
 
 use Illuminate\Auth\Access\AuthorizationException;
@@ -9,7 +11,7 @@ use Kirschbaum\Commentions\Config;
 use Kirschbaum\Commentions\Contracts\Commenter;
 use Kirschbaum\Commentions\Events\UserWasMentionedEvent;
 
-class SaveComment
+final class SaveComment
 {
     /**
      * @throws AuthorizationException
@@ -31,17 +33,17 @@ class SaveComment
         return $comment;
     }
 
-    protected function dispatchMentionEvents(Comment $comment): void
+    public static function run(...$args)
+    {
+        return (new self())(...$args);
+    }
+
+    private function dispatchMentionEvents(Comment $comment): void
     {
         $mentionees = $comment->getMentioned();
 
-        $mentionees->each(function ($mentionee) use ($comment) {
+        $mentionees->each(function ($mentionee) use ($comment): void {
             UserWasMentionedEvent::dispatch($comment, $mentionee);
         });
-    }
-
-    public static function run(...$args)
-    {
-        return (new static())(...$args);
     }
 }

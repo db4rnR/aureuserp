@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,9 +13,14 @@ use Webkul\Inventory\Database\Factories\PackageTypeFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class PackageType extends Model implements Sortable
+final class PackageType extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -40,11 +47,6 @@ class PackageType extends Model implements Sortable
         'package_carrier_type',
         'company_id',
         'creator_id',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function company(): BelongsTo

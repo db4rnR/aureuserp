@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Exception;
@@ -11,9 +13,14 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class TaxPartition extends Model implements Sortable
+final class TaxPartition extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'accounts_tax_partition_lines';
 
@@ -29,32 +36,7 @@ class TaxPartition extends Model implements Sortable
         'creator_id',
     ];
 
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
-    ];
-
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'creator_id');
-    }
-
-    public function account()
-    {
-        return $this->belongsTo(Account::class, 'account_id');
-    }
-
-    public function tax()
-    {
-        return $this->belongsTo(Tax::class, 'tax_id');
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class, 'company_id');
-    }
-
-    public static function validateRepartitionLines($invoices, $refunds)
+    public static function validateRepartitionLines($invoices, $refunds): void
     {
         if ($invoices->count() !== $refunds->count()) {
             throw new Exception('Invoice and credit note distribution should have the same number of records.');
@@ -88,11 +70,11 @@ class TaxPartition extends Model implements Sortable
         }
     }
 
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
 
-        static::saved(function (self $model) {
+        self::saved(function (self $model): void {
             try {
                 DB::beginTransaction();
 
@@ -118,7 +100,7 @@ class TaxPartition extends Model implements Sortable
             }
         });
 
-        static::deleting(function ($model) {
+        self::deleting(function ($model): void {
             try {
                 DB::beginTransaction();
 
@@ -140,5 +122,25 @@ class TaxPartition extends Model implements Sortable
                 throw $e;
             }
         });
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'account_id');
+    }
+
+    public function tax()
+    {
+        return $this->belongsTo(Tax::class, 'tax_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

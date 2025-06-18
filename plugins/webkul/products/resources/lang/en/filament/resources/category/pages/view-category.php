@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'delete' => [
             'notification' => [
                 'success' => [
                     'title' => 'Category deleted',
-                    'body'  => 'The category has been deleted successfully.',
+                    'body' => 'The category has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Category could not be deleted',
-                    'body'  => 'The category cannot be deleted because it is currently in use.',
+                    'body' => 'The category cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

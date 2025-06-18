@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -11,7 +13,7 @@ use Webkul\Support\Models\State;
 /**
  * @extends Factory<Bank>
  */
-class BankFactory extends Factory
+final class BankFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -28,15 +30,15 @@ class BankFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'       => fake()->name(),
-            'code'       => fake()->swiftBicNumber(),
-            'email'      => fake()->unique()->safeEmail(),
-            'phone'      => fake()->phoneNumber(),
-            'street1'    => fake()->streetAddress(),
-            'street2'    => fake()->streetAddress(),
-            'city'       => fake()->city(),
-            'zip'        => fake()->postcode(),
-            'state_id'   => State::factory(),
+            'name' => fake()->name(),
+            'code' => fake()->swiftBicNumber(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'street1' => fake()->streetAddress(),
+            'street2' => fake()->streetAddress(),
+            'city' => fake()->city(),
+            'zip' => fake()->postcode(),
+            'state_id' => State::factory(),
             'country_id' => Country::factory(),
             'creator_id' => User::factory(),
         ];

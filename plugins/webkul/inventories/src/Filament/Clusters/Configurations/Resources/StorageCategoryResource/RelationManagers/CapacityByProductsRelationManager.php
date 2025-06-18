@@ -1,25 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\StorageCategoryResource\RelationManagers;
 
-use Filament\Schemas\Schema;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Unique;
 
-class CapacityByProductsRelationManager extends RelationManager
+final class CapacityByProductsRelationManager extends RelationManager
 {
     protected static string $relationship = 'storageCategoryCapacitiesByProduct';
 
@@ -39,16 +39,10 @@ class CapacityByProductsRelationManager extends RelationManager
                         'name',
                         modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                     )
-                    ->getOptionLabelFromRecordUsing(function ($record): string {
-                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
-                    })
-                    ->disableOptionWhen(function ($label) {
-                        return str_contains($label, ' (Deleted)');
-                    })
+                    ->getOptionLabelFromRecordUsing(fn ($record): string => $record->name.($record->trashed() ? ' (Deleted)' : ''))
+                    ->disableOptionWhen(fn ($label): bool => str_contains((string) $label, ' (Deleted)'))
                     ->required()
-                    ->unique(modifyRuleUsing: function (Unique $rule) {
-                        return $rule->where('storage_category_id', $this->getOwnerRecord()->id);
-                    })
+                    ->unique(modifyRuleUsing: fn (Unique $rule) => $rule->where('storage_category_id', $this->getOwnerRecord()->id))
                     ->searchable()
                     ->preload(),
                 TextInput::make('qty')

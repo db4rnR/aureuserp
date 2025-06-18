@@ -1,40 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
+use BackedEnum;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\OperationState;
 use Filament\Actions\DeleteBulkAction;
-use Webkul\Inventory\Enums\OperationType;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\ViewDelivery;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\EditDelivery;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\ManageMoves;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\ListDeliveries;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\CreateDelivery;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
+use Webkul\Inventory\Enums\OperationType;
 use Webkul\Inventory\Filament\Clusters\Operations;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\CreateDelivery;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\EditDelivery;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\ListDeliveries;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\ManageMoves;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\ViewDelivery;
 use Webkul\Inventory\Models\Delivery;
 
-class DeliveryResource extends Resource
+final class DeliveryResource extends Resource
 {
     protected static ?string $model = Delivery::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-truck';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -42,7 +42,7 @@ class DeliveryResource extends Resource
 
     protected static ?string $cluster = Operations::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -72,11 +72,11 @@ class DeliveryResource extends Resource
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make()
-                        ->hidden(fn (Delivery $record) => $record->state == OperationState::DONE)
-                        ->action(function (Delivery $record) {
+                        ->hidden(fn (Delivery $record): bool => $record->state === OperationState::DONE)
+                        ->action(function (Delivery $record): void {
                             try {
                                 $record->delete();
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('inventories::filament/clusters/operations/resources/delivery.table.actions.delete.notification.error.title'))
@@ -94,10 +94,10 @@ class DeliveryResource extends Resource
             ])
             ->toolbarActions([
                 DeleteBulkAction::make()
-                    ->action(function (Collection $records) {
+                    ->action(function (Collection $records): void {
                         try {
                             $records->each(fn (Model $record) => $record->delete());
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('inventories::filament/clusters/operations/resources/delivery.table.bulk-actions.delete.notification.error.title'))
@@ -112,11 +112,9 @@ class DeliveryResource extends Resource
                             ->body(__('inventories::filament/clusters/operations/resources/delivery.table.bulk-actions.delete.notification.success.body')),
                     ),
             ])
-            ->modifyQueryUsing(function (Builder $query) {
-                return $query->whereHas('operationType', function (Builder $query) {
-                    $query->where('type', OperationType::OUTGOING);
-                });
-            });
+            ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('operationType', function (Builder $query): void {
+                $query->where('type', OperationType::OUTGOING);
+            }));
     }
 
     public static function infolist(Schema $schema): Schema
@@ -136,11 +134,11 @@ class DeliveryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListDeliveries::route('/'),
+            'index' => ListDeliveries::route('/'),
             'create' => CreateDelivery::route('/create'),
-            'view'   => ViewDelivery::route('/{record}/view'),
-            'edit'   => EditDelivery::route('/{record}/edit'),
-            'moves'  => ManageMoves::route('/{record}/moves'),
+            'view' => ViewDelivery::route('/{record}/view'),
+            'edit' => EditDelivery::route('/{record}/edit'),
+            'moves' => ManageMoves::route('/{record}/moves'),
         ];
     }
 }

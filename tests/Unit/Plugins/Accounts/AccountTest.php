@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Group;
-use Webkul\Account\Models\Account;
 use Webkul\Account\Enums\AccountType;
-use Webkul\Support\Models\Currency;
-use Webkul\Security\Models\User;
-use Webkul\Account\Models\Tax;
-use Webkul\Account\Models\Tag;
+use Webkul\Account\Models\Account;
 use Webkul\Account\Models\Journal;
+use Webkul\Account\Models\Tag;
+use Webkul\Account\Models\Tax;
+use Webkul\Security\Models\User;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('unit')]
 #[Group('accounts')]
 #[Description('Test Account model attributes and relationships')]
-function account_model_attributes_and_relationships()
+function account_model_attributes_and_relationships(): void
 {
     // Create a test account
     $account = Account::factory()->create([
@@ -34,18 +36,18 @@ function account_model_attributes_and_relationships()
     expect($account->non_trade)->toBeFalse();
 
     // Test relationships
-    expect($account->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($account->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($account->taxes())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
-    expect($account->tags())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
-    expect($account->journals())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($account->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($account->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($account->taxes())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($account->tags())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($account->journals())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('accounts')]
 #[Description('Test Account model relationships with other models')]
-function account_model_relationships_with_other_models()
+function account_model_relationships_with_other_models(): void
 {
     // Create a currency
     $currency = Currency::factory()->create();

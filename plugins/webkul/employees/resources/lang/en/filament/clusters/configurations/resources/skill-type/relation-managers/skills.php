@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
         'name' => 'Name',
@@ -7,7 +9,7 @@ return [
 
     'table' => [
         'columns' => [
-            'name'       => 'Name',
+            'name' => 'Name',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
@@ -24,21 +26,21 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Skill updated',
-                    'body'  => 'The skill has been updated successfully.',
+                    'body' => 'The skill has been updated successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Skill restored',
-                    'body'  => 'The skill has been restored successfully.',
+                    'body' => 'The skill has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Skill deleted',
-                    'body'  => 'The skill has been deleted successfully.',
+                    'body' => 'The skill has been deleted successfully.',
                 ],
             ],
         ],
@@ -47,21 +49,21 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Skills deleted',
-                    'body'  => 'The skills has been deleted successfully.',
+                    'body' => 'The skills has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Skills force deleted',
-                    'body'  => 'The skills has been force deleted successfully.',
+                    'body' => 'The skills has been force deleted successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Skills force restored',
-                    'body'  => 'The skills has been force restored successfully.',
+                    'body' => 'The skills has been force restored successfully.',
                 ],
             ],
         ],

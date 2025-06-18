@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_order_tags', function (Blueprint $table) {
+        Schema::create('sales_order_tags', function (Blueprint $table): void {
             $table->unsignedBigInteger('order_id')->nullable();
             $table->unsignedBigInteger('tag_id')->nullable();
 

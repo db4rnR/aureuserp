@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class TitleSeeder extends Seeder
+final class TitleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,35 +21,35 @@ class TitleSeeder extends Seeder
 
         DB::table('partners_titles')->insert([
             [
-                'name'       => 'Doctor',
+                'name' => 'Doctor',
                 'short_name' => 'Dr.',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'Madam',
+                'name' => 'Madam',
                 'short_name' => 'Mrs',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'Miss',
+                'name' => 'Miss',
                 'short_name' => 'Miss',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'Mister',
+                'name' => 'Mister',
                 'short_name' => 'Mr.',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'Professor',
+                'name' => 'Professor',
                 'short_name' => 'Prof.',
                 'creator_id' => $user?->id,
                 'created_at' => now(),

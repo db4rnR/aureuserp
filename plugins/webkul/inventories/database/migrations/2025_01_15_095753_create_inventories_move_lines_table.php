@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories_move_lines', function (Blueprint $table) {
+        Schema::create('inventories_move_lines', function (Blueprint $table): void {
             $table->id();
             $table->string('lot_name')->nullable();
             $table->string('state')->nullable();

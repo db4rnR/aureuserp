@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,9 +13,14 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Blog\Database\Factories\TagFactory;
 use Webkul\Security\Models\User;
 
-class Tag extends Model implements Sortable
+final class Tag extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -32,11 +39,6 @@ class Tag extends Model implements Sortable
         'color',
         'sort',
         'creator_id',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function creator(): BelongsTo

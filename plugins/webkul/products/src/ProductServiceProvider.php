@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product;
 
 use Webkul\Support\Console\Commands\InstallCommand;
@@ -7,7 +9,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class ProductServiceProvider extends PackageServiceProvider
+final class ProductServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'products';
 
@@ -15,7 +17,7 @@ class ProductServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasViews()
             ->hasTranslations()
             ->hasMigrations([
@@ -34,14 +36,14 @@ class ProductServiceProvider extends PackageServiceProvider
                 '2025_02_18_112837_create_products_product_price_lists_table',
                 '2025_02_21_053249 _create_products_product_combinations_table',
             ])
-            ->hasSeeder('Webkul\\Product\\Database\Seeders\\DatabaseSeeder')
+            ->hasSeeder(Database\Seeders\DatabaseSeeder::class)
             ->runsMigrations()
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 
     public function packageBooted(): void

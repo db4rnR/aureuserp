@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Passer la barre d\'outils',
     'align_center' => 'Centrer le texte',

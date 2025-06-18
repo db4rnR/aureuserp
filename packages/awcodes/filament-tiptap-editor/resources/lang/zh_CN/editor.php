@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => '跳过工具栏',
     'align_center' => '文本居中对齐',

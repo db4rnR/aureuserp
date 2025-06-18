@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentFullCalendar\Widgets\Concerns;
 
 use Closure;
@@ -17,6 +19,18 @@ trait InteractsWithHeaderActions
     public function bootedInteractsWithHeaderActions(): void
     {
         $this->cacheHeaderActions();
+    }
+
+    /**
+     * @return array<Action | ActionGroup>
+     */
+    public function getCachedHeaderActions(): array
+    {
+        if (! $this->getModel()) {
+            return [];
+        }
+
+        return $this->cachedHeaderActions;
     }
 
     protected function cacheHeaderActions(): void
@@ -41,24 +55,12 @@ trait InteractsWithHeaderActions
             }
 
             if (! $action instanceof Action) {
-                throw new InvalidArgumentException('Header actions must be an instance of ' . Action::class . ', or ' . ActionGroup::class . '.');
+                throw new InvalidArgumentException('Header actions must be an instance of '.Action::class.', or '.ActionGroup::class.'.');
             }
 
             $this->cacheAction($action);
             $this->cachedHeaderActions[] = $action;
         }
-    }
-
-    /**
-     * @return array<Action | ActionGroup>
-     */
-    public function getCachedHeaderActions(): array
-    {
-        if (! $this->getModel()) {
-            return [];
-        }
-
-        return $this->cachedHeaderActions;
     }
 
     /**

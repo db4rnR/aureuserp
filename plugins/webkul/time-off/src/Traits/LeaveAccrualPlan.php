@@ -1,46 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Traits;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Grid;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Webkul\TimeOff\Enums\AddedValueType;
-use Filament\Schemas\Components\Fieldset;
-use Webkul\TimeOff\Enums\Frequency;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Utilities\Get;
-use Webkul\TimeOff\Enums\CarryoverDay;
-use Webkul\TimeOff\Enums\CarryoverMonth;
-use Filament\Forms\Components\Toggle;
-use Webkul\TimeOff\Enums\StartType;
-use Filament\Forms\Components\Radio;
-use Webkul\TimeOff\Enums\CarryOverUnusedAccruals;
-use Webkul\TimeOff\Enums\AccrualValidityType;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Actions\CreateAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Support\Enums\Week;
-use Webkul\TimeOff\Enums;
+use Webkul\TimeOff\Enums\AccrualValidityType;
+use Webkul\TimeOff\Enums\AddedValueType;
+use Webkul\TimeOff\Enums\CarryoverDay;
+use Webkul\TimeOff\Enums\CarryoverMonth;
+use Webkul\TimeOff\Enums\CarryOverUnusedAccruals;
+use Webkul\TimeOff\Enums\Frequency;
+use Webkul\TimeOff\Enums\StartType;
 
 trait LeaveAccrualPlan
 {
@@ -74,7 +73,7 @@ trait LeaveAccrualPlan
                                     ->live()
                                     ->default(Frequency::WEEKLY->value)
                                     ->required()
-                                    ->afterStateUpdated(fn (Set $set) => $set('week_day', null)),
+                                    ->afterStateUpdated(fn (Set $set): mixed => $set('week_day', null)),
                                 Grid::make()
                                     ->schema([
                                         Group::make()
@@ -85,7 +84,7 @@ trait LeaveAccrualPlan
                                                     ->default(Week::MONDAY->value)
                                                     ->required(),
                                             ])
-                                            ->visible(fn (Get $get) => $get('frequency') === Frequency::WEEKLY->value),
+                                            ->visible(fn (Get $get): bool => $get('frequency') === Frequency::WEEKLY->value),
                                         Group::make()
                                             ->schema([
                                                 Select::make('monthly_day')
@@ -94,7 +93,7 @@ trait LeaveAccrualPlan
                                                     ->default(CarryoverDay::DAY_1->value)
                                                     ->required(),
                                             ])
-                                            ->visible(fn (Get $get) => $get('frequency') === Frequency::MONTHLY->value),
+                                            ->visible(fn (Get $get): bool => $get('frequency') === Frequency::MONTHLY->value),
                                         Grid::make(2)
                                             ->schema([
                                                 Select::make('first_day')
@@ -108,7 +107,7 @@ trait LeaveAccrualPlan
                                                     ->default(CarryoverDay::DAY_15->value)
                                                     ->required(),
                                             ])
-                                            ->visible(fn (Get $get) => $get('frequency') === Frequency::BIMONTHLY->value),
+                                            ->visible(fn (Get $get): bool => $get('frequency') === Frequency::BIMONTHLY->value),
                                         Grid::make(2)
                                             ->schema([
                                                 Group::make()
@@ -138,7 +137,7 @@ trait LeaveAccrualPlan
                                                             ->required(),
                                                     ]),
                                             ])
-                                            ->visible(fn (Get $get) => $get('frequency') === Frequency::BIYEARLY->value),
+                                            ->visible(fn (Get $get): bool => $get('frequency') === Frequency::BIYEARLY->value),
                                         Grid::make(2)
                                             ->schema([
                                                 Group::make()
@@ -155,7 +154,7 @@ trait LeaveAccrualPlan
                                                             ->required(),
                                                     ]),
                                             ])
-                                            ->visible(fn (Get $get) => $get('frequency') === Frequency::YEARLY->value),
+                                            ->visible(fn (Get $get): bool => $get('frequency') === Frequency::YEARLY->value),
                                     ]),
                             ]),
                         Fieldset::make(__('time-off::traits/leave-accrual-plan.form.fields.cap-accrued-time'))
@@ -167,7 +166,7 @@ trait LeaveAccrualPlan
                                     ->label(__('time-off::traits/leave-accrual-plan.form.fields.cap-accrued-time')),
                                 TextInput::make('maximum_leave')
                                     ->label(__('time-off::traits/leave-accrual-plan.form.fields.days'))
-                                    ->visible(fn (Get $get) => $get('cap_accrued_time') === true)
+                                    ->visible(fn (Get $get): bool => $get('cap_accrued_time') === true)
                                     ->numeric(),
                             ])->columns(4),
                         Fieldset::make(__('time-off::traits/leave-accrual-plan.form.fields.start-count'))
@@ -196,12 +195,12 @@ trait LeaveAccrualPlan
                                         Toggle::make('cap_accrued_time_yearly')
                                             ->inline(false)
                                             ->live()
-                                            ->visible(fn (Get $get) => $get('action_with_unused_accruals') == CarryOverUnusedAccruals::ALL_ACCRUED_TIME_CARRIED_OVER->value)
+                                            ->visible(fn (Get $get): bool => $get('action_with_unused_accruals') === CarryOverUnusedAccruals::ALL_ACCRUED_TIME_CARRIED_OVER->value)
                                             ->default(false)
                                             ->label(__('time-off::traits/leave-accrual-plan.form.fields.milestone-cap')),
                                         TextInput::make('maximum_leave_yearly')
                                             ->numeric()
-                                            ->visible(fn (Get $get) => $get('cap_accrued_time_yearly'))
+                                            ->visible(fn (Get $get): mixed => $get('cap_accrued_time_yearly'))
                                             ->label(__('time-off::traits/leave-accrual-plan.form.fields.maximum-leave-yearly')),
                                     ]),
                                 Grid::make(2)
@@ -209,16 +208,16 @@ trait LeaveAccrualPlan
                                         Toggle::make('accrual_validity')
                                             ->inline(false)
                                             ->live()
-                                            ->visible(fn (Get $get) => $get('action_with_unused_accruals') == CarryOverUnusedAccruals::ALL_ACCRUED_TIME_CARRIED_OVER->value)
+                                            ->visible(fn (Get $get): bool => $get('action_with_unused_accruals') === CarryOverUnusedAccruals::ALL_ACCRUED_TIME_CARRIED_OVER->value)
                                             ->default(false)
                                             ->label(__('time-off::traits/leave-accrual-plan.form.fields.accrual-validity')),
                                         TextInput::make('accrual_validity_count')
                                             ->numeric()
-                                            ->visible(fn (Get $get) => $get('accrual_validity'))
+                                            ->visible(fn (Get $get): mixed => $get('accrual_validity'))
                                             ->label(__('time-off::traits/leave-accrual-plan.form.fields.accrual-validity-count')),
                                         Select::make('accrual_validity_type')
                                             ->required()
-                                            ->visible(fn (Get $get) => $get('accrual_validity'))
+                                            ->visible(fn (Get $get): mixed => $get('accrual_validity'))
                                             ->options(AccrualValidityType::class)
                                             ->label(__('time-off::traits/leave-accrual-plan.form.fields.accrual-validity-type')),
                                     ]),
@@ -306,7 +305,7 @@ trait LeaveAccrualPlan
                 CreateAction::make()
                     ->icon('heroicon-o-plus-circle')
                     ->label(__('time-off::traits/leave-accrual-plan.table.header-actions.created.title'))
-                    ->mutateDataUsing(function ($data) {
+                    ->mutateDataUsing(function (array $data) {
                         $data['creator_id'] = Auth::user()?->id;
 
                         return $data;
@@ -371,11 +370,11 @@ trait LeaveAccrualPlan
                             ->schema([
                                 TextEntry::make('week_day')
                                     ->label(__('time-off::traits/leave-accrual-plan.infolist.entries.accrual-day'))
-                                    ->visible(fn ($record) => $record->frequency === Frequency::WEEKLY->value)
+                                    ->visible(fn ($record): bool => $record->frequency === Frequency::WEEKLY->value)
                                     ->icon('heroicon-o-clock'),
                                 TextEntry::make('monthly_day')
                                     ->label(__('time-off::traits/leave-accrual-plan.infolist.entries.day-of-month'))
-                                    ->visible(fn ($record) => $record->frequency === Frequency::MONTHLY->value)
+                                    ->visible(fn ($record): bool => $record->frequency === Frequency::MONTHLY->value)
                                     ->icon('heroicon-o-calendar-days'),
                                 Grid::make(2)
                                     ->schema([
@@ -386,7 +385,7 @@ trait LeaveAccrualPlan
                                             ->label(__('time-off::traits/leave-accrual-plan.infolist.entries.second-day-of-month'))
                                             ->icon('heroicon-o-arrow-down-circle'),
                                     ])
-                                    ->visible(fn ($record) => $record->frequency === Frequency::BIMONTHLY->value),
+                                    ->visible(fn ($record): bool => $record->frequency === Frequency::BIMONTHLY->value),
                                 Grid::make(2)
                                     ->schema([
                                         TextEntry::make('first_month')
@@ -396,12 +395,12 @@ trait LeaveAccrualPlan
                                             ->label(__('time-off::traits/leave-accrual-plan.infolist.entries.second-period-month'))
                                             ->icon('heroicon-o-arrow-down-on-square'),
                                     ])
-                                    ->visible(fn ($record) => $record->frequency === Frequency::BIYEARLY->value),
+                                    ->visible(fn ($record): bool => $record->frequency === Frequency::BIYEARLY->value),
                             ]),
                         IconEntry::make('cap_accrued_time')
                             ->boolean()
                             ->label(__('time-off::traits/leave-accrual-plan.infolist.entries.cap-accrued-time'))
-                            ->icon(fn ($state) => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle'),
+                            ->icon(fn ($state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle'),
                         TextEntry::make('maximum_leave')
                             ->label(__('time-off::traits/leave-accrual-plan.infolist.entries.days'))
                             ->visible(fn ($record) => $record->cap_accrued_time)

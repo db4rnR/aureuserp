@@ -46,7 +46,7 @@ trait CanGenerateRelationshipsForTenancy
                     ],
                 ];
             })
-            ->each(function ($modifiedResource) {
+            ->each(function ($modifiedResource): void {
                 $resourceModelStringer = Stringer::for($modifiedResource['modelPath']);
                 $tenantModelstringer = Stringer::for($modifiedResource['tenantModelPath']);
 
@@ -121,9 +121,9 @@ trait CanGenerateRelationshipsForTenancy
         $morphType = str($foreignKeyPrefix)->snake()->append('_type');
 
         return match (true) {
-            in_array($foreignKey, $columns) => 'belongsTo',
+            in_array($foreignKey, $columns, true) => 'belongsTo',
             /** @phpstan-ignore-next-line */
-            in_array($morphType, $columns) && in_array($foreignKey, $columns) => 'morphTo',
+            in_array($morphType, $columns, true) && in_array($foreignKey, $columns, true) => 'morphTo',
             default => null,
         };
     }

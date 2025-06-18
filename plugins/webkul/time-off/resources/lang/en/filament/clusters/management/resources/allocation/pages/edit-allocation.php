@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Allocation updated',
-        'body'  => 'The allocation has been updated successfully.',
+        'body' => 'The allocation has been updated successfully.',
     ],
 
     'header-actions' => [
         'delete' => [
             'notification' => [
                 'title' => 'Allocation deleted',
-                'body'  => 'The allocation has been deleted successfully.',
+                'body' => 'The allocation has been deleted successfully.',
             ],
         ],
         'approved' => [
@@ -18,7 +20,7 @@ return [
 
             'notification' => [
                 'title' => 'Allocation approved',
-                'body'  => 'The allocation has been approved successfully.',
+                'body' => 'The allocation has been approved successfully.',
             ],
         ],
         'refuse' => [
@@ -26,7 +28,7 @@ return [
 
             'notification' => [
                 'title' => 'Allocation refused',
-                'body'  => 'The allocation has been refused successfully.',
+                'body' => 'The allocation has been refused successfully.',
             ],
         ],
         'mark-as-ready-to-confirm' => [
@@ -34,7 +36,7 @@ return [
 
             'notification' => [
                 'title' => 'Marked as ready to confirm',
-                'body'  => 'The allocation has been marked as ready to confirm successfully.',
+                'body' => 'The allocation has been marked as ready to confirm successfully.',
             ],
         ],
     ],

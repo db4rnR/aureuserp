@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Components\Modals;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
 use Awcodes\Curator\Components\Forms\Uploader;
 use Awcodes\Curator\CuratorPlugin;
 use Awcodes\Curator\Models\Media;
@@ -17,6 +17,8 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
@@ -27,7 +29,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class CuratorPanel extends Component implements HasActions, HasForms
+final class CuratorPanel extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;
@@ -55,7 +57,7 @@ class CuratorPanel extends Component implements HasActions, HasForms
 
     public bool $isLimitedToDirectory = false;
 
-    public bool | Closure $isTenantAware = true;
+    public bool|Closure $isTenantAware = true;
 
     public ?string $tenantOwnershipRelationshipName = null;
 
@@ -71,7 +73,7 @@ class CuratorPanel extends Component implements HasActions, HasForms
 
     public ?int $mediaId = null;
 
-    public PathGenerator | string | null $pathGenerator = null;
+    public PathGenerator|string|null $pathGenerator = null;
 
     public string $search = '';
 
@@ -208,7 +210,7 @@ class CuratorPanel extends Component implements HasActions, HasForms
     {
         $files = $this->mediaClass->query()
             ->when(filament()->hasTenancy() && $this->isTenantAware, function ($query) {
-                return $query->where($this->tenantOwnershipRelationshipName . '_id', filament()->getTenant()->id);
+                return $query->where($this->tenantOwnershipRelationshipName.'_id', filament()->getTenant()->id);
             })
             ->when($this->selected, function ($query, $selected) {
                 $selected = collect($selected)->pluck('id')->toArray();
@@ -219,7 +221,7 @@ class CuratorPanel extends Component implements HasActions, HasForms
                 return $query->where('directory', $this->directory);
             })
             ->when($this->types, function ($query) {
-                return $query->where(function ($query) {
+                return $query->where(function ($query): void {
                     $types = $this->types;
                     $query = $query->whereIn('type', $types);
                     $wildcardTypes = collect($types)->filter(fn ($type) => str_contains($type, '*'));
@@ -244,7 +246,7 @@ class CuratorPanel extends Component implements HasActions, HasForms
                 ->whereIn('id', $selected)
                 ->get()
                 ->sortBy(function ($model) use ($selected) {
-                    return array_search($model->id, $selected);
+                    return array_search($model->id, $selected, true);
                 });
 
             array_unshift($items, ...$selectedItems);
@@ -270,7 +272,7 @@ class CuratorPanel extends Component implements HasActions, HasForms
         ];
     }
 
-    public function addToSelection(int | string $id): void
+    public function addToSelection(int|string $id): void
     {
         $item = collect($this->files)->firstWhere('id', $id);
 
@@ -284,7 +286,7 @@ class CuratorPanel extends Component implements HasActions, HasForms
         $this->setMediaForm();
     }
 
-    public function removeFromSelection(int | string $id): void
+    public function removeFromSelection(int|string $id): void
     {
         $this->selected = collect($this->selected)->reject(function ($selectedItem) use ($id) {
             return $selectedItem['id'] === $id;
@@ -293,7 +295,7 @@ class CuratorPanel extends Component implements HasActions, HasForms
         $this->context = count($this->selected) === 1 ? 'edit' : 'create';
     }
 
-    public function removeFromFiles(int | string $id): void
+    public function removeFromFiles(int|string $id): void
     {
         $this->files = collect($this->files)->reject(function ($selectedItem) use ($id) {
             return $selectedItem['id'] === $id;
@@ -309,11 +311,11 @@ class CuratorPanel extends Component implements HasActions, HasForms
             ->when($this->isLimitedToDirectory, function ($query) {
                 return $query->where('directory', $this->directory);
             })
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('title', 'like', '%' . $this->search . '%')
-            ->orWhere('alt', 'like', '%' . $this->search . '%')
-            ->orWhere('caption', 'like', '%' . $this->search . '%')
-            ->orWhere('description', 'like', '%' . $this->search . '%')
+            ->where('name', 'like', '%'.$this->search.'%')
+            ->orWhere('title', 'like', '%'.$this->search.'%')
+            ->orWhere('alt', 'like', '%'.$this->search.'%')
+            ->orWhere('caption', 'like', '%'.$this->search.'%')
+            ->orWhere('description', 'like', '%'.$this->search.'%')
             ->limit(50)
             ->get()
             ->toArray();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -7,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Filament\Resources\ProductResource;
 
-class CreateProduct extends CreateRecord
+final class CreateProduct extends CreateRecord
 {
     protected static string $resource = ProductResource::class;
 

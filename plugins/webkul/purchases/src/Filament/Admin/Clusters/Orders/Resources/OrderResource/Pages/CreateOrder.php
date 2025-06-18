@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages;
 
-use Webkul\Purchase\Enums\OrderState;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 
-class CreateOrder extends CreateRecord
+final class CreateOrder extends CreateRecord
 {
     protected static string $resource = OrderResource::class;
 
@@ -38,7 +39,7 @@ class CreateOrder extends CreateRecord
         return $data;
     }
 
-    protected function afterCreate(): void
+    private function afterCreate(): void
     {
         PurchaseOrder::computePurchaseOrder($this->getRecord());
     }

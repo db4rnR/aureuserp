@@ -1,30 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Webkul\Field\Models\Field;
 
-class FieldsColumnManager
+final class FieldsColumnManager
 {
     /**
      * Create a new column for the field
      */
     public static function createColumn(Field $field): void
     {
-        $table = static::getTableName($field);
+        $table = self::getTableName($field);
 
         if (! Schema::hasTable($table)) {
             return;
         }
 
-        Schema::table($table, function (Blueprint $table) use ($field) {
+        Schema::table($table, function (Blueprint $table) use ($field): void {
             if (Schema::hasColumn($table->getTable(), $field->code)) {
                 return;
             }
 
-            static::addColumn($table, $field);
+            self::addColumn($table, $field);
         });
     }
 
@@ -33,15 +35,15 @@ class FieldsColumnManager
      */
     public static function updateColumn(Field $field): void
     {
-        $table = static::getTableName($field);
+        $table = self::getTableName($field);
 
         if (! Schema::hasTable($table)) {
             return;
         }
 
-        Schema::table($table, function (Blueprint $table) use ($field) {
+        Schema::table($table, function (Blueprint $table) use ($field): void {
             if (! Schema::hasColumn($table->getTable(), $field->code)) {
-                static::createColumn($field);
+                self::createColumn($field);
 
                 return;
             }
@@ -53,13 +55,13 @@ class FieldsColumnManager
      */
     public static function deleteColumn(Field $field): void
     {
-        $table = static::getTableName($field);
+        $table = self::getTableName($field);
 
         if (! Schema::hasTable($table)) {
             return;
         }
 
-        Schema::table($table, function (Blueprint $table) use ($field) {
+        Schema::table($table, function (Blueprint $table) use ($field): void {
             if (! Schema::hasColumn($table->getTable(), $field->code)) {
                 return;
             }
@@ -71,9 +73,9 @@ class FieldsColumnManager
     /**
      * Add column to table based on field type
      */
-    protected static function addColumn(Blueprint $table, Field $field): void
+    private static function addColumn(Blueprint $table, Field $field): void
     {
-        $typeMethod = static::getColumnType($field);
+        $typeMethod = self::getColumnType($field);
 
         // Create the column
         $column = $table->$typeMethod($field->code);
@@ -84,7 +86,7 @@ class FieldsColumnManager
         // Apply specific validations if configured
         if ($field->validations) {
             foreach ($field->validations as $validation) {
-                static::applyValidationToColumn($column, $validation);
+                self::applyValidationToColumn($validation);
             }
         }
     }
@@ -92,41 +94,39 @@ class FieldsColumnManager
     /**
      * Determine the appropriate column type for text fields
      */
-    protected static function getColumnType(Field $field): string
+    private static function getColumnType(Field $field): string
     {
         return match ($field->type) {
-            'text' => static::getTextColumnType($field),
+            'text' => self::getTextColumnType($field),
             'textarea', 'editor', 'markdown' => 'text',
-            'radio'  => 'string',
+            'radio' => 'string',
             'select' => $field->is_multiselect ? 'json' : 'string',
             'checkbox', 'toggle' => 'boolean',
             'checkbox_list' => 'json',
-            'datetime'      => 'datetime',
-            'color'         => 'string',
-            default         => 'string'
+            'datetime' => 'datetime',
+            'color' => 'string',
+            default => 'string'
         };
     }
 
     /**
      * Determine the appropriate column type for text fields
      */
-    protected static function getTextColumnType(Field $field): string
+    private static function getTextColumnType(Field $field): string
     {
         return match ($field->input_type) {
             'integer' => 'integer',
             'numeric' => 'decimal',
-            default   => 'string'
+            default => 'string'
         };
     }
 
     /**
      * Apply validation rules to the column
      */
-    protected static function applyValidationToColumn($column, array $validation): void
+    private static function applyValidationToColumn(array $validation): void
     {
         $rule = $validation['validation'];
-
-        $value = $validation['value'] ?? null;
 
         switch ($rule) {
             // Add more validation-to-column mappings as needed
@@ -136,7 +136,7 @@ class FieldsColumnManager
     /**
      * Get the table name for the customizable model
      */
-    protected static function getTableName(Field $field): string
+    private static function getTableName(Field $field): string
     {
         $model = app($field->customizable_type);
 

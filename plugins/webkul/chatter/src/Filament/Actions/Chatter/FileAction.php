@@ -1,23 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Filament\Actions\Chatter;
 
-use Filament\Forms\Components\FileUpload;
 use Exception;
-use Filament\Support\Enums\Width;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\IconPosition;
+use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
 
-class FileAction extends Action
+final class FileAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'file.action';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -39,7 +35,7 @@ class FileAction extends Action
                     ->deletable()
                     ->panelLayout('grid')
                     ->imagePreviewHeight('100')
-                    ->deleteUploadedFileUsing(function ($file, ?Model $record) {
+                    ->deleteUploadedFileUsing(function ($file, ?Model $record): void {
                         $attachment = $record->attachments()
                             ->where('file_path', $file)
                             ->first();
@@ -68,7 +64,7 @@ class FileAction extends Action
                     ->columnSpanFull()
                     ->required()
                     ->default(function (?Model $record) {
-                        if (! $record) {
+                        if (! $record instanceof Model) {
                             return [];
                         }
 
@@ -87,11 +83,9 @@ class FileAction extends Action
                         ->pluck('file_path')
                         ->toArray();
 
-                    $newFiles = array_filter($data['files'] ?? [], function ($file) use ($existingFiles) {
-                        return ! in_array($file, $existingFiles);
-                    });
+                    $newFiles = array_filter($data['files'] ?? [], fn ($file): bool => ! in_array($file, $existingFiles, true));
 
-                    if (! empty($newFiles)) {
+                    if ($newFiles !== []) {
                         $record->addAttachments($newFiles);
 
                         Notification::make()
@@ -131,5 +125,10 @@ class FileAction extends Action
             )
             ->modalWidth(Width::ThreeExtraLarge)
             ->slideOver(false);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'file.action';
     }
 }

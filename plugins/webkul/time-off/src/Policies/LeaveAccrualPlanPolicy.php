@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
-use Webkul\TimeOff\Models\LeaveAccrualPlan;
 
-class LeaveAccrualPlanPolicy
+final class LeaveAccrualPlanPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class LeaveAccrualPlanPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, LeaveAccrualPlan $leaveAccrualPlan): bool
+    public function view(User $user): bool
     {
         return $user->can('view_accrual::plan');
     }
@@ -37,7 +38,7 @@ class LeaveAccrualPlanPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, LeaveAccrualPlan $leaveAccrualPlan): bool
+    public function update(User $user): bool
     {
         return $user->can('update_accrual::plan');
     }
@@ -45,7 +46,7 @@ class LeaveAccrualPlanPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, LeaveAccrualPlan $leaveAccrualPlan): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_accrual::plan');
     }
@@ -61,7 +62,7 @@ class LeaveAccrualPlanPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, LeaveAccrualPlan $leaveAccrualPlan): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_accrual::plan');
     }
@@ -77,7 +78,7 @@ class LeaveAccrualPlanPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, LeaveAccrualPlan $leaveAccrualPlan): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_accrual::plan');
     }
@@ -93,7 +94,7 @@ class LeaveAccrualPlanPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, LeaveAccrualPlan $leaveAccrualPlan): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_accrual::plan');
     }

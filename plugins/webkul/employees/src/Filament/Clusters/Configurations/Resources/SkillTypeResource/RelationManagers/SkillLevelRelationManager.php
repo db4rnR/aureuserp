@@ -1,38 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\SkillTypeResource\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Grouping\Group;
-use Filament\Tables\Filters\TrashedFilter;
-use Filament\Actions\CreateAction;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Support\Filament\Tables as CustomTables;
 use Webkul\Support\Filament\Tables\Infolists\ProgressBarEntry;
 
-class SkillLevelRelationManager extends RelationManager
+final class SkillLevelRelationManager extends RelationManager
 {
     protected static string $relationship = 'skillLevels';
 
@@ -69,10 +68,10 @@ class SkillLevelRelationManager extends RelationManager
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/levels.table.columns.level'))
                     ->getStateUsing(fn ($record) => $record->level)
                     ->color(fn ($record): string => match (true) {
-                        $record->level === 100                      => 'success',
+                        $record->level === 100 => 'success',
                         $record->level >= 50 && $record->level < 80 => 'warning',
-                        $record->level < 20                         => 'danger',
-                        default                                     => 'info',
+                        $record->level < 20 => 'danger',
+                        default => 'info',
                     }),
                 IconColumn::make('default_level')
                     ->sortable()
@@ -188,10 +187,10 @@ class SkillLevelRelationManager extends RelationManager
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/levels.infolist.entries.level'))
                     ->getStateUsing(fn ($record) => $record->level)
                     ->color(fn ($record): string => match (true) {
-                        $record->level === 100                      => 'success',
+                        $record->level === 100 => 'success',
                         $record->level >= 50 && $record->level < 80 => 'warning',
-                        $record->level < 20                         => 'danger',
-                        default                                     => 'info',
+                        $record->level < 20 => 'danger',
+                        default => 'info',
                     }),
                 IconEntry::make('default_level')
                     ->boolean()

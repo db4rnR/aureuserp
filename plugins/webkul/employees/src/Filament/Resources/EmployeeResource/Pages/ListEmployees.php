@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Resources\EmployeeResource\Pages;
 
-use Filament\Actions\CreateAction;
 use Carbon\Carbon;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -12,20 +13,11 @@ use Webkul\Employee\Filament\Resources\EmployeeResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListEmployees extends ListRecords
+final class ListEmployees extends ListRecords
 {
     use HasTableViews;
 
     protected static string $resource = EmployeeResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle')
-                ->label(__('employees::filament/resources/employee/pages/list-employee.header-actions.create.label')),
-        ];
-    }
 
     public function getPresetTableViews(): array
     {
@@ -63,9 +55,16 @@ class ListEmployees extends ListRecords
             'newly_hired' => PresetView::make(__('employees::filament/resources/employee/pages/list-employee.tabs.newly-hired'))
                 ->icon('heroicon-s-calendar')
                 ->favorite()
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query->where('created_at', '>=', Carbon::now()->subMonth());
-                }),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('created_at', '>=', Carbon::now()->subMonth())),
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make()
+                ->icon('heroicon-o-plus-circle')
+                ->label(__('employees::filament/resources/employee/pages/list-employee.header-actions.create.label')),
         ];
     }
 }

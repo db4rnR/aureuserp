@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security;
 
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class SecurityServiceProvider extends PackageServiceProvider
+final class SecurityServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'security';
 
@@ -13,7 +15,7 @@ class SecurityServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->isCore()
             ->hasViews()
             ->hasTranslations()

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentFullCalendar\Actions;
 
 use Filament\Actions\EditAction as BaseEditAction;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 
-class EditAction extends BaseEditAction
+final class EditAction extends BaseEditAction
 {
     protected function setUp(): void
     {

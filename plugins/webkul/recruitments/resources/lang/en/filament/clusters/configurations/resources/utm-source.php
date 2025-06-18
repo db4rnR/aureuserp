@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Sources',
 
@@ -9,7 +11,7 @@ return [
     ],
 
     'groups' => [
-        'status'     => 'Status',
+        'status' => 'Status',
         'created-by' => 'Created By',
         'created-at' => 'Created At',
         'updated-at' => 'Updated At',
@@ -17,24 +19,24 @@ return [
 
     'form' => [
         'fields' => [
-            'name'             => 'Name',
+            'name' => 'Name',
             'name-placeholder' => 'Enter the name of the source',
-            'status'           => 'Status',
+            'status' => 'Status',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'id'         => 'ID',
-            'name'       => 'Name',
-            'status'     => 'Status',
+            'id' => 'ID',
+            'name' => 'Name',
+            'status' => 'Status',
             'created-by' => 'Created By',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
 
         'filters' => [
-            'name'       => 'Name',
+            'name' => 'Name',
             'created-by' => 'Created By',
             'updated-at' => 'Updated At',
             'created-at' => 'Created At',
@@ -44,14 +46,14 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Source updated',
-                    'body'  => 'The source has been updated successfully.',
+                    'body' => 'The source has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Source deleted',
-                    'body'  => 'The source has been deleted successfully.',
+                    'body' => 'The source has been deleted successfully.',
                 ],
             ],
         ],
@@ -60,7 +62,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Sources deleted',
-                    'body'  => 'The Sources has been deleted successfully.',
+                    'body' => 'The Sources has been deleted successfully.',
                 ],
             ],
         ],
@@ -69,7 +71,7 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Source created',
-                    'body'  => 'The source has been created successfully.',
+                    'body' => 'The source has been created successfully.',
                 ],
             ],
         ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
@@ -7,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\CommentReaction;
 
-class CommentWasReactedEvent
+final class CommentWasReactedEvent
 {
     use Dispatchable;
     use SerializesModels;

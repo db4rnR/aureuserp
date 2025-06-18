@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('sales_order_lines', function (Blueprint $table) {
+        Schema::table('sales_order_lines', function (Blueprint $table): void {
             if (Schema::hasTable('inventories_routes') && ! Schema::hasColumn('sales_order_lines', 'route_id')) {
                 $table->foreignId('route_id')
                     ->nullable()
@@ -33,7 +33,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('sales_order_lines', function (Blueprint $table) {
+        Schema::table('sales_order_lines', function (Blueprint $table): void {
             if (Schema::hasColumn('sales_order_lines', 'route_id')) {
                 $table->dropForeign(['route_id']);
                 $table->dropColumn('route_id');

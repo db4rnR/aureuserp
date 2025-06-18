@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'label' => 'Cancel',
 
@@ -8,18 +10,18 @@ return [
             'warning' => [
                 'receipts' => [
                     'title' => 'Cannot cancel order',
-                    'body'  => 'The order cannot be canceled since they have receipts that are already done.',
+                    'body' => 'The order cannot be canceled since they have receipts that are already done.',
                 ],
 
                 'bills' => [
                     'title' => 'Cannot cancel order',
-                    'body'  => 'The order cannot be canceled. You must first cancel their related vendor bills.',
+                    'body' => 'The order cannot be canceled. You must first cancel their related vendor bills.',
                 ],
             ],
 
             'success' => [
                 'title' => 'Order canceled',
-                'body'  => 'The order has been canceled successfully.',
+                'body' => 'The order has been canceled successfully.',
             ],
         ],
     ],

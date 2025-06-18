@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -13,7 +15,7 @@ use Webkul\Support\Models\Company;
 /**
  * @extends Factory<Partner>
  */
-class PartnerFactory extends Factory
+final class PartnerFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -30,22 +32,22 @@ class PartnerFactory extends Factory
     public function definition(): array
     {
         return [
-            'account_type'     => AccountType::INDIVIDUAL,
-            'name'             => fake()->name(),
-            'email'            => fake()->unique()->safeEmail(),
-            'job_title'        => fake()->jobTitle(),
-            'website'          => fake()->url(),
-            'tax_id'           => fake()->vat(),
-            'phone'            => fake()->phoneNumber(),
-            'mobile'           => fake()->phoneNumber(),
-            'color'            => fake()->hexColor(),
+            'account_type' => AccountType::INDIVIDUAL,
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'job_title' => fake()->jobTitle(),
+            'website' => fake()->url(),
+            'tax_id' => fake()->vat(),
+            'phone' => fake()->phoneNumber(),
+            'mobile' => fake()->phoneNumber(),
+            'color' => fake()->hexColor(),
             'company_registry' => fake()->companyNumber(),
-            'reference'        => fake()->unique()->word(),
-            'creator_id'       => User::factory(),
-            'user_id'          => User::factory(),
-            'title_id'         => Title::factory(),
-            'company_id'       => Company::factory(),
-            'industry_id'      => Industry::factory(),
+            'reference' => fake()->unique()->word(),
+            'creator_id' => User::factory(),
+            'user_id' => User::factory(),
+            'title_id' => Title::factory(),
+            'company_id' => Company::factory(),
+            'industry_id' => Industry::factory(),
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Employee\Database\Factories\EmployeeSkillFactory;
 use Webkul\Security\Models\User;
 
-class EmployeeSkill extends Model
+final class EmployeeSkill extends Model
 {
     use HasFactory, SoftDeletes;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Resources\MediaResource;
 
 use Awcodes\Curator\CuratorPlugin;
@@ -8,7 +10,7 @@ use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditMedia extends EditRecord
+final class EditMedia extends EditRecord
 {
     public static function getResource(): string
     {
@@ -40,7 +42,7 @@ class EditMedia extends EditRecord
             $livewire = $this->getForm('form')->getLivewire();
             $statePath = $this->getForm('form')->getStatePath();
 
-            data_set($livewire, $statePath . '.file', null);
+            data_set($livewire, $statePath.'.file', null);
         }
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanResource;
 
-class ListAccrualPlans extends ListRecords
+final class ListAccrualPlans extends ListRecords
 {
     protected static string $resource = AccrualPlanResource::class;
 

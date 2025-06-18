@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator;
 
 abstract class Helpers
@@ -10,7 +12,7 @@ abstract class Helpers
      * @param  array[]  $arr
      * @return array[]
      */
-    public static function arrayRefsGroupBy(array &$arr, string $key): array
+    final public static function arrayRefsGroupBy(array &$arr, string $key): array
     {
         $ret = [];
 

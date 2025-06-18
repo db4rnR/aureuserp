@@ -1,30 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Webkul\Recruitment\Filament\Widgets\JobPositionStatsWidget;
-use Webkul\Recruitment\Filament\Widgets\ApplicantChartWidget;
+use BackedEnum;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Filament\View\LegacyComponents\Widget;
 use Webkul\Employee\Models\Department;
 use Webkul\Employee\Models\EmployeeJobPosition;
-use Webkul\Recruitment\Filament\Widgets;
+use Webkul\Recruitment\Filament\Widgets\ApplicantChartWidget;
+use Webkul\Recruitment\Filament\Widgets\JobPositionStatsWidget;
 use Webkul\Recruitment\Models\Stage;
 use Webkul\Support\Filament\Clusters\Dashboard as DashboardCluster;
 use Webkul\Support\Models\Company;
 
-class Recruitments extends BaseDashboard
+final class Recruitments extends BaseDashboard
 {
     use BaseDashboard\Concerns\HasFiltersForm;
 
     protected static string $routePath = 'recruitment';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-folder';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
 
     protected static ?string $cluster = DashboardCluster::class;
 
@@ -70,10 +72,10 @@ class Recruitments extends BaseDashboard
                         Select::make('status')
                             ->label(__('recruitments::filament/pages/recruitment.filters-form.status.title'))
                             ->options([
-                                'all'      => __('recruitments::filament/pages/recruitment.filters-form.status.options.all'),
-                                'ongoing'  => __('recruitments::filament/pages/recruitment.filters-form.status.options.ongoing'),
-                                'hired'    => __('recruitments::filament/pages/recruitment.filters-form.status.options.hired'),
-                                'refused'  => __('recruitments::filament/pages/recruitment.filters-form.status.options.refused'),
+                                'all' => __('recruitments::filament/pages/recruitment.filters-form.status.options.all'),
+                                'ongoing' => __('recruitments::filament/pages/recruitment.filters-form.status.options.ongoing'),
+                                'hired' => __('recruitments::filament/pages/recruitment.filters-form.status.options.hired'),
+                                'refused' => __('recruitments::filament/pages/recruitment.filters-form.status.options.refused'),
                                 'archived' => __('recruitments::filament/pages/recruitment.filters-form.status.options.archived'),
                             ])
                             ->default('all')

@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyTimeOffResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Carbon;
@@ -13,7 +14,7 @@ use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyTimeOffResource;
 
-class EditMyTimeOff extends EditRecord
+final class EditMyTimeOff extends EditRecord
 {
     protected static string $resource = MyTimeOffResource::class;
 
@@ -34,7 +35,7 @@ class EditMyTimeOff extends EditRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             ViewAction::make(),
             DeleteAction::make()
                 ->successNotification(
@@ -92,7 +93,7 @@ class EditMyTimeOff extends EditRecord
         $data['state'] = State::CONFIRM->value;
 
         $data['date_from'] = $data['request_date_from'];
-        $data['date_to'] = isset($data['request_date_to']) ? $data['request_date_to'] : null;
+        $data['date_to'] = $data['request_date_to'] ?? null;
 
         return $data;
     }

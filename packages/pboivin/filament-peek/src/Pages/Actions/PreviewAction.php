@@ -1,24 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Pages\Actions;
 
+use Filament\Actions\Action;
 use Pboivin\FilamentPeek\Support\Concerns\CanPreviewInNewTab;
 use Pboivin\FilamentPeek\Support\Concerns\SetsInitialPreviewModalData;
-use Pboivin\FilamentPeek\Support\Panel;
 use Pboivin\FilamentPeek\Support\Page;
+use Pboivin\FilamentPeek\Support\Panel;
 use Pboivin\FilamentPeek\Support\View;
-use Filament\Actions\Action;
-use Pboivin\FilamentPeek\Support;
 
-class PreviewAction extends Action
+final class PreviewAction extends Action
 {
     use CanPreviewInNewTab;
     use SetsInitialPreviewModalData;
-
-    public static function getDefaultName(): ?string
-    {
-        return 'preview';
-    }
 
     protected function setUp(): void
     {
@@ -26,7 +22,7 @@ class PreviewAction extends Action
 
         $this->label(__('filament-peek::ui.preview-action-label'))
             ->color('gray')
-            ->action(function ($livewire) {
+            ->action(function ($livewire): void {
                 Panel::ensurePluginIsLoaded();
 
                 Page::ensurePreviewModalSupport($livewire);
@@ -43,5 +39,10 @@ class PreviewAction extends Action
             });
 
         View::setupPreviewModal();
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'preview';
     }
 }

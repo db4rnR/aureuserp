@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\PaymentsResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Account\Filament\Resources\PaymentsResource;
 use Webkul\Account\Filament\Resources\PaymentsResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
-class EditPayments extends EditRecord
+final class EditPayments extends EditRecord
 {
     protected static string $resource = PaymentsResource::class;
 
@@ -32,7 +33,7 @@ class EditPayments extends EditRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             ViewAction::make(),
             DeleteAction::make(),
             BaseActions\ConfirmAction::make(),

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('companies', function (Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table): void {
             $table->string('street1')->nullable()->comment('Street 1');
             $table->string('street2')->nullable()->comment('Street 2');
             $table->string('city')->nullable()->comment('City');
@@ -34,7 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('companies', function (Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table): void {
             $table->dropForeign(['state_id']);
             $table->dropForeign(['country_id']);
 

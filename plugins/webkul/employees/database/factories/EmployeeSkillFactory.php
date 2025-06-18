@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -8,7 +10,7 @@ use Webkul\Employee\Models\EmployeeSkill;
 use Webkul\Employee\Models\Skill;
 use Webkul\Employee\Models\SkillLevel;
 
-class EmployeeSkillFactory extends Factory
+final class EmployeeSkillFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -25,11 +27,11 @@ class EmployeeSkillFactory extends Factory
     public function definition(): array
     {
         return [
-            'employee_id'    => Employee::factory(),
-            'skill_id'       => Skill::factory(),
+            'employee_id' => Employee::factory(),
+            'skill_id' => Skill::factory(),
             'skill_level_id' => SkillLevel::factory(),
-            'start_date'     => $this->faker->date(),
-            'notes'          => $this->faker->text(),
+            'start_date' => $this->faker->date(),
+            'notes' => $this->faker->text(),
         ];
     }
 }

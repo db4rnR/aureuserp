@@ -1,32 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Livewire;
 
-use Filament\Schemas\Schema;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
+use Filament\Schemas\Schema;
 use Illuminate\Validation\Rules\Password;
 use Webkul\Project\Filament\Pages\Dashboard;
 use Webkul\Security\Models\Invitation;
 use Webkul\Security\Models\User;
 use Webkul\Security\Settings\UserSettings;
 
-class AcceptInvitation extends SimplePage
+final class AcceptInvitation extends SimplePage
 {
     use InteractsWithFormActions;
     use InteractsWithForms;
 
-    protected string $view = 'security::livewire.accept-invitation';
-
     public int $invitation;
 
-    private Invitation $invitationModel;
-
     public ?array $data = [];
+
+    protected string $view = 'security::livewire.accept-invitation';
+
+    private Invitation $invitationModel;
 
     public function mount(): void
     {
@@ -70,9 +72,9 @@ class AcceptInvitation extends SimplePage
         $this->invitationModel = Invitation::find($this->invitation);
 
         $user = User::create([
-            'name'               => $this->form->getState()['name'],
-            'password'           => $this->form->getState()['password'],
-            'email'              => $this->invitationModel->email,
+            'name' => $this->form->getState()['name'],
+            'password' => $this->form->getState()['password'],
+            'email' => $this->invitationModel->email,
             'default_company_id' => app(UserSettings::class)->default_company_id,
         ]);
 

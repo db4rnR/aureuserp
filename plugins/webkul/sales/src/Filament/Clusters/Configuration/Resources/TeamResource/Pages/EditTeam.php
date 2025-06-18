@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource;
 
-class EditTeam extends EditRecord
+final class EditTeam extends EditRecord
 {
     protected static string $resource = TeamResource::class;
 
@@ -31,7 +32,7 @@ class EditTeam extends EditRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             ViewAction::make(),
             DeleteAction::make()
                 ->successNotification(

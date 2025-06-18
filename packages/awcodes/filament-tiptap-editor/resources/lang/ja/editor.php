@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'ツールバーをスキップ',
     'align_center' => 'テキストを中央揃え',

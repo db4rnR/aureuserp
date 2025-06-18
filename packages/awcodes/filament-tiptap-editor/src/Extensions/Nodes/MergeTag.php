@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-class MergeTag extends Node
+final class MergeTag extends Node
 {
     public static $name = 'mergeTag';
 
@@ -41,7 +43,7 @@ class MergeTag extends Node
     {
         return [
             [
-                'tag' => "span[data-type='" . static::$name . "']",
+                'tag' => "span[data-type='".self::$name."']",
             ],
         ];
     }
@@ -50,7 +52,7 @@ class MergeTag extends Node
     {
         return [
             'span',
-            HTML::mergeAttributes(['data-type' => static::$name], $HTMLAttributes),
+            HTML::mergeAttributes(['data-type' => self::$name], $HTMLAttributes),
             0,
         ];
     }

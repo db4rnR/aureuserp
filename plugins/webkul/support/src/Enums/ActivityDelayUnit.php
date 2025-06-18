@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Enums;
 
 enum ActivityDelayUnit: string
@@ -16,9 +18,9 @@ enum ActivityDelayUnit: string
     {
         return [
             self::MINUTES->value => __('support::enums/activity-delay-unit.minutes'),
-            self::HOURS->value   => __('support::enums/activity-delay-unit.hours'),
-            self::DAYS->value    => __('support::enums/activity-delay-unit.days'),
-            self::WEEKS->value   => __('support::enums/activity-delay-unit.weeks'),
+            self::HOURS->value => __('support::enums/activity-delay-unit.hours'),
+            self::DAYS->value => __('support::enums/activity-delay-unit.days'),
+            self::WEEKS->value => __('support::enums/activity-delay-unit.weeks'),
         ];
     }
 }

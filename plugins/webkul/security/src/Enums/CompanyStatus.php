@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Enums;
 
 enum CompanyStatus: string
@@ -11,8 +13,8 @@ enum CompanyStatus: string
     public static function options(): array
     {
         return [
-            self::ACTIVE->value      => __('security::enums/company-status.active'),
-            self::INACTIVE->value    => __('security::enums/company-status.inactive'),
+            self::ACTIVE->value => __('security::enums/company-status.active'),
+            self::INACTIVE->value => __('security::enums/company-status.inactive'),
         ];
     }
 }

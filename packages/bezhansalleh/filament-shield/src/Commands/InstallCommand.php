@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Process;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'shield:install')]
-class InstallCommand extends Command implements PromptsForMissingInput
+final class InstallCommand extends Command implements PromptsForMissingInput
 {
     use CanBeProhibitable;
     use CanMakePanelTenantable;
@@ -49,7 +49,7 @@ class InstallCommand extends Command implements PromptsForMissingInput
             (string) str($panel->getId())
                 ->studly()
                 ->append('PanelProvider')
-                ->prepend('Providers' . DIRECTORY_SEPARATOR . 'Filament' . DIRECTORY_SEPARATOR)
+                ->prepend('Providers'.DIRECTORY_SEPARATOR.'Filament'.DIRECTORY_SEPARATOR)
                 ->replace(['\\', '/'], DIRECTORY_SEPARATOR)
                 ->append('.php'),
         );

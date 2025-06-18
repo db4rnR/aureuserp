@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMMediumResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMMediumResource;
 
-class ListUTMMedia extends ListRecords
+final class ListUTMMedia extends ListRecords
 {
     protected static string $resource = UTMMediumResource::class;
 

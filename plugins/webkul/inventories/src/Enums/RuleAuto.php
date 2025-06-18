@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -13,7 +15,7 @@ enum RuleAuto: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::MANUAL      => __('inventories::enums/rule-auto.manual'),
+            self::MANUAL => __('inventories::enums/rule-auto.manual'),
             self::TRANSPARENT => __('inventories::enums/rule-auto.transparent'),
         };
     }

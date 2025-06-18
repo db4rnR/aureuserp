@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Exception;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Security\Models\User;
 use Webkul\Support\Database\Factories\UOMFactory;
 
-class UOM extends Model
+final class UOM extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -56,9 +58,9 @@ class UOM extends Model
      *
      * @throws Exception If conversion fails and $raiseIfFailure is true
      */
-    public function computeQuantity($qty, $toUnit, $round = true, $roundingMethod = 'UP', $raiseIfFailure = true)
+    public function computeQuantity($qty, $toUnit, $round = true, $roundingMethod = 'UP', $raiseIfFailure = true): float
     {
-        if (! $this || ! $qty) {
+        if (! $qty) {
             return $qty;
         }
 
@@ -68,9 +70,10 @@ class UOM extends Model
                     'The unit of measure :unit defined on the order line doesn\'t belong to the same category as the unit of measure :product_unit defined on the product. Please correct the unit of measure defined on the order line or on the product. They should belong to the same category.',
                     ['unit' => $this->name, 'product_unit' => $toUnit->name]
                 ));
-            } else {
-                return $qty;
             }
+
+            return $qty;
+
         }
 
         if ($this->id === $toUnit->id) {
@@ -79,12 +82,12 @@ class UOM extends Model
             $amount = $qty / $this->factor;
 
             if ($toUnit) {
-                $amount = $amount * $toUnit->factor;
+                $amount *= $toUnit->factor;
             }
         }
 
         if ($toUnit && $round) {
-            $amount = $this->floatRound(
+            return $this->floatRound(
                 $amount,
                 $toUnit->rounding,
                 $roundingMethod
@@ -92,6 +95,11 @@ class UOM extends Model
         }
 
         return $amount;
+    }
+
+    protected static function newFactory(): UOMFactory
+    {
+        return UOMFactory::new();
     }
 
     /**
@@ -102,33 +110,19 @@ class UOM extends Model
      * @param  string  $method  The rounding method
      * @return float The rounded value
      */
-    private function floatRound($value, $precision, $method = 'UP')
+    private function floatRound($value, $precision, $method = 'UP'): float
     {
-        if ($precision == 0) {
+        if ($precision === 0) {
             return $value;
         }
 
         $factor = 1.0 / $precision;
 
-        switch (strtoupper($method)) {
-            case 'CEILING':
-            case 'UP':
-                return ceil($value * $factor) / $factor;
-
-            case 'FLOOR':
-            case 'DOWN':
-                return floor($value * $factor) / $factor;
-
-            case 'HALF-UP':
-                return round($value * $factor) / $factor;
-
-            default:
-                return round($value * $factor) / $factor;
-        }
-    }
-
-    protected static function newFactory(): UOMFactory
-    {
-        return UOMFactory::new();
+        return match (mb_strtoupper($method)) {
+            'CEILING', 'UP' => ceil($value * $factor) / $factor,
+            'FLOOR', 'DOWN' => floor($value * $factor) / $factor,
+            'HALF-UP' => round($value * $factor) / $factor,
+            default => round($value * $factor) / $factor,
+        };
     }
 }

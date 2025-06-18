@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ActivityPlanResource\Pages;
 
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlanResource\Pages\ListActivityPlans as BaseListActivityPlans;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ActivityPlanResource;
 
-class ListActivityPlans extends BaseListActivityPlans
+final class ListActivityPlans extends BaseListActivityPlans
 {
     protected static string $resource = ActivityPlanResource::class;
 

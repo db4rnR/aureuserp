@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => '툴바 건너뛰기',
     'align_center' => '텍스트 중앙 정렬',

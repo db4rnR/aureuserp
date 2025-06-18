@@ -1,30 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Clusters\Settings\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Placeholder;
-use Filament\Schemas\Components\Actions;
-use Filament\Actions\Action;
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
+use Filament\Actions\Action;
+use Filament\Forms\Components\Placeholder;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Schema;
 use Webkul\Security\Settings\UserSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-class ManageActivity extends SettingsPage
+final class ManageActivity extends SettingsPage
 {
     use HasPageShield;
 
     protected static ?string $cluster = Settings::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $settings = UserSettings::class;
 
     public static function getNavigationGroup(): string
     {
         return __('security::filament/clusters/manage-activity.group');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('security::filament/clusters/manage-activity.navigation.label');
     }
 
     public function getBreadcrumbs(): array
@@ -37,11 +44,6 @@ class ManageActivity extends SettingsPage
     public function getTitle(): string
     {
         return __('security::filament/clusters/manage-activity.title');
-    }
-
-    public static function getNavigationLabel(): string
-    {
-        return __('security::filament/clusters/manage-activity.navigation.label');
     }
 
     public function form(Schema $schema): Schema

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -9,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<Tag>
  */
-class TagFactory extends Factory
+final class TagFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -26,8 +28,8 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'       => fake()->name(),
-            'color'      => fake()->hexColor(),
+            'name' => fake()->name(),
+            'color' => fake()->hexColor(),
             'creator_id' => User::factory(),
         ];
     }

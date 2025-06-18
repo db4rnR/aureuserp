@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Delivery updated',
-        'body'  => 'The delivery has been updated successfully.',
+        'body' => 'The delivery has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -15,12 +17,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Delivery deleted',
-                    'body'  => 'The delivery has been deleted successfully.',
+                    'body' => 'The delivery has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Delivery could not be deleted',
-                    'body'  => 'The delivery cannot be deleted because it is currently in use.',
+                    'body' => 'The delivery cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

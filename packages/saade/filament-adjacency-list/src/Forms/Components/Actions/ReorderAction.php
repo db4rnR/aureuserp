@@ -1,18 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList\Forms\Components\Actions;
 
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-class ReorderAction extends Action
+final class ReorderAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'reorder';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,5 +27,10 @@ class ReorderAction extends Action
         $this->visible(
             fn (AdjacencyList $component): bool => $component->isReorderable()
         );
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'reorder';
     }
 }

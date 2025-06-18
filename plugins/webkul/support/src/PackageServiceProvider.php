@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support;
 
 use Carbon\Carbon;
@@ -15,7 +17,29 @@ abstract class PackageServiceProvider extends BasePackageServiceProvider
 
     abstract public function configureCustomPackage(Package $package): void;
 
-    public function register()
+    final public static function generateSettingName(string $settingFileName, Carbon $now): string
+    {
+        $settingsPath = 'settings/'.dirname($settingFileName).'/';
+        $settingFileName = basename($settingFileName);
+
+        $len = mb_strlen($settingFileName) + 4;
+
+        if (Str::contains($settingFileName, '/')) {
+            $settingsPath .= Str::of($settingFileName)->beforeLast('/')->finish('/');
+
+            $settingFileName = Str::of($settingFileName)->afterLast('/');
+        }
+
+        foreach (glob(database_path("{$settingsPath}*.php")) as $filename) {
+            if ((mb_substr($filename, -$len) === $settingFileName.'.php')) {
+                return $filename;
+            }
+        }
+
+        return database_path($settingsPath.$now->format('Y_m_d_His').'_'.Str::of($settingFileName)->snake()->finish('.php'));
+    }
+
+    final public function register()
     {
         $this->registeringPackage();
 
@@ -25,7 +49,7 @@ abstract class PackageServiceProvider extends BasePackageServiceProvider
 
         $this->configureCustomPackage($this->package);
 
-        if (empty($this->package->name)) {
+        if (! isset($this->package->name) || ($this->package->name === '' || $this->package->name === '0')) {
             throw InvalidPackage::nameIsRequired();
         }
 
@@ -38,14 +62,14 @@ abstract class PackageServiceProvider extends BasePackageServiceProvider
         return $this;
     }
 
-    public function newPackage(): Package
+    final public function newPackage(): Package
     {
         return new Package;
     }
 
-    public function configurePackage(BasePackage $package): void {}
+    final public function configurePackage(BasePackage $package): void {}
 
-    public function boot()
+    final public function boot()
     {
         $this->bootingPackage();
 
@@ -110,10 +134,7 @@ abstract class PackageServiceProvider extends BasePackageServiceProvider
                 }
 
                 $this->publishes([
-                    $filePath => $this->generateSettingName(
-                        $settingFileName,
-                        $now->addSecond()
-                    ),
+                    $filePath => static::generateSettingName($settingFileName, $now->addSecond()),
                 ], "{$this->package->shortName()}-settings");
 
                 if ($this->package->runsSettings) {
@@ -126,11 +147,11 @@ abstract class PackageServiceProvider extends BasePackageServiceProvider
             }
         }
 
-        if (! empty($this->package->commands)) {
+        if ($this->package->commands !== []) {
             $this->commands($this->package->commands);
         }
 
-        if (! empty($this->package->consoleCommands) && $this->app->runningInConsole()) {
+        if ($this->package->consoleCommands !== [] && $this->app->runningInConsole()) {
             $this->commands($this->package->consoleCommands);
         }
 
@@ -153,13 +174,13 @@ abstract class PackageServiceProvider extends BasePackageServiceProvider
             $this->loadViewComponentsAs($prefix, [$componentClass]);
         }
 
-        if (count($this->package->viewComponents)) {
+        if (count($this->package->viewComponents) !== 0) {
             $this->publishes([
                 $this->package->basePath('/Components') => base_path("app/View/Components/vendor/{$this->package->shortName()}"),
             ], "{$this->package->name}-components");
         }
 
-        if ($this->package->publishableProviderName) {
+        if ($this->package->publishableProviderName !== null && $this->package->publishableProviderName !== '' && $this->package->publishableProviderName !== '0') {
             $this->publishes([
                 $this->package->basePath("/../resources/stubs/{$this->package->publishableProviderName}.php.stub") => base_path("app/Providers/{$this->package->publishableProviderName}.php"),
             ], "{$this->package->shortName()}-provider");
@@ -180,27 +201,5 @@ abstract class PackageServiceProvider extends BasePackageServiceProvider
         $this->packageBooted();
 
         return $this;
-    }
-
-    public static function generateSettingName(string $settingFileName, Carbon $now): string
-    {
-        $settingsPath = 'settings/'.dirname($settingFileName).'/';
-        $settingFileName = basename($settingFileName);
-
-        $len = strlen($settingFileName) + 4;
-
-        if (Str::contains($settingFileName, '/')) {
-            $settingsPath .= Str::of($settingFileName)->beforeLast('/')->finish('/');
-
-            $settingFileName = Str::of($settingFileName)->afterLast('/');
-        }
-
-        foreach (glob(database_path("{$settingsPath}*.php")) as $filename) {
-            if ((substr($filename, -$len) === $settingFileName.'.php')) {
-                return $filename;
-            }
-        }
-
-        return database_path($settingsPath.$now->format('Y_m_d_His').'_'.Str::of($settingFileName)->snake()->finish('.php'));
     }
 }

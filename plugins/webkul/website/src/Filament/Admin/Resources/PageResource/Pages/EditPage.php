@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Filament\Admin\Resources\PageResource\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Website\Filament\Admin\Resources\PageResource;
 use Webkul\Website\Models\Page;
 
-class EditPage extends EditRecord
+final class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
 
@@ -33,7 +34,7 @@ class EditPage extends EditRecord
             Action::make('publish')
                 ->label(__('website::filament/admin/resources/page/pages/edit-record.header-actions.publish.label'))
                 ->icon('heroicon-o-check-circle')
-                ->action(function (Page $record) {
+                ->action(function (Page $record): void {
                     $record->update([
                         'published_at' => now(),
                         'is_published' => true,
@@ -45,11 +46,11 @@ class EditPage extends EditRecord
                         ->body(__('website::filament/admin/resources/page/pages/edit-record.header-actions.publish.notification.body'))
                         ->send();
                 })
-                ->visible(fn (Page $record) => ! $record->is_published),
+                ->visible(fn (Page $record): bool => ! $record->is_published),
             Action::make('draft')
                 ->label(__('website::filament/admin/resources/page/pages/edit-record.header-actions.draft.label'))
                 ->icon('heroicon-o-archive-box')
-                ->action(function (Page $record) {
+                ->action(function (Page $record): void {
                     $record->update(['is_published' => false]);
 
                     Notification::make()

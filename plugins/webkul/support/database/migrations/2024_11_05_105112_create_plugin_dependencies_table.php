@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plugin_dependencies', function (Blueprint $table) {
+        Schema::create('plugin_dependencies', function (Blueprint $table): void {
             $table->foreignId('plugin_id')
                 ->constrained('plugins')
                 ->cascadeOnDelete();

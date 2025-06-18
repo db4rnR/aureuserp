@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Credit Note',
 
@@ -8,7 +10,7 @@ return [
 
         'form' => [
             'reason' => 'Reason displayed on Credit Note',
-            'date'   => 'Date',
+            'date' => 'Date',
         ],
     ],
 ];

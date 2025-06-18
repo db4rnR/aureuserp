@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\DepartureReason;
 
-class DepartureReasonFactory extends Factory
+final class DepartureReasonFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,9 +24,9 @@ class DepartureReasonFactory extends Factory
     public function definition(): array
     {
         return [
-            'sequence'    => $this->faker->randomNumber(),
+            'sequence' => $this->faker->randomNumber(),
             'reason_code' => $this->faker->word,
-            'name'        => $this->faker->word,
+            'name' => $this->faker->word,
         ];
     }
 }

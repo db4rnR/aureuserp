@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources\TeamResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use Webkul\Security\Filament\Resources\TeamResource;
 
-class ManageTeams extends ManageRecords
+final class ManageTeams extends ManageRecords
 {
     protected static string $resource = TeamResource::class;
 

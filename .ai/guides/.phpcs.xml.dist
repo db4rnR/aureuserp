@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<ruleset name="AureusERP">
+    <description>AureusERP coding standard with preference for native types over PHPDoc</description>
+
+    <!-- Define the files to analyze -->
+    <file>app</file>
+    <file>bin</file>
+    <file>bootstrap</file>
+    <file>config</file>
+    <file>database</file>
+    <file>routes</file>
+    <file>tests</file>
+    <file>packages</file>
+    <file>plugins</file>
+
+    <!-- Exclude paths that match other tools -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*/bootstrap/cache/*</exclude-pattern>
+    <exclude-pattern>*/public/*</exclude-pattern>
+    <exclude-pattern>*/database/migrations/*</exclude-pattern>
+    <exclude-pattern>*/plugins/**/database/migrations/*</exclude-pattern>
+    <exclude-pattern>*/reports/rector/cache/*</exclude-pattern>
+
+    <!-- PHP 8.4 compatibility -->
+    <config name="php_version" value="80400"/>
+
+    <!-- Enforce native type hints -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
+        <properties>
+            <property name="enableObjectTypeHint" value="true"/>
+            <property name="traversableTypeHints" type="array">
+                <element value="array"/>
+                <element value="\ArrayAccess"/>
+                <element value="\Countable"/>
+                <element value="\Illuminate\Support\Collection"/>
+                <element value="\Illuminate\Database\Eloquent\Collection"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+        <properties>
+            <property name="enableNativeTypeHint" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+        <properties>
+            <property name="enableStaticTypeHint" value="true"/>
+            <property name="traversableTypeHints" type="array">
+                <element value="array"/>
+                <element value="\Traversable"/>
+                <element value="\Illuminate\Support\Collection"/>
+                <element value="\Illuminate\Database\Eloquent\Collection"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
+
+    <!-- Discourage redundant PHPDoc when native types are used -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+        <properties>
+            <property name="enableEachParameterAndReturnInspection" value="true"/>
+            <property name="usefulAnnotations" type="array">
+                <element value="@api"/>
+                <element value="@deprecated"/>
+                <element value="@example"/>
+                <element value="@see"/>
+                <element value="@throws"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>

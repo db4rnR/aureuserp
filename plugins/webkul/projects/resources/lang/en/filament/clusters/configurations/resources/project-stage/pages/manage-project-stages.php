@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'create' => [
@@ -7,13 +9,13 @@ return [
 
             'notification' => [
                 'title' => 'Project stage created',
-                'body'  => 'The project stage has been created successfully.',
+                'body' => 'The project stage has been created successfully.',
             ],
         ],
     ],
 
     'tabs' => [
-        'all'      => 'All',
+        'all' => 'All',
         'archived' => 'Archived',
     ],
 ];

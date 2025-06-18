@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,9 +14,14 @@ use Webkul\Project\Database\Factories\ProjectStageFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class ProjectStage extends Model implements Sortable
+final class ProjectStage extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -43,13 +50,8 @@ class ProjectStage extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'is_active'    => 'boolean',
+        'is_active' => 'boolean',
         'is_collapsed' => 'boolean',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function creator(): BelongsTo

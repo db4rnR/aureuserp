@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek;
 
 use Illuminate\Support\Str;
@@ -23,11 +25,11 @@ function generateToc(string $prefix): string
     foreach (DOC_FILES as $file) {
         foreach (file($file) as $line) {
             if (preg_match('/^# /', $line)) {
-                $title = preg_replace('/^# /', '', trim($line));
+                $title = preg_replace('/^# /', '', mb_trim($line));
                 $slug = Str::slug($title);
                 $toc[] = "- [$title]({$prefix}{$file})";
             } elseif (preg_match('/^## /', $line)) {
-                $title = preg_replace('/^## /', '', trim($line));
+                $title = preg_replace('/^## /', '', mb_trim($line));
                 $slug = Str::slug($title);
                 $toc[] = "    - [$title]({$prefix}{$file}#{$slug})";
             }
@@ -52,7 +54,7 @@ function generateFooter(string $prefix): string
             $file = basename($file);
 
             if (preg_match('/^# /', $line)) {
-                $title = preg_replace('/^# /', '', trim($line));
+                $title = preg_replace('/^# /', '', mb_trim($line));
                 $toc[] = "- [$title]({$prefix}{$file})";
             }
         }
@@ -90,7 +92,7 @@ function updateMarkdown(string $file, string $toc): string
             continue;
         }
 
-        $readme[] = rtrim($line);
+        $readme[] = mb_rtrim($line);
     }
 
     return implode("\n", [

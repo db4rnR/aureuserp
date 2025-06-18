@@ -1,13 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages;
 
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\EditJobPosition as BaseEditJobPosition;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource;
 
-class EditJobPosition extends BaseEditJobPosition
+final class EditJobPosition extends BaseEditJobPosition
 {
     protected static string $resource = JobPositionResource::class;
+
+    public function prepareData($data): array
+    {
+        $model = $this->record;
+
+        return array_merge($data, [
+            'no_of_employee' => $model->no_of_employee,
+            'no_of_hired_employee' => $model->no_of_hired_employee,
+            'expected_employees' => $model->expected_employees,
+        ]);
+    }
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
@@ -19,19 +32,8 @@ class EditJobPosition extends BaseEditJobPosition
         return $this->prepareData($data);
     }
 
-    protected function afterSave(): void
+    private function afterSave(): void
     {
         $this->record->refresh();
-    }
-
-    public function prepareData($data): array
-    {
-        $model = $this->record;
-
-        return array_merge($data, [
-            'no_of_employee'       => $model->no_of_employee,
-            'no_of_hired_employee' => $model->no_of_hired_employee,
-            'expected_employees'   => $model->expected_employees,
-        ]);
     }
 }

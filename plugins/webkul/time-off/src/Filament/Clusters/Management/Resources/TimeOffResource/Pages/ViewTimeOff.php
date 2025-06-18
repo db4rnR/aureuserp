@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages;
 
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
 
-class ViewTimeOff extends ViewRecord
+final class ViewTimeOff extends ViewRecord
 {
     protected static string $resource = TimeOffResource::class;
 
@@ -18,7 +19,7 @@ class ViewTimeOff extends ViewRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             EditAction::make(),
             DeleteAction::make()
                 ->successNotification(

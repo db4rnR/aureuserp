@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions;
 
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\FileUpload;
 use Exception;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
@@ -18,13 +19,8 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-class SendEmailAction extends Action
+final class SendEmailAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'purchases.orders.send-email';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -32,12 +28,12 @@ class SendEmailAction extends Action
         $userName = Auth::user()->name;
 
         $acceptRespondUrl = URL::signedRoute('purchases.quotations.respond', [
-            'order'  => $this->getRecord()->id,
+            'order' => $this->getRecord()->id,
             'action' => 'accept',
         ]);
 
         $declineRespondUrl = URL::signedRoute('purchases.quotations.respond', [
-            'order'  => $this->getRecord()->id,
+            'order' => $this->getRecord()->id,
             'action' => 'decline',
         ]);
 
@@ -55,7 +51,7 @@ class SendEmailAction extends Action
                     ->multiple()
                     ->searchable()
                     ->preload()
-                    ->default(fn () => [$this->getRecord()->partner_id]),
+                    ->default(fn (): array => [$this->getRecord()->partner_id]),
                 TextInput::make('subject')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order/actions/send-email.form.fields.subject'))
                     ->required()
@@ -80,13 +76,11 @@ MD),
                 FileUpload::make('attachment')
                     ->hiddenLabel()
                     ->disk('public')
-                    ->default(function () {
-                        return PurchaseOrder::generateRFQPdf($this->getRecord());
-                    })
+                    ->default(fn () => PurchaseOrder::generateRFQPdf($this->getRecord()))
                     ->downloadable()
                     ->openable(),
             ])
-            ->action(function (array $data, Order $record, Component $livewire) {
+            ->action(function (array $data, Order $record, Component $livewire): void {
                 try {
                     $record = PurchaseOrder::sendRFQ($record, $data);
                 } catch (Exception $e) {
@@ -107,9 +101,14 @@ MD),
                     ->send();
             })
             ->color(fn (): string => $this->getRecord()->state === OrderState::DRAFT ? 'primary' : 'gray')
-            ->visible(fn () => in_array($this->getRecord()->state, [
+            ->visible(fn (): bool => in_array($this->getRecord()->state, [
                 OrderState::DRAFT,
                 OrderState::SENT,
-            ]));
+            ], true));
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'purchases.orders.send-email';
     }
 }

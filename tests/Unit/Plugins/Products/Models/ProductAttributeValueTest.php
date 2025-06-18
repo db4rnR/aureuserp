@@ -1,19 +1,21 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Product\Models\ProductAttributeValue;
-use Webkul\Product\Models\Product;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Product\Models\Attribute;
-use Webkul\Product\Models\ProductAttribute;
 use Webkul\Product\Models\AttributeOption;
+use Webkul\Product\Models\Product;
+use Webkul\Product\Models\ProductAttribute;
+use Webkul\Product\Models\ProductAttributeValue;
 use Webkul\Security\Models\User;
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductAttributeValue model attributes and properties')]
-function product_attribute_value_model_attributes_and_properties()
+function product_attribute_value_model_attributes_and_properties(): void
 {
     // Create a test product attribute value
     $productAttributeValue = ProductAttributeValue::factory()->create([
@@ -24,18 +26,18 @@ function product_attribute_value_model_attributes_and_properties()
     expect($productAttributeValue->extra_price)->toBe(10.00);
 
     // Test relationships
-    expect($productAttributeValue->product())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($productAttributeValue->attribute())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($productAttributeValue->productAttribute())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($productAttributeValue->attributeOption())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($productAttributeValue->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productAttributeValue->product())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productAttributeValue->attribute())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productAttributeValue->productAttribute())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productAttributeValue->attributeOption())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($productAttributeValue->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductAttributeValue model relationships with other models')]
-function product_attribute_value_model_relationships_with_other_models()
+function product_attribute_value_model_relationships_with_other_models(): void
 {
     // Create related models
     $product = Product::factory()->create(['name' => 'Test Product']);
@@ -48,7 +50,7 @@ function product_attribute_value_model_relationships_with_other_models()
         'attribute_id' => $attribute->id,
         'name' => 'Test Option',
     ]);
-    $user = User::factory()->create();
+    User::factory()->create();
 
     // Create a product attribute value with relationships
     $productAttributeValue = ProductAttributeValue::factory()->create([
@@ -70,7 +72,7 @@ function product_attribute_value_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductAttributeValue model timestamps')]
-function product_attribute_value_model_timestamps()
+function product_attribute_value_model_timestamps(): void
 {
     // The ProductAttributeValue model has $timestamps = false, so it should not have created_at and updated_at fields
 
@@ -87,7 +89,7 @@ function product_attribute_value_model_timestamps()
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test ProductAttributeValue model with different attribute options')]
-function product_attribute_value_model_with_different_attribute_options()
+function product_attribute_value_model_with_different_attribute_options(): void
 {
     // Create a product
     $product = Product::factory()->create(['name' => 'Test Product']);

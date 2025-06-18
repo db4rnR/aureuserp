@@ -1,26 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Quotation Template',
 
     'navigation' => [
-        'title'  => 'Quotation Template',
-        'group'  => 'Sales Orders',
+        'title' => 'Quotation Template',
+        'group' => 'Sales Orders',
     ],
 
     'form' => [
         'tabs' => [
             'products' => [
-                'title'  => 'Products',
+                'title' => 'Products',
                 'fields' => [
-                    'products'     => 'Products',
-                    'name'         => 'Name',
-                    'quantity'     => 'Quantity',
+                    'products' => 'Products',
+                    'name' => 'Name',
+                    'quantity' => 'Quantity',
                 ],
             ],
 
             'terms-and-conditions' => [
-                'title'  => 'Terms & Conditions',
+                'title' => 'Terms & Conditions',
                 'fields' => [
                     'note-placeholder' => 'Write your terms and conditions for the quotations.',
                 ],
@@ -32,9 +34,9 @@ return [
                 'title' => 'General Information',
 
                 'fields' => [
-                    'name'               => 'Name',
+                    'name' => 'Name',
                     'quotation-validity' => 'Quotation Validity',
-                    'sale-journal'       => 'Sale Journal',
+                    'sale-journal' => 'Sale Journal',
                 ],
             ],
 
@@ -42,8 +44,8 @@ return [
                 'title' => 'Signature & Payments',
 
                 'fields' => [
-                    'online-signature'      => 'Online Signature',
-                    'online-payment'        => 'Online Payment',
+                    'online-signature' => 'Online Signature',
+                    'online-payment' => 'Online Payment',
                     'prepayment-percentage' => 'Prepayment Percentage',
                 ],
             ],
@@ -52,24 +54,24 @@ return [
 
     'table' => [
         'columns' => [
-            'created-by'            => 'Created by',
-            'company'               => 'Company',
-            'name'                  => 'Name',
-            'number-of-days'        => 'Number of days',
-            'journal'               => 'Sale Journal',
-            'signature-required'    => 'Signature Required',
-            'payment-required'      => 'Payment Required',
+            'created-by' => 'Created by',
+            'company' => 'Company',
+            'name' => 'Name',
+            'number-of-days' => 'Number of days',
+            'journal' => 'Sale Journal',
+            'signature-required' => 'Signature Required',
+            'payment-required' => 'Payment Required',
             'prepayment-percentage' => 'Prepayment Percentage',
         ],
-        'groups'  => [
+        'groups' => [
             'company' => 'Company',
-            'name'    => 'Name',
+            'name' => 'Name',
             'journal' => 'Journal',
         ],
         'filters' => [
             'created-by' => 'Created By',
-            'company'    => 'Company',
-            'name'       => 'Name',
+            'company' => 'Company',
+            'name' => 'Name',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
@@ -77,7 +79,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Quotation template deleted',
-                    'body'  => 'The quotation template has been deleted successfully.',
+                    'body' => 'The quotation template has been deleted successfully.',
                 ],
             ],
 
@@ -86,7 +88,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Quotation template deleted',
-                    'body'  => 'The quotation template has been deleted successfully.',
+                    'body' => 'The quotation template has been deleted successfully.',
                 ],
             ],
         ],
@@ -110,17 +112,17 @@ return [
             ],
         ],
         'entries' => [
-            'product'               => 'Product',
-            'description'           => 'Description',
-            'quantity'              => 'Quantity',
-            'unit-price'            => 'Unit Price',
-            'section-name'          => 'Section Name',
-            'note-title'            => 'Note Title',
-            'name'                  => 'Template Name',
-            'quotation-validity'    => 'Quotation Validity',
-            'sale-journal'          => 'Sale Journal',
-            'online-signature'      => 'Online Signature',
-            'online-payment'        => 'Online Payment',
+            'product' => 'Product',
+            'description' => 'Description',
+            'quantity' => 'Quantity',
+            'unit-price' => 'Unit Price',
+            'section-name' => 'Section Name',
+            'note-title' => 'Note Title',
+            'name' => 'Template Name',
+            'quotation-validity' => 'Quotation Validity',
+            'sale-journal' => 'Sale Journal',
+            'online-signature' => 'Online Signature',
+            'online-payment' => 'Online Payment',
             'prepayment-percentage' => 'Prepayment Percentage',
         ],
     ],

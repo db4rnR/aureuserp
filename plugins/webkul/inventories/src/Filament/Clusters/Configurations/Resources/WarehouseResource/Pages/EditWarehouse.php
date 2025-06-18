@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\LocationType;
-use Webkul\Inventory\Enums\ReceptionStep;
-use Webkul\Inventory\Enums\DeliveryStep;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\DeliveryStep;
+use Webkul\Inventory\Enums\LocationType;
+use Webkul\Inventory\Enums\ReceptionStep;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResource;
 use Webkul\Inventory\Models\Location;
 use Webkul\Inventory\Models\OperationType;
 use Webkul\Inventory\Models\Route;
 use Webkul\Inventory\Models\Rule;
 
-class EditWarehouse extends EditRecord
+final class EditWarehouse extends EditRecord
 {
     protected static string $resource = WarehouseResource::class;
 
@@ -41,7 +41,7 @@ class EditWarehouse extends EditRecord
         ];
     }
 
-    protected function afterSave(): void
+    private function afterSave(): void
     {
         $warehouse = $this->getRecord();
 
@@ -87,9 +87,9 @@ class EditWarehouse extends EditRecord
                 ReceptionStep::ONE_STEP->value => [
                     'update' => [
                         $warehouse->in_type_id => [
-                            'source_location_id'      => $supplierLocation->id,
+                            'source_location_id' => $supplierLocation->id,
                             'destination_location_id' => $warehouse->lot_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                     ],
                     'archive' => [$warehouse->store_type_id, $warehouse->qc_type_id],
@@ -97,14 +97,14 @@ class EditWarehouse extends EditRecord
                 ReceptionStep::TWO_STEPS->value => [
                     'update' => [
                         $warehouse->in_type_id => [
-                            'source_location_id'      => $supplierLocation->id,
+                            'source_location_id' => $supplierLocation->id,
                             'destination_location_id' => $warehouse->input_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                         $warehouse->store_type_id => [
-                            'source_location_id'      => $warehouse->input_stock_location_id,
+                            'source_location_id' => $warehouse->input_stock_location_id,
                             'destination_location_id' => $warehouse->lot_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                     ],
                     'archive' => [$warehouse->qc_type_id],
@@ -112,19 +112,19 @@ class EditWarehouse extends EditRecord
                 ReceptionStep::THREE_STEPS->value => [
                     'update' => [
                         $warehouse->in_type_id => [
-                            'source_location_id'      => $supplierLocation->id,
+                            'source_location_id' => $supplierLocation->id,
                             'destination_location_id' => $warehouse->input_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                         $warehouse->qc_type_id => [
-                            'source_location_id'      => $warehouse->input_stock_location_id,
+                            'source_location_id' => $warehouse->input_stock_location_id,
                             'destination_location_id' => $warehouse->qc_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                         $warehouse->store_type_id => [
-                            'source_location_id'      => $warehouse->qc_stock_location_id,
+                            'source_location_id' => $warehouse->qc_stock_location_id,
                             'destination_location_id' => $warehouse->lot_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                     ],
                 ],
@@ -137,9 +137,9 @@ class EditWarehouse extends EditRecord
                 DeliveryStep::ONE_STEP->value => [
                     'update' => [
                         $warehouse->out_type_id => [
-                            'source_location_id'      => $warehouse->lot_stock_location_id,
+                            'source_location_id' => $warehouse->lot_stock_location_id,
                             'destination_location_id' => $customerLocation->id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                     ],
                     'archive' => [$warehouse->pick_type_id, $warehouse->pack_type_id],
@@ -147,14 +147,14 @@ class EditWarehouse extends EditRecord
                 DeliveryStep::TWO_STEPS->value => [
                     'update' => [
                         $warehouse->pick_type_id => [
-                            'source_location_id'      => $warehouse->lot_stock_location_id,
+                            'source_location_id' => $warehouse->lot_stock_location_id,
                             'destination_location_id' => $warehouse->output_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                         $warehouse->out_type_id => [
-                            'source_location_id'      => $warehouse->output_stock_location_id,
+                            'source_location_id' => $warehouse->output_stock_location_id,
                             'destination_location_id' => $customerLocation->id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                     ],
                     'archive' => [$warehouse->pack_type_id],
@@ -162,19 +162,19 @@ class EditWarehouse extends EditRecord
                 DeliveryStep::THREE_STEPS->value => [
                     'update' => [
                         $warehouse->pick_type_id => [
-                            'source_location_id'      => $warehouse->lot_stock_location_id,
+                            'source_location_id' => $warehouse->lot_stock_location_id,
                             'destination_location_id' => $warehouse->pack_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                         $warehouse->pack_type_id => [
-                            'source_location_id'      => $warehouse->pack_stock_location_id,
+                            'source_location_id' => $warehouse->pack_stock_location_id,
                             'destination_location_id' => $warehouse->output_stock_location_id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                         $warehouse->out_type_id => [
-                            'source_location_id'      => $warehouse->output_stock_location_id,
+                            'source_location_id' => $warehouse->output_stock_location_id,
                             'destination_location_id' => $customerLocation->id,
-                            'deleted_at'              => null,
+                            'deleted_at' => null,
                         ],
                     ],
                 ],
@@ -182,8 +182,8 @@ class EditWarehouse extends EditRecord
         );
 
         if (
-            in_array($this->data['reception_steps'], [ReceptionStep::TWO_STEPS->value, ReceptionStep::THREE_STEPS->value])
-            && in_array($this->data['delivery_steps'], [DeliveryStep::TWO_STEPS->value, DeliveryStep::THREE_STEPS->value])
+            in_array($this->data['reception_steps'], [ReceptionStep::TWO_STEPS->value, ReceptionStep::THREE_STEPS->value], true)
+            && in_array($this->data['delivery_steps'], [DeliveryStep::TWO_STEPS->value, DeliveryStep::THREE_STEPS->value], true)
         ) {
             OperationType::withTrashed()->whereIn('id', [$warehouse->xdock_type_id])->update(['deleted_at' => null]);
 
@@ -200,16 +200,16 @@ class EditWarehouse extends EditRecord
 
         $warehouse->receptionRoute->update([
             'name' => match ($this->data['reception_steps']) {
-                ReceptionStep::ONE_STEP->value    => $warehouse->name.': Receive in 1 step (Stock)',
-                ReceptionStep::TWO_STEPS->value   => $warehouse->name.': Receive in 2 steps (Input + Stock)',
+                ReceptionStep::ONE_STEP->value => $warehouse->name.': Receive in 1 step (Stock)',
+                ReceptionStep::TWO_STEPS->value => $warehouse->name.': Receive in 2 steps (Input + Stock)',
                 ReceptionStep::THREE_STEPS->value => $warehouse->name.': Receive in 3 steps (Input + Quality + Stock)',
             },
         ]);
 
         $warehouse->deliveryRoute->update([
             'name' => match ($this->data['delivery_steps']) {
-                DeliveryStep::ONE_STEP->value    => $warehouse->name.': Deliver in 1 step (Ship)',
-                DeliveryStep::TWO_STEPS->value   => $warehouse->name.': Deliver in 2 steps (Pick + Ship)',
+                DeliveryStep::ONE_STEP->value => $warehouse->name.': Deliver in 1 step (Ship)',
+                DeliveryStep::TWO_STEPS->value => $warehouse->name.': Deliver in 2 steps (Pick + Ship)',
                 DeliveryStep::THREE_STEPS->value => $warehouse->name.': Deliver in 3 steps (Pick + Pack + Ship)',
             },
         ]);

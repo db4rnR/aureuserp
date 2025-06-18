@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Extensions;
 
 use Tiptap\Core\Extension;
 use Tiptap\Utils\InlineStyle;
 
-class Color extends Extension
+final class Color extends Extension
 {
     public static $name = 'color';
 

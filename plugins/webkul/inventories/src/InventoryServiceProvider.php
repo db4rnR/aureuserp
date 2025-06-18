@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory;
 
 use Illuminate\Foundation\AliasLoader;
@@ -11,7 +13,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class InventoryServiceProvider extends PackageServiceProvider
+final class InventoryServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'inventories';
 
@@ -19,7 +21,7 @@ class InventoryServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasViews()
             ->hasTranslations()
             ->hasMigrations([
@@ -72,18 +74,18 @@ class InventoryServiceProvider extends PackageServiceProvider
                 '2025_01_17_094051_create_inventories_logistic_settings',
             ])
             ->runsSettings()
-            ->hasSeeder('Webkul\\Inventory\\Database\Seeders\\DatabaseSeeder')
+            ->hasSeeder(Database\Seeders\DatabaseSeeder::class)
             ->hasDependencies([
                 'products',
             ])
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {
-                $command->startWith(function (UninstallCommand $command) {
+            ->hasUninstallCommand(function (UninstallCommand $command): void {
+                $command->startWith(function (UninstallCommand $command): void {
                     $tables = [
                         'inventories_rules',
                         'inventories_operations',

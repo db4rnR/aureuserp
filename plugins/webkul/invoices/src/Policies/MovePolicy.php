@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -7,7 +9,7 @@ use Webkul\Invoice\Models\Move;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-class MovePolicy
+final class MovePolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 
@@ -22,7 +24,7 @@ class MovePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Move $move): bool
+    public function view(User $user): bool
     {
         return $user->can('view_refund');
     }

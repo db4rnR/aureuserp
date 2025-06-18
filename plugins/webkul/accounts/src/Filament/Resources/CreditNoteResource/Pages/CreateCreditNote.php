@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\CreditNoteResource\Pages;
 
-use Webkul\Account\Enums\MoveType;
 use Filament\Notifications\Notification;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\CreditNoteResource;
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\CreateInvoice as CreateRecord;
 
-class CreateCreditNote extends CreateRecord
+final class CreateCreditNote extends CreateRecord
 {
     protected static string $resource = CreditNoteResource::class;
 

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hugomyb\FilamentMediaAction\Tables\Actions;
 
 use Filament\Actions\Action;
 use Hugomyb\FilamentMediaAction\Concerns\HasMedia;
 
-class MediaAction extends Action
+final class MediaAction extends Action
 {
     use HasMedia;
 }

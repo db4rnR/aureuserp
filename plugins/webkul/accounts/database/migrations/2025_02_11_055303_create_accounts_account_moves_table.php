@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_account_moves', function (Blueprint $table) {
+        Schema::create('accounts_account_moves', function (Blueprint $table): void {
             $table->id();
 
             $table->integer('sort')->nullable()->comment('Sort order');
@@ -89,7 +89,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_bank_statement_lines', function (Blueprint $table) {
+        Schema::table('accounts_bank_statement_lines', function (Blueprint $table): void {
             if (Schema::hasColumn('accounts_bank_statement_lines', 'move_id')) {
                 $table->dropForeign(['move_id']);
             }

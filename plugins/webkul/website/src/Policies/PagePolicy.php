@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
-use Webkul\Website\Models\Page;
 
-class PagePolicy
+final class PagePolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class PagePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Page $page): bool
+    public function view(User $user): bool
     {
         return $user->can('view_page');
     }
@@ -37,7 +38,7 @@ class PagePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Page $page): bool
+    public function update(User $user): bool
     {
         return $user->can('update_page');
     }
@@ -45,7 +46,7 @@ class PagePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Page $page): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_page');
     }
@@ -61,7 +62,7 @@ class PagePolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Page $page): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_page');
     }
@@ -77,7 +78,7 @@ class PagePolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Page $page): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_page');
     }
@@ -93,7 +94,7 @@ class PagePolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Page $page): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_page');
     }

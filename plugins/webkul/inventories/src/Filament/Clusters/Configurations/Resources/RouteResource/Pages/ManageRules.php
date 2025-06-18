@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Tables\Columns\TextColumn;
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 
-class ManageRules extends ManageRelatedRecords
+final class ManageRules extends ManageRelatedRecords
 {
     protected static string $resource = RouteResource::class;
 
     protected static string $relationship = 'rules';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     public static function getNavigationLabel(): string
     {
@@ -46,15 +48,13 @@ class ManageRules extends ManageRelatedRecords
                 CreateAction::make()
                     ->label(__('inventories::filament/clusters/configurations/resources/route/pages/manage-rules.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
-                    ->fillForm(function (array $arguments): array {
-                        return [
-                            'route_id' => $this->getOwnerRecord()->id,
-                        ];
-                    })
+                    ->fillForm(fn (array $arguments): array => [
+                        'route_id' => $this->getOwnerRecord()->id,
+                    ])
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::id();
 
-                        $data['company_id'] = $data['company_id'] ?? Auth::user()->default_company_id;
+                        $data['company_id'] ??= Auth::user()->default_company_id;
 
                         return $data;
                     })

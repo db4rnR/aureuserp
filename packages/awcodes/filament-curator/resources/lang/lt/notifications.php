@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'Įrašas sėkmingai atnaujintas.',
     'update_error' => 'Atnaujinant įrašą įvyko klaida.',

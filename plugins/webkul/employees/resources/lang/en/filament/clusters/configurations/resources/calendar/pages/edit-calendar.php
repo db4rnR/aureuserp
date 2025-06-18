@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Work Schedule Plan updated',
-        'body'  => 'The work schedule plan has been updated successfully.',
+        'body' => 'The work schedule plan has been updated successfully.',
     ],
 
     'header-actions' => [
         'delete' => [
             'notification' => [
                 'title' => 'Work Schedule Plan deleted',
-                'body'  => 'The work schedule plan has been deleted successfully.',
+                'body' => 'The work schedule plan has been deleted successfully.',
             ],
         ],
     ],

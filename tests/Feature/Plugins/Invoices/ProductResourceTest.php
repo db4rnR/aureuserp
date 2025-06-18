@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+use Webkul\Invoice\Models\Category;
 use Webkul\Invoice\Models\Product;
 use Webkul\Product\Enums\ProductType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
-use Webkul\Invoice\Models\Category;
 
 #[Test]
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test products listing page loads successfully')]
-function products_listing_page_loads_successfully()
+function products_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -30,7 +32,7 @@ function products_listing_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test product creation page loads successfully')]
-function product_creation_page_loads_successfully()
+function product_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -49,14 +51,14 @@ function product_creation_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test product can be created successfully')]
-function product_can_be_created_successfully()
+function product_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
 
     // Create dependencies
     $company = Company::factory()->create();
-    $currency = Currency::factory()->create();
+    Currency::factory()->create();
     $category = Category::factory()->create();
 
     // Act as the user
@@ -93,7 +95,7 @@ function product_can_be_created_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test product can be viewed successfully')]
-function product_can_be_viewed_successfully()
+function product_can_be_viewed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -118,7 +120,7 @@ function product_can_be_viewed_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test product can be edited successfully')]
-function product_can_be_edited_successfully()
+function product_can_be_edited_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -160,7 +162,7 @@ function product_can_be_edited_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test product attributes page loads successfully')]
-function product_attributes_page_loads_successfully()
+function product_attributes_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -186,7 +188,7 @@ function product_attributes_page_loads_successfully()
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test product variants page loads successfully')]
-function product_variants_page_loads_successfully()
+function product_variants_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

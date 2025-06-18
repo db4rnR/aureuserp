@@ -1,21 +1,23 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Invoice\Models\CreditNote;
-use Webkul\Account\Models\Move as BaseMove;
-use Webkul\Account\Enums\MoveType;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Account\Enums\MoveState;
-use Webkul\Support\Models\Currency;
-use Webkul\Security\Models\User;
-use Webkul\Partner\Models\Partner;
+use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Models\Journal;
+use Webkul\Account\Models\Move as BaseMove;
+use Webkul\Invoice\Models\CreditNote;
+use Webkul\Partner\Models\Partner;
+use Webkul\Security\Models\User;
+use Webkul\Support\Models\Currency;
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test CreditNote model inheritance and properties')]
-function credit_note_model_inheritance_and_properties()
+function credit_note_model_inheritance_and_properties(): void
 {
     // Create a test credit note
     $creditNote = CreditNote::factory()->create([
@@ -52,18 +54,18 @@ function credit_note_model_inheritance_and_properties()
     expect($creditNote->amount_residual)->toBe(1200.00);
 
     // Test relationships inherited from the base class
-    expect($creditNote->journal())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($creditNote->partner())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($creditNote->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($creditNote->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($creditNote->lines())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($creditNote->journal())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($creditNote->partner())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($creditNote->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($creditNote->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($creditNote->lines())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test CreditNote model relationships with other models')]
-function credit_note_model_relationships_with_other_models()
+function credit_note_model_relationships_with_other_models(): void
 {
     // Create related models
     $currency = Currency::factory()->create();
@@ -90,7 +92,7 @@ function credit_note_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test CreditNote model methods')]
-function credit_note_model_methods()
+function credit_note_model_methods(): void
 {
     // Create a test credit note
     $creditNote = CreditNote::factory()->create([
@@ -108,7 +110,7 @@ function credit_note_model_methods()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test CreditNote model sequence prefix generation')]
-function credit_note_model_sequence_prefix_generation()
+function credit_note_model_sequence_prefix_generation(): void
 {
     // Create a test credit note
     $creditNote = CreditNote::factory()->create([
@@ -119,7 +121,7 @@ function credit_note_model_sequence_prefix_generation()
     $creditNote->updateSequencePrefix();
 
     // Test that the sequence prefix was generated correctly
-    $expectedPrefix = 'RINV/' . date('Y') . '/' . date('m');
+    $expectedPrefix = 'RINV/'.date('Y').'/'.date('m');
     expect($creditNote->sequence_prefix)->toBe($expectedPrefix);
 }
 
@@ -127,14 +129,14 @@ function credit_note_model_sequence_prefix_generation()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test CreditNote model traits')]
-function credit_note_model_traits()
+function credit_note_model_traits(): void
 {
     // Create a test credit note
     $creditNote = CreditNote::factory()->create();
 
     // Test that the model uses the expected traits
-    expect($creditNote)->toBeInstanceOf(\Webkul\Chatter\Traits\HasChatter::class);
-    expect($creditNote)->toBeInstanceOf(\Webkul\Field\Traits\HasCustomFields::class);
-    expect($creditNote)->toBeInstanceOf(\Webkul\Chatter\Traits\HasLogActivity::class);
-    expect($creditNote)->toBeInstanceOf(\Spatie\EloquentSortable\Sortable::class);
+    expect($creditNote)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
+    expect($creditNote)->toBeInstanceOf(Webkul\Field\Traits\HasCustomFields::class);
+    expect($creditNote)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
+    expect($creditNote)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
 }

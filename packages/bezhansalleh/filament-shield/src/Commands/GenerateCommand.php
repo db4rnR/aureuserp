@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Commands;
 
 use BezhanSalleh\FilamentShield\Commands\Concerns\CanBeProhibitable;
@@ -17,12 +19,30 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use function Laravel\Prompts\Select;
 
 #[AsCommand(name: 'shield:generate')]
-class GenerateCommand extends Command
+final class GenerateCommand extends Command
 {
     use CanBeProhibitable;
     use CanGeneratePolicy;
     use CanGenerateRelationshipsForTenancy;
     use CanManipulateFiles;
+
+    /** @var string */
+    public $signature = 'shield:generate
+        {--all : Generate permissions/policies for all entities }
+        {--option= : Override the config generator option(<fg=green;options=bold>policies_and_permissions,policies,permissions and tenant_relationships</>)}
+        {--resource= : One or many resources separated by comma (,) }
+        {--page= : One or many pages separated by comma (,) }
+        {--widget= : One or many widgets separated by comma (,) }
+        {--exclude : Exclude the given entities during generation }
+        {--ignore-config-exclude : Ignore config `<fg=yellow;options=bold>exclude</>` option during generation }
+        {--minimal : Output minimal amount of info to console}
+        {--ignore-existing-policies : Ignore generating policies that already exist }
+        {--panel= : Panel ID to get the components(resources, pages, widgets)}
+        {--relationships : Generate relationships for the given panel, only works if the panel has tenancy enabled}
+    ';
+
+    /** @var string */
+    public $description = 'Generate Permissions and/or Policies for Filament entities.';
 
     /**
      * The resources to generate permissions or policies for, or should be exclude.
@@ -54,24 +74,6 @@ class GenerateCommand extends Command
     protected bool $onlyWidgets = false;
 
     protected bool $ignoreConfigExclude = false;
-
-    /** @var string */
-    public $signature = 'shield:generate
-        {--all : Generate permissions/policies for all entities }
-        {--option= : Override the config generator option(<fg=green;options=bold>policies_and_permissions,policies,permissions and tenant_relationships</>)}
-        {--resource= : One or many resources separated by comma (,) }
-        {--page= : One or many pages separated by comma (,) }
-        {--widget= : One or many widgets separated by comma (,) }
-        {--exclude : Exclude the given entities during generation }
-        {--ignore-config-exclude : Ignore config `<fg=yellow;options=bold>exclude</>` option during generation }
-        {--minimal : Output minimal amount of info to console}
-        {--ignore-existing-policies : Ignore generating policies that already exist }
-        {--panel= : Panel ID to get the components(resources, pages, widgets)}
-        {--relationships : Generate relationships for the given panel, only works if the panel has tenancy enabled}
-    ';
-
-    /** @var string */
-    public $description = 'Generate Permissions and/or Policies for Filament entities.';
 
     public function handle(): int
     {
@@ -124,6 +126,15 @@ class GenerateCommand extends Command
         return Command::SUCCESS;
     }
 
+    protected static function getPolicyStub(string $model): string
+    {
+        if (Str::is(Str::of(Utils::getAuthProviderFQCN())->afterLast('\\'), $model)) {
+            return 'UserPolicy';
+        }
+
+        return 'DefaultPolicy';
+    }
+
     protected function determinGeneratorOptionAndEntities(): void
     {
         $this->generatorOption = $this->option('option') ?? Utils::getGeneratorOption();
@@ -152,11 +163,11 @@ class GenerateCommand extends Command
         return collect(FilamentShield::getResources())
             ->filter(function ($resource) {
                 if ($this->excludeResources) {
-                    return ! in_array(Str::of($resource['fqcn'])->afterLast('\\'), $this->resources);
+                    return ! in_array(Str::of($resource['fqcn'])->afterLast('\\'), $this->resources, true);
                 }
 
                 if ($this->onlyResources) {
-                    return in_array(Str::of($resource['fqcn'])->afterLast('\\'), $this->resources);
+                    return in_array(Str::of($resource['fqcn'])->afterLast('\\'), $this->resources, true);
                 }
 
                 return true;
@@ -169,11 +180,11 @@ class GenerateCommand extends Command
         return collect(FilamentShield::getPages())
             ->filter(function ($page) {
                 if ($this->excludePages) {
-                    return ! in_array($page['class'], $this->pages);
+                    return ! in_array($page['class'], $this->pages, true);
                 }
 
                 if ($this->onlyPages) {
-                    return in_array($page['class'], $this->pages);
+                    return in_array($page['class'], $this->pages, true);
                 }
 
                 return true;
@@ -186,11 +197,11 @@ class GenerateCommand extends Command
         return collect(FilamentShield::getWidgets())
             ->filter(function ($widget) {
                 if ($this->excludeWidgets) {
-                    return ! in_array($widget['class'], $this->widgets);
+                    return ! in_array($widget['class'], $this->widgets, true);
                 }
 
                 if ($this->onlyWidgets) {
-                    return in_array($widget['class'], $this->widgets);
+                    return in_array($widget['class'], $this->widgets, true);
                 }
 
                 return true;
@@ -202,7 +213,7 @@ class GenerateCommand extends Command
     {
         return collect($resources)
             ->values()
-            ->each(function ($entity) {
+            ->each(function ($entity): void {
                 if ($this->generatorOption === 'policies_and_permissions') {
                     $policyPath = $this->generatePolicyPath($entity);
                     /** @phpstan-ignore-next-line */
@@ -252,15 +263,15 @@ class GenerateCommand extends Command
                     return [
                         '#' => $key + 1,
                         'Resource' => $resource['model'],
-                        'Policy' => "{$resource['model']}Policy.php" . ($this->generatorOption !== 'permissions' ? ' ✅' : ' ❌'),
+                        'Policy' => "{$resource['model']}Policy.php".($this->generatorOption !== 'permissions' ? ' ✅' : ' ❌'),
                         'Permissions' => implode(
-                            ',' . PHP_EOL,
+                            ','.PHP_EOL,
                             collect(
                                 Utils::getResourcePermissionPrefixes($resource['fqcn'])
                             )->map(function ($permission) use ($resource) {
-                                return $permission . '_' . $resource['resource'];
+                                return $permission.'_'.$resource['resource'];
                             })->toArray()
-                        ) . ($this->generatorOption !== 'policies' ? ' ✅' : ' ❌'),
+                        ).($this->generatorOption !== 'policies' ? ' ✅' : ' ❌'),
                     ];
                 })
             );
@@ -303,15 +314,6 @@ class GenerateCommand extends Command
                 })
             );
         }
-    }
-
-    protected static function getPolicyStub(string $model): string
-    {
-        if (Str::is(Str::of(Utils::getAuthProviderFQCN())->afterLast('\\'), $model)) {
-            return 'UserPolicy';
-        }
-
-        return 'DefaultPolicy';
     }
 
     protected function resetConfigExclusionCondition(bool $condition): void

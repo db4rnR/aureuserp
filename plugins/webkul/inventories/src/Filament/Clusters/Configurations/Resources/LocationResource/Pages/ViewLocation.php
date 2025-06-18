@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource\Pages;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource;
 use Webkul\Inventory\Models\Location;
 
-class ViewLocation extends ViewRecord
+final class ViewLocation extends ViewRecord
 {
     protected static string $resource = LocationResource::class;
 
@@ -23,13 +24,13 @@ class ViewLocation extends ViewRecord
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->action(function (Location $record) {
-                    $pdf = PDF::loadView('inventories::filament.clusters.configurations.locations.actions.print', [
+                    $pdf = Pdf::loadView('inventories::filament.clusters.configurations.locations.actions.print', [
                         'records' => collect([$record]),
                     ]);
 
                     $pdf->setPaper('a4', 'portrait');
 
-                    return response()->streamDownload(function () use ($pdf) {
+                    return response()->streamDownload(function () use ($pdf): void {
                         echo $pdf->output();
                     }, 'Location-'.$record->name.'.pdf');
                 }),

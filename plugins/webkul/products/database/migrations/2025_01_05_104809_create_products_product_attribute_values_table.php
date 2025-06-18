@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_product_attribute_values', function (Blueprint $table) {
+        Schema::create('products_product_attribute_values', function (Blueprint $table): void {
             $table->id();
             $table->decimal('extra_price', 15, 4)->nullable();
 

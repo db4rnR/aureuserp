@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -7,7 +9,7 @@ use Webkul\Recruitment\Models\Applicant;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-class ApplicantPolicy
+final class ApplicantPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 
@@ -22,7 +24,7 @@ class ApplicantPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Applicant $applicant): bool
+    public function view(User $user): bool
     {
         return $user->can('view_applicant');
     }

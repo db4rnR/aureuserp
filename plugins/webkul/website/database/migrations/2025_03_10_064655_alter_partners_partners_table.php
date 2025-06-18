@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('partners_partners', function (Blueprint $table) {
+        Schema::table('partners_partners', function (Blueprint $table): void {
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->string('password')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('partners_partners', function (Blueprint $table) {
+        Schema::table('partners_partners', function (Blueprint $table): void {
             $table->dropColumn('email_verified_at');
             $table->dropColumn('is_active');
             $table->dropColumn('password');

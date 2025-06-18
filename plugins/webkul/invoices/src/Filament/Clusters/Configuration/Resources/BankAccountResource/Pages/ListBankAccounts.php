@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource\Pages;
 
 use Webkul\Account\Filament\Resources\BankAccountResource\Pages\ListBankAccounts as BaseManageBankAccounts;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource;
 
-class ListBankAccounts extends BaseManageBankAccounts
+final class ListBankAccounts extends BaseManageBankAccounts
 {
     protected static string $resource = BankAccountResource::class;
 }

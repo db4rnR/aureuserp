@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'print' => [
@@ -10,12 +12,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Dropship Deleted',
-                    'body'  => 'The dropship has been deleted successfully.',
+                    'body' => 'The dropship has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Dropship could not be deleted',
-                    'body'  => 'The dropship cannot be deleted because it is currently in use.',
+                    'body' => 'The dropship cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

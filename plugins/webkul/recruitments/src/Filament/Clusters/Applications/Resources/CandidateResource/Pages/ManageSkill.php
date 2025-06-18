@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Applications\Resources\CandidateResource\Pages;
 
+use BackedEnum;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Webkul\Recruitment\Filament\Clusters\Applications\Resources\CandidateResource;
 use Webkul\Recruitment\Traits\CandidateSkillRelation;
 
-class ManageSkill extends ManageRelatedRecords
+final class ManageSkill extends ManageRelatedRecords
 {
     use CandidateSkillRelation;
 
@@ -14,7 +17,7 @@ class ManageSkill extends ManageRelatedRecords
 
     protected static string $relationship = 'skills';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-bolt';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-bolt';
 
     public static function getNavigationLabel(): string
     {

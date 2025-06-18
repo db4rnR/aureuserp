@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages;
 
-use Filament\Schemas\Schema;
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource;
 use Webkul\Partner\Filament\Resources\BankAccountResource;
 
-class ManageBankAccounts extends ManageRelatedRecords
+final class ManageBankAccounts extends ManageRelatedRecords
 {
     protected static string $resource = PartnerResource::class;
 
     protected static string $relationship = 'bankAccounts';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
     public static function getNavigationLabel(): string
     {
@@ -35,9 +37,7 @@ class ManageBankAccounts extends ManageRelatedRecords
                 CreateAction::make()
                     ->label(__('New Bank Account'))
                     ->icon('heroicon-o-plus-circle')
-                    ->mutateDataUsing(function (array $data): array {
-                        return $data;
-                    }),
+                    ->mutateDataUsing(fn (array $data): array => $data),
             ]);
     }
 }

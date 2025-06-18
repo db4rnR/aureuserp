@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Mandatory Days',
 
@@ -11,50 +13,50 @@ return [
 
     'form' => [
         'fields' => [
-            'name'       => 'Name',
+            'name' => 'Name',
             'start-date' => 'Start Date',
-            'end-date'   => 'End Date',
-            'color'      => 'Color',
+            'end-date' => 'End Date',
+            'color' => 'Color',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'company-name' => 'Company Name',
-            'created-by'   => 'Created By',
-            'start-date'   => 'Start Date',
-            'end-date'     => 'End Date',
+            'created-by' => 'Created By',
+            'start-date' => 'Start Date',
+            'end-date' => 'End Date',
         ],
 
         'filters' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'company-name' => 'Company Name',
-            'created-by'   => 'Created By',
-            'start-date'   => 'Start Date',
-            'end-date'     => 'End Date',
+            'created-by' => 'Created By',
+            'start-date' => 'Start Date',
+            'end-date' => 'End Date',
         ],
 
         'groups' => [
-            'name'         => 'Name',
+            'name' => 'Name',
             'company-name' => 'Company Name',
-            'created-by'   => 'Created By',
-            'start-date'   => 'Start Date',
-            'end-date'     => 'End Date',
+            'created-by' => 'Created By',
+            'start-date' => 'Start Date',
+            'end-date' => 'End Date',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Mandatory day updated',
-                    'body'  => 'The mandatory day has been restored successfully.',
+                    'body' => 'The mandatory day has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Mandatory day deleted',
-                    'body'  => 'The mandatory day has been deleted successfully.',
+                    'body' => 'The mandatory day has been deleted successfully.',
                 ],
             ],
         ],
@@ -63,7 +65,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Mandatory days deleted',
-                    'body'  => 'The mandatory days has been deleted successfully.',
+                    'body' => 'The mandatory days has been deleted successfully.',
                 ],
             ],
         ],
@@ -71,10 +73,10 @@ return [
 
     'infolist' => [
         'entries' => [
-            'name'       => 'Name',
+            'name' => 'Name',
             'start-date' => 'Start Date',
-            'end-date'   => 'End Date',
-            'color'      => 'Color',
+            'end-date' => 'End Date',
+            'color' => 'Color',
         ],
     ],
 ];

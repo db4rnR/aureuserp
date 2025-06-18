@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_payment_registers', function (Blueprint $table) {
+        Schema::create('accounts_payment_registers', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('currency_id')->nullable()->comment('Currency')->constrained('currencies')->nullOnDelete();

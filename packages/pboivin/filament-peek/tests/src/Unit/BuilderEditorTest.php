@@ -1,21 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Unit;
 
-use Pboivin\FilamentPeek\Tests\Unit\Fixtures\EditRecordDummy;
-use Filament\Schemas\Components\Component;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Component;
 use InvalidArgumentException;
 use Livewire\Livewire;
 use Pboivin\FilamentPeek\Livewire\BuilderEditor;
 use Pboivin\FilamentPeek\Tests\TestCase;
+use Pboivin\FilamentPeek\Tests\Unit\Fixtures\EditRecordDummy;
 
-it('can render', function () {
+it('can render', function (): void {
     Livewire::test(BuilderEditor::class)
         ->assertSeeHtml('Editor');
 });
 
-it('throws an exception for missing form schema', function () {
+it('throws an exception for missing form schema', function (): void {
     /** @var TestCase $this */
     $this->expectException(InvalidArgumentException::class);
     $this->expectExceptionMessage('Missing Builder editor schema');
@@ -26,7 +28,7 @@ it('throws an exception for missing form schema', function () {
         ->call('refreshBuilderPreview');
 });
 
-it('throws an exception for missing blade view', function () {
+it('throws an exception for missing blade view', function (): void {
     /** @var TestCase $this */
     $this->expectException(InvalidArgumentException::class);
     $this->expectExceptionMessage('Missing preview modal URL or Blade view');
@@ -45,7 +47,7 @@ it('throws an exception for missing blade view', function () {
         ->call('refreshBuilderPreview');
 });
 
-it('renders the preview blade view', function () {
+it('renders the preview blade view', function (): void {
     $page = new class extends EditRecordDummy
     {
         public static function getBuilderEditorSchema(string $builderName): Component|array
@@ -66,7 +68,7 @@ it('renders the preview blade view', function () {
         );
 });
 
-it('renders the preview url', function () {
+it('renders the preview url', function (): void {
     $page = new class extends EditRecordDummy
     {
         public static function getBuilderEditorSchema(string $builderName): Component|array
@@ -87,7 +89,7 @@ it('renders the preview url', function () {
         );
 });
 
-it('mutates the builder preview data', function () {
+it('mutates the builder preview data', function (): void {
     $page = new class extends EditRecordDummy
     {
         public static function getBuilderEditorSchema(string $builderName): Component|array

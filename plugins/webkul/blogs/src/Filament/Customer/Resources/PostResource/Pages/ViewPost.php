@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Filament\Customer\Resources\PostResource\Pages;
 
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Blog\Filament\Customer\Resources\PostResource;
 
-class ViewPost extends ViewRecord
+final class ViewPost extends ViewRecord
 {
     protected static string $resource = PostResource::class;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Traits;
 
 use Carbon\Carbon;
@@ -33,60 +35,6 @@ trait HasChatter
         $this->applyMessageFilters($query, $filters);
 
         return $query->get();
-    }
-
-    /**
-     * Apply filters to the query
-     */
-    private function applyMessageFilters($query, array $filters)
-    {
-        if (! empty($filters['type'])) {
-            $query->whereIn('type', $filters['type']);
-        }
-
-        if (isset($filters['is_internal'])) {
-            $query->where('is_internal', $filters['is_internal']);
-        }
-
-        if (! empty($filters['date_from'])) {
-            $query->whereDate('created_at', '>=', $filters['date_from']);
-        }
-
-        if (! empty($filters['date_to'])) {
-            $query->whereDate('created_at', '<=', $filters['date_to']);
-        }
-
-        if (! empty($filters['causer_id'])) {
-            $query->where('causer_id', $filters['causer_id']);
-
-            if (! empty($filters['causer_type'])) {
-                $query->where('causer_type', $filters['causer_type']);
-            }
-        }
-
-        if (! empty($filters['assigned_to'])) {
-            $query->where('assigned_to', $filters['assigned_to']);
-        }
-
-        if (! empty($filters['activity_type_id'])) {
-            $query->where('activity_type_id', $filters['activity_type_id']);
-        }
-
-        if (! empty($filters['company_id'])) {
-            $query->where('company_id', $filters['company_id']);
-        }
-
-        if (! empty($filters['search'])) {
-            $searchTerm = '%'.$filters['search'].'%';
-            $query->where(function ($query) use ($searchTerm) {
-                $query->where('subject', 'like', $searchTerm)
-                    ->orWhere('body', 'like', $searchTerm)
-                    ->orWhere('summary', 'like', $searchTerm)
-                    ->orWhere('name', 'like', $searchTerm);
-            });
-        }
-
-        return $query;
     }
 
     /**
@@ -141,9 +89,9 @@ trait HasChatter
         $user = filament()->auth()->user();
 
         $message->fill(array_merge([
-            'creator_id'    => $user->id,
+            'creator_id' => $user->id,
             'date_deadline' => $data['date_deadline'] ?? now(),
-            'company_id'    => $data['company_id'] ?? ($user->defaultCompany?->id ?? null),
+            'company_id' => $data['company_id'] ?? ($user->defaultCompany?->id ?? null),
         ], $data));
 
         $this->messages()->save($message);
@@ -157,8 +105,8 @@ trait HasChatter
     public function replyToMessage(Message $parentMessage, array $data): Message
     {
         return $this->addMessage(array_merge($data, [
-            'parent_id'        => $parentMessage->id,
-            'company_id'       => $parentMessage->company_id,
+            'parent_id' => $parentMessage->id,
+            'company_id' => $parentMessage->company_id,
             'activity_type_id' => $parentMessage->activity_type_id,
         ]));
     }
@@ -172,7 +120,7 @@ trait HasChatter
 
         if (
             $message->messageable_id !== $this->id
-            || $message->messageable_type !== get_class($this)
+            || $message->messageable_type !== $this::class
         ) {
             return false;
         }
@@ -187,7 +135,7 @@ trait HasChatter
     {
         if (
             $message->messageable_id !== $this->id
-            || $message->messageable_type !== get_class($this)
+            || $message->messageable_type !== $this::class
         ) {
             return false;
         }
@@ -204,7 +152,7 @@ trait HasChatter
     {
         if (
             $message->messageable_id !== $this->id
-            || $message->messageable_type !== get_class($this)
+            || $message->messageable_type !== $this::class
         ) {
             return false;
         }
@@ -271,7 +219,7 @@ trait HasChatter
      */
     public function addAttachments(array $files, array $additionalData = []): Collection
     {
-        if (empty($files)) {
+        if ($files === []) {
             return collect();
         }
 
@@ -279,11 +227,11 @@ trait HasChatter
             ->createMany(
                 collect($files)
                     ->map(fn ($filePath) => [
-                        'file_path'          => $filePath,
-                        'original_file_name' => basename($filePath),
-                        'mime_type'          => mime_content_type($storagePath = storage_path('app/public/'.$filePath)) ?: 'application/octet-stream',
-                        'file_size'          => filesize($storagePath) ?: 0,
-                        'creator_id'         => filament()->auth()->user()->id,
+                        'file_path' => $filePath,
+                        'original_file_name' => basename((string) $filePath),
+                        'mime_type' => mime_content_type($storagePath = storage_path('app/public/'.$filePath)) ?: 'application/octet-stream',
+                        'file_size' => filesize($storagePath) ?: 0,
+                        'creator_id' => filament()->auth()->user()->id,
                         ...$additionalData,
                     ])
                     ->filter()
@@ -301,7 +249,7 @@ trait HasChatter
         if (
             ! $attachment ||
             $attachment->messageable_id !== $this->id ||
-            $attachment->messageable_type !== get_class($this)
+            $attachment->messageable_type !== $this::class
         ) {
             return false;
         }
@@ -404,5 +352,59 @@ trait HasChatter
         return $this->followers()
             ->where('partner_id', $partner->id)
             ->exists();
+    }
+
+    /**
+     * Apply filters to the query
+     */
+    private function applyMessageFilters($query, array $filters)
+    {
+        if (! empty($filters['type'])) {
+            $query->whereIn('type', $filters['type']);
+        }
+
+        if (isset($filters['is_internal'])) {
+            $query->where('is_internal', $filters['is_internal']);
+        }
+
+        if (! empty($filters['date_from'])) {
+            $query->whereDate('created_at', '>=', $filters['date_from']);
+        }
+
+        if (! empty($filters['date_to'])) {
+            $query->whereDate('created_at', '<=', $filters['date_to']);
+        }
+
+        if (! empty($filters['causer_id'])) {
+            $query->where('causer_id', $filters['causer_id']);
+
+            if (! empty($filters['causer_type'])) {
+                $query->where('causer_type', $filters['causer_type']);
+            }
+        }
+
+        if (! empty($filters['assigned_to'])) {
+            $query->where('assigned_to', $filters['assigned_to']);
+        }
+
+        if (! empty($filters['activity_type_id'])) {
+            $query->where('activity_type_id', $filters['activity_type_id']);
+        }
+
+        if (! empty($filters['company_id'])) {
+            $query->where('company_id', $filters['company_id']);
+        }
+
+        if (! empty($filters['search'])) {
+            $searchTerm = '%'.$filters['search'].'%';
+            $query->where(function ($query) use ($searchTerm): void {
+                $query->where('subject', 'like', $searchTerm)
+                    ->orWhere('body', 'like', $searchTerm)
+                    ->orWhere('summary', 'like', $searchTerm)
+                    ->orWhere('name', 'like', $searchTerm);
+            });
+        }
+
+        return $query;
     }
 }

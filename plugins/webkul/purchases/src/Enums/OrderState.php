@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Enums;
 
 use Filament\Support\Contracts\HasColor;
@@ -20,10 +22,10 @@ enum OrderState: string implements HasColor, HasLabel
     public static function options(): array
     {
         return [
-            self::DRAFT->value    => __('purchases::enums/order-state.draft'),
-            self::SENT->value     => __('purchases::enums/order-state.sent'),
+            self::DRAFT->value => __('purchases::enums/order-state.draft'),
+            self::SENT->value => __('purchases::enums/order-state.sent'),
             self::PURCHASE->value => __('purchases::enums/order-state.purchase'),
-            self::DONE->value     => __('purchases::enums/order-state.done'),
+            self::DONE->value => __('purchases::enums/order-state.done'),
             self::CANCELED->value => __('purchases::enums/order-state.canceled'),
         ];
     }
@@ -31,10 +33,10 @@ enum OrderState: string implements HasColor, HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::DRAFT    => __('purchases::enums/order-state.draft'),
-            self::SENT     => __('purchases::enums/order-state.sent'),
+            self::DRAFT => __('purchases::enums/order-state.draft'),
+            self::SENT => __('purchases::enums/order-state.sent'),
             self::PURCHASE => __('purchases::enums/order-state.purchase'),
-            self::DONE     => __('purchases::enums/order-state.done'),
+            self::DONE => __('purchases::enums/order-state.done'),
             self::CANCELED => __('purchases::enums/order-state.canceled'),
         };
     }
@@ -42,10 +44,10 @@ enum OrderState: string implements HasColor, HasLabel
     public function getColor(): string
     {
         return match ($this) {
-            self::DRAFT    => 'gray',
-            self::SENT     => 'blue',
+            self::DRAFT => 'gray',
+            self::SENT => 'blue',
             self::PURCHASE => 'success',
-            self::DONE     => 'success',
+            self::DONE => 'success',
             self::CANCELED => 'danger',
         };
     }

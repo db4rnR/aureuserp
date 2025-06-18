@@ -1,52 +1,52 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
 use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Hidden;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\FontWeight;
+use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Enums\FiltersLayout;
-use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\BulkAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\FontWeight;
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Schemas\Components\Grid;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Forms;
-use Filament\Infolists;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -57,7 +57,7 @@ use Webkul\Product\Models\Category;
 use Webkul\Product\Models\Product;
 use Webkul\Support\Models\UOM;
 
-class ProductResource extends Resource
+final class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
@@ -119,7 +119,7 @@ class ProductResource extends Resource
                                             ->maxValue(99999999999),
                                     ]),
                             ])
-                            ->visible(fn (Get $get): bool => $get('type') == ProductType::GOODS->value),
+                            ->visible(fn (Get $get): bool => $get('type') === ProductType::GOODS->value),
                     ])
                     ->columnSpan(['lg' => 2]),
 
@@ -357,7 +357,7 @@ class ProductResource extends Resource
                     ])->filter()->values()->all()),
             ], layout: FiltersLayout::Modal)
             ->filtersTriggerAction(
-                fn (Action $action) => $action
+                fn (Action $action): Action => $action
                     ->slideOver(),
             )
             ->filtersFormColumns(2)
@@ -382,10 +382,10 @@ class ProductResource extends Resource
                                 ->body(__('products::filament/resources/product.table.actions.delete.notification.body')),
                         ),
                     ForceDeleteAction::make()
-                        ->action(function (Product $record) {
+                        ->action(function (Product $record): void {
                             try {
                                 $record->forceDelete();
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('products::filament/resources/product.table.actions.force-delete.notification.error.title'))
@@ -416,30 +416,30 @@ class ProductResource extends Resource
                             Radio::make('format')
                                 ->label(__('products::filament/resources/product.table.bulk-actions.print.form.fields.format'))
                                 ->options([
-                                    'dymo'       => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.dymo'),
-                                    '2x7_price'  => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.2x7_price'),
-                                    '4x7_price'  => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x7_price'),
-                                    '4x12'       => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x12'),
+                                    'dymo' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.dymo'),
+                                    '2x7_price' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.2x7_price'),
+                                    '4x7_price' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x7_price'),
+                                    '4x12' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x12'),
                                     '4x12_price' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x12_price'),
                                 ])
                                 ->default('2x7_price')
                                 ->required(),
                         ])
                         ->action(function (array $data, $records) {
-                            $pdf = PDF::loadView('products::filament.resources.products.actions.print', [
-                                'records'  => $records,
+                            $pdf = Pdf::loadView('products::filament.resources.products.actions.print', [
+                                'records' => $records,
                                 'quantity' => $data['quantity'],
-                                'format'   => $data['format'],
+                                'format' => $data['format'],
                             ]);
 
                             $paperSize = match ($data['format']) {
-                                'dymo'  => [0, 0, 252.2, 144],
+                                'dymo' => [0, 0, 252.2, 144],
                                 default => 'a4',
                             };
 
                             $pdf->setPaper($paperSize, 'portrait');
 
-                            return response()->streamDownload(function () use ($pdf) {
+                            return response()->streamDownload(function () use ($pdf): void {
                                 echo $pdf->output();
                             }, 'Product-Barcode.pdf');
                         }),
@@ -458,10 +458,10 @@ class ProductResource extends Resource
                                 ->body(__('products::filament/resources/product.table.bulk-actions.delete.notification.body')),
                         ),
                     ForceDeleteBulkAction::make()
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->forceDelete());
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('products::filament/resources/product.table.bulk-actions.force-delete.notification.error.title'))
@@ -528,7 +528,7 @@ class ProductResource extends Resource
                                             ]),
                                     ]),
                             ])
-                            ->visible(fn ($record): bool => $record->type == ProductType::GOODS),
+                            ->visible(fn ($record): bool => $record->type === ProductType::GOODS),
                     ])
                     ->columnSpan(['lg' => 2]),
 

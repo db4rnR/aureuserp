@@ -1,15 +1,16 @@
 <?php
 
-use Webkul\Account\Models\Account;
+declare(strict_types=1);
+
 use Webkul\Account\Enums\AccountType;
+use Webkul\Account\Models\Account;
 use Webkul\Security\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 #[Test]
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test account listing page loads successfully')]
-function account_listing_page_loads_successfully()
+function account_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -28,7 +29,7 @@ function account_listing_page_loads_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test account creation page loads successfully')]
-function account_creation_page_loads_successfully()
+function account_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -47,7 +48,7 @@ function account_creation_page_loads_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test account can be created successfully')]
-function account_can_be_created_successfully()
+function account_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -82,7 +83,7 @@ function account_can_be_created_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test account can be updated successfully')]
-function account_can_be_updated_successfully()
+function account_can_be_updated_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -127,7 +128,7 @@ function account_can_be_updated_successfully()
 #[Group('feature')]
 #[Group('accounts')]
 #[Description('Test account can be deleted successfully')]
-function account_can_be_deleted_successfully()
+function account_can_be_deleted_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

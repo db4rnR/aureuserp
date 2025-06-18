@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\TaxGroupResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Account\Filament\Resources\TaxGroupResource;
 use Webkul\Account\Models\TaxGroup;
 
-class EditTaxGroup extends EditRecord
+final class EditTaxGroup extends EditRecord
 {
     protected static string $resource = TaxGroupResource::class;
 
@@ -33,10 +34,10 @@ class EditTaxGroup extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make()
-                ->action(function (TaxGroup $record) {
+                ->action(function (TaxGroup $record): void {
                     try {
                         $record->delete();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('accounts::filament/resources/tax-group/pages/edit-tax-group.header-actions.delete.notification.error.title'))

@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Blog\Models\Tag;
 use Webkul\Security\Models\User;
 
-class TagPolicy
+final class TagPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class TagPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Tag $tag): bool
+    public function view(User $user): bool
     {
         return $user->can('view_tag');
     }
@@ -37,7 +38,7 @@ class TagPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Tag $tag): bool
+    public function update(User $user): bool
     {
         return $user->can('update_tag');
     }
@@ -45,7 +46,7 @@ class TagPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Tag $tag): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_tag');
     }
@@ -61,7 +62,7 @@ class TagPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Tag $tag): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_tag');
     }
@@ -77,7 +78,7 @@ class TagPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Tag $tag): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_tag');
     }
@@ -93,7 +94,7 @@ class TagPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Tag $tag): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_tag');
     }

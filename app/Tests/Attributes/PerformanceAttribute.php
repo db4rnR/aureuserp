@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Attributes;
 
 use Attribute;
@@ -32,19 +34,18 @@ use Attribute;
  * ```
  */
 #[Attribute(Attribute::TARGET_METHOD)]
-class PerformanceAttribute
+final readonly class PerformanceAttribute
 {
     /**
      * Constructor.
      *
-     * @param int|null $threshold Maximum acceptable execution time in milliseconds (null for no threshold)
-     * @param string|null $metric The specific performance metric being measured (e.g., 'query', 'response', 'memory')
-     * @param bool $baseline Whether this test establishes a performance baseline
+     * @param  int|null  $threshold  Maximum acceptable execution time in milliseconds (null for no threshold)
+     * @param  string|null  $metric  The specific performance metric being measured (e.g., 'query', 'response', 'memory')
+     * @param  bool  $baseline  Whether this test establishes a performance baseline
      */
     public function __construct(
-        public readonly ?int $threshold = null,
-        public readonly ?string $metric = null,
-        public readonly bool $baseline = false
-    ) {
-    }
+        public ?int $threshold = null,
+        public ?string $metric = null,
+        public bool $baseline = false
+    ) {}
 }

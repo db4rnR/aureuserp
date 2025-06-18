@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Invoice',
 
@@ -9,22 +11,22 @@ return [
     ],
 
     'global-search' => [
-        'number'           => 'Number',
-        'customer'         => 'Customer',
-        'invoice-date'     => 'Invoice Date',
+        'number' => 'Number',
+        'customer' => 'Customer',
+        'invoice-date' => 'Invoice Date',
         'invoice-due-date' => 'Invoice Due Date',
     ],
 
     'form' => [
         'section' => [
             'general' => [
-                'title'  => 'General',
+                'title' => 'General',
                 'fields' => [
                     'customer-invoice' => 'Customer Credit Note',
-                    'customer'         => 'Customer',
-                    'invoice-date'     => 'Invoice Date',
-                    'due-date'         => 'Due Date',
-                    'payment-term'     => 'Payment Term',
+                    'customer' => 'Customer',
+                    'invoice-date' => 'Invoice Date',
+                    'due-date' => 'Due Date',
+                    'payment-term' => 'Payment Term',
                 ],
             ],
         ],
@@ -35,33 +37,33 @@ return [
 
                 'repeater' => [
                     'products' => [
-                        'title'       => 'Products',
+                        'title' => 'Products',
                         'add-product' => 'Add Product',
 
                         'fields' => [
-                            'product'             => 'Product',
-                            'quantity'            => 'Quantity',
-                            'unit'                => 'Unit',
-                            'taxes'               => 'Taxes',
+                            'product' => 'Product',
+                            'quantity' => 'Quantity',
+                            'unit' => 'Unit',
+                            'taxes' => 'Taxes',
                             'discount-percentage' => 'Discount Percentage',
-                            'unit-price'          => 'Unit Price',
-                            'sub-total'           => 'Sub Total',
+                            'unit-price' => 'Unit Price',
+                            'sub-total' => 'Sub Total',
                         ],
                     ],
                 ],
             ],
 
             'other-information' => [
-                'title'    => 'Other Information',
+                'title' => 'Other Information',
                 'fieldset' => [
                     'invoice' => [
-                        'title'  => 'Invoice',
+                        'title' => 'Invoice',
                         'fields' => [
                             'customer-reference' => 'Customer Reference',
-                            'sales-person'       => 'Sales Person',
-                            'payment-reference'  => 'Payment Reference',
-                            'recipient-bank'     => 'Recipient Bank',
-                            'delivery-date'      => 'Delivery Date',
+                            'sales-person' => 'Sales Person',
+                            'payment-reference' => 'Payment Reference',
+                            'recipient-bank' => 'Recipient Bank',
+                            'delivery-date' => 'Delivery Date',
                         ],
                     ],
 
@@ -69,28 +71,28 @@ return [
                         'title' => 'Accounting',
 
                         'fields' => [
-                            'incoterm'          => 'Incoterm',
+                            'incoterm' => 'Incoterm',
                             'incoterm-location' => 'Incoterm Location',
-                            'payment-method'    => 'Payment Method',
-                            'auto-post'         => 'Auto Post',
-                            'checked'           => 'Checked',
+                            'payment-method' => 'Payment Method',
+                            'auto-post' => 'Auto Post',
+                            'checked' => 'Checked',
                         ],
                     ],
 
                     'additional-information' => [
-                        'title'  => 'Additional Information',
+                        'title' => 'Additional Information',
                         'fields' => [
-                            'company'  => 'Company',
+                            'company' => 'Company',
                             'currency' => 'Currency',
                         ],
                     ],
 
                     'marketing' => [
-                        'title'  => 'Marketing',
+                        'title' => 'Marketing',
                         'fields' => [
                             'campaign' => 'Campaign',
-                            'medium'   => 'Medium',
-                            'source'   => 'Source',
+                            'medium' => 'Medium',
+                            'source' => 'Source',
                         ],
                     ],
                 ],
@@ -105,13 +107,13 @@ return [
     'infolist' => [
         'section' => [
             'general' => [
-                'title'   => 'General',
+                'title' => 'General',
                 'entries' => [
                     'customer-invoice' => 'Customer Credit Note',
-                    'customer'         => 'Customer',
-                    'invoice-date'     => 'Invoice Date',
-                    'due-date'         => 'Due Date',
-                    'payment-term'     => 'Payment Term',
+                    'customer' => 'Customer',
+                    'invoice-date' => 'Invoice Date',
+                    'due-date' => 'Due Date',
+                    'payment-term' => 'Payment Term',
                 ],
             ],
         ],
@@ -123,30 +125,30 @@ return [
                 'repeater' => [
                     'products' => [
                         'entries' => [
-                            'product'             => 'Product',
-                            'quantity'            => 'Quantity',
-                            'unit'                => 'Unit Of Measure',
-                            'taxes'               => 'Taxes',
+                            'product' => 'Product',
+                            'quantity' => 'Quantity',
+                            'unit' => 'Unit Of Measure',
+                            'taxes' => 'Taxes',
                             'discount-percentage' => 'Discount Percentage',
-                            'unit-price'          => 'Unit Price',
-                            'sub-total'           => 'Sub Total',
-                            'total'               => 'Total',
+                            'unit-price' => 'Unit Price',
+                            'sub-total' => 'Sub Total',
+                            'total' => 'Total',
                         ],
                     ],
                 ],
             ],
 
             'other-information' => [
-                'title'    => 'Other Information',
+                'title' => 'Other Information',
                 'fieldset' => [
                     'invoice' => [
-                        'title'   => 'Invoice',
+                        'title' => 'Invoice',
                         'entries' => [
                             'customer-reference' => 'Customer Reference',
-                            'sales-person'       => 'Sales Person',
-                            'payment-reference'  => 'Payment Reference',
-                            'recipient-bank'     => 'Recipient Bank',
-                            'delivery-date'      => 'Delivery Date',
+                            'sales-person' => 'Sales Person',
+                            'payment-reference' => 'Payment Reference',
+                            'recipient-bank' => 'Recipient Bank',
+                            'delivery-date' => 'Delivery Date',
                         ],
                     ],
 
@@ -154,28 +156,28 @@ return [
                         'title' => 'Accounting',
 
                         'fieldset' => [
-                            'incoterm'          => 'Incoterm',
+                            'incoterm' => 'Incoterm',
                             'incoterm-location' => 'Incoterm Location',
-                            'payment-method'    => 'Payment Method',
-                            'auto-post'         => 'Auto Post',
-                            'checked'           => 'Checked',
+                            'payment-method' => 'Payment Method',
+                            'auto-post' => 'Auto Post',
+                            'checked' => 'Checked',
                         ],
                     ],
 
                     'additional-information' => [
-                        'title'   => 'Additional Information',
+                        'title' => 'Additional Information',
                         'entries' => [
-                            'company'  => 'Company',
+                            'company' => 'Company',
                             'currency' => 'Currency',
                         ],
                     ],
 
                     'marketing' => [
-                        'title'   => 'Marketing',
+                        'title' => 'Marketing',
                         'entries' => [
                             'campaign' => 'Campaign',
-                            'medium'   => 'Medium',
-                            'source'   => 'Source',
+                            'medium' => 'Medium',
+                            'source' => 'Source',
                         ],
                     ],
                 ],

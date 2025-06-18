@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Payment;
 
 use Webkul\Support\Console\Commands\InstallCommand;
@@ -7,13 +9,13 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class PaymentServiceProvider extends PackageServiceProvider
+final class PaymentServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'payments';
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasTranslations()
             ->hasMigrations([
                 '2025_02_10_131418_create_payments_payment_methods_table',
@@ -25,13 +27,13 @@ class PaymentServiceProvider extends PackageServiceProvider
             ->hasDependencies([
                 'accounts',
             ])
-            ->hasSeeder('Webkul\\Payment\\Database\Seeders\\DatabaseSeeder')
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasSeeder(Database\Seeders\DatabaseSeeder::class)
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 }

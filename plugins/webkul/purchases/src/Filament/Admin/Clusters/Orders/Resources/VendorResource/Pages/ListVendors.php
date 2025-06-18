@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
@@ -8,11 +10,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ListVendors as BaseListVendors;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource;
 
-class ListVendors extends BaseListVendors
+final class ListVendors extends BaseListVendors
 {
     protected static string $resource = VendorResource::class;
 
-    static function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

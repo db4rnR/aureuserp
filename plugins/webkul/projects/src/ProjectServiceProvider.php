@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project;
 
 use Webkul\Support\Console\Commands\InstallCommand;
@@ -7,13 +9,13 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class ProjectServiceProvider extends PackageServiceProvider
+final class ProjectServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'projects';
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasTranslations()
             ->hasMigrations([
                 '2024_12_12_074920_create_projects_project_stages_table',
@@ -34,13 +36,13 @@ class ProjectServiceProvider extends PackageServiceProvider
                 '2024_12_16_094021_create_project_time_settings',
             ])
             ->runsSettings()
-            ->hasSeeder('Webkul\\Project\\Database\Seeders\\DatabaseSeeder')
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasSeeder(Database\Seeders\DatabaseSeeder::class)
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 
     public function packageBooted(): void

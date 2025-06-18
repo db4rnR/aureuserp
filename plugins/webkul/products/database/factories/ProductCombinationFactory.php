@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductCombinationFactory extends Factory
+final class ProductCombinationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,8 +16,8 @@ class ProductCombinationFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id'                 => 1,
-            'product_attribute_id'       => 1,
+            'product_id' => 1,
+            'product_attribute_id' => 1,
             'product_attribute_value_id' => 1,
         ];
     }

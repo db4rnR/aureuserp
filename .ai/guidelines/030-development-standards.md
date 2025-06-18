@@ -1,5 +1,18 @@
 # 3. Development Standards
 
+## 3.0. Core Development Principle
+
+**All code, comments, and technical documentation should be clear, actionable, and suitable for a junior developer to understand and implement.**
+
+This principle should guide all development work in the project:
+
+- Write code that is easy to read and understand
+- Document complex logic with clear comments
+- Break down complex functionality into smaller, manageable parts
+- Use descriptive variable and function names
+- Include examples and explanations for non-obvious implementations
+- Provide context for architectural decisions
+
 ## 3.1. Code Style
 
 ### 3.1.1. PHP Standards

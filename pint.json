@@ -1,19 +1,45 @@
 {
     "preset": "laravel",
-    "notPath": [
-        "tests/TestCase.php"
+    "include": [
+        "app/**/*.php",
+        "bin/**/*.php",
+        "bootstrap/**/*.php",
+        "config/**/*.php",
+        "database/**/*.php",
+        "routes/**/*.php",
+        "tests/**/*.php",
+        "packages/**/src/**/*.php",
+        "packages/**/tests/**/*.php",
+        "plugins/**/*.php"
+    ],
+    "exclude": [
+        "vendor",
+        "node_modules",
+        "storage",
+        "bootstrap/cache",
+        "public",
+        "database/migrations",
+        "plugins/**/database/migrations",
+        "reports/rector/cache"
     ],
     "rules": {
+        "declare_strict_types": true,
+        "fully_qualified_strict_types": true,
+        "native_function_type_declaration_casing": true,
+        "no_unreachable_default_argument_value": true,
+        "phpdoc_to_return_type": true,
+        "return_type_declaration": true,
+        "strict_comparison": true,
+        "strict_param": true,
+        "void_return": true,
         "array_push": true,
         "backtick_to_shell_exec": true,
         "date_time_immutable": true,
-        "declare_strict_types": true,
         "lowercase_keywords": true,
         "lowercase_static_reference": true,
         "final_class": true,
         "final_internal_class": true,
         "final_public_method_for_abstract_class": true,
-        "fully_qualified_strict_types": true,
         "global_namespace_import": {
             "import_classes": true,
             "import_constants": true,
@@ -22,9 +48,15 @@
         "mb_str_functions": true,
         "modernize_types_casting": true,
         "new_with_parentheses": false,
+        "no_multiple_statements_per_line": true,
+            "ordered_interfaces": true,
+            "ordered_traits": true,
+            "protected_to_private": true,
+            "self_accessor": true,
+            "self_static_accessor": true,
+            "visibility_required": true,
         "no_superfluous_elseif": true,
         "no_useless_else": true,
-        "no_multiple_statements_per_line": true,
         "ordered_class_elements": {
             "order": [
                 "use_trait",
@@ -49,13 +81,6 @@
                 "method_private"
             ],
             "sort_algorithm": "none"
-        },
-        "ordered_interfaces": true,
-        "ordered_traits": true,
-        "protected_to_private": true,
-        "self_accessor": true,
-        "self_static_accessor": true,
-        "strict_comparison": true,
-        "visibility_required": true
+        }
     }
 }

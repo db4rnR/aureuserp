@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Livewire;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +12,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class CommentList extends Component
+final class CommentList extends Component
 {
     use HasMentions;
     use HasPolling;

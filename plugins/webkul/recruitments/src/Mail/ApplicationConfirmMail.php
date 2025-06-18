@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -10,14 +12,14 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ApplicationConfirmMail extends Mailable
+final class ApplicationConfirmMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Array to store attachments
      */
-    protected array $attachmentData = [];
+    private array $attachmentData = [];
 
     /**
      * Create a new message instance.
@@ -34,7 +36,7 @@ class ApplicationConfirmMail extends Mailable
     {
         return new Envelope(
             subject: $this->payload['subject'],
-            from: new Address($this->payload['from']['address'], '"'.addslashes($this->payload['from']['name']).'"'),
+            from: new Address($this->payload['from']['address'], '"'.addslashes((string) $this->payload['from']['name']).'"'),
         );
     }
 

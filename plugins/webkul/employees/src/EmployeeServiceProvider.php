@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee;
 
 use Webkul\Support\Console\Commands\InstallCommand;
@@ -7,13 +9,13 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class EmployeeServiceProvider extends PackageServiceProvider
+final class EmployeeServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'employees';
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasTranslations()
             ->hasMigrations([
                 '2024_12_11_045350_create_employees_work_locations_table',
@@ -38,13 +40,13 @@ class EmployeeServiceProvider extends PackageServiceProvider
                 '2025_01_24_052852_add_department_id_to_activity_plans_table',
             ])
             ->runsMigrations()
-            ->hasSeeder('Webkul\\Employee\\Database\Seeders\\DatabaseSeeder')
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasSeeder(Database\Seeders\DatabaseSeeder::class)
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->runsMigrations()
                     ->runsSeeders();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 
     public function packageBooted(): void

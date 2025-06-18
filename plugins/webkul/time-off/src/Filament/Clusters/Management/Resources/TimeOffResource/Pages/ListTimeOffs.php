@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ use Webkul\TableViews\Filament\Concerns\HasTableViews;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
 
-class ListTimeOffs extends ListRecords
+final class ListTimeOffs extends ListRecords
 {
     use HasTableViews;
 
@@ -49,7 +50,7 @@ class ListTimeOffs extends ListRecords
                     $today = now()->format('Y-m-d');
 
                     return $query
-                        ->where(function ($query) use ($today) {
+                        ->where(function ($query) use ($today): void {
                             $query
                                 ->whereDate('date_from', '<=', $today)
                                 ->whereDate('date_to', '>=', $today);
@@ -61,7 +62,7 @@ class ListTimeOffs extends ListRecords
                 ->modifyQueryUsing(function (Builder $query) {
                     $currentUserId = Auth::user()->id;
 
-                    return $query->whereHas('employee', function ($query) use ($currentUserId) {
+                    return $query->whereHas('employee', function ($query) use ($currentUserId): void {
                         $query->where('leave_manager_id', '=', $currentUserId)
                             ->orWhere('user_id', '=', $currentUserId);
                     });
@@ -72,8 +73,8 @@ class ListTimeOffs extends ListRecords
                 ->modifyQueryUsing(function (Builder $query) {
                     $currentUserId = Auth::user()->id;
 
-                    return $query->whereHas('employee', function ($query) use ($currentUserId) {
-                        $query->whereHas('parent', function ($query) use ($currentUserId) {
+                    return $query->whereHas('employee', function ($query) use ($currentUserId): void {
+                        $query->whereHas('parent', function ($query) use ($currentUserId): void {
                             $query->where('user_id', '=', $currentUserId);
                         });
                     });

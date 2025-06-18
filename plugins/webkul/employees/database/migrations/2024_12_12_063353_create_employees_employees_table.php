@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees_employees', function (Blueprint $table) {
+        Schema::create('employees_employees', function (Blueprint $table): void {
             $table->id();
 
             $table->string('time_zone')->nullable()->comment('Employee Timezone');

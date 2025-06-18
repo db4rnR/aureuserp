@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Bank Accounts',
@@ -7,16 +9,16 @@ return [
     ],
 
     'form' => [
-        'account-number'     => 'Account Number',
-        'bank'               => [
-            'title'    => 'Bank',
+        'account-number' => 'Account Number',
+        'bank' => [
+            'title' => 'Bank',
             'sections' => [
                 'general' => [
                     'title' => 'General',
 
                     'fields' => [
-                        'name'  => 'Name',
-                        'code'  => 'Bank Identifier Code',
+                        'name' => 'Name',
+                        'code' => 'Bank Identifier Code',
                         'email' => 'Email',
                         'phone' => 'Phone',
                     ],
@@ -27,70 +29,70 @@ return [
 
                     'fields' => [
                         'address' => 'Address',
-                        'city'    => 'City',
+                        'city' => 'City',
                         'street1' => 'Street 1',
                         'street2' => 'Street 2',
-                        'state'   => 'State',
-                        'zip'     => 'Zip',
+                        'state' => 'State',
+                        'zip' => 'Zip',
                         'country' => 'Country',
                     ],
                 ],
             ],
         ],
 
-        'account-holder'     => 'Account Holder',
+        'account-holder' => 'Account Holder',
     ],
 
     'table' => [
         'columns' => [
             'account-number' => 'Account Number',
-            'bank'           => 'Bank',
+            'bank' => 'Bank',
             'account-holder' => 'Account Holder',
-            'send-money'     => 'Can Send Money',
-            'created-at'     => 'Created At',
-            'updated-at'     => 'Updated At',
-            'deleted-at'     => 'Deleted At',
+            'send-money' => 'Can Send Money',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
+            'deleted-at' => 'Deleted At',
         ],
 
         'filters' => [
-            'bank'           => 'Bank',
+            'bank' => 'Bank',
             'account-holder' => 'Account Holder',
-            'creator'        => 'Creator',
+            'creator' => 'Creator',
             'can-send-money' => 'Can Send Money',
         ],
 
         'groups' => [
-            'bank'               => 'Bank',
-            'can-send-money'     => 'Can Send Money',
-            'created-at'         => 'Created At',
+            'bank' => 'Bank',
+            'can-send-money' => 'Can Send Money',
+            'created-at' => 'Created At',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Bank account updated',
-                    'body'  => 'The bank account has been updated successfully.',
+                    'body' => 'The bank account has been updated successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Bank account restored',
-                    'body'  => 'The bank account has been restored successfully.',
+                    'body' => 'The bank account has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Bank account deleted',
-                    'body'  => 'The bank account has been deleted successfully.',
+                    'body' => 'The bank account has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Bank account force deleted',
-                    'body'  => 'The bank account has been force deleted successfully.',
+                    'body' => 'The bank account has been force deleted successfully.',
                 ],
             ],
         ],
@@ -99,21 +101,21 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Bank accounts restored',
-                    'body'  => 'The bank accounts has been restored successfully.',
+                    'body' => 'The bank accounts has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Bank accounts deleted',
-                    'body'  => 'The bank accounts has been deleted successfully.',
+                    'body' => 'The bank accounts has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Bank accounts force deleted',
-                    'body'  => 'The bank accounts has been force deleted successfully.',
+                    'body' => 'The bank accounts has been force deleted successfully.',
                 ],
             ],
         ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Http\Controllers;
 
 use Exception;
@@ -9,7 +11,7 @@ use Z3d0X\FilamentFabricator\Layouts\Layout;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-class PageController
+final class PageController
 {
     public function __invoke(?Page $filamentFabricatorPage = null): string
     {

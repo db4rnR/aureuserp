@@ -1,25 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Z3d0X\FilamentFabricator\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Actions\Action;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\ListPages;
-use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\CreatePage;
-use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\ViewPage;
-use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\EditPage;
+use BackedEnum;
 use Closure;
+use Filament\Actions\Action;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -29,12 +28,15 @@ use Illuminate\Validation\Rules\Unique;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Forms\Components\PageBuilder;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
-use Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\CreatePage;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\EditPage;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\ListPages;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\ViewPage;
 use Z3d0X\FilamentFabricator\View\ResourceSchemaSlot;
 
-class PageResource extends Resource
+final class PageResource extends Resource
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -73,7 +75,7 @@ class PageResource extends Resource
 
                                 TextInput::make('title')
                                     ->label(__('filament-fabricator::page-resource.labels.title'))
-                                    ->afterStateUpdated(function (Get $get, Set $set, ?string $state, ?PageContract $record) {
+                                    ->afterStateUpdated(function (Get $get, Set $set, ?string $state, ?PageContract $record): void {
                                         if (! $get('is_slug_changed_manually') && filled($state) && blank($record)) {
                                             $set('slug', Str::slug($state, language: config('app.locale', 'en')));
                                         }
@@ -88,11 +90,11 @@ class PageResource extends Resource
                                 TextInput::make('slug')
                                     ->label(__('filament-fabricator::page-resource.labels.slug'))
                                     ->unique(ignoreRecord: true, modifyRuleUsing: fn (Unique $rule, Get $get) => $rule->where('parent_id', $get('parent_id')))
-                                    ->afterStateUpdated(function (Set $set) {
+                                    ->afterStateUpdated(function (Set $set): void {
                                         $set('is_slug_changed_manually', true);
                                     })
                                     ->rule(function ($state) {
-                                        return function (string $attribute, $value, Closure $fail) use ($state) {
+                                        return function (string $attribute, $value, Closure $fail) use ($state): void {
                                             if ($state !== '/' && (Str::startsWith($value, '/') || Str::endsWith($value, '/'))) {
                                                 $fail(__('filament-fabricator::page-resource.errors.slug_starts_or_ends_with_slash'));
                                             }
@@ -113,7 +115,7 @@ class PageResource extends Resource
                                     ->preload()
                                     ->reactive()
                                     ->suffixAction(
-                                        fn ($get, $context) => Action::make($context . '-parent')
+                                        fn ($get, $context) => Action::make($context.'-parent')
                                             ->icon('heroicon-o-arrow-top-right-on-square')
                                             ->url(fn () => PageResource::getUrl($context, ['record' => $get('parent_id')]))
                                             ->openUrlInNewTab()
@@ -122,7 +124,7 @@ class PageResource extends Resource
                                     ->relationship(
                                         'parent',
                                         'title',
-                                        function (Builder $query, ?PageContract $record) {
+                                        function (Builder $query, ?PageContract $record): void {
                                             if (filled($record)) {
                                                 $query->where('id', '!=', $record->id);
                                             }

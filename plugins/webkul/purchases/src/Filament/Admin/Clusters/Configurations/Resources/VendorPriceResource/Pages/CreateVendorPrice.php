@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -8,7 +10,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource;
 
-class CreateVendorPrice extends CreateRecord
+final class CreateVendorPrice extends CreateRecord
 {
     protected static string $resource = VendorPriceResource::class;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages;
 
 use Filament\Resources\Pages\EditRecord;
@@ -7,7 +9,7 @@ use Pboivin\FilamentPeek\Pages\Actions\PreviewAction;
 use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource;
 
-class EditPage extends EditRecord
+final class EditPage extends EditRecord
 {
     use HasPreviewModal;
 

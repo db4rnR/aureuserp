@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'print' => [
@@ -20,12 +22,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Package Deleted',
-                    'body'  => 'The package has been deleted successfully.',
+                    'body' => 'The package has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Package could not be deleted',
-                    'body'  => 'The package cannot be deleted because it is currently in use.',
+                    'body' => 'The package cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

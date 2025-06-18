@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_account_payment_register_move_lines', function (Blueprint $table) {
+        Schema::create('accounts_account_payment_register_move_lines', function (Blueprint $table): void {
             $table->foreignId('payment_register_id')->comment('Account Payment Register Id');
             $table->foreignId('move_line_id')->comment('Account move line');
 

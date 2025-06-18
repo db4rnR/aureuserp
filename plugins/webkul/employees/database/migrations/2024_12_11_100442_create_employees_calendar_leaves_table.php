@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees_calendar_leaves', function (Blueprint $table) {
+        Schema::create('employees_calendar_leaves', function (Blueprint $table): void {
             $table->id();
 
             $table->string('name');

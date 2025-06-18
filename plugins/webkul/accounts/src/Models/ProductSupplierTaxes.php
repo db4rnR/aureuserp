@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Product\Models\Product;
 
-class ProductSupplierTaxes extends Model
+final class ProductSupplierTaxes extends Model
 {
     protected $table = 'accounts_product_supplier_taxes';
 

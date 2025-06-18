@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +19,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UTMMedium;
 use Webkul\Support\Models\UTMSource;
 
-class Applicant extends Model
+final class Applicant extends Model
 {
     use HasApplicationStatus, HasChatter, HasLogActivity, SoftDeletes;
 
@@ -55,22 +57,27 @@ class Applicant extends Model
     ];
 
     protected $casts = [
-        'is_active'               => 'boolean',
-        'create_date'             => 'date',
-        'date_closed'             => 'date',
-        'date_opened'             => 'date',
+        'is_active' => 'boolean',
+        'create_date' => 'date',
+        'date_closed' => 'date',
+        'date_opened' => 'date',
         'date_last_stage_updated' => 'date',
-        'refuse_date'             => 'date',
-        'applicant_properties'    => 'json',
-        'probability'             => 'double',
-        'salary_proposed'         => 'double',
-        'salary_expected'         => 'double',
-        'delay_close'             => 'double',
+        'refuse_date' => 'date',
+        'applicant_properties' => 'json',
+        'probability' => 'double',
+        'salary_proposed' => 'double',
+        'salary_expected' => 'double',
+        'delay_close' => 'double',
     ];
 
     protected $appends = [
         'application_status',
     ];
+
+    public static function getStatusOptions(): array
+    {
+        return ApplicationStatus::options();
+    }
 
     public function source(): BelongsTo
     {
@@ -149,11 +156,6 @@ class Applicant extends Model
         return $this->belongsTo(User::class, 'creator_id');
     }
 
-    public static function getStatusOptions(): array
-    {
-        return ApplicationStatus::options();
-    }
-
     public function setAsHired(): bool
     {
         return $this->updateStatus(ApplicationStatus::HIRED->value);
@@ -185,13 +187,16 @@ class Applicant extends Model
     {
         if ($this->refuse_reason_id) {
             return ApplicationStatus::REFUSED;
-        } elseif (! $this->is_active || $this->deleted_at) {
-            return ApplicationStatus::ARCHIVED;
-        } elseif ($this->date_closed) {
-            return ApplicationStatus::HIRED;
-        } else {
-            return ApplicationStatus::ONGOING;
         }
+        if (! $this->is_active || $this->deleted_at) {
+            return ApplicationStatus::ARCHIVED;
+        }
+        if ($this->date_closed) {
+            return ApplicationStatus::HIRED;
+        }
+
+        return ApplicationStatus::ONGOING;
+
     }
 
     public function createEmployee(): ?Employee
@@ -205,16 +210,15 @@ class Applicant extends Model
         }
 
         $employee = Employee::create([
-            'name'          => $this->candidate->name,
-            'user_id'       => $this->candidate->user_id,
-            'job_id'        => $this->job_id,
+            'name' => $this->candidate->name,
+            'user_id' => $this->candidate->user_id,
+            'job_id' => $this->job_id,
             'department_id' => $this->department_id,
-            'company_id'    => $this->company_id,
-            'partner_id'    => $this->candidate->partner_id,
-            'company_id'    => $this->candidate->company_id,
-            'work_email'    => $this->candidate->email_from,
-            'mobile_phone'  => $this->candidate->phone,
-            'is_active'     => true,
+            'partner_id' => $this->candidate->partner_id,
+            'company_id' => $this->candidate->company_id,
+            'work_email' => $this->candidate->email_from,
+            'mobile_phone' => $this->candidate->phone,
+            'is_active' => true,
         ]);
 
         $this->candidate()->update([

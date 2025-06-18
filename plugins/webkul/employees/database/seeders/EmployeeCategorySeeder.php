@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class EmployeeCategorySeeder extends Seeder
+final class EmployeeCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.

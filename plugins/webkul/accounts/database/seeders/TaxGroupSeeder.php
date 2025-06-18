@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Seeders;
 
 use Carbon\Carbon;
@@ -8,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class TaxGroupSeeder extends Seeder
+final class TaxGroupSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,15 +29,15 @@ class TaxGroupSeeder extends Seeder
 
         $taxGroups = [
             [
-                'id'                 => 1,
-                'sort'               => 1,
-                'company_id'         => $company?->id,
-                'country_id'         => 104,
-                'creator_id'         => $user?->id,
-                'name'               => 'Tax 15%',
+                'id' => 1,
+                'sort' => 1,
+                'company_id' => $company?->id,
+                'country_id' => 104,
+                'creator_id' => $user?->id,
+                'name' => 'Tax 15%',
                 'preceding_subtotal' => null,
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
         ];
 

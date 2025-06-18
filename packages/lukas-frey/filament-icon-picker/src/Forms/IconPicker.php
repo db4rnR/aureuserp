@@ -1,7 +1,8 @@
 <?php
 
-namespace Guava\FilamentIconPicker\Forms;
+declare(strict_types=1);
 
+namespace Guava\FilamentIconPicker\Forms;
 
 use BadMethodCallException;
 use BladeUI\Icons\Factory as IconFactory;
@@ -17,17 +18,22 @@ use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use Symfony\Component\Finder\SplFileInfo;
 
-class IconPicker extends Select
+use function view;
+
+final class IconPicker extends Select
 {
     use CanBeCacheable;
 
     protected string $view = 'filament-icon-picker::forms.icon-picker';
 
     protected array|Closure|null $sets = null;
+
     protected array|Closure|null $allowedIcons = null;
+
     protected array|Closure|null $disallowedIcons = null;
 
     protected bool|Closure $isHtmlAllowed = true;
+
     protected bool|Closure $isSearchable = true;
 
     protected Closure|string|Htmlable|null $itemTemplate = null;
@@ -51,7 +57,7 @@ class IconPicker extends Select
 
             return $this->tryCache($key, function () use ($component, $search, $icons) {
                 return collect($icons)
-                    ->filter(fn(string $icon) => str_contains($icon, $search))
+                    ->filter(fn (string $icon) => str_contains($icon, $search))
                     ->mapWithKeys(function (string $icon) use ($component) {
                         return [$icon => $component->getItemTemplate(['icon' => $icon])];
                     })
@@ -67,7 +73,7 @@ class IconPicker extends Select
 
         $this
             ->itemTemplate(function (IconPicker $component, string $icon) {
-                return \view('filament-icon-picker::item', [
+                return view('filament-icon-picker::item', [
                     'icon' => $icon,
                 ])->render();
             })
@@ -77,7 +83,6 @@ class IconPicker extends Select
     }
 
     /**
-     * @param array|string|Closure|null $sets
      * @return $this
      */
     public function sets(array|Closure|string|null $sets = null): static
@@ -146,7 +151,7 @@ class IconPicker extends Select
 
     public function getSearchResults(string $search): array
     {
-        if (!$this->getSearchResultsUsing) {
+        if (! $this->getSearchResultsUsing) {
             return [];
         }
 
@@ -164,12 +169,129 @@ class IconPicker extends Select
         return $results;
     }
 
+    public function getOptions(): array
+    {
+        $this->doPreload();
+
+        return parent::getOptions();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function relationship(string|Closure|null $name = null, string|Closure|null $titleAttribute = null, ?Closure $modifyQueryUsing = null, bool $ignoreRecord = false): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function options(Arrayable|Closure|array|string|null $options): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function allowHtml(bool|Closure $condition = true): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function searchable(bool|array|Closure $condition = true): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function getSearchResultsUsing(?Closure $callback): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function getOptionLabelFromRecordUsing(?Closure $callback): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function createOptionUsing(?Closure $callback): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function createOptionAction(?Closure $callback): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function createOptionForm(array|Closure|null $schema): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function schema(array|Closure $components): static
+    {
+        $this->markAsNotAllowed();
+    }
+
+    /**
+     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
+     *
+     * @throws BadMethodCallException
+     */
+    public function multiple(bool|Closure $condition = true): static
+    {
+        $this->markAsNotAllowed();
+    }
+
     /**
      * Enact the preload logic (if, and only if, the user wants to preload the icons)
      */
     protected function doPreload(): void
     {
-        if (!$this->isPreloaded()) {
+        if (! $this->isPreloaded()) {
             return;
         }
 
@@ -194,118 +316,14 @@ class IconPicker extends Select
         parent::options($options);
     }
 
-    public function getOptions(): array
-    {
-        $this->doPreload();
-        return parent::getOptions();
-    }
-
-
-     /**
+    /**
      * Marks the calling method as not allowed (whether because it's not supported or because it's meaningless when using this field)
+     *
      * @throws BadMethodCallException Always
      */
-    protected function markAsNotAllowed(string $reason = 'Method not allowed.'): void {
+    protected function markAsNotAllowed(string $reason = 'Method not allowed.'): void
+    {
         throw new BadMethodCallException($reason);
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function relationship(string|Closure|null $name = null, string|Closure|null $titleAttribute = null, ?Closure $modifyQueryUsing = null, bool $ignoreRecord = false): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function options(Arrayable|Closure|array|string|null $options): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function allowHtml(bool|Closure $condition = true): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function searchable(bool|array|Closure $condition = true): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function getSearchResultsUsing(?Closure $callback): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function getOptionLabelFromRecordUsing(?Closure $callback): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function createOptionUsing(?Closure $callback): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function createOptionAction(?Closure $callback): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function createOptionForm(array|Closure|null $schema): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function schema(array|Closure $components): static
-    {
-        $this->markAsNotAllowed();
-    }
-
-    /**
-     * @deprecated Method inherited from `\Filament\Forms\Components\Select` but not supported (or meaningless) when using this field
-     * @throws BadMethodCallException
-     */
-    public function multiple(bool|Closure $condition = true): static
-    {
-        $this->markAsNotAllowed();
     }
 
     private function loadIcons(): Collection
@@ -324,19 +342,18 @@ class IconPicker extends Select
                 $sets = collect($iconsFactory->all());
 
                 if ($allowedSets) {
-                    $sets = $sets->filter(fn($value, $key) => in_array($key, $allowedSets));
+                    $sets = $sets->filter(fn ($value, $key) => in_array($key, $allowedSets, true));
                 }
 
                 return [$sets, $allowedIcons, $disallowedIcons];
             });
 
-
         $allowedSetsHash = md5(serialize($sets));
         $allowedHash = md5(serialize($allowedIcons));
         $disallowedHash = md5(serialize($disallowedIcons));
         $iconsKey = "icon-picker.fields.icons.{$iconsHash}.{$allowedSetsHash}.{$allowedHash}.{$disallowedHash}.{$this->getStatePath()}";
-        
-        $icons = $this->tryCache($iconsKey, function() use($sets, $allowedIcons, $disallowedIcons) {
+
+        $icons = $this->tryCache($iconsKey, function () use ($sets, $allowedIcons, $disallowedIcons) {
             $icons = [];
 
             foreach ($sets as $set) {
@@ -352,10 +369,10 @@ class IconPicker extends Select
 
                         $iconName = $this->getIconName($file, parentPath: $path, prefix: $prefix);
 
-                        if ($allowedIcons && !in_array($iconName, $allowedIcons)) {
+                        if ($allowedIcons && ! in_array($iconName, $allowedIcons, true)) {
                             continue;
                         }
-                        if ($disallowedIcons && in_array($iconName, $disallowedIcons)) {
+                        if ($disallowedIcons && in_array($iconName, $disallowedIcons, true)) {
                             continue;
                         }
 
@@ -374,7 +391,8 @@ class IconPicker extends Select
      * @see https://github.com/blade-ui-kit/blade-icons and its IconsManifest.php
      * @see https://github.com/blade-ui-kit/blade-icons/blob/ce60487deeb7bcbccd5e69188dc91b4c29622aff/src/IconsManifest.php#L78
      */
-    private function getIconName(SplFileInfo $file, string $parentPath, string $prefix): string {
+    private function getIconName(SplFileInfo $file, string $parentPath, string $prefix): string
+    {
         // BladeIcons uses a simple (and view-compliant) naming convention for icon names
         // `xtra-icon` is the `icon.svg` from the `xtra` icon set
         // `xtra-dir.icon` is the `icon.svg` from the `dir/` folder from the `xtra` icon set
@@ -386,7 +404,7 @@ class IconPicker extends Select
         // - add the prefix at the beginning, followed by a dash
 
         $iconName = str($file->getPathname())
-            ->after($parentPath . DIRECTORY_SEPARATOR)
+            ->after($parentPath.DIRECTORY_SEPARATOR)
             ->replace(DIRECTORY_SEPARATOR, '.')
             ->basename('.svg')
             ->toString();

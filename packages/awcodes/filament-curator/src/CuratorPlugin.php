@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator;
 
 use Awcodes\Curator\Models\Media;
@@ -11,29 +13,39 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 
-class CuratorPlugin implements Plugin
+final class CuratorPlugin implements Plugin
 {
     use EvaluatesClosures;
 
-    protected string | Closure | null $label = null;
+    protected string|Closure|null $label = null;
 
-    protected string | Closure | null $navigationGroup = null;
+    protected string|Closure|null $navigationGroup = null;
 
-    protected string | Closure | null $navigationLabel = null;
+    protected string|Closure|null $navigationLabel = null;
 
-    protected string | Closure | null $navigationIcon = null;
+    protected string|Closure|null $navigationIcon = null;
 
-    protected int | Closure | null $navigationSort = null;
+    protected int|Closure|null $navigationSort = null;
 
-    protected bool | Closure | null $navigationCountBadge = null;
+    protected bool|Closure|null $navigationCountBadge = null;
 
-    protected bool | Closure | null $shouldRegisterNavigation = null;
+    protected bool|Closure|null $shouldRegisterNavigation = null;
 
-    protected string | Closure | null $defaultListView = null;
+    protected string|Closure|null $defaultListView = null;
 
-    protected string | Closure | null $pluralLabel = null;
+    protected string|Closure|null $pluralLabel = null;
 
     protected ?string $resource = null;
+
+    public static function make(): static
+    {
+        return app(self::class);
+    }
+
+    public static function get(): Plugin
+    {
+        return filament(app(static::class)->getId());
+    }
 
     public function getId(): string
     {
@@ -57,16 +69,6 @@ class CuratorPlugin implements Plugin
     }
 
     public function boot(Panel $panel): void {}
-
-    public static function make(): static
-    {
-        return app(static::class);
-    }
-
-    public static function get(): Plugin
-    {
-        return filament(app(static::class)->getId());
-    }
 
     public function getResource(): string
     {
@@ -118,28 +120,28 @@ class CuratorPlugin implements Plugin
         return $this->evaluate($this->defaultListView) ?? config('curator.table.layout');
     }
 
-    public function navigationGroup(string | Closure | null $group = null): static
+    public function navigationGroup(string|Closure|null $group = null): static
     {
         $this->navigationGroup = $group;
 
         return $this;
     }
 
-    public function navigationLabel(string | Closure | null $label = null): static
+    public function navigationLabel(string|Closure|null $label = null): static
     {
         $this->navigationLabel = $label;
 
         return $this;
     }
 
-    public function navigationIcon(string | Closure $icon): static
+    public function navigationIcon(string|Closure $icon): static
     {
         $this->navigationIcon = $icon;
 
         return $this;
     }
 
-    public function navigationSort(int | Closure $order): static
+    public function navigationSort(int|Closure $order): static
     {
         $this->navigationSort = $order;
 
@@ -153,21 +155,21 @@ class CuratorPlugin implements Plugin
         return $this;
     }
 
-    public function registerNavigation(bool | Closure $condition = true): static
+    public function registerNavigation(bool|Closure $condition = true): static
     {
         $this->shouldRegisterNavigation = $condition;
 
         return $this;
     }
 
-    public function defaultListView(string | Closure $view): static
+    public function defaultListView(string|Closure $view): static
     {
         $this->defaultListView = $view;
 
         return $this;
     }
 
-    public function pluralLabel(string | Closure $label): static
+    public function pluralLabel(string|Closure $label): static
     {
         $this->pluralLabel = $label;
 
@@ -181,7 +183,7 @@ class CuratorPlugin implements Plugin
         return $this;
     }
 
-    public function label(string | Closure $label): static
+    public function label(string|Closure $label): static
     {
         $this->label = $label;
 

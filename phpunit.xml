@@ -19,10 +19,10 @@
     <source>
         <include>
             <directory>app</directory>
+            <directory>packages</directory>
             <directory>plugins</directory>
         </include>
         <exclude>
-            <directory>packages</directory>
             <directory>vendor</directory>
         </exclude>
     </source>

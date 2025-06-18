@@ -1,25 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Traits\Resources\Employee;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Radio;
-use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\CreateAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Employee\Models\SkillType;
@@ -78,16 +78,19 @@ trait EmployeeSkillRelation
                     ->color(fn ($record) => $record->skillType?->color),
                 CustomTables\Columns\ProgressBarEntry::make('skillLevel.level')
                     ->getStateUsing(fn ($record) => $record->skillLevel?->level)
-                    ->color(function ($record) {
+                    ->color(function ($record): string {
                         if ($record->skillLevel?->level === 100) {
                             return 'success';
-                        } elseif ($record->skillLevel?->level >= 50 && $record->skillLevel?->level < 80) {
-                            return 'warning';
-                        } elseif ($record->skillLevel?->level < 20) {
-                            return 'danger';
-                        } else {
-                            return 'info';
                         }
+                        if ($record->skillLevel?->level >= 50 && $record->skillLevel?->level < 80) {
+                            return 'warning';
+                        }
+                        if ($record->skillLevel?->level < 20) {
+                            return 'danger';
+                        }
+
+                        return 'info';
+
                     })
                     ->label(__('employees::filament/resources/employee/relation-manager/skill.table.columns.level-percent')),
                 TextColumn::make('creator.name')
@@ -171,16 +174,19 @@ trait EmployeeSkillRelation
                                     ->label(__('employees::filament/resources/employee/relation-manager/skill.infolist.entries.skill-level')),
                                 CustomTables\Infolists\ProgressBarEntry::make('skillLevel.level')
                                     ->getStateUsing(fn ($record) => $record->skillLevel?->level)
-                                    ->color(function ($record) {
+                                    ->color(function ($record): string {
                                         if ($record->skillLevel->level === 100) {
                                             return 'success';
-                                        } elseif ($record->skillLevel->level >= 50 && $record->skillLevel->level < 80) {
-                                            return 'warning';
-                                        } elseif ($record->skillLevel->level < 20) {
-                                            return 'danger';
-                                        } else {
-                                            return 'info';
                                         }
+                                        if ($record->skillLevel->level >= 50 && $record->skillLevel->level < 80) {
+                                            return 'warning';
+                                        }
+                                        if ($record->skillLevel->level < 20) {
+                                            return 'danger';
+                                        }
+
+                                        return 'info';
+
                                     })
                                     ->label(__('employees::filament/resources/employee/relation-manager/skill.infolist.entries.level-percent')),
                             ])

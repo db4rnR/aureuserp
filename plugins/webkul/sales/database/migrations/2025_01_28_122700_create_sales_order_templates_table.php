@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_order_templates', function (Blueprint $table) {
+        Schema::create('sales_order_templates', function (Blueprint $table): void {
             $table->id();
             $table->integer('sort')->nullable()->default(0);
             $table->foreignId('company_id')->nullable()->constrained('companies')->nullOnDelete();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -10,7 +12,7 @@ use Kirschbaum\Commentions\Contracts\Commenter;
 /**
  * @extends Factory<\App\Models\Comment>
  */
-class CommentFactory extends Factory
+final class CommentFactory extends Factory
 {
     protected $model = Comment::class;
 

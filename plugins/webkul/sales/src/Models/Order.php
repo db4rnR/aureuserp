@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,7 +29,7 @@ use Webkul\Support\Models\UtmCampaign;
 use Webkul\Support\Models\UTMMedium;
 use Webkul\Support\Models\UTMSource;
 
-class Order extends Model
+final class Order extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes;
 
@@ -74,42 +76,42 @@ class Order extends Model
     ];
 
     protected array $logAttributes = [
-        'medium.name'          => 'Medium',
-        'utmSource.name'       => 'UTM Source',
-        'partner.name'         => 'Customer',
-        'partnerInvoice.name'  => 'Invoice Address',
+        'medium.name' => 'Medium',
+        'utmSource.name' => 'UTM Source',
+        'partner.name' => 'Customer',
+        'partnerInvoice.name' => 'Invoice Address',
         'partnerShipping.name' => 'Shipping Address',
-        'fiscalPosition.name'  => 'Fiscal Position',
-        'paymentTerm.name'     => 'Payment Term',
-        'currency.name'        => 'Currency',
-        'user.name'            => 'Salesperson',
-        'team.name'            => 'Sales Team',
-        'creator.name'         => 'Created By',
-        'company.name'         => 'Company',
-        'name'                 => 'Order Reference',
-        'state'                => 'Order Status',
-        'client_order_ref'     => 'Customer Reference',
-        'origin'               => 'Source Document',
-        'reference'            => 'Reference',
-        'signed_by'            => 'Signed By',
-        'invoice_status'       => 'Invoice Status',
-        'validity_date'        => 'Validity Date',
-        'note'                 => 'Terms and Conditions',
-        'currency_rate'        => 'Currency Rate',
-        'amount_untaxed'       => 'Subtotal',
-        'amount_tax'           => 'Tax',
-        'amount_total'         => 'Total',
-        'locked'               => 'Locked',
-        'require_signature'    => 'Require Signature',
-        'require_payment'      => 'Require Payment',
-        'commitment_date'      => 'Commitment Date',
-        'date_order'           => 'Order Date',
-        'signed_on'            => 'Signed On',
-        'prepayment_percent'   => 'Prepayment Percentage',
+        'fiscalPosition.name' => 'Fiscal Position',
+        'paymentTerm.name' => 'Payment Term',
+        'currency.name' => 'Currency',
+        'user.name' => 'Salesperson',
+        'team.name' => 'Sales Team',
+        'creator.name' => 'Created By',
+        'company.name' => 'Company',
+        'name' => 'Order Reference',
+        'state' => 'Order Status',
+        'client_order_ref' => 'Customer Reference',
+        'origin' => 'Source Document',
+        'reference' => 'Reference',
+        'signed_by' => 'Signed By',
+        'invoice_status' => 'Invoice Status',
+        'validity_date' => 'Validity Date',
+        'note' => 'Terms and Conditions',
+        'currency_rate' => 'Currency Rate',
+        'amount_untaxed' => 'Subtotal',
+        'amount_tax' => 'Tax',
+        'amount_total' => 'Total',
+        'locked' => 'Locked',
+        'require_signature' => 'Require Signature',
+        'require_payment' => 'Require Payment',
+        'commitment_date' => 'Commitment Date',
+        'date_order' => 'Order Date',
+        'signed_on' => 'Signed On',
+        'prepayment_percent' => 'Prepayment Percentage',
     ];
 
     protected $casts = [
-        'state'          => OrderState::class,
+        'state' => OrderState::class,
         'invoice_status' => InvoiceStatus::class,
     ];
 
@@ -223,24 +225,24 @@ class Order extends Model
         return $this->hasMany(Operation::class, 'sale_order_id');
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($order) {
-            $order->updateName();
-        });
-
-        static::created(function ($order) {
-            $order->update(['name' => $order->name]);
-        });
-    }
-
     /**
      * Update the name based on the state without trigger any additional events.
      */
-    public function updateName()
+    public function updateName(): void
     {
         $this->name = 'SO/'.$this->id;
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::saving(function ($order): void {
+            $order->updateName();
+        });
+
+        self::created(function ($order): void {
+            $order->update(['name' => $order->name]);
+        });
     }
 }

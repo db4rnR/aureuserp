@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
-use Webkul\Account\Enums\MoveState;
-use Webkul\Account\Enums\PaymentState;
-use Webkul\Account\Enums\MoveType;
-use Webkul\Account\Enums\JournalType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\JournalType;
+use Webkul\Account\Enums\MoveState;
+use Webkul\Account\Enums\MoveType;
+use Webkul\Account\Enums\PaymentState;
 use Webkul\Chatter\Traits\HasChatter;
 use Webkul\Chatter\Traits\HasLogActivity;
 use Webkul\Field\Traits\HasCustomFields;
@@ -23,9 +24,14 @@ use Webkul\Support\Models\UtmCampaign;
 use Webkul\Support\Models\UTMMedium;
 use Webkul\Support\Models\UTMSource;
 
-class Move extends Model implements Sortable
+final class Move extends Model implements Sortable
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'accounts_account_moves';
 
@@ -96,61 +102,56 @@ class Move extends Model implements Sortable
     ];
 
     protected array $logAttributes = [
-        'medium.name'                       => 'Medium',
-        'source.name'                       => 'UTM Source',
-        'partner.name'                      => 'Customer',
-        'commercialPartner.name'            => 'Commercial Partner',
-        'partnerShipping.name'              => 'Shipping Address',
-        'partnerBank.name'                  => 'Bank Account',
-        'fiscalPosition.name'               => 'Fiscal Position',
-        'currency.name'                     => 'Currency',
-        'reversedEntry.name'                => 'Reversed Entry',
-        'invoiceUser.name'                  => 'Invoice User',
-        'invoiceIncoterm.name'              => 'Invoice Incoterm',
-        'invoiceCashRounding.name'          => 'Invoice Cash Rounding',
-        'createdBy.name'                    => 'Created By',
-        'name'                              => 'Invoice Reference',
-        'state'                             => 'Invoice Status',
-        'reference'                         => 'Reference',
-        'invoiceSourceEmail'                => 'Source Email',
-        'invoicePartnerDisplayName'         => 'Partner Display Name',
-        'invoiceOrigin'                     => 'Invoice Origin',
-        'incotermLocation'                  => 'Incoterm Location',
-        'date'                              => 'Invoice Date',
-        'invoice_date'                      => 'Invoice Date',
-        'invoice_date_due'                  => 'Due Date',
-        'delivery_date'                     => 'Delivery Date',
-        'narration'                         => 'Notes',
-        'amount_untaxed'                    => 'Subtotal',
-        'amount_tax'                        => 'Tax',
-        'amount_total'                      => 'Total',
-        'amount_residual'                   => 'Residual',
-        'amount_untaxed_signed'             => 'Subtotal (Signed)',
+        'medium.name' => 'Medium',
+        'source.name' => 'UTM Source',
+        'partner.name' => 'Customer',
+        'commercialPartner.name' => 'Commercial Partner',
+        'partnerShipping.name' => 'Shipping Address',
+        'partnerBank.name' => 'Bank Account',
+        'fiscalPosition.name' => 'Fiscal Position',
+        'currency.name' => 'Currency',
+        'reversedEntry.name' => 'Reversed Entry',
+        'invoiceUser.name' => 'Invoice User',
+        'invoiceIncoterm.name' => 'Invoice Incoterm',
+        'invoiceCashRounding.name' => 'Invoice Cash Rounding',
+        'createdBy.name' => 'Created By',
+        'name' => 'Invoice Reference',
+        'state' => 'Invoice Status',
+        'reference' => 'Reference',
+        'invoiceSourceEmail' => 'Source Email',
+        'invoicePartnerDisplayName' => 'Partner Display Name',
+        'invoiceOrigin' => 'Invoice Origin',
+        'incotermLocation' => 'Incoterm Location',
+        'date' => 'Invoice Date',
+        'invoice_date' => 'Invoice Date',
+        'invoice_date_due' => 'Due Date',
+        'delivery_date' => 'Delivery Date',
+        'narration' => 'Notes',
+        'amount_untaxed' => 'Subtotal',
+        'amount_tax' => 'Tax',
+        'amount_total' => 'Total',
+        'amount_residual' => 'Residual',
+        'amount_untaxed_signed' => 'Subtotal (Signed)',
         'amount_untaxed_in_currency_signed' => 'Subtotal (In Currency) (Signed)',
-        'amount_tax_signed'                 => 'Tax (Signed)',
-        'amount_total_signed'               => 'Total (Signed)',
-        'amount_total_in_currency_signed'   => 'Total (In Currency) (Signed)',
-        'amount_residual_signed'            => 'Residual (Signed)',
-        'quick_edit_total_amount'           => 'Quick Edit Total Amount',
-        'is_storno'                         => 'Is Storno',
-        'always_tax_exigible'               => 'Always Tax Exigible',
-        'checked'                           => 'Checked',
-        'posted_before'                     => 'Posted Before',
-        'made_sequence_gap'                 => 'Made Sequence Gap',
-        'is_manually_modified'              => 'Is Manually Modified',
-        'is_move_sent'                      => 'Is Move Sent',
+        'amount_tax_signed' => 'Tax (Signed)',
+        'amount_total_signed' => 'Total (Signed)',
+        'amount_total_in_currency_signed' => 'Total (In Currency) (Signed)',
+        'amount_residual_signed' => 'Residual (Signed)',
+        'quick_edit_total_amount' => 'Quick Edit Total Amount',
+        'is_storno' => 'Is Storno',
+        'always_tax_exigible' => 'Always Tax Exigible',
+        'checked' => 'Checked',
+        'posted_before' => 'Posted Before',
+        'made_sequence_gap' => 'Made Sequence Gap',
+        'is_manually_modified' => 'Is Manually Modified',
+        'is_move_sent' => 'Is Move Sent',
     ];
 
     protected $casts = [
         'invoice_date_due' => 'datetime',
-        'state'            => MoveState::class,
-        'payment_state'    => PaymentState::class,
-        'move_type'        => MoveType::class,
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'state' => MoveState::class,
+        'payment_state' => PaymentState::class,
+        'move_type' => MoveType::class,
     ];
 
     public function campaign()
@@ -170,12 +171,12 @@ class Move extends Model implements Sortable
 
     public function taxCashBasisOriginMove()
     {
-        return $this->belongsTo(Move::class, 'tax_cash_basis_origin_move_id');
+        return $this->belongsTo(self::class, 'tax_cash_basis_origin_move_id');
     }
 
     public function autoPostOrigin()
     {
-        return $this->belongsTo(Move::class, 'auto_post_origin_id');
+        return $this->belongsTo(self::class, 'auto_post_origin_id');
     }
 
     public function invoicePaymentTerm()
@@ -260,9 +261,9 @@ class Move extends Model implements Sortable
             ->sum('discount');
     }
 
-    public function isInbound($includeReceipts = true)
+    public function isInbound($includeReceipts = true): bool
     {
-        return in_array($this->move_type, $this->getInboundTypes($includeReceipts));
+        return in_array($this->move_type, $this->getInboundTypes($includeReceipts), true);
     }
 
     public function getInboundTypes($includeReceipts = true): array
@@ -276,9 +277,9 @@ class Move extends Model implements Sortable
         return $types;
     }
 
-    public function isOutbound($includeReceipts = true)
+    public function isOutbound($includeReceipts = true): bool
     {
-        return in_array($this->move_type, $this->getOutboundTypes($includeReceipts));
+        return in_array($this->move_type, $this->getOutboundTypes($includeReceipts), true);
     }
 
     public function getOutboundTypes($includeReceipts = true): array
@@ -315,98 +316,90 @@ class Move extends Model implements Sortable
             ->where('display_type', 'payment_term');
     }
 
-    public function isInvoice($includeReceipts = false)
+    public function isInvoice($includeReceipts = false): bool
     {
-        return $this->isSaleDocument($includeReceipts) || $this->isPurchaseDocument($includeReceipts);
+        if ($this->isSaleDocument($includeReceipts)) {
+            return true;
+        }
+
+        return $this->isPurchaseDocument($includeReceipts);
     }
 
-    public function isEntry()
+    public function isEntry(): bool
     {
         return $this->move_type === MoveType::ENTRY;
     }
 
-    public function getSaleTypes($includeReceipts = false)
+    public function getSaleTypes($includeReceipts = false): array
     {
         return $includeReceipts
             ? [MoveType::OUT_INVOICE, MoveType::OUT_REFUND, MoveType::OUT_RECEIPT]
             : [MoveType::OUT_INVOICE, MoveType::OUT_REFUND];
     }
 
-    public function isSaleDocument($includeReceipts = false)
+    public function isSaleDocument($includeReceipts = false): bool
     {
-        return in_array($this->move_type, $this->getSaleTypes($includeReceipts));
+        return in_array($this->move_type, $this->getSaleTypes($includeReceipts), true);
     }
 
-    public function isPurchaseDocument($includeReceipts = false)
+    public function isPurchaseDocument($includeReceipts = false): bool
     {
         return in_array($this->move_type, $includeReceipts ? [
             MoveType::IN_INVOICE,
             MoveType::IN_REFUND,
             MoveType::IN_RECEIPT,
-        ] : [MoveType::IN_INVOICE, MoveType::IN_REFUND]);
+        ] : [MoveType::IN_INVOICE, MoveType::IN_REFUND], true);
     }
 
-    public function getValidJournalTypes()
+    public function getValidJournalTypes(): array
     {
         if ($this->isSaleDocument(true)) {
             return [JournalType::SALE];
-        } elseif ($this->isPurchaseDocument(true)) {
-            return [JournalType::PURCHASE];
-        } elseif ($this->origin_payment_id || $this->statement_line_id) {
-            return [JournalType::BANK, JournalType::CASH, JournalType::CREDIT_CARD];
-        } else {
-            return [JournalType::GENERAL];
         }
+        if ($this->isPurchaseDocument(true)) {
+            return [JournalType::PURCHASE];
+        }
+        if ($this->origin_payment_id || $this->statement_line_id) {
+            return [JournalType::BANK, JournalType::CASH, JournalType::CREDIT_CARD];
+        }
+
+        return [JournalType::GENERAL];
+
+    }
+
+    /**
+     * Update the full name without triggering additional events
+     */
+    public function updateSequencePrefix(): void
+    {
+        $suffix = date('Y').'/'.date('m');
+
+        $this->sequence_prefix = match ($this->move_type) {
+            MoveType::OUT_INVOICE => 'INV/'.$suffix,
+            MoveType::OUT_REFUND => 'RINV/'.$suffix,
+            MoveType::IN_INVOICE => 'BILL/'.$suffix,
+            MoveType::IN_REFUND => 'RBILL/'.$suffix,
+            default => $suffix,
+        };
     }
 
     /**
      * Bootstrap any application services.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::creating(function ($model) {
+        self::creating(function ($model): void {
             $model->creator_id = auth()->id();
         });
 
-        static::created(function ($model) {
+        self::created(function ($model): void {
             $model->updateSequencePrefix();
 
             $model->updateQuietly([
                 'name' => $model->sequence_prefix.'/'.$model->id,
             ]);
         });
-    }
-
-    /**
-     * Update the full name without triggering additional events
-     */
-    public function updateSequencePrefix()
-    {
-        $suffix = date('Y').'/'.date('m');
-
-        switch ($this->move_type) {
-            case MoveType::OUT_INVOICE:
-                $this->sequence_prefix = 'INV/'.$suffix;
-
-                break;
-            case MoveType::OUT_REFUND:
-                $this->sequence_prefix = 'RINV/'.$suffix;
-
-                break;
-            case MoveType::IN_INVOICE:
-                $this->sequence_prefix = 'BILL/'.$suffix;
-
-                break;
-            case MoveType::IN_REFUND:
-                $this->sequence_prefix = 'RBILL/'.$suffix;
-
-                break;
-            default:
-                $this->sequence_prefix = $suffix;
-
-                break;
-        }
     }
 }

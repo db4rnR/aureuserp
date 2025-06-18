@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory;
 
-use Webkul\Inventory\Enums\MoveState;
-use Webkul\Inventory\Enums\OperationState;
-use Webkul\Inventory\Enums\LocationType;
-use Webkul\Inventory\Enums\ProductTracking;
-use Webkul\Inventory\Enums\CreateBackorder;
-use Webkul\Inventory\Enums\RuleAuto;
-use Webkul\Inventory\Enums\ProcureMethod;
-use Webkul\Inventory\Enums\RuleAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Webkul\Inventory\Enums\CreateBackorder;
+use Webkul\Inventory\Enums\LocationType;
+use Webkul\Inventory\Enums\MoveState;
+use Webkul\Inventory\Enums\OperationState;
+use Webkul\Inventory\Enums\ProcureMethod;
+use Webkul\Inventory\Enums\ProductTracking;
+use Webkul\Inventory\Enums\RuleAction;
+use Webkul\Inventory\Enums\RuleAuto;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Inventory\Models\Move;
 use Webkul\Inventory\Models\MoveLine;
@@ -22,7 +24,7 @@ use Webkul\Purchase\Facades\PurchaseOrder as PurchaseOrderFacade;
 use Webkul\Sale\Facades\SaleOrder as SaleFacade;
 use Webkul\Support\Package;
 
-class InventoryManager
+final class InventoryManager
 {
     public function checkTransferAvailability(Operation $record): Operation
     {
@@ -53,10 +55,8 @@ class InventoryManager
             }
         }
 
-        if (Package::isPluginInstalled('sales')) {
-            if ($record->saleOrder) {
-                SaleFacade::computeSaleOrder($record->saleOrder);
-            }
+        if (Package::isPluginInstalled('sales') && $record->saleOrder) {
+            SaleFacade::computeSaleOrder($record->saleOrder);
         }
 
         $this->applyPushRules($record);
@@ -67,7 +67,7 @@ class InventoryManager
     public function validateTransferMove(Move $move): Move
     {
         $move->update([
-            'state'     => MoveState::DONE,
+            'state' => MoveState::DONE,
             'is_picked' => true,
         ]);
 
@@ -92,28 +92,28 @@ class InventoryManager
         if ($sourceQuantity) {
             $remainingQty = $sourceQuantity->quantity - $moveLine->uom_qty;
 
-            if ($remainingQty == 0) {
+            if ($remainingQty === 0) {
                 $sourceQuantity->delete();
             } else {
                 $reservedQty = $this->calculateReservedQty($moveLine->sourceLocation, $moveLine->uom_qty);
 
                 $sourceQuantity->update([
-                    'quantity'                => $remainingQty,
-                    'reserved_quantity'       => $sourceQuantity->reserved_quantity - $reservedQty,
+                    'quantity' => $remainingQty,
+                    'reserved_quantity' => $sourceQuantity->reserved_quantity - $reservedQty,
                     'inventory_diff_quantity' => $sourceQuantity->inventory_diff_quantity + $moveLine->uom_qty,
                 ]);
             }
         } else {
             ProductQuantity::create([
-                'product_id'              => $moveLine->product_id,
-                'location_id'             => $moveLine->source_location_id,
-                'lot_id'                  => $moveLine->lot_id,
-                'package_id'              => $moveLine->package_id,
-                'quantity'                => -$moveLine->uom_qty,
+                'product_id' => $moveLine->product_id,
+                'location_id' => $moveLine->source_location_id,
+                'lot_id' => $moveLine->lot_id,
+                'package_id' => $moveLine->package_id,
+                'quantity' => -$moveLine->uom_qty,
                 'inventory_diff_quantity' => $moveLine->uom_qty,
-                'company_id'              => $moveLine->sourceLocation->company_id,
-                'creator_id'              => Auth::id(),
-                'incoming_at'             => now(),
+                'company_id' => $moveLine->sourceLocation->company_id,
+                'creator_id' => Auth::id(),
+                'incoming_at' => now(),
             ]);
         }
 
@@ -128,22 +128,22 @@ class InventoryManager
 
         if ($destinationQuantity) {
             $destinationQuantity->update([
-                'quantity'                => $destinationQuantity->quantity + $moveLine->uom_qty,
-                'reserved_quantity'       => $destinationQuantity->reserved_quantity + $reservedQty,
+                'quantity' => $destinationQuantity->quantity + $moveLine->uom_qty,
+                'reserved_quantity' => $destinationQuantity->reserved_quantity + $reservedQty,
                 'inventory_diff_quantity' => $destinationQuantity->inventory_diff_quantity - $moveLine->uom_qty,
             ]);
         } else {
             ProductQuantity::create([
-                'product_id'              => $moveLine->product_id,
-                'location_id'             => $moveLine->destination_location_id,
-                'package_id'              => $moveLine->result_package_id,
-                'lot_id'                  => $moveLine->lot_id,
-                'quantity'                => $moveLine->uom_qty,
-                'reserved_quantity'       => $reservedQty,
+                'product_id' => $moveLine->product_id,
+                'location_id' => $moveLine->destination_location_id,
+                'package_id' => $moveLine->result_package_id,
+                'lot_id' => $moveLine->lot_id,
+                'quantity' => $moveLine->uom_qty,
+                'reserved_quantity' => $reservedQty,
                 'inventory_diff_quantity' => -$moveLine->uom_qty,
-                'incoming_at'             => now(),
-                'creator_id'              => Auth::id(),
-                'company_id'              => $moveLine->destinationLocation->company_id,
+                'incoming_at' => now(),
+                'creator_id' => Auth::id(),
+                'company_id' => $moveLine->destinationLocation->company_id,
             ]);
         }
 
@@ -151,7 +151,7 @@ class InventoryManager
         if ($moveLine->result_package_id && $moveLine->resultPackage) {
             $moveLine->resultPackage->update([
                 'location_id' => $moveLine->destination_location_id,
-                'pack_date'   => now(),
+                'pack_date' => now(),
             ]);
         }
 
@@ -170,8 +170,8 @@ class InventoryManager
     {
         foreach ($record->moves as $move) {
             $move->update([
-                'state'        => MoveState::CANCELED,
-                'quantity'     => 0,
+                'state' => MoveState::CANCELED,
+                'quantity' => 0,
             ]);
 
             $move->lines()->delete();
@@ -187,30 +187,30 @@ class InventoryManager
     public function returnTransfer(Operation $record): Operation
     {
         $newOperation = $record->replicate()->fill([
-            'state'                   => OperationState::DRAFT,
-            'origin'                  => 'Return of '.$record->name,
-            'operation_type_id'       => $record->operationType->returnOperationType?->id ?? $record->operation_type_id,
-            'source_location_id'      => $record->destination_location_id,
+            'state' => OperationState::DRAFT,
+            'origin' => 'Return of '.$record->name,
+            'operation_type_id' => $record->operationType->returnOperationType?->id ?? $record->operation_type_id,
+            'source_location_id' => $record->destination_location_id,
             'destination_location_id' => $record->source_location_id,
-            'return_id'               => $record->id,
-            'user_id'                 => Auth::id(),
-            'creator_id'              => Auth::id(),
+            'return_id' => $record->id,
+            'user_id' => Auth::id(),
+            'creator_id' => Auth::id(),
         ]);
 
         $newOperation->save();
 
         foreach ($record->moves as $move) {
             $newMove = $move->replicate()->fill([
-                'operation_id'            => $newOperation->id,
-                'reference'               => $newOperation->name,
-                'state'                   => MoveState::DRAFT,
-                'is_refund'               => true,
-                'product_qty'             => $move->product_qty,
-                'product_uom_qty'         => $move->product_uom_qty,
-                'source_location_id'      => $move->destination_location_id,
+                'operation_id' => $newOperation->id,
+                'reference' => $newOperation->name,
+                'state' => MoveState::DRAFT,
+                'is_refund' => true,
+                'product_qty' => $move->product_qty,
+                'product_uom_qty' => $move->product_uom_qty,
+                'source_location_id' => $move->destination_location_id,
                 'destination_location_id' => $move->source_location_id,
                 'origin_returned_move_id' => $move->id,
-                'operation_type_id'       => $newOperation->operation_type_id,
+                'operation_type_id' => $newOperation->operation_type_id,
             ]);
 
             $newMove->save();
@@ -251,11 +251,11 @@ class InventoryManager
         }
 
         $newOperation = $record->replicate()->fill([
-            'state'         => OperationState::DRAFT,
-            'origin'        => $record->origin ?? $record->name,
+            'state' => OperationState::DRAFT,
+            'origin' => $record->origin ?? $record->name,
             'back_order_id' => $record->id,
-            'user_id'       => Auth::id(),
-            'creator_id'    => Auth::id(),
+            'user_id' => Auth::id(),
+            'creator_id' => Auth::id(),
         ]);
 
         $newOperation->save();
@@ -268,12 +268,12 @@ class InventoryManager
             $remainingQty = round($move->product_uom_qty - $move->quantity, 4);
 
             $newMove = $move->replicate()->fill([
-                'operation_id'    => $newOperation->id,
-                'reference'       => $newOperation->name,
-                'state'           => MoveState::DRAFT,
-                'product_qty'     => $move->uom->computeQuantity($remainingQty, $move->product->uom, true, 'HALF-UP'),
+                'operation_id' => $newOperation->id,
+                'reference' => $newOperation->name,
+                'state' => MoveState::DRAFT,
+                'product_qty' => $move->uom->computeQuantity($remainingQty, $move->product->uom, true, 'HALF-UP'),
                 'product_uom_qty' => $remainingQty,
-                'quantity'        => $remainingQty,
+                'quantity' => $remainingQty,
             ]);
 
             $newMove->save();
@@ -308,7 +308,7 @@ class InventoryManager
 
     public function computeTransfer(Operation $record): Operation
     {
-        if (in_array($record->state, [OperationState::DONE, OperationState::CANCELED])) {
+        if (in_array($record->state, [OperationState::DONE, OperationState::CANCELED], true)) {
             return $record;
         }
 
@@ -345,13 +345,13 @@ class InventoryManager
             $productQuantities = ProductQuantity::with(['location', 'lot', 'package'])
                 ->where('product_id', $record->product_id)
                 // Todo: Fix this to handle nesting
-                ->whereHas('location', function (Builder $query) use ($record) {
+                ->whereHas('location', function (Builder $query) use ($record): void {
                     $query->where('id', $record->source_location_id)
                         ->orWhere('parent_id', $record->source_location_id);
                 })
                 ->when(
-                    $record->sourceLocation->type != LocationType::SUPPLIER
-                    && $record->product->tracking == ProductTracking::LOT,
+                    $record->sourceLocation->type !== LocationType::SUPPLIER
+                    && $record->product->tracking === ProductTracking::LOT,
                     fn ($query) => $query->whereNotNull('lot_id')
                 )
                 ->get();
@@ -379,11 +379,11 @@ class InventoryManager
                     ? min($line->uom_qty, $remainingQty)
                     : min($line->uom_qty, $currentLocationQty, $remainingQty);
 
-                if ($newQty != $line->uom_qty) {
+                if ($newQty !== $line->uom_qty) {
                     $line->update([
-                        'qty'     => $record->product->uom->computeQuantity($newQty, $record->uom, true, 'HALF-UP'),
+                        'qty' => $record->product->uom->computeQuantity($newQty, $record->uom, true, 'HALF-UP'),
                         'uom_qty' => $newQty,
-                        'state'   => MoveState::ASSIGNED,
+                        'state' => MoveState::ASSIGNED,
                     ]);
                 }
 
@@ -402,25 +402,25 @@ class InventoryManager
                 while ($remainingQty > 0) {
                     $newQty = $remainingQty;
 
-                    if ($record->product->tracking == ProductTracking::SERIAL) {
+                    if ($record->product->tracking === ProductTracking::SERIAL) {
                         $newQty = 1;
                     }
 
                     $record->lines()->create([
-                        'qty'                     => $record->product->uom->computeQuantity($newQty, $record->uom, true, 'HALF-UP'),
-                        'uom_qty'                 => $newQty,
-                        'source_location_id'      => $record->source_location_id,
-                        'state'                   => MoveState::ASSIGNED,
-                        'reference'               => $record->reference,
-                        'picking_description'     => $record->description_picking,
-                        'is_picked'               => $record->is_picked,
-                        'scheduled_at'            => $record->scheduled_at,
-                        'operation_id'            => $record->operation_id,
-                        'product_id'              => $record->product_id,
-                        'uom_id'                  => $record->uom_id,
+                        'qty' => $record->product->uom->computeQuantity($newQty, $record->uom, true, 'HALF-UP'),
+                        'uom_qty' => $newQty,
+                        'source_location_id' => $record->source_location_id,
+                        'state' => MoveState::ASSIGNED,
+                        'reference' => $record->reference,
+                        'picking_description' => $record->description_picking,
+                        'is_picked' => $record->is_picked,
+                        'scheduled_at' => $record->scheduled_at,
+                        'operation_id' => $record->operation_id,
+                        'product_id' => $record->product_id,
+                        'uom_id' => $record->uom_id,
                         'destination_location_id' => $record->destination_location_id,
-                        'company_id'              => $record->company_id,
-                        'creator_id'              => Auth::id(),
+                        'company_id' => $record->company_id,
+                        'creator_id' => Auth::id(),
                     ]);
 
                     $remainingQty = round($remainingQty - $newQty, 4);
@@ -446,24 +446,24 @@ class InventoryManager
                     $availableQuantity += $newQty;
 
                     $record->lines()->create([
-                        'qty'                     => $record->product->uom->computeQuantity($newQty, $record->uom, true, 'HALF-UP'),
-                        'uom_qty'                 => $newQty,
-                        'lot_name'                => $productQuantity->lot?->name,
-                        'lot_id'                  => $productQuantity->lot_id,
-                        'package_id'              => $productQuantity->package_id,
-                        'result_package_id'       => $newQty == $productQuantity->quantity ? $productQuantity->package_id : null,
-                        'source_location_id'      => $productQuantity->location_id,
-                        'state'                   => MoveState::ASSIGNED,
-                        'reference'               => $record->reference,
-                        'picking_description'     => $record->description_picking,
-                        'is_picked'               => $record->is_picked,
-                        'scheduled_at'            => $record->scheduled_at,
-                        'operation_id'            => $record->operation_id,
-                        'product_id'              => $record->product_id,
-                        'uom_id'                  => $record->uom_id,
+                        'qty' => $record->product->uom->computeQuantity($newQty, $record->uom, true, 'HALF-UP'),
+                        'uom_qty' => $newQty,
+                        'lot_name' => $productQuantity->lot?->name,
+                        'lot_id' => $productQuantity->lot_id,
+                        'package_id' => $productQuantity->package_id,
+                        'result_package_id' => $newQty === $productQuantity->quantity ? $productQuantity->package_id : null,
+                        'source_location_id' => $productQuantity->location_id,
+                        'state' => MoveState::ASSIGNED,
+                        'reference' => $record->reference,
+                        'picking_description' => $record->description_picking,
+                        'is_picked' => $record->is_picked,
+                        'scheduled_at' => $record->scheduled_at,
+                        'operation_id' => $record->operation_id,
+                        'product_id' => $record->product_id,
+                        'uom_id' => $record->uom_id,
                         'destination_location_id' => $record->destination_location_id,
-                        'company_id'              => $record->company_id,
-                        'creator_id'              => Auth::id(),
+                        'company_id' => $record->company_id,
+                        'creator_id' => Auth::id(),
                     ]);
 
                     $remainingQty = round($remainingQty - $newQty, 4);
@@ -475,7 +475,7 @@ class InventoryManager
 
         if ($availableQuantity <= 0) {
             $record->update([
-                'state'    => MoveState::CONFIRMED,
+                'state' => MoveState::CONFIRMED,
                 'quantity' => null,
             ]);
 
@@ -484,7 +484,7 @@ class InventoryManager
             ]);
         } elseif ($availableQuantity < $requestedQty) {
             $record->update([
-                'state'    => MoveState::PARTIALLY_ASSIGNED,
+                'state' => MoveState::PARTIALLY_ASSIGNED,
                 'quantity' => $record->product->uom->computeQuantity($availableQuantity, $record->uom, true, 'HALF-UP'),
             ]);
 
@@ -493,7 +493,7 @@ class InventoryManager
             ]);
         } else {
             $record->update([
-                'state'    => MoveState::ASSIGNED,
+                'state' => MoveState::ASSIGNED,
                 'quantity' => $record->product->uom->computeQuantity($availableQuantity, $record->uom, true, 'HALF-UP'),
             ]);
         }
@@ -505,17 +505,17 @@ class InventoryManager
     {
         $record->refresh();
 
-        if (in_array($record->state, [OperationState::DONE, OperationState::CANCELED])) {
+        if (in_array($record->state, [OperationState::DONE, OperationState::CANCELED], true)) {
             return $record;
         }
 
-        if ($record->moves->every(fn ($move) => $move->state === MoveState::CONFIRMED)) {
+        if ($record->moves->every(fn ($move): bool => $move->state === MoveState::CONFIRMED)) {
             $record->state = OperationState::CONFIRMED;
-        } elseif ($record->moves->every(fn ($move) => $move->state === MoveState::DONE)) {
+        } elseif ($record->moves->every(fn ($move): bool => $move->state === MoveState::DONE)) {
             $record->state = OperationState::DONE;
-        } elseif ($record->moves->every(fn ($move) => $move->state === MoveState::CANCELED)) {
+        } elseif ($record->moves->every(fn ($move): bool => $move->state === MoveState::CANCELED)) {
             $record->state = OperationState::CANCELED;
-        } elseif ($record->moves->contains(fn ($move) => $move->state === MoveState::ASSIGNED ||
+        } elseif ($record->moves->contains(fn ($move): bool => $move->state === MoveState::ASSIGNED ||
             $move->state === MoveState::PARTIALLY_ASSIGNED
         )) {
             $record->state = OperationState::ASSIGNED;
@@ -534,18 +534,6 @@ class InventoryManager
         }
 
         return $record->moves->sum('product_uom_qty') > $record->moves->sum('quantity');
-    }
-
-    /**
-     * Calculate reserved quantity for a location.
-     */
-    private function calculateReservedQty($location, $qty): int
-    {
-        if ($location->type === LocationType::INTERNAL && ! $location->is_stock_location) {
-            return $qty;
-        }
-
-        return 0;
     }
 
     /**
@@ -572,7 +560,7 @@ class InventoryManager
 
             if (! isset($rules[$ruleId])) {
                 $rules[$ruleId] = [
-                    'rule'  => $rule,
+                    'rule' => $rule,
                     'moves' => [$pushedMove],
                 ];
             } else {
@@ -586,60 +574,31 @@ class InventoryManager
     }
 
     /**
-     * Create a new operation based on a push rule and assign moves to it.
-     */
-    private function createPushOperation(Operation $record, Rule $rule, array $moves): void
-    {
-        $newOperation = Operation::create([
-            'state'                   => OperationState::DRAFT,
-            'origin'                  => $record->name,
-            'operation_type_id'       => $rule->operation_type_id,
-            'source_location_id'      => $rule->source_location_id,
-            'destination_location_id' => $rule->destination_location_id,
-            'scheduled_at'            => now()->addDays($rule->delay),
-            'company_id'              => $rule->company_id,
-            'user_id'                 => Auth::id(),
-            'creator_id'              => Auth::id(),
-        ]);
-
-        foreach ($moves as $move) {
-            $move->update([
-                'operation_id' => $newOperation->id,
-                'reference'    => $newOperation->name,
-            ]);
-        }
-
-        $newOperation->refresh();
-
-        $this->computeTransfer($newOperation);
-    }
-
-    /**
      * Run a push rule on a move.
      */
     public function runPushRule(Rule $rule, Move $move)
     {
         if ($rule->auto !== RuleAuto::MANUAL) {
-            return;
+            return null;
         }
 
         $newMove = $move->replicate()->fill([
-            'state'                   => MoveState::DRAFT,
-            'reference'               => null,
-            'product_qty'             => $move->uom->computeQuantity($move->quantity, $move->product->uom, true, 'HALF-UP'),
-            'product_uom_qty'         => $move->quantity,
-            'origin'                  => $move->origin ?? $move->operation->name ?? '/',
-            'operation_id'            => null,
-            'source_location_id'      => $move->destination_location_id,
+            'state' => MoveState::DRAFT,
+            'reference' => null,
+            'product_qty' => $move->uom->computeQuantity($move->quantity, $move->product->uom, true, 'HALF-UP'),
+            'product_uom_qty' => $move->quantity,
+            'origin' => $move->origin ?? $move->operation->name ?? '/',
+            'operation_id' => null,
+            'source_location_id' => $move->destination_location_id,
             'destination_location_id' => $rule->destination_location_id,
-            'final_location_id'       => $move->final_location_id,
-            'rule_id'                 => $rule->id,
-            'scheduled_at'            => $move->scheduled_at->addDays($rule->delay),
-            'company_id'              => $rule->company_id,
-            'operation_type_id'       => $rule->operation_type_id,
-            'propagate_cancel'        => $rule->propagate_cancel,
-            'warehouse_id'            => $rule->warehouse_id,
-            'procure_method'          => ProcureMethod::MAKE_TO_ORDER,
+            'final_location_id' => $move->final_location_id,
+            'rule_id' => $rule->id,
+            'scheduled_at' => $move->scheduled_at->addDays($rule->delay),
+            'company_id' => $rule->company_id,
+            'operation_type_id' => $rule->operation_type_id,
+            'propagate_cancel' => $rule->propagate_cancel,
+            'warehouse_id' => $rule->warehouse_id,
+            'procure_method' => ProcureMethod::MAKE_TO_ORDER,
         ]);
 
         $newMove->save();
@@ -701,10 +660,12 @@ class InventoryManager
         ];
 
         foreach ($routeSources as [$source, $relationName]) {
-            if (! $source || ! $source->{$relationName}) {
+            if (! $source) {
                 continue;
             }
-
+            if (! $source->{$relationName}) {
+                continue;
+            }
             $routeIds = $source->{$relationName}->pluck('id');
 
             if ($routeIds->isEmpty()) {
@@ -723,5 +684,46 @@ class InventoryManager
         }
 
         return null;
+    }
+
+    /**
+     * Calculate reserved quantity for a location.
+     */
+    private function calculateReservedQty($location, $qty): int
+    {
+        if ($location->type === LocationType::INTERNAL && ! $location->is_stock_location) {
+            return $qty;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Create a new operation based on a push rule and assign moves to it.
+     */
+    private function createPushOperation(Operation $record, Rule $rule, array $moves): void
+    {
+        $newOperation = Operation::create([
+            'state' => OperationState::DRAFT,
+            'origin' => $record->name,
+            'operation_type_id' => $rule->operation_type_id,
+            'source_location_id' => $rule->source_location_id,
+            'destination_location_id' => $rule->destination_location_id,
+            'scheduled_at' => now()->addDays($rule->delay),
+            'company_id' => $rule->company_id,
+            'user_id' => Auth::id(),
+            'creator_id' => Auth::id(),
+        ]);
+
+        foreach ($moves as $move) {
+            $move->update([
+                'operation_id' => $newOperation->id,
+                'reference' => $newOperation->name,
+            ]);
+        }
+
+        $newOperation->refresh();
+
+        $this->computeTransfer($newOperation);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'print' => [
@@ -9,7 +11,7 @@ return [
         'delete' => [
             'notification' => [
                 'title' => 'Location deleted',
-                'body'  => 'The location has been deleted successfully.',
+                'body' => 'The location has been deleted successfully.',
             ],
         ],
     ],

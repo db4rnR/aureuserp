@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Fiscal Positions',
 
@@ -10,33 +12,33 @@ return [
 
     'global-search' => [
         'zip-from' => 'Zip From',
-        'zip-to'   => 'Zip To',
-        'name'     => 'Name',
+        'zip-to' => 'Zip To',
+        'name' => 'Name',
     ],
 
     'form' => [
         'fields' => [
-            'name'                 => 'Name',
-            'foreign-vat'          => 'Foreign VAT',
-            'country'              => 'Country',
-            'country-group'        => 'Country Group',
-            'zip-from'             => 'Zip From',
-            'zip-to'               => 'Zip To',
+            'name' => 'Name',
+            'foreign-vat' => 'Foreign VAT',
+            'country' => 'Country',
+            'country-group' => 'Country Group',
+            'zip-from' => 'Zip From',
+            'zip-to' => 'Zip To',
             'detect-automatically' => 'Detect Automatically',
-            'notes'                => 'Notes',
+            'notes' => 'Notes',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'name'                 => 'Name',
-            'company'              => 'Company',
-            'country'              => 'Country',
-            'country-group'        => 'Country Group',
-            'created-by'           => 'Created By',
-            'zip-from'             => 'Zip From',
-            'zip-to'               => 'Zip To',
-            'status'               => 'Status',
+            'name' => 'Name',
+            'company' => 'Company',
+            'country' => 'Country',
+            'country-group' => 'Country Group',
+            'created-by' => 'Created By',
+            'zip-from' => 'Zip From',
+            'zip-to' => 'Zip To',
+            'status' => 'Status',
             'detect-automatically' => 'Detect Automatically',
         ],
 
@@ -44,7 +46,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Payment Term deleted',
-                    'body'  => 'The payment term has been deleted successfully.',
+                    'body' => 'The payment term has been deleted successfully.',
                 ],
             ],
         ],
@@ -53,7 +55,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Fiscal Position deleted',
-                    'body'  => 'The fiscal Position has been deleted successfully.',
+                    'body' => 'The fiscal Position has been deleted successfully.',
                 ],
             ],
         ],
@@ -61,14 +63,14 @@ return [
 
     'infolist' => [
         'entries' => [
-            'name'                 => 'Name',
-            'foreign-vat'          => 'Foreign VAT',
-            'country'              => 'Country',
-            'country-group'        => 'Country Group',
-            'zip-from'             => 'Zip From',
-            'zip-to'               => 'Zip To',
+            'name' => 'Name',
+            'foreign-vat' => 'Foreign VAT',
+            'country' => 'Country',
+            'country-group' => 'Country Group',
+            'zip-from' => 'Zip From',
+            'zip-to' => 'Zip To',
             'detect-automatically' => 'Detect Automatically',
-            'notes'                => 'Notes',
+            'notes' => 'Notes',
         ],
     ],
 ];

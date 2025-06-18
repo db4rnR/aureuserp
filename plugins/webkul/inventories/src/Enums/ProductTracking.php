@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -16,8 +18,8 @@ enum ProductTracking: string implements HasLabel
     {
         return match ($this) {
             self::SERIAL => __('inventories::enums/product-tracking.serial'),
-            self::LOT    => __('inventories::enums/product-tracking.lot'),
-            self::QTY    => __('inventories::enums/product-tracking.qty'),
+            self::LOT => __('inventories::enums/product-tracking.lot'),
+            self::QTY => __('inventories::enums/product-tracking.qty'),
         };
     }
 }

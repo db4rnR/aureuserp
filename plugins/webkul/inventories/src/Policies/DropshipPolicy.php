@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -7,7 +9,7 @@ use Webkul\Inventory\Models\Dropship;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-class DropshipPolicy
+final class DropshipPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 
@@ -22,7 +24,7 @@ class DropshipPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Dropship $dropship): bool
+    public function view(User $user): bool
     {
         return $user->can('view_dropship');
     }

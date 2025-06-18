@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class DegreeSeeder extends Seeder
+final class DegreeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,29 +21,29 @@ class DegreeSeeder extends Seeder
 
         $degrees = [
             [
-                'sort'       => 1,
-                'name'       => 'Graduate',
+                'sort' => 1,
+                'name' => 'Graduate',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'sort'       => 2,
-                'name'       => 'Master',
+                'sort' => 2,
+                'name' => 'Master',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'sort'       => 3,
-                'name'       => 'Bachelor',
+                'sort' => 3,
+                'name' => 'Bachelor',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'sort'       => 4,
-                'name'       => 'Doctoral Degree',
+                'sort' => 4,
+                'name' => 'Doctoral Degree',
                 'creator_id' => $user?->id,
                 'created_at' => now(),
                 'updated_at' => now(),

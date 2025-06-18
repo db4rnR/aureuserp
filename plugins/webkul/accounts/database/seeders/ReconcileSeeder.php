@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class ReconcileSeeder extends Seeder
+final class ReconcileSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class TraceabilitySettings extends Settings
+final class TraceabilitySettings extends Settings
 {
     public bool $enable_lots_serial_numbers;
 

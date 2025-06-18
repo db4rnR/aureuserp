@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TableViews\Filament\Components;
 
 use Webkul\TableViews\Models\TableView;
 
-class SavedView extends PresetView
+final class SavedView extends PresetView
 {
+    public $isFavorite;
     protected TableView $model;
 
     public function model(TableView $model): static
@@ -52,6 +55,6 @@ class SavedView extends PresetView
 
     public function getVisibilityIcon(): string
     {
-        return $this->isPublic() ? 'heroicon-o-eye' : 'heroicon-o-user';
+        return $this->model->is_public ? 'heroicon-o-eye' : 'heroicon-o-user';
     }
 }

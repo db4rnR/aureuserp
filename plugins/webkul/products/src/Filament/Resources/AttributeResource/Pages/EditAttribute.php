@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\AttributeResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Product\Filament\Resources\AttributeResource;
 
-class EditAttribute extends EditRecord
+final class EditAttribute extends EditRecord
 {
     protected static string $resource = AttributeResource::class;
 

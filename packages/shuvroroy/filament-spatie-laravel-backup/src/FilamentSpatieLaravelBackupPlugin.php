@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelBackup;
 
 use Closure;
@@ -8,11 +10,11 @@ use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use ShuvroRoy\FilamentSpatieLaravelBackup\Pages\Backups;
 
-class FilamentSpatieLaravelBackupPlugin implements Plugin
+final class FilamentSpatieLaravelBackupPlugin implements Plugin
 {
     use EvaluatesClosures;
 
-    protected bool | Closure $authorizeUsing = true;
+    protected bool|Closure $authorizeUsing = true;
 
     protected string $page = Backups::class;
 
@@ -24,6 +26,19 @@ class FilamentSpatieLaravelBackupPlugin implements Plugin
 
     protected ?int $timeout = null;
 
+    public static function get(): static
+    {
+        /** @var static $instance */
+        $instance = filament(app(self::class)->getId());
+
+        return $instance;
+    }
+
+    public static function make(): static
+    {
+        return new static;
+    }
+
     public function register(Panel $panel): void
     {
         $panel->pages([$this->getPage()]);
@@ -34,7 +49,7 @@ class FilamentSpatieLaravelBackupPlugin implements Plugin
         //
     }
 
-    public function authorize(bool | Closure $callback = true): static
+    public function authorize(bool|Closure $callback = true): static
     {
         $this->authorizeUsing = $callback;
 
@@ -46,22 +61,9 @@ class FilamentSpatieLaravelBackupPlugin implements Plugin
         return $this->evaluate($this->authorizeUsing) === true;
     }
 
-    public static function get(): static
-    {
-        /** @var static $instance */
-        $instance = filament(app(static::class)->getId());
-
-        return $instance;
-    }
-
     public function getId(): string
     {
         return 'filament-spatie-backup';
-    }
-
-    public static function make(): static
-    {
-        return new static;
     }
 
     public function usingPage(string $page): static

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class PurchaseOrder extends Facade
+final class PurchaseOrder extends Facade
 {
     /**
      * Get the registered name of the component.

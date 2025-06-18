@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages;
 
 use Filament\Resources\Pages\EditRecord;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource;
 
-class EditPost extends EditRecord
+final class EditPost extends EditRecord
 {
     use HasPostPreview;
 

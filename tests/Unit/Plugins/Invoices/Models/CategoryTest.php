@@ -1,7 +1,9 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Invoice\Models\Category;
 use Webkul\Invoice\Models\Product;
 use Webkul\Product\Models\Category as BaseCategory;
@@ -11,7 +13,7 @@ use Webkul\Security\Models\User;
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Category model inheritance and properties')]
-function category_model_inheritance_and_properties()
+function category_model_inheritance_and_properties(): void
 {
     // Create a test category
     $category = Category::factory()->create([
@@ -30,18 +32,18 @@ function category_model_inheritance_and_properties()
     expect($category->parent_path)->toBe('/');
 
     // Test relationships inherited from the base class
-    expect($category->parent())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($category->children())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($category->products())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
-    expect($category->creator())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($category->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($category->parent())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($category->children())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($category->products())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
+    expect($category->creator())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($category->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Category model relationships with other models')]
-function category_model_relationships_with_other_models()
+function category_model_relationships_with_other_models(): void
 {
     // Create related models
     $user = User::factory()->create();
@@ -72,7 +74,7 @@ function category_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Category model additional fillable fields')]
-function category_model_additional_fillable_fields()
+function category_model_additional_fillable_fields(): void
 {
     // Create a reflection of the Category class to access protected properties
     $reflection = new ReflectionClass(Category::class);
@@ -91,7 +93,7 @@ function category_model_additional_fillable_fields()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Category model hierarchy and full_name generation')]
-function category_model_hierarchy_and_full_name_generation()
+function category_model_hierarchy_and_full_name_generation(): void
 {
     // Create a hierarchy of categories
     $grandparent = Category::factory()->create(['name' => 'Grandparent']);
@@ -123,17 +125,17 @@ function category_model_hierarchy_and_full_name_generation()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Category model traits')]
-function category_model_traits()
+function category_model_traits(): void
 {
     // Create a test category
     $category = Category::factory()->create();
 
     // Test that the model uses the expected traits
-    expect($category)->toBeInstanceOf(\Webkul\Chatter\Traits\HasChatter::class);
-    expect($category)->toBeInstanceOf(\Webkul\Chatter\Traits\HasLogActivity::class);
+    expect($category)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
+    expect($category)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
 
     // Test log attributes
-    $logAttributes = (new \ReflectionClass($category))->getProperty('logAttributes')->getValue($category);
+    $logAttributes = new ReflectionClass($category)->getProperty('logAttributes')->getValue($category);
     expect($logAttributes)->toBeArray();
     expect($logAttributes)->toContain('name');
     expect($logAttributes)->toContain('full_name');

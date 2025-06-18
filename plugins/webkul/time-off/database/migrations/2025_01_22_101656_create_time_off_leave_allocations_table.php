@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('time_off_leave_allocations', function (Blueprint $table) {
+        Schema::create('time_off_leave_allocations', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('holiday_status_id')->constrained('time_off_leave_types')->restrictOnDelete();
             $table->foreignId('employee_id')->constrained('employees_employees')->restrictOnDelete();

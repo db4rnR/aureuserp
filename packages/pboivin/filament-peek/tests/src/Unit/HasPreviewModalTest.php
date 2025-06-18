@@ -1,44 +1,46 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Unit;
 
-use Pboivin\FilamentPeek\Tests\Unit\Fixtures\EditRecordDummy;
-use Pboivin\FilamentPeek\Tests\Unit\Fixtures\CreateRecordDummy;
-use Pboivin\FilamentPeek\Tests\Unit\Fixtures\ModelDummy;
-use Pboivin\FilamentPeek\Tests\Unit\Fixtures\ViewRecordDummy;
-use Livewire\Mechanisms\DataStore;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
 use InvalidArgumentException;
+use Livewire\Mechanisms\DataStore;
 use Mockery;
 use Pboivin\FilamentPeek\Exceptions\PreviewModalException;
+use Pboivin\FilamentPeek\Tests\Unit\Fixtures\CreateRecordDummy;
+use Pboivin\FilamentPeek\Tests\Unit\Fixtures\EditRecordDummy;
+use Pboivin\FilamentPeek\Tests\Unit\Fixtures\ModelDummy;
+use Pboivin\FilamentPeek\Tests\Unit\Fixtures\ViewRecordDummy;
 use Tests\TestCase;
 
-it('has no initial preview modal url', function () {
+it('has no initial preview modal url', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getPreviewModalUrl())->toBeNull();
 });
 
-it('has no initial preview modal view', function () {
+it('has no initial preview modal view', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getPreviewModalView())->toBeNull();
 });
 
-it('has initial preview modal title', function () {
+it('has initial preview modal title', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getPreviewModalTitle())->not()->toBeEmpty();
 });
 
-it('has initial preview modal data record key', function () {
+it('has initial preview modal data record key', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getPreviewModalDataRecordKey())->toEqual('record');
 });
 
-it('prepares preview modal data on create pages', function () {
+it('prepares preview modal data on create pages', function (): void {
     $page = invade(new CreateRecordDummy);
 
     $data = $page->preparePreviewModalData();
@@ -47,7 +49,7 @@ it('prepares preview modal data on create pages', function () {
     expect($data['isPeekPreviewModal'])->toBeTrue();
 });
 
-it('prepares preview modal data on view pages', function () {
+it('prepares preview modal data on view pages', function (): void {
     $page = invade(new ViewRecordDummy);
 
     $data = $page->preparePreviewModalData();
@@ -56,7 +58,7 @@ it('prepares preview modal data on view pages', function () {
     expect($data['isPeekPreviewModal'])->toBeTrue();
 });
 
-it('prepares preview modal data on edit pages', function () {
+it('prepares preview modal data on edit pages', function (): void {
     $page = invade(new EditRecordDummy);
 
     $data = $page->preparePreviewModalData();
@@ -73,7 +75,7 @@ it('prepares preview modal data on edit pages', function () {
 //     expect($data['isPeekPreviewModal'])->toBeTrue();
 // });
 
-it('requires url or blade view', function () {
+it('requires url or blade view', function (): void {
     /** @var TestCase $this */
     $this->expectException(InvalidArgumentException::class);
     $this->expectExceptionMessage('Missing preview modal URL or Blade view');
@@ -83,7 +85,7 @@ it('requires url or blade view', function () {
     $page->openPreviewModal();
 });
 
-it('mutates preview modal data before opening the modal', function () {
+it('mutates preview modal data before opening the modal', function (): void {
     $page = invade(new class extends EditRecordDummy
     {
         protected function getPreviewModalUrl(): ?string
@@ -103,7 +105,7 @@ it('mutates preview modal data before opening the modal', function () {
 });
 
 // @todo: Rewrite test
-it('dispatches open preview modal browser event', function () {
+it('dispatches open preview modal browser event', function (): void {
     $page = invade(new class extends EditRecordDummy
     {
         protected function getPreviewModalUrl(): ?string
@@ -127,7 +129,7 @@ it('dispatches open preview modal browser event', function () {
 });
 
 // @todo: Rewrite test
-it('dispatches close preview modal browser event', function () {
+it('dispatches close preview modal browser event', function (): void {
     $page = invade(new class extends EditRecordDummy
     {
         protected function getPreviewModalUrl(): ?string
@@ -151,9 +153,9 @@ it('dispatches close preview modal browser event', function () {
 });
 
 // @todo: Rewrite test
-it('renders the preview modal view', function () {
-    $this->mock(ViewFactory::class, function ($mock) {
-        $view = Mockery::mock(View::class, function ($mock) {
+it('renders the preview modal view', function (): void {
+    $this->mock(ViewFactory::class, function ($mock): void {
+        $view = Mockery::mock(View::class, function ($mock): void {
             $mock->shouldReceive('render')->andReturn('TEST');
         });
 
@@ -183,7 +185,7 @@ it('renders the preview modal view', function () {
     }
 });
 
-it('requires internal preview url for preview tab', function () {
+it('requires internal preview url for preview tab', function (): void {
     /** @var TestCase $this */
     $this->expectException(PreviewModalException::class);
     $this->expectExceptionMessage('You must enable the `internalPreviewUrl` configuration to open the preview in a new tab.');
@@ -194,7 +196,7 @@ it('requires internal preview url for preview tab', function () {
 });
 
 // @todo: Rewrite test
-it('dispatches open preview tab browser event', function () {
+it('dispatches open preview tab browser event', function (): void {
     config()->set('filament-peek.internalPreviewUrl.enabled', true);
 
     $page = invade(new class extends EditRecordDummy

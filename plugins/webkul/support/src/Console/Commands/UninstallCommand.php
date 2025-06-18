@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Console\Commands;
 
 use Closure;
@@ -8,17 +10,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Webkul\Support\Package;
 
-class UninstallCommand extends Command
+final class UninstallCommand extends Command
 {
-    protected Package $package;
-
     public ?Closure $startWith = null;
 
     public ?Closure $endWith = null;
 
     public $hidden = true;
 
-    protected bool $forceUninstall = false;
+    private readonly Package $package;
+
+    private bool $forceUninstall = false;
 
     public function __construct(Package $package)
     {
@@ -31,7 +33,7 @@ class UninstallCommand extends Command
         parent::__construct();
     }
 
-    public function handle()
+    public function handle(): void
     {
         if (! $this->package->isInstalled()) {
             $this->error("Package {$this->package->shortName()} is not installed!");
@@ -45,7 +47,7 @@ class UninstallCommand extends Command
             return;
         }
 
-        if ($this->startWith) {
+        if ($this->startWith instanceof Closure) {
             ($this->startWith)($this);
         }
 
@@ -63,12 +65,26 @@ class UninstallCommand extends Command
 
         $this->info("🗑️ Package <comment>{$this->package->shortName()}</comment> has been uninstalled!");
 
-        if ($this->endWith) {
+        if ($this->endWith instanceof Closure) {
             ($this->endWith)($this);
         }
     }
 
-    protected function dropTables(): void
+    public function startWith(?Closure $callable): self
+    {
+        $this->startWith = $callable;
+
+        return $this;
+    }
+
+    public function endWith(?Closure $callable): self
+    {
+        $this->endWith = $callable;
+
+        return $this;
+    }
+
+    private function dropTables(): void
     {
         $this->info("⚙️ Dropping database tables for <comment>{$this->package->shortName()}</comment>...");
 
@@ -117,19 +133,5 @@ class UninstallCommand extends Command
         $this->info('✅ Database tables dropped successfully.');
 
         $this->newLine();
-    }
-
-    public function startWith($callable): self
-    {
-        $this->startWith = $callable;
-
-        return $this;
-    }
-
-    public function endWith($callable): self
-    {
-        $this->endWith = $callable;
-
-        return $this;
     }
 }

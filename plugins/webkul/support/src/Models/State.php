@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class State extends Model
+final class State extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -20,10 +22,8 @@ class State extends Model
 
     /**
      * Get the country that owns the state.
-     *
-     * @return BelongsTo
      */
-    public function country()
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
     }

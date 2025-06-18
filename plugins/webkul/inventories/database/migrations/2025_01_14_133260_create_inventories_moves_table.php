@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories_moves', function (Blueprint $table) {
+        Schema::create('inventories_moves', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('state')->nullable();

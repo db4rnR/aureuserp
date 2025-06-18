@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources\ProjectResource\Pages;
 
-use Filament\Actions\CreateAction;
+use BackedEnum;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
-use Filament\Schemas\Schema;
-use Filament\Actions;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ use Webkul\Project\Models\Task;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ManageTasks extends ManageRelatedRecords
+final class ManageTasks extends ManageRelatedRecords
 {
     use HasTableViews;
 
@@ -32,21 +33,11 @@ class ManageTasks extends ManageRelatedRecords
 
     protected static string $relationship = 'tasks';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function getNavigationLabel(): string
     {
         return __('projects::filament/resources/project/pages/manage-tasks.title');
-    }
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make()
-                ->label(__('projects::filament/resources/project/pages/manage-tasks.header-actions.create.label'))
-                ->icon('heroicon-o-plus-circle')
-                ->url(TaskResource::getUrl('create')),
-        ];
     }
 
     public function table(Table $table): Table
@@ -83,9 +74,7 @@ class ManageTasks extends ManageRelatedRecords
                         ),
                 ]),
             ])
-            ->modifyQueryUsing(function (Builder $query) {
-                return $query->whereNull('parent_id');
-            });
+            ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('parent_id'));
     }
 
     public function infolist(Schema $schema): Schema
@@ -108,19 +97,15 @@ class ManageTasks extends ManageRelatedRecords
             'my_tasks' => PresetView::make(__('projects::filament/resources/project/pages/manage-tasks.tabs.my-tasks'))
                 ->icon('heroicon-s-user')
                 ->favorite()
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query
-                        ->whereHas('users', function ($q) {
-                            $q->where('user_id', Auth::id());
-                        });
-                }),
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->whereHas('users', function ($q): void {
+                        $q->where('user_id', Auth::id());
+                    })),
 
             'unassigned_tasks' => PresetView::make(__('projects::filament/resources/project/pages/manage-tasks.tabs.unassigned-tasks'))
                 ->icon('heroicon-s-user-minus')
                 ->favorite()
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query->whereDoesntHave('users');
-                }),
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereDoesntHave('users')),
 
             'closed_tasks' => PresetView::make(__('projects::filament/resources/project/pages/manage-tasks.tabs.closed-tasks'))
                 ->icon('heroicon-s-check-circle')
@@ -138,9 +123,17 @@ class ManageTasks extends ManageRelatedRecords
             'archived_tasks' => PresetView::make(__('projects::filament/resources/project/pages/manage-tasks.tabs.archived-tasks'))
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make()
+                ->label(__('projects::filament/resources/project/pages/manage-tasks.header-actions.create.label'))
+                ->icon('heroicon-o-plus-circle')
+                ->url(TaskResource::getUrl('create')),
         ];
     }
 }

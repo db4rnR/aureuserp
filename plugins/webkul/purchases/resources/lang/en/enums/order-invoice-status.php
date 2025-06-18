@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'no'          => 'Noting To Bill',
+    'no' => 'Noting To Bill',
     'to-invoiced' => 'Waiting Bills',
-    'invoiced'    => 'Fully Billed',
+    'invoiced' => 'Fully Billed',
 ];

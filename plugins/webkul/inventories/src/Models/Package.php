@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +14,7 @@ use Webkul\Inventory\Enums\PackageUse;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Package extends Model
+final class Package extends Model
 {
     use HasFactory;
 
@@ -45,7 +47,7 @@ class Package extends Model
      */
     protected $casts = [
         'package_use' => PackageUse::class,
-        'pack_date'   => 'date',
+        'pack_date' => 'date',
     ];
 
     public function packageType(): BelongsTo

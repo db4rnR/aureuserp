@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Webkul\Product\Models\Packaging as BasePackaging;
 
-class Packaging extends BasePackaging
+final class Packaging extends BasePackaging
 {
     /**
      * Create a new Eloquent model instance.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Mediums',
 
@@ -10,22 +12,22 @@ return [
 
     'form' => [
         'fields' => [
-            'name'             => 'Name',
+            'name' => 'Name',
             'name-placeholder' => 'Enter the name of the medium',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'id'         => 'ID',
-            'name'       => 'Name',
+            'id' => 'ID',
+            'name' => 'Name',
             'created-by' => 'Created By',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
 
         'filters' => [
-            'name'       => 'Name',
+            'name' => 'Name',
             'created-by' => 'Created By',
             'updated-at' => 'Updated At',
             'created-at' => 'Created At',
@@ -35,14 +37,14 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Medium updated',
-                    'body'  => 'The medium has been updated successfully.',
+                    'body' => 'The medium has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Medium deleted',
-                    'body'  => 'The medium has been deleted successfully.',
+                    'body' => 'The medium has been deleted successfully.',
                 ],
             ],
         ],
@@ -51,7 +53,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Mediums deleted',
-                    'body'  => 'The Mediums has been deleted successfully.',
+                    'body' => 'The Mediums has been deleted successfully.',
                 ],
             ],
         ],
@@ -60,7 +62,7 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Medium created',
-                    'body'  => 'The medium has been created successfully.',
+                    'body' => 'The medium has been created successfully.',
                 ],
             ],
         ],

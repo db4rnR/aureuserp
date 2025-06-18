@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Capacity By Products',
 
     'form' => [
         'product' => 'Product',
-        'qty'     => 'Quantity',
+        'qty' => 'Quantity',
     ],
 
     'table' => [
@@ -15,28 +17,28 @@ return [
 
                 'notification' => [
                     'title' => 'Product Capacity created',
-                    'body'  => 'The product capacity been added successfully.',
+                    'body' => 'The product capacity been added successfully.',
                 ],
             ],
         ],
 
         'columns' => [
             'product' => 'Product',
-            'qty'     => 'Quantity',
+            'qty' => 'Quantity',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Product Capacity updated',
-                    'body'  => 'The product capacity has been updated successfully.',
+                    'body' => 'The product capacity has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Product Capacity deleted',
-                    'body'  => 'The product capacity has been deleted successfully.',
+                    'body' => 'The product capacity has been deleted successfully.',
                 ],
             ],
         ],

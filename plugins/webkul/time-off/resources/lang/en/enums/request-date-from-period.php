@@ -1,6 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'morning'   => 'Morning',
+    'morning' => 'Morning',
     'afternoon' => 'Afternoon',
 ];

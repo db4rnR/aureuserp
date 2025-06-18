@@ -4,6 +4,10 @@
 > **Note:** The project guidelines have been restructured into a more organized format.
 > Please refer to the new guidelines in the `.junie/guidelines/` directory.
 
+## Core Communication Principle
+
+**All documents and responses should be clear, actionable, and suitable for a junior developer to understand and implement.**
+
 ## Guidelines Structure
 
 The guidelines are now organized into the following files:

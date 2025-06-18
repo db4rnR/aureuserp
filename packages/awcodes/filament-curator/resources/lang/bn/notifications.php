@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'রেকর্ডটি সফলভাবে আপডেট করা হয়েছে।',
     'update_error' => 'রেকর্ড আপডেট করতে ত্রুটি ঘটেছে।',

@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\TimeOff\Models\Leave;
 
-class LeaveTypeWidget extends ChartWidget
+final class LeaveTypeWidget extends ChartWidget
 {
-    public function getHeading(): string|Htmlable|null
-    {
-        return __('time-off::filament/widgets/leave-type-widget.heading.title');
-    }
-
     protected static ?int $sort = 2;
 
     protected int|string|array $columnSpan = 'full';
 
     protected ?string $maxHeight = '400px';
+
+    public function getHeading(): string|Htmlable|null
+    {
+        return __('time-off::filament/widgets/leave-type-widget.heading.title');
+    }
 
     protected function getData(): array
     {
@@ -49,16 +51,16 @@ class LeaveTypeWidget extends ChartWidget
         ')->first();
 
         $data = match ($this->pageFilters['status'] ?? 'all') {
-            'draft'     => ['Draft' => $stats->draft ?? 0],
+            'draft' => ['Draft' => $stats->draft ?? 0],
             'confirmed' => ['Confirmed' => $stats->confirmed ?? 0],
             'validated' => ['Validated' => $stats->validated ?? 0],
-            'refused'   => ['Refused' => $stats->refused ?? 0],
+            'refused' => ['Refused' => $stats->refused ?? 0],
             'cancelled' => ['Cancelled' => $stats->cancelled ?? 0],
-            default     => [
-                __('time-off::filament/widgets/leave-type-widget.types.draft')     => $stats->draft ?? 0,
+            default => [
+                __('time-off::filament/widgets/leave-type-widget.types.draft') => $stats->draft ?? 0,
                 __('time-off::filament/widgets/leave-type-widget.types.confirmed') => $stats->confirmed ?? 0,
                 __('time-off::filament/widgets/leave-type-widget.types.validated') => $stats->validated ?? 0,
-                __('time-off::filament/widgets/leave-type-widget.types.refused')   => $stats->refused ?? 0,
+                __('time-off::filament/widgets/leave-type-widget.types.refused') => $stats->refused ?? 0,
                 __('time-off::filament/widgets/leave-type-widget.types.cancelled') => $stats->cancelled ?? 0,
             ],
         };
@@ -66,13 +68,13 @@ class LeaveTypeWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label'           => __('time-off::filament/widgets/leave-type-widget.label'),
-                    'data'            => array_values($data),
-                    'backgroundColor' => array_map(fn ($key) => match ($key) {
-                        __('time-off::filament/widgets/leave-type-widget.types.draft')     => '#94a3b8',
+                    'label' => __('time-off::filament/widgets/leave-type-widget.label'),
+                    'data' => array_values($data),
+                    'backgroundColor' => array_map(fn ($key): string => match ($key) {
+                        __('time-off::filament/widgets/leave-type-widget.types.draft') => '#94a3b8',
                         __('time-off::filament/widgets/leave-type-widget.types.confirmed') => '#3b82f6',
                         __('time-off::filament/widgets/leave-type-widget.types.validated') => '#22c55e',
-                        __('time-off::filament/widgets/leave-type-widget.types.refused')   => '#ef4444',
+                        __('time-off::filament/widgets/leave-type-widget.types.refused') => '#ef4444',
                         __('time-off::filament/widgets/leave-type-widget.types.cancelled') => '#f97316',
                     }, array_keys($data)),
                 ],

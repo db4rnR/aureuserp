@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Currency extends Model
+final class Currency extends Model
 {
     protected $fillable = [
         'name',

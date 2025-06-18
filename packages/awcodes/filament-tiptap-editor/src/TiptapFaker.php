@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor;
 
 use Faker\Factory;
@@ -7,31 +9,31 @@ use Faker\Generator;
 use FilamentTiptapEditor\Facades\TiptapConverter;
 use Illuminate\Support\Str;
 
-class TiptapFaker
+final class TiptapFaker
 {
-    protected Generator $faker;
+    private Generator $faker;
 
-    protected string $output = '';
+    private string $output = '';
 
     public static function make(): static
     {
-        $static = new static;
+        $static = new self;
         $static->faker = Factory::create();
 
         return $static;
     }
 
-    public function heading(int | string | null $level = 2): static
+    public function heading(int|string|null $level = 2): static
     {
-        $this->output .= '<h' . $level . '>' . Str::title($this->faker->words(rand(3, 8), true)) . '</h' . $level . '>';
+        $this->output .= '<h'.$level.'>'.Str::title($this->faker->words(rand(3, 8), true)).'</h'.$level.'>';
 
         return $this;
     }
 
-    public function headingWithLink(int | string | null $level = 2): static
+    public function headingWithLink(int|string|null $level = 2): static
     {
-        $heading = $this->faker->words(rand(2, 3), true) . '<a href="#">' . $this->faker->words(rand(2, 3), true) . '</a>' . $this->faker->words(rand(2, 3), true);
-        $this->output .= '<h' . $level . '>' . Str::title($heading) . '</h' . $level . '>';
+        $heading = $this->faker->words(rand(2, 3), true).'<a href="#">'.$this->faker->words(rand(2, 3), true).'</a>'.$this->faker->words(rand(2, 3), true);
+        $this->output .= '<h'.$level.'>'.Str::title($heading).'</h'.$level.'>';
 
         return $this;
     }
@@ -46,49 +48,48 @@ class TiptapFaker
     public function paragraphs(int $count = 1, bool $withRandomLinks = false): static
     {
         if ($withRandomLinks) {
-            $this->output .= '<p>' . collect($this->faker->paragraphs($count))->map(function ($paragraph) {
-                return $paragraph . ' <a href="' . $this->faker->url() . '">' . $this->faker->words(rand(3, 8), true) . '</a>';
-            })->implode('</p><p>') . '</p>';
+            $this->output .= '<p>'.collect($this->faker->paragraphs($count))->map(function ($paragraph) {
+                return $paragraph.' <a href="'.$this->faker->url().'">'.$this->faker->words(rand(3, 8), true).'</a>';
+            })->implode('</p><p>').'</p>';
 
             return $this;
-        } else {
-            $this->output .= '<p>' . collect($this->faker->paragraphs($count))->implode('</p><p>') . '</p>';
         }
+        $this->output .= '<p>'.collect($this->faker->paragraphs($count))->implode('</p><p>').'</p>';
 
         return $this;
     }
 
     public function unorderedList(int $count = 1): static
     {
-        $this->output .= '<ul><li>' . collect($this->faker->words($count))->implode('</li><li>') . '</li></ul>';
+        $this->output .= '<ul><li>'.collect($this->faker->words($count))->implode('</li><li>').'</li></ul>';
 
         return $this;
     }
 
     public function orderedList(int $count = 1): static
     {
-        $this->output .= '<ol><li>' . collect($this->faker->words($count))->implode('</li><li>') . '</li></ol>';
+        $this->output .= '<ol><li>'.collect($this->faker->words($count))->implode('</li><li>').'</li></ol>';
 
         return $this;
     }
 
     public function checkedList(int $count = 1): static
     {
-        $this->output .= '<ul class="checked-list"><li>' . collect($this->faker->words($count))->implode('</li><li>') . '</li></ul>';
+        $this->output .= '<ul class="checked-list"><li>'.collect($this->faker->words($count))->implode('</li><li>').'</li></ul>';
 
         return $this;
     }
 
     public function image(?int $width = 640, ?int $height = 480): static
     {
-        $this->output .= '<p><img src="' . $this->faker->imageUrl($width, $height) . '" alt="' . $this->faker->sentence . '" title="' . $this->faker->sentence . '" width="' . $width . '" height="' . $height . '" /></p>';
+        $this->output .= '<p><img src="'.$this->faker->imageUrl($width, $height).'" alt="'.$this->faker->sentence.'" title="'.$this->faker->sentence.'" width="'.$width.'" height="'.$height.'" /></p>';
 
         return $this;
     }
 
     public function link(): static
     {
-        $this->output .= '<a href="' . $this->faker->url() . '">' . $this->faker->words(rand(3, 8), true) . '</a>';
+        $this->output .= '<a href="'.$this->faker->url().'">'.$this->faker->words(rand(3, 8), true).'</a>';
 
         return $this;
     }
@@ -99,9 +100,9 @@ class TiptapFaker
         $responsive = $responsive ? 'responsive' : '';
 
         if ($provider === 'vimeo') {
-            $this->output .= '<div data-vimeo-video="true" class="' . $responsive . '"><iframe src="https://vimeo.com/146782320" width="' . $width . '" height="' . $height . '" allowfullscreen="true" allow="autoplay; fullscreen; picture-in-picture" style="' . $style . '"></iframe></div>';
+            $this->output .= '<div data-vimeo-video="true" class="'.$responsive.'"><iframe src="https://vimeo.com/146782320" width="'.$width.'" height="'.$height.'" allowfullscreen="true" allow="autoplay; fullscreen; picture-in-picture" style="'.$style.'"></iframe></div>';
         } else {
-            $this->output .= '<div data-youtube-video="true" class="' . $responsive . '"><iframe src="https://www.youtube.com/watch?v=4ugMYpzLA0c" width="' . $width . '" height="' . $height . '" allowfullscreen="true" allow="autoplay; fullscreen; picture-in-picture" style="' . $style . '"></iframe></div>';
+            $this->output .= '<div data-youtube-video="true" class="'.$responsive.'"><iframe src="https://www.youtube.com/watch?v=4ugMYpzLA0c" width="'.$width.'" height="'.$height.'" allowfullscreen="true" allow="autoplay; fullscreen; picture-in-picture" style="'.$style.'"></iframe></div>';
         }
 
         return $this;
@@ -109,7 +110,7 @@ class TiptapFaker
 
     public function details(): static
     {
-        $this->output .= '<details><summary>' . $this->faker->sentence() . '</summary><div data-type="details-content"><p>' . $this->faker->paragraph() . '</p></div></details>';
+        $this->output .= '<details><summary>'.$this->faker->sentence().'</summary><div data-type="details-content"><p>'.$this->faker->paragraph().'</p></div></details>';
 
         return $this;
     }
@@ -123,7 +124,7 @@ class TiptapFaker
 
     public function blockquote(): static
     {
-        $this->output .= '<blockquote>' . $this->faker->sentence() . '</blockquote>';
+        $this->output .= '<blockquote>'.$this->faker->sentence().'</blockquote>';
 
         return $this;
     }
@@ -146,17 +147,17 @@ class TiptapFaker
     {
         $cols = $cols ?? rand(3, 8);
 
-        $this->output .= '<table><thead><tr><th>' . collect($this->faker->words($cols))->implode('</th><th>') . '</th></tr></thead><tbody><tr><td>' . collect($this->faker->words($cols))->implode('</td><td>') . '</td></tr><tr><td>' . collect($this->faker->words($cols))->implode('</td><td>') . '</td></tr></tbody></table>';
+        $this->output .= '<table><thead><tr><th>'.collect($this->faker->words($cols))->implode('</th><th>').'</th></tr></thead><tbody><tr><td>'.collect($this->faker->words($cols))->implode('</td><td>').'</td></tr><tr><td>'.collect($this->faker->words($cols))->implode('</td><td>').'</td></tr></tbody></table>';
 
         return $this;
     }
 
     public function grid(array $cols = [1, 1, 1]): static
     {
-        $this->output .= '<div class="filament-tiptap-grid-builder" data-type="responsive" data-cols="' . count($cols) . '" style="grid-template-columns: repeat(3, 1fr);" data-stack-at="md">';
+        $this->output .= '<div class="filament-tiptap-grid-builder" data-type="responsive" data-cols="'.count($cols).'" style="grid-template-columns: repeat(3, 1fr);" data-stack-at="md">';
 
         foreach ($cols as $col) {
-            $this->output .= '<div class="filament-tiptap-grid-builder__column" data-col-span="' . $col . '" style="grid-column: span 1;"><h2>' . Str::title($this->faker->words(rand(3, 8), true)) . '</h2><p>' . $this->faker->paragraph() . '</p></div>';
+            $this->output .= '<div class="filament-tiptap-grid-builder__column" data-col-span="'.$col.'" style="grid-column: span 1;"><h2>'.Str::title($this->faker->words(rand(3, 8), true)).'</h2><p>'.$this->faker->paragraph().'</p></div>';
         }
 
         $this->output .= '</div>';
@@ -190,7 +191,7 @@ class TiptapFaker
         return $this->output;
     }
 
-    public function asJSON(bool $decoded = true): string | array
+    public function asJSON(bool $decoded = true): string|array
     {
         return TiptapConverter::asJSON($this->output, decoded: $decoded);
     }

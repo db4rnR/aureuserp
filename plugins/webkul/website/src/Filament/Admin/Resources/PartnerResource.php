@@ -1,34 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Filament\Admin\Resources;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ViewPartner;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\EditPartner;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ManageContacts;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ManageAddresses;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\ContactsRelationManager;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\AddressesRelationManager;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ListPartners;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\CreatePartner;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Webkul\Partner\Filament\Resources\PartnerResource as BasePartnerResource;
-use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages;
+use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\AddressesRelationManager;
+use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\ContactsRelationManager;
+use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\CreatePartner;
+use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\EditPartner;
+use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ListPartners;
+use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ManageAddresses;
+use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ManageContacts;
+use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ViewPartner;
 use Webkul\Website\Models\Partner;
 
-class PartnerResource extends BasePartnerResource
+final class PartnerResource extends BasePartnerResource
 {
     protected static ?string $model = Partner::class;
 
     protected static ?string $slug = 'website/contacts';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static bool $shouldRegisterNavigation = true;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationLabel(): string
     {
@@ -68,11 +69,11 @@ class PartnerResource extends BasePartnerResource
     public static function getPages(): array
     {
         return [
-            'index'     => ListPartners::route('/'),
-            'create'    => CreatePartner::route('/create'),
-            'view'      => ViewPartner::route('/{record}'),
-            'edit'      => EditPartner::route('/{record}/edit'),
-            'contacts'  => ManageContacts::route('/{record}/contacts'),
+            'index' => ListPartners::route('/'),
+            'create' => CreatePartner::route('/create'),
+            'view' => ViewPartner::route('/{record}'),
+            'edit' => EditPartner::route('/{record}/edit'),
+            'contacts' => ManageContacts::route('/{record}/contacts'),
             'addresses' => ManageAddresses::route('/{record}/addresses'),
         ];
     }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recruitments_stages', function (Blueprint $table) {
+        Schema::create('recruitments_stages', function (Blueprint $table): void {
             $table->id();
             $table->integer('sort')->nullable()->comment('Sort order of the stage');
             $table->unsignedBigInteger('creator_id')->nullable();

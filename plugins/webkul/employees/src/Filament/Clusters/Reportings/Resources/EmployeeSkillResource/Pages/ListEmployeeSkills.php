@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource\Pages;
 
 use Filament\Resources\Pages\ListRecords;
@@ -8,7 +10,7 @@ use Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListEmployeeSkills extends ListRecords
+final class ListEmployeeSkills extends ListRecords
 {
     use HasTableViews;
 

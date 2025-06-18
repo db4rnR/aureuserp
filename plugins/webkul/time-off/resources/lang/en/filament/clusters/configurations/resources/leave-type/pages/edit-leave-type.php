@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Leave Type updated',
-        'body'  => 'The leave type has been updated successfully.',
+        'body' => 'The leave type has been updated successfully.',
     ],
 
     'header-actions' => [
         'delete' => [
             'notification' => [
                 'title' => 'Leave Type deleted',
-                'body'  => 'The leave type has been deleted successfully.',
+                'body' => 'The leave type has been deleted successfully.',
             ],
         ],
     ],

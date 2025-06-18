@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Storage Categories',
@@ -9,13 +11,13 @@ return [
     'form' => [
         'sections' => [
             'general' => [
-                'title'  => 'General',
+                'title' => 'General',
 
                 'fields' => [
-                    'name'               => 'Name',
+                    'name' => 'Name',
                     'allow-new-products' => 'Allow New Products',
-                    'max-weight'         => 'Max Weight',
-                    'company'            => 'Company',
+                    'max-weight' => 'Max Weight',
+                    'company' => 'Company',
                 ],
             ],
         ],
@@ -23,26 +25,26 @@ return [
 
     'table' => [
         'columns' => [
-            'name'               => 'Name',
+            'name' => 'Name',
             'allow-new-products' => 'Allow New Products',
-            'max-weight'         => 'Max Weight',
-            'company'            => 'Company',
-            'deleted-at'         => 'Deleted At',
-            'created-at'         => 'Created At',
-            'updated-at'         => 'Updated At',
+            'max-weight' => 'Max Weight',
+            'company' => 'Company',
+            'deleted-at' => 'Deleted At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
             'allow-new-products' => 'Allow New Products',
-            'created-at'         => 'Created At',
-            'updated-at'         => 'Updated At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'actions' => [
             'delete' => [
                 'notification' => [
                     'title' => 'Storage Category deleted',
-                    'body'  => 'The storage category has been deleted successfully.',
+                    'body' => 'The storage category has been deleted successfully.',
                 ],
             ],
         ],
@@ -51,7 +53,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Storage Categories deleted',
-                    'body'  => 'The storage categories has been deleted successfully.',
+                    'body' => 'The storage categories has been deleted successfully.',
                 ],
             ],
         ],
@@ -60,13 +62,13 @@ return [
     'infolist' => [
         'sections' => [
             'general' => [
-                'title'  => 'General',
+                'title' => 'General',
 
                 'entries' => [
-                    'name'               => 'Name',
+                    'name' => 'Name',
                     'allow-new-products' => 'Allow New Products',
-                    'max-weight'         => 'Max Weight',
-                    'company'            => 'Company',
+                    'max-weight' => 'Max Weight',
+                    'company' => 'Company',
                 ],
             ],
 
@@ -74,8 +76,8 @@ return [
                 'title' => 'Record Information',
 
                 'entries' => [
-                    'created-by'   => 'Created By',
-                    'created-at'   => 'Created At',
+                    'created-by' => 'Created By',
+                    'created-at' => 'Created At',
                     'last-updated' => 'Last Updated',
                 ],
             ],

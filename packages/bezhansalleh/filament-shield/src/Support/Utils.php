@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Support;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use BezhanSalleh\FilamentShield\FilamentShield;
 use Filament\Facades\Filament;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Panel;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Spatie\Permission\PermissionRegistrar;
 
-class Utils
+final class Utils
 {
     public static function getFilamentAuthGuard(): string
     {
@@ -75,7 +77,7 @@ class Utils
 
     public static function isAuthProviderConfigured(): bool
     {
-        return in_array("Spatie\Permission\Traits\HasRoles", class_uses_recursive(static::getAuthProviderFQCN()));
+        return in_array("Spatie\Permission\Traits\HasRoles", class_uses_recursive(self::getAuthProviderFQCN()), true);
     }
 
     public static function isSuperAdminEnabled(): bool
@@ -90,7 +92,7 @@ class Utils
 
     public static function isSuperAdminDefinedViaGate(): bool
     {
-        return (bool) static::isSuperAdminEnabled() && config('filament-shield.super_admin.define_via_gate', false);
+        return (bool) self::isSuperAdminEnabled() && config('filament-shield.super_admin.define_via_gate', false);
     }
 
     public static function getSuperAdminGateInterceptionStatus(): string
@@ -110,8 +112,8 @@ class Utils
 
     public static function createPanelUserRole(): void
     {
-        if (static::isPanelUserRoleEnabled()) {
-            FilamentShield::createRole(name: Utils::getPanelUserRoleName());
+        if (self::isPanelUserRoleEnabled()) {
+            FilamentShield::createRole(name: self::getPanelUserRoleName());
         }
     }
 
@@ -201,12 +203,12 @@ class Utils
 
     public static function isRolePolicyRegistered(): bool
     {
-        return static::isRolePolicyGenerated() && config('filament-shield.register_role_policy.enabled', false);
+        return self::isRolePolicyGenerated() && config('filament-shield.register_role_policy.enabled', false);
     }
 
     public static function doesResourceHaveCustomPermissions(string $resourceClass): bool
     {
-        return in_array(HasShieldPermissions::class, class_implements($resourceClass));
+        return in_array(HasShieldPermissions::class, class_implements($resourceClass), true);
     }
 
     public static function showModelPath(string $resourceFQCN): string
@@ -223,9 +225,9 @@ class Utils
 
     public static function getResourcePermissionPrefixes(string $resourceFQCN): array
     {
-        return static::doesResourceHaveCustomPermissions($resourceFQCN)
+        return self::doesResourceHaveCustomPermissions($resourceFQCN)
             ? $resourceFQCN::getPermissionPrefixes()
-            : static::getGeneralResourcePermissionPrefixes($resourceFQCN);
+            : self::getGeneralResourcePermissionPrefixes($resourceFQCN);
     }
 
     public static function getRoleModel(): string
@@ -262,13 +264,6 @@ class Utils
             ->toString();
     }
 
-    protected static function isRolePolicyGenerated(): bool
-    {
-        $filesystem = new Filesystem;
-
-        return (bool) $filesystem->exists(app_path(static::getPolicyPath() . DIRECTORY_SEPARATOR . 'RolePolicy.php'));
-    }
-
     public static function isTenancyEnabled(): bool
     {
         return (bool) config()->get('permission.teams', false);
@@ -282,5 +277,12 @@ class Utils
     public static function getTenantModelForeignKey(): string
     {
         return config()->get('permission.column_names.team_foreign_key', 'team_id');
+    }
+
+    private static function isRolePolicyGenerated(): bool
+    {
+        $filesystem = new Filesystem;
+
+        return (bool) $filesystem->exists(app_path(self::getPolicyPath().DIRECTORY_SEPARATOR.'RolePolicy.php'));
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -9,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<Packaging>
  */
-class PackagingFactory extends Factory
+final class PackagingFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -26,8 +28,8 @@ class PackagingFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'       => fake()->name(),
-            'full_name'  => fake()->name(),
+            'name' => fake()->name(),
+            'full_name' => fake()->name(),
             'creator_id' => User::factory(),
         ];
     }

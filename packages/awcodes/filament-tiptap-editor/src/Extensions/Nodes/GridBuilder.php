@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-class GridBuilder extends Node
+final class GridBuilder extends Node
 {
     public static $name = 'gridBuilder';
 
@@ -37,7 +39,7 @@ class GridBuilder extends Node
 
                     return [
                         'data-cols' => $attributes['data-cols'],
-                        'style' => 'grid-template-columns: repeat(' . $attributes['data-cols'] . ', 1fr);',
+                        'style' => 'grid-template-columns: repeat('.$attributes['data-cols'].', 1fr);',
                     ];
                 },
             ],

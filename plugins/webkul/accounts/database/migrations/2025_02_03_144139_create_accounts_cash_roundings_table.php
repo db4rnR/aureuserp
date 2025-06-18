@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_cash_roundings', function (Blueprint $table) {
+        Schema::create('accounts_cash_roundings', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('creator_id')->nullable()->comment('Created By')->constrained('users')->nullOnDelete();
             $table->string('strategy')->comment('Rounding Strategy');

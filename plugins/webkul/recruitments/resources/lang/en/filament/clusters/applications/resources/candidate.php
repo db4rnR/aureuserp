@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Candidate',
 
@@ -15,10 +17,10 @@ return [
 
                 'fields' => [
                     'full-name' => 'Full Name',
-                    'email'     => 'Email Address',
-                    'phone'     => 'Phone Number',
-                    'linkedin'  => 'LinkedIn Profile',
-                    'contact'   => 'Contact',
+                    'email' => 'Email Address',
+                    'phone' => 'Phone Number',
+                    'linkedin' => 'LinkedIn Profile',
+                    'contact' => 'Contact',
                 ],
             ],
 
@@ -26,16 +28,16 @@ return [
                 'title' => 'Additional Details',
 
                 'fields' => [
-                    'company'           => 'Company',
-                    'degree'            => 'Degree',
-                    'tags'              => 'Tags',
-                    'manager'           => 'Manager',
+                    'company' => 'Company',
+                    'degree' => 'Degree',
+                    'tags' => 'Tags',
+                    'manager' => 'Manager',
                     'availability-date' => 'Availability Date',
 
                     'priority-options' => [
-                        'low'    => 'Low',
+                        'low' => 'Low',
                         'medium' => 'Medium',
-                        'high'   => 'High',
+                        'high' => 'High',
                     ],
                 ],
             ],
@@ -44,7 +46,7 @@ return [
                 'title' => 'Status',
 
                 'fields' => [
-                    'active'     => 'Active',
+                    'active' => 'Active',
                     'evaluation' => 'Evaluation',
                 ],
             ],
@@ -53,7 +55,7 @@ return [
                 'title' => 'Communication',
 
                 'fields' => [
-                    'cc-email'      => 'CC Email',
+                    'cc-email' => 'CC Email',
                     'email-bounced' => 'Email Bounced',
                 ],
             ],
@@ -62,15 +64,15 @@ return [
 
     'table' => [
         'columns' => [
-            'name'       => 'Full Name',
-            'tags'       => 'Tags',
+            'name' => 'Full Name',
+            'tags' => 'Tags',
             'evaluation' => 'Evaluation',
         ],
 
         'filters' => [
-            'company'      => 'Company',
+            'company' => 'Company',
             'partner-name' => 'Contact',
-            'degree'       => 'Degree',
+            'degree' => 'Degree',
             'manager-name' => 'Manager',
         ],
 
@@ -82,7 +84,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Candidate Deleted',
-                    'body'  => 'The candidate was successfully deleted.',
+                    'body' => 'The candidate was successfully deleted.',
                 ],
             ],
 
@@ -90,7 +92,7 @@ return [
                 'create' => [
                     'notification' => [
                         'title' => 'Candidate Created',
-                        'body'  => 'The candidate was successfully created.',
+                        'body' => 'The candidate was successfully created.',
                     ],
                 ],
             ],
@@ -104,10 +106,10 @@ return [
 
                 'entries' => [
                     'full-name' => 'Full Name',
-                    'email'     => 'Email Address',
-                    'phone'     => 'Phone Number',
-                    'linkedin'  => 'LinkedIn Profile',
-                    'contact'   => 'Contact',
+                    'email' => 'Email Address',
+                    'phone' => 'Phone Number',
+                    'linkedin' => 'LinkedIn Profile',
+                    'contact' => 'Contact',
                 ],
             ],
 
@@ -115,16 +117,16 @@ return [
                 'title' => 'Additional Details',
 
                 'entries' => [
-                    'company'           => 'Company',
-                    'degree'            => 'Degree',
-                    'tags'              => 'Tags',
-                    'manager'           => 'Manager',
+                    'company' => 'Company',
+                    'degree' => 'Degree',
+                    'tags' => 'Tags',
+                    'manager' => 'Manager',
                     'availability-date' => 'Availability Date',
 
                     'priority-options' => [
-                        'low'    => 'Low',
+                        'low' => 'Low',
                         'medium' => 'Medium',
-                        'high'   => 'High',
+                        'high' => 'High',
                     ],
                 ],
             ],
@@ -133,7 +135,7 @@ return [
                 'title' => 'Status',
 
                 'entries' => [
-                    'active'     => 'Active',
+                    'active' => 'Active',
                     'evaluation' => 'Evaluation',
                 ],
             ],
@@ -142,7 +144,7 @@ return [
                 'title' => 'Communication',
 
                 'entries' => [
-                    'cc-email'      => 'CC Email',
+                    'cc-email' => 'CC Email',
                     'email-bounced' => 'Email Bounced',
                 ],
             ],

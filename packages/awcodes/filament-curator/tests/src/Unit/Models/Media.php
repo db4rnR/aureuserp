@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Awcodes\Curator\Models\Media;
 use Illuminate\Support\Facades\Storage;
 
-test('to array', function () {
+test('to array', function (): void {
     Storage::fake('public');
 
     $media = Media::factory()->create()->fresh();
@@ -39,7 +41,7 @@ test('to array', function () {
     ]);
 });
 
-test('factory creates an svg', function () {
+test('factory creates an svg', function (): void {
     Storage::fake('public');
 
     $media = Media::factory()->type('svg')->create()->fresh();
@@ -52,7 +54,7 @@ test('factory creates an svg', function () {
         ->full_path->toBe(Storage::disk($media->disk)->path($media->path));
 });
 
-test('factory creates a document', function () {
+test('factory creates a document', function (): void {
     Storage::fake('public');
 
     $media = Media::factory()->type('document')->create()->fresh();
@@ -65,7 +67,7 @@ test('factory creates a document', function () {
         ->full_path->toBe(Storage::disk($media->disk)->path($media->path));
 });
 
-test('factory creates a video', function () {
+test('factory creates a video', function (): void {
     Storage::fake('public');
 
     $media = Media::factory()->type('video')->create()->fresh();
@@ -78,7 +80,7 @@ test('factory creates a video', function () {
         ->full_path->toBe(Storage::disk($media->disk)->path($media->path));
 });
 
-test('factory creates an image', function () {
+test('factory creates an image', function (): void {
     Storage::fake('public');
 
     $media = Media::factory()->create()->fresh();
@@ -91,7 +93,7 @@ test('factory creates an image', function () {
         ->full_path->toBe(Storage::disk($media->disk)->path($media->path));
 });
 
-it('returns correct local url', function () {
+it('returns correct local url', function (): void {
     Storage::fake('public');
 
     $media = Media::factory()->create()->fresh();
@@ -99,7 +101,7 @@ it('returns correct local url', function () {
     expect($media->url)->toBe(Storage::disk($media->disk)->url($media->path));
 });
 
-it('returns correct remote url', function () {
+it('returns correct remote url', function (): void {
     Storage::fake('s3');
     config()->set('curator.disk', 's3');
     config()->set('curator.visibility', 'private');

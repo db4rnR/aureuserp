@@ -1,20 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages;
 
-use Filament\Actions\DeleteAction;
-use Webkul\Purchase\Enums\OrderState;
-use Filament\Actions;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 use Webkul\Purchase\Models\Order;
 
-class ViewOrder extends ViewRecord
+final class ViewOrder extends ViewRecord
 {
     protected static string $resource = OrderResource::class;
 
@@ -37,15 +37,15 @@ class ViewOrder extends ViewRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             DeleteAction::make()
-                ->hidden(fn () => $this->getRecord()->state == OrderState::DONE)
-                ->action(function (DeleteAction $action, Order $record) {
+                ->hidden(fn (): bool => $this->getRecord()->state === OrderState::DONE)
+                ->action(function (DeleteAction $action, Order $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('inventories::filament/clusters/orders/resources/order/pages/view-order.header-actions.delete.notification.error.title'))

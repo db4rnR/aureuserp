@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListOrders extends ListRecords
+final class ListOrders extends ListRecords
 {
     use HasTableViews;
 
@@ -53,11 +54,9 @@ class ListOrders extends ListRecords
 
             'late_orders' => PresetView::make(__('purchases::filament/admin/clusters/orders/resources/order/pages/list-orders.tabs.late-orders'))
                 ->icon('heroicon-o-exclamation-circle')
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query
-                        ->whereIn('state', [OrderState::DRAFT, OrderState::SENT])
-                        ->where('ordered_at', '<', now());
-                }),
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->whereIn('state', [OrderState::DRAFT, OrderState::SENT])
+                    ->where('ordered_at', '<', now())),
         ];
     }
 

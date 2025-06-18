@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchases_requisition_lines', function (Blueprint $table) {
+        Schema::create('purchases_requisition_lines', function (Blueprint $table): void {
             $table->id();
             $table->decimal('qty', 15, 4)->nullable()->default(0);
             $table->decimal('price_unit', 15, 4)->nullable()->default(0);

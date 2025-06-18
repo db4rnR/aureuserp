@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Livewire;
 
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +13,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
-class Comments extends Component
+final class Comments extends Component
 {
     use HasMentions;
     use HasPolling;
@@ -25,7 +27,7 @@ class Comments extends Component
     ];
 
     #[Renderless]
-    public function save()
+    public function save(): void
     {
         $this->validate();
 

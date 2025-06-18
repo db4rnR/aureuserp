@@ -1,43 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
+use BackedEnum;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Group;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
-use Filament\Schemas\Components\Grid;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages\ListPackageTypes;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages\CreatePackageType;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages\ViewPackageType;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages\EditPackageType;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
-use Filament\Tables;
+use Filament\Support\Enums\TextSize;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Webkul\Inventory\Filament\Clusters\Configurations;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages\CreatePackageType;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages\EditPackageType;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages\ListPackageTypes;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource\Pages\ViewPackageType;
 use Webkul\Inventory\Models\PackageType;
 use Webkul\Inventory\Settings\OperationSettings;
 
-class PackageTypeResource extends Resource
+final class PackageTypeResource extends Resource
 {
     protected static ?string $model = PackageType::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-archive-box';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-archive-box';
 
     protected static ?int $navigationSort = 10;
 
@@ -283,10 +282,10 @@ class PackageTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListPackageTypes::route('/'),
+            'index' => ListPackageTypes::route('/'),
             'create' => CreatePackageType::route('/create'),
-            'view'   => ViewPackageType::route('/{record}'),
-            'edit'   => EditPackageType::route('/{record}/edit'),
+            'view' => ViewPackageType::route('/{record}'),
+            'edit' => EditPackageType::route('/{record}/edit'),
         ];
     }
 }

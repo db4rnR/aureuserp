@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Attachment extends Model
+final class Attachment extends Model
 {
     protected $table = 'chatter_attachments';
 
@@ -24,6 +26,22 @@ class Attachment extends Model
     ];
 
     protected $appends = ['url'];
+
+    public static function boot(): void
+    {
+        parent::boot();
+
+        self::deleted(function ($attachment): void {
+            $filePath = $attachment->file_path;
+
+            if (
+                $filePath
+                && Storage::disk('public')->exists($filePath)
+            ) {
+                Storage::disk('public')->delete($filePath);
+            }
+        });
+    }
 
     public function messageable()
     {
@@ -48,21 +66,5 @@ class Attachment extends Model
     public function message()
     {
         return $this->belongsTo(Message::class, 'message_id');
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::deleted(function ($attachment) {
-            $filePath = $attachment->file_path;
-
-            if (
-                $filePath
-                && Storage::disk('public')->exists($filePath)
-            ) {
-                Storage::disk('public')->delete($filePath);
-            }
-        });
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Test Coverage Dashboard Generator
  *
@@ -19,9 +21,9 @@ define('COLOR_BOLD', "\033[1m");
 
 // Create reports directory if it doesn't exist
 $reportsDir = 'reports/coverage';
-if (!is_dir($reportsDir)) {
-    if (!mkdir($reportsDir, 0755, true) && !is_dir($reportsDir)) {
-        echo COLOR_RED . "Error: Could not create reports directory.\n" . COLOR_RESET;
+if (! is_dir($reportsDir)) {
+    if (! mkdir($reportsDir, 0755, true) && ! is_dir($reportsDir)) {
+        echo COLOR_RED."Error: Could not create reports directory.\n".COLOR_RESET;
         exit(1);
     }
 }
@@ -31,8 +33,8 @@ echo "Running tests with coverage...\n";
 passthru('composer test:coverage');
 
 // Check if coverage report was generated
-if (!file_exists('reports/coverage/clover.xml')) {
-    echo COLOR_RED . "Error: Coverage report not generated. Make sure Xdebug is enabled.\n" . COLOR_RESET;
+if (! file_exists('reports/coverage/clover.xml')) {
+    echo COLOR_RED."Error: Coverage report not generated. Make sure Xdebug is enabled.\n".COLOR_RESET;
     exit(1);
 }
 
@@ -40,13 +42,13 @@ if (!file_exists('reports/coverage/clover.xml')) {
 $cloverFile = 'reports/coverage/clover.xml';
 $xmlContent = file_get_contents($cloverFile);
 if ($xmlContent === false) {
-    echo COLOR_RED . "Error: Could not read coverage report file.\n" . COLOR_RESET;
+    echo COLOR_RED."Error: Could not read coverage report file.\n".COLOR_RESET;
     exit(1);
 }
 
 $xml = simplexml_load_string($xmlContent);
-if (!$xml) {
-    echo COLOR_RED . "Error: Could not parse coverage report XML.\n" . COLOR_RESET;
+if (! $xml) {
+    echo COLOR_RED."Error: Could not parse coverage report XML.\n".COLOR_RESET;
     exit(1);
 }
 
@@ -62,29 +64,29 @@ $appCoverage = [
 ];
 
 foreach ($xml->xpath('//package') as $package) {
-    $path = (string)$package['name'];
+    $path = (string) $package['name'];
 
     // Skip vendor files
-    if (strpos($path, 'vendor/') === 0) {
+    if (mb_strpos($path, 'vendor/') === 0) {
         continue;
     }
 
     // Determine if this is a plugin or app file
-    $isPlugin = strpos($path, 'plugins/') === 0;
+    $isPlugin = mb_strpos($path, 'plugins/') === 0;
     $pluginName = $isPlugin ? explode('/', $path)[1] : null;
 
     // Extract metrics
     $metrics = $package->xpath('.//metrics');
     foreach ($metrics as $metric) {
-        $lines = (int)$metric['elements'];
-        $coveredLines = (int)$metric['coveredelements'];
-        $methods = (int)$metric['methods'];
-        $coveredMethods = (int)$metric['coveredmethods'];
-        $statements = (int)$metric['statements'];
-        $coveredStatements = (int)$metric['coveredstatements'];
+        $lines = (int) $metric['elements'];
+        $coveredLines = (int) $metric['coveredelements'];
+        $methods = (int) $metric['methods'];
+        $coveredMethods = (int) $metric['coveredmethods'];
+        $statements = (int) $metric['statements'];
+        $coveredStatements = (int) $metric['coveredstatements'];
 
         if ($isPlugin) {
-            if (!isset($plugins[$pluginName])) {
+            if (! isset($plugins[$pluginName])) {
                 $plugins[$pluginName] = [
                     'lines' => 0,
                     'covered' => 0,
@@ -134,26 +136,27 @@ $methodCoverage = $totalMethods > 0 ? ($totalCoveredMethods / $totalMethods) * 1
 $statementCoverage = $totalStatements > 0 ? ($totalCoveredStatements / $totalStatements) * 100 : 0;
 
 // Display dashboard
-echo "\n" . COLOR_BOLD . "TEST COVERAGE DASHBOARD\n" . COLOR_RESET;
-echo str_repeat('-', 80) . "\n";
-echo COLOR_BOLD . "Overall Coverage: " . formatCoverage($overallCoverage) . "\n";
-echo "Method Coverage: " . formatCoverage($methodCoverage) . "\n";
-echo "Statement Coverage: " . formatCoverage($statementCoverage) . "\n" . COLOR_RESET;
-echo str_repeat('-', 80) . "\n";
+echo "\n".COLOR_BOLD."TEST COVERAGE DASHBOARD\n".COLOR_RESET;
+echo str_repeat('-', 80)."\n";
+echo COLOR_BOLD.'Overall Coverage: '.formatCoverage($overallCoverage)."\n";
+echo 'Method Coverage: '.formatCoverage($methodCoverage)."\n";
+echo 'Statement Coverage: '.formatCoverage($statementCoverage)."\n".COLOR_RESET;
+echo str_repeat('-', 80)."\n";
 
 // Display app coverage
 $appLineCoverage = $appCoverage['lines'] > 0 ? ($appCoverage['covered'] / $appCoverage['lines']) * 100 : 0;
-echo COLOR_BOLD . "App Coverage: " . formatCoverage($appLineCoverage) . COLOR_RESET . "\n";
+echo COLOR_BOLD.'App Coverage: '.formatCoverage($appLineCoverage).COLOR_RESET."\n";
 
 // Display plugin coverage
-echo COLOR_BOLD . "\nPlugin Coverage:\n" . COLOR_RESET;
-echo str_pad("Plugin", 30) . " | " . str_pad("Coverage", 10) . " | " . str_pad("Methods", 10) . " | " . str_pad("Statements", 10) . "\n";
-echo str_repeat('-', 80) . "\n";
+echo COLOR_BOLD."\nPlugin Coverage:\n".COLOR_RESET;
+echo mb_str_pad('Plugin', 30).' | '.mb_str_pad('Coverage', 10).' | '.mb_str_pad('Methods', 10).' | '.mb_str_pad('Statements', 10)."\n";
+echo str_repeat('-', 80)."\n";
 
 // Sort plugins by coverage (descending)
-uasort($plugins, function($a, $b) {
+uasort($plugins, function ($a, $b) {
     $aCoverage = $a['lines'] > 0 ? ($a['covered'] / $a['lines']) * 100 : 0;
     $bCoverage = $b['lines'] > 0 ? ($b['covered'] / $b['lines']) * 100 : 0;
+
     return $bCoverage <=> $aCoverage;
 });
 
@@ -162,34 +165,37 @@ foreach ($plugins as $name => $plugin) {
     $methodCoverage = $plugin['methods'] > 0 ? ($plugin['coveredMethods'] / $plugin['methods']) * 100 : 0;
     $statementCoverage = $plugin['statements'] > 0 ? ($plugin['coveredStatements'] / $plugin['statements']) * 100 : 0;
 
-    echo str_pad($name, 30) . " | " .
-         str_pad(formatCoverage($lineCoverage, false), 10) . " | " .
-         str_pad(formatCoverage($methodCoverage, false), 10) . " | " .
-         str_pad(formatCoverage($statementCoverage, false), 10) . "\n";
+    echo mb_str_pad($name, 30).' | '.
+         mb_str_pad(formatCoverage($lineCoverage, false), 10).' | '.
+         mb_str_pad(formatCoverage($methodCoverage, false), 10).' | '.
+         mb_str_pad(formatCoverage($statementCoverage, false), 10)."\n";
 }
 
-echo "\n" . COLOR_BOLD . "HTML Report: " . COLOR_RESET . "file://" . realpath('reports/coverage') . "/index.html\n";
+echo "\n".COLOR_BOLD.'HTML Report: '.COLOR_RESET.'file://'.realpath('reports/coverage')."/index.html\n";
 echo "Open this URL in your browser to view the detailed HTML coverage report.\n\n";
 
 /**
  * Format coverage percentage with color coding
  *
- * @param float $coverage Coverage percentage
- * @param bool $withColor Whether to include color codes
+ * @param  float  $coverage  Coverage percentage
+ * @param  bool  $withColor  Whether to include color codes
  * @return string Formatted coverage string
  */
-function formatCoverage($coverage, $withColor = true) {
-    $formatted = number_format($coverage, 2) . '%';
+function formatCoverage($coverage, $withColor = true): string
+{
+    $formatted = number_format($coverage, 2).'%';
 
-    if (!$withColor) {
+    if (! $withColor) {
         return $formatted;
     }
 
     if ($coverage >= 70) {
-        return COLOR_GREEN . $formatted . COLOR_RESET;
-    } elseif ($coverage >= 50) {
-        return COLOR_YELLOW . $formatted . COLOR_RESET;
-    } else {
-        return COLOR_RED . $formatted . COLOR_RESET;
+        return COLOR_GREEN.$formatted.COLOR_RESET;
     }
+    if ($coverage >= 50) {
+        return COLOR_YELLOW.$formatted.COLOR_RESET;
+    }
+
+    return COLOR_RED.$formatted.COLOR_RESET;
+
 }

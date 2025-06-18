@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Customer\Clusters\Account\Resources;
 
+use BackedEnum;
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\PurchaseOrderResource\Pages\ListPurchaseOrders;
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\PurchaseOrderResource\Pages\ViewPurchaseOrder;
-use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\PurchaseOrderResource\Pages;
 use Webkul\Purchase\Models\CustomerPurchaseOrder as PurchaseOrder;
 
-class PurchaseOrderResource extends OrderResource
+final class PurchaseOrderResource extends OrderResource
 {
     protected static ?string $model = PurchaseOrder::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?int $navigationSort = 2;
 
@@ -31,7 +33,7 @@ class PurchaseOrderResource extends OrderResource
     {
         return [
             'index' => ListPurchaseOrders::route('/'),
-            'view'  => ViewPurchaseOrder::route('/{record}'),
+            'view' => ViewPurchaseOrder::route('/{record}'),
         ];
     }
 }

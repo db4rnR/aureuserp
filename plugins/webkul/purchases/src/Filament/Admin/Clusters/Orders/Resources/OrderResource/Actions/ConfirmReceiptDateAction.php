@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions;
 
 use Filament\Actions\Action;
@@ -8,13 +10,8 @@ use Livewire\Component;
 use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Models\Order;
 
-class ConfirmReceiptDateAction extends Action
+final class ConfirmReceiptDateAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'purchases.orders.confirm-receipt-date';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -36,9 +33,14 @@ class ConfirmReceiptDateAction extends Action
                     ->success()
                     ->send();
             })
-            ->visible(fn () => ! $this->getRecord()->mail_reminder_confirmed && in_array($this->getRecord()->state, [
+            ->visible(fn (): bool => ! $this->getRecord()->mail_reminder_confirmed && in_array($this->getRecord()->state, [
                 OrderState::PURCHASE,
                 OrderState::DONE,
-            ]));
+            ], true));
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'purchases.orders.confirm-receipt-date';
     }
 }

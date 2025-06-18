@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Filament\Admin\Resources\PageResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Website\Filament\Admin\Resources\PageResource;
 
-class ViewPage extends ViewRecord
+final class ViewPage extends ViewRecord
 {
     protected static string $resource = PageResource::class;
 

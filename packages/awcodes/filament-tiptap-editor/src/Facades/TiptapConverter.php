@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Facades;
 
 use Illuminate\Support\Facades\Facade;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \FilamentTiptapEditor\TiptapConverter
  */
-class TiptapConverter extends Facade
+final class TiptapConverter extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

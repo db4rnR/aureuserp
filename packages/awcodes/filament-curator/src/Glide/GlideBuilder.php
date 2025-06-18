@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Glide;
 
 use Illuminate\Support\Str;
 use League\Glide\Urls\UrlBuilderFactory;
 
-class GlideBuilder
+final class GlideBuilder
 {
     final public function __construct(
         public ?string $bg = null,
@@ -22,7 +24,7 @@ class GlideBuilder
         public ?float $gam = null,
         public ?int $h = null,
         public ?int $q = null,
-        public string | int | null $or = null,
+        public string|int|null $or = null,
         public ?int $pixel = null,
         public ?int $sharp = null,
         public ?int $w = null,
@@ -39,7 +41,7 @@ class GlideBuilder
 
     public static function make(): static
     {
-        return app(static::class);
+        return app(self::class);
     }
 
     public function toArray(): array
@@ -158,7 +160,7 @@ class GlideBuilder
         return $this;
     }
 
-    public function orientation(string | int $value): static
+    public function orientation(string|int $value): static
     {
         $this->or = $value;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelHealth\Pages;
 
 use Carbon\Carbon;
@@ -12,7 +14,7 @@ use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 use Spatie\Health\Commands\RunHealthChecksCommand;
 use Spatie\Health\ResultStores\ResultStore;
 
-class HealthCheckResults extends Page
+final class HealthCheckResults extends Page
 {
     /**
      * @var array<string, string>
@@ -20,20 +22,6 @@ class HealthCheckResults extends Page
     protected $listeners = ['refresh-component' => '$refresh'];
 
     protected string $view = 'filament-spatie-health::pages.health-check-results';
-
-    protected function getActions(): array
-    {
-        return [
-            Action::make(__('filament-spatie-health::health.pages.health_check_results.buttons.refresh'))
-                ->button()
-                ->action('refresh'),
-        ];
-    }
-
-    public function getHeading(): string | Htmlable
-    {
-        return __('filament-spatie-health::health.pages.health_check_results.heading');
-    }
 
     public static function getNavigationGroup(): ?string
     {
@@ -55,14 +43,14 @@ class HealthCheckResults extends Page
         return FilamentSpatieLaravelHealthPlugin::get()->getNavigationIcon();
     }
 
-    protected function getViewData(): array
+    public static function canAccess(): bool
     {
-        $checkResults = app(ResultStore::class)->latestResults();
+        return FilamentSpatieLaravelHealthPlugin::get()->isAuthorized();
+    }
 
-        return [
-            'lastRanAt' => new Carbon($checkResults?->finishedAt),
-            'checkResults' => $checkResults,
-        ];
+    public function getHeading(): string|Htmlable
+    {
+        return __('filament-spatie-health::health.pages.health_check_results.heading');
     }
 
     public function refresh(): void
@@ -77,8 +65,22 @@ class HealthCheckResults extends Page
             ->send();
     }
 
-    public static function canAccess(): bool
+    protected function getActions(): array
     {
-        return FilamentSpatieLaravelHealthPlugin::get()->isAuthorized();
+        return [
+            Action::make(__('filament-spatie-health::health.pages.health_check_results.buttons.refresh'))
+                ->button()
+                ->action('refresh'),
+        ];
+    }
+
+    protected function getViewData(): array
+    {
+        $checkResults = app(ResultStore::class)->latestResults();
+
+        return [
+            'lastRanAt' => new Carbon($checkResults?->finishedAt),
+            'checkResults' => $checkResults,
+        ];
     }
 }

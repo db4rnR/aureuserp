@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Database\Factories;
 
-use Webkul\Partner\Models\BankAccount;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Webkul\Partner\Models\BankAccount;
 use Webkul\Partner\Models\Title;
 use Webkul\Security\Models\User;
 
 /**
  * @extends Factory<BankAccount>
  */
-class TitleFactory extends Factory
+final class TitleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -27,7 +29,7 @@ class TitleFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'       => fake()->name(),
+            'name' => fake()->name(),
             'short_name' => fake()->name(),
             'creator_id' => User::factory(),
         ];

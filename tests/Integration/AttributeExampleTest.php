@@ -1,29 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use Pest\Attributes\Test;
-use Pest\Attributes\Group;
-use Pest\Attributes\Description;
-use Pest\Attributes\DataProvider;
-use Pest\Attributes\BeforeEach;
 use Pest\Attributes\AfterEach;
+use Pest\Attributes\BeforeEach;
+use Pest\Attributes\DataProvider;
+use Pest\Attributes\Description;
+use Pest\Attributes\Group;
+use Pest\Attributes\Test;
 
 /**
  * Example of integration tests using attributes instead of PHPDoc comments.
  * These tests focus on testing the interaction between different components of the system.
  */
-
 #[BeforeEach]
-function setup_database()
+function setup_database(): void
 {
     // Begin a database transaction
     DB::beginTransaction();
 }
 
 #[AfterEach]
-function cleanup_database()
+function cleanup_database(): void
 {
     // Roll back the transaction to clean up
     DB::rollBack();
@@ -32,7 +32,7 @@ function cleanup_database()
 #[Test]
 #[Group('integration')]
 #[Description('Test user creation and retrieval from database')]
-function user_creation_and_retrieval()
+function user_creation_and_retrieval(): void
 {
     // Create a user
     $user = User::factory()->create([
@@ -52,7 +52,7 @@ function user_creation_and_retrieval()
 #[Test]
 #[Group('integration')]
 #[Description('Test relationship between users and their posts')]
-function user_posts_relationship()
+function user_posts_relationship(): void
 {
     // This is just an example. Adjust according to your actual models and relationships.
 
@@ -82,10 +82,10 @@ function user_posts_relationship()
 #[Test]
 #[Group('integration')]
 #[Description('Test database transactions and rollback')]
-function database_transactions_and_rollback()
+function database_transactions_and_rollback(): void
 {
     // Create a user
-    $user = User::factory()->create([
+    User::factory()->create([
         'email' => 'transaction_test@example.com',
     ]);
 
@@ -99,7 +99,7 @@ function database_transactions_and_rollback()
 #[Test]
 #[Group('integration')]
 #[Description('Test that the previous transaction was rolled back')]
-function previous_transaction_was_rolled_back()
+function previous_transaction_was_rolled_back(): void
 {
     // Verify the user from the previous test doesn't exist
     expect(User::where('email', 'transaction_test@example.com')->exists())->toBeFalse();
@@ -109,7 +109,7 @@ function previous_transaction_was_rolled_back()
 #[Group('integration')]
 #[DataProvider('user_types_provider')]
 #[Description('Test different user types and their capabilities')]
-function user_types_and_capabilities($userType, $expectedCapabilities)
+function user_types_and_capabilities($userType, $expectedCapabilities): void
 {
     // Create a user with the specified type
     // This is just an example. Adjust according to your actual user model and capabilities.
@@ -126,7 +126,7 @@ function user_types_and_capabilities($userType, $expectedCapabilities)
     }
 }
 
-function user_types_provider()
+function user_types_provider(): array
 {
     return [
         'admin user has all capabilities' => ['admin', ['create', 'read', 'update', 'delete']],

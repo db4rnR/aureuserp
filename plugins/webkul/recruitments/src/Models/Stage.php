@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,10 +11,15 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Security\Models\User;
 
-class Stage extends Model implements Sortable
+final class Stage extends Model implements Sortable
 {
     use HasFactory;
     use SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'recruitments_stages';
 
@@ -30,14 +37,9 @@ class Stage extends Model implements Sortable
     ];
 
     protected $casts = [
-        'is_default'  => 'boolean',
+        'is_default' => 'boolean',
         'hired_stage' => 'boolean',
-        'fold'        => 'boolean',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
+        'fold' => 'boolean',
     ];
 
     public function createdBy()

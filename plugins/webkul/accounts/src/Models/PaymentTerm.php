@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,9 +14,14 @@ use Webkul\Account\Enums\DueTermValue;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class PaymentTerm extends Model implements Sortable
+final class PaymentTerm extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'accounts_payment_terms';
 
@@ -29,11 +36,6 @@ class PaymentTerm extends Model implements Sortable
         'display_on_invoice',
         'early_discount',
         'discount_percentage',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function company()
@@ -51,18 +53,18 @@ class PaymentTerm extends Model implements Sortable
         return $this->hasOne(PaymentDueTerm::class, 'payment_id');
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::created(function ($paymentTerm) {
+        self::created(function ($paymentTerm): void {
             $paymentTerm->dueTerm()->create([
-                'value'           => DueTermValue::PERCENT->value,
-                'value_amount'    => 100,
-                'delay_type'      => DelayType::DAYS_AFTER->value,
+                'value' => DueTermValue::PERCENT->value,
+                'value_amount' => 100,
+                'delay_type' => DelayType::DAYS_AFTER->value,
                 'days_next_month' => 10,
-                'nb_days'         => 0,
-                'payment_id'      => $paymentTerm->id,
+                'nb_days' => 0,
+                'payment_id' => $paymentTerm->id,
             ]);
         });
     }

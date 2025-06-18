@@ -1,20 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentAdjacencyList\Forms\Components\Actions;
 
 use Filament\Actions\Action;
-use Filament\Support\Enums\Size;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Size;
 use Illuminate\Support\Str;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-class AddAction extends Action
+final class AddAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'add';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -50,5 +47,10 @@ class AddAction extends Action
         $this->visible(
             fn (AdjacencyList $component): bool => $component->isAddable()
         );
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'add';
     }
 }

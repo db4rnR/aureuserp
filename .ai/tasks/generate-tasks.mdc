@@ -12,7 +12,7 @@ To guide an AI assistant in creating a detailed, step-by-step task list in Markd
 ## Output
 
 - **Format:** Markdown (`.md`)
-- **Location:** `/.junie/tasks/`
+- **Location:** `/.ai//tasks/[feature-name]/`
 - **Filename:** `tasks-[prd-file-name].md` (e.g., `tasks-prd-user-profile-editing.md`)
 
 ## Process
@@ -24,7 +24,8 @@ To guide an AI assistant in creating a detailed, step-by-step task list in Markd
 5.  **Phase 2: Generate Sub-Tasks:** Once the user confirms, break down each parent task into smaller, actionable sub-tasks necessary to complete the parent task. Ensure sub-tasks logically follow from the parent task and cover the implementation details implied by the PRD.
 6.  **Identify Relevant Files:** Based on the tasks and PRD, identify potential files that will need to be created or modified. List these under the `Relevant Files` section, including corresponding test files if applicable.
 7.  **Generate Final Output:** Combine the parent tasks, sub-tasks, relevant files, and notes into the final Markdown structure.
-8.  **Save Task List:** Save the generated document in the `/tasks/` directory with the filename `tasks-[prd-file-name].md`, where `[prd-file-name]` matches the base name of the input PRD file (e.g., if the input was `prd-user-profile-editing.md`, the output is `tasks-prd-user-profile-editing.md`).
+8.  **Save Task List:** Save the generated document in the `/tasks/[feature-name]/` directory with the filename `tasks-
+[prd-file-name].md`, where `[prd-file-name]` matches the base name of the input PRD file (e.g., if the input was `prd-user-profile-editing.md`, the output is `tasks-prd-user-profile-editing.md`).
 
 ## Output Format
 
@@ -77,4 +78,12 @@ The process explicitly requires a pause after generating parent tasks to get use
 
 ## Target Audience
 
-Assume the primary reader of the task list is a **junior developer** who will implement the feature.
+Assume the primary reader of the task list is a **junior developer** who will implement the feature. Therefore:
+
+* Break down complex tasks into very specific, manageable steps
+* Include references to relevant documentation or learning resources where appropriate
+* Provide code examples or pseudocode for technically challenging parts
+* Explain the 'why' behind tasks, not just the 'what'
+* Avoid assuming prior knowledge of complex architectural patterns
+* Define any technical terms or acronyms that aren't universally understood
+* Include helpful tips or gotchas that might trip up someone new to the codebase

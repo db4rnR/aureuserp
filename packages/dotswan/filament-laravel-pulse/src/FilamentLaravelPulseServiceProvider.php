@@ -8,11 +8,11 @@ use Dotswan\FilamentLaravelPulse\Widgets\PulseCache;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseExceptions;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseQueues;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseServers;
+use Dotswan\FilamentLaravelPulse\Widgets\PulseSlowJobs;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseSlowOutGoingRequests;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseSlowQueries;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseSlowRequests;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseUsage;
-use Dotswan\FilamentLaravelPulse\Widgets\PulseSlowJobs;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
@@ -22,7 +22,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentLaravelPulseServiceProvider extends PackageServiceProvider
+final class FilamentLaravelPulseServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-laravel-pulse';
 
@@ -31,7 +31,7 @@ class FilamentLaravelPulseServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
 
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasCommands($this->getCommands())
             ->hasConfigFile('filament-laravel-pulse')
             ->hasInstallCommand(function (InstallCommand $command): void {
@@ -41,7 +41,7 @@ class FilamentLaravelPulseServiceProvider extends PackageServiceProvider
             });
 
         if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
+            $package->hasViews(self::$viewNamespace);
         }
     }
 

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
         'sections' => [
             'fields' => [
-                'skill-type'  => 'Skill Type',
-                'skill'       => 'Skill',
+                'skill-type' => 'Skill Type',
+                'skill' => 'Skill',
                 'skill-level' => 'Skill Level',
             ],
         ],
@@ -13,13 +15,13 @@ return [
 
     'table' => [
         'columns' => [
-            'skill-type'    => 'Skill Type',
-            'skill'         => 'Skill',
-            'skill-level'   => 'Skill Level',
+            'skill-type' => 'Skill Type',
+            'skill' => 'Skill',
+            'skill-level' => 'Skill Level',
             'level-percent' => 'Level Percent',
-            'created-by'    => 'Created By',
-            'user'          => 'User',
-            'created-at'    => 'Created At',
+            'created-by' => 'Created By',
+            'user' => 'User',
+            'created-at' => 'Created At',
         ],
 
         'groups' => [
@@ -31,30 +33,30 @@ return [
         ],
 
         'filters' => [
-            'activity-type'   => 'Activity Type',
+            'activity-type' => 'Activity Type',
             'activity-status' => 'Activity Status',
-            'has-delay'       => 'Has Delay',
+            'has-delay' => 'Has Delay',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Skill updated',
-                    'body'  => 'The skill has been updated successfully.',
+                    'body' => 'The skill has been updated successfully.',
                 ],
             ],
 
             'create' => [
                 'notification' => [
                     'title' => 'Skill created',
-                    'body'  => 'The skill has been created successfully.',
+                    'body' => 'The skill has been created successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Skill deleted',
-                    'body'  => 'The skill has been deleted successfully.',
+                    'body' => 'The skill has been deleted successfully.',
                 ],
             ],
         ],
@@ -63,7 +65,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Skills deleted',
-                    'body'  => 'The skills has been deleted successfully.',
+                    'body' => 'The skills has been deleted successfully.',
                 ],
             ],
         ],
@@ -71,9 +73,9 @@ return [
 
     'infolist' => [
         'entries' => [
-            'skill-type'    => 'Skill Type',
-            'skill'         => 'Skill',
-            'skill-level'   => 'Skill Level',
+            'skill-type' => 'Skill Type',
+            'skill' => 'Skill',
+            'skill-level' => 'Skill Level',
             'level-percent' => 'Level Percent',
         ],
     ],

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('partners_partners', function (Blueprint $table) {
+        Schema::create('partners_partners', function (Blueprint $table): void {
             $table->id();
             $table->string('account_type')->default('individual');
             $table->string('sub_type')->nullable()->index()->default('partner');

@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Accrual Type updated',
-        'body'  => 'The accrual Type has been updated successfully.',
+        'body' => 'The accrual Type has been updated successfully.',
     ],
 
     'header-actions' => [
         'delete' => [
             'notification' => [
                 'title' => 'Accrual Type deleted',
-                'body'  => 'The accrual type has been deleted successfully.',
+                'body' => 'The accrual type has been deleted successfully.',
             ],
         ],
     ],

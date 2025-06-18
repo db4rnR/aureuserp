@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Blog\Filament\Customer\Resources\CategoryResource\Pages;
 
 use Filament\Resources\Pages\ViewRecord;
@@ -11,7 +13,7 @@ use Webkul\Blog\Filament\Customer\Resources\CategoryResource;
 use Webkul\Blog\Models\Category;
 use Webkul\Blog\Models\Post;
 
-class ViewCategory extends ViewRecord
+final class ViewCategory extends ViewRecord
 {
     protected static string $resource = CategoryResource::class;
 
@@ -27,17 +29,17 @@ class ViewCategory extends ViewRecord
         return __('blogs::filament/customer/resources/category/pages/view-category.navigation.title');
     }
 
-    protected function getRecords(): Collection
+    private function getRecords(): Collection
     {
         return Category::all();
     }
 
-    protected function getPosts(): Paginator
+    private function getPosts(): Paginator
     {
         $query = Post::query()->where('category_id', $this->getRecord()->id)->where('is_published', 1);
 
         if (request()->has('search') && $search = request()->input('search')) {
-            $query->where(function (Builder $query) use ($search) {
+            $query->where(function (Builder $query) use ($search): void {
                 $query->where('title', 'like', "%{$search}%")
                     ->orWhere('content', 'like', "%{$search}%");
             });

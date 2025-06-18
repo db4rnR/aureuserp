@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'label' => 'Send PO By Email',
 
     'form' => [
         'fields' => [
-            'to'      => 'To',
+            'to' => 'To',
             'subject' => 'Subject',
             'message' => 'Message',
         ],
@@ -15,7 +17,7 @@ return [
         'notification' => [
             'success' => [
                 'title' => 'Email sent',
-                'body'  => 'The email has been sent successfully.',
+                'body' => 'The email has been sent successfully.',
             ],
         ],
     ],

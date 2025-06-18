@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('inventories_moves', function (Blueprint $table) {
+        Schema::table('inventories_moves', function (Blueprint $table): void {
             $table->boolean('is_refund')->default(0);
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('inventories_moves', function (Blueprint $table) {
+        Schema::table('inventories_moves', function (Blueprint $table): void {
             $table->dropColumn('is_refund');
         });
     }

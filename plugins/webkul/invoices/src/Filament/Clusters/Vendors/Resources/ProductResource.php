@@ -1,39 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Placeholder;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Section;
+use BackedEnum;
 use Filament\Forms\Components\Hidden;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ViewProduct;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\EditProduct;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ManageAttributes;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ManageVariants;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ListProducts;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\CreateProduct;
-use Filament\Forms;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Webkul\Account\Enums\TypeTaxUse;
 use Webkul\Account\Models\Tax;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Invoice\Enums\InvoicePolicy;
 use Webkul\Invoice\Filament\Clusters\Vendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\CreateProduct;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\EditProduct;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ListProducts;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ManageAttributes;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ManageVariants;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ViewProduct;
 use Webkul\Invoice\Models\Product;
 use Webkul\Product\Filament\Resources\ProductResource as BaseProductResource;
 use Webkul\Support\Models\UOM;
 
-class ProductResource extends BaseProductResource
+final class ProductResource extends BaseProductResource
 {
     use HasCustomFields;
 
     protected static ?string $model = Product::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -41,7 +42,7 @@ class ProductResource extends BaseProductResource
 
     protected static ?string $cluster = Vendors::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationLabel(): string
     {
@@ -70,8 +71,8 @@ class ProductResource extends BaseProductResource
 
             Placeholder::make('total_tax_inclusion')
                 ->hiddenLabel()
-                ->content(function (Get $get) {
-                    $price = floatval($get('price'));
+                ->content(function (Get $get): string {
+                    $price = (float) ($get('price'));
                     $selectedTaxIds = $get('accounts_product_taxes');
 
                     if (! $price || empty($selectedTaxIds)) {
@@ -83,7 +84,7 @@ class ProductResource extends BaseProductResource
                     $result = [
                         'total_excluded' => $price,
                         'total_included' => $price,
-                        'taxes'          => [],
+                        'taxes' => [],
                     ];
 
                     $totalTaxAmount = 0;
@@ -98,8 +99,8 @@ class ProductResource extends BaseProductResource
                         }
 
                         $result['taxes'][] = [
-                            'tax'    => $tax,
-                            'base'   => $price,
+                            'tax' => $tax,
+                            'base' => $price,
                             'amount' => $taxAmount,
                         ];
                     }
@@ -109,21 +110,21 @@ class ProductResource extends BaseProductResource
 
                     $parts = [];
 
-                    if ($result['total_included'] != $price) {
+                    if ($result['total_included'] !== $price) {
                         $parts[] = sprintf(
                             '%s Incl. Taxes',
                             number_format($result['total_included'], 2)
                         );
                     }
 
-                    if ($result['total_excluded'] != $price) {
+                    if ($result['total_excluded'] !== $price) {
                         $parts[] = sprintf(
                             '%s Excl. Taxes',
                             number_format($result['total_excluded'], 2)
                         );
                     }
 
-                    return ! empty($parts) ? '(= '.implode(', ', $parts).')' : ' ';
+                    return empty($parts) ? ' ' : '(= '.implode(', ', $parts).')';
                 }),
 
             Select::make('accounts_product_supplier_taxes')
@@ -146,7 +147,7 @@ class ProductResource extends BaseProductResource
 
         $policyComponent = [
             Section::make()
-                ->visible(fn (Get $get) => $get('sales_ok'))
+                ->visible(fn (Get $get): mixed => $get('sales_ok'))
                 ->schema([
                     Select::make('invoice_policy')
                         ->label(__('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.title'))
@@ -155,12 +156,10 @@ class ProductResource extends BaseProductResource
                         ->default(InvoicePolicy::ORDER->value),
                     Placeholder::make('invoice_policy_help')
                         ->hiddenLabel()
-                        ->content(function (Get $get) {
-                            return match ($get('invoice_policy')) {
-                                InvoicePolicy::ORDER->value    => __('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.ordered-policy'),
-                                InvoicePolicy::DELIVERY->value => __('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.delivered-policy'),
-                                default                        => '',
-                            };
+                        ->content(fn (Get $get) => match ($get('invoice_policy')) {
+                            InvoicePolicy::ORDER->value => __('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.ordered-policy'),
+                            InvoicePolicy::DELIVERY->value => __('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.delivered-policy'),
+                            default => '',
                         }),
                 ]),
         ];
@@ -195,12 +194,12 @@ class ProductResource extends BaseProductResource
     public static function getPages(): array
     {
         return [
-            'index'      => ListProducts::route('/'),
-            'create'     => CreateProduct::route('/create'),
-            'view'       => ViewProduct::route('/{record}'),
-            'edit'       => EditProduct::route('/{record}/edit'),
+            'index' => ListProducts::route('/'),
+            'create' => CreateProduct::route('/create'),
+            'view' => ViewProduct::route('/{record}'),
+            'edit' => EditProduct::route('/{record}/edit'),
             'attributes' => ManageAttributes::route('/{record}/attributes'),
-            'variants'   => ManageVariants::route('/{record}/variants'),
+            'variants' => ManageVariants::route('/{record}/variants'),
         ];
     }
 }

@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Models\Page;
 use Z3d0X\FilamentFabricator\Observers\PageRoutesObserver;
 
-describe(PageRoutesObserver::class, function () {
-    beforeEach(function () {
+describe(PageRoutesObserver::class, function (): void {
+    beforeEach(function (): void {
         // Cleanup the table before every test
         Page::query()->delete();
     });
 
-    describe('#created($page)', function () {
-        it('properly adds all the page\'s URLs to the mapping', function () {
+    describe('#created($page)', function (): void {
+        it('properly adds all the page\'s URLs to the mapping', function (): void {
             $beforeUrls = FilamentFabricator::getPageUrls();
 
             /**
@@ -38,7 +40,7 @@ describe(PageRoutesObserver::class, function () {
             expect($afterUrls)->toEqual($pageUrls);
         });
 
-        it('properly works on child pages', function () {
+        it('properly works on child pages', function (): void {
             /**
              * @var Page $page
              */
@@ -110,8 +112,8 @@ describe(PageRoutesObserver::class, function () {
         });
     });
 
-    describe('#updated($page)', function () {
-        it('removes the old URLs from the mapping', function () {
+    describe('#updated($page)', function (): void {
+        it('removes the old URLs from the mapping', function (): void {
             /**
              * @var Page $page
              */
@@ -132,7 +134,7 @@ describe(PageRoutesObserver::class, function () {
             expect($allUrls)->not->toContain(...$oldUrls);
         });
 
-        it('adds the new URLs to the mapping', function () {
+        it('adds the new URLs to the mapping', function (): void {
             /**
              * @var Page $page
              */
@@ -161,7 +163,7 @@ describe(PageRoutesObserver::class, function () {
             expect($newUrls)->toEqual($expected);
         });
 
-        it('properly updates all child (and descendant) routes', function () {
+        it('properly updates all child (and descendant) routes', function (): void {
             /**
              * @var Page $page
              */
@@ -260,7 +262,7 @@ describe(PageRoutesObserver::class, function () {
             expect($fromPages)->toEqual($expectedUrls);
         });
 
-        it('properly updates itself and descendants when changing which page is the parent (BelongsTo#associate and BelongsTo#dissociate)', function () {
+        it('properly updates itself and descendants when changing which page is the parent (BelongsTo#associate and BelongsTo#dissociate)', function (): void {
             /**
              * @var Page $page
              */
@@ -353,7 +355,7 @@ describe(PageRoutesObserver::class, function () {
             expect($fromPages)->toEqual($expectedUrls);
         });
 
-        it('properly updates itself and descendants when changing which page is the parent (Model#update)', function () {
+        it('properly updates itself and descendants when changing which page is the parent (Model#update)', function (): void {
             /**
              * @var Page $page
              */
@@ -448,7 +450,7 @@ describe(PageRoutesObserver::class, function () {
             expect($fromPages)->toEqual($expectedUrls);
         });
 
-        it('properly updates itself and descendants when changing which page is the parent (manual change and Model#save)', function () {
+        it('properly updates itself and descendants when changing which page is the parent (manual change and Model#save)', function (): void {
             /**
              * @var Page $page
              */
@@ -540,8 +542,8 @@ describe(PageRoutesObserver::class, function () {
         });
     });
 
-    describe('#deleting($page)', function () {
-        it('removes the page\'s URLs from the mapping', function () {
+    describe('#deleting($page)', function (): void {
+        it('removes the page\'s URLs from the mapping', function (): void {
             /**
              * @var Page $page
              */
@@ -563,7 +565,7 @@ describe(PageRoutesObserver::class, function () {
             expect($afterUrls)->toBeEmpty();
         });
 
-        it('sets the childrens\' parent to null if $page had no parent', function () {
+        it('sets the childrens\' parent to null if $page had no parent', function (): void {
             /**
              * @var Page $page
              */
@@ -598,7 +600,7 @@ describe(PageRoutesObserver::class, function () {
             expect($child->getAllUrls())->toEqual($expected);
         });
 
-        it('attaches the children to $page\'s parent if it had one', function () {
+        it('attaches the children to $page\'s parent if it had one', function (): void {
             /**
              * @var Page $page
              */

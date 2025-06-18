@@ -8,9 +8,9 @@ use Closure;
 
 trait CanBeCentralApp
 {
-    protected bool | Closure $isCentralApp = false;
+    protected bool|Closure $isCentralApp = false;
 
-    public function centralApp(bool | Closure $condition = true): static
+    public function centralApp(bool|Closure $condition = true): static
     {
         $this->isCentralApp = $condition;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -11,7 +13,7 @@ use Webkul\Partner\Models\Industry;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 
-class JobPosition extends BaseJobPosition
+final class JobPosition extends BaseJobPosition
 {
     /**
      * Create a new Eloquent model instance.
@@ -32,7 +34,7 @@ class JobPosition extends BaseJobPosition
 
         $this->mergeCasts([
             'date_from' => 'datetime',
-            'date_to'   => 'datetime',
+            'date_to' => 'datetime',
         ]);
 
         parent::__construct($attributes);
@@ -68,58 +70,50 @@ class JobPosition extends BaseJobPosition
         return $this->belongsTo(Industry::class, 'industry_id');
     }
 
-    protected function noOfEmployee(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                return once(function () {
-                    return $this->employees()
-                        ->where('is_active', true)
-                        ->count();
-                });
-            }
-        );
-    }
-
-    protected function noOfHiredEmployee(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                return once(function () {
-                    return $this->applications()
-                        ->where(function ($query) {
-                            $query->whereNotNull('date_closed')
-                                ->where('is_active', true);
-                        })
-                        ->count();
-                });
-            }
-        );
-    }
-
-    protected function expectedEmployees(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                $currentEmployees = $this->getAttributeValue('no_of_employee');
-
-                return $currentEmployees + ($this->no_of_recruitment ?? 0);
-            }
-        );
-    }
-
     public function applications()
     {
         return $this->hasMany(Applicant::class, 'job_id');
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::updated(function ($jobPosition) {
+        self::updated(function ($jobPosition): void {
             cache()->forget("job_position_{$jobPosition->id}_employee_count");
             cache()->forget("job_position_{$jobPosition->id}_hired_count");
         });
+    }
+
+    private function noOfEmployee(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => once(fn () => $this->employees()
+                ->where('is_active', true)
+                ->count())
+        );
+    }
+
+    private function noOfHiredEmployee(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => once(fn () => $this->applications()
+                ->where(function ($query): void {
+                    $query->whereNotNull('date_closed')
+                        ->where('is_active', true);
+                })
+                ->count())
+        );
+    }
+
+    private function expectedEmployees(): Attribute
+    {
+        return Attribute::make(
+            get: function (): float|int|array {
+                $currentEmployees = $this->getAttributeValue('no_of_employee');
+
+                return $currentEmployees + ($this->no_of_recruitment ?? 0);
+            }
+        );
     }
 }

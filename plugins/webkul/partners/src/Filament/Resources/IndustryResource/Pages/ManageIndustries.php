@@ -1,19 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Partner\Filament\Resources\IndustryResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\IndustryResource;
 use Webkul\Partner\Models\Industry;
 
-class ManageIndustries extends ManageRecords
+final class ManageIndustries extends ManageRecords
 {
     protected static string $resource = IndustryResource::class;
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make(__('partners::filament/resources/industry/pages/manage-industries.tabs.all'))
+                ->badge(Industry::count()),
+            'archived' => Tab::make(__('partners::filament/resources/industry/pages/manage-industries.tabs.archived'))
+                ->badge(Industry::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
+        ];
+    }
 
     protected function getHeaderActions(): array
     {
@@ -32,19 +44,6 @@ class ManageIndustries extends ManageRecords
                         ->title(__('partners::filament/resources/industry/pages/manage-industries.header-actions.create.notification.title'))
                         ->body(__('partners::filament/resources/industry/pages/manage-industries.header-actions.create.notification.body')),
                 ),
-        ];
-    }
-
-    public function getTabs(): array
-    {
-        return [
-            'all' => Tab::make(__('partners::filament/resources/industry/pages/manage-industries.tabs.all'))
-                ->badge(Industry::count()),
-            'archived' => Tab::make(__('partners::filament/resources/industry/pages/manage-industries.tabs.archived'))
-                ->badge(Industry::onlyTrashed()->count())
-                ->modifyQueryUsing(function ($query) {
-                    return $query->onlyTrashed();
-                }),
         ];
     }
 }

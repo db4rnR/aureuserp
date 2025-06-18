@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
         'sections' => [
             'general' => [
-                'title'  => 'General',
+                'title' => 'General',
 
                 'fields' => [
                     'name' => 'Name',
@@ -13,11 +15,11 @@ return [
             ],
 
             'options' => [
-                'title'  => 'Options',
+                'title' => 'Options',
 
                 'fields' => [
-                    'name'        => 'Name',
-                    'color'       => 'Color',
+                    'name' => 'Name',
+                    'color' => 'Color',
                     'extra-price' => 'Extra Price',
                 ],
             ],
@@ -26,15 +28,15 @@ return [
 
     'table' => [
         'columns' => [
-            'name'        => 'Name',
-            'type'        => 'Type',
-            'deleted-at'  => 'Deleted At',
-            'created-at'  => 'Created At',
-            'updated-at'  => 'Updated At',
+            'name' => 'Name',
+            'type' => 'Type',
+            'deleted-at' => 'Deleted At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'type'       => 'Type',
+            'type' => 'Type',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
@@ -47,14 +49,14 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Attribute restored',
-                    'body'  => 'The attribute has been restored successfully.',
+                    'body' => 'The attribute has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Attribute deleted',
-                    'body'  => 'The attribute has been deleted successfully.',
+                    'body' => 'The attribute has been deleted successfully.',
                 ],
             ],
 
@@ -62,12 +64,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Attribute force deleted',
-                        'body'  => 'The attribute has been force deleted successfully.',
+                        'body' => 'The attribute has been force deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Attribute could not be deleted',
-                        'body'  => 'The attribute cannot be deleted because it is currently in use.',
+                        'body' => 'The attribute cannot be deleted because it is currently in use.',
                     ],
                 ],
             ],
@@ -77,14 +79,14 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Attributes restored',
-                    'body'  => 'The attributes has been restored successfully.',
+                    'body' => 'The attributes has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Attributes deleted',
-                    'body'  => 'The attributes has been deleted successfully.',
+                    'body' => 'The attributes has been deleted successfully.',
                 ],
             ],
 
@@ -92,12 +94,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Attributes force deleted',
-                        'body'  => 'The attributes has been force deleted successfully.',
+                        'body' => 'The attributes has been force deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Attributes could not be deleted',
-                        'body'  => 'The attributes cannot be deleted because they are currently in use.',
+                        'body' => 'The attributes cannot be deleted because they are currently in use.',
                     ],
                 ],
             ],
@@ -119,7 +121,7 @@ return [
                 'title' => 'Record Information',
 
                 'entries' => [
-                    'creator'    => 'Created By',
+                    'creator' => 'Created By',
                     'created_at' => 'Created At',
                     'updated_at' => 'Last Updated At',
                 ],

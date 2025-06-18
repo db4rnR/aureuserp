@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\Curator\Database\Factories;
 
 use Awcodes\Curator\Models\Media;
@@ -8,7 +10,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 
-class MediaFactory extends Factory
+final class MediaFactory extends Factory
 {
     protected $model = Media::class;
 
@@ -28,7 +30,7 @@ class MediaFactory extends Factory
         };
     }
 
-    public function private(): MediaFactory
+    public function private(): self
     {
         return $this->state(function (array $attributes) {
             return [
@@ -37,7 +39,7 @@ class MediaFactory extends Factory
         });
     }
 
-    public function randomTimestamps(): MediaFactory
+    public function randomTimestamps(): self
     {
         return $this->state(function (array $attributes) {
             return [
@@ -92,16 +94,16 @@ class MediaFactory extends Factory
     public function handleSvg(): array
     {
         $fakeFile = UploadedFile::fake()->create(
-            name: $this->faker->word . '.svg',
+            name: $this->faker->word.'.svg',
             kilobytes: $this->faker->numberBetween(1, 100),
             mimeType: 'image/svg+xml',
         );
 
-        Storage::disk($this->getDisk())->put($this->getDirectory() . '/' . $fakeFile->hashName(), $fakeFile->getContent());
+        Storage::disk($this->getDisk())->put($this->getDirectory().'/'.$fakeFile->hashName(), $fakeFile->getContent());
 
         return [
             'name' => pathinfo($fakeFile->hashName(), PATHINFO_FILENAME),
-            'path' => $this->getDirectory() . '/' . $fakeFile->hashName(),
+            'path' => $this->getDirectory().'/'.$fakeFile->hashName(),
             'ext' => 'svg',
             'type' => $fakeFile->getMimeType(),
             'alt' => $this->faker->words(rand(3, 8), true),
@@ -120,16 +122,16 @@ class MediaFactory extends Factory
     public function handleDocument(): array
     {
         $fakeFile = UploadedFile::fake()->create(
-            name: $this->faker->word . '.pdf',
+            name: $this->faker->word.'.pdf',
             kilobytes: $this->faker->numberBetween(1, 100),
             mimeType: 'application/pdf',
         );
 
-        Storage::disk($this->getDisk())->put($this->getDirectory() . '/' . $fakeFile->hashName(), $fakeFile->getContent());
+        Storage::disk($this->getDisk())->put($this->getDirectory().'/'.$fakeFile->hashName(), $fakeFile->getContent());
 
         return [
             'name' => pathinfo($fakeFile->hashName(), PATHINFO_FILENAME),
-            'path' => $this->getDirectory() . '/' . $fakeFile->hashName(),
+            'path' => $this->getDirectory().'/'.$fakeFile->hashName(),
             'ext' => 'pdf',
             'type' => $fakeFile->getMimeType(),
             'alt' => $this->faker->words(rand(3, 8), true),
@@ -148,16 +150,16 @@ class MediaFactory extends Factory
     public function handleVideo(): array
     {
         $fakeFile = UploadedFile::fake()->create(
-            name: $this->faker->word . '.mp4',
+            name: $this->faker->word.'.mp4',
             kilobytes: $this->faker->numberBetween(1, 100),
             mimeType: 'video/mp4',
         );
 
-        Storage::disk($this->getDisk())->put($this->getDirectory() . '/' . $fakeFile->hashName(), $fakeFile->getContent());
+        Storage::disk($this->getDisk())->put($this->getDirectory().'/'.$fakeFile->hashName(), $fakeFile->getContent());
 
         return [
             'name' => pathinfo($fakeFile->hashName(), PATHINFO_FILENAME),
-            'path' => $this->getDirectory() . '/' . $fakeFile->hashName(),
+            'path' => $this->getDirectory().'/'.$fakeFile->hashName(),
             'ext' => 'mp4',
             'type' => $fakeFile->getMimeType(),
             'alt' => $this->faker->words(rand(3, 8), true),
@@ -179,16 +181,16 @@ class MediaFactory extends Factory
         $height = $this->faker->numberBetween(100, 2000);
 
         $fakeFile = UploadedFile::fake()->image(
-            name: $this->faker->word . '.jpg',
+            name: $this->faker->word.'.jpg',
             width: $width,
             height: $height,
         );
 
-        Storage::disk($this->getDisk())->put($this->getDirectory() . '/' . $fakeFile->hashName(), $fakeFile->getContent());
+        Storage::disk($this->getDisk())->put($this->getDirectory().'/'.$fakeFile->hashName(), $fakeFile->getContent());
 
         return [
             'name' => pathinfo($fakeFile->hashName(), PATHINFO_FILENAME),
-            'path' => $this->getDirectory() . '/' . $fakeFile->hashName(),
+            'path' => $this->getDirectory().'/'.$fakeFile->hashName(),
             'ext' => 'jpg',
             'type' => $fakeFile->getMimeType(),
             'alt' => $this->faker->words(rand(3, 8), true),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Attributes;
 
 use Attribute;
@@ -23,15 +25,14 @@ use Attribute;
  * ```
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-class PluginTestAttribute
+final readonly class PluginTestAttribute
 {
     /**
      * Constructor.
      *
-     * @param string $pluginName The name of the plugin being tested
+     * @param  string  $pluginName  The name of the plugin being tested
      */
     public function __construct(
-        public readonly string $pluginName
-    ) {
-    }
+        public string $pluginName
+    ) {}
 }

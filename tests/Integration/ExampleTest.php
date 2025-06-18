@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
  * Example integration test that demonstrates testing database interactions.
  */
-it('can create and retrieve a user', function () {
+it('can create and retrieve a user', function (): void {
     // This is just an example. Adjust according to your actual User model structure.
     $user = User::factory()->create([
         'name' => 'Test User',

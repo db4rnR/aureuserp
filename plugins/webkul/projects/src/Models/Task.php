@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kirschbaum\Commentions\Contracts\Commentable;
+use Kirschbaum\Commentions\HasComments;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Chatter\Traits\HasChatter;
@@ -19,9 +23,16 @@ use Webkul\Security\Models\Scopes\UserPermissionScope;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Task extends Model implements Sortable
+final class Task extends Model implements Commentable, Sortable
 {
-    use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
+    use HasChatter, HasComments, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
+
+    public string $recordTitleAttribute = 'title';
+
+    public array $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     /**
      * Table name.
@@ -69,20 +80,18 @@ class Task extends Model implements Sortable
      * @var string
      */
     protected $casts = [
-        'deadline'            => 'datetime',
-        'is_active'           => 'boolean',
-        'tags'                => 'array',
-        'deadline'            => 'datetime',
-        'priority'            => 'boolean',
-        'is_active'           => 'boolean',
-        'is_recurring'        => 'boolean',
-        'working_hours_open'  => 'float',
+        'deadline' => 'datetime',
+        'is_active' => 'boolean',
+        'tags' => 'array',
+        'priority' => 'boolean',
+        'is_recurring' => 'boolean',
+        'working_hours_open' => 'float',
         'working_hours_close' => 'float',
-        'allocated_hours'     => 'float',
-        'remaining_hours'     => 'float',
-        'effective_hours'     => 'float',
-        'total_hours_spent'   => 'float',
-        'overtime'            => 'float',
+        'allocated_hours' => 'float',
+        'remaining_hours' => 'float',
+        'effective_hours' => 'float',
+        'total_hours_spent' => 'float',
+        'overtime' => 'float',
     ];
 
     protected array $logAttributes = [
@@ -97,19 +106,12 @@ class Task extends Model implements Sortable
         'is_recurring',
         'deadline',
         'allocated_hours',
-        'stage.name'   => 'Stage',
+        'stage.name' => 'Stage',
         'project.name' => 'Project',
         'partner.name' => 'Partner',
         'parent.title' => 'Parent',
         'company.name' => 'Company',
         'creator.name' => 'Creator',
-    ];
-
-    public string $recordTitleAttribute = 'title';
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function parent(): BelongsTo
@@ -167,19 +169,19 @@ class Task extends Model implements Sortable
         return $this->hasMany(Timesheet::class);
     }
 
-    protected static function booted()
+    protected static function booted(): void
     {
-        static::addGlobalScope(new UserPermissionScope('users'));
+        self::addGlobalScope(new UserPermissionScope('users'));
     }
 
     /**
      * Bootstrap any application services.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::updated(function ($task) {
+        self::updated(function ($task): void {
             $task->timesheets()->update([
                 'project_id' => $task->project_id,
                 'partner_id' => $task->partner_id ?? $task->project?->partner_id,

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-class UTMMediumSeeder extends Seeder
+final class UTMMediumSeeder extends Seeder
 {
     public function run(): void
     {
@@ -26,13 +28,11 @@ class UTMMediumSeeder extends Seeder
 
         $user = User::first();
 
-        DB::table('utm_mediums')->insert(collect($mediums)->map(function ($medium) use ($user) {
-            return [
-                'name'       => $medium,
-                'creator_id' => $user?->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        })->toArray());
+        DB::table('utm_mediums')->insert(collect($mediums)->map(fn ($medium): array => [
+            'name' => $medium,
+            'creator_id' => $user?->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ])->toArray());
     }
 }

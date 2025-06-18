@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +15,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Leave extends Model
+final class Leave extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 
@@ -51,30 +53,30 @@ class Leave extends Model
     ];
 
     protected array $logAttributes = [
-        'user.name'                => 'User',
-        'manger.name'              => 'Manager',
-        'holidayStatus.name'       => 'Holiday Status',
-        'employee.name'            => 'Employee',
-        'employeeCompany.name'     => 'Employee Company',
-        'department.name'          => 'Department',
-        'calendar.name'            => 'Calendar',
-        'firstApprover.name'       => 'First Approver',
-        'lastApprover.name'        => 'Last Approver',
-        'private_name'             => 'Description',
-        'state'                    => 'State',
-        'duration_display'         => 'Duration Display',
+        'user.name' => 'User',
+        'manger.name' => 'Manager',
+        'holidayStatus.name' => 'Holiday Status',
+        'employee.name' => 'Employee',
+        'employeeCompany.name' => 'Employee Company',
+        'department.name' => 'Department',
+        'calendar.name' => 'Calendar',
+        'firstApprover.name' => 'First Approver',
+        'lastApprover.name' => 'Last Approver',
+        'private_name' => 'Description',
+        'state' => 'State',
+        'duration_display' => 'Duration Display',
         'request_date_from_period' => 'Request Date From Period',
-        'request_date_from'        => 'Request Date From',
-        'request_date_to'          => 'Request Date To',
-        'notes'                    => 'Notes',
-        'request_unit_half'        => 'Request Unit Half',
-        'request_unit_hours'       => 'Request Unit Hours',
-        'date_from'                => 'Date From',
-        'date_to'                  => 'Date To',
-        'number_of_days'           => 'Number Of Days',
-        'number_of_hours'          => 'Number Of Hours',
-        'request_hour_from'        => 'Request Hour From',
-        'request_hour_to'          => 'Request Hour To',
+        'request_date_from' => 'Request Date From',
+        'request_date_to' => 'Request Date To',
+        'notes' => 'Notes',
+        'request_unit_half' => 'Request Unit Half',
+        'request_unit_hours' => 'Request Unit Hours',
+        'date_from' => 'Date From',
+        'date_to' => 'Date To',
+        'number_of_days' => 'Number Of Days',
+        'number_of_hours' => 'Number Of Hours',
+        'request_hour_from' => 'Request Hour From',
+        'request_hour_to' => 'Request Hour To',
     ];
 
     public function user(): BelongsTo

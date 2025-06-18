@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Enums;
 
 use Filament\Support\Contracts\HasColor;
@@ -17,27 +19,27 @@ enum WorkLocation: string implements HasColor, HasIcon, HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::Home   => __('employees::enums/work-location.home'),
+            self::Home => __('employees::enums/work-location.home'),
             self::Office => __('employees::enums/work-location.office'),
-            self::Other  => __('employees::enums/work-location.other'),
+            self::Other => __('employees::enums/work-location.other'),
         };
     }
 
     public function getColor(): string|array|null
     {
         return match ($this) {
-            self::Home   => 'success',
+            self::Home => 'success',
             self::Office => 'warning',
-            self::Other  => 'info',
+            self::Other => 'info',
         };
     }
 
     public function getIcon(): ?string
     {
         return match ($this) {
-            self::Home   => 'heroicon-m-home',
+            self::Home => 'heroicon-m-home',
             self::Office => 'heroicon-m-building-office-2',
-            self::Other  => 'heroicon-m-map-pin',
+            self::Other => 'heroicon-m-map-pin',
         };
     }
 }

@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Clusters\Configurations\Resources\MilestoneResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\MilestoneResource;
 
-class ManageMilestones extends ManageRecords
+final class ManageMilestones extends ManageRecords
 {
     protected static string $resource = MilestoneResource::class;
 

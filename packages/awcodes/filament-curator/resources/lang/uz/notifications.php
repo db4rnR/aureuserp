@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'Ma\'lumot muvaffaqiyatli yangilandi.',
     'update_error' => 'Ma\'lumotni yangilashda xatolik yuz berdi.',

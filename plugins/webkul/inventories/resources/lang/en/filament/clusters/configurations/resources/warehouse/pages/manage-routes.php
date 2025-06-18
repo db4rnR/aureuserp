@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Routes',
 
@@ -10,7 +12,7 @@ return [
 
                 'notification' => [
                     'title' => 'Route created',
-                    'body'  => 'The route has been created successfully.',
+                    'body' => 'The route has been created successfully.',
                 ],
             ],
         ],

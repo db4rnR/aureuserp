@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Skills',
 
@@ -13,10 +15,10 @@ return [
                 'title' => 'Skill Details',
 
                 'fields' => [
-                    'employee'       => 'Employee',
-                    'skill'          => 'Skill',
-                    'skill-level'    => 'Level',
-                    'skill-type'     => 'Skill Type',
+                    'employee' => 'Employee',
+                    'skill' => 'Skill',
+                    'skill-level' => 'Level',
+                    'skill-type' => 'Skill Type',
                 ],
             ],
             'addition-information' => [
@@ -32,30 +34,30 @@ return [
 
     'table' => [
         'columns' => [
-            'id'              => 'ID',
-            'employee'        => 'Employee',
-            'skill'           => 'Skill',
-            'skill-level'     => 'Level',
-            'skill-type'      => 'Skill Type',
-            'user'            => 'User',
-            'proficiency'     => 'Proficiency',
-            'created-by'      => 'Created By',
-            'created-at'      => 'Created At',
+            'id' => 'ID',
+            'employee' => 'Employee',
+            'skill' => 'Skill',
+            'skill-level' => 'Level',
+            'skill-type' => 'Skill Type',
+            'user' => 'User',
+            'proficiency' => 'Proficiency',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
         ],
 
         'filters' => [
-            'employee'        => 'Employee',
-            'skill'           => 'Skill',
-            'skill-level'     => 'Level',
-            'skill-type'      => 'Skill Type',
-            'user'            => 'User',
-            'created-by'      => 'Created By',
-            'created-at'      => 'Created At',
-            'updated-at'      => 'Updated At',
+            'employee' => 'Employee',
+            'skill' => 'Skill',
+            'skill-level' => 'Level',
+            'skill-type' => 'Skill Type',
+            'user' => 'User',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
-            'employee'   => 'Employee',
+            'employee' => 'Employee',
             'skill-type' => 'Skill Type',
         ],
     ],
@@ -66,10 +68,10 @@ return [
                 'title' => 'Skill Details',
 
                 'entries' => [
-                    'employee'        => 'Employee',
-                    'skill'           => 'Skill',
-                    'skill-level'     => 'Level',
-                    'skill-type'      => 'Skill Type',
+                    'employee' => 'Employee',
+                    'skill' => 'Skill',
+                    'skill-level' => 'Level',
+                    'skill-type' => 'Skill Type',
                 ],
             ],
 

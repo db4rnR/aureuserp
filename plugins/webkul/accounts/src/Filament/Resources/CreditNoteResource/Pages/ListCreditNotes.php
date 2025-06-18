@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\CreditNoteResource\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +12,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ListInvoices as List
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListCreditNotes extends ListRecords
+final class ListCreditNotes extends ListRecords
 {
     use HasTableViews;
 

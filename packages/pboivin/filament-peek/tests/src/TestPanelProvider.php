@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests;
 
 use Filament\Http\Middleware\Authenticate;
@@ -19,7 +21,7 @@ use Pboivin\FilamentPeek\FilamentPeekPlugin;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource;
 
-class TestPanelProvider extends PanelProvider
+final class TestPanelProvider extends PanelProvider
 {
     public static $should_load_plugin_assets = true;
 

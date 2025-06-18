@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Test Performance Measurement Script
  *
@@ -45,11 +47,11 @@ if ($filter) {
 }
 
 if ($parallel) {
-    $command .= " --parallel";
+    $command .= ' --parallel';
 }
 
 // Add timing flag
-$command .= " --debug";
+$command .= ' --debug';
 
 echo "Running command: {$command}\n";
 
@@ -66,7 +68,7 @@ $endTime = microtime(true);
 $executionTime = $endTime - $startTime;
 
 // Display results
-echo "\nTest Execution Time: " . number_format($executionTime, 2) . " seconds\n";
+echo "\nTest Execution Time: ".number_format($executionTime, 2)." seconds\n";
 
 // Parse the output to extract more detailed timing information
 $testCount = 0;
@@ -84,26 +86,28 @@ foreach ($output as $line) {
 
     // Extract individual test times if available
     if (preg_match('/(\d+\.\d+)s (\S+)/', $line, $matches)) {
-        $time = floatval($matches[1]);
+        $time = (float) ($matches[1]);
         $test = $matches[2];
         $slowestTests[$test] = $time;
     }
 }
 
 // Sort and display the slowest tests
-if (!empty($slowestTests)) {
+if (! empty($slowestTests)) {
     arsort($slowestTests);
     echo "\nSlowest Tests:\n";
     $count = 0;
     foreach ($slowestTests as $test => $time) {
-        echo "{$test}: " . number_format($time, 2) . "s\n";
+        echo "{$test}: ".number_format($time, 2)."s\n";
         $count++;
-        if ($count >= 5) break; // Show only the 5 slowest tests
+        if ($count >= 5) {
+            break;
+        } // Show only the 5 slowest tests
     }
 }
 
 // Save or compare results
-$resultsFile = __DIR__ . '/test-performance-baseline.json';
+$resultsFile = __DIR__.'/test-performance-baseline.json';
 
 if ($baseline) {
     $results = [
@@ -123,14 +127,14 @@ if ($baseline) {
     $percentChange = ($timeDiff / $baseline['executionTime']) * 100;
 
     echo "\nComparison with Baseline:\n";
-    echo "Baseline Time: " . number_format($baseline['executionTime'], 2) . "s\n";
-    echo "Current Time: " . number_format($executionTime, 2) . "s\n";
-    echo "Difference: " . number_format($timeDiff, 2) . "s (" . number_format($percentChange, 2) . "%)\n";
+    echo 'Baseline Time: '.number_format($baseline['executionTime'], 2)."s\n";
+    echo 'Current Time: '.number_format($executionTime, 2)."s\n";
+    echo 'Difference: '.number_format($timeDiff, 2).'s ('.number_format($percentChange, 2)."%)\n";
 
     if ($percentChange < 0) {
-        echo "Performance Improvement: " . number_format(abs($percentChange), 2) . "%\n";
+        echo 'Performance Improvement: '.number_format(abs($percentChange), 2)."%\n";
     } else {
-        echo "Performance Regression: " . number_format($percentChange, 2) . "%\n";
+        echo 'Performance Regression: '.number_format($percentChange, 2)."%\n";
     }
 }
 

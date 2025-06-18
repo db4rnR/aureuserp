@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\FiscalPositionResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -7,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\FiscalPositionResource;
 
-class CreateFiscalPosition extends CreateRecord
+final class CreateFiscalPosition extends CreateRecord
 {
     protected static string $resource = FiscalPositionResource::class;
 

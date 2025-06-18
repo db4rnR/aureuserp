@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Tags',
 
@@ -10,25 +12,25 @@ return [
 
     'form' => [
         'fields' => [
-            'name'             => 'Name',
+            'name' => 'Name',
             'name-placeholder' => 'Enter the name of the tags',
-            'color'            => 'Color',
+            'color' => 'Color',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'id'         => 'ID',
-            'name'       => 'Name',
-            'color'      => 'Color',
+            'id' => 'ID',
+            'name' => 'Name',
+            'color' => 'Color',
             'created-by' => 'Created By',
             'created-at' => 'Created At',
             'updated-at' => 'Updated At',
         ],
 
         'filters' => [
-            'name'       => 'Name',
-            'employee'   => 'Employee',
+            'name' => 'Name',
+            'employee' => 'Employee',
             'created-by' => 'Created By',
             'updated-at' => 'Updated At',
             'created-at' => 'Created At',
@@ -38,14 +40,14 @@ return [
             'edit' => [
                 'notification' => [
                     'title' => 'Tags updated',
-                    'body'  => 'The tags has been updated successfully.',
+                    'body' => 'The tags has been updated successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Tags deleted',
-                    'body'  => 'The tags has been deleted successfully.',
+                    'body' => 'The tags has been deleted successfully.',
                 ],
             ],
         ],
@@ -54,7 +56,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Applicant Categories deleted',
-                    'body'  => 'The applicant Categories has been deleted successfully.',
+                    'body' => 'The applicant Categories has been deleted successfully.',
                 ],
             ],
         ],
@@ -63,14 +65,14 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Tags created',
-                    'body'  => 'The tags has been created successfully.',
+                    'body' => 'The tags has been created successfully.',
                 ],
             ],
         ],
     ],
 
     'infolist' => [
-        'name'  => 'Name',
+        'name' => 'Name',
         'color' => 'Color',
     ],
 ];

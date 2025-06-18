@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use FilamentTiptapEditor\TiptapConverter;
 
 if (! function_exists('tiptap_converter')) {

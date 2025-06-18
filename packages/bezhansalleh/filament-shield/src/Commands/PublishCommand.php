@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Commands;
 
 use BezhanSalleh\FilamentShield\Commands\Concerns\CanBeProhibitable;
@@ -14,7 +16,7 @@ use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\select;
 
 #[AsCommand(name: 'shield:publish', description: "Publish Shield's Resource.")]
-class PublishCommand extends Command
+final class PublishCommand extends Command
 {
     use CanBeProhibitable;
     use CanManipulateFiles;
@@ -42,10 +44,10 @@ class PublishCommand extends Command
             : Arr::first($resourceNamespaces);
 
         $newResourcePath = (count($resourceDirectories) > 1)
-            ? $resourceDirectories[array_search($newResourceNamespace, $resourceNamespaces)]
+            ? $resourceDirectories[array_search($newResourceNamespace, $resourceNamespaces, true)]
             : Arr::first($resourceDirectories);
 
-        $roleResourcePath = str(DIRECTORY_SEPARATOR . 'RoleResource.php')
+        $roleResourcePath = str(DIRECTORY_SEPARATOR.'RoleResource.php')
             ->prepend($newResourcePath)
             ->replace(['\\', '/'], DIRECTORY_SEPARATOR)
             ->toString();
@@ -58,15 +60,15 @@ class PublishCommand extends Command
         }
 
         $filesystem->ensureDirectoryExists($newResourcePath);
-        $filesystem->copyDirectory(__DIR__ . '/../Resources', $newResourcePath);
+        $filesystem->copyDirectory(__DIR__.'/../Resources', $newResourcePath);
 
         $currentNamespace = 'BezhanSalleh\\FilamentShield\\Resources';
 
         $this->replaceInFile($roleResourcePath, $currentNamespace, $newResourceNamespace);
-        $this->replaceInFile($newResourcePath . '/RoleResource/Pages/CreateRole.php', $currentNamespace, $newResourceNamespace);
-        $this->replaceInFile($newResourcePath . '/RoleResource/Pages/EditRole.php', $currentNamespace, $newResourceNamespace);
-        $this->replaceInFile($newResourcePath . '/RoleResource/Pages/ViewRole.php', $currentNamespace, $newResourceNamespace);
-        $this->replaceInFile($newResourcePath . '/RoleResource/Pages/ListRoles.php', $currentNamespace, $newResourceNamespace);
+        $this->replaceInFile($newResourcePath.'/RoleResource/Pages/CreateRole.php', $currentNamespace, $newResourceNamespace);
+        $this->replaceInFile($newResourcePath.'/RoleResource/Pages/EditRole.php', $currentNamespace, $newResourceNamespace);
+        $this->replaceInFile($newResourcePath.'/RoleResource/Pages/ViewRole.php', $currentNamespace, $newResourceNamespace);
+        $this->replaceInFile($newResourcePath.'/RoleResource/Pages/ListRoles.php', $currentNamespace, $newResourceNamespace);
 
         $this->components->info("Shield's Resource have been published successfully!");
 

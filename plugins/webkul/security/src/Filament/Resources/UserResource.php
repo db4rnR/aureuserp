@@ -1,54 +1,53 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Filament\Resources;
 
-use Filament\Schemas\Schema;
+use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Toggle;
-use Filament\Actions\Action;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Grid;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\IconEntry;
-use Webkul\Security\Filament\Resources\UserResource\Pages\ListUsers;
-use Webkul\Security\Filament\Resources\UserResource\Pages\CreateUser;
-use Webkul\Security\Filament\Resources\UserResource\Pages\EditUser;
-use Webkul\Security\Filament\Resources\UserResource\Pages\ViewUsers;
-use Filament\Forms;
-use Filament\Infolists;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Webkul\Security\Enums\PermissionType;
-use Webkul\Security\Filament\Resources\UserResource\Pages;
+use Webkul\Security\Filament\Resources\UserResource\Pages\CreateUser;
+use Webkul\Security\Filament\Resources\UserResource\Pages\EditUser;
+use Webkul\Security\Filament\Resources\UserResource\Pages\ListUsers;
+use Webkul\Security\Filament\Resources\UserResource\Pages\ViewUsers;
 use Webkul\Security\Models\User;
 
-class UserResource extends Resource
+final class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?int $navigationSort = 4;
 
@@ -70,7 +69,7 @@ class UserResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('security::filament/resources/user.global-search.name')  => $record->name ?? '—',
+            __('security::filament/resources/user.global-search.name') => $record->name ?? '—',
             __('security::filament/resources/user.global-search.email') => $record->email ?? '—',
         ];
     }
@@ -107,7 +106,7 @@ class UserResource extends Resource
                                             ->label(__('security::filament/resources/user.form.sections.general-information.fields.password-confirmation'))
                                             ->password()
                                             ->hiddenOn('edit')
-                                            ->rule('required', fn ($get) => (bool) $get('password'))
+                                            ->rule('required', fn ($get): bool => (bool) $get('password'))
                                             ->same('password'),
                                     ])
                                     ->columns(2),
@@ -176,14 +175,12 @@ class UserResource extends Resource
                                             ->relationship('defaultCompany', 'name')
                                             ->required()
                                             ->searchable()
-                                            ->createOptionForm(fn (Schema $schema) => CompanyResource::form($schema))
-                                            ->createOptionAction(function (Action $action) {
+                                            ->createOptionForm(fn (Schema $schema): Schema => CompanyResource::form($schema))
+                                            ->createOptionAction(function (Action $action): void {
                                                 $action
-                                                    ->fillForm(function (array $arguments): array {
-                                                        return [
-                                                            'user_id' => Auth::id(),
-                                                        ];
-                                                    })
+                                                    ->fillForm(fn (array $arguments): array => [
+                                                        'user_id' => Auth::id(),
+                                                    ])
                                                     ->mutateDataUsing(function (array $data) {
                                                         $data['user_id'] = Auth::id();
 
@@ -330,7 +327,7 @@ class UserResource extends Resource
                 ]),
             ])
             ->defaultSort('created_at', 'desc')
-            ->modifyQueryUsing(function ($query) {
+            ->modifyQueryUsing(function ($query): void {
                 $query->with('roles', 'teams', 'defaultCompany', 'allowedCompanies');
             })
             ->emptyStateActions([
@@ -380,7 +377,7 @@ class UserResource extends Resource
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/user.infolist.sections.permissions.entries.roles'))
                                             ->listWithLineBreaks()
-                                            ->formatStateUsing(fn ($state) => ucfirst($state))
+                                            ->formatStateUsing(fn ($state): string => ucfirst((string) $state))
                                             ->bulleted(),
                                         TextEntry::make('teams.name')
                                             ->icon('heroicon-o-user-group')
@@ -389,13 +386,11 @@ class UserResource extends Resource
                                             ->listWithLineBreaks()
                                             ->bulleted(),
                                         TextEntry::make('resource_permission')
-                                            ->icon(function ($record) {
-                                                return [
-                                                    PermissionType::GLOBAL->value     => 'heroicon-o-globe-alt',
-                                                    PermissionType::INDIVIDUAL->value => 'heroicon-o-user',
-                                                    PermissionType::GROUP->value      => 'heroicon-o-user-group',
-                                                ][$record->resource_permission];
-                                            })
+                                            ->icon(fn ($record): string => [
+                                                PermissionType::GLOBAL->value => 'heroicon-o-globe-alt',
+                                                PermissionType::INDIVIDUAL->value => 'heroicon-o-user',
+                                                PermissionType::GROUP->value => 'heroicon-o-user-group',
+                                            ][$record->resource_permission])
                                             ->formatStateUsing(fn ($state) => PermissionType::options()[$state] ?? $state)
                                             ->placeholder('-')
                                             ->label(__('security::filament/resources/user.infolist.sections.permissions.entries.resource-permission')),
@@ -448,10 +443,10 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListUsers::route('/'),
+            'index' => ListUsers::route('/'),
             'create' => CreateUser::route('/create'),
-            'edit'   => EditUser::route('/{record}/edit'),
-            'view'   => ViewUsers::route('/{record}'),
+            'edit' => EditUser::route('/{record}/edit'),
+            'view' => ViewUsers::route('/{record}'),
         ];
     }
 }

@@ -1,23 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages;
 
+use BackedEnum;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Webkul\Inventory\Enums\OperationState;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
 use Filament\Tables\Table;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\Inventory\Models\Operation;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ManageOperations extends ManageRelatedRecords
+final class ManageOperations extends ManageRelatedRecords
 {
     use HasTableViews;
 
@@ -25,7 +26,7 @@ class ManageOperations extends ManageRelatedRecords
 
     protected static string $relationship = 'operations';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrows-right-left';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-right-left';
 
     public static function getNavigationLabel(): string
     {
@@ -47,7 +48,7 @@ class ManageOperations extends ManageRelatedRecords
                     EditAction::make()
                         ->url(fn ($record): string => OperationResource::getUrl('edit', ['record' => $record])),
                     DeleteAction::make()
-                        ->hidden(fn (Operation $record): bool => $record->state == OperationState::DONE)
+                        ->hidden(fn (Operation $record): bool => $record->state === OperationState::DONE)
                         ->successNotification(
                             Notification::make()
                                 ->success()

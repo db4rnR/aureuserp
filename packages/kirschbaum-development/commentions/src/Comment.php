@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions;
 
 use Carbon\Carbon;
 use Closure;
 use DateTime;
+use DateTimeImmutable;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -33,7 +36,7 @@ use Spatie\Color\Rgb;
  * @property-read DateTime|Carbon $created_at
  * @property-read DateTime|Carbon $updated_at
  */
-class Comment extends Model implements RenderableComment
+final class Comment extends Model implements RenderableComment
 {
     use HasFactory;
 
@@ -133,9 +136,9 @@ class Comment extends Model implements RenderableComment
             ->map(fn (string $segment): string => filled($segment) ? mb_substr($segment, 0, 1) : '')
             ->join(' ');
 
-        $backgroundColor = Rgb::fromString('rgb(' . FilamentColor::getColors()['gray'][950] . ')')->toHex();
+        $backgroundColor = Rgb::fromString('rgb('.FilamentColor::getColors()['gray'][950].')')->toHex();
 
-        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=FFFFFF&background=' . str($backgroundColor)->after('#');
+        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=FFFFFF&background='.str($backgroundColor)->after('#');
     }
 
     public function getBody(): string
@@ -148,12 +151,12 @@ class Comment extends Model implements RenderableComment
         return $this->body_parsed;
     }
 
-    public function getCreatedAt(): DateTime|Carbon
+    public function getCreatedAt(): DateTimeImmutable|Carbon
     {
         return $this->created_at;
     }
 
-    public function getUpdatedAt(): DateTime|Carbon
+    public function getUpdatedAt(): DateTimeImmutable|Carbon
     {
         return $this->updated_at;
     }

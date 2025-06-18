@@ -1,64 +1,57 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\RichEditor;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Hidden;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
+use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Tables\Enums\FiltersLayout;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
-use Filament\Support\Enums\FontWeight;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Infolists\Components\IconEntry;
-use Filament\Schemas\Components\Grid;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\ViewTask;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\EditTask;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\ManageTimesheets;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\ManageSubTasks;
-use Webkul\Project\Filament\Resources\TaskResource\RelationManagers\TimesheetsRelationManager;
-use Webkul\Project\Filament\Resources\TaskResource\RelationManagers\SubTasksRelationManager;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\ListTasks;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\CreateTask;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -68,8 +61,14 @@ use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 use Webkul\Project\Enums\TaskState;
 use Webkul\Project\Filament\Resources\ProjectResource\Pages\ManageTasks;
-use Webkul\Project\Filament\Resources\TaskResource\Pages;
-use Webkul\Project\Filament\Resources\TaskResource\RelationManagers;
+use Webkul\Project\Filament\Resources\TaskResource\Pages\CreateTask;
+use Webkul\Project\Filament\Resources\TaskResource\Pages\EditTask;
+use Webkul\Project\Filament\Resources\TaskResource\Pages\ListTasks;
+use Webkul\Project\Filament\Resources\TaskResource\Pages\ManageSubTasks;
+use Webkul\Project\Filament\Resources\TaskResource\Pages\ManageTimesheets;
+use Webkul\Project\Filament\Resources\TaskResource\Pages\ViewTask;
+use Webkul\Project\Filament\Resources\TaskResource\RelationManagers\SubTasksRelationManager;
+use Webkul\Project\Filament\Resources\TaskResource\RelationManagers\TimesheetsRelationManager;
 use Webkul\Project\Models\Project;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Models\TaskStage;
@@ -78,7 +77,7 @@ use Webkul\Project\Settings\TimeSettings;
 use Webkul\Security\Filament\Resources\UserResource;
 use Webkul\Support\Filament\Tables\Columns\ProgressBarEntry;
 
-class TaskResource extends Resource
+final class TaskResource extends Resource
 {
     use HasCustomFields;
 
@@ -86,9 +85,9 @@ class TaskResource extends Resource
 
     protected static ?string $slug = 'project/tasks';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -110,8 +109,8 @@ class TaskResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('projects::filament/resources/task.global-search.project')   => $record->project?->name ?? '—',
-            __('projects::filament/resources/task.global-search.customer')  => $record->partner?->name ?? '—',
+            __('projects::filament/resources/task.global-search.project') => $record->project?->name ?? '—',
+            __('projects::filament/resources/task.global-search.customer') => $record->partner?->name ?? '—',
             __('projects::filament/resources/task.global-search.milestone') => $record->milestone?->name ?? '—',
         ];
     }
@@ -169,7 +168,7 @@ class TaskResource extends Resource
                             ]),
 
                         Section::make(__('projects::filament/resources/task.form.sections.additional.title'))
-                            ->visible(! empty($customFormFields = static::getCustomFormFields()))
+                            ->visible(($customFormFields = self::getCustomFormFields()) !== [])
                             ->schema($customFormFields),
                     ])
                     ->columnSpan(['lg' => 2]),
@@ -185,7 +184,7 @@ class TaskResource extends Resource
                                     ->preload()
                                     ->live()
                                     ->createOptionForm(fn (Schema $schema): Schema => ProjectResource::form($schema))
-                                    ->afterStateUpdated(function (Set $set) {
+                                    ->afterStateUpdated(function (Set $set): void {
                                         $set('milestone_id', null);
                                     }),
                                 Select::make('milestone_id')
@@ -198,7 +197,7 @@ class TaskResource extends Resource
                                     ->searchable()
                                     ->preload()
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('projects::filament/resources/task.form.sections.settings.fields.milestone-hint-text'))
-                                    ->createOptionForm(fn ($get) => [
+                                    ->createOptionForm(fn ($get): array => [
                                         TextInput::make('name')
                                             ->label(__('projects::filament/resources/task.form.sections.settings.fields.name'))
                                             ->required()
@@ -215,7 +214,7 @@ class TaskResource extends Resource
                                         Hidden::make('creator_id')
                                             ->default(fn () => Auth::user()->id),
                                     ])
-                                    ->hidden(function (TaskSettings $taskSettings, Get $get) {
+                                    ->hidden(function (TaskSettings $taskSettings, Get $get): bool {
                                         $project = Project::find($get('project_id'));
 
                                         if (! $project) {
@@ -228,7 +227,7 @@ class TaskResource extends Resource
 
                                         return ! $project->allow_milestones;
                                     })
-                                    ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                                    ->visible(fn (TaskSettings $taskSettings): bool => $taskSettings->enable_milestones),
                                 Select::make('partner_id')
                                     ->label(__('projects::filament/resources/task.form.sections.settings.fields.customer'))
                                     ->relationship('partner', 'name')
@@ -242,7 +241,7 @@ class TaskResource extends Resource
                                     ->searchable()
                                     ->multiple()
                                     ->preload()
-                                    ->createOptionForm(fn (Schema $schema) => UserResource::form($schema)),
+                                    ->createOptionForm(fn (Schema $schema): Schema => UserResource::form($schema)),
                                 DateTimePicker::make('deadline')
                                     ->label(__('projects::filament/resources/task.form.sections.settings.fields.deadline'))
                                     ->native(false)
@@ -255,7 +254,7 @@ class TaskResource extends Resource
                                     ->suffixIcon('heroicon-o-clock')
                                     ->helperText(__('projects::filament/resources/task.form.sections.settings.fields.allocated-hours-helper-text'))
                                     ->dehydrateStateUsing(fn ($state) => $state ?: 0)
-                                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                    ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
                             ]),
                     ]),
             ])
@@ -267,7 +266,7 @@ class TaskResource extends Resource
         $isTimesheetEnabled = app(TimeSettings::class)->enable_timesheets;
 
         return $table
-            ->columns(static::mergeCustomTableColumns([
+            ->columns(self::mergeCustomTableColumns([
                 TextColumn::make('id')
                     ->label(__('projects::filament/resources/task.table.columns.id'))
                     ->searchable()
@@ -326,7 +325,7 @@ class TaskResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                    ->visible(fn (TaskSettings $taskSettings): bool => $taskSettings->enable_milestones),
                 TextColumn::make('partner.name')
                     ->label(__('projects::filament/resources/task.table.columns.customer'))
                     ->searchable()
@@ -341,7 +340,7 @@ class TaskResource extends Resource
                     ->label(__('projects::filament/resources/task.table.columns.allocated-time'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->formatStateUsing(function ($state) {
+                    ->formatStateUsing(function ($state): string {
                         $hours = floor($state);
                         $minutes = ($state - $hours) * 60;
 
@@ -351,20 +350,20 @@ class TaskResource extends Resource
                         Sum::make()
                             ->label(__('projects::filament/resources/task.table.columns.allocated-time'))
                             ->numeric()
-                            ->formatStateUsing(function ($state) {
+                            ->formatStateUsing(function ($state): string {
                                 $hours = floor($state);
                                 $minutes = ($state - $hours) * 60;
 
                                 return $hours.':'.$minutes;
                             })
                     )
-                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                    ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
                 TextColumn::make('total_hours_spent')
                     ->label(__('projects::filament/resources/task.table.columns.time-spent'))
                     ->sortable()
                     ->toggleable()
                     ->numeric()
-                    ->formatStateUsing(function ($state) {
+                    ->formatStateUsing(function ($state): string {
                         $hours = floor($state);
                         $minutes = ($state - $hours) * 60;
 
@@ -374,19 +373,19 @@ class TaskResource extends Resource
                         Sum::make()
                             ->label(__('projects::filament/resources/task.table.columns.time-spent'))
                             ->numeric()
-                            ->formatStateUsing(function ($state) {
+                            ->formatStateUsing(function ($state): string {
                                 $hours = floor($state);
                                 $minutes = ($state - $hours) * 60;
 
                                 return $hours.':'.$minutes;
                             })
                     )
-                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                    ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
                 TextColumn::make('remaining_hours')
                     ->label(__('projects::filament/resources/task.table.columns.time-remaining'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->formatStateUsing(function ($state) {
+                    ->formatStateUsing(function ($state): string {
                         $hours = floor($state);
                         $minutes = ($state - $hours) * 60;
 
@@ -397,20 +396,20 @@ class TaskResource extends Resource
                             ->label(__('projects::filament/resources/task.table.columns.time-remaining'))
                             ->numeric()
                             ->numeric()
-                            ->formatStateUsing(function ($state) {
+                            ->formatStateUsing(function ($state): string {
                                 $hours = floor($state);
                                 $minutes = ($state - $hours) * 60;
 
                                 return $hours.':'.$minutes;
                             })
                     )
-                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                    ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
                 ProgressBarEntry::make('progress')
                     ->label(__('projects::filament/resources/task.table.columns.progress'))
                     ->sortable()
                     ->toggleable()
                     ->color(fn (Task $record): string => $record->progress > 100 ? 'danger' : ($record->progress < 100 ? 'warning' : 'success'))
-                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                    ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
                 TextColumn::make('deadline')
                     ->label(__('projects::filament/resources/task.table.columns.deadline'))
                     ->sortable()
@@ -418,15 +417,13 @@ class TaskResource extends Resource
                 TextColumn::make('tags.name')
                     ->label(__('projects::filament/resources/task.table.columns.tags'))
                     ->badge()
-                    ->state(function (Task $record): array {
-                        return $record->tags()->get()->map(fn ($tag) => [
-                            'label' => $tag->name,
-                            'color' => $tag->color ?? '#808080',
-                        ])->toArray();
-                    })
+                    ->state(fn (Task $record): array => $record->tags()->get()->map(fn ($tag): array => [
+                        'label' => $tag->name,
+                        'color' => $tag->color ?? '#808080',
+                    ])->toArray())
                     ->badge()
                     ->formatStateUsing(fn ($state) => $state['label'])
-                    ->color(fn ($state) => Color::generateV3Palette($state['color']))
+                    ->color(fn ($state): array => Color::generateV3Palette($state['color']))
                     ->toggleable(),
                 TextColumn::make('stage.name')
                     ->label(__('projects::filament/resources/task.table.columns.stage'))
@@ -456,7 +453,7 @@ class TaskResource extends Resource
             ->defaultSort('sort', 'desc')
             ->filters([
                 QueryBuilder::make()
-                    ->constraints(collect(static::mergeCustomTableQueryBuilderConstraints([
+                    ->constraints(collect(self::mergeCustomTableQueryBuilderConstraints([
                         TextConstraint::make('title')
                             ->label(__('projects::filament/resources/task.table.filters.title')),
                         SelectConstraint::make('priority')
@@ -594,7 +591,7 @@ class TaskResource extends Resource
                     ]))->filter()->values()->all()),
             ], layout: FiltersLayout::Modal)
             ->filtersTriggerAction(
-                fn (Action $action) => $action
+                fn (Action $action): Action => $action
                     ->slideOver(),
             )
             ->filtersFormColumns(2)
@@ -653,7 +650,7 @@ class TaskResource extends Resource
                 ]),
             ])
             ->checkIfRecordIsSelectableUsing(
-                fn (Model $record): bool => static::can('delete', $record) || static::can('forceDelete', $record) || static::can('restore', $record),
+                fn (Model $record): bool => self::can('delete', $record) || self::can('forceDelete', $record) || self::can('restore', $record),
             );
     }
 
@@ -689,15 +686,13 @@ class TaskResource extends Resource
                                 TextEntry::make('tags.name')
                                     ->label(__('projects::filament/resources/task.infolist.sections.general.entries.tags'))
                                     ->badge()
-                                    ->state(function (Task $record): array {
-                                        return $record->tags()->get()->map(fn ($tag) => [
-                                            'label' => $tag->name,
-                                            'color' => $tag->color ?? '#808080',
-                                        ])->toArray();
-                                    })
+                                    ->state(fn (Task $record): array => $record->tags()->get()->map(fn ($tag): array => [
+                                        'label' => $tag->name,
+                                        'color' => $tag->color ?? '#808080',
+                                    ])->toArray())
                                     ->badge()
                                     ->formatStateUsing(fn ($state) => $state['label'])
-                                    ->color(fn ($state) => Color::generateV3Palette($state['color']))
+                                    ->color(fn ($state): array => Color::generateV3Palette($state['color']))
                                     ->listWithLineBreaks()
                                     ->separator(', '),
                             ]),
@@ -717,7 +712,7 @@ class TaskResource extends Resource
                                             ->label(__('projects::filament/resources/task.infolist.sections.project-information.entries.milestone'))
                                             ->icon('heroicon-o-flag')
                                             ->placeholder('—')
-                                            ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                                            ->visible(fn (TaskSettings $taskSettings): bool => $taskSettings->enable_milestones),
 
                                         TextEntry::make('stage.name')
                                             ->label(__('projects::filament/resources/task.infolist.sections.project-information.entries.stage'))
@@ -754,38 +749,38 @@ class TaskResource extends Resource
                                             ->icon('heroicon-o-clock')
                                             ->suffix(' Hours')
                                             ->placeholder('—')
-                                            ->formatStateUsing(function ($state) {
+                                            ->formatStateUsing(function ($state): string {
                                                 $hours = floor($state);
                                                 $minutes = ($state - $hours) * 60;
 
                                                 return $hours.':'.$minutes;
                                             })
-                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
 
                                         TextEntry::make('total_hours_spent')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.time-spent'))
                                             ->icon('heroicon-o-clock')
                                             ->suffix(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.time-spent-suffix'))
-                                            ->formatStateUsing(function ($state) {
+                                            ->formatStateUsing(function ($state): string {
                                                 $hours = floor($state);
                                                 $minutes = ($state - $hours) * 60;
 
                                                 return $hours.':'.$minutes;
                                             })
-                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
 
                                         TextEntry::make('remaining_hours')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.time-remaining'))
                                             ->icon('heroicon-o-clock')
                                             ->suffix(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.time-remaining-suffix'))
-                                            ->formatStateUsing(function ($state) {
+                                            ->formatStateUsing(function ($state): string {
                                                 $hours = floor($state);
                                                 $minutes = ($state - $hours) * 60;
 
                                                 return $hours.':'.$minutes;
                                             })
                                             ->color(fn ($state): string => $state < 0 ? 'danger' : 'success')
-                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
 
                                         TextEntry::make('progress')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.progress'))
@@ -796,13 +791,13 @@ class TaskResource extends Resource
                                                     ? 'danger'
                                                     : ($record->progress < 100 ? 'warning' : 'success')
                                             )
-                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
                                     ]),
                             ])
-                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                            ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
 
                         Section::make(__('projects::filament/resources/task.infolist.sections.additional-information.title'))
-                            ->visible(! empty($customInfolistEntries = static::getCustomInfolistEntries()))
+                            ->visible(($customInfolistEntries = self::getCustomInfolistEntries()) !== [])
                             ->schema($customInfolistEntries),
                     ])
                     ->columnSpan(['lg' => 2]),
@@ -837,7 +832,7 @@ class TaskResource extends Resource
                                     ->label(__('projects::filament/resources/task.infolist.sections.statistics.entries.timesheet-entries'))
                                     ->state(fn (Task $record): int => $record->timesheets()->count())
                                     ->icon('heroicon-o-clock')
-                                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                    ->visible(fn (TimeSettings $timeSettings): bool => $timeSettings->enable_timesheets),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),
@@ -873,12 +868,12 @@ class TaskResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'      => ListTasks::route('/'),
-            'create'     => CreateTask::route('/create'),
-            'edit'       => EditTask::route('/{record}/edit'),
-            'view'       => ViewTask::route('/{record}'),
+            'index' => ListTasks::route('/'),
+            'create' => CreateTask::route('/create'),
+            'edit' => EditTask::route('/{record}/edit'),
+            'view' => ViewTask::route('/{record}'),
             'timesheets' => ManageTimesheets::route('/{record}/timesheets'),
-            'sub-tasks'  => ManageSubTasks::route('/{record}/sub-tasks'),
+            'sub-tasks' => ManageSubTasks::route('/{record}/sub-tasks'),
         ];
     }
 }

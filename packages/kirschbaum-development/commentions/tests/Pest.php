@@ -1,8 +1,10 @@
 <?php
 
-use Tests\TestCase;
+declare(strict_types=1);
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Tests\TestCase;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +55,7 @@ expect()->pipe('toContain', function (Closure $next, mixed $expected) {
 |
 */
 
-function something()
+function something(): void
 {
     // ..
 }

@@ -1,39 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Filament\Tables\Filters;
 
+use Filament\Support\Components\Component;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\QueryBuilder\Constraints\Constraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\Constraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
-use Filament\Support\Components\Component;
-use Filament\Tables;
-use Filament\Tables\Filters\QueryBuilder\Constraints;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Webkul\Field\Models\Field;
 
-class CustomFilters extends Component
+final class CustomFilters extends Component
 {
-    protected array $include = [];
+    private array $include = [];
 
-    protected array $exclude = [];
+    private array $exclude = [];
 
-    protected ?string $resourceClass = null;
-
-    final public function __construct(string $resource)
-    {
-        $this->resourceClass = $resource;
-    }
+    final public function __construct(private readonly ?string $resourceClass) {}
 
     public static function make(string $resource): static
     {
-        $static = app(static::class, ['resource' => $resource]);
+        $static = app(self::class, ['resource' => $resource]);
 
         $static->configure();
 
@@ -54,40 +49,36 @@ class CustomFilters extends Component
         return $this;
     }
 
-    protected function getResourceClass(): string
-    {
-        return $this->resourceClass;
-    }
-
     public function getFilters(): array
     {
         $fields = $this->getFields();
 
-        return $fields->map(function ($field) {
-            return $this->createFilter($field);
-        })->toArray();
+        return $fields->map(fn ($field): BaseFilter => $this->createFilter($field))->toArray();
     }
 
     public function getQueryBuilderConstraints(): array
     {
         $fields = $this->getFields();
 
-        return $fields->map(function ($field) {
-            return $this->createConstraint($field);
-        })->toArray();
+        return $fields->map(fn ($field): Constraint => $this->createConstraint($field))->toArray();
     }
 
-    protected function getFields(): Collection
+    private function getResourceClass(): string
+    {
+        return $this->resourceClass;
+    }
+
+    private function getFields(): Collection
     {
         $query = Field::query()
-            ->where('customizable_type', $this->getResourceClass()::getModel())
+            ->where('customizable_type', $this->resourceClass::getModel())
             ->where('use_in_table', true);
 
-        if (! empty($this->include)) {
+        if ($this->include !== []) {
             $query->whereIn('code', $this->include);
         }
 
-        if (! empty($this->exclude)) {
+        if ($this->exclude !== []) {
             $query->whereNotIn('code', $this->exclude);
         }
 
@@ -97,7 +88,7 @@ class CustomFilters extends Component
             ->get();
     }
 
-    protected function createFilter(Field $field): BaseFilter
+    private function createFilter(Field $field): BaseFilter
     {
         $filter = match ($field->type) {
             'checkbox' => Filter::make($field->code)
@@ -108,25 +99,21 @@ class CustomFilters extends Component
                 ->query(fn (Builder $query): Builder => $query->where($field->code, true)),
 
             'radio' => SelectFilter::make($field->code)
-                ->options(function () use ($field) {
-                    return collect($field->options)
-                        ->mapWithKeys(fn ($option) => [$option => $option])
-                        ->toArray();
-                }),
+                ->options(fn () => collect($field->options)
+                    ->mapWithKeys(fn ($option) => [$option => $option])
+                    ->toArray()),
 
             'select' => $field->is_multiselect
                 ? SelectFilter::make($field->code)
-                    ->options(function () use ($field) {
-                        return collect($field->options)
-                            ->mapWithKeys(fn ($option) => [$option => $option])
-                            ->toArray();
-                    })
+                    ->options(fn () => collect($field->options)
+                        ->mapWithKeys(fn ($option) => [$option => $option])
+                        ->toArray())
                     ->query(function (Builder $query, $state) use ($field): Builder {
                         if (empty($state['values'])) {
                             return $query;
                         }
 
-                        return $query->where(function (Builder $query) use ($state, $field) {
+                        return $query->where(function (Builder $query) use ($state, $field): void {
                             foreach ((array) $state as $value) {
                                 $query->orWhereJsonContains($field->code, $value);
                             }
@@ -134,24 +121,20 @@ class CustomFilters extends Component
                     })
                     ->multiple()
                 : SelectFilter::make($field->code)
-                    ->options(function () use ($field) {
-                        return collect($field->options)
-                            ->mapWithKeys(fn ($option) => [$option => $option])
-                            ->toArray();
-                    }),
+                    ->options(fn () => collect($field->options)
+                        ->mapWithKeys(fn ($option) => [$option => $option])
+                        ->toArray()),
 
             'checkbox_list' => SelectFilter::make($field->code)
-                ->options(function () use ($field) {
-                    return collect($field->options)
-                        ->mapWithKeys(fn ($option) => [$option => $option])
-                        ->toArray();
-                })
+                ->options(fn () => collect($field->options)
+                    ->mapWithKeys(fn ($option) => [$option => $option])
+                    ->toArray())
                 ->query(function (Builder $query, $state) use ($field): Builder {
                     if (empty($state['values'])) {
                         return $query;
                     }
 
-                    return $query->where(function (Builder $query) use ($state, $field) {
+                    return $query->where(function (Builder $query) use ($state, $field): void {
                         foreach ((array) $state as $value) {
                             $query->orWhereJsonContains($field->code, $value);
                         }
@@ -165,13 +148,13 @@ class CustomFilters extends Component
         return $filter->label($field->name);
     }
 
-    protected function createConstraint(Field $field): Constraint
+    private function createConstraint(Field $field): Constraint
     {
         $filter = match ($field->type) {
             'text' => match ($field->input_type) {
                 'integer' => NumberConstraint::make($field->code)->integer(),
                 'numeric' => NumberConstraint::make($field->code),
-                default   => TextConstraint::make($field->code),
+                default => TextConstraint::make($field->code),
             },
 
             'datetime' => DateConstraint::make($field->code),
@@ -180,25 +163,19 @@ class CustomFilters extends Component
 
             'select' => $field->is_multiselect
                 ? SelectConstraint::make($field->code)
-                    ->options(function () use ($field) {
-                        return collect($field->options)
-                            ->mapWithKeys(fn ($option) => [$option => $option])
-                            ->toArray();
-                    })
+                    ->options(fn () => collect($field->options)
+                        ->mapWithKeys(fn ($option) => [$option => $option])
+                        ->toArray())
                     ->multiple()
                 : SelectConstraint::make($field->code)
-                    ->options(function () use ($field) {
-                        return collect($field->options)
-                            ->mapWithKeys(fn ($option) => [$option => $option])
-                            ->toArray();
-                    }),
+                    ->options(fn () => collect($field->options)
+                        ->mapWithKeys(fn ($option) => [$option => $option])
+                        ->toArray()),
 
             'checkbox_list' => SelectConstraint::make($field->code)
-                ->options(function () use ($field) {
-                    return collect($field->options)
-                        ->mapWithKeys(fn ($option) => [$option => $option])
-                        ->toArray();
-                })
+                ->options(fn () => collect($field->options)
+                    ->mapWithKeys(fn ($option) => [$option => $option])
+                    ->toArray())
                 ->multiple(),
 
             default => TextConstraint::make($field->code),

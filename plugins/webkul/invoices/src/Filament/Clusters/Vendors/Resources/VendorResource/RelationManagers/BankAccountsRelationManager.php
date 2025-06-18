@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\RelationManagers;
 
-use Filament\Schemas\Schema;
 use Filament\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Partner\Filament\Resources\BankAccountResource;
 
-class BankAccountsRelationManager extends RelationManager
+final class BankAccountsRelationManager extends RelationManager
 {
     protected static string $relationship = 'bankAccounts';
 
@@ -25,9 +26,7 @@ class BankAccountsRelationManager extends RelationManager
                 CreateAction::make()
                     ->label(__('invoices::filament/clusters/vendors/resources/vendor/relation-manager/bank-account-relation-manager.create-bank-account'))
                     ->icon('heroicon-o-plus-circle')
-                    ->mutateDataUsing(function (array $data): array {
-                        return $data;
-                    }),
+                    ->mutateDataUsing(fn (array $data): array => $data),
             ]);
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Saade\FilamentFullCalendar\Actions;
 
 use Filament\Actions\ViewAction as BaseViewAction;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 
-class ViewAction extends BaseViewAction
+final class ViewAction extends BaseViewAction
 {
     protected function setUp(): void
     {

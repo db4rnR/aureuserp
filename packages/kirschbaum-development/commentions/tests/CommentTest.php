@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use Gate;
-use Tests\Policies\BlockedCommentPolicy;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Event;
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\Events\UserWasMentionedEvent;
 use Tests\Models\Post;
 use Tests\Models\User;
+use Tests\Policies\BlockedCommentPolicy;
 
-test('it can save a comment', function () {
+test('it can save a comment', function (): void {
     $user = User::factory()->create();
     $post = Post::factory()->create();
 
@@ -26,7 +28,7 @@ test('it can save a comment', function () {
     expect($post->comments)->toHaveCount(1);
 });
 
-test('it cannot save a comment when the policy denies it', function () {
+test('it cannot save a comment when the policy denies it', function (): void {
     $user = User::factory()->create();
     $post = Post::factory()->create();
 
@@ -37,7 +39,7 @@ test('it cannot save a comment when the policy denies it', function () {
         ->and($post->comments)->toHaveCount(0);
 });
 
-test('it dispatches events for mentions', function () {
+test('it dispatches events for mentions', function (): void {
     Event::fake();
 
     $user = User::factory()->create();
@@ -62,7 +64,7 @@ test('it dispatches events for mentions', function () {
     });
 });
 
-test('it can get mentioned user ids from comment', function () {
+test('it can get mentioned user ids from comment', function (): void {
     $user = User::factory()->create();
     $mentionedUser1 = User::factory()->create();
     $mentionedUser2 = User::factory()->create();

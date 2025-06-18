@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource\Pages;
 
-use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -12,7 +13,7 @@ use Illuminate\Database\QueryException;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource;
 use Webkul\Purchase\Models\ProductSupplier;
 
-class EditVendorPrice extends EditRecord
+final class EditVendorPrice extends EditRecord
 {
     protected static string $resource = VendorPriceResource::class;
 
@@ -34,12 +35,12 @@ class EditVendorPrice extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make()
-                ->action(function (DeleteAction $action, ProductSupplier $record) {
+                ->action(function (DeleteAction $action, ProductSupplier $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/edit-vendor-price.header-actions.delete.notification.error.title'))

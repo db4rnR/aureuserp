@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +11,7 @@ use Webkul\Inventory\Database\Factories\PackageLevelFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class PackageLevel extends Model
+final class PackageLevel extends Model
 {
     use HasFactory;
 

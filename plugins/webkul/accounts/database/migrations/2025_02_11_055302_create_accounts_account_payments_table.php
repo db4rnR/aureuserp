@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_account_payments', function (Blueprint $table) {
+        Schema::create('accounts_account_payments', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('journal_id')->nullable()->comment('Journal')->constrained('accounts_journals')->restrictOnDelete();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelHealth;
 
 use Closure;
@@ -8,23 +10,36 @@ use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use ShuvroRoy\FilamentSpatieLaravelHealth\Pages\HealthCheckResults;
 
-class FilamentSpatieLaravelHealthPlugin implements Plugin
+final class FilamentSpatieLaravelHealthPlugin implements Plugin
 {
     use EvaluatesClosures;
 
-    protected bool | Closure $authorizeUsing = true;
+    protected bool|Closure $authorizeUsing = true;
 
     protected bool $navigationGroupSet = false;
 
     protected string $page = HealthCheckResults::class;
 
-    protected string | Closure | null $navigationGroup = null;
+    protected string|Closure|null $navigationGroup = null;
 
-    protected int | Closure $navigationSort = 1;
+    protected int|Closure $navigationSort = 1;
 
-    protected string | Closure $navigationIcon = 'heroicon-o-heart';
+    protected string|Closure $navigationIcon = 'heroicon-o-heart';
 
-    protected string | Closure | null $navigationLabel = null;
+    protected string|Closure|null $navigationLabel = null;
+
+    public static function get(): static
+    {
+        /** @var static $instance */
+        $instance = filament(app(self::class)->getId());
+
+        return $instance;
+    }
+
+    public static function make(): static
+    {
+        return new static;
+    }
 
     public function register(Panel $panel): void
     {
@@ -37,7 +52,7 @@ class FilamentSpatieLaravelHealthPlugin implements Plugin
         //
     }
 
-    public function authorize(bool | Closure $callback = true): static
+    public function authorize(bool|Closure $callback = true): static
     {
         $this->authorizeUsing = $callback;
 
@@ -49,22 +64,9 @@ class FilamentSpatieLaravelHealthPlugin implements Plugin
         return $this->evaluate($this->authorizeUsing) === true;
     }
 
-    public static function get(): static
-    {
-        /** @var static $instance */
-        $instance = filament(app(static::class)->getId());
-
-        return $instance;
-    }
-
     public function getId(): string
     {
         return 'filament-spatie-health';
-    }
-
-    public static function make(): static
-    {
-        return new static;
     }
 
     public function usingPage(string $page): static
@@ -79,7 +81,7 @@ class FilamentSpatieLaravelHealthPlugin implements Plugin
         return $this->page;
     }
 
-    public function navigationGroup(string | Closure | null $navigationGroup): static
+    public function navigationGroup(string|Closure|null $navigationGroup): static
     {
         $this->navigationGroup = $navigationGroup;
         $this->navigationGroupSet = true;
@@ -98,7 +100,7 @@ class FilamentSpatieLaravelHealthPlugin implements Plugin
         return $navigationGroup;
     }
 
-    public function navigationSort(int | Closure $navigationSort): static
+    public function navigationSort(int|Closure $navigationSort): static
     {
         $this->navigationSort = $navigationSort;
 
@@ -110,7 +112,7 @@ class FilamentSpatieLaravelHealthPlugin implements Plugin
         return $this->evaluate($this->navigationSort);
     }
 
-    public function navigationIcon(string | Closure $navigationIcon): static
+    public function navigationIcon(string|Closure $navigationIcon): static
     {
         $this->navigationIcon = $navigationIcon;
 
@@ -122,7 +124,7 @@ class FilamentSpatieLaravelHealthPlugin implements Plugin
         return $this->evaluate($this->navigationIcon);
     }
 
-    public function navigationLabel(string | Closure | null $navigationLabel): static
+    public function navigationLabel(string|Closure|null $navigationLabel): static
     {
         $this->navigationLabel = $navigationLabel;
 

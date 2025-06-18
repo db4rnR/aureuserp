@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Invoice\Models\Product as BaseProduct;
 
-class Product extends BaseProduct
+final class Product extends BaseProduct
 {
     /**
      * Create a new Eloquent model instance.
@@ -28,8 +30,9 @@ class Product extends BaseProduct
         if ($this->is_configurable) {
             return $this->hasMany(ProductSupplier::class)
                 ->orWhereIn('product_id', $this->variants()->pluck('id'));
-        } else {
-            return $this->hasMany(ProductSupplier::class);
         }
+
+        return $this->hasMany(ProductSupplier::class);
+
     }
 }

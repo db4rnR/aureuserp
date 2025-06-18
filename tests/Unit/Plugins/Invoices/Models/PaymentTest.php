@@ -1,27 +1,29 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Invoice\Models\Payment;
+use PHPUnit\Framework\Attributes\Group;
+use Webkul\Account\Models\Account;
+use Webkul\Account\Models\Journal;
+use Webkul\Account\Models\Move;
 use Webkul\Account\Models\Payment as BasePayment;
+use Webkul\Account\Models\PaymentMethod;
+use Webkul\Account\Models\PaymentMethodLine;
+use Webkul\Invoice\Models\Payment;
+use Webkul\Partner\Models\BankAccount;
+use Webkul\Partner\Models\Partner;
+use Webkul\Payment\Models\PaymentToken;
+use Webkul\Payment\Models\PaymentTransaction;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
-use Webkul\Partner\Models\Partner;
-use Webkul\Partner\Models\BankAccount;
-use Webkul\Account\Models\Move;
-use Webkul\Account\Models\Journal;
-use Webkul\Account\Models\Account;
-use Webkul\Account\Models\PaymentMethod;
-use Webkul\Account\Models\PaymentMethodLine;
-use Webkul\Payment\Models\PaymentToken;
-use Webkul\Payment\Models\PaymentTransaction;
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Payment model inheritance and properties')]
-function payment_model_inheritance_and_properties()
+function payment_model_inheritance_and_properties(): void
 {
     // Create a test payment
     $payment = Payment::factory()->create([
@@ -50,29 +52,29 @@ function payment_model_inheritance_and_properties()
     expect($payment->is_sent)->toBeFalse();
 
     // Test relationships inherited from the base class
-    expect($payment->move())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->journal())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->partnerBank())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->pairedInternalTransferPayment())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->paymentMethodLine())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->paymentMethod())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->currency())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->partner())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->outstandingAccount())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->destinationAccount())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->paymentTransaction())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->sourcePayment())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->paymentToken())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($payment->accountMovePayment())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($payment->move())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->journal())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->partnerBank())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->pairedInternalTransferPayment())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->paymentMethodLine())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->paymentMethod())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->currency())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->partner())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->outstandingAccount())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->destinationAccount())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->paymentTransaction())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->sourcePayment())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->paymentToken())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($payment->accountMovePayment())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Payment model relationships with other models')]
-function payment_model_relationships_with_other_models()
+function payment_model_relationships_with_other_models(): void
 {
     // Create related models
     $move = Move::factory()->create();
@@ -136,17 +138,17 @@ function payment_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Payment model traits')]
-function payment_model_traits()
+function payment_model_traits(): void
 {
     // Create a test payment
     $payment = Payment::factory()->create();
 
     // Test that the model uses the expected traits
-    expect($payment)->toBeInstanceOf(\Webkul\Chatter\Traits\HasChatter::class);
-    expect($payment)->toBeInstanceOf(\Webkul\Chatter\Traits\HasLogActivity::class);
+    expect($payment)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
+    expect($payment)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
 
     // Test log attributes
-    $logAttributes = (new \ReflectionClass($payment))->getProperty('logAttributes')->getValue($payment);
+    $logAttributes = new ReflectionClass($payment)->getProperty('logAttributes')->getValue($payment);
     expect($logAttributes)->toBeArray();
     expect($logAttributes)->toContain('name');
     expect($logAttributes)->toHaveKey('move.name');

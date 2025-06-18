@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor;
 
 use Filament\Schemas\Components\Component;
@@ -25,12 +27,12 @@ abstract class TiptapBlock
 
     public ?string $icon = null;
 
-    public function getIdentifier(): string
+    final public function getIdentifier(): string
     {
         return $this->identifier ?? Str::camel(class_basename($this));
     }
 
-    public function getLabel(): string
+    final public function getLabel(): string
     {
         return $this->label ?? Str::of(class_basename($this))
             ->kebab()
@@ -38,17 +40,17 @@ abstract class TiptapBlock
             ->title();
     }
 
-    public function getModalWidth(): string
+    final public function getModalWidth(): string
     {
         return $this->width ?? 'sm';
     }
 
-    public function isSlideOver(): bool
+    final public function isSlideOver(): bool
     {
         return $this->slideOver ?? false;
     }
 
-    public function getFormSchema(): array
+    final public function getFormSchema(): array
     {
         return [];
     }
@@ -56,7 +58,7 @@ abstract class TiptapBlock
     /**
      * @throws Throwable
      */
-    public function getPreview(?array $data = null, ?Component $component = null): string
+    final public function getPreview(?array $data = null, ?Component $component = null): string
     {
         $data = $data ?? [];
 
@@ -69,14 +71,14 @@ abstract class TiptapBlock
     /**
      * @throws Throwable
      */
-    public function getRendered(?array $data = null): string
+    final public function getRendered(?array $data = null): string
     {
         $data = $data ?? [];
 
         return view($this->rendered, $data)->render();
     }
 
-    public function getIcon(): ?string
+    final public function getIcon(): ?string
     {
         return $this->evaluate($this->icon);
     }

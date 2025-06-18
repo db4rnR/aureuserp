@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters;
 
+use BackedEnum;
 use Filament\Clusters\Cluster;
 
-class ToInvoice extends Cluster
+final class ToInvoice extends Cluster
 {
     protected static ?string $slug = 'sale/invoice';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
     public static function getNavigationLabel(): string
     {

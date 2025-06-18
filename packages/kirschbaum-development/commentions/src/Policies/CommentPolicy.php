@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Policies;
 
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\Contracts\Commenter;
 
-class CommentPolicy
+final class CommentPolicy
 {
     public function create(Commenter $user): bool
     {

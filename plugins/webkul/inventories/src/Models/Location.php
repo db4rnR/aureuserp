@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +15,7 @@ use Webkul\Product\Enums\ProductRemoval;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class Location extends Model
+final class Location extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -60,13 +62,13 @@ class Location extends Model
      * @var string
      */
     protected $casts = [
-        'type'                => LocationType::class,
-        'removal_strategy'    => ProductRemoval::class,
+        'type' => LocationType::class,
+        'removal_strategy' => ProductRemoval::class,
         'last_inventory_date' => 'date',
         'next_inventory_date' => 'date',
-        'is_scrap'            => 'boolean',
-        'is_replenish'        => 'boolean',
-        'is_dock'             => 'boolean',
+        'is_scrap' => 'boolean',
+        'is_replenish' => 'boolean',
+        'is_dock' => 'boolean',
     ];
 
     public function parent(): BelongsTo
@@ -105,7 +107,7 @@ class Location extends Model
             return false;
         }
 
-        return $this->warehouse->lot_stock_location_id == $this->id
+        return $this->warehouse->lot_stock_location_id === $this->id
             || ($this->parent_id && $this->parent->is_stock_location);
     }
 
@@ -116,35 +118,13 @@ class Location extends Model
             LocationType::CUSTOMER,
             LocationType::INVENTORY,
             LocationType::PRODUCTION,
-        ]) || $this->is_scrap;
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($category) {
-            $category->updateParentPath();
-
-            $category->updateFullName();
-        });
-
-        static::updated(function ($category) {
-            $category->updateChildrenParentPaths();
-
-            if ($category->wasChanged('full_name')) {
-                $category->updateChildrenFullNames();
-            }
-        });
+        ], true) || $this->is_scrap;
     }
 
     /**
      * Update the full name without triggering additional events
      */
-    public function updateFullName()
+    public function updateFullName(): void
     {
         if ($this->type === LocationType::VIEW) {
             $this->full_name = $this->name;
@@ -158,7 +138,7 @@ class Location extends Model
     /**
      * Update the full name without triggering additional events
      */
-    public function updateParentPath()
+    public function updateParentPath(): void
     {
         if ($this->type === LocationType::VIEW) {
             $this->parent_path = $this->id.'/';
@@ -176,7 +156,7 @@ class Location extends Model
             ->where('parent_id', $this->id)
             ->get();
 
-        $children->each(function ($child) {
+        $children->each(function ($child): void {
             $child->updateFullName();
             $child->saveQuietly();
 
@@ -191,11 +171,33 @@ class Location extends Model
             ->where('parent_id', $this->id)
             ->get();
 
-        $children->each(function ($child) {
+        $children->each(function ($child): void {
             $child->updateParentPath();
             $child->saveQuietly();
 
             $child->updateChildrenParentPaths();
+        });
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::saving(function ($category): void {
+            $category->updateParentPath();
+
+            $category->updateFullName();
+        });
+
+        self::updated(function ($category): void {
+            $category->updateChildrenParentPaths();
+
+            if ($category->wasChanged('full_name')) {
+                $category->updateChildrenFullNames();
+            }
         });
     }
 

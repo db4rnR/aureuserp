@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Sari peste bara de instrumente',
     'align_center' => 'Aliniază textul la centru',

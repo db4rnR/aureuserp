@@ -1,24 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Actions;
 
-use Filament\Actions\Action;
-use Filament\Schemas\Components\Group;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
+use Filament\Schemas\Components\Group;
 use FilamentTiptapEditor\TiptapEditor;
 
-class OEmbedAction extends Action
+final class OEmbedAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'filament_tiptap_oembed';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -76,7 +73,7 @@ class OEmbedAction extends Action
                             }
 
                             $state = CarbonInterval::seconds($state)->cascade();
-                            $component->state(Carbon::parse($state->h . ':' . $state->i . ':' . $state->s)->format('Y-m-d H:i:s'));
+                            $component->state(Carbon::parse($state->h.':'.$state->i.':'.$state->s)->format('Y-m-d H:i:s'));
                         })
                         ->dehydrateStateUsing(function ($state): int {
                             if (! $state) {
@@ -92,7 +89,7 @@ class OEmbedAction extends Action
                     ->default(true)
                     ->reactive()
                     ->label(trans('filament-tiptap-editor::oembed-modal.labels.responsive'))
-                    ->afterStateUpdated(function (callable $set, $state) {
+                    ->afterStateUpdated(function (callable $set, $state): void {
                         if ($state) {
                             $set('width', '16');
                             $set('height', '9');
@@ -115,7 +112,7 @@ class OEmbedAction extends Action
                         ->default('9'),
                 ])->columns(['md' => 2]),
             ])
-            ->action(function (TiptapEditor $component, $data) {
+            ->action(function (TiptapEditor $component, $data): void {
                 $component->getLivewire()->dispatch(
                     event: 'insertFromAction',
                     type: 'video',
@@ -123,5 +120,10 @@ class OEmbedAction extends Action
                     video: $data,
                 );
             });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'filament_tiptap_oembed';
     }
 }

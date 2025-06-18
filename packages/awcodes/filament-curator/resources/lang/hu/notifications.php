@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'A rekord frissítése sikeres volt.',
     'update_error' => 'Hiba történt a rekord frissítése során.',

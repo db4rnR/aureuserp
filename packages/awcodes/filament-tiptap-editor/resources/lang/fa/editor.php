@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'رد نوار ابزار',
     'align_center' => 'تراز کردن مرکز متن',

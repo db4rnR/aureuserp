@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AdvancedPaymentInvoiceOrderSale extends Model
+final class AdvancedPaymentInvoiceOrderSale extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'sales_advance_payment_invoice_order_sales';
 
     protected $fillable = [
         'advance_payment_invoice_id',
         'order_id',
     ];
-
-    public $timestamps = false;
 
     public function advancePaymentInvoice()
     {

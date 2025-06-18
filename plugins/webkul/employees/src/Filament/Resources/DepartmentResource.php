@@ -1,61 +1,63 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Filament\Resources;
 
-use Filament\Schemas\Schema;
+use BackedEnum;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\ColorEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
+use Filament\Panel;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Tables\Columns\Layout\Stack;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\ColorEntry;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Panel;
-use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\ListDepartments;
-use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\CreateDepartment;
-use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\ViewDepartment;
-use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\EditDepartment;
-use Filament\Forms;
-use Filament\Infolists;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Employee\Filament\Resources\DepartmentResource\Pages;
+use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\CreateDepartment;
+use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\EditDepartment;
+use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\ListDepartments;
+use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\ViewDepartment;
 use Webkul\Employee\Models\Department;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Support\Models\Company;
 
-class DepartmentResource extends Resource
+final class DepartmentResource extends Resource
 {
     use HasCustomFields;
 
     protected static ?string $model = Department::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office-2';
+
+    protected static ?int $navigationSort = 2;
 
     public static function getNavigationLabel(): string
     {
@@ -75,13 +77,11 @@ class DepartmentResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('employees::filament/resources/department.global-search.name')               => $record->name ?? '—',
+            __('employees::filament/resources/department.global-search.name') => $record->name ?? '—',
             __('employees::filament/resources/department.global-search.department-manager') => $record->manager?->name ?? '—',
-            __('employees::filament/resources/department.global-search.company')            => $record->company?->name ?? '—',
+            __('employees::filament/resources/department.global-search.company') => $record->company?->name ?? '—',
         ];
     }
-
-    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {
@@ -127,7 +127,7 @@ class DepartmentResource extends Resource
                                     ])
                                     ->columns(2),
                                 Section::make(__('employees::filament/resources/department.form.sections.additional.title'))
-                                    ->visible(! empty($customFormFields = static::getCustomFormFields()))
+                                    ->visible(($customFormFields = self::getCustomFormFields()) !== [])
                                     ->description(__('employees::filament/resources/department.form.sections.additional.description'))
                                     ->schema($customFormFields),
                             ]),
@@ -193,7 +193,7 @@ class DepartmentResource extends Resource
                     ->collapsible(),
             ])
             ->filtersFormColumns(2)
-            ->filters(static::mergeCustomTableFilters([
+            ->filters(self::mergeCustomTableFilters([
                 QueryBuilder::make()
                     ->constraintPickerColumns(2)
                     ->constraints([
@@ -314,7 +314,7 @@ class DepartmentResource extends Resource
                                                 TextEntry::make('hierarchy')
                                                     ->label('')
                                                     ->html()
-                                                    ->state(fn (Department $record): string => static::buildHierarchyTree($record)),
+                                                    ->state(fn (Department $record): string => self::buildHierarchyTree($record)),
                                             ])->columnSpan('full'),
                                     ])
                                     ->columns(2),
@@ -324,14 +324,29 @@ class DepartmentResource extends Resource
             ]);
     }
 
-    protected static function buildHierarchyTree(Department $currentDepartment): string
+    public static function getSlug(?Panel $panel = null): string
     {
-        $rootDepartment = static::findRootDepartment($currentDepartment);
-
-        return static::renderDepartmentTree($rootDepartment, $currentDepartment);
+        return 'employees/departments';
     }
 
-    protected static function findRootDepartment(Department $department): Department
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListDepartments::route('/'),
+            'create' => CreateDepartment::route('/create'),
+            'view' => ViewDepartment::route('/{record}'),
+            'edit' => EditDepartment::route('/{record}/edit'),
+        ];
+    }
+
+    private static function buildHierarchyTree(Department $currentDepartment): string
+    {
+        $rootDepartment = self::findRootDepartment($currentDepartment);
+
+        return self::renderDepartmentTree($rootDepartment, $currentDepartment);
+    }
+
+    private static function findRootDepartment(Department $department): Department
     {
         $current = $department;
         while ($current->parent_id) {
@@ -341,14 +356,14 @@ class DepartmentResource extends Resource
         return $current;
     }
 
-    protected static function renderDepartmentTree(
+    private static function renderDepartmentTree(
         Department $department,
         Department $currentDepartment,
         int $depth = 0,
         bool $isLast = true,
         array $parentIsLast = []
     ): string {
-        $output = static::formatDepartmentLine(
+        $output = self::formatDepartmentLine(
             $department,
             $depth,
             $department->id === $currentDepartment->id,
@@ -367,7 +382,7 @@ class DepartmentResource extends Resource
             foreach ($children as $index => $child) {
                 $newParentIsLast = array_merge($parentIsLast, [$isLast]);
 
-                $output .= static::renderDepartmentTree(
+                $output .= self::renderDepartmentTree(
                     $child,
                     $currentDepartment,
                     $depth + 1,
@@ -380,7 +395,7 @@ class DepartmentResource extends Resource
         return $output;
     }
 
-    protected static function formatDepartmentLine(
+    private static function formatDepartmentLine(
         Department $department,
         int $depth,
         bool $isActive,
@@ -417,20 +432,5 @@ class DepartmentResource extends Resource
             e($managerName),
             $employeeCount
         );
-    }
-
-    public static function getSlug(?Panel $panel = null): string
-    {
-        return 'employees/departments';
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index'  => ListDepartments::route('/'),
-            'create' => CreateDepartment::route('/create'),
-            'view'   => ViewDepartment::route('/{record}'),
-            'edit'   => EditDepartment::route('/{record}/edit'),
-        ];
     }
 }

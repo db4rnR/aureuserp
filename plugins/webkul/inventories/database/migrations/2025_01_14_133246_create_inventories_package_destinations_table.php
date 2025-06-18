@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories_package_destinations', function (Blueprint $table) {
+        Schema::create('inventories_package_destinations', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('operation_id')

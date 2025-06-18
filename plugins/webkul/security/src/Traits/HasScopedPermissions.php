@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Security\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -76,8 +78,13 @@ trait HasScopedPermissions
      */
     protected function hasAccess(User $user, Model $model, string $ownerAttribute = 'user'): bool
     {
-        return $this->hasGlobalAccess($user)
-            || $this->hasGroupAccess($user, $model, $ownerAttribute)
-            || $this->hasIndividualAccess($user, $model, $ownerAttribute);
+        if ($this->hasGlobalAccess($user)) {
+            return true;
+        }
+        if ($this->hasGroupAccess($user, $model, $ownerAttribute)) {
+            return true;
+        }
+
+        return (bool) $this->hasIndividualAccess($user, $model, $ownerAttribute);
     }
 }

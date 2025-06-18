@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages;
 
-use Filament\Actions\ActionGroup;
-use Filament\Actions\Action;
-use Filament\Actions\DeleteAction;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Actions;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\QueryException;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\Inventory\Models\Package;
 
-class EditPackage extends EditRecord
+final class EditPackage extends EditRecord
 {
     protected static string $resource = PackageResource::class;
 
@@ -38,13 +39,13 @@ class EditPackage extends EditRecord
                     ->label(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.print.actions.without-content.label'))
                     ->color('gray')
                     ->action(function (Package $record) {
-                        $pdf = PDF::loadView('inventories::filament.clusters.products.packages.actions.print-without-content', [
+                        $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-without-content', [
                             'records' => collect([$record]),
                         ]);
 
                         $pdf->setPaper('a4', 'portrait');
 
-                        return response()->streamDownload(function () use ($pdf) {
+                        return response()->streamDownload(function () use ($pdf): void {
                             echo $pdf->output();
                         }, 'Package-'.$record->name.'.pdf');
                     }),
@@ -52,13 +53,13 @@ class EditPackage extends EditRecord
                     ->label(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.print.actions.with-content.label'))
                     ->color('gray')
                     ->action(function (Package $record) {
-                        $pdf = PDF::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
+                        $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
                             'records' => collect([$record]),
                         ]);
 
                         $pdf->setPaper('a4', 'portrait');
 
-                        return response()->streamDownload(function () use ($pdf) {
+                        return response()->streamDownload(function () use ($pdf): void {
                             echo $pdf->output();
                         }, 'Package-'.$record->name.'.pdf');
                     }),
@@ -68,12 +69,12 @@ class EditPackage extends EditRecord
                 ->color('gray')
                 ->button(),
             DeleteAction::make()
-                ->action(function (DeleteAction $action, Package $record) {
+                ->action(function (DeleteAction $action, Package $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
-                    } catch (QueryException $e) {
+                    } catch (QueryException) {
                         Notification::make()
                             ->danger()
                             ->title(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.delete.notification.error.title'))

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\SkillLevel;
 use Webkul\Employee\Models\SkillType;
 
-class SkillLevelFactory extends Factory
+final class SkillLevelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -23,9 +25,9 @@ class SkillLevelFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'          => $this->faker->name,
+            'name' => $this->faker->name,
             'skill_type_id' => SkillType::factory(),
-            'level'         => $this->faker->numberBetween(5, 100),
+            'level' => $this->faker->numberBetween(5, 100),
             'default_level' => 0,
         ];
     }

@@ -9,7 +9,7 @@ use Filament\Panel;
 
 trait HasPanelShield
 {
-    public static function bootHasPanelShield()
+    public static function bootHasPanelShield(): void
     {
         if (! app()->runningInConsole()) {
             if (Utils::isPanelUserRoleEnabled()) {

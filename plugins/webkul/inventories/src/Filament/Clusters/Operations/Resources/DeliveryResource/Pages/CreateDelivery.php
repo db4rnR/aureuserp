@@ -1,36 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages;
 
-use Webkul\Inventory\Enums\OperationState;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource;
 use Webkul\Inventory\Models\OperationType;
 
-class CreateDelivery extends CreateRecord
+final class CreateDelivery extends CreateRecord
 {
     protected static string $resource = DeliveryResource::class;
 
     public function getTitle(): string|Htmlable
     {
         return __('inventories::filament/clusters/operations/resources/delivery/pages/create-delivery.title');
-    }
-
-    protected function getRedirectUrl(): string
-    {
-        return $this->getResource()::getUrl('edit', ['record' => $this->getRecord()]);
-    }
-
-    protected function getCreatedNotification(): Notification
-    {
-        return Notification::make()
-            ->success()
-            ->title(__('inventories::filament/clusters/operations/resources/delivery/pages/create-delivery.notification.title'))
-            ->body(__('inventories::filament/clusters/operations/resources/delivery/pages/create-delivery.notification.body'));
     }
 
     public function mount(): void
@@ -46,6 +35,19 @@ class CreateDelivery extends CreateRecord
         $this->data['destination_location_id'] = $operationType?->destination_location_id;
 
         $this->form->fill($this->data);
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('edit', ['record' => $this->getRecord()]);
+    }
+
+    protected function getCreatedNotification(): Notification
+    {
+        return Notification::make()
+            ->success()
+            ->title(__('inventories::filament/clusters/operations/resources/delivery/pages/create-delivery.notification.title'))
+            ->body(__('inventories::filament/clusters/operations/resources/delivery/pages/create-delivery.notification.body'));
     }
 
     protected function mutateFormDataBeforeCreate(array $data): array

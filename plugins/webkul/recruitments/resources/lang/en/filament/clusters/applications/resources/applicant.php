@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Applicant',
 
@@ -14,20 +16,20 @@ return [
                 'title' => 'General Information',
 
                 'fields' => [
-                    'evaluation-good'           => 'Evaluation: Good',
-                    'evaluation-very-good'      => 'Evaluation: Very Good',
+                    'evaluation-good' => 'Evaluation: Good',
+                    'evaluation-very-good' => 'Evaluation: Very Good',
                     'evaluation-very-excellent' => 'Evaluation: Very Excellent',
-                    'hired'                     => 'Hired',
-                    'candidate-name'            => 'Candidate name',
-                    'email'                     => 'Emails',
-                    'phone'                     => 'Phone',
-                    'linkedin-profile'          => 'Linkedin Profile',
-                    'recruiter'                 => 'Recruiter',
-                    'interviewer'               => 'Interviewer',
-                    'tags'                      => 'Tags',
-                    'notes'                     => 'Notes',
-                    'hired-date'                => 'Hired Date',
-                    'job-position'              => 'Job Positions',
+                    'hired' => 'Hired',
+                    'candidate-name' => 'Candidate name',
+                    'email' => 'Emails',
+                    'phone' => 'Phone',
+                    'linkedin-profile' => 'Linkedin Profile',
+                    'recruiter' => 'Recruiter',
+                    'interviewer' => 'Interviewer',
+                    'tags' => 'Tags',
+                    'notes' => 'Notes',
+                    'hired-date' => 'Hired Date',
+                    'job-position' => 'Job Positions',
                 ],
             ],
 
@@ -35,7 +37,7 @@ return [
                 'title' => 'Education & Availability',
 
                 'fields' => [
-                    'degree'            => 'Degree',
+                    'degree' => 'Degree',
                     'availability-date' => 'Availability Date',
                 ],
             ],
@@ -48,9 +50,9 @@ return [
                 'title' => 'Expected & Proposed Salary',
 
                 'fields' => [
-                    'expected-salary'       => 'Expected Salary',
+                    'expected-salary' => 'Expected Salary',
                     'salary-proposed-extra' => 'Other Benefit',
-                    'proposed-salary'       => 'Proposed Salary',
+                    'proposed-salary' => 'Proposed Salary',
                     'salary-expected-extra' => 'Other Benefit',
                 ],
             ],
@@ -68,79 +70,79 @@ return [
 
     'table' => [
         'columns' => [
-            'partner-name'       => 'Partner Name',
-            'applied-on'         => 'Applied On',
-            'job-position'       => 'Job Position',
-            'stage'              => 'Stage',
-            'candidate-name'     => 'Candidate Name',
-            'evaluation'         => 'Evaluation',
+            'partner-name' => 'Partner Name',
+            'applied-on' => 'Applied On',
+            'job-position' => 'Job Position',
+            'stage' => 'Stage',
+            'candidate-name' => 'Candidate Name',
+            'evaluation' => 'Evaluation',
             'application-status' => 'Application Status',
-            'tags'               => 'Tags',
-            'refuse-reason'      => 'Refuse Reason',
-            'email'              => 'Email',
-            'recruiter'          => 'Recruiter',
-            'interviewer'        => 'Interviewer',
-            'candidate-phone'    => 'Phone',
-            'medium'             => 'Medium',
-            'source'             => 'Source',
-            'salary-expected'    => 'Expected Salary',
-            'availability-date'  => 'Availability Date',
+            'tags' => 'Tags',
+            'refuse-reason' => 'Refuse Reason',
+            'email' => 'Email',
+            'recruiter' => 'Recruiter',
+            'interviewer' => 'Interviewer',
+            'candidate-phone' => 'Phone',
+            'medium' => 'Medium',
+            'source' => 'Source',
+            'salary-expected' => 'Expected Salary',
+            'availability-date' => 'Availability Date',
         ],
 
         'filters' => [
-            'source'                  => 'Source',
-            'medium'                  => 'Medium',
-            'candidate'               => 'Candidate',
-            'priority'                => 'Priority',
-            'salary-proposed-extra'   => 'Salary Proposed Extra',
-            'salary-expected-extra'   => 'Salary Expected Extra',
-            'applicant-notes'         => 'Applicant Notes',
-            'create-date'             => 'Applied On',
-            'date-closed'             => 'Hired Date',
+            'source' => 'Source',
+            'medium' => 'Medium',
+            'candidate' => 'Candidate',
+            'priority' => 'Priority',
+            'salary-proposed-extra' => 'Salary Proposed Extra',
+            'salary-expected-extra' => 'Salary Expected Extra',
+            'applicant-notes' => 'Applicant Notes',
+            'create-date' => 'Applied On',
+            'date-closed' => 'Hired Date',
             'date-last-stage-updated' => 'Last Stage Updated',
-            'stage'                   => 'Stage',
-            'job-position'            => 'Job Position',
+            'stage' => 'Stage',
+            'job-position' => 'Job Position',
         ],
 
         'actions' => [
             'delete' => [
                 'notification' => [
                     'title' => 'Applicant Deleted',
-                    'body'  => 'The applicant was successfully deleted.',
+                    'body' => 'The applicant was successfully deleted.',
                 ],
             ],
         ],
 
         'groups' => [
-            'stage'          => 'Stage',
-            'job-position'   => 'Job Position',
+            'stage' => 'Stage',
+            'job-position' => 'Job Position',
             'candidate-name' => 'Candidate Name',
-            'responsible'    => 'Responsible',
-            'creation-date'  => 'Creation Date',
-            'hired-date'     => 'Hired Date',
-            'last-stage'     => 'Last Stage',
-            'refuse-reason'  => 'Refuse Reason',
+            'responsible' => 'Responsible',
+            'creation-date' => 'Creation Date',
+            'hired-date' => 'Hired Date',
+            'last-stage' => 'Last Stage',
+            'refuse-reason' => 'Refuse Reason',
         ],
 
         'bulk-actions' => [
             'delete' => [
                 'notification' => [
                     'title' => 'Employees deleted',
-                    'body'  => 'The employees has been deleted successfully.',
+                    'body' => 'The employees has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Employees deleted',
-                    'body'  => 'The employees has been deleted successfully.',
+                    'body' => 'The employees has been deleted successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Employees restored',
-                    'body'  => 'The employees has been restored successfully.',
+                    'body' => 'The employees has been restored successfully.',
                 ],
             ],
         ],
@@ -152,19 +154,19 @@ return [
                 'title' => 'General Information',
 
                 'entries' => [
-                    'evaluation-good'           => 'Evaluation: Good',
-                    'evaluation-very-good'      => 'Evaluation: Very Good',
+                    'evaluation-good' => 'Evaluation: Good',
+                    'evaluation-very-good' => 'Evaluation: Very Good',
                     'evaluation-very-excellent' => 'Evaluation: Very Excellent',
-                    'hired'                     => 'Hired',
-                    'candidate-name'            => 'Candidate name',
-                    'email'                     => 'Emails',
-                    'phone'                     => 'Phone',
-                    'linkedin-profile'          => 'Linkedin Profile',
-                    'recruiter'                 => 'Recruiter',
-                    'interviewer'               => 'Interviewer',
-                    'tags'                      => 'Tags',
-                    'notes'                     => 'Notes',
-                    'job-position'              => 'Job Positions',
+                    'hired' => 'Hired',
+                    'candidate-name' => 'Candidate name',
+                    'email' => 'Emails',
+                    'phone' => 'Phone',
+                    'linkedin-profile' => 'Linkedin Profile',
+                    'recruiter' => 'Recruiter',
+                    'interviewer' => 'Interviewer',
+                    'tags' => 'Tags',
+                    'notes' => 'Notes',
+                    'job-position' => 'Job Positions',
                 ],
             ],
 
@@ -172,7 +174,7 @@ return [
                 'title' => 'Education & Availability',
 
                 'entries' => [
-                    'degree'            => 'Degree',
+                    'degree' => 'Degree',
                     'availability-date' => 'Availability Date',
                 ],
             ],
@@ -185,9 +187,9 @@ return [
                 'title' => 'Expected & Proposed Salary',
 
                 'entries' => [
-                    'expected-salary'       => 'Expected Salary',
+                    'expected-salary' => 'Expected Salary',
                     'salary-proposed-extra' => 'Other Benefit',
-                    'proposed-salary'       => 'Proposed Salary',
+                    'proposed-salary' => 'Proposed Salary',
                     'salary-expected-extra' => 'Other Benefit',
                 ],
             ],

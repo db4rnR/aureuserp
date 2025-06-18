@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase;
 
-use Webkul\Purchase\Livewire\Customer\ListProducts;
 use Illuminate\Foundation\AliasLoader;
 use Livewire\Livewire;
 use Webkul\Purchase\Facades\PurchaseOrder as PurchaseOrderFacade;
+use Webkul\Purchase\Livewire\Customer\ListProducts;
 use Webkul\Purchase\Livewire\Summary;
 use Webkul\Support\Console\Commands\InstallCommand;
 use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-class PurchaseServiceProvider extends PackageServiceProvider
+final class PurchaseServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'purchases';
 
@@ -20,7 +22,7 @@ class PurchaseServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasViews()
             ->hasRoute('web')
             ->hasTranslations()
@@ -47,12 +49,12 @@ class PurchaseServiceProvider extends PackageServiceProvider
             ->hasDependencies([
                 'invoices',
             ])
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->installDependencies()
                     ->runsMigrations();
             })
-            ->hasUninstallCommand(function (UninstallCommand $command) {});
+            ->hasUninstallCommand(function (UninstallCommand $command): void {});
     }
 
     public function packageBooted(): void

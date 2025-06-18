@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\QuantityResource\Pages;
 
-use Webkul\Inventory\Enums\LocationType;
 use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\LocationType;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\QuantityResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ManageQuantities extends ManageRecords
+final class ManageQuantities extends ManageRecords
 {
     use HasTableViews;
 
@@ -28,16 +29,16 @@ class ManageQuantities extends ManageRecords
             'internal_locations' => PresetView::make(__('inventories::filament/clusters/operations/resources/quantity/pages/manage-quantities.tabs.internal-locations'))
                 ->favorite()
                 ->icon('heroicon-s-building-office')
-                ->modifyQueryUsing(function (Builder $query) {
-                    $query->whereHas('location', function (Builder $query) {
+                ->modifyQueryUsing(function (Builder $query): void {
+                    $query->whereHas('location', function (Builder $query): void {
                         $query->where('type', LocationType::INTERNAL);
                     });
                 }),
             'transit_locations' => PresetView::make(__('inventories::filament/clusters/operations/resources/quantity/pages/manage-quantities.tabs.transit-locations'))
                 ->favorite()
                 ->icon('heroicon-s-truck')
-                ->modifyQueryUsing(function (Builder $query) {
-                    $query->whereHas('location', function (Builder $query) {
+                ->modifyQueryUsing(function (Builder $query): void {
+                    $query->whereHas('location', function (Builder $query): void {
                         $query->where('type', LocationType::TRANSIT);
                     });
                 }),

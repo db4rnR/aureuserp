@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources\ProjectResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Project\Filament\Resources\ProjectResource;
 use Webkul\Support\Models\ActivityPlan;
 
-class ViewProject extends ViewRecord
+final class ViewProject extends ViewRecord
 {
     protected static string $resource = ProjectResource::class;
 
@@ -18,7 +19,7 @@ class ViewProject extends ViewRecord
     {
         return [
             ChatterAction::make()
-                ->setResource(static::$resource)
+                ->setResource(self::$resource)
                 ->setActivityPlans($this->getActivityPlans()),
             DeleteAction::make()
                 ->successNotification(

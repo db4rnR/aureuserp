@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\ListTaxGroups;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\CreateTaxGroup;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\ViewTaxGroup;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\EditTaxGroup;
 use Webkul\Account\Filament\Resources\TaxGroupResource as BaseTaxGroupResource;
 use Webkul\Invoice\Filament\Clusters\Configuration;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\CreateTaxGroup;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\EditTaxGroup;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\ListTaxGroups;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\ViewTaxGroup;
 use Webkul\Invoice\Models\TaxGroup;
 
-class TaxGroupResource extends BaseTaxGroupResource
+final class TaxGroupResource extends BaseTaxGroupResource
 {
     protected static ?string $model = TaxGroup::class;
 
@@ -37,10 +38,10 @@ class TaxGroupResource extends BaseTaxGroupResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListTaxGroups::route('/'),
+            'index' => ListTaxGroups::route('/'),
             'create' => CreateTaxGroup::route('/create'),
-            'view'   => ViewTaxGroup::route('/{record}'),
-            'edit'   => EditTaxGroup::route('/{record}/edit'),
+            'view' => ViewTaxGroup::route('/{record}'),
+            'edit' => EditTaxGroup::route('/{record}/edit'),
         ];
     }
 }

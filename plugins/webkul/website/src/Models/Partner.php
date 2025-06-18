@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Models;
 
 use Webkul\Partner\Models\Partner as BasePartner;
 
-class Partner extends BasePartner
+final class Partner extends BasePartner
 {
     /**
      * The attributes that should be hidden for serialization.
@@ -30,7 +32,7 @@ class Partner extends BasePartner
 
         $this->mergeCasts([
             'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
+            'password' => 'hashed',
         ]);
 
         parent::__construct($attributes);

@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FilamentTiptapEditor\Data;
 
-class MentionItem
+final class MentionItem
 {
     public int $id;
 

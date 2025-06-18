@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Sale\Models\Packaging;
 use Webkul\Security\Models\User;
 
-class PackagingPolicy
+final class PackagingPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class PackagingPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Packaging $packaging): bool
+    public function view(User $user): bool
     {
         return $user->can('view_packaging');
     }
@@ -37,7 +38,7 @@ class PackagingPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Packaging $packaging): bool
+    public function update(User $user): bool
     {
         return $user->can('update_packaging');
     }
@@ -45,7 +46,7 @@ class PackagingPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Packaging $packaging): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_packaging');
     }
@@ -61,7 +62,7 @@ class PackagingPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Packaging $packaging): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_packaging');
     }
@@ -77,7 +78,7 @@ class PackagingPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Packaging $packaging): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_packaging');
     }
@@ -93,7 +94,7 @@ class PackagingPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Packaging $packaging): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_packaging');
     }

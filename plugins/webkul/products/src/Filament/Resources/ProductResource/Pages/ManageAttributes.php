@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Tables\Columns\TextColumn;
+use BackedEnum;
 use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Forms;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -23,18 +24,18 @@ use Webkul\Product\Filament\Resources\ProductResource;
 use Webkul\Product\Filament\Resources\ProductResource\Actions\GenerateVariantsAction;
 use Webkul\Product\Models\ProductAttribute;
 
-class ManageAttributes extends ManageRelatedRecords
+final class ManageAttributes extends ManageRelatedRecords
 {
     protected static string $resource = ProductResource::class;
 
     protected static string $relationship = 'attributes';
 
-    static function getSubNavigationPosition(): SubNavigationPosition
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
+
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }
-
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-swatch';
 
     public static function getNavigationLabel(): string
     {
@@ -53,17 +54,13 @@ class ManageAttributes extends ManageRelatedRecords
                         'name',
                         modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                     )
-                    ->getOptionLabelFromRecordUsing(function ($record): string {
-                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
-                    })
-                    ->disableOptionWhen(function (string $value) {
-                        return $this->getOwnerRecord()->attributes->contains('attribute_id', $value);
-                    })
+                    ->getOptionLabelFromRecordUsing(fn ($record): string => $record->name.($record->trashed() ? ' (Deleted)' : ''))
+                    ->disableOptionWhen(fn (string $value) => $this->getOwnerRecord()->attributes->contains('attribute_id', $value))
                     ->searchable()
                     ->preload()
                     ->disabledOn('edit')
                     ->createOptionForm(fn (Schema $schema): Schema => AttributeResource::form($schema))
-                    ->afterStateUpdated(function ($state, Set $set) {
+                    ->afterStateUpdated(function ($state, Set $set): void {
                         $set('options', []);
                     }),
                 Select::make('options')
@@ -103,7 +100,7 @@ class ManageAttributes extends ManageRelatedRecords
 
                         return $data;
                     })
-                    ->after(function (ProductAttribute $record) {
+                    ->after(function (ProductAttribute $record): void {
                         $this->updateOrCreateVariants($record);
                     })
                     ->successNotification(
@@ -115,7 +112,7 @@ class ManageAttributes extends ManageRelatedRecords
             ])
             ->recordActions([
                 EditAction::make()
-                    ->after(function (ProductAttribute $record) {
+                    ->after(function (ProductAttribute $record): void {
                         $this->updateOrCreateVariants($record);
                     })
                     ->successNotification(
@@ -125,7 +122,7 @@ class ManageAttributes extends ManageRelatedRecords
                             ->body(__('products::filament/resources/product/pages/manage-attributes.table.actions.edit.notification.body')),
                     ),
                 DeleteAction::make()
-                    ->after(function (ProductAttribute $record) {
+                    ->after(function (ProductAttribute $record): void {
                         $this->updateOrCreateVariants($record);
                     })
                     ->successNotification(
@@ -138,13 +135,13 @@ class ManageAttributes extends ManageRelatedRecords
             ->paginated(false);
     }
 
-    protected function updateOrCreateVariants(ProductAttribute $record): void
+    private function updateOrCreateVariants(ProductAttribute $record): void
     {
-        $record->values->each(function ($value) use ($record) {
+        $record->values->each(function ($value) use ($record): void {
             $value->update([
-                'extra_price'  => $value->attributeOption->extra_price,
+                'extra_price' => $value->attributeOption->extra_price,
                 'attribute_id' => $record->attribute_id,
-                'product_id'   => $record->product_id,
+                'product_id' => $record->product_id,
             ]);
         });
 

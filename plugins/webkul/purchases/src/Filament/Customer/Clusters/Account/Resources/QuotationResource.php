@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Filament\Customer\Clusters\Account\Resources;
 
+use BackedEnum;
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResource\Pages\ListQuotations;
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResource\Pages\ViewQuotation;
-use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResource\Pages;
 use Webkul\Purchase\Models\CustomerPurchaseOrder as PurchaseOrder;
 
-class QuotationResource extends OrderResource
+final class QuotationResource extends OrderResource
 {
     protected static ?string $model = PurchaseOrder::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?int $navigationSort = 1;
 
@@ -31,7 +33,7 @@ class QuotationResource extends OrderResource
     {
         return [
             'index' => ListQuotations::route('/'),
-            'view'  => ViewQuotation::route('/{record}'),
+            'view' => ViewQuotation::route('/{record}'),
         ];
     }
 }

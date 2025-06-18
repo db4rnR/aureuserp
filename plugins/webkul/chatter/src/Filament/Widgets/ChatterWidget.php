@@ -1,17 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Filament\Widgets;
 
 use Filament\Widgets\Widget;
 use Illuminate\Support\Collection;
 
-class ChatterWidget extends Widget
+final class ChatterWidget extends Widget
 {
-    protected string $view = 'chatter::filament.widgets.chatter';
-
-    protected int|string|array $columnSpan = 'full';
-
-    public $record = null;
+    public $record;
 
     public mixed $activityPlans;
 
@@ -21,9 +19,18 @@ class ChatterWidget extends Widget
 
     public mixed $messageViewMail;
 
-    protected static string $type = 'footer';
+    protected string $view = 'chatter::filament.widgets.chatter';
 
-    public function mount($record = null, $followerViewMail = null, $messageViewMail = null, $resource = '', $activityPlans = [])
+    protected int|string|array $columnSpan = 'full';
+
+    private static string $type = 'footer';
+
+    public static function canView(): bool
+    {
+        return true;
+    }
+
+    public function mount($record = null, mixed $followerViewMail = null, mixed $messageViewMail = null, string $resource = '', $activityPlans = []): void
     {
         $this->record = $record;
 
@@ -38,11 +45,6 @@ class ChatterWidget extends Widget
         $this->messageViewMail = $messageViewMail;
 
         $this->resource = $resource;
-    }
-
-    public static function canView(): bool
-    {
-        return true;
     }
 
     public function getRecord()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use Filament\FilamentServiceProvider;
@@ -11,7 +13,7 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Tests\Models\User;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
@@ -33,7 +35,7 @@ class TestCase extends Orchestra
         ];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('database.default', 'sqlite');
         $app['config']->set('database.connections.sqlite', [
@@ -43,13 +45,13 @@ class TestCase extends Orchestra
         ]);
     }
 
-    protected function setUpDatabase()
+    protected function setUpDatabase(): void
     {
         Schema::dropAllTables();
 
         $migrations = [
-            __DIR__ . '/../database/migrations/create_commentions_tables.php.stub',
-            __DIR__ . '/../database/migrations/create_commentions_reactions_table.php.stub',
+            __DIR__.'/../database/migrations/create_commentions_tables.php.stub',
+            __DIR__.'/../database/migrations/create_commentions_reactions_table.php.stub',
         ];
 
         foreach ($migrations as $migration) {
@@ -58,7 +60,7 @@ class TestCase extends Orchestra
             $migration->up();
         }
 
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -66,7 +68,7 @@ class TestCase extends Orchestra
             $table->timestamps();
         });
 
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table): void {
             $table->increments('id');
             $table->string('title');
             $table->text('content');

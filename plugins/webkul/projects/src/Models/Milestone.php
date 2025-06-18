@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Project\Database\Factories\MilestoneFactory;
 use Webkul\Security\Models\User;
 
-class Milestone extends Model
+final class Milestone extends Model
 {
     use HasFactory;
 
@@ -40,7 +42,7 @@ class Milestone extends Model
      */
     protected $casts = [
         'is_completed' => 'boolean',
-        'deadline'     => 'datetime',
+        'deadline' => 'datetime',
         'completed_at' => 'datetime',
     ];
 

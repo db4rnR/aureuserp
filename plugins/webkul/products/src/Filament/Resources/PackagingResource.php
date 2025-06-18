@@ -1,30 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Product\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Grouping\Group;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\BulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
-use Filament\Tables;
+use Filament\Support\Enums\TextSize;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -33,7 +32,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Models\Packaging;
 
-class PackagingResource extends Resource
+final class PackagingResource extends Resource
 {
     protected static ?string $model = Packaging::class;
 
@@ -57,12 +56,8 @@ class PackagingResource extends Resource
                         'name',
                         modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                     )
-                    ->getOptionLabelFromRecordUsing(function ($record): string {
-                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
-                    })
-                    ->disableOptionWhen(function ($label) {
-                        return str_contains($label, ' (Deleted)');
-                    })
+                    ->getOptionLabelFromRecordUsing(fn ($record): string => $record->name.($record->trashed() ? ' (Deleted)' : ''))
+                    ->disableOptionWhen(fn ($label): bool => str_contains((string) $label, ' (Deleted)'))
                     ->required()
                     ->searchable()
                     ->preload(),
@@ -143,10 +138,10 @@ class PackagingResource extends Resource
                             ->body(__('products::filament/resources/packaging.table.actions.edit.notification.body')),
                     ),
                 DeleteAction::make()
-                    ->action(function (Packaging $record) {
+                    ->action(function (Packaging $record): void {
                         try {
                             $record->delete();
-                        } catch (QueryException $e) {
+                        } catch (QueryException) {
                             Notification::make()
                                 ->danger()
                                 ->title(__('products::filament/resources/packaging.table.actions.delete.notification.error.title'))
@@ -167,21 +162,21 @@ class PackagingResource extends Resource
                         ->label(__('products::filament/resources/packaging.table.bulk-actions.print.label'))
                         ->icon('heroicon-o-printer')
                         ->action(function ($records) {
-                            $pdf = PDF::loadView('products::filament.resources.packagings.actions.print', [
+                            $pdf = Pdf::loadView('products::filament.resources.packagings.actions.print', [
                                 'records' => $records,
                             ]);
 
                             $pdf->setPaper('a4', 'portrait');
 
-                            return response()->streamDownload(function () use ($pdf) {
+                            return response()->streamDownload(function () use ($pdf): void {
                                 echo $pdf->output();
                             }, 'Packaging-Barcode.pdf');
                         }),
                     DeleteBulkAction::make()
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->delete());
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('products::filament/resources/packaging.table.bulk-actions.delete.notification.error.title'))

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_accounts_move_payment', function (Blueprint $table) {
+        Schema::create('accounts_accounts_move_payment', function (Blueprint $table): void {
             $table->foreignId('invoice_id')->comment('Invoice')->constrained('accounts_account_moves')->cascadeOnDelete();
             $table->foreignId('payment_id')->comment('Payment')->constrained('accounts_account_payments')->cascadeOnDelete();
         });

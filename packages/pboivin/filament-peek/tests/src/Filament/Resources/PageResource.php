@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Actions;
-use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\ListPages;
-use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\CreatePage;
-use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\EditPage;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Pboivin\FilamentPeek\Forms\Actions\InlinePreviewAction;
 use Pboivin\FilamentPeek\Tables\Actions\ListPreviewAction;
-use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages;
+use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\CreatePage;
+use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\EditPage;
+use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\ListPages;
 use Pboivin\FilamentPeek\Tests\Models\Page;
 
-class PageResource extends Resource
+final class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tabs' => [
-        'all'      => 'All',
-        'office'   => 'Office',
-        'home'     => 'Home',
-        'other'    => 'Other',
+        'all' => 'All',
+        'office' => 'Office',
+        'home' => 'Home',
+        'other' => 'Other',
     ],
 
     'header-actions' => [
@@ -14,7 +16,7 @@ return [
 
             'notification' => [
                 'title' => 'Work Location created',
-                'body'  => 'The work location has been created successfully.',
+                'body' => 'The work location has been created successfully.',
             ],
         ],
     ],

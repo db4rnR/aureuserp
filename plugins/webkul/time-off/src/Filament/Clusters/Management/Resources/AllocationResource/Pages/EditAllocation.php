@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource\Pages;
 
-use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource;
 
-class EditAllocation extends EditRecord
+final class EditAllocation extends EditRecord
 {
     protected static string $resource = AllocationResource::class;
 
@@ -32,12 +33,12 @@ class EditAllocation extends EditRecord
     {
         return [
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             Action::make('approved')
                 ->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.approved.title'))
                 ->color('gray')
-                ->hidden(fn ($record) => $record->state !== State::CONFIRM->value)
-                ->action(function ($record) {
+                ->hidden(fn ($record): bool => $record->state !== State::CONFIRM->value)
+                ->action(function ($record): void {
                     $record->update(['state' => State::VALIDATE_TWO->value]);
 
                     $this->refreshFormData(['state']);
@@ -51,8 +52,8 @@ class EditAllocation extends EditRecord
             Action::make('refuse')
                 ->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.refuse.title'))
                 ->color('gray')
-                ->hidden(fn ($record) => $record->state === State::REFUSE->value)
-                ->action(function ($record) {
+                ->hidden(fn ($record): bool => $record->state === State::REFUSE->value)
+                ->action(function ($record): void {
                     $record->update(['state' => State::REFUSE->value]);
 
                     $this->refreshFormData(['state']);
@@ -66,8 +67,8 @@ class EditAllocation extends EditRecord
             Action::make('mark_as_ready_to_confirm')
                 ->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.mark-as-ready-to-confirm.title'))
                 ->color('gray')
-                ->visible(fn ($record) => $record->state === State::REFUSE->value)
-                ->action(function ($record) {
+                ->visible(fn ($record): bool => $record->state === State::REFUSE->value)
+                ->action(function ($record): void {
                     $record->update(['state' => State::CONFIRM->value]);
 
                     $this->refreshFormData(['state']);

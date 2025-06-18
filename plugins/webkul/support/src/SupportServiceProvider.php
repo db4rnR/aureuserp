@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support;
 
 use Filament\Support\Facades\FilamentView;
@@ -13,7 +15,7 @@ use Webkul\Security\Livewire\AcceptInvitation;
 use Webkul\Security\Policies\RolePolicy;
 use Webkul\Support\Console\Commands\InstallERP;
 
-class SupportServiceProvider extends PackageServiceProvider
+final class SupportServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'support';
 
@@ -21,7 +23,7 @@ class SupportServiceProvider extends PackageServiceProvider
 
     public function configureCustomPackage(Package $package): void
     {
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->isCore()
             ->hasViews()
             ->hasTranslations()
@@ -72,7 +74,7 @@ class SupportServiceProvider extends PackageServiceProvider
          */
         $this->app['router']->get('cache/{filename}', [
             'uses' => 'Webkul\Support\Http\Controllers\ImageCacheController@getImage',
-            'as'   => 'image_cache',
+            'as' => 'image_cache',
         ])->where(['filename' => '[ \w\\.\\/\\-\\@\(\)\=]+']);
     }
 

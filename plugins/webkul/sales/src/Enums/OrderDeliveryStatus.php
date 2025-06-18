@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Enums;
 
 use Filament\Support\Contracts\HasColor;
@@ -18,30 +20,30 @@ enum OrderDeliveryStatus: string implements HasColor, HasLabel
     public static function options(): array
     {
         return [
-            self::NO->value      => __('sales::enums/order-delivery-status.no'),
+            self::NO->value => __('sales::enums/order-delivery-status.no'),
             self::PENDING->value => __('sales::enums/order-delivery-status.pending'),
             self::PARTIAL->value => __('sales::enums/order-delivery-status.partial'),
-            self::FULL->value    => __('sales::enums/order-delivery-status.full'),
+            self::FULL->value => __('sales::enums/order-delivery-status.full'),
         ];
     }
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::NO      => __('sales::enums/order-delivery-status.no'),
+            self::NO => __('sales::enums/order-delivery-status.no'),
             self::PENDING => __('sales::enums/order-delivery-status.pending'),
             self::PARTIAL => __('sales::enums/order-delivery-status.partial'),
-            self::FULL    => __('sales::enums/order-delivery-status.full'),
+            self::FULL => __('sales::enums/order-delivery-status.full'),
         };
     }
 
     public function getColor(): string
     {
         return match ($this) {
-            self::NO      => 'gray',
+            self::NO => 'gray',
             self::PENDING => 'info',
             self::PARTIAL => 'warning',
-            self::FULL    => 'success',
+            self::FULL => 'success',
         };
     }
 }

@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'update-quantity' => [
-            'label'                     => 'Update Quantity',
-            'modal-heading'             => 'Update Product Quantity',
+            'label' => 'Update Quantity',
+            'modal-heading' => 'Update Product Quantity',
             'modal-submit-action-label' => 'Update',
 
             'form' => [
                 'fields' => [
-                    'product'     => 'Product',
+                    'product' => 'Product',
                     'on-hand-qty' => 'On Hand Quantity',
                 ],
             ],

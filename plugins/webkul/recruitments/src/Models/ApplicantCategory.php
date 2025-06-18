@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-class ApplicantCategory extends Model
+final class ApplicantCategory extends Model
 {
     protected $table = 'recruitments_applicant_categories';
 

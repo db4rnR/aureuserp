@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Webkul\Partner\Models\Partner as BasePartner;
 
-class Partner extends BasePartner
+final class Partner extends BasePartner
 {
     public function __construct(array $attributes = [])
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'update_success' => 'Η εγγραφή ενημερώθηκε επιτυχώς.',
     'update_error' => 'Υπήρξε ένα πρόβλημα κατά την μεταφόρτωση του αρχείου.',

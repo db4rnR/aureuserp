@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Reporting\Resources;
 
-use Filament\Schemas\Schema;
-use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages\ListByEmployees;
-use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages\CreateByEmployee;
-use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages\EditByEmployee;
+use BackedEnum;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
 use Webkul\TimeOff\Filament\Clusters\Reporting;
-use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages;
+use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages\CreateByEmployee;
+use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages\EditByEmployee;
+use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages\ListByEmployees;
 use Webkul\TimeOff\Models\Leave;
 
-class ByEmployeeResource extends Resource
+final class ByEmployeeResource extends Resource
 {
     protected static ?string $model = Leave::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $cluster = Reporting::class;
 
@@ -45,9 +47,9 @@ class ByEmployeeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListByEmployees::route('/'),
+            'index' => ListByEmployees::route('/'),
             'create' => CreateByEmployee::route('/create'),
-            'edit'   => EditByEmployee::route('/{record}/edit'),
+            'edit' => EditByEmployee::route('/{record}/edit'),
         ];
     }
 }

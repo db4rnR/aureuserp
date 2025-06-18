@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ListVendors as BaseListPartners;
 
-class ListPartners extends BaseListPartners
+final class ListPartners extends BaseListPartners
 {
     protected static string $resource = PartnerResource::class;
 

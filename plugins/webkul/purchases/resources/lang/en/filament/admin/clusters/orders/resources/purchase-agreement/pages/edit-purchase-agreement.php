@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'notification' => [
         'title' => 'Purchase Agreement updated',
-        'body'  => 'The purchase agreement has been updated successfully.',
+        'body' => 'The purchase agreement has been updated successfully.',
     ],
 
     'header-actions' => [
@@ -26,7 +28,7 @@ return [
         'delete' => [
             'notification' => [
                 'title' => 'Purchase Agreement deleted',
-                'body'  => 'The purchase agreement has been deleted successfully.',
+                'body' => 'The purchase agreement has been deleted successfully.',
             ],
         ],
     ],

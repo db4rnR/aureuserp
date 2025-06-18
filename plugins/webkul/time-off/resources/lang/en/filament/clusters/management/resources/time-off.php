@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Time off',
 
@@ -11,69 +13,68 @@ return [
 
     'form' => [
         'fields' => [
-            'employee-name'     => 'Employee Name',
-            'department-name'   => 'Department Name',
-            'time-off-type'     => 'Time off Type',
-            'date'              => 'Date',
-            'dates'             => 'Dates',
+            'employee-name' => 'Employee Name',
+            'department-name' => 'Department Name',
+            'time-off-type' => 'Time off Type',
+            'date' => 'Date',
+            'dates' => 'Dates',
             'request-date-from' => 'Request Date From',
-            'request-date-to'   => 'Request Date To',
-            'description'       => 'Description',
-            'period'            => 'Period',
-            'half-day'          => 'Half Day',
-            'requested-days'    => 'Requested (Days/Hours)',
-            'description'       => 'Description',
-            'attachment'        => 'Attachment',
-            'day'               => ':day day',
-            'days'              => ':days day(s)',
+            'request-date-to' => 'Request Date To',
+            'period' => 'Period',
+            'half-day' => 'Half Day',
+            'requested-days' => 'Requested (Days/Hours)',
+            'description' => 'Description',
+            'attachment' => 'Attachment',
+            'day' => ':day day',
+            'days' => ':days day(s)',
         ],
     ],
 
     'table' => [
         'columns' => [
-            'employee-name'  => 'Employee',
-            'time-off-type'  => 'Time Off Type',
-            'description'    => 'Description',
-            'date-from'      => 'Date From',
-            'date-to'        => 'Date To',
-            'duration'       => 'Duration',
-            'status'         => 'Status',
+            'employee-name' => 'Employee',
+            'time-off-type' => 'Time Off Type',
+            'description' => 'Description',
+            'date-from' => 'Date From',
+            'date-to' => 'Date To',
+            'duration' => 'Duration',
+            'status' => 'Status',
         ],
 
         'groups' => [
             'employee-name' => 'Employee',
             'time-off-type' => 'Time Off Type',
-            'status'        => 'Status',
-            'start-date'    => 'Start Date',
-            'start-to'      => 'End Date',
-            'updated-at'    => 'Updated At',
-            'created-at'    => 'Created At',
+            'status' => 'Status',
+            'start-date' => 'Start Date',
+            'start-to' => 'End Date',
+            'updated-at' => 'Updated At',
+            'created-at' => 'Created At',
         ],
 
         'actions' => [
             'approve' => [
                 'title' => [
                     'validate' => 'Validate',
-                    'approve'  => 'Approve',
+                    'approve' => 'Approve',
                 ],
                 'notification' => [
                     'title' => 'Time Off approved',
-                    'body'  => 'The time off has been approved successfully.',
+                    'body' => 'The time off has been approved successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Time Off deleted',
-                    'body'  => 'The time off has been deleted successfully.',
+                    'body' => 'The time off has been deleted successfully.',
                 ],
             ],
 
             'refused' => [
-                'title'        => 'Refuse',
+                'title' => 'Refuse',
                 'notification' => [
                     'title' => 'Time Off refused',
-                    'body'  => 'The time off has been refused successfully.',
+                    'body' => 'The time off has been refused successfully.',
                 ],
             ],
         ],
@@ -82,7 +83,7 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Time Offs deleted',
-                    'body'  => 'The time offs has been deleted successfully.',
+                    'body' => 'The time offs has been deleted successfully.',
                 ],
             ],
         ],
@@ -90,19 +91,18 @@ return [
 
     'infolist' => [
         'entries' => [
-            'time-off-type'     => 'Time off Type',
-            'date'              => 'Date',
-            'dates'             => 'Dates',
+            'time-off-type' => 'Time off Type',
+            'date' => 'Date',
+            'dates' => 'Dates',
             'request-date-from' => 'Request Date From',
-            'request-date-to'   => 'Request Date To',
-            'description'       => 'Description',
-            'period'            => 'Period',
-            'half-day'          => 'Half Day',
-            'requested-days'    => 'Requested (Days/Hours)',
-            'description'       => 'Description',
-            'attachment'        => 'Attachment',
-            'day'               => ':day day',
-            'days'              => ':days day(s)',
+            'request-date-to' => 'Request Date To',
+            'period' => 'Period',
+            'half-day' => 'Half Day',
+            'requested-days' => 'Requested (Days/Hours)',
+            'description' => 'Description',
+            'attachment' => 'Attachment',
+            'day' => ':day day',
+            'days' => ':days day(s)',
         ],
     ],
 ];

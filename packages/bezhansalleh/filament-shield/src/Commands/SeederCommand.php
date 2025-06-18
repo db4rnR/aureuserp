@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BezhanSalleh\FilamentShield\Commands;
 
 use BezhanSalleh\FilamentShield\Commands\Concerns\CanManipulateFiles;
@@ -8,7 +10,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'shield:seeder')]
-class SeederCommand extends Command
+final class SeederCommand extends Command
 {
     use CanManipulateFiles;
 
@@ -75,7 +77,7 @@ class SeederCommand extends Command
 
         if ((Utils::getPermissionModel()::exists() && is_null($option)) || $option === 'direct_permissions') {
             $directPermissions = collect(Utils::getPermissionModel()::get())
-                ->filter(fn ($permission) => ! in_array($permission->name, $directPermissionNames->unique()->flatten()->all()))
+                ->filter(fn ($permission) => ! in_array($permission->name, $directPermissionNames->unique()->flatten()->all(), true))
                 ->map(fn ($permission) => [
                     'name' => $permission->name,
                     'guard_name' => $permission->guard_name,

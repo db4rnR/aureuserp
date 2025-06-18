@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,9 +13,14 @@ use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Country;
 
-class EmploymentType extends Model implements Sortable
+final class EmploymentType extends Model implements Sortable
 {
     use HasCustomFields, HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'employees_employment_types';
 
@@ -23,11 +30,6 @@ class EmploymentType extends Model implements Sortable
         'creator_id',
         'code',
         'sort',
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function country()

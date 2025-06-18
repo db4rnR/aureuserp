@@ -1,22 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Actions;
 
-use Filament\Support\Enums\Width;
-use Filament\Forms\Components\Placeholder;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\Placeholder;
+use Filament\Support\Enums\Width;
 use Illuminate\Support\HtmlString;
 use Webkul\Employee\Models\CalendarLeaves;
 use Webkul\TimeOff\Models\LeaveMandatoryDay;
 
-class HolidayAction extends Action
+final class HolidayAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'time_off.holiday_action';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -29,7 +25,7 @@ class HolidayAction extends Action
             ->schema([
                 Placeholder::make('public_holiday')
                     ->label(__('time-off::filament/actions/holiday-action.form.placeholders.public-holiday'))
-                    ->content(function () {
+                    ->content(function (): HtmlString {
                         $publicHolidays = CalendarLeaves::with('company')->get();
 
                         if ($publicHolidays->isEmpty()) {
@@ -65,7 +61,7 @@ class HolidayAction extends Action
 
                 Placeholder::make('mandatory_holiday')
                     ->label(__('time-off::filament/actions/holiday-action.form.placeholders.mandatory-holiday'))
-                    ->content(function () {
+                    ->content(function (): HtmlString {
                         $mandatoryHolidays = LeaveMandatoryDay::with('company', 'createdBy')->get();
 
                         if ($mandatoryHolidays->isEmpty()) {
@@ -103,5 +99,10 @@ class HolidayAction extends Action
             ->label(__('time-off::filament/actions/holiday-action.title'))
             ->modalSubmitAction(false)
             ->modalCancelAction(false);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'time_off.holiday_action';
     }
 }

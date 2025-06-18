@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_account_move_lines', function (Blueprint $table) {
+        Schema::create('accounts_account_move_lines', function (Blueprint $table): void {
             $table->id();
             $table->integer('sort')->nullable();
             $table->foreignId('move_id')->comment('Journal Entry')->constrained('accounts_account_moves')->cascadeOnDelete();

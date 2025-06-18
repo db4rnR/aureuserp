@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Filament\Clusters\Applications\Resources\CandidateResource\Pages;
 
-use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
@@ -12,7 +13,7 @@ use Webkul\Employee\Filament\Resources\EmployeeResource;
 use Webkul\Recruitment\Filament\Clusters\Applications\Resources\CandidateResource;
 use Webkul\Recruitment\Models\Candidate;
 
-class ViewCandidate extends ViewRecord
+final class ViewCandidate extends ViewRecord
 {
     protected static string $resource = CandidateResource::class;
 
@@ -38,7 +39,7 @@ class ViewCandidate extends ViewRecord
                     return redirect(EmployeeResource::getUrl('edit', ['record' => $employee]));
                 }),
             ChatterActions\ChatterAction::make()
-                ->setResource(static::$resource),
+                ->setResource(self::$resource),
             DeleteAction::make()
                 ->successNotification(
                     Notification::make()

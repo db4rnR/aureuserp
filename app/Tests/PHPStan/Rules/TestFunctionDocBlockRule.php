@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\PHPStan\Rules;
 
-use PhpParser\Node;
 use PhpParser\Comment\Doc;
+use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
@@ -16,7 +18,7 @@ use PHPStan\Rules\RuleErrorBuilder;
  * - The expected outcome
  * - Any special setup or conditions
  */
-class TestFunctionDocBlockRule implements Rule
+final class TestFunctionDocBlockRule implements Rule
 {
     public function getNodeType(): string
     {
@@ -26,12 +28,12 @@ class TestFunctionDocBlockRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         // Only apply this rule to test files
-        if (!str_contains($scope->getFile(), '/tests/')) {
+        if (! str_contains($scope->getFile(), '/tests/')) {
             return [];
         }
 
         // Only apply this rule to test functions (Pest style tests)
-        if (!str_starts_with($node->name->name, 'test_')) {
+        if (! str_starts_with((string) $node->name->name, 'test_')) {
             return [];
         }
 
@@ -39,17 +41,18 @@ class TestFunctionDocBlockRule implements Rule
 
         // Check if the function has a PHPDoc block
         $docComment = $node->getDocComment();
-        if (!$docComment instanceof Doc) {
+        if (! $docComment instanceof Doc) {
             $errors[] = RuleErrorBuilder::message(
                 'Test function should have a PHPDoc block that describes what is being tested, the expected outcome, and any special setup or conditions.'
             )->build();
+
             return $errors;
         }
 
         // Check if the PHPDoc block is comprehensive enough
         $docText = $docComment->getText();
         $minLength = 50; // Minimum length for a comprehensive PHPDoc block
-        if (strlen($docText) < $minLength) {
+        if (mb_strlen($docText) < $minLength) {
             $errors[] = RuleErrorBuilder::message(
                 'Test function PHPDoc block should be comprehensive. It should describe what is being tested, the expected outcome, and any special setup or conditions.'
             )->build();

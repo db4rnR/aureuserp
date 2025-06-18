@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products_products', function (Blueprint $table) {
+        Schema::table('products_products', function (Blueprint $table): void {
             $table->foreignId('property_account_income_id')
                 ->nullable()
                 ->comment('Income Account')
@@ -40,7 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products_products', function (Blueprint $table) {
+        Schema::table('products_products', function (Blueprint $table): void {
             $table->dropForeign(['property_account_income_id']);
             $table->dropForeign(['property_account_expense_id']);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-class ActivityPlan extends Model
+final class ActivityPlan extends Model
 {
     use HasCustomFields, HasFactory, SoftDeletes;
 

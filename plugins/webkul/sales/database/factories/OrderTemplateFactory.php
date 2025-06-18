@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Database\Factories;
 
-use Webkul\Sale\Models\OrderTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Webkul\Sale\Models\OrderTemplate;
 
 /**
  * @extends Factory<OrderTemplate>
  */
-class OrderTemplateFactory extends Factory
+final class OrderTemplateFactory extends Factory
 {
     /**
      * Define the model's default state.

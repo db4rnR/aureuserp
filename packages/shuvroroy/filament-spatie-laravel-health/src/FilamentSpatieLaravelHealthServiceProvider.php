@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ShuvroRoy\FilamentSpatieLaravelHealth;
 
 use Filament\Support\Assets\Css;
@@ -7,7 +9,7 @@ use Filament\Support\Facades\FilamentAsset;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentSpatieLaravelHealthServiceProvider extends PackageServiceProvider
+final class FilamentSpatieLaravelHealthServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -20,7 +22,7 @@ class FilamentSpatieLaravelHealthServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         FilamentAsset::register([
-            Css::make('filament-spatie-health-styles', __DIR__ . '/../resources/dist/plugin.css'),
+            Css::make('filament-spatie-health-styles', __DIR__.'/../resources/dist/plugin.css'),
         ], 'filament-spatie-health');
     }
 }

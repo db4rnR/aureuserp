@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Internal Transfers',
@@ -12,12 +14,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Internal Transfer deleted',
-                        'body'  => 'The internal transfer ras been deleted successfully.',
+                        'body' => 'The internal transfer ras been deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Internal Transfer could not be deleted',
-                        'body'  => 'The internal transfer cannot be deleted because it is currently in use.',
+                        'body' => 'The internal transfer cannot be deleted because it is currently in use.',
                     ],
                 ],
             ],
@@ -28,12 +30,12 @@ return [
                 'notification' => [
                     'success' => [
                         'title' => 'Internal Transfers deleted',
-                        'body'  => 'The internal transfers has been deleted successfully.',
+                        'body' => 'The internal transfers has been deleted successfully.',
                     ],
 
                     'error' => [
                         'title' => 'Internal Transfers could not be deleted',
-                        'body'  => 'The internal transfers cannot be deleted because they are currently in use.',
+                        'body' => 'The internal transfers cannot be deleted because they are currently in use.',
                     ],
                 ],
             ],

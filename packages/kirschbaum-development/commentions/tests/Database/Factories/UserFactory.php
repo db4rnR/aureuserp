@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tests\Models\User;
 
-class UserFactory extends Factory
+final class UserFactory extends Factory
 {
     protected $model = User::class;
 

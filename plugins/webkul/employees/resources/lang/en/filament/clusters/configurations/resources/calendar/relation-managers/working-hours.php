@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'modal' => [
         'title' => 'Working Hours',
@@ -8,11 +10,10 @@ return [
     'form' => [
         'sections' => [
             'general' => [
-                'title'  => 'General Information',
+                'title' => 'General Information',
                 'fields' => [
                     'attendance-name' => 'Attendance Name',
-                    'attendance-name' => 'Attendance Name',
-                    'day-of-week'     => 'Day of Week',
+                    'day-of-week' => 'Day of Week',
                 ],
             ],
 
@@ -21,9 +22,9 @@ return [
 
                 'fields' => [
                     'day-period' => 'Day Periods',
-                    'week-type'  => 'Week Type',
-                    'work-from'  => 'Work From',
-                    'work-to'    => 'Work To',
+                    'week-type' => 'Week Type',
+                    'work-from' => 'Work From',
+                    'work-to' => 'Work To',
                 ],
             ],
 
@@ -32,7 +33,7 @@ return [
 
                 'fields' => [
                     'starting-date' => 'Starting Date',
-                    'ending-date'   => 'Ending Date',
+                    'ending-date' => 'Ending Date',
                 ],
             ],
 
@@ -41,7 +42,7 @@ return [
 
                 'fields' => [
                     'durations-days' => 'Duration (Days)',
-                    'display-type'   => 'Display Type',
+                    'display-type' => 'Display Type',
                 ],
             ],
         ],
@@ -49,62 +50,62 @@ return [
 
     'table' => [
         'columns' => [
-            'name'          => 'Attendance Name',
-            'day-of-week'   => 'Day of Week',
-            'day-period'    => 'Day Periods',
-            'work-from'     => 'Work From',
-            'work-to'       => 'Work To',
+            'name' => 'Attendance Name',
+            'day-of-week' => 'Day of Week',
+            'day-period' => 'Day Periods',
+            'work-from' => 'Work From',
+            'work-to' => 'Work To',
             'starting-date' => 'Starting Date',
-            'ending-date'   => 'Ending Date',
-            'display-type'  => 'Display Type',
-            'created-by'    => 'Created By',
-            'created-at'    => 'Created At',
-            'updated-at'    => 'Updated At',
+            'ending-date' => 'Ending Date',
+            'display-type' => 'Display Type',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
             'activity-type' => 'Activity Type',
-            'assignment'    => 'Assignment',
-            'assigned-to'   => 'Assigned To',
-            'interval'      => 'Interval',
-            'delay-unit'    => 'Delay Unit',
-            'delay-from'    => 'Delay From',
-            'created-by'    => 'Created By',
-            'created-at'    => 'Created At',
-            'updated-at'    => 'Updated At',
+            'assignment' => 'Assignment',
+            'assigned-to' => 'Assigned To',
+            'interval' => 'Interval',
+            'delay-unit' => 'Delay Unit',
+            'delay-from' => 'Delay From',
+            'created-by' => 'Created By',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'filters' => [
             'display-type' => 'Display Type',
-            'day-of-week'  => 'Day of Week',
+            'day-of-week' => 'Day of Week',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Working Hours updated',
-                    'body'  => 'The working hours has been updated successfully.',
+                    'body' => 'The working hours has been updated successfully.',
                 ],
             ],
 
             'create' => [
                 'notification' => [
                     'title' => 'Working Hours created',
-                    'body'  => 'The working hours has been created successfully.',
+                    'body' => 'The working hours has been created successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Working Hours deleted',
-                    'body'  => 'The working hours has been deleted successfully.',
+                    'body' => 'The working hours has been deleted successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Working Hours restored',
-                    'body'  => 'The working hours has been restored successfully.',
+                    'body' => 'The working hours has been restored successfully.',
                 ],
             ],
         ],
@@ -113,21 +114,21 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Working Hours deleted',
-                    'body'  => 'The working hours has been deleted successfully.',
+                    'body' => 'The working hours has been deleted successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Working Hours deleted',
-                    'body'  => 'The working hours has been deleted successfully.',
+                    'body' => 'The working hours has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Working Hours deleted',
-                    'body'  => 'The working hours has been deleted successfully.',
+                    'body' => 'The working hours has been deleted successfully.',
                 ],
             ],
         ],
@@ -139,7 +140,7 @@ return [
                 'title' => 'General Information',
 
                 'entries' => [
-                    'name'        => 'Attendance Name',
+                    'name' => 'Attendance Name',
                     'day-of-week' => 'Day of Week',
                 ],
             ],
@@ -149,9 +150,9 @@ return [
 
                 'entries' => [
                     'day-period' => 'Day Periods',
-                    'week-type'  => 'Week Type',
-                    'work-from'  => 'Work From',
-                    'work-to'    => 'Work To',
+                    'week-type' => 'Week Type',
+                    'work-from' => 'Work From',
+                    'work-to' => 'Work To',
                 ],
             ],
 
@@ -160,7 +161,7 @@ return [
 
                 'entries' => [
                     'starting-date' => 'Starting Date',
-                    'ending-date'   => 'Ending Date',
+                    'ending-date' => 'Ending Date',
                 ],
             ],
 
@@ -169,7 +170,7 @@ return [
 
                 'entries' => [
                     'durations-days' => 'Duration (Days)',
-                    'display-type'   => 'Display Type',
+                    'display-type' => 'Display Type',
                 ],
             ],
         ],

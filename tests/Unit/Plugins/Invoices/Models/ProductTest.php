@@ -1,18 +1,20 @@
 <?php
 
-use PHPUnit\Framework\Attributes\Group;
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\Description;
-use Webkul\Invoice\Models\Product;
+use PHPUnit\Framework\Attributes\Group;
 use Webkul\Account\Models\Tax;
-use Webkul\Support\Models\Company;
-use Webkul\Security\Models\User;
+use Webkul\Invoice\Models\Product;
 use Webkul\Product\Models\Category;
+use Webkul\Security\Models\User;
+use Webkul\Support\Models\Company;
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Product model attributes and relationships')]
-function product_model_attributes_and_relationships()
+function product_model_attributes_and_relationships(): void
 {
     // Create a test product
     $product = Product::factory()->create([
@@ -63,18 +65,18 @@ function product_model_attributes_and_relationships()
     expect($product->purchase_ok)->toBeTrue();
 
     // Test relationships
-    expect($product->company())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->createdBy())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->category())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class);
-    expect($product->productTaxes())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
-    expect($product->supplierTaxes())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($product->company())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->createdBy())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->category())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsTo::class);
+    expect($product->productTaxes())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    expect($product->supplierTaxes())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
 }
 
 #[Test]
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Product model relationships with other models')]
-function product_model_relationships_with_other_models()
+function product_model_relationships_with_other_models(): void
 {
     // Create related models
     $company = Company::factory()->create();
@@ -106,18 +108,18 @@ function product_model_relationships_with_other_models()
 #[Group('unit')]
 #[Group('invoices')]
 #[Description('Test Product model traits')]
-function product_model_traits()
+function product_model_traits(): void
 {
     // Create a test product
     $product = Product::factory()->create();
 
     // Test that the model uses the expected traits
-    expect($product)->toBeInstanceOf(\Webkul\Chatter\Traits\HasChatter::class);
-    expect($product)->toBeInstanceOf(\Webkul\Field\Traits\HasCustomFields::class);
-    expect($product)->toBeInstanceOf(\Webkul\Chatter\Traits\HasLogActivity::class);
+    expect($product)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
+    expect($product)->toBeInstanceOf(Webkul\Field\Traits\HasCustomFields::class);
+    expect($product)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
 
     // Test log attributes
-    $logAttributes = (new \ReflectionClass($product))->getProperty('logAttributes')->getValue($product);
+    $logAttributes = new ReflectionClass($product)->getProperty('logAttributes')->getValue($product);
     expect($logAttributes)->toBeArray();
     expect($logAttributes)->toContain('name');
     expect($logAttributes)->toContain('type');

@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
-use Webkul\Inventory\Enums\LocationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Inventory\Database\Factories\LotFactory;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\LocationType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-class Lot extends Model
+final class Lot extends Model
 {
     use HasFactory;
 
@@ -52,12 +53,12 @@ class Lot extends Model
      * @var string
      */
     protected $casts = [
-        'properties'      => 'array',
+        'properties' => 'array',
         'expiry_reminded' => 'boolean',
         'expiration_date' => 'datetime',
-        'use_date'        => 'datetime',
-        'removal_date'    => 'datetime',
-        'alert_date'      => 'datetime',
+        'use_date' => 'datetime',
+        'removal_date' => 'datetime',
+        'alert_date' => 'datetime',
     ];
 
     public function product(): BelongsTo
@@ -93,7 +94,7 @@ class Lot extends Model
     public function getTotalQuantityAttribute()
     {
         return $this->quantities()
-            ->whereHas('location', function ($query) {
+            ->whereHas('location', function ($query): void {
                 $query->where('type', LocationType::INTERNAL)
                     ->where('is_scrap', false);
             })

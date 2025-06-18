@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -9,24 +11,11 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VendorPurchaseOrderMail extends Mailable
+final class VendorPurchaseOrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject;
-
-    public $message;
-
-    public $pdfPath;
-
-    public function __construct($subject, $message, $pdfPath)
-    {
-        $this->subject = $subject;
-
-        $this->message = $message;
-
-        $this->pdfPath = $pdfPath;
-    }
+    public function __construct(public $subject, public $message, public $pdfPath) {}
 
     /**
      * Get the message envelope.

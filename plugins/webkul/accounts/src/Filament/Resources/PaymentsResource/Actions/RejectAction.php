@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\PaymentsResource\Actions;
 
 use Filament\Actions\Action;
@@ -7,13 +9,8 @@ use Livewire\Component;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Models\Payment;
 
-class RejectAction extends Action
+final class RejectAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'customers.payment.reject';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,8 +24,11 @@ class RejectAction extends Action
 
                 $livewire->refreshFormData(['state']);
             })
-            ->hidden(function (Payment $record) {
-                return $record->state != PaymentStatus::IN_PROCESS->value;
-            });
+            ->hidden(fn (Payment $record): bool => $record->state !== PaymentStatus::IN_PROCESS->value);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'customers.payment.reject';
     }
 }

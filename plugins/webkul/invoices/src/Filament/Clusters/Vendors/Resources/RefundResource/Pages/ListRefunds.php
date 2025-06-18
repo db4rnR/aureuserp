@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +12,7 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListRefunds extends BaseListInvoices
+final class ListRefunds extends BaseListInvoices
 {
     use HasTableViews;
 

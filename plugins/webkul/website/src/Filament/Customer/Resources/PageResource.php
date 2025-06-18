@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Website\Filament\Customer\Resources;
 
-use Webkul\Website\Filament\Customer\Resources\PageResource\Pages\ViewPage;
 use Filament\Resources\Resource;
-use Webkul\Website\Filament\Customer\Resources\PageResource\Pages;
+use Webkul\Website\Filament\Customer\Resources\PageResource\Pages\ViewPage;
 use Webkul\Website\Models\Page;
 
-class PageResource extends Resource
+final class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 

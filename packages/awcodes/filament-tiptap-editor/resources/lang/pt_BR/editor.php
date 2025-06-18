@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'skip_toolbar' => 'Pular barra de ferramentas',
     'align_center' => 'Alinhar texto ao centro',

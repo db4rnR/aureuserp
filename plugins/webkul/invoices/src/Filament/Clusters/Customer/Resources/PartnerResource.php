@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ViewPartner;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\EditPartner;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageContacts;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageAddresses;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageBankAccounts;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ListPartners;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\CreatePartner;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Table;
 use Webkul\Invoice\Filament\Clusters\Customer;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\CreatePartner;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\EditPartner;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ListPartners;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageAddresses;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageBankAccounts;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageContacts;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ViewPartner;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource as BasePartnerResource;
 use Webkul\Invoice\Models\Partner;
 use Webkul\Partner\Filament\Resources\PartnerResource as BaseVendorResource;
 
-class PartnerResource extends BasePartnerResource
+final class PartnerResource extends BasePartnerResource
 {
     protected static ?string $model = Partner::class;
 
@@ -26,11 +28,11 @@ class PartnerResource extends BasePartnerResource
 
     protected static ?int $navigationSort = 6;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $cluster = Customer::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -47,9 +49,9 @@ class PartnerResource extends BasePartnerResource
         $table = BaseVendorResource::table($table);
 
         $table->contentGrid([
-            'sm'  => 1,
-            'md'  => 2,
-            'xl'  => 3,
+            'sm' => 1,
+            'md' => 2,
+            'xl' => 3,
             '2xl' => 3,
         ]);
 
@@ -72,12 +74,12 @@ class PartnerResource extends BasePartnerResource
     public static function getPages(): array
     {
         return [
-            'index'        => ListPartners::route('/'),
-            'create'       => CreatePartner::route('/create'),
-            'view'         => ViewPartner::route('/{record}'),
-            'edit'         => EditPartner::route('/{record}/edit'),
-            'contacts'     => ManageContacts::route('/{record}/contacts'),
-            'addresses'    => ManageAddresses::route('/{record}/addresses'),
+            'index' => ListPartners::route('/'),
+            'create' => CreatePartner::route('/create'),
+            'view' => ViewPartner::route('/{record}'),
+            'edit' => EditPartner::route('/{record}/edit'),
+            'contacts' => ManageContacts::route('/{record}/contacts'),
+            'addresses' => ManageAddresses::route('/{record}/addresses'),
             'bank-account' => ManageBankAccounts::route('/{record}/bank-accounts'),
         ];
     }

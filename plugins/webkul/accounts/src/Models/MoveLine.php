@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,9 +17,14 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 use Webkul\Support\Models\UOM;
 
-class MoveLine extends Model implements Sortable
+final class MoveLine extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'sort',
+        'sort_when_creating' => true,
+    ];
 
     protected $table = 'accounts_account_move_lines';
 
@@ -76,11 +83,6 @@ class MoveLine extends Model implements Sortable
     protected $casts = [
         'parent_state' => MoveState::class,
         'display_type' => DisplayType::class,
-    ];
-
-    public $sortable = [
-        'order_column_name'  => 'sort',
-        'sort_when_creating' => true,
     ];
 
     public function move()
@@ -155,7 +157,7 @@ class MoveLine extends Model implements Sortable
 
     public function moveLines()
     {
-        return $this->hasMany(MoveLine::class, 'reconcile_id');
+        return $this->hasMany(self::class, 'reconcile_id');
     }
 
     public function payment()

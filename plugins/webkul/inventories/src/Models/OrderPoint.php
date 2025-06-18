@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +13,7 @@ use Webkul\Inventory\Enums\OrderPointTrigger;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-class OrderPoint extends Model
+final class OrderPoint extends Model
 {
     use HasFactory, SoftDeletes;
 

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Purchase\Livewire;
 
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
-class Summary extends Component
+final class Summary extends Component
 {
     #[Reactive]
     public $products = [];
@@ -18,7 +20,7 @@ class Summary extends Component
 
     public $grandTotal = 0;
 
-    public function mount($products)
+    public function mount($products): void
     {
         $this->products = $products ?? [];
     }

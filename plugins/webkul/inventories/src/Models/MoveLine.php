@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Models;
 
-use Webkul\Inventory\Enums\MoveState;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Inventory\Database\Factories\MoveLineFactory;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\MoveState;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-class MoveLine extends Model
+final class MoveLine extends Model
 {
     use HasFactory;
 
@@ -59,9 +60,9 @@ class MoveLine extends Model
      * @var array
      */
     protected $casts = [
-        'state'             => MoveState::class,
-        'is_picked'         => 'boolean',
-        'scheduled_at'      => 'datetime',
+        'state' => MoveState::class,
+        'is_picked' => 'boolean',
+        'scheduled_at' => 'datetime',
     ];
 
     public function move(): BelongsTo

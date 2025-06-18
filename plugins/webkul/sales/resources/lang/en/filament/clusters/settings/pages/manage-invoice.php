@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title' => 'Manage Invoice',
 
@@ -11,10 +13,10 @@ return [
 
     'form' => [
         'invoice-policy' => [
-            'label'      => 'Invoice Policy',
+            'label' => 'Invoice Policy',
             'label-help' => 'Define how invoices are generated from sales orders.',
-            'options'    => [
-                'order'    => 'Generate invoice based on ordered quantities',
+            'options' => [
+                'order' => 'Generate invoice based on ordered quantities',
                 'delivery' => 'Generate invoice based on delivered quantities',
             ],
         ],

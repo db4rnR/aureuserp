@@ -1,45 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
-use Webkul\Inventory\Enums\ProductTracking;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\BulkAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
-use Filament\Schemas\Components\Grid;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages\ViewLot;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages\EditLot;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages\ListLots;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages\CreateLot;
+use BackedEnum;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Webkul\Inventory\Enums;
+use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource\Pages\EditDelivery;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DropshipResource\Pages\EditDropship;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource\Pages\EditInternal;
@@ -48,15 +44,19 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\ScrapResource\Pages\
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ScrapResource\Pages\EditScrap;
 use Webkul\Inventory\Filament\Clusters\Products;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages\CreateLot;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages\EditLot;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages\ListLots;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Pages\ViewLot;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\ManageQuantities;
 use Webkul\Inventory\Models\Lot;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 
-class LotResource extends Resource
+final class LotResource extends Resource
 {
     protected static ?string $model = Lot::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $cluster = Products::class;
 
@@ -64,7 +64,7 @@ class LotResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function isDiscovered(): bool
     {
@@ -197,10 +197,10 @@ class LotResource extends Resource
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make()
-                        ->action(function (Lot $record) {
+                        ->action(function (Lot $record): void {
                             try {
                                 $record->delete();
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('inventories::filament/clusters/products/resources/lot.table.actions.delete.notification.error.title'))
@@ -222,21 +222,21 @@ class LotResource extends Resource
                         ->label(__('inventories::filament/clusters/products/resources/lot.table.bulk-actions.print.label'))
                         ->icon('heroicon-o-printer')
                         ->action(function ($records) {
-                            $pdf = PDF::loadView('inventories::filament.clusters.products.lots.actions.print', [
+                            $pdf = Pdf::loadView('inventories::filament.clusters.products.lots.actions.print', [
                                 'records' => $records,
                             ]);
 
                             $pdf->setPaper('a4', 'portrait');
 
-                            return response()->streamDownload(function () use ($pdf) {
+                            return response()->streamDownload(function () use ($pdf): void {
                                 echo $pdf->output();
                             }, 'Lot-Barcode.pdf');
                         }),
                     DeleteBulkAction::make()
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->delete());
-                            } catch (QueryException $e) {
+                            } catch (QueryException) {
                                 Notification::make()
                                     ->danger()
                                     ->title(__('inventories::filament/clusters/products/resources/lot.table.bulk-actions.delete.notification.error.title'))
@@ -336,10 +336,10 @@ class LotResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'      => ListLots::route('/'),
-            'create'     => CreateLot::route('/create'),
-            'view'       => ViewLot::route('/{record}'),
-            'edit'       => EditLot::route('/{record}/edit'),
+            'index' => ListLots::route('/'),
+            'create' => CreateLot::route('/create'),
+            'view' => ViewLot::route('/{record}'),
+            'edit' => EditLot::route('/{record}/edit'),
             'quantities' => Pages\ManageQuantities::route('/{record}/quantities'),
         ];
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'header-actions' => [
         'print' => [
@@ -10,12 +12,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Receipt Deleted',
-                    'body'  => 'The receipt has been deleted successfully.',
+                    'body' => 'The receipt has been deleted successfully.',
                 ],
 
                 'error' => [
                     'title' => 'Receipt could not be deleted',
-                    'body'  => 'The Receipt cannot be deleted because it is currently in use.',
+                    'body' => 'The Receipt cannot be deleted because it is currently in use.',
                 ],
             ],
         ],

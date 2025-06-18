@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Webkul\Support\Models\Currency;
 
-class CurrencySeeder extends Seeder
+final class CurrencySeeder extends Seeder
 {
     /**
      * Seed the application's database with currencies.
@@ -58,14 +60,12 @@ class CurrencySeeder extends Seeder
 
         Currency::query()->delete();
 
-        $currencyData = collect($currencies)->map(function ($name, $code) {
-            return [
-                'code'       => $code,
-                'name'       => $name,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        })->all();
+        $currencyData = collect($currencies)->map(fn ($name, $code): array => [
+            'code' => $code,
+            'name' => $name,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ])->all();
 
         Currency::insert($currencyData);
     }

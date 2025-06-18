@@ -1,33 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Fieldset;
+use BackedEnum;
 use Filament\Forms\Components\Select;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ViewProductCategory;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\EditProductCategory;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ManageProducts;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ListProductCategories;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\CreateProductCategory;
-use Filament\Forms;
-use Filament\Infolists;
 use Filament\Resources\Pages\Page;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Webkul\Inventory\Filament\Clusters\Configurations;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\CreateProductCategory;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\EditProductCategory;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ListProductCategories;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ManageProducts;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ViewProductCategory;
 use Webkul\Inventory\Models\Category;
 use Webkul\Inventory\Settings\WarehouseSettings;
 use Webkul\Product\Filament\Resources\CategoryResource;
 
-class ProductCategoryResource extends CategoryResource
+final class ProductCategoryResource extends CategoryResource
 {
     protected static ?string $model = Category::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-folder';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -70,7 +70,7 @@ class ProductCategoryResource extends CategoryResource
                     ])
                     ->columns(1),
             ])
-            ->visible(fn (WarehouseSettings $settings) => $settings->enable_multi_steps_routes);
+            ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_multi_steps_routes);
 
         $components[1]->childComponents($childComponents);
 
@@ -103,7 +103,7 @@ class ProductCategoryResource extends CategoryResource
                     ->icon('heroicon-o-cog-6-tooth')
                     ->collapsible(),
             ])
-            ->visible(fn (WarehouseSettings $settings) => $settings->enable_multi_steps_routes);
+            ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_multi_steps_routes);
 
         $components[0]->childComponents($firstGroupChildComponents);
 
@@ -116,7 +116,7 @@ class ProductCategoryResource extends CategoryResource
     {
         $route = request()->route()?->getName() ?? session('current_route');
 
-        if ($route && $route != 'livewire.update') {
+        if ($route && $route !== 'livewire.update') {
             session(['current_route' => $route]);
         } else {
             $route = session('current_route');
@@ -141,10 +141,10 @@ class ProductCategoryResource extends CategoryResource
     public static function getPages(): array
     {
         return [
-            'index'    => ListProductCategories::route('/'),
-            'create'   => CreateProductCategory::route('/create'),
-            'view'     => ViewProductCategory::route('/{record}'),
-            'edit'     => EditProductCategory::route('/{record}/edit'),
+            'index' => ListProductCategories::route('/'),
+            'create' => CreateProductCategory::route('/create'),
+            'view' => ViewProductCategory::route('/{record}'),
+            'edit' => EditProductCategory::route('/{record}/edit'),
             'products' => ManageProducts::route('/{record}/products'),
         ];
     }

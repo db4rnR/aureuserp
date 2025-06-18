@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
-        'name'          => 'Name',
-        'level'         => 'Level',
+        'name' => 'Name',
+        'level' => 'Level',
         'default-level' => 'Default Level',
     ],
 
     'table' => [
         'columns' => [
-            'name'          => 'Name',
-            'level'         => 'Level',
+            'name' => 'Name',
+            'level' => 'Level',
             'default-level' => 'Default Level',
-            'created-at'    => 'Created At',
-            'updated-at'    => 'Updated At',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
         ],
 
         'groups' => [
@@ -28,28 +30,28 @@ return [
             'create' => [
                 'notification' => [
                     'title' => 'Skill Level created',
-                    'body'  => 'The skill level has been created successfully.',
+                    'body' => 'The skill level has been created successfully.',
                 ],
             ],
 
             'edit' => [
                 'notification' => [
                     'title' => 'Skill Level updated',
-                    'body'  => 'The skill level has been updated successfully.',
+                    'body' => 'The skill level has been updated successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Skill Level restored',
-                    'body'  => 'The skill level has been restored successfully.',
+                    'body' => 'The skill level has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Skill Level deleted',
-                    'body'  => 'The skill level has been deleted successfully.',
+                    'body' => 'The skill level has been deleted successfully.',
                 ],
             ],
         ],
@@ -58,21 +60,21 @@ return [
             'delete' => [
                 'notification' => [
                     'title' => 'Skill Levels deleted',
-                    'body'  => 'The skills has been deleted successfully.',
+                    'body' => 'The skills has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Skill Levels force deleted',
-                    'body'  => 'The skills has been force deleted successfully.',
+                    'body' => 'The skills has been force deleted successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Skill Levels force restored',
-                    'body'  => 'The skills has been force restored successfully.',
+                    'body' => 'The skills has been force restored successfully.',
                 ],
             ],
         ],
@@ -80,8 +82,8 @@ return [
 
     'infolist' => [
         'entries' => [
-            'name'          => 'Name',
-            'level'         => 'Level',
+            'name' => 'Name',
+            'level' => 'Level',
             'default-level' => 'Default Level',
         ],
     ],

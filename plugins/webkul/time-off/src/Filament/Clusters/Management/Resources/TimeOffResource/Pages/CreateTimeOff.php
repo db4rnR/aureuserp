@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages;
 
 use Filament\Notifications\Notification;
@@ -10,7 +12,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
 
-class CreateTimeOff extends CreateRecord
+final class CreateTimeOff extends CreateRecord
 {
     protected static string $resource = TimeOffResource::class;
 
@@ -27,11 +29,7 @@ class CreateTimeOff extends CreateRecord
         if (isset($data['employee_id'])) {
             $employee = Employee::find($data['employee_id']);
 
-            if ($employee->department) {
-                $data['department_id'] = $employee->department?->id;
-            } else {
-                $data['department_id'] = null;
-            }
+            $data['department_id'] = $employee->department ? $employee->department?->id : null;
 
             if ($employee->calendar) {
                 $data['calendar_id'] = $employee->calendar->id;

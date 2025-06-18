@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_incoterms', function (Blueprint $table) {
+        Schema::create('accounts_incoterms', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('creator_id')->nullable()->comment('Creator')->constrained('users')->nullOnDelete();
             $table->string('code', 3)->comment('Code');

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments_payment_transactions', function (Blueprint $table) {
+        Schema::create('payments_payment_transactions', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('sort')->nullable()->comment('Sort Order');

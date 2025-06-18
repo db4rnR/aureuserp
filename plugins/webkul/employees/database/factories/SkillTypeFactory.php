@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Employee\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\SkillType;
 
-class SkillTypeFactory extends Factory
+final class SkillTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,8 +24,8 @@ class SkillTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'   => $this->faker->word,
-            'color'  => $this->faker->hexColor,
+            'name' => $this->faker->word,
+            'color' => $this->faker->hexColor,
             'status' => 1,
         ];
     }

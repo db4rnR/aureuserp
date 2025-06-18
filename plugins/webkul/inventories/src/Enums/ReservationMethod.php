@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -16,8 +18,8 @@ enum ReservationMethod: string implements HasLabel
     {
         return match ($this) {
             self::AT_CONFIRM => __('inventories::enums/reservation-method.at-confirm'),
-            self::MANUAL     => __('inventories::enums/reservation-method.manual'),
-            self::BY_DATE    => __('inventories::enums/reservation-method.by-date'),
+            self::MANUAL => __('inventories::enums/reservation-method.manual'),
+            self::BY_DATE => __('inventories::enums/reservation-method.by-date'),
         };
     }
 }

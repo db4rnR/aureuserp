@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('accounts_account_moves', function (Blueprint $table) {
+        Schema::table('accounts_account_moves', function (Blueprint $table): void {
             $table->foreignId('tax_cash_basis_reconcile_id')
                 ->nullable()
                 ->after('tax_cash_basis_origin_move_id')
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts_account_moves', function (Blueprint $table) {
+        Schema::table('accounts_account_moves', function (Blueprint $table): void {
             if (Schema::hasColumn('accounts_account_moves', 'tax_cash_basis_reconcile_id')) {
                 $table->dropConstrainedForeignId('tax_cash_basis_reconcile_id');
             }

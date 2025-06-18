@@ -1,54 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Actions;
+use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Support\Enums\Size;
-use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Select;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Livewire;
-use Filament\Schemas\Components\Fieldset;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Components\Grid;
-use Filament\Support\Enums\TextSize;
-use Filament\Infolists\Components\RepeatableEntry;
-use Webkul\Invoice\Settings\ProductSettings;
 use Filament\Infolists\Components\IconEntry;
-use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ListInvoices;
-use Webkul\Account\Filament\Resources\InvoiceResource\Pages\CreateInvoice;
-use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ViewInvoice;
-use Webkul\Account\Filament\Resources\InvoiceResource\Pages\EditInvoice;
-use Filament\Forms\Components\Repeater;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms;
-use Filament\Infolists;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Livewire;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\Size;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -57,29 +53,32 @@ use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Enums\PaymentState;
 use Webkul\Account\Enums\TypeTaxUse;
 use Webkul\Account\Facades\Tax;
-use Webkul\Account\Filament\Resources\InvoiceResource\Pages;
+use Webkul\Account\Filament\Resources\InvoiceResource\Pages\CreateInvoice;
+use Webkul\Account\Filament\Resources\InvoiceResource\Pages\EditInvoice;
+use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ListInvoices;
+use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ViewInvoice;
 use Webkul\Account\Livewire\InvoiceSummary;
 use Webkul\Account\Models\Move as AccountMove;
 use Webkul\Field\Filament\Forms\Components\ProgressStepper;
 use Webkul\Invoice\Models\Product;
-use Webkul\Invoice\Settings;
+use Webkul\Invoice\Settings\ProductSettings;
 use Webkul\Support\Models\Currency;
 use Webkul\Support\Models\UOM;
 
-class InvoiceResource extends Resource
+final class InvoiceResource extends Resource
 {
     protected static ?string $model = AccountMove::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-receipt-percent';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-receipt-percent';
 
     protected static bool $shouldRegisterNavigation = false;
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('accounts::filament/resources/invoice.global-search.number')           => $record?->name ?? '—',
-            __('accounts::filament/resources/invoice.global-search.customer')         => $record?->invoice_partner_display_name ?? '—',
-            __('accounts::filament/resources/invoice.global-search.invoice-date')     => $record?->invoice_date ?? '—',
+            __('accounts::filament/resources/invoice.global-search.number') => $record?->name ?? '—',
+            __('accounts::filament/resources/invoice.global-search.customer') => $record?->invoice_partner_display_name ?? '—',
+            __('accounts::filament/resources/invoice.global-search.invoice-date') => $record?->invoice_date ?? '—',
             __('accounts::filament/resources/invoice.global-search.invoice-date-due') => $record?->invoice_date_due ?? '—',
         ];
     }
@@ -91,17 +90,17 @@ class InvoiceResource extends Resource
                 ProgressStepper::make('state')
                     ->hiddenLabel()
                     ->inline()
-                    ->options(function ($record) {
+                    ->options(function ($record): array {
                         $options = MoveState::options();
 
                         if (
                             $record
-                            && $record->state != MoveState::CANCEL->value
+                            && $record->state !== MoveState::CANCEL->value
                         ) {
                             unset($options[MoveState::CANCEL->value]);
                         }
 
-                        if ($record == null) {
+                        if ($record === null) {
                             unset($options[MoveState::CANCEL->value]);
                         }
 
@@ -119,7 +118,7 @@ class InvoiceResource extends Resource
                             Action::make('payment_state')
                                 ->icon(fn ($record) => $record->payment_state->getIcon())
                                 ->color(fn ($record) => $record->payment_state->getColor())
-                                ->visible(fn ($record) => $record && in_array($record->payment_state, [PaymentState::PAID, PaymentState::REVERSED]))
+                                ->visible(fn ($record): bool => $record && in_array($record->payment_state, [PaymentState::PAID, PaymentState::REVERSED], true))
                                 ->label(fn ($record) => $record->payment_state->getLabel())
                                 ->size(Size::ExtraLarge->value),
                         ]),
@@ -136,19 +135,19 @@ class InvoiceResource extends Resource
                                             ->searchable()
                                             ->preload()
                                             ->live()
-                                            ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                            ->disabled(fn ($record): bool => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL], true)),
                                     ]),
                                 DatePicker::make('invoice_date')
                                     ->label(__('accounts::filament/resources/invoice.form.section.general.fields.invoice-date'))
                                     ->default(now())
                                     ->native(false)
-                                    ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                    ->disabled(fn ($record): bool => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL], true)),
                                 DatePicker::make('invoice_date_due')
                                     ->required()
                                     ->default(now())
                                     ->native(false)
                                     ->live()
-                                    ->hidden(fn (Get $get) => $get('invoice_payment_term_id') !== null)
+                                    ->hidden(fn (Get $get): bool => $get('invoice_payment_term_id') !== null)
                                     ->label(__('accounts::filament/resources/invoice.form.section.general.fields.due-date')),
                                 Select::make('invoice_payment_term_id')
                                     ->relationship(
@@ -156,13 +155,9 @@ class InvoiceResource extends Resource
                                         'name',
                                         modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                                     )
-                                    ->getOptionLabelFromRecordUsing(function ($record): string {
-                                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
-                                    })
-                                    ->disableOptionWhen(function ($label) {
-                                        return str_contains($label, ' (Deleted)');
-                                    })
-                                    ->required(fn (Get $get) => $get('invoice_date_due') === null)
+                                    ->getOptionLabelFromRecordUsing(fn ($record): string => $record->name.($record->trashed() ? ' (Deleted)' : ''))
+                                    ->disableOptionWhen(fn ($label): bool => str_contains((string) $label, ' (Deleted)'))
+                                    ->required(fn (Get $get): bool => $get('invoice_date_due') === null)
                                     ->live()
                                     ->searchable()
                                     ->preload()
@@ -174,13 +169,11 @@ class InvoiceResource extends Resource
                         Tab::make(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.title'))
                             ->icon('heroicon-o-list-bullet')
                             ->schema([
-                                static::getProductRepeater(),
-                                Livewire::make(InvoiceSummary::class, function (Get $get) {
-                                    return [
-                                        'currency' => Currency::find($get('currency_id')),
-                                        'products' => $get('products'),
-                                    ];
-                                })
+                                self::getProductRepeater(),
+                                Livewire::make(InvoiceSummary::class, fn (Get $get): array => [
+                                    'currency' => Currency::find($get('currency_id')),
+                                    'products' => $get('products'),
+                                ])
                                     ->live()
                                     ->reactive(),
                             ]),
@@ -202,14 +195,14 @@ class InvoiceResource extends Resource
                                             ->searchable()
                                             ->preload()
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.invoice.fields.recipient-bank'))
-                                            ->createOptionForm(fn ($form) => BankAccountResource::form($form))
-                                            ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                            ->createOptionForm(fn ($form): Schema => BankAccountResource::form($form))
+                                            ->disabled(fn ($record): bool => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL], true)),
                                         TextInput::make('payment_reference')
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.invoice.fields.payment-reference')),
                                         DatePicker::make('delivery_date')
                                             ->native(false)
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.invoice.fields.delivery-date'))
-                                            ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                            ->disabled(fn ($record): bool => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL], true)),
                                     ]),
                                 Fieldset::make(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.accounting.title'))
                                     ->schema([
@@ -229,7 +222,7 @@ class InvoiceResource extends Resource
                                             ->default(0)
                                             ->inline(false)
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.accounting.fieldset.auto-post'))
-                                            ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                            ->disabled(fn ($record): bool => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL], true)),
                                         Toggle::make('checked')
                                             ->inline(false)
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.accounting.fieldset.checked')),
@@ -346,9 +339,9 @@ class InvoiceResource extends Resource
                 TextColumn::make('payment_state')
                     ->label(__('Payment State'))
                     ->placeholder('-')
-                    ->color(fn (PaymentState $state) => $state->getColor())
-                    ->icon(fn (PaymentState $state) => $state->getIcon())
-                    ->formatStateUsing(fn (PaymentState $state) => $state->getLabel())
+                    ->color(fn (PaymentState $state): ?string => $state->getColor())
+                    ->icon(fn (PaymentState $state): ?string => $state->getIcon())
+                    ->formatStateUsing(fn (PaymentState $state): ?string => $state->getLabel())
                     ->badge()
                     ->searchable()
                     ->sortable()
@@ -507,12 +500,12 @@ class InvoiceResource extends Resource
                                 TextEntry::make('partner.name')
                                     ->placeholder('-')
                                     ->label(__('accounts::filament/resources/invoice.infolist.section.general.entries.customer'))
-                                    ->visible(fn ($record) => $record->partner_id !== null)
+                                    ->visible(fn ($record): bool => $record->partner_id !== null)
                                     ->icon('heroicon-o-user'),
                                 TextEntry::make('invoice_partner_display_name')
                                     ->placeholder('-')
                                     ->label(__('accounts::filament/resources/invoice.infolist.section.general.entries.customer'))
-                                    ->visible(fn ($record) => $record->partner_id === null)
+                                    ->visible(fn ($record): bool => $record->partner_id === null)
                                     ->icon('heroicon-o-user'),
                                 TextEntry::make('invoice_date')
                                     ->placeholder('-')
@@ -523,12 +516,12 @@ class InvoiceResource extends Resource
                                     ->placeholder('-')
                                     ->label(__('accounts::filament/resources/invoice.infolist.section.general.entries.due-date'))
                                     ->icon('heroicon-o-clock')
-                                    ->hidden(fn ($record) => $record->invoice_payment_term_id !== null)
+                                    ->hidden(fn ($record): bool => $record->invoice_payment_term_id !== null)
                                     ->date(),
                                 TextEntry::make('invoicePaymentTerm.name')
                                     ->placeholder('-')
                                     ->label(__('accounts::filament/resources/invoice.infolist.section.general.entries.payment-term'))
-                                    ->hidden(fn ($record) => $record->invoice_payment_term_id === null)
+                                    ->hidden(fn ($record): bool => $record->invoice_payment_term_id === null)
                                     ->icon('heroicon-o-calendar-days'),
                             ])->columns(2),
                     ]),
@@ -551,7 +544,7 @@ class InvoiceResource extends Resource
                                             ->icon('heroicon-o-hashtag'),
                                         TextEntry::make('uom.name')
                                             ->placeholder('-')
-                                            ->visible(fn (ProductSettings $settings) => $settings->enable_uom)
+                                            ->visible(fn (ProductSettings $settings): bool => $settings->enable_uom)
                                             ->label(__('accounts::filament/resources/invoice.infolist.tabs.invoice-lines.repeater.products.entries.unit'))
                                             ->icon('heroicon-o-scale'),
                                         TextEntry::make('price_unit')
@@ -566,11 +559,9 @@ class InvoiceResource extends Resource
                                             ->suffix('%'),
                                         TextEntry::make('taxes.name')
                                             ->badge()
-                                            ->state(function ($record): array {
-                                                return $record->taxes->map(fn ($tax) => [
-                                                    'name' => $tax->name,
-                                                ])->toArray();
-                                            })
+                                            ->state(fn ($record): array => $record->taxes->map(fn ($tax): array => [
+                                                'name' => $tax->name,
+                                            ])->toArray())
                                             ->icon('heroicon-o-receipt-percent')
                                             ->formatStateUsing(fn ($state) => $state['name'])
                                             ->placeholder('-')
@@ -582,18 +573,14 @@ class InvoiceResource extends Resource
                                             ->icon('heroicon-o-calculator')
                                             ->money(fn ($record) => $record->currency->code),
                                     ])->columns(5),
-                                Livewire::make(InvoiceSummary::class, function ($record) {
-                                    return [
-                                        'currency'   => $record->currency,
-                                        'amountTax'  => $record->amount_tax ?? 0,
-                                        'products'   => $record->lines->map(function ($item) {
-                                            return [
-                                                ...$item->toArray(),
-                                                'taxes' => $item->taxes->pluck('id')->toArray() ?? [],
-                                            ];
-                                        })->toArray(),
-                                    ];
-                                }),
+                                Livewire::make(InvoiceSummary::class, fn ($record): array => [
+                                    'currency' => $record->currency,
+                                    'amountTax' => $record->amount_tax ?? 0,
+                                    'products' => $record->lines->map(fn ($item) => [
+                                        ...$item->toArray(),
+                                        'taxes' => $item->taxes->pluck('id')->toArray() ?? [],
+                                    ])->toArray(),
+                                ]),
                             ]),
                         Tab::make(__('accounts::filament/resources/invoice.infolist.tabs.other-information.title'))
                             ->icon('heroicon-o-information-circle')
@@ -688,10 +675,10 @@ class InvoiceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListInvoices::route('/'),
+            'index' => ListInvoices::route('/'),
             'create' => CreateInvoice::route('/create'),
-            'view'   => ViewInvoice::route('/{record}'),
-            'edit'   => EditInvoice::route('/{record}/edit'),
+            'view' => ViewInvoice::route('/{record}'),
+            'edit' => EditInvoice::route('/{record}/edit'),
         ];
     }
 
@@ -715,7 +702,7 @@ class InvoiceResource extends Resource
 
                 return $product->name ?? null;
             })
-            ->deleteAction(fn (Action $action) => $action->requiresConfirmation())
+            ->deleteAction(fn (Action $action): Action => $action->requiresConfirmation())
             ->schema([
                 Group::make()
                     ->schema([
@@ -739,8 +726,8 @@ class InvoiceResource extends Resource
                                     ->preload()
                                     ->live()
                                     ->dehydrated()
-                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateUpdated(fn (Set $set, Get $get) => static::afterProductUpdated($set, $get))
+                                    ->disabled(fn ($record): bool => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL], true))
+                                    ->afterStateUpdated(fn (Set $set, Get $get) => self::afterProductUpdated($set, $get))
                                     ->required(),
                                 TextInput::make('quantity')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.quantity'))
@@ -750,8 +737,8 @@ class InvoiceResource extends Resource
                                     ->maxValue(99999999999)
                                     ->live()
                                     ->dehydrated()
-                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateUpdated(fn (Set $set, Get $get) => static::afterProductQtyUpdated($set, $get)),
+                                    ->disabled(fn ($record): bool => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL], true))
+                                    ->afterStateUpdated(fn (Set $set, Get $get) => self::afterProductQtyUpdated($set, $get)),
                                 Select::make('uom_id')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.unit'))
                                     ->relationship(
@@ -763,23 +750,21 @@ class InvoiceResource extends Resource
                                     ->live()
                                     ->selectablePlaceholder(false)
                                     ->dehydrated()
-                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateUpdated(fn (Set $set, Get $get) => static::afterUOMUpdated($set, $get))
-                                    ->visible(fn (ProductSettings $settings) => $settings->enable_uom),
+                                    ->disabled(fn ($record): bool => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL], true))
+                                    ->afterStateUpdated(fn (Set $set, Get $get) => self::afterUOMUpdated($set, $get))
+                                    ->visible(fn (ProductSettings $settings): bool => $settings->enable_uom),
                                 Select::make('taxes')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.taxes'))
                                     ->relationship(
                                         'taxes',
                                         'name',
-                                        function (Builder $query) {
-                                            return $query->where('type_tax_use', TypeTaxUse::SALE->value);
-                                        },
+                                        fn (Builder $query) => $query->where('type_tax_use', TypeTaxUse::SALE->value),
                                     )
                                     ->searchable()
                                     ->multiple()
                                     ->preload()
                                     ->dehydrated()
-                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->disabled(fn ($record): bool => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL], true))
                                     ->afterStateHydrated(fn (Get $get, Set $set) => self::calculateLineTotals($set, $get))
                                     ->afterStateUpdated(fn (Get $get, Set $set, $state) => self::calculateLineTotals($set, $get))
                                     ->live(),
@@ -792,7 +777,7 @@ class InvoiceResource extends Resource
                                     ->maxValue(99999999999)
                                     ->live()
                                     ->dehydrated()
-                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->disabled(fn ($record): bool => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL], true))
                                     ->afterStateUpdated(fn (Set $set, Get $get) => self::calculateLineTotals($set, $get)),
                                 TextInput::make('price_unit')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.unit-price'))
@@ -803,13 +788,13 @@ class InvoiceResource extends Resource
                                     ->required()
                                     ->live()
                                     ->dehydrated()
-                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->disabled(fn ($record): bool => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL], true))
                                     ->afterStateUpdated(fn (Set $set, Get $get) => self::calculateLineTotals($set, $get)),
                                 TextInput::make('price_subtotal')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.sub-total'))
                                     ->default(0)
                                     ->dehydrated()
-                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL])),
+                                    ->disabled(fn ($record): bool => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL], true)),
                                 Hidden::make('product_uom_qty')
                                     ->default(0),
                                 Hidden::make('price_tax')
@@ -820,8 +805,8 @@ class InvoiceResource extends Resource
                     ])
                     ->columns(2),
             ])
-            ->mutateRelationshipDataBeforeCreateUsing(fn (array $data, $record) => static::mutateProductRelationship($data, $record))
-            ->mutateRelationshipDataBeforeSaveUsing(fn (array $data, $record) => static::mutateProductRelationship($data, $record));
+            ->mutateRelationshipDataBeforeCreateUsing(fn (array $data, $record): array => self::mutateProductRelationship($data, $record))
+            ->mutateRelationshipDataBeforeSaveUsing(fn (array $data, $record): array => self::mutateProductRelationship($data, $record));
     }
 
     public static function mutateProductRelationship(array $data, $record): array
@@ -841,13 +826,13 @@ class InvoiceResource extends Resource
 
         $set('uom_id', $product->uom_id);
 
-        $priceUnit = static::calculateUnitPrice($get('uom_id'), $product->price ?? $product->cost);
+        $priceUnit = self::calculateUnitPrice($get('uom_id'), $product->price ?? $product->cost);
 
         $set('price_unit', round($priceUnit, 2));
 
         $set('taxes', $product->productTaxes->pluck('id')->toArray());
 
-        $uomQuantity = static::calculateUnitQuantity($get('uom_id'), $get('quantity'));
+        $uomQuantity = self::calculateUnitQuantity($get('uom_id'), $get('quantity'));
 
         $set('product_uom_qty', round($uomQuantity, 2));
 
@@ -860,7 +845,7 @@ class InvoiceResource extends Resource
             return;
         }
 
-        $uomQuantity = static::calculateUnitQuantity($get('uom_id'), $get('quantity'));
+        $uomQuantity = self::calculateUnitQuantity($get('uom_id'), $get('quantity'));
 
         $set('product_uom_qty', round($uomQuantity, 2));
 
@@ -873,13 +858,13 @@ class InvoiceResource extends Resource
             return;
         }
 
-        $uomQuantity = static::calculateUnitQuantity($get('uom_id'), $get('quantity'));
+        $uomQuantity = self::calculateUnitQuantity($get('uom_id'), $get('quantity'));
 
         $set('product_uom_qty', round($uomQuantity, 2));
 
         $product = Product::find($get('product_id'));
 
-        $priceUnit = static::calculateUnitPrice($get('uom_id'), $product->cost ?? $product->price);
+        $priceUnit = self::calculateUnitPrice($get('uom_id'), $product->cost ?? $product->price);
 
         $set('price_unit', round($priceUnit, 2));
 
@@ -892,7 +877,7 @@ class InvoiceResource extends Resource
             return $quantity;
         }
 
-        $uom = Uom::find($uomId);
+        $uom = UOM::find($uomId);
 
         return (float) ($quantity ?? 0) / $uom->factor;
     }
@@ -903,7 +888,7 @@ class InvoiceResource extends Resource
             return $price;
         }
 
-        $uom = Uom::find($uomId);
+        $uom = UOM::find($uomId);
 
         return (float) ($price / $uom->factor);
     }
@@ -924,18 +909,18 @@ class InvoiceResource extends Resource
             return;
         }
 
-        $priceUnit = floatval($get('price_unit'));
+        $priceUnit = (float) ($get('price_unit'));
 
-        $quantity = floatval($get('quantity') ?? 1);
+        $quantity = (float) ($get('quantity') ?? 1);
 
         $subTotal = $priceUnit * $quantity;
 
-        $discountValue = floatval($get('discount') ?? 0);
+        $discountValue = (float) ($get('discount') ?? 0);
 
         if ($discountValue > 0) {
             $discountAmount = $subTotal * ($discountValue / 100);
 
-            $subTotal = $subTotal - $discountAmount;
+            $subTotal -= $discountAmount;
         }
 
         $taxIds = $get('taxes') ?? [];

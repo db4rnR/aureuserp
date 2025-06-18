@@ -1,33 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Resources\TaskResource\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Hidden;
+use BackedEnum;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Resources\TaskResource;
 use Webkul\Project\Settings\TimeSettings;
 
-class ManageTimesheets extends ManageRelatedRecords
+final class ManageTimesheets extends ManageRelatedRecords
 {
     protected static string $resource = TaskResource::class;
 
     protected static string $relationship = 'timesheets';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 
     public static function getNavigationLabel(): string
     {
@@ -99,7 +100,7 @@ class ManageTimesheets extends ManageRelatedRecords
                     ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.description')),
                 TextColumn::make('unit_amount')
                     ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent'))
-                    ->formatStateUsing(function ($state) {
+                    ->formatStateUsing(function ($state): string {
                         $hours = floor($state);
                         $minutes = ($hours - $hours) * 60;
 
@@ -108,7 +109,7 @@ class ManageTimesheets extends ManageRelatedRecords
                     ->summarize([
                         Sum::make()
                             ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent'))
-                            ->formatStateUsing(function ($state) {
+                            ->formatStateUsing(function ($state): string {
                                 $hours = floor($state);
                                 $minutes = ($state - $hours) * 60;
 
@@ -116,7 +117,7 @@ class ManageTimesheets extends ManageRelatedRecords
                             }),
                         Sum::make()
                             ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent-on-subtasks'))
-                            ->formatStateUsing(function ($state) {
+                            ->formatStateUsing(function ($state): string {
                                 $subtaskHours = $this->getOwnerRecord()->subtask_effective_hours;
                                 $hours = floor($subtaskHours);
                                 $minutes = ($subtaskHours - $hours) * 60;
@@ -125,7 +126,7 @@ class ManageTimesheets extends ManageRelatedRecords
                             }),
                         Sum::make()
                             ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.total-time-spent'))
-                            ->formatStateUsing(function ($state) {
+                            ->formatStateUsing(function ($state): string {
                                 $subtaskHours = $this->getOwnerRecord()->total_hours_spent;
                                 $hours = floor($subtaskHours);
                                 $minutes = ($subtaskHours - $hours) * 60;
@@ -134,7 +135,7 @@ class ManageTimesheets extends ManageRelatedRecords
                             }),
                         Sum::make()
                             ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.remaining-time'))
-                            ->formatStateUsing(function () {
+                            ->formatStateUsing(function (): string {
                                 $remainingHours = $this->getOwnerRecord()->remaining_hours;
 
                                 $hours = floor($remainingHours);

@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Field\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Field\Models\Field;
 use Webkul\Security\Models\User;
 
-class FieldPolicy
+final class FieldPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class FieldPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Field $field): bool
+    public function view(User $user): bool
     {
         return $user->can('view_field');
     }
@@ -37,7 +38,7 @@ class FieldPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Field $field): bool
+    public function update(User $user): bool
     {
         return $user->can('update_field');
     }
@@ -45,7 +46,7 @@ class FieldPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Field $field): bool
+    public function delete(User $user): bool
     {
         return $user->can('delete_field');
     }
@@ -61,7 +62,7 @@ class FieldPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Field $field): bool
+    public function forceDelete(User $user): bool
     {
         return $user->can('force_delete_field');
     }
@@ -77,7 +78,7 @@ class FieldPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Field $field): bool
+    public function restore(User $user): bool
     {
         return $user->can('restore_field');
     }
@@ -93,7 +94,7 @@ class FieldPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Field $field): bool
+    public function replicate(User $user): bool
     {
         return $user->can('replicate_field');
     }

@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'setup' => [
-        'title'               => 'Followers',
+        'title' => 'Followers',
         'submit-action-title' => 'Add Follower',
-        'tooltip'             => 'Add Follower',
+        'tooltip' => 'Add Follower',
 
         'form' => [
             'fields' => [
-                'recipients'  => 'Recipients',
+                'recipients' => 'Recipients',
                 'notify-user' => 'Notify User',
-                'add-a-note'  => 'Add a note',
+                'add-a-note' => 'Add a note',
             ],
         ],
 
@@ -18,12 +20,12 @@ return [
             'notification' => [
                 'success' => [
                     'title' => 'Follower Added',
-                    'body'  => '":partner" has been added as a follower.',
+                    'body' => '":partner" has been added as a follower.',
                 ],
 
                 'error' => [
                     'title' => 'Follower added error',
-                    'body'  => 'Failed to ":partner" as follower',
+                    'body' => 'Failed to ":partner" as follower',
                 ],
             ],
 

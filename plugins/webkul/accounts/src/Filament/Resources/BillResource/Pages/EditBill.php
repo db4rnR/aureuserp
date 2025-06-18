@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Account\Filament\Resources\BillResource\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ use Webkul\Account\Filament\Resources\BillResource\Actions\CreditNoteAction;
 use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
-class EditBill extends EditRecord
+final class EditBill extends EditRecord
 {
     protected static string $resource = BillResource::class;
 
@@ -48,7 +49,7 @@ class EditBill extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $user = Auth::user();
+        Auth::user();
 
         $record = $this->getRecord();
 
@@ -61,7 +62,7 @@ class EditBill extends EditRecord
         return $data;
     }
 
-    protected function afterSave(): void
+    private function afterSave(): void
     {
         Account::computeAccountMove($this->getRecord());
     }

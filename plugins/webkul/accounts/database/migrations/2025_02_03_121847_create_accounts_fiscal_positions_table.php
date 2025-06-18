@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_fiscal_positions', function (Blueprint $table) {
+        Schema::create('accounts_fiscal_positions', function (Blueprint $table): void {
             $table->id();
 
             $table->integer('sort')->nullable()->comment('Sort Order');

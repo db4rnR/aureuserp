@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests;
 
 use Illuminate\Support\Facades\Config;
 
-class TestCaseWithPreviewUrl extends TestCase
+final class TestCaseWithPreviewUrl extends TestCase
 {
-    protected function configurePackageProviders($app)
+    protected function configurePackageProviders($app): void
     {
         Config::set('filament-peek.internalPreviewUrl.enabled', true);
 

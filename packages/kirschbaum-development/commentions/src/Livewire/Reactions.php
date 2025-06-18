@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kirschbaum\Commentions\Livewire;
 
 use Illuminate\Contracts\View\View;
@@ -10,7 +12,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Reactions extends Component
+final class Reactions extends Component
 {
     public RenderableComment $comment;
 
@@ -33,7 +35,7 @@ class Reactions extends Component
     }
 
     #[On('comment:reaction:saved')]
-    public function refreshReactionSummary()
+    public function refreshReactionSummary(): void
     {
         unset($this->reactionSummary);
     }
@@ -57,7 +59,7 @@ class Reactions extends Component
                 return [
                     'count' => $group->count(),
                     'reaction' => $group->first()->reaction,
-                    'reacted_by_current_user' => $user && $group->contains(fn ($reaction) => $reaction->reactor_id == $user->getKey() && $reaction->reactor_type == $user->getMorphClass()),
+                    'reacted_by_current_user' => $user && $group->contains(fn ($reaction) => $reaction->reactor_id === $user->getKey() && $reaction->reactor_type === $user->getMorphClass()),
                 ];
             })
             ->sortByDesc('count')

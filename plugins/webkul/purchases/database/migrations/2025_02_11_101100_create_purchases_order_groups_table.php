@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchases_order_groups', function (Blueprint $table) {
+        Schema::create('purchases_order_groups', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('creator_id')

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Recruitment\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +10,7 @@ use Webkul\Employee\Models\SkillLevel;
 use Webkul\Employee\Models\SkillType;
 use Webkul\Security\Models\User;
 
-class CandidateSkill extends Model
+final class CandidateSkill extends Model
 {
     protected $table = 'recruitments_candidate_skills';
 

@@ -1,63 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Chatter\Filament\Actions\Chatter;
 
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Actions;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Hidden;
 use Exception;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Webkul\Chatter\Mail\MessageMail;
 use Webkul\Support\Services\EmailService;
 
-class MessageAction extends Action
+final class MessageAction extends Action
 {
-    protected string $mailView = 'chatter::mail.message-mail';
+    private string $mailView = 'chatter::mail.message-mail';
 
-    protected string $resource = '';
-
-    public static function getDefaultName(): ?string
-    {
-        return 'message.action';
-    }
-
-    public function setResource(string $resource): self
-    {
-        $this->resource = $resource;
-
-        return $this;
-    }
-
-    public function setMessageMailView(?string $mailView): self
-    {
-        $mailView = $this->evaluate($mailView);
-
-        if (empty($mailView)) {
-            return $this;
-        }
-
-        $this->mailView = $mailView;
-
-        return $this;
-    }
-
-    public function getMessageMailView(): string
-    {
-        return $this->mailView;
-    }
-
-    public function getResource(): string
-    {
-        return $this->resource;
-    }
+    private string $resource = '';
 
     protected function setUp(): void
     {
@@ -71,10 +37,8 @@ class MessageAction extends Action
                 Group::make([
                     Actions::make([
                         Action::make('add_subject')
-                            ->label(function ($get) {
-                                return $get('showSubject') ? __('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.hide-subject') : __('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.add-subject');
-                            })
-                            ->action(function ($set, $get) {
+                            ->label(fn ($get) => $get('showSubject') ? __('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.hide-subject') : __('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.add-subject'))
+                            ->action(function ($set, $get): void {
                                 if ($get('showSubject')) {
                                     $set('showSubject', false);
 
@@ -85,7 +49,7 @@ class MessageAction extends Action
                             })
                             ->link()
                             ->size('sm')
-                            ->icon(fn (Get $get) => ! $get('showSubject') ? 'heroicon-s-plus' : 'heroicon-s-minus'),
+                            ->icon(fn (Get $get): string => $get('showSubject') ? 'heroicon-s-minus' : 'heroicon-s-plus'),
                     ])
                         ->columnSpan('full')
                         ->alignRight(),
@@ -123,7 +87,7 @@ class MessageAction extends Action
                 Hidden::make('type')
                     ->default('comment'),
             ])
-            ->action(function (array $data, ?Model $record = null) {
+            ->action(function (array $data, ?Model $record = null): void {
                 try {
                     $data['name'] = $record->name;
 
@@ -155,11 +119,46 @@ class MessageAction extends Action
             ->label(__('chatter::filament/resources/actions/chatter/message-action.setup.title'))
             ->icon('heroicon-o-chat-bubble-left-right')
             ->modalIcon('heroicon-o-chat-bubble-left-right')
-            ->modalSubmitAction(function ($action) {
+            ->modalSubmitAction(function ($action): void {
                 $action->label(__('chatter::filament/resources/actions/chatter/message-action.setup.submit-title'));
                 $action->icon('heroicon-m-paper-airplane');
             })
             ->slideOver(false);
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'message.action';
+    }
+
+    public function setResource(string $resource): self
+    {
+        $this->resource = $resource;
+
+        return $this;
+    }
+
+    public function setMessageMailView(?string $mailView): self
+    {
+        $mailView = $this->evaluate($mailView);
+
+        if (empty($mailView)) {
+            return $this;
+        }
+
+        $this->mailView = $mailView;
+
+        return $this;
+    }
+
+    public function getMessageMailView(): string
+    {
+        return $this->mailView;
+    }
+
+    public function getResource(): string
+    {
+        return $this->resource;
     }
 
     private function notifyFollower(mixed $record, mixed $message): void
@@ -168,7 +167,7 @@ class MessageAction extends Action
             if ($follower?->partner) {
                 app(EmailService::class)->send(
                     mailClass: MessageMail::class,
-                    view: $this->getMessageMailView(),
+                    view: $this->mailView,
                     attachments: $this->prepareAttachments($message->attachments),
                     payload: $this->preparePayload($record, $follower->partner, $message),
                 );
@@ -178,34 +177,32 @@ class MessageAction extends Action
 
     private function prepareResourceUrl(mixed $record): string
     {
-        return $this->getResource()::getUrl('view', ['record' => $record]);
+        return $this->resource::getUrl('view', ['record' => $record]);
     }
 
     private function preparePayload(Model $record, mixed $partner, mixed $message): array
     {
         return [
-            'record_url'     => $this->prepareResourceUrl($record) ?? '',
-            'record_name'    => $recordName = $record->{$record->recordTitleAttribute} ?? $record->name,
-            'model_name'     => class_basename($record),
-            'subject'        => __('chatter::filament/resources/actions/chatter/message-action.setup.actions.mail.subject', [
+            'record_url' => $this->prepareResourceUrl($record) ?? '',
+            'record_name' => $recordName = $record->{$record->recordTitleAttribute} ?? $record->name,
+            'model_name' => class_basename($record),
+            'subject' => __('chatter::filament/resources/actions/chatter/message-action.setup.actions.mail.subject', [
                 'record_name' => $recordName,
             ]),
-            'content'        => $message->body ?? '',
-            'to'             => [
+            'content' => $message->body ?? '',
+            'to' => [
                 'address' => $partner->email,
-                'name'    => $partner->name,
+                'name' => $partner->name,
             ],
         ];
     }
 
     private function prepareAttachments(Collection $attachments): array
     {
-        return $attachments?->map(function ($attachment) {
-            return [
-                'path' => asset($attachment->url),
-                'name' => $attachment->name,
-                'mime' => $attachment->mime,
-            ];
-        })->toArray();
+        return $attachments?->map(fn ($attachment): array => [
+            'path' => asset($attachment->url),
+            'name' => $attachment->name,
+            'mime' => $attachment->mime,
+        ])->toArray();
     }
 }

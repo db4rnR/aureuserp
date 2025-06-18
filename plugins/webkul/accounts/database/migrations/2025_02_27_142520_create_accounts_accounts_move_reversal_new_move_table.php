@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts_accounts_move_reversal_new_move', function (Blueprint $table) {
+        Schema::create('accounts_accounts_move_reversal_new_move', function (Blueprint $table): void {
             $table->foreignId('new_move_id')->comment('Move')->constrained('accounts_account_moves')->cascadeOnDelete();
             $table->foreignId('reversal_id')->comment('Reversal')->constrained('accounts_accounts_move_reversals')->cascadeOnDelete();
         });

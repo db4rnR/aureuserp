@@ -1,28 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Project\Filament\Widgets;
 
-use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Webkul\Project\Models\Timesheet;
 
-class TopAssigneesWidget extends BaseWidget
+final class TopAssigneesWidget extends BaseWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
+
+    private static ?string $pollingInterval = '15s';
 
     public function getHeading(): string|Htmlable|null
     {
         return __('projects::filament/widgets/top-assignees.heading');
     }
 
-    protected static ?string $pollingInterval = '15s';
+    public function getTableRecordKey(Model|array $record): string
+    {
+        return (string) $record->project_id;
+    }
 
     protected function getTableQuery(): Builder
     {
@@ -40,13 +46,13 @@ class TopAssigneesWidget extends BaseWidget
             $query->whereIn('analytic_records.partner_id', $this->pageFilters['selectedPartners']);
         }
 
-        $startDate = ! is_null($this->pageFilters['startDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['startDate']) :
-            null;
+        $startDate = is_null($this->pageFilters['startDate'] ?? null) ?
+            null :
+            Carbon::parse($this->pageFilters['startDate']);
 
-        $endDate = ! is_null($this->pageFilters['endDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['endDate']) :
-            now();
+        $endDate = is_null($this->pageFilters['endDate'] ?? null) ?
+            now() :
+            Carbon::parse($this->pageFilters['endDate']);
 
         return $query
             ->join('users', 'users.id', '=', 'analytic_records.user_id')
@@ -75,10 +81,5 @@ class TopAssigneesWidget extends BaseWidget
                 ->label(__('projects::filament/widgets/top-assignees.table-columns.tasks'))
                 ->sortable(),
         ];
-    }
-
-    public function getTableRecordKey(Model|array $record): string
-    {
-        return (string) $record->project_id;
     }
 }

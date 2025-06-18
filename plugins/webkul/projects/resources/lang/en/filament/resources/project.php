@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'navigation' => [
         'title' => 'Projects',
@@ -8,7 +10,7 @@ return [
 
     'global-search' => [
         'project-manager' => 'Project Manager',
-        'customer'        => 'Customer',
+        'customer' => 'Customer',
     ],
 
     'form' => [
@@ -17,9 +19,9 @@ return [
                 'title' => 'General',
 
                 'fields' => [
-                    'name'             => 'Name',
+                    'name' => 'Name',
                     'name-placeholder' => 'Project Name...',
-                    'description'      => 'Description',
+                    'description' => 'Description',
                 ],
             ],
 
@@ -27,14 +29,14 @@ return [
                 'title' => 'Additional Information',
 
                 'fields' => [
-                    'project-manager'             => 'Project Manager',
-                    'customer'                    => 'Customer',
-                    'start-date'                  => 'Start Date',
-                    'end-date'                    => 'End Date',
-                    'allocated-hours'             => 'Allocated Hours',
+                    'project-manager' => 'Project Manager',
+                    'customer' => 'Customer',
+                    'start-date' => 'Start Date',
+                    'end-date' => 'End Date',
+                    'allocated-hours' => 'Allocated Hours',
                     'allocated-hours-helper-text' => 'In hours (Eg. 1.5 hours means 1 hour 30 minutes)',
-                    'tags'                        => 'Tags',
-                    'company'                     => 'Company',
+                    'tags' => 'Tags',
+                    'company' => 'Company',
                 ],
             ],
 
@@ -42,16 +44,16 @@ return [
                 'title' => 'Settings',
 
                 'fields' => [
-                    'visibility'                   => 'Visibility',
-                    'visibility-hint-tooltip'      => 'Allow employees to access your project or tasks by adding them as followers. They will automatically gain access to any tasks assigned to them..',
-                    'private-description'          => 'Invited internal users only.',
-                    'internal-description'         => 'All internal users can see.',
-                    'public-description'           => 'Invited portal users and all internal users.',
-                    'time-management'              => 'Time Management',
-                    'allow-timesheets'             => 'Allow Timesheets',
+                    'visibility' => 'Visibility',
+                    'visibility-hint-tooltip' => 'Allow employees to access your project or tasks by adding them as followers. They will automatically gain access to any tasks assigned to them..',
+                    'private-description' => 'Invited internal users only.',
+                    'internal-description' => 'All internal users can see.',
+                    'public-description' => 'Invited portal users and all internal users.',
+                    'time-management' => 'Time Management',
+                    'allow-timesheets' => 'Allow Timesheets',
                     'allow-timesheets-helper-text' => 'Log time on tasks and track progress',
-                    'task-management'              => 'Task Management',
-                    'allow-milestones'             => 'Allow Milestones',
+                    'task-management' => 'Task Management',
+                    'allow-milestones' => 'Allow Milestones',
                     'allow-milestones-helper-text' => 'Monitor key milestones that are essential for achieving success.',
                 ],
             ],
@@ -60,62 +62,62 @@ return [
 
     'table' => [
         'columns' => [
-            'name'            => 'Name',
-            'customer'        => 'Customer',
-            'start-date'      => 'Start Date',
-            'end-date'        => 'End Date',
-            'planned-date'    => 'Planned Date',
+            'name' => 'Name',
+            'customer' => 'Customer',
+            'start-date' => 'Start Date',
+            'end-date' => 'End Date',
+            'planned-date' => 'Planned Date',
             'remaining-hours' => 'Remaining Hours',
             'project-manager' => 'Project Manager',
         ],
 
         'groups' => [
-            'stage'           => 'Stage',
+            'stage' => 'Stage',
             'project-manager' => 'Project Manager',
-            'customer'        => 'Customer',
-            'created-at'      => 'Created At',
+            'customer' => 'Customer',
+            'created-at' => 'Created At',
         ],
 
         'filters' => [
-            'name'             => 'Name',
-            'visibility'       => 'Visibility',
-            'start-date'       => 'Start Date',
-            'end-date'         => 'End Date',
+            'name' => 'Name',
+            'visibility' => 'Visibility',
+            'start-date' => 'Start Date',
+            'end-date' => 'End Date',
             'allow-timesheets' => 'Allow Timesheets',
             'allow-milestones' => 'Allow Milestones',
-            'allocated-hours'  => 'Allocated Hours',
-            'created-at'       => 'Created At',
-            'updated-at'       => 'Updated At',
-            'stage'            => 'Stage',
-            'customer'         => 'Customer',
-            'project-manager'  => 'Project Manager',
-            'company'          => 'Company',
-            'creator'          => 'Creator',
-            'tags'             => 'Tags',
+            'allocated-hours' => 'Allocated Hours',
+            'created-at' => 'Created At',
+            'updated-at' => 'Updated At',
+            'stage' => 'Stage',
+            'customer' => 'Customer',
+            'project-manager' => 'Project Manager',
+            'company' => 'Company',
+            'creator' => 'Creator',
+            'tags' => 'Tags',
         ],
 
         'actions' => [
-            'tasks'      => ':count Tasks',
+            'tasks' => ':count Tasks',
             'milestones' => ':completed milestones completed out of :all',
 
             'restore' => [
                 'notification' => [
                     'title' => 'Project restored',
-                    'body'  => 'The project has been restored successfully.',
+                    'body' => 'The project has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Project deleted',
-                    'body'  => 'The project has been deleted successfully.',
+                    'body' => 'The project has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Project force deleted',
-                    'body'  => 'The project has been force deleted successfully.',
+                    'body' => 'The project has been force deleted successfully.',
                 ],
             ],
         ],
@@ -127,9 +129,9 @@ return [
                 'title' => 'General',
 
                 'entries' => [
-                    'name'             => 'Name',
+                    'name' => 'Name',
                     'name-placeholder' => 'Project Name...',
-                    'description'      => 'Description',
+                    'description' => 'Description',
                 ],
             ],
 
@@ -137,15 +139,15 @@ return [
                 'title' => 'Additional Information',
 
                 'entries' => [
-                    'project-manager'        => 'Project Manager',
-                    'customer'               => 'Customer',
-                    'project-timeline'       => 'Project Timeline',
-                    'allocated-hours'        => 'Allocated Hours',
+                    'project-manager' => 'Project Manager',
+                    'customer' => 'Customer',
+                    'project-timeline' => 'Project Timeline',
+                    'allocated-hours' => 'Allocated Hours',
                     'allocated-hours-suffix' => ' Hours',
-                    'remaining-hours'        => 'Remaining Hours',
+                    'remaining-hours' => 'Remaining Hours',
                     'remaining-hours-suffix' => ' Hours',
-                    'current-stage'          => 'Current Stage',
-                    'tags'                   => 'Tags',
+                    'current-stage' => 'Current Stage',
+                    'tags' => 'Tags',
                 ],
             ],
 
@@ -153,7 +155,7 @@ return [
                 'title' => 'Statistics',
 
                 'entries' => [
-                    'total-tasks'         => 'Total Tasks',
+                    'total-tasks' => 'Total Tasks',
                     'milestones-progress' => 'Milestones Progress',
                 ],
             ],
@@ -162,8 +164,8 @@ return [
                 'title' => 'Record Information',
 
                 'entries' => [
-                    'created-at'   => 'Created At',
-                    'created-by'   => 'Created By',
+                    'created-at' => 'Created At',
+                    'created-by' => 'Created By',
                     'last-updated' => 'Last Updated',
                 ],
             ],
@@ -172,7 +174,7 @@ return [
                 'title' => 'Project Settings',
 
                 'entries' => [
-                    'visibility'         => 'Visibility',
+                    'visibility' => 'Visibility',
                     'timesheets-enabled' => 'Timesheets Enabled',
                     'milestones-enabled' => 'Milestones Enabled',
                 ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToUpsellResource\Pages;
 
 use Filament\Resources\Pages\ListRecords;
@@ -9,16 +11,11 @@ use Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToUpsellResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListOrderToUpsells extends ListRecords
+final class ListOrderToUpsells extends ListRecords
 {
     use HasTableViews;
 
     protected static string $resource = OrderToUpsellResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [];
-    }
 
     public function getPresetTableViews(): array
     {
@@ -32,5 +29,10 @@ class ListOrderToUpsells extends ListRecords
                 ->favorite()
                 ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [];
     }
 }

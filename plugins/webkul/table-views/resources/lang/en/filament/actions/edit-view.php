@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'form' => [
-        'name'                  => 'Name',
-        'color'                 => 'Color',
-        'icon'                  => 'Icon',
-        'add-to-favorites'      => 'Add To Favorites',
+        'name' => 'Name',
+        'color' => 'Color',
+        'icon' => 'Icon',
+        'add-to-favorites' => 'Add To Favorites',
         'add-to-favorites-help' => 'Add this filter to your favorites',
-        'make-public'           => 'Make Public',
-        'make-public-help'      => 'Make this filter available to all users',
-        'options'               => [
-            'danger'  => 'Danger',
-            'gray'    => 'Gray',
-            'info'    => 'Information',
+        'make-public' => 'Make Public',
+        'make-public-help' => 'Make this filter available to all users',
+        'options' => [
+            'danger' => 'Danger',
+            'gray' => 'Gray',
+            'info' => 'Information',
             'success' => 'Success',
             'warning' => 'Warning',
         ],

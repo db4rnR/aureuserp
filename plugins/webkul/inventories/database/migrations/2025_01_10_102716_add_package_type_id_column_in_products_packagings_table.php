@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products_packagings', function (Blueprint $table) {
+        Schema::table('products_packagings', function (Blueprint $table): void {
             $table->foreignId('package_type_id')
                 ->nullable()
                 ->constrained('inventories_package_types')
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products_packagings', function (Blueprint $table) {
+        Schema::table('products_packagings', function (Blueprint $table): void {
             if (Schema::hasColumn('products_packagings', 'package_type_id')) {
                 $table->dropForeign(['package_type_id']);
 

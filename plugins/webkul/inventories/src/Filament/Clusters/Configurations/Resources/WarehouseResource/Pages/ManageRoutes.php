@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResource\Pages;
 
-use Filament\Schemas\Schema;
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResource;
 
-class ManageRoutes extends ManageRelatedRecords
+final class ManageRoutes extends ManageRelatedRecords
 {
     protected static string $resource = WarehouseResource::class;
 
     protected static string $relationship = 'routes';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-path';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path';
 
     public static function getNavigationLabel(): string
     {
@@ -37,18 +39,16 @@ class ManageRoutes extends ManageRelatedRecords
                 CreateAction::make()
                     ->label(__('inventories::filament/clusters/configurations/resources/warehouse/pages/manage-routes.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
-                    ->fillForm(function (array $arguments): array {
-                        return [
-                            'warehouse_selectable' => true,
-                            'warehouses'           => [$this->getOwnerRecord()->id],
-                        ];
-                    })
+                    ->fillForm(fn (array $arguments): array => [
+                        'warehouse_selectable' => true,
+                        'warehouses' => [$this->getOwnerRecord()->id],
+                    ])
                     ->mutateDataUsing(function (array $data): array {
                         $data['warehouse_selectable'] = true;
 
                         $data['creator_id'] = Auth::id();
 
-                        $data['company_id'] = $data['company_id'] ?? Auth::user()->default_company_id;
+                        $data['company_id'] ??= Auth::user()->default_company_id;
 
                         return $data;
                     })

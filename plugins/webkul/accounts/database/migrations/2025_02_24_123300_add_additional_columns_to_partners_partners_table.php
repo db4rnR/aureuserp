@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('partners_partners', function (Blueprint $table) {
+        Schema::table('partners_partners', function (Blueprint $table): void {
             $table->integer('message_bounce')->nullable()->comment('Message Bounce');
             $table->integer('supplier_rank')->nullable()->comment('Supplier Rank');
             $table->integer('customer_rank')->nullable()->comment('Customer Rank');
@@ -81,7 +81,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('partners_partners', function (Blueprint $table) {
+        Schema::table('partners_partners', function (Blueprint $table): void {
             $table->dropForeign('fk_partners_account_payable');
             $table->dropForeign('fk_partners_account_receivable');
             $table->dropForeign('fk_partners_account_position');

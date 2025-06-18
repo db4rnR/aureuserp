@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +12,7 @@ use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Pages\ListQ
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-class ListOrders extends BaseListOrders
+final class ListOrders extends BaseListOrders
 {
     use HasTableViews;
 

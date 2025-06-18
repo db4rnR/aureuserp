@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tabs' => [
-        'all'      => 'All',
+        'all' => 'All',
         'archived' => 'Archived',
     ],
 
@@ -12,7 +14,7 @@ return [
 
             'notification' => [
                 'title' => 'Working Schedule created',
-                'body'  => 'The working schedule has been created successfully.',
+                'body' => 'The working schedule has been created successfully.',
             ],
         ],
     ],

@@ -1,43 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pboivin\FilamentPeek\Tests\Unit;
 
-use Pboivin\FilamentPeek\Tests\Unit\Fixtures\EditRecordDummy;
-use Pboivin\FilamentPeek\Tests\Unit\Fixtures\CreateRecordDummy;
-use Livewire\Mechanisms\DataStore;
 use InvalidArgumentException;
+use Livewire\Mechanisms\DataStore;
+use Pboivin\FilamentPeek\Tests\Unit\Fixtures\CreateRecordDummy;
+use Pboivin\FilamentPeek\Tests\Unit\Fixtures\EditRecordDummy;
 
-it('has no initial builder preview url', function () {
+it('has no initial builder preview url', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getBuilderPreviewUrl('blocks'))->toBeNull();
 });
 
-it('has no initial builder preview view', function () {
+it('has no initial builder preview view', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getBuilderPreviewView('blocks'))->toBeNull();
 });
 
-it('has no initial builder editor schema', function () {
+it('has no initial builder editor schema', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getBuilderEditorSchema('blocks'))->toBeEmpty();
 });
 
-it('has initial builder editor title', function () {
+it('has initial builder editor title', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getBuilderEditorTitle())->not()->toBeEmpty();
 });
 
-it('has required event listener', function () {
+it('has required event listener', function (): void {
     $page = invade(new EditRecordDummy);
 
     expect($page->getListeners())->toContain('updateBuilderFieldWithEditorData');
 });
 
-it('prepares builder preview data on create pages', function () {
+it('prepares builder preview data on create pages', function (): void {
     $page = invade(new CreateRecordDummy);
 
     $data = $page->prepareBuilderPreviewData([]);
@@ -45,7 +47,7 @@ it('prepares builder preview data on create pages', function () {
     expect($data['isPeekPreviewModal'])->toBeTrue();
 });
 
-it('prepares builder preview data on edit pages', function () {
+it('prepares builder preview data on edit pages', function (): void {
     $page = invade(new EditRecordDummy);
 
     $data = $page->prepareBuilderPreviewData([]);
@@ -54,7 +56,7 @@ it('prepares builder preview data on edit pages', function () {
 });
 
 // @todo: Rewrite test
-it('dispatches openBuilderEditor event', function () {
+it('dispatches openBuilderEditor event', function (): void {
     $page = invade(new class extends EditRecordDummy
     {
         protected function getBuilderPreviewView(string $builderName): ?string
@@ -84,7 +86,7 @@ it('dispatches openBuilderEditor event', function () {
 });
 
 // @todo: Rewrite test
-it('mutates initial builder editor data', function () {
+it('mutates initial builder editor data', function (): void {
     $page = invade(new class extends EditRecordDummy
     {
         protected function getBuilderPreviewView(string $builderName): ?string
@@ -115,7 +117,7 @@ it('mutates initial builder editor data', function () {
     }
 });
 
-it('throws an exception for missing event listener', function () {
+it('throws an exception for missing event listener', function (): void {
     /** @var TestCase $this */
     $this->expectException(InvalidArgumentException::class);
     $this->expectExceptionMessage("Missing 'updateBuilderFieldWithEditorData' Livewire event listener");

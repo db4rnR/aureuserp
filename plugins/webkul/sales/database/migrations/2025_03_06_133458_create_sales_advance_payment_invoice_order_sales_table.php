@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_advance_payment_invoice_order_sales', function (Blueprint $table) {
+        Schema::create('sales_advance_payment_invoice_order_sales', function (Blueprint $table): void {
             $table->unsignedBigInteger('advance_payment_invoice_id');
             $table->unsignedBigInteger('order_id');
 
