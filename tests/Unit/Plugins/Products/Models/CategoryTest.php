@@ -39,7 +39,7 @@ function category_model_attributes_and_properties(): void
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Category model relationships with other models')]
-function category_model_relationships_with_other_models(): void
+function product_category_model_relationships_with_other_models(): void
 {
     // Create related models
     $user = User::factory()->create();
@@ -76,7 +76,7 @@ function category_model_relationships_with_other_models(): void
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Category model hierarchy and full_name generation')]
-function category_model_hierarchy_and_full_name_generation(): void
+function product_category_model_hierarchy_and_full_name_generation(): void
 {
     // Create a hierarchy of categories
     $grandparent = Category::factory()->create(['name' => 'Grandparent']);
@@ -126,7 +126,7 @@ function category_model_validate_no_recursion_method(): void
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Category model traits')]
-function category_model_traits(): void
+function product_category_model_traits(): void
 {
     // Create a test category
     $category = Category::factory()->create();

@@ -36,7 +36,7 @@ function attribute_model_attributes_and_properties(): void
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Attribute model relationships with other models')]
-function attribute_model_relationships_with_other_models(): void
+function product_attribute_model_relationships_with_other_models(): void
 {
     // Create related models
     $user = User::factory()->create();
@@ -70,7 +70,7 @@ function attribute_model_relationships_with_other_models(): void
 #[Group('unit')]
 #[Group('products')]
 #[Description('Test Attribute model traits and interfaces')]
-function attribute_model_traits_and_interfaces(): void
+function product_attribute_model_traits_and_interfaces(): void
 {
     // Create a test attribute
     $attribute = Attribute::factory()->create();
