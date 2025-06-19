@@ -1,44 +1,45 @@
-# Plugin-Specific Migration Templates - FilamentPHP v4 Refactoring
-
-**Date Created:** December 19, 2024  
-**Purpose:** Provide customized migration templates for different types of plugins based on their complexity, dependencies, and characteristics
+# Plugin-Specific Migration Templates
 
 ## Overview
 
-This document provides plugin-specific migration templates that can be customized for each plugin's unique requirements. Templates are organized by plugin tiers and complexity levels to ensure appropriate migration strategies.
+This document provides customized migration templates for different types of plugins based on their complexity, dependencies, and characteristics. Each template is tailored to address the specific challenges and requirements of different plugin categories.
+
+**Last Updated:** December 19, 2024  
+**Purpose:** Provide comprehensive, actionable migration templates for FilamentPHP v4 refactoring
 
 ## Template Categories
 
-### Tier 1: Foundation Plugins Template
-**Applicable to:** Partners, Products, Employees, Accounts  
-**Characteristics:** Base plugins that other plugins depend on  
-**Migration Priority:** Highest (must be migrated first)
+### 1. Foundation Plugins Template
+**Applicable to**: accounts, contacts, partners
+**Characteristics**: Core functionality, high interdependency, critical business logic
 
-### Tier 2: Intermediate Plugins Template
-**Applicable to:** Contacts, Invoices, Recruitments  
-**Characteristics:** Depend on Tier 1 plugins  
-**Migration Priority:** High (after Tier 1 completion)
+### 2. Financial Plugins Template  
+**Applicable to**: invoices, payments, purchases
+**Characteristics**: Financial data handling, transaction processing, audit requirements
 
-### Tier 3: Advanced Plugins Template
-**Applicable to:** Sales, Purchases, Inventories  
-**Characteristics:** Complex dependencies on multiple tiers  
-**Migration Priority:** Medium (after Tier 1 & 2 completion)
+### 3. Operations Plugins Template
+**Applicable to**: products, inventories, sales
+**Characteristics**: Business operations, data relationships, workflow dependencies
 
-### Tier 4: Specialized Plugins Template
-**Applicable to:** Website, Projects, Time-off  
-**Characteristics:** Specialized functionality with specific dependencies  
-**Migration Priority:** Medium-Low
+### 4. HR Plugins Template
+**Applicable to**: employees, recruitments, time-off, timesheets
+**Characteristics**: Employee data, compliance requirements, reporting features
 
-### Tier 5: Independent Plugins Template
-**Applicable to:** Analytics, Blogs, Chatter, Fields, Security, Support, Table-views, Timesheets  
-**Characteristics:** No dependencies on other plugins  
-**Migration Priority:** Low (can be migrated anytime)
+### 5. Supporting Plugins Template
+**Applicable to**: analytics, blogs, chatter, fields, projects, security, support, table-views, website
+**Characteristics**: Auxiliary features, lower complexity, fewer dependencies
 
 ---
 
-## Tier 1: Foundation Plugins Migration Template
+## Template 1: Foundation Plugins Migration
 
-### Plugin: [PLUGIN_NAME] (Foundation Tier)
+### Pre-Migration Checklist
+- [ ] **Critical**: Create multiple backup points
+- [ ] **Critical**: Notify all team members of migration
+- [ ] **Critical**: Schedule maintenance window
+- [ ] **Critical**: Prepare rollback plan
+- [ ] **Required**: Test all dependent plugins
+- [ ] **Required**: Validate data integrity procedures
 
 #### Pre-Migration Checklist
 - [ ] Verify no other plugins are currently being migrated
