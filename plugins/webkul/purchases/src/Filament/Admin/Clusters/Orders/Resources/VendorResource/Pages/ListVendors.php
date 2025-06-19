@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ListVendors as BaseListVendors;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource;
 
-final class ListVendors extends BaseListVendors
+class ListVendors extends BaseListVendors
 {
     protected static string $resource = VendorResource::class;
 

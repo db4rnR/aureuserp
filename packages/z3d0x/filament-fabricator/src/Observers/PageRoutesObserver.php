@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-final class PageRoutesObserver
+class PageRoutesObserver
 {
     public function __construct(
         protected PageRoutesService $pageRoutesService

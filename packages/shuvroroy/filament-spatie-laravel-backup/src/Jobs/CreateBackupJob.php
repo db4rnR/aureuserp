@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 use ShuvroRoy\FilamentSpatieLaravelBackup\Enums\Option;
 use Spatie\Backup\Commands\BackupCommand;
 
-final class CreateBackupJob implements ShouldQueue
+class CreateBackupJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

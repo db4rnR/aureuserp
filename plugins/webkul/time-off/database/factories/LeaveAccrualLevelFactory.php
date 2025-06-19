@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\LeaveAccrualLevel>
  */
-final class LeaveAccrualLevelFactory extends Factory
+class LeaveAccrualLevelFactory extends Factory
 {
     /**
      * Define the model's default state.

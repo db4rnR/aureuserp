@@ -12,7 +12,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Product\Database\Factories\AttributeOptionFactory;
 use Webkul\Security\Models\User;
 
-final class AttributeOption extends Model implements Sortable
+class AttributeOption extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

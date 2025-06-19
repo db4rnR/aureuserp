@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 use Webkul\Support\Enums\UOMType;
 
-final class UOMSeeder extends Seeder
+class UOMSeeder extends Seeder
 {
     /**
      * Run the database seeds.

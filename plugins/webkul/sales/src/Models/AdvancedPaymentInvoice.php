@@ -10,7 +10,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-final class AdvancedPaymentInvoice extends Model
+class AdvancedPaymentInvoice extends Model
 {
     protected $table = 'sales_advance_payment_invoices';
 

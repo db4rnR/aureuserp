@@ -6,7 +6,7 @@ namespace Webkul\Purchase\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class OrderSettings extends Settings
+class OrderSettings extends Settings
 {
     public bool $enable_order_approval;
 

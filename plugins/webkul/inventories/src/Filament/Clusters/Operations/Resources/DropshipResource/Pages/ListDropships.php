@@ -11,7 +11,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\DropshipResource;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListDropships extends ListRecords
+class ListDropships extends ListRecords
 {
     use HasTableViews;
 
@@ -30,8 +30,7 @@ final class ListDropships extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/operations/resources/dropship/pages/list-dropships.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/operations/resources/dropship/pages/list-dropships.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

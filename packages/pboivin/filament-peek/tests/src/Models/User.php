@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Pboivin\FilamentPeek\Tests\Database\Factories\UserFactory;
 
-final class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser
 {
     use HasFactory;
 

@@ -12,7 +12,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\QuantityResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ManageQuantities extends ManageRecords
+class ManageQuantities extends ManageRecords
 {
     use HasTableViews;
 

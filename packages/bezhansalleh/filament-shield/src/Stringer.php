@@ -9,7 +9,7 @@ namespace BezhanSalleh\FilamentShield;
 use Illuminate\Support\Traits\Conditionable;
 use RuntimeException;
 
-final class Stringer
+class Stringer
 {
     use Conditionable;
 

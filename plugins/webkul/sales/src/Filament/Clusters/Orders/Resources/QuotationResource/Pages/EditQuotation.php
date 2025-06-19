@@ -14,7 +14,7 @@ use Webkul\Sale\Facades\SaleOrder;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Actions as BaseActions;
 
-final class EditQuotation extends EditRecord
+class EditQuotation extends EditRecord
 {
     protected static string $resource = QuotationResource::class;
 
@@ -30,8 +30,7 @@ final class EditQuotation extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('sales::filament/clusters/orders/resources/quotation/pages/edit-quotation.notification.title'))
             ->body(__('sales::filament/clusters/orders/resources/quotation/pages/edit-quotation.notification.body'));
     }
@@ -39,8 +38,7 @@ final class EditQuotation extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource($this->getResource()),
+            ChatterActions\ChatterAction::make()->setResource($this->getResource()),
             BaseActions\BackToQuotationAction::make(),
             BaseActions\CancelQuotationAction::make(),
             BaseActions\ConfirmAction::make(),
@@ -48,11 +46,9 @@ final class EditQuotation extends EditRecord
             BaseActions\PreviewAction::make(),
             BaseActions\SendByEmailAction::make(),
             BaseActions\LockAndUnlockAction::make(),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === OrderState::SALE)
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === OrderState::SALE)
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('sales::filament/clusters/orders/resources/quotation/pages/edit-quotation.header-actions.notification.delete.title'))
                         ->body(__('sales::filament/clusters/orders/resources/quotation/pages/edit-quotation.header-actions.notification.delete.body')),
                 ),

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Security\Models\User;
 
-final class ProductAttributeValue extends Model
+class ProductAttributeValue extends Model
 {
     /**
      * Timestamps.

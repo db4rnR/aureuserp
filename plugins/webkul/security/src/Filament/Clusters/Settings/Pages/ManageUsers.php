@@ -15,7 +15,7 @@ use Webkul\Security\Settings\UserSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 use Webkul\Support\Models\Company;
 
-final class ManageUsers extends SettingsPage
+class ManageUsers extends SettingsPage
 {
     use HasPageShield;
 
@@ -51,21 +51,17 @@ final class ManageUsers extends SettingsPage
     {
         return $schema
             ->components([
-                Toggle::make('enable_user_invitation')
-                    ->label(__('security::filament/clusters/manage-users.form.enable-user-invitation.label'))
+                Toggle::make('enable_user_invitation')->label(__('security::filament/clusters/manage-users.form.enable-user-invitation.label'))
                     ->helperText(__('security::filament/clusters/manage-users.form.enable-user-invitation.helper-text'))
                     ->required(),
-                Toggle::make('enable_reset_password')
-                    ->label(__('security::filament/clusters/manage-users.form.enable-reset-password.label'))
+                Toggle::make('enable_reset_password')->label(__('security::filament/clusters/manage-users.form.enable-reset-password.label'))
                     ->helperText(__('security::filament/clusters/manage-users.form.enable-reset-password.helper-text'))
                     ->required(),
-                Select::make('default_role_id')
-                    ->label(__('security::filament/clusters/manage-users.form.default-role.label'))
+                Select::make('default_role_id')->label(__('security::filament/clusters/manage-users.form.default-role.label'))
                     ->helperText(__('security::filament/clusters/manage-users.form.default-role.helper-text'))
                     ->options(Role::all()->pluck('name', 'id'))
                     ->searchable(),
-                Select::make('default_company_id')
-                    ->label(__('security::filament/clusters/manage-users.form.default-company.label'))
+                Select::make('default_company_id')->label(__('security::filament/clusters/manage-users.form.default-company.label'))
                     ->helperText(__('security::filament/clusters/manage-users.form.default-company.helper-text'))
                     ->options(Company::all()->pluck('name', 'id'))
                     ->searchable(),

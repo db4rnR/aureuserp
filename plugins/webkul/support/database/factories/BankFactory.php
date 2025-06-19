@@ -13,7 +13,7 @@ use Webkul\Support\Models\State;
 /**
  * @extends Factory<Bank>
  */
-final class BankFactory extends Factory
+class BankFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

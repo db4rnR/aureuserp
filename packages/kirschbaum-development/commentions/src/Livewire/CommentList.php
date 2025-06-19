@@ -12,7 +12,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-final class CommentList extends Component
+class CommentList extends Component
 {
     use HasMentions;
     use HasPolling;

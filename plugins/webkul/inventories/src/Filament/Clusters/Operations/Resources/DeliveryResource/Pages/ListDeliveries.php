@@ -11,7 +11,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListDeliveries extends ListRecords
+class ListDeliveries extends ListRecords
 {
     use HasTableViews;
 
@@ -30,8 +30,7 @@ final class ListDeliveries extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/operations/resources/delivery/pages/list-deliveries.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/operations/resources/delivery/pages/list-deliveries.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

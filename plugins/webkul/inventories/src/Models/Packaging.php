@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Webkul\Product\Models\Packaging as BasePackaging;
 
-final class Packaging extends BasePackaging
+class Packaging extends BasePackaging
 {
     /**
      * Create a new Eloquent model instance.

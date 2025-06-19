@@ -11,7 +11,7 @@ use Pboivin\FilamentPeek\Support\Page;
 use Pboivin\FilamentPeek\Support\Panel;
 use Pboivin\FilamentPeek\Support\View;
 
-final class PreviewAction extends Action
+class PreviewAction extends Action
 {
     use CanPreviewInNewTab;
     use SetsInitialPreviewModalData;

@@ -14,7 +14,7 @@ use Webkul\Project\Database\Factories\TaskStageFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class TaskStage extends Model implements Sortable
+class TaskStage extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

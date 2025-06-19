@@ -11,7 +11,7 @@ use Webkul\Account\Models\TaxGroup;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class TaxSeeder extends Seeder
+class TaxSeeder extends Seeder
 {
     public function run(): void
     {

@@ -11,7 +11,7 @@ use Webkul\Inventory\Facades\Inventory;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Inventory\Models\Operation;
 
-final class ReturnAction extends Action
+class ReturnAction extends Action
 {
     protected function setUp(): void
     {

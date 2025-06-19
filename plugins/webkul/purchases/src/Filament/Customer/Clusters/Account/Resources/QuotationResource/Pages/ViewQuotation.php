@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\Quotation
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResource;
 
-final class ViewQuotation extends ViewRecord
+class ViewQuotation extends ViewRecord
 {
     protected static string $resource = QuotationResource::class;
 }

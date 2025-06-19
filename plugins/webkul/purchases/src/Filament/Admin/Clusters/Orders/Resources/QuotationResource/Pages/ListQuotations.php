@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\QuotationReso
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages\ListOrders;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\QuotationResource;
 
-final class ListQuotations extends ListOrders
+class ListQuotations extends ListOrders
 {
     protected static string $resource = QuotationResource::class;
 }

@@ -12,7 +12,7 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResour
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\ViewProductAttribute;
 use Webkul\Sale\Models\Attribute;
 
-final class ProductAttributeResource extends BaseProductAttributeResource
+class ProductAttributeResource extends BaseProductAttributeResource
 {
     protected static ?string $model = Attribute::class;
 

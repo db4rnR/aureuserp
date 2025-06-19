@@ -9,7 +9,7 @@ use Filament\Notifications\Notification;
 use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Facades\SaleOrder;
 
-final class BackToQuotationAction extends Action
+class BackToQuotationAction extends Action
 {
     protected function setUp(): void
     {
@@ -24,8 +24,7 @@ final class BackToQuotationAction extends Action
 
                 $livewire->refreshFormData(['state']);
 
-                Notification::make()
-                    ->success()
+                Notification::make()->success()
                     ->title(__('sales::filament/clusters/orders/resources/quotation/actions/back-to-quotation.notification.back-to-quotation.title'))
                     ->body(__('sales::filament/clusters/orders/resources/quotation/actions/back-to-quotation.notification.back-to-quotation.body'))
                     ->send();

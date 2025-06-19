@@ -16,7 +16,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCate
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\ViewProductCategory;
 use Webkul\Purchase\Models\Category;
 
-final class ProductCategoryResource extends CategoryResource
+class ProductCategoryResource extends CategoryResource
 {
     protected static ?string $model = Category::class;
 

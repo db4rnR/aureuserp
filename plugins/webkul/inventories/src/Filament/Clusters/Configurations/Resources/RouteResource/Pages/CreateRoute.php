@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource;
 
-final class CreateRoute extends CreateRecord
+class CreateRoute extends CreateRecord
 {
     protected static string $resource = RouteResource::class;
 
@@ -20,8 +20,7 @@ final class CreateRoute extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/route/pages/create-route.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/route/pages/create-route.notification.body'));
     }

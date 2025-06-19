@@ -19,7 +19,7 @@ use Webkul\Account\Models\Partner;
 use Webkul\Account\Models\Tax;
 use Webkul\Support\Services\EmailService;
 
-final class AccountManager
+class AccountManager
 {
     public static function computeInvoiceDateDue(AccountMove $move): AccountMove
     {
@@ -143,8 +143,7 @@ final class AccountManager
 
         $record->addMessage($messageData);
 
-        Notification::make()
-            ->success()
+        Notification::make()->success()
             ->title(__('accounts::filament/resources/invoice/actions/print-and-send.modal.notification.invoice-sent.title'))
             ->body(__('accounts::filament/resources/invoice/actions/print-and-send.modal.notification.invoice-sent.body'))
             ->send();

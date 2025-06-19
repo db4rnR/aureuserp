@@ -7,7 +7,7 @@ namespace Webkul\TimeOff\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\TimeOff\Models\LeaveType;
 
-final class LeaveTypeFactory extends Factory
+class LeaveTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

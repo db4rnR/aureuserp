@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Facades\Cache;
 
-final class ImageCacheController
+class ImageCacheController
 {
     /**
      * Logo

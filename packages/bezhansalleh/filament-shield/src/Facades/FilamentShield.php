@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \BezhanSalleh\FilamentShield\FilamentShield
  */
-final class FilamentShield extends Facade
+class FilamentShield extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

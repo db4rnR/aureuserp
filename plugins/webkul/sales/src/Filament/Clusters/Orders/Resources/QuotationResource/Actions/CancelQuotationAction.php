@@ -9,12 +9,12 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Webkul\Partner\Models\Partner;
 use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Facades\SaleOrder;
 
-final class CancelQuotationAction extends Action
+class CancelQuotationAction extends Action
 {
     protected function setUp(): void
     {
@@ -27,8 +27,7 @@ final class CancelQuotationAction extends Action
             ->modalHeading(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.modal.heading'))
             ->modalDescription(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.modal.description'))
             ->modalFooterActions(fn ($record, $livewire): array => [
-                Action::make('sendAndCancel')
-                    ->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.send-and-cancel.title'))
+                Action::make('sendAndCancel')->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.send-and-cancel.title'))
                     ->icon('heroicon-o-envelope')
                     ->modalIcon('heroicon-s-envelope')
                     ->action(function ($data) use ($record, $livewire): void {
@@ -36,15 +35,13 @@ final class CancelQuotationAction extends Action
 
                         $livewire->refreshFormData(['state']);
 
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.send-and-cancel.notification.cancelled.title'))
                             ->body(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.send-and-cancel.notification.cancelled.body'))
                             ->send();
                     })
                     ->cancelParentActions(),
-                Action::make('cancel')
-                    ->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.cancel.title'))
+                Action::make('cancel')->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.cancel.title'))
                     ->icon('heroicon-o-x-circle')
                     ->modalIcon('heroicon-s-x-circle')
                     ->action(function () use ($record, $livewire): void {
@@ -52,37 +49,32 @@ final class CancelQuotationAction extends Action
 
                         $livewire->refreshFormData(['state']);
 
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.cancel.notification.cancelled.title'))
                             ->body(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.cancel.notification.cancelled.body'))
                             ->send();
                     })
                     ->cancelParentActions(),
-                Action::make('close')
-                    ->color('gray')
+                Action::make('close')->color('gray')
                     ->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.footer-actions.close.title'))
                     ->cancelParentActions(),
             ])
             ->schema(
-                fn (Schema $schema, $record): Schema => $schema->components([
-                    Select::make('partners')
-                        ->options(Partner::all()->pluck('name', 'id'))
+                fn (Form $form, $record): Form => $form->schema([
+                    Select::make('partners')->options(Partner::all()->pluck('name', 'id'))
                         ->multiple()
                         ->default([$record->partner_id])
                         ->searchable()
                         ->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.form.fields.partner'))
                         ->preload(),
-                    TextInput::make('subject')
-                        ->default(fn () => __('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.form.fields.subject-default', [
+                    TextInput::make('subject')->default(fn () => __('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.form.fields.subject-default', [
                             'name' => $record->name,
                             'id' => $record->id,
                         ]))
                         ->placeholder(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.form.fields.subject-placeholder'))
                         ->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.form.fields.subject'))
                         ->hiddenLabel(),
-                    RichEditor::make('description')
-                        ->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.form.fields.description'))
+                    RichEditor::make('description')->label(__('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.form.fields.description'))
                         ->default(fn () => __('sales::filament/clusters/orders/resources/quotation/actions/cancel-quotation.form.fields.description-default', [
                             'partner_name' => $record?->partner?->name,
                             'name' => $record?->name,

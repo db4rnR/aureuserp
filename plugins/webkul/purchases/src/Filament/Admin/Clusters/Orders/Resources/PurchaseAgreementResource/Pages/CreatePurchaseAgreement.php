@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Purchase\Enums\RequisitionState;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource;
 
-final class CreatePurchaseAgreement extends CreateRecord
+class CreatePurchaseAgreement extends CreateRecord
 {
     protected static string $resource = PurchaseAgreementResource::class;
 
@@ -27,8 +27,7 @@ final class CreatePurchaseAgreement extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/create-purchase-agreement.notification.title'))
             ->body(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/create-purchase-agreement.notification.body'));
     }

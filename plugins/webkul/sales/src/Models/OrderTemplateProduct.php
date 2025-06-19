@@ -9,7 +9,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-final class OrderTemplateProduct extends Model
+class OrderTemplateProduct extends Model
 {
     protected $table = 'sales_order_template_products';
 

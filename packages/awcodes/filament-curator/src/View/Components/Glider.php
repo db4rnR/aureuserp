@@ -12,7 +12,7 @@ use Illuminate\View\Component;
 use League\Glide\Urls\UrlBuilderFactory;
 use stdClass;
 
-final class Glider extends Component
+class Glider extends Component
 {
     public string $source;
 

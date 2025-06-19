@@ -7,7 +7,7 @@ namespace Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResourc
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\Pages\ListTimeOffs;
 use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource;
 
-final class ListByEmployees extends ListTimeOffs
+class ListByEmployees extends ListTimeOffs
 {
     protected static string $resource = ByEmployeeResource::class;
 }

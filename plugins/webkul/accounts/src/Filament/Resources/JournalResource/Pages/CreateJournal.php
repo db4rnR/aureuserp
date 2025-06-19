@@ -11,7 +11,7 @@ use Webkul\Account\Enums\CommunicationStandard;
 use Webkul\Account\Enums\CommunicationType;
 use Webkul\Account\Filament\Resources\JournalResource;
 
-final class CreateJournal extends CreateRecord
+class CreateJournal extends CreateRecord
 {
     protected static string $resource = JournalResource::class;
 
@@ -22,8 +22,7 @@ final class CreateJournal extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/journal/pages/create-journal.notification.title'))
             ->body(__('accounts::filament/resources/journal/pages/create-journal.notification.body'));
     }

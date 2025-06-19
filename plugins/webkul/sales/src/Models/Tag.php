@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-final class Tag extends Model
+class Tag extends Model
 {
     use HasFactory;
 

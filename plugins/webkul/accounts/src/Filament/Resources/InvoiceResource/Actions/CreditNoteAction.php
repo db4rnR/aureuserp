@@ -7,7 +7,7 @@ namespace Webkul\Account\Filament\Resources\InvoiceResource\Actions;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -22,7 +22,7 @@ use Webkul\Account\Models\MoveReversal;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\CreditNotesResource;
 use Webkul\Support\Traits\PDFHandler;
 
-final class CreditNoteAction extends Action
+class CreditNoteAction extends Action
 {
     use PDFHandler;
 
@@ -38,13 +38,11 @@ final class CreditNoteAction extends Action
             ->modalHeading(__('accounts::filament/resources/invoice/actions/credit-note.modal.heading'));
 
         $this->schema(
-            fn (Schema $schema): Schema => $schema->components([
-                Textarea::make('reason')
-                    ->label(__('accounts::filament/resources/invoice/actions/credit-note.modal.form.reason'))
+            fn (Form $form): Form => $form->schema([
+                Textarea::make('reason')->label(__('accounts::filament/resources/invoice/actions/credit-note.modal.form.reason'))
                     ->maxLength(245)
                     ->required(),
-                DatePicker::make('date')
-                    ->label(__('accounts::filament/resources/invoice/actions/credit-note.modal.form.date'))
+                DatePicker::make('date')->label(__('accounts::filament/resources/invoice/actions/credit-note.modal.form.date'))
                     ->default(now())
                     ->native(false)
                     ->required(),

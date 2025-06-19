@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Webkul\Security\Filament\Resources\RoleResource;
 
-final class CreateRole extends CreateRecord
+class CreateRole extends CreateRecord
 {
     public Collection $permissions;
 

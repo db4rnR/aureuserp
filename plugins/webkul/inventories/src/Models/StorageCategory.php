@@ -15,7 +15,7 @@ use Webkul\Inventory\Enums\AllowNewProduct;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class StorageCategory extends Model implements Sortable
+class StorageCategory extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

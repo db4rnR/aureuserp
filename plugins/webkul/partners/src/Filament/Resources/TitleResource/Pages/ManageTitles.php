@@ -10,15 +10,14 @@ use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\TitleResource;
 
-final class ManageTitles extends ManageRecords
+class ManageTitles extends ManageRecords
 {
     protected static string $resource = TitleResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('partners::filament/resources/title/pages/manage-titles.header-actions.create.label'))
+            CreateAction::make()->label(__('partners::filament/resources/title/pages/manage-titles.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data): array {
                     $data['creator_id'] = Auth::id();
@@ -26,8 +25,7 @@ final class ManageTitles extends ManageRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('partners::filament/resources/title/pages/manage-titles.header-actions.create.notification.title'))
                         ->body(__('partners::filament/resources/title/pages/manage-titles.header-actions.create.notification.body')),
                 ),

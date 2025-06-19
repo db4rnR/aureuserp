@@ -8,7 +8,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Group;
+use Filament\Forms\Components\Group;
 use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Support\Arr;
 use Webkul\Sale\Enums\AdvancedPayment;
@@ -16,7 +16,7 @@ use Webkul\Sale\Enums\InvoiceStatus;
 use Webkul\Sale\Facades\SaleOrder as SalesFacade;
 use Webkul\Sale\Models\Order;
 
-final class CreateInvoiceAction extends Action
+class CreateInvoiceAction extends Action
 {
     protected function setUp(): void
     {
@@ -32,8 +32,7 @@ final class CreateInvoiceAction extends Action
             })
             ->label(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.title'))
             ->schema([
-                Radio::make('advance_payment_method')
-                    ->inline(false)
+                Radio::make('advance_payment_method')->inline(false)
                     ->label(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.form.fields.create-invoice'))
                     ->options(function () {
                         $options = AdvancedPayment::options();
@@ -44,17 +43,14 @@ final class CreateInvoiceAction extends Action
                     })
                     ->default(AdvancedPayment::DELIVERED->value)
                     ->live(),
-                Group::make()
-                    ->columns(2)
+                Group::make()->columns(2)
                     ->schema([
-                        TextInput::make('amount')
-                            ->visible(fn (Get $get): bool => $get('advance_payment_method') === AdvancedPayment::PERCENTAGE->value)
-                            ->rules('required', 'numeric')
+                        TextInput::make('amount')->visible(fn (Get $get): bool => $get('advance_payment_method') === AdvancedPayment::PERCENTAGE->value)
+                            ->rules(['required', 'numeric'])
                             ->default(0.00)
                             ->suffix('%'),
-                        TextInput::make('amount')
-                            ->visible(fn (Get $get): bool => $get('advance_payment_method') === AdvancedPayment::FIXED->value)
-                            ->rules('required', 'numeric')
+                        TextInput::make('amount')->visible(fn (Get $get): bool => $get('advance_payment_method') === AdvancedPayment::FIXED->value)
+                            ->rules(['required', 'numeric'])
                             ->default(0.00)
                             ->prefix(fn ($record) => $record->currency->symbol),
                     ]),
@@ -62,8 +58,7 @@ final class CreateInvoiceAction extends Action
             ->hidden(fn ($record): bool => $record->invoice_status !== InvoiceStatus::TO_INVOICE)
             ->action(function (Order $record, $data): void {
                 if ($record->qty_to_invoice === 0) {
-                    Notification::make()
-                        ->title(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.notification.no-invoiceable-lines.title'))
+                    Notification::make()->title(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.notification.no-invoiceable-lines.title'))
                         ->body(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.notification.no-invoiceable-lines.body'))
                         ->warning()
                         ->send();
@@ -73,8 +68,7 @@ final class CreateInvoiceAction extends Action
 
                 SalesFacade::createInvoice($record, $data);
 
-                Notification::make()
-                    ->title(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.notification.invoice-created.title'))
+                Notification::make()->title(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.notification.invoice-created.title'))
                     ->body(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.notification.invoice-created.body'))
                     ->success()
                     ->send();

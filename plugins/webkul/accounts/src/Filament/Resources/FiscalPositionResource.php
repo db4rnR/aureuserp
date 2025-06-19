@@ -35,7 +35,7 @@ use Webkul\Account\Filament\Resources\FiscalPositionResource\Pages\ViewFiscalPos
 use Webkul\Account\Filament\Resources\FiscalPositionResource\RelationManagers\FiscalPositionTaxRelationManager;
 use Webkul\Account\Models\FiscalPosition;
 
-final class FiscalPositionResource extends Resource
+class FiscalPositionResource extends Resource
 {
     protected static ?string $model = FiscalPosition::class;
 
@@ -43,44 +43,34 @@ final class FiscalPositionResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Section::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                TextInput::make('name')
-                                    ->label(__('accounts::filament/resources/fiscal-position.form.fields.name'))
+                Section::make()->schema([
+                        Group::make()->schema([
+                                TextInput::make('name')->label(__('accounts::filament/resources/fiscal-position.form.fields.name'))
                                     ->required()
                                     ->placeholder(__('Name')),
-                                TextInput::make('foreign_vat')
-                                    ->label(__('Foreign VAT'))
+                                TextInput::make('foreign_vat')->label(__('Foreign VAT'))
                                     ->label(__('accounts::filament/resources/fiscal-position.form.fields.foreign-vat'))
                                     ->required(),
-                                Select::make('country_id')
-                                    ->relationship('country', 'name')
+                                Select::make('country_id')->relationship('country', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->label(__('accounts::filament/resources/fiscal-position.form.fields.country')),
-                                Select::make('country_group_id')
-                                    ->relationship('countryGroup', 'name')
+                                Select::make('country_group_id')->relationship('countryGroup', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->label(__('accounts::filament/resources/fiscal-position.form.fields.country-group')),
-                                TextInput::make('zip_from')
-                                    ->label(__('accounts::filament/resources/fiscal-position.form.fields.zip-from'))
+                                TextInput::make('zip_from')->label(__('accounts::filament/resources/fiscal-position.form.fields.zip-from'))
                                     ->required(),
-                                TextInput::make('zip_to')
-                                    ->label(__('accounts::filament/resources/fiscal-position.form.fields.zip-to'))
+                                TextInput::make('zip_to')->label(__('accounts::filament/resources/fiscal-position.form.fields.zip-to'))
                                     ->required(),
-                                Toggle::make('auto_reply')
-                                    ->inline(false)
+                                Toggle::make('auto_reply')->inline(false)
                                     ->label(__('accounts::filament/resources/fiscal-position.form.fields.detect-automatically')),
                             ])->columns(2),
-                        RichEditor::make('notes')
-                            ->label(__('accounts::filament/resources/fiscal-position.form.fields.notes')),
+                        RichEditor::make('notes')->label(__('accounts::filament/resources/fiscal-position.form.fields.notes')),
                     ]),
             ]);
     }
@@ -89,41 +79,33 @@ final class FiscalPositionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->searchable()
+                TextColumn::make('name')->searchable()
                     ->sortable()
                     ->label(__('accounts::filament/resources/fiscal-position.table.columns.name')),
-                TextColumn::make('company.name')
-                    ->searchable()
+                TextColumn::make('company.name')->searchable()
                     ->sortable()
                     ->label(__('accounts::filament/resources/fiscal-position.table.columns.company')),
-                TextColumn::make('country.name')
-                    ->searchable()
+                TextColumn::make('country.name')->searchable()
                     ->placeholder('-')
                     ->sortable()
                     ->label(__('accounts::filament/resources/fiscal-position.table.columns.country')),
-                TextColumn::make('countryGroup.name')
-                    ->searchable()
+                TextColumn::make('countryGroup.name')->searchable()
                     ->placeholder('-')
                     ->sortable()
                     ->label(__('accounts::filament/resources/fiscal-position.table.columns.country-group')),
-                TextColumn::make('createdBy.name')
-                    ->searchable()
+                TextColumn::make('createdBy.name')->searchable()
                     ->placeholder('-')
                     ->sortable()
                     ->label(__('accounts::filament/resources/fiscal-position.table.columns.created-by')),
-                TextColumn::make('zip_from')
-                    ->searchable()
+                TextColumn::make('zip_from')->searchable()
                     ->placeholder('-')
                     ->sortable()
                     ->label(__('accounts::filament/resources/fiscal-position.table.columns.zip-from')),
-                TextColumn::make('zip_to')
-                    ->searchable()
+                TextColumn::make('zip_to')->searchable()
                     ->placeholder('-')
                     ->sortable()
                     ->label(__('accounts::filament/resources/fiscal-position.table.columns.zip-to')),
-                IconColumn::make('auto_reply')
-                    ->searchable()
+                IconColumn::make('auto_reply')->searchable()
                     ->sortable()
                     ->label(__('Detect Automatically'))
                     ->label(__('accounts::filament/resources/fiscal-position.table.columns.detect-automatically')),
@@ -131,20 +113,16 @@ final class FiscalPositionResource extends Resource
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('accounts::filament/resources/fiscal-position.table.columns.actions.delete.notification.title'))
                             ->body(__('accounts::filament/resources/fiscal-position.table.columns.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('accounts::filament/resources/fiscal-position.table.columns.bulk-actions.delete.notification.title'))
                                 ->body(__('accounts::filament/resources/fiscal-position.table.columns.bulk-actions.delete.notification.body'))
                         ),
@@ -152,47 +130,36 @@ final class FiscalPositionResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Section::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                Grid::make()
-                                    ->schema([
-                                        TextEntry::make('name')
-                                            ->label(__('accounts::filament/resources/fiscal-position.infolist.entries.name'))
+                Section::make()->schema([
+                        Group::make()->schema([
+                                Grid::make()->schema([
+                                        TextEntry::make('name')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.name'))
                                             ->placeholder('-')
                                             ->icon('heroicon-o-document-text'),
-                                        TextEntry::make('foreign_vat')
-                                            ->label(__('accounts::filament/resources/fiscal-position.infolist.entries.foreign-vat'))
+                                        TextEntry::make('foreign_vat')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.foreign-vat'))
                                             ->placeholder('-')
                                             ->icon('heroicon-o-document'),
-                                        TextEntry::make('country.name')
-                                            ->label(__('accounts::filament/resources/fiscal-position.infolist.entries.country'))
+                                        TextEntry::make('country.name')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.country'))
                                             ->placeholder('-')
                                             ->icon('heroicon-o-globe-alt'),
-                                        TextEntry::make('countryGroup.name')
-                                            ->label(__('accounts::filament/resources/fiscal-position.infolist.entries.country-group'))
+                                        TextEntry::make('countryGroup.name')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.country-group'))
                                             ->placeholder('-')
                                             ->icon('heroicon-o-map'),
-                                        TextEntry::make('zip_from')
-                                            ->label(__('accounts::filament/resources/fiscal-position.infolist.entries.zip-from'))
+                                        TextEntry::make('zip_from')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.zip-from'))
                                             ->placeholder('-')
                                             ->icon('heroicon-o-map-pin'),
-                                        TextEntry::make('zip_to')
-                                            ->label(__('accounts::filament/resources/fiscal-position.infolist.entries.zip-to'))
+                                        TextEntry::make('zip_to')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.zip-to'))
                                             ->placeholder('-')
                                             ->icon('heroicon-o-map-pin'),
-                                        IconEntry::make('auto_reply')
-                                            ->label(__('accounts::filament/resources/fiscal-position.infolist.entries.detect-automatically'))
+                                        IconEntry::make('auto_reply')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.detect-automatically'))
                                             ->placeholder('-'),
                                     ])->columns(2),
                             ]),
-                        TextEntry::make('notes')
-                            ->label(__('accounts::filament/resources/fiscal-position.infolist.entries.notes'))
+                        TextEntry::make('notes')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.notes'))
                             ->placeholder('-')
                             ->markdown(),
                     ]),
@@ -213,8 +180,7 @@ final class FiscalPositionResource extends Resource
         return [
             RelationGroup::make('distribution_for_invoice', [
                 FiscalPositionTaxRelationManager::class,
-            ])
-                ->icon('heroicon-o-banknotes'),
+            ])->icon('heroicon-o-banknotes'),
         ];
     }
 

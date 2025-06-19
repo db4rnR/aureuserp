@@ -9,14 +9,13 @@ use Filament\Resources\Pages\CreateRecord;
 use Webkul\Field\FieldsColumnManager;
 use Webkul\Field\Filament\Resources\FieldResource;
 
-final class CreateField extends CreateRecord
+class CreateField extends CreateRecord
 {
     protected static string $resource = FieldResource::class;
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('fields::filament/resources/field/pages/create-field.notification.title'))
             ->body(__('fields::filament/resources/field/pages/create-field.notification.body'));
     }

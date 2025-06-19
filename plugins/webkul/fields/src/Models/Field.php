@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
-final class Field extends Model implements Sortable
+class Field extends Model implements Sortable
 {
     use SoftDeletes, SortableTrait;
 

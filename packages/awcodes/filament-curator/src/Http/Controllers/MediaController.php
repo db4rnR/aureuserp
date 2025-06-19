@@ -13,7 +13,7 @@ use League\Glide\Filesystem\FileNotFoundException;
 use League\Glide\Signatures\SignatureException;
 use League\Glide\Signatures\SignatureFactory;
 
-final class MediaController extends Controller
+class MediaController extends Controller
 {
     public function show(Request $request, $path)
     {

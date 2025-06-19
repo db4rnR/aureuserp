@@ -7,7 +7,7 @@ namespace Saade\FilamentFullCalendar\Actions;
 use Filament\Actions\CreateAction as BaseCreateAction;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 
-final class CreateAction extends BaseCreateAction
+class CreateAction extends BaseCreateAction
 {
     protected function setUp(): void
     {

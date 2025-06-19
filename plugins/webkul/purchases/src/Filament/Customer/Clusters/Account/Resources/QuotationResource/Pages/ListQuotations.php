@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResource;
 
-final class ListQuotations extends ListRecords
+class ListQuotations extends ListRecords
 {
     protected static string $resource = QuotationResource::class;
 

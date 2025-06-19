@@ -10,7 +10,7 @@ use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\BillResource;
 
-final class CreateBill extends CreateRecord
+class CreateBill extends CreateRecord
 {
     protected static string $resource = BillResource::class;
 
@@ -21,8 +21,7 @@ final class CreateBill extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/bill/pages/create-bill.notification.title'))
             ->body(__('accounts::filament/resources/bill/pages/create-bill.notification.body'));
     }

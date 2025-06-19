@@ -6,9 +6,10 @@ namespace Webkul\TableViews\Filament\Components;
 
 use Webkul\TableViews\Models\TableView;
 
-final class SavedView extends PresetView
+class SavedView extends PresetView
 {
     public $isFavorite;
+
     protected TableView $model;
 
     public function model(TableView $model): static

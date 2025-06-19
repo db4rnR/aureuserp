@@ -6,7 +6,7 @@ namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-final class TaxPartitionSeeder extends Seeder
+class TaxPartitionSeeder extends Seeder
 {
     /**
      * Run the database seeds.

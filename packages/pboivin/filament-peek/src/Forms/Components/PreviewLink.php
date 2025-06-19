@@ -13,7 +13,7 @@ use Pboivin\FilamentPeek\Support\View;
 /**
  * @deprecated Use InlinePreviewAction instead.
  */
-final class PreviewLink extends Component
+class PreviewLink extends Component
 {
     protected string $view = 'filament-peek::components.preview-link';
 

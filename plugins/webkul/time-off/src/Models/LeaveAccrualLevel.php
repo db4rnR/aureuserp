@@ -10,7 +10,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 
-final class LeaveAccrualLevel extends Model implements Sortable
+class LeaveAccrualLevel extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

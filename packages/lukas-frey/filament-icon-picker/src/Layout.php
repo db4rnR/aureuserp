@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Guava\FilamentIconPicker;
 
-final class Layout
+class Layout
 {
     public const FLOATING = 'floating';
 

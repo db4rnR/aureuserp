@@ -7,7 +7,7 @@ namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources\ActivityType
 use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\EditActivityType as BaseEditActivityType;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\ActivityTypeResource;
 
-final class EditActivityType extends BaseEditActivityType
+class EditActivityType extends BaseEditActivityType
 {
     protected static string $resource = ActivityTypeResource::class;
 }

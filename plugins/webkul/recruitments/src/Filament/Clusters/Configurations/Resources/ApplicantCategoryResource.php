@@ -25,7 +25,7 @@ use Webkul\Recruitment\Filament\Clusters\Configurations;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ApplicantCategoryResource\Pages\ListApplicantCategories;
 use Webkul\Recruitment\Models\ApplicantCategory;
 
-final class ApplicantCategoryResource extends Resource
+class ApplicantCategoryResource extends Resource
 {
     protected static ?string $model = ApplicantCategory::class;
 
@@ -48,17 +48,15 @@ final class ApplicantCategoryResource extends Resource
         return __('recruitments::filament/clusters/configurations/resources/applicant-category.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('name')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.form.fields.name'))
+                TextInput::make('name')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.form.fields.name'))
                     ->required()
                     ->maxLength(255)
                     ->placeholder(__('recruitments::filament/clusters/configurations/resources/applicant-category.form.fields.name-placeholder')),
-                ColorPicker::make('color')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.form.fields.color'))
+                ColorPicker::make('color')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.form.fields.color'))
                     ->required()
                     ->hexColor(),
             ]);
@@ -68,64 +66,50 @@ final class ApplicantCategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.id'))
+                TextColumn::make('id')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.id'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('name')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.name'))
+                TextColumn::make('name')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                ColorColumn::make('color')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.color')),
-                TextColumn::make('createdBy.name')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.created-by'))
+                ColorColumn::make('color')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.color')),
+                TextColumn::make('createdBy.name')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.created-by'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                QueryBuilder::make()
-                    ->constraintPickerColumns(2)
+                QueryBuilder::make()->constraintPickerColumns(2)
                     ->constraints([
-                        TextConstraint::make('name')
-                            ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.filters.name'))
+                        TextConstraint::make('name')->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.filters.name'))
                             ->icon('heroicon-o-user'),
                     ]),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                EditAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.actions.edit.notification.title'))
                             ->body(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.actions.edit.notification.body'))
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.actions.delete.notification.title'))
                             ->body(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.bulk-actions.delete.notification.title'))
                                 ->body(__('recruitments::filament/clusters/configurations/resources/applicant-category.table.bulk-actions.delete.notification.body'))
                         ),
@@ -134,16 +118,14 @@ final class ApplicantCategoryResource extends Resource
             ->reorderable('sort', 'desc');
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                TextEntry::make('name')
-                    ->placeholder('—')
+                TextEntry::make('name')->placeholder('—')
                     ->icon('heroicon-o-briefcase')
                     ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.infolist.name')),
-                TextEntry::make('color')
-                    ->placeholder('—')
+                TextEntry::make('color')->placeholder('—')
                     ->icon('heroicon-o-briefcase')
                     ->label(__('recruitments::filament/clusters/configurations/resources/applicant-category.infolist.color')),
             ]);

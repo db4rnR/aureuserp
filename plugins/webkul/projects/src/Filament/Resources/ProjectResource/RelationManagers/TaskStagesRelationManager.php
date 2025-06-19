@@ -12,13 +12,13 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\TaskStageResource;
 
-final class TaskStagesRelationManager extends RelationManager
+class TaskStagesRelationManager extends RelationManager
 {
     protected static string $relationship = 'taskStages';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return TaskStageResource::form($schema);
+        return TaskStageResource::form($form);
     }
 
     public function table(Table $table): Table
@@ -27,8 +27,7 @@ final class TaskStagesRelationManager extends RelationManager
             ->filters([])
             ->groups([])
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('projects::filament/resources/project/relation-managers/task-stages.table.header-actions.create.label'))
+                CreateAction::make()->label(__('projects::filament/resources/project/relation-managers/task-stages.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::id();
@@ -36,8 +35,7 @@ final class TaskStagesRelationManager extends RelationManager
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('projects::filament/resources/project/relation-managers/task-stages.table.header-actions.create.notification.title'))
                             ->body(__('projects::filament/resources/project/relation-managers/task-stages.table.header-actions.create.notification.body')),
                     ),

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-final class CashRounding extends Model
+class CashRounding extends Model
 {
     use HasFactory;
 

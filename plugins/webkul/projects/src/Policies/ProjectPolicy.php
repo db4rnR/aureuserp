@@ -9,7 +9,7 @@ use Webkul\Project\Models\Project;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class ProjectPolicy
+class ProjectPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

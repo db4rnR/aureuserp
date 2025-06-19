@@ -14,7 +14,7 @@ use Webkul\Inventory\Models\Attribute;
 use Webkul\Inventory\Settings\ProductSettings;
 use Webkul\Product\Filament\Resources\AttributeResource;
 
-final class ProductAttributeResource extends AttributeResource
+class ProductAttributeResource extends AttributeResource
 {
     protected static ?string $model = Attribute::class;
 

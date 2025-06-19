@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Enums\ReservationMethod;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource;
 
-final class CreateOperationType extends CreateRecord
+class CreateOperationType extends CreateRecord
 {
     protected static string $resource = OperationTypeResource::class;
 
@@ -21,8 +21,7 @@ final class CreateOperationType extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/operation-type/pages/create-operation-type.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/operation-type/pages/create-operation-type.notification.body'));
     }

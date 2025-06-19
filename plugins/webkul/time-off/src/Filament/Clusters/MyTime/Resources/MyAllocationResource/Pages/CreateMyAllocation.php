@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyAllocationResource;
 
-final class CreateMyAllocation extends CreateRecord
+class CreateMyAllocation extends CreateRecord
 {
     protected static string $resource = MyAllocationResource::class;
 
@@ -21,8 +21,7 @@ final class CreateMyAllocation extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/my-time/resources/my-allocation/pages/create-allocation.notification.success.title'))
             ->body(__('time-off::filament/clusters/my-time/resources/my-allocation/pages/create-allocation.notification.success.body'));
     }
@@ -32,8 +31,7 @@ final class CreateMyAllocation extends CreateRecord
         $employee = Employee::where('user_id', Auth::id())->first();
 
         if (! $employee) {
-            Notification::make()
-                ->warning()
+            Notification::make()->warning()
                 ->title(__('time-off::filament/clusters/my-time/resources/my-allocation/pages/create-allocation.notification.warning.title'))
                 ->body(__('time-off::filament/clusters/my-time/resources/my-allocation/pages/create-allocation.notification.warning.body'))
                 ->send();

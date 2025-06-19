@@ -13,7 +13,7 @@ use Webkul\Employee\Database\Factories\SkillTypeFactory;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-final class SkillType extends Model
+class SkillType extends Model
 {
     use HasCustomFields, HasFactory, SoftDeletes;
 

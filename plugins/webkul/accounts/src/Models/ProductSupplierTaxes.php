@@ -7,7 +7,7 @@ namespace Webkul\Account\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Product\Models\Product;
 
-final class ProductSupplierTaxes extends Model
+class ProductSupplierTaxes extends Model
 {
     protected $table = 'accounts_product_supplier_taxes';
 

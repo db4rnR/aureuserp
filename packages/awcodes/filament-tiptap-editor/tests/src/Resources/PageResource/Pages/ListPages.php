@@ -8,7 +8,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use FilamentTiptapEditor\Tests\Resources\PageResource;
 
-final class ListPages extends ListRecords
+class ListPages extends ListRecords
 {
     protected static string $resource = PageResource::class;
 

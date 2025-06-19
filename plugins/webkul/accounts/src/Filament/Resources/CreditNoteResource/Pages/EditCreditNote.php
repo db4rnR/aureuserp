@@ -11,7 +11,7 @@ use Webkul\Account\Filament\Resources\CreditNoteResource;
 use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\EditInvoice as EditRecord;
 
-final class EditCreditNote extends EditRecord
+class EditCreditNote extends EditRecord
 {
     protected static string $resource = CreditNoteResource::class;
 
@@ -22,8 +22,7 @@ final class EditCreditNote extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/credit-note/pages/edit-credit-note.notification.title'))
             ->body(__('accounts::filament/resources/credit-note/pages/edit-credit-note.notification.body'));
     }
@@ -37,8 +36,7 @@ final class EditCreditNote extends EditRecord
             'customers.invoice.credit-note',
         ], true))->map(function ($action): BaseActions\PreviewAction|\Filament\Actions\Action|\Filament\Actions\ActionGroup {
             if ($action->getName() === 'customers.invoice.preview') {
-                return BaseActions\PreviewAction::make()
-                    ->modalHeading(__('accounts::filament/resources/credit-note/pages/edit-credit-note.header-actions.preview.modal-heading'))
+                return BaseActions\PreviewAction::make()->modalHeading(__('accounts::filament/resources/credit-note/pages/edit-credit-note.header-actions.preview.modal-heading'))
                     ->setTemplate('accounts::credit-note/actions/preview.index');
             }
 

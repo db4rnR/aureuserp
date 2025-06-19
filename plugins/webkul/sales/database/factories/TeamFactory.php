@@ -10,7 +10,7 @@ use Webkul\Sale\Models\Team;
 /**
  * @extends Factory<Team>
  */
-final class TeamFactory extends Factory
+class TeamFactory extends Factory
 {
     /**
      * Define the model's default state.

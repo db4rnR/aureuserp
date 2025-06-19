@@ -10,14 +10,13 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Product\Filament\Resources\AttributeResource;
 
-final class EditAttribute extends EditRecord
+class EditAttribute extends EditRecord
 {
     protected static string $resource = AttributeResource::class;
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('products::filament/resources/attribute/pages/edit-attribute.notification.title'))
             ->body(__('products::filament/resources/attribute/pages/edit-attribute.notification.body'));
     }
@@ -26,10 +25,8 @@ final class EditAttribute extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('products::filament/resources/attribute/pages/edit-attribute.header-actions.delete.notification.title'))
                         ->body(__('products::filament/resources/attribute/pages/edit-attribute.header-actions.delete.notification.body')),
                 ),

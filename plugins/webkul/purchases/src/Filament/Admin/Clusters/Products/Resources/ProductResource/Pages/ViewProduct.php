@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductReso
 use Webkul\Product\Filament\Resources\ProductResource\Pages\ViewProduct as BaseViewProduct;
 use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource;
 
-final class ViewProduct extends BaseViewProduct
+class ViewProduct extends BaseViewProduct
 {
     protected static string $resource = ProductResource::class;
 }

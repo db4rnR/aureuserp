@@ -24,7 +24,7 @@ use Webkul\Purchase\Facades\PurchaseOrder as PurchaseOrderFacade;
 use Webkul\Sale\Facades\SaleOrder as SaleFacade;
 use Webkul\Support\Package;
 
-final class InventoryManager
+class InventoryManager
 {
     public function checkTransferAvailability(Operation $record): Operation
     {

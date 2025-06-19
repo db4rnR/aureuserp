@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\LeaveMandatoryDay>
  */
-final class LeaveMandatoryDayFactory extends Factory
+class LeaveMandatoryDayFactory extends Factory
 {
     /**
      * Define the model's default state.

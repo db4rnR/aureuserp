@@ -11,7 +11,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListInternals extends ListRecords
+class ListInternals extends ListRecords
 {
     use HasTableViews;
 
@@ -30,8 +30,7 @@ final class ListInternals extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/operations/resources/internal/pages/list-internals.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/operations/resources/internal/pages/list-internals.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

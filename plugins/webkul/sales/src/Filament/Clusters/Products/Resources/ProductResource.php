@@ -17,7 +17,7 @@ use Webkul\Sale\Filament\Clusters\Products\Resources\ProductResource\Pages\Manag
 use Webkul\Sale\Filament\Clusters\Products\Resources\ProductResource\Pages\ViewProduct;
 use Webkul\Sale\Models\Product;
 
-final class ProductResource extends BaseProductResource
+class ProductResource extends BaseProductResource
 {
     protected static ?string $model = Product::class;
 

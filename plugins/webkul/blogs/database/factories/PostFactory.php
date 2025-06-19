@@ -10,7 +10,7 @@ use Webkul\Blog\Models\Post;
 /**
  * @extends Factory<Post>
  */
-final class PostFactory extends Factory
+class PostFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

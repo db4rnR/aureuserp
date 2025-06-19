@@ -11,7 +11,7 @@ use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-final class ClearRoutesCacheCommand extends Command
+class ClearRoutesCacheCommand extends Command
 {
     protected $signature = 'filament-fabricator:clear-routes-cache {--R|refresh}';
 

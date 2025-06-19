@@ -15,7 +15,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Leave extends Model
+class Leave extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 

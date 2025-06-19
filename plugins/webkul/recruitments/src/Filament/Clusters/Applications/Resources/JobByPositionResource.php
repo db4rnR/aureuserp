@@ -21,7 +21,7 @@ use Webkul\Recruitment\Filament\Clusters\Applications\Resources\JobByPositionRes
 use Webkul\Recruitment\Models\Applicant;
 use Webkul\Recruitment\Models\JobPosition;
 
-final class JobByPositionResource extends Resource
+class JobByPositionResource extends Resource
 {
     protected static ?string $model = JobPosition::class;
 
@@ -31,9 +31,9 @@ final class JobByPositionResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return JobPositionResource::form($schema);
+        return JobPositionResource::form($form);
     }
 
     public static function getModelLabel(): string
@@ -57,23 +57,20 @@ final class JobByPositionResource extends Resource
             ->columns([
                 Stack::make([
                     Stack::make([
-                        TextColumn::make('name')
-                            ->weight(FontWeight::Bold)
+                        TextColumn::make('name')->weight(FontWeight::Bold)
                             ->label(__('Name'))
                             ->label(__('recruitments::filament/clusters/applications/resources/job-by-application.table.columns.name'))
                             ->searchable()
                             ->sortable(),
                         Stack::make([
-                            TextColumn::make('department.manager.name')
-                                ->icon('heroicon-m-briefcase')
+                            TextColumn::make('department.manager.name')->icon('heroicon-m-briefcase')
                                 ->label(__('Manager'))
                                 ->label(__('recruitments::filament/clusters/applications/resources/job-by-application.table.columns.manager-name'))
                                 ->sortable()
                                 ->searchable(),
                         ]),
                         Stack::make([
-                            TextColumn::make('company.name')
-                                ->searchable()
+                            TextColumn::make('company.name')->searchable()
                                 ->label(__('recruitments::filament/clusters/applications/resources/job-by-application.table.columns.company-name'))
                                 ->icon('heroicon-m-building-office-2')
                                 ->searchable(),
@@ -87,8 +84,7 @@ final class JobByPositionResource extends Resource
                 'xl' => 2,
             ])
             ->recordActions([
-                Action::make('applications')
-                    ->label(function ($record) {
+                Action::make('applications')->label(function ($record) {
                         $totalNewApplicantCount = Applicant::where('job_id', $record->id)
                             ->where('stage_id', 1)
                             ->count();
@@ -127,15 +123,13 @@ final class JobByPositionResource extends Resource
                         ],
                     ]))),
                 ActionGroup::make([
-                    EditAction::make('to_recruitment')
-                        ->label(fn ($record) => __('recruitments::filament/clusters/applications/resources/job-by-application.table.actions.to-recruitment.to-recruitment', [
+                    EditAction::make('to_recruitment')->label(fn ($record) => __('recruitments::filament/clusters/applications/resources/job-by-application.table.actions.to-recruitment.to-recruitment', [
                             'count' => $record->no_of_recruitment,
                         ]))
                         ->icon(null)
                         ->color('primary')
                         ->size(Size::Large),
-                    Action::make('total_applications')
-                        ->label(function ($record) {
+                    Action::make('total_applications')->label(function ($record) {
                             $totalApplicantCount = Applicant::where('job_id', $record->id)
                                 ->count();
 
@@ -166,9 +160,9 @@ final class JobByPositionResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return JobPositionResource::infolist($schema);
+        return JobPositionResource::infolist($infolist);
     }
 
     public static function getPages(): array

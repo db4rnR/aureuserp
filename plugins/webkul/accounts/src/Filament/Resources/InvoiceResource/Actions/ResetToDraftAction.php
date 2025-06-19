@@ -10,7 +10,7 @@ use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Models\Move;
 
-final class ResetToDraftAction extends Action
+class ResetToDraftAction extends Action
 {
     protected function setUp(): void
     {

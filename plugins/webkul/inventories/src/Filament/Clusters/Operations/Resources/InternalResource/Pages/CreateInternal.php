@@ -13,7 +13,7 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource;
 use Webkul\Inventory\Models\OperationType;
 
-final class CreateInternal extends CreateRecord
+class CreateInternal extends CreateRecord
 {
     protected static string $resource = InternalResource::class;
 
@@ -44,8 +44,7 @@ final class CreateInternal extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/operations/resources/internal/pages/create-internal.notification.title'))
             ->body(__('inventories::filament/clusters/operations/resources/internal/pages/create-internal.notification.body'));
     }

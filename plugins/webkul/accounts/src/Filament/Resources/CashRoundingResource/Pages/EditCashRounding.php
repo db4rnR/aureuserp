@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Account\Filament\Resources\CashRoundingResource;
 
-final class EditCashRounding extends EditRecord
+class EditCashRounding extends EditRecord
 {
     protected static string $resource = CashRoundingResource::class;
 
@@ -21,8 +21,7 @@ final class EditCashRounding extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/cash-rounding/pages/edit-cash-rounding.notification.title'))
             ->body(__('accounts::filament/resources/cash-rounding/pages/edit-cash-rounding.notification.body'));
     }
@@ -31,10 +30,8 @@ final class EditCashRounding extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/cash-rounding/pages/edit-cash-rounding.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/cash-rounding/pages/edit-cash-rounding.header-actions.delete.notification.body'))
                 ),

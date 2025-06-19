@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Livewire;
 use Filament\Pages\SimplePage;
 use Webkul\Purchase\Models\Order;
 
-final class RespondQuotation extends SimplePage
+class RespondQuotation extends SimplePage
 {
     public int $order;
 

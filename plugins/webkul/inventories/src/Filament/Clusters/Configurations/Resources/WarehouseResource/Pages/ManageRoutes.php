@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResource;
 
-final class ManageRoutes extends ManageRelatedRecords
+class ManageRoutes extends ManageRelatedRecords
 {
     protected static string $resource = WarehouseResource::class;
 
@@ -27,17 +27,16 @@ final class ManageRoutes extends ManageRelatedRecords
         return __('inventories::filament/clusters/configurations/resources/warehouse/pages/manage-routes.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return RouteResource::form($schema);
+        return RouteResource::form($form);
     }
 
     public function table(Table $table): Table
     {
         return RouteResource::table($table)
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse/pages/manage-routes.table.header-actions.create.label'))
+                CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/warehouse/pages/manage-routes.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->fillForm(fn (array $arguments): array => [
                         'warehouse_selectable' => true,
@@ -53,8 +52,7 @@ final class ManageRoutes extends ManageRelatedRecords
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/warehouse/pages/manage-routes.table.header-actions.create.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/warehouse/pages/manage-routes.table.header-actions.create.notification.body')),
                     ),

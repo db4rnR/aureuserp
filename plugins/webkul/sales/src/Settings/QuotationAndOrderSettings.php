@@ -6,7 +6,7 @@ namespace Webkul\Sale\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class QuotationAndOrderSettings extends Settings
+class QuotationAndOrderSettings extends Settings
 {
     public int $default_quotation_validity;
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\PriceList>
  */
-final class PriceListFactory extends Factory
+class PriceListFactory extends Factory
 {
     /**
      * Define the model's default state.

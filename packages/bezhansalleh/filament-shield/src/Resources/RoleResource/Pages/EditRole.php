@@ -11,7 +11,7 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
-final class EditRole extends EditRecord
+class EditRole extends EditRecord
 {
     public Collection $permissions;
 

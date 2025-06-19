@@ -9,7 +9,7 @@ use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResour
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\QuotationResource\Pages\ViewQuotation;
 use Webkul\Purchase\Models\CustomerPurchaseOrder as PurchaseOrder;
 
-final class QuotationResource extends OrderResource
+class QuotationResource extends OrderResource
 {
     protected static ?string $model = PurchaseOrder::class;
 

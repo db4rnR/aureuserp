@@ -7,7 +7,7 @@ namespace FilamentTiptapEditor\Extensions\Nodes;
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-final class GridBuilder extends Node
+class GridBuilder extends Node
 {
     public static $name = 'gridBuilder';
 

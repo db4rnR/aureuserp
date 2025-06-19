@@ -7,7 +7,7 @@ namespace FilamentTiptapEditor\Extensions\Nodes;
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-final class MergeTag extends Node
+class MergeTag extends Node
 {
     public static $name = 'mergeTag';
 

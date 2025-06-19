@@ -6,7 +6,7 @@ namespace Webkul\Account\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-final class Tax extends Facade
+class Tax extends Facade
 {
     /**
      * Get the registered name of the component.

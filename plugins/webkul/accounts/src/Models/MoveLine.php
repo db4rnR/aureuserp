@@ -17,7 +17,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 use Webkul\Support\Models\UOM;
 
-final class MoveLine extends Model implements Sortable
+class MoveLine extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

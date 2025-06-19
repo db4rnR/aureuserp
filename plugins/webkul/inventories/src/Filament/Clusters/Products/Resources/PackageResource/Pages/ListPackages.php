@@ -12,7 +12,7 @@ use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListPackages extends ListRecords
+class ListPackages extends ListRecords
 {
     use HasTableViews;
 
@@ -34,8 +34,7 @@ final class ListPackages extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/products/resources/package/pages/list-packages.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/products/resources/package/pages/list-packages.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

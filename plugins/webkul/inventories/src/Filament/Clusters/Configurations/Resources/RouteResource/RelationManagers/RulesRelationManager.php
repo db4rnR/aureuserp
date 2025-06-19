@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 
-final class RulesRelationManager extends RelationManager
+class RulesRelationManager extends RelationManager
 {
     protected static string $relationship = 'rules';
 
@@ -23,25 +23,21 @@ final class RulesRelationManager extends RelationManager
         return __('inventories::filament/clusters/configurations/resources/route/relation-managers/rules.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return RuleResource::form($schema);
+        return RuleResource::form($form);
     }
 
     public function table(Table $table): Table
     {
         return RuleResource::table($table)
             ->columns([
-                TextColumn::make('action')
-                    ->searchable(),
-                TextColumn::make('sourceLocation.full_name')
-                    ->searchable(),
-                TextColumn::make('destinationLocation.full_name')
-                    ->searchable(),
+                TextColumn::make('action')->searchable(),
+                TextColumn::make('sourceLocation.full_name')->searchable(),
+                TextColumn::make('destinationLocation.full_name')->searchable(),
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('inventories::filament/clusters/configurations/resources/route/relation-managers/rules.table.header-actions.create.label'))
+                CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/route/relation-managers/rules.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->fillForm(fn (array $arguments): array => [
                         'route_id' => $this->getOwnerRecord()->id,
@@ -54,8 +50,7 @@ final class RulesRelationManager extends RelationManager
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/route/relation-managers/rules.table.header-actions.create.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/route/relation-managers/rules.table.header-actions.create.notification.body')),
                     ),

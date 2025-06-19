@@ -16,7 +16,7 @@ use Webkul\Inventory\Database\Factories\RouteFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Route extends Model implements Sortable
+class Route extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

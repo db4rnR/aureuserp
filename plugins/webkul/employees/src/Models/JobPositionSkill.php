@@ -6,7 +6,7 @@ namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class JobPositionSkill extends Model
+class JobPositionSkill extends Model
 {
     public $timestamps = false;
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Product\Models\Category as BaseCategory;
 
-final class Category extends BaseCategory
+class Category extends BaseCategory
 {
     /**
      * Create a new Eloquent model instance.

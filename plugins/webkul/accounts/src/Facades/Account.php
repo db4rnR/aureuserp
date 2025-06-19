@@ -10,7 +10,7 @@ use Webkul\Account\Models\Move;
 /**
  * @method static computeAccountMove(Move $record)
  */
-final class Account extends Facade
+class Account extends Facade
 {
     /**
      * Get the registered name of the component.

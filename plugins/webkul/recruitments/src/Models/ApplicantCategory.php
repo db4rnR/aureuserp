@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-final class ApplicantCategory extends Model
+class ApplicantCategory extends Model
 {
     protected $table = 'recruitments_applicant_categories';
 

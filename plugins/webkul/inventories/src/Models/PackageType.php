@@ -13,7 +13,7 @@ use Webkul\Inventory\Database\Factories\PackageTypeFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class PackageType extends Model implements Sortable
+class PackageType extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

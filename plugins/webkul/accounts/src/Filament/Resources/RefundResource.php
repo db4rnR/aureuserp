@@ -11,7 +11,7 @@ use Webkul\Account\Filament\Resources\RefundResource\Pages\ListRefunds;
 use Webkul\Account\Filament\Resources\RefundResource\Pages\ViewRefund;
 use Webkul\Account\Models\Move as AccountMove;
 
-final class RefundResource extends BillResource
+class RefundResource extends BillResource
 {
     protected static ?string $model = AccountMove::class;
 

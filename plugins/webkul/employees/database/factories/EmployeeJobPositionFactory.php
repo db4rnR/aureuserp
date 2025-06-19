@@ -10,7 +10,7 @@ use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class EmployeeJobPositionFactory extends Factory
+class EmployeeJobPositionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

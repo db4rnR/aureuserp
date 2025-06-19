@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Filament\Resources\AttributeResource;
 use Webkul\Product\Models\Attribute;
 
-final class ListAttributes extends ListRecords
+class ListAttributes extends ListRecords
 {
     protected static string $resource = AttributeResource::class;
 
@@ -30,8 +30,7 @@ final class ListAttributes extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('products::filament/resources/attribute/pages/list-attributes.header-actions.create.label'))
+            CreateAction::make()->label(__('products::filament/resources/attribute/pages/list-attributes.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
@@ -43,8 +42,7 @@ final class ListAttributes extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('products::filament/resources/attribute/pages/list-attributes.header-actions.create.notification.title'))
                         ->body(__('products::filament/resources/attribute/pages/list-attributes.header-actions.create.notification.body')),
                 ),

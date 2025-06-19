@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Employee\Models\Employee;
 use Webkul\Security\Models\User;
 
-final class EmployeeSeeder extends Seeder
+class EmployeeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -11,7 +11,7 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-final class PrintRFQAction extends Action
+class PrintRFQAction extends Action
 {
     protected function setUp(): void
     {

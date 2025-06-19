@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\CommentReaction;
 
-final class CommentWasReactedEvent
+class CommentWasReactedEvent
 {
     use Dispatchable;
     use SerializesModels;

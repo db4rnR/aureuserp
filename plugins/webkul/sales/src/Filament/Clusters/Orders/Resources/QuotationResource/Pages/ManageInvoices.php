@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Webkul\Account\Filament\Resources\InvoiceResource;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 
-final class ManageInvoices extends ManageRelatedRecords
+class ManageInvoices extends ManageRelatedRecords
 {
     protected static string $resource = QuotationResource::class;
 
@@ -35,12 +35,10 @@ final class ManageInvoices extends ManageRelatedRecords
     {
         return InvoiceResource::table($table)
             ->recordActions([
-                ViewAction::make()
-                    ->url(fn ($record): string => InvoiceResource::getUrl('view', ['record' => $record]))
+                ViewAction::make()->url(fn ($record): string => InvoiceResource::getUrl('view', ['record' => $record]))
                     ->openUrlInNewTab(false),
 
-                EditAction::make()
-                    ->url(fn ($record): string => InvoiceResource::getUrl('edit', ['record' => $record]))
+                EditAction::make()->url(fn ($record): string => InvoiceResource::getUrl('edit', ['record' => $record]))
                     ->openUrlInNewTab(false),
             ]);
     }

@@ -10,7 +10,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\Field\Filament\Resources\FieldResource;
 use Webkul\Field\Models\Field;
 
-final class ListFields extends ListRecords
+class ListFields extends ListRecords
 {
     protected static string $resource = FieldResource::class;
 
@@ -28,8 +28,7 @@ final class ListFields extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('fields::filament/resources/field/pages/list-fields.header-actions.create.label'))
+            CreateAction::make()->label(__('fields::filament/resources/field/pages/list-fields.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

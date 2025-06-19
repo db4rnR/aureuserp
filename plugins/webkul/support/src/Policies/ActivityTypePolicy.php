@@ -7,7 +7,7 @@ namespace Webkul\Support\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class ActivityTypePolicy
+class ActivityTypePolicy
 {
     use HandlesAuthorization;
 

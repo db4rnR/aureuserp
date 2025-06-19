@@ -11,7 +11,7 @@ use ReflectionClass;
 use Webkul\Purchase\Filament\Admin\Clusters\Settings\Pages\ManageProducts;
 use Webkul\Support\Package;
 
-final class PurchasePlugin implements Plugin
+class PurchasePlugin implements Plugin
 {
     public static function make(): static
     {
@@ -44,8 +44,7 @@ final class PurchasePlugin implements Plugin
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Admin/Clusters'), for: 'Webkul\\Purchase\\Filament\\Admin\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Admin/Widgets'), for: 'Webkul\\Purchase\\Filament\\Admin\\Widgets')
                     ->navigationItems([
-                        NavigationItem::make('settings')
-                            ->label('Settings')
+                        NavigationItem::make('settings')->label('Settings')
                             ->url(fn (): string => ManageProducts::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Purchase')

@@ -9,7 +9,7 @@ use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource;
 
-final class ViewVendorPrice extends ViewRecord
+class ViewVendorPrice extends ViewRecord
 {
     protected static string $resource = VendorPriceResource::class;
 

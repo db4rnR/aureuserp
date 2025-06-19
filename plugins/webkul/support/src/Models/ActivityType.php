@@ -14,7 +14,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 
-final class ActivityType extends Model implements Sortable
+class ActivityType extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

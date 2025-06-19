@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Z3d0X\FilamentFabricator\View;
 
-final class ResourceSchemaSlot
+class ResourceSchemaSlot
 {
     public const BLOCKS_BEFORE = 'blocks.before';
 

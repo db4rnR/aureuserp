@@ -11,7 +11,7 @@ use ReflectionClass;
 use Webkul\Inventory\Filament\Clusters\Settings\Pages\ManageOperations;
 use Webkul\Support\Package;
 
-final class InventoryPlugin implements Plugin
+class InventoryPlugin implements Plugin
 {
     public static function make(): static
     {
@@ -37,8 +37,7 @@ final class InventoryPlugin implements Plugin
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Inventory\\Filament\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Inventory\\Filament\\Widgets')
                     ->navigationItems([
-                        NavigationItem::make('settings')
-                            ->label('Settings')
+                        NavigationItem::make('settings')->label('Settings')
                             ->url(fn (): string => ManageOperations::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Inventory')

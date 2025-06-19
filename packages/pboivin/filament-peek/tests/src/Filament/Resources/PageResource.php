@@ -16,7 +16,7 @@ use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\EditPage;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource\Pages\ListPages;
 use Pboivin\FilamentPeek\Tests\Models\Page;
 
-final class PageResource extends Resource
+class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 

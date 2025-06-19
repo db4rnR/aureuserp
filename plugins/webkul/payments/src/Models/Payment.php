@@ -7,7 +7,7 @@ namespace Webkul\Payment\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-final class Payment extends Model
+class Payment extends Model
 {
     use HasFactory;
 }

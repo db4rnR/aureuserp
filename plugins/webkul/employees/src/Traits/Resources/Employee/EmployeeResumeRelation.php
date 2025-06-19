@@ -32,31 +32,26 @@ use Webkul\Employee\Enums\ResumeDisplayType;
 
 trait EmployeeResumeRelation
 {
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Section::make([
-                    TextInput::make('name')
-                        ->label('Title')
+                    TextInput::make('name')->label('Title')
                         ->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.title'))
                         ->required()
                         ->reactive(),
-                    Select::make('type')
-                        ->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.type'))
+                    Select::make('type')->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.type'))
                         ->relationship(name: 'resumeType', titleAttribute: 'name')
                         ->searchable()
                         ->preload()
                         ->createOptionForm([
-                            Group::make()
-                                ->schema([
-                                    TextInput::make('name')
-                                        ->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.name'))
+                            Group::make()->schema([
+                                    TextInput::make('name')->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.name'))
                                         ->required()
                                         ->maxLength(255)
                                         ->live(onBlur: true),
-                                    Hidden::make('creator_id')
-                                        ->default(Auth::user()->id)
+                                    Hidden::make('creator_id')->default(Auth::user()->id)
                                         ->required(),
                                 ])->columns(2),
                         ])
@@ -66,25 +61,21 @@ trait EmployeeResumeRelation
                             ->modalWidth('2xl')),
                     Fieldset::make(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.duration'))
                         ->schema([
-                            DatePicker::make('start_date')
-                                ->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.start-date'))
+                            DatePicker::make('start_date')->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.start-date'))
                                 ->required()
                                 ->native(false)
                                 ->reactive(),
-                            DatePicker::make('end_date')
-                                ->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.end-date'))
+                            DatePicker::make('end_date')->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.end-date'))
                                 ->native(false)
                                 ->reactive(),
                         ]),
-                    Select::make('display_type')
-                        ->preload()
+                    Select::make('display_type')->preload()
                         ->options(ResumeDisplayType::options())
                         ->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.display-type'))
                         ->searchable()
                         ->required()
                         ->reactive(),
-                    Textarea::make('description')
-                        ->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.description')),
+                    Textarea::make('description')->label(__('employees::filament/resources/employee/relation-manager/resume.form.sections.fields.description')),
                 ])->columns(2),
             ]);
     }
@@ -93,66 +84,52 @@ trait EmployeeResumeRelation
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.title'))
+                TextColumn::make('name')->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.title'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('start_date')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.start-date'))
+                TextColumn::make('start_date')->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.start-date'))
                     ->sortable()
                     ->toggleable()
                     ->date(),
-                TextColumn::make('end_date')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.end-date'))
+                TextColumn::make('end_date')->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.end-date'))
                     ->sortable()
                     ->toggleable()
                     ->date(),
-                TextColumn::make('display_type')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.display-type'))
+                TextColumn::make('display_type')->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.display-type'))
                     ->default(fn ($record) => ResumeDisplayType::options()[$record->display_type])
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('description')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.description'))
+                TextColumn::make('description')->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.description'))
                     ->limit(50)
                     ->wrap()
                     ->searchable(),
-                TextColumn::make('creator.name')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.created-by'))
+                TextColumn::make('creator.name')->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.created-by'))
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.created-at'))
                     ->sortable()
                     ->toggleable()
                     ->date()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('employees::filament/resources/employee/relation-manager/resume.table.columns.updated-at'))
                     ->sortable()
                     ->toggleable()
                     ->date()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->groups([
-                Tables\Grouping\Group::make('type.name')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.group-by-type'))
+                Tables\Grouping\Group::make('type.name')->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.group-by-type'))
                     ->collapsible(),
 
-                Tables\Grouping\Group::make('display_type')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.group-by-display-type'))
+                Tables\Grouping\Group::make('display_type')->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.group-by-display-type'))
                     ->collapsible(),
             ])
             ->filters([
-                SelectFilter::make('type_id')
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.type'))
+                SelectFilter::make('type_id')->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.type'))
                     ->relationship('resumeType', 'name')
                     ->searchable(),
-                Filter::make('start_date')
-                    ->schema([
-                        DatePicker::make('start')
-                            ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.start-date-from')),
-                        DatePicker::make('end')
-                            ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.start-date-to')),
+                Filter::make('start_date')->schema([
+                        DatePicker::make('start')->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.start-date-from')),
+                        DatePicker::make('end')->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.start-date-to')),
                     ])
                     ->query(fn ($query, array $data) => $query
                         ->when(
@@ -164,12 +141,9 @@ trait EmployeeResumeRelation
                             fn ($query, $end) => $query->whereDate('start_date', '<=', $end)
                         )),
 
-                Filter::make('created_at')
-                    ->schema([
-                        DatePicker::make('from')
-                            ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.created-from')),
-                        DatePicker::make('to')
-                            ->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.created-to')),
+                Filter::make('created_at')->schema([
+                        DatePicker::make('from')->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.created-from')),
+                        DatePicker::make('to')->label(__('employees::filament/resources/employee/relation-manager/resume.table.groups.created-to')),
                     ])
                     ->query(fn ($query, array $data) => $query
                         ->when(
@@ -182,8 +156,7 @@ trait EmployeeResumeRelation
                         )),
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('employees::filament/resources/employee/relation-manager/resume.table.header-actions.add-resume'))
+                CreateAction::make()->label(__('employees::filament/resources/employee/relation-manager/resume.table.header-actions.add-resume'))
                     ->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::user()->id;
@@ -192,35 +165,28 @@ trait EmployeeResumeRelation
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('employees::filament/resources/employee/relation-manager/resume.table.actions.create.notification.title'))
                             ->body(__('employees::filament/resources/employee/relation-manager/resume.table.actions.create.notification.body'))
                     ),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                EditAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('employees::filament/resources/employee/relation-manager/resume.table.actions.edit.notification.title'))
                             ->body(__('employees::filament/resources/employee/relation-manager/resume.table.actions.edit.notification.body'))
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('employees::filament/resources/employee/relation-manager/resume.table.actions.delete.notification.title'))
                             ->body(__('employees::filament/resources/employee/relation-manager/resume.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/resources/employee/relation-manager/resume.table.bulk-actions.delete.notification.title'))
                                 ->body(__('employees::filament/resources/employee/relation-manager/resume.table.bulk-actions.delete.notification.body'))
                         ),
@@ -228,40 +194,31 @@ trait EmployeeResumeRelation
             ]);
     }
 
-    public function infolist(Schema $schema): Schema
+    public function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Group::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.title'))
+                Group::make()->schema([
+                        Group::make()->schema([
+                                TextEntry::make('name')->label(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.title'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-document-text'),
-                                TextEntry::make('display_type')
-                                    ->label(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.display-type'))
+                                TextEntry::make('display_type')->label(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.display-type'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-document'),
-                                Group::make()
-                                    ->schema([
-                                        TextEntry::make('resumeType.name')
-                                            ->placeholder('—')
+                                Group::make()->schema([
+                                        TextEntry::make('resumeType.name')->placeholder('—')
                                             ->label(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.type')),
                                     ]),
-                                TextEntry::make('description')
-                                    ->placeholder('—')
+                                TextEntry::make('description')->placeholder('—')
                                     ->label(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.description')),
                             ])->columns(2),
                         Fieldset::make(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.duration'))
                             ->schema([
-                                TextEntry::make('start_date')
-                                    ->placeholder('—')
+                                TextEntry::make('start_date')->placeholder('—')
                                     ->label(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.start-date'))
                                     ->icon('heroicon-o-calendar'),
-                                TextEntry::make('end_date')
-                                    ->placeholder('—')
+                                TextEntry::make('end_date')->placeholder('—')
                                     ->label(__('employees::filament/resources/employee/relation-manager/resume.infolist.entries.end-date'))
                                     ->icon('heroicon-o-calendar'),
                             ])

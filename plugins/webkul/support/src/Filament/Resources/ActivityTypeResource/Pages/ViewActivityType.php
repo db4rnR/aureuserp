@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Support\Filament\Resources\ActivityTypeResource;
 
-final class ViewActivityType extends ViewRecord
+class ViewActivityType extends ViewRecord
 {
     protected static string $resource = ActivityTypeResource::class;
 
@@ -18,10 +18,8 @@ final class ViewActivityType extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('support::filament/resources/activity-type/pages/view-activity-type.header-actions.delete.notification.title'))
                         ->body(__('support::filament/resources/activity-type/pages/view-activity-type.header-actions.delete.notification.body')),
                 ),

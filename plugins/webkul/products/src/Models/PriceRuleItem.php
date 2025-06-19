@@ -15,7 +15,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-final class PriceRuleItem extends Model
+class PriceRuleItem extends Model
 {
     use HasFactory;
 

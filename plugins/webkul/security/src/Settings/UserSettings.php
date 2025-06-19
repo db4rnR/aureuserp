@@ -6,7 +6,7 @@ namespace Webkul\Security\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class UserSettings extends Settings
+class UserSettings extends Settings
 {
     public bool $enable_user_invitation;
 

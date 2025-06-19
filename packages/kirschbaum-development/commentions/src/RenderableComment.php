@@ -9,7 +9,7 @@ use DateTimeImmutable;
 use Kirschbaum\Commentions\Contracts\RenderableComment as RenderableCommentContract;
 use Livewire\Wireable;
 
-final class RenderableComment implements RenderableCommentContract, Wireable
+class RenderableComment implements RenderableCommentContract, Wireable
 {
     private bool $isComment;
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kirschbaum\Commentions\Filament\Concerns\HasMentionables;
 use Kirschbaum\Commentions\Filament\Concerns\HasPolling;
 
-final class CommentsTableAction extends Action
+class CommentsTableAction extends Action
 {
     use HasMentionables;
     use HasPolling;

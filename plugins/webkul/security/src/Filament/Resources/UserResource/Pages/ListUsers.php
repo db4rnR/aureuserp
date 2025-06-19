@@ -18,7 +18,7 @@ use Webkul\Security\Models\Invitation;
 use Webkul\Security\Models\User;
 use Webkul\Security\Settings\UserSettings;
 
-final class ListUsers extends ListRecords
+class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
 
@@ -36,25 +36,21 @@ final class ListUsers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-user-plus')
+            CreateAction::make()->icon('heroicon-o-user-plus')
                 ->label(__('security::filament/resources/user/pages/list-user.header-actions.create.label')),
-            Action::make('inviteUser')
-                ->label(__('security::filament/resources/user/pages/list-user.header-actions.invite.title'))
+            Action::make('inviteUser')->label(__('security::filament/resources/user/pages/list-user.header-actions.invite.title'))
                 ->icon('heroicon-o-envelope')
                 ->modalIcon('heroicon-o-envelope')
                 ->modalSubmitActionLabel(__('security::filament/resources/user/pages/list-user.header-actions.invite.modal.submit-action-label'))
                 ->visible(fn (UserSettings $userSettings): bool => $userSettings->enable_user_invitation)
                 ->schema([
-                    TextInput::make('email')
-                        ->email()
+                    TextInput::make('email')->email()
                         ->label(__('security::filament/resources/user/pages/list-user.header-actions.invite.form.email'))
                         ->required(),
                 ])
                 ->action(function (array $data): void {
                     if (app(UserSettings::class)->default_company_id === null) {
-                        Notification::make('invitedFailed')
-                            ->title(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.default-company-error.title'))
+                        Notification::make('invitedFailed')->title(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.default-company-error.title'))
                             ->body(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.default-company-error.body'))
                             ->danger()
                             ->send();
@@ -67,16 +63,14 @@ final class ListUsers extends ListRecords
                     try {
                         Mail::to($invitation->email)->send(new UserInvitationMail($invitation));
 
-                        Notification::make('invitedSuccess')
-                            ->title(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.success.title'))
+                        Notification::make('invitedSuccess')->title(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.success.title'))
                             ->body(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.success.body'))
                             ->success()
                             ->send();
                     } catch (Exception $e) {
                         report($e);
 
-                        Notification::make('invitedFailed')
-                            ->title(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.error.title'))
+                        Notification::make('invitedFailed')->title(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.error.title'))
                             ->body(__('security::filament/resources/user/pages/list-user.header-actions.invite.notification.error.body'))
                             ->success()
                             ->send();

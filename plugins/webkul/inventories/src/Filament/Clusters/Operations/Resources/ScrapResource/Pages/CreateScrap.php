@@ -13,7 +13,7 @@ use Webkul\Inventory\Models\Location;
 use Webkul\Inventory\Models\Product;
 use Webkul\Inventory\Models\Warehouse;
 
-final class CreateScrap extends CreateRecord
+class CreateScrap extends CreateRecord
 {
     protected static string $resource = ScrapResource::class;
 

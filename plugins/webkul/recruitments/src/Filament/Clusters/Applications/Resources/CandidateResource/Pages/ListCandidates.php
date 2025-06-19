@@ -13,7 +13,7 @@ use Webkul\Recruitment\Filament\Clusters\Applications\Resources\CandidateResourc
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListCandidates extends ListRecords
+class ListCandidates extends ListRecords
 {
     use HasTableViews;
 
@@ -133,8 +133,7 @@ final class ListCandidates extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
+            CreateAction::make()->icon('heroicon-o-plus-circle'),
         ];
     }
 }

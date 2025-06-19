@@ -11,7 +11,7 @@ use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Models\Move;
 
-final class CancelAction extends Action
+class CancelAction extends Action
 {
     protected function setUp(): void
     {

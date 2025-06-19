@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\View;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class TableViewsServiceProvider extends PackageServiceProvider
+class TableViewsServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'table-views';
 

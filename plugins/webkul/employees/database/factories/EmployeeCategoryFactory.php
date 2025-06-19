@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\EmployeeCategory;
 use Webkul\Security\Models\User;
 
-final class EmployeeCategoryFactory extends Factory
+class EmployeeCategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

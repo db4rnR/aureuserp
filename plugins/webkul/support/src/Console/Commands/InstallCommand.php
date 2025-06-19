@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Webkul\Support\Models\Plugin;
 use Webkul\Support\Package;
 
-final class InstallCommand extends Command
+class InstallCommand extends Command
 {
     public ?Closure $startWith = null;
 

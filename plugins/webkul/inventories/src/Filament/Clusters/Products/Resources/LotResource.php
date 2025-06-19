@@ -52,7 +52,7 @@ use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\Pages\
 use Webkul\Inventory\Models\Lot;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 
-final class LotResource extends Resource
+class LotResource extends Resource
 {
     protected static ?string $model = Lot::class;
 
@@ -80,23 +80,20 @@ final class LotResource extends Resource
         return __('inventories::filament/clusters/products/resources/lot.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Section::make(__('inventories::filament/clusters/products/resources/lot.form.sections.general.title'))
                     ->schema([
-                        TextInput::make('name')
-                            ->label(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.name'))
+                        TextInput::make('name')->label(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.name'))
                             ->required()
                             ->maxLength(255)
                             ->autofocus()
                             ->placeholder(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.name-placeholder'))
                             ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;']),
-                        Group::make()
-                            ->schema([
-                                Select::make('product_id')
-                                    ->label(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.product'))
+                        Group::make()->schema([
+                                Select::make('product_id')->label(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.product'))
                                     ->relationship('product', 'name')
                                     ->relationship(
                                         name: 'product',
@@ -116,12 +113,10 @@ final class LotResource extends Resource
                                         CreateScrap::class,
                                         EditScrap::class,
                                     ]),
-                                TextInput::make('reference')
-                                    ->label(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.reference'))
+                                TextInput::make('reference')->label(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.reference'))
                                     ->maxLength(255)
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.reference-hint-tooltip')),
-                                RichEditor::make('description')
-                                    ->label(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.description'))
+                                RichEditor::make('description')->label(__('inventories::filament/clusters/products/resources/lot.form.sections.general.fields.description'))
                                     ->columnSpan(2),
                             ])
                             ->columns(2),
@@ -133,61 +128,48 @@ final class LotResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.columns.name'))
+                TextColumn::make('name')->label(__('inventories::filament/clusters/products/resources/lot.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('product.name')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.columns.product'))
+                TextColumn::make('product.name')->label(__('inventories::filament/clusters/products/resources/lot.table.columns.product'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('reference')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.columns.reference'))
+                TextColumn::make('reference')->label(__('inventories::filament/clusters/products/resources/lot.table.columns.reference'))
                     ->placeholder('—')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('total_quantity')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.columns.on-hand-qty'))
+                TextColumn::make('total_quantity')->label(__('inventories::filament/clusters/products/resources/lot.table.columns.on-hand-qty'))
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('inventories::filament/clusters/products/resources/lot.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('inventories::filament/clusters/products/resources/lot.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->groups([
-                Tables\Grouping\Group::make('product.name')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.groups.product')),
-                Tables\Grouping\Group::make('location.full_name')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.groups.location')),
-                Tables\Grouping\Group::make('created_at')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.groups.created-at'))
+                Tables\Grouping\Group::make('product.name')->label(__('inventories::filament/clusters/products/resources/lot.table.groups.product')),
+                Tables\Grouping\Group::make('location.full_name')->label(__('inventories::filament/clusters/products/resources/lot.table.groups.location')),
+                Tables\Grouping\Group::make('created_at')->label(__('inventories::filament/clusters/products/resources/lot.table.groups.created-at'))
                     ->date(),
             ])
             ->filters([
-                SelectFilter::make('product_id')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.filters.product'))
+                SelectFilter::make('product_id')->label(__('inventories::filament/clusters/products/resources/lot.table.filters.product'))
                     ->relationship('product', 'name')
                     ->searchable()
                     ->preload(),
-                SelectFilter::make('location_id')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.filters.location'))
+                SelectFilter::make('location_id')->label(__('inventories::filament/clusters/products/resources/lot.table.filters.location'))
                     ->relationship('location', 'full_name')
                     ->searchable()
                     ->multiple()
                     ->preload(),
-                SelectFilter::make('creator_id')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.filters.creator'))
+                SelectFilter::make('creator_id')->label(__('inventories::filament/clusters/products/resources/lot.table.filters.creator'))
                     ->relationship('creator', 'name')
                     ->searchable()
                     ->preload(),
-                SelectFilter::make('company_id')
-                    ->label(__('inventories::filament/clusters/products/resources/lot.table.filters.company'))
+                SelectFilter::make('company_id')->label(__('inventories::filament/clusters/products/resources/lot.table.filters.company'))
                     ->relationship('company', 'name')
                     ->searchable()
                     ->preload(),
@@ -196,21 +178,18 @@ final class LotResource extends Resource
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
-                    DeleteAction::make()
-                        ->action(function (Lot $record): void {
+                    DeleteAction::make()->action(function (Lot $record): void {
                             try {
                                 $record->delete();
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/products/resources/lot.table.actions.delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/products/resources/lot.table.actions.delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/products/resources/lot.table.actions.delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/products/resources/lot.table.actions.delete.notification.success.body')),
                         ),
@@ -218,8 +197,7 @@ final class LotResource extends Resource
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    BulkAction::make('print')
-                        ->label(__('inventories::filament/clusters/products/resources/lot.table.bulk-actions.print.label'))
+                    BulkAction::make('print')->label(__('inventories::filament/clusters/products/resources/lot.table.bulk-actions.print.label'))
                         ->icon('heroicon-o-printer')
                         ->action(function ($records) {
                             $pdf = Pdf::loadView('inventories::filament.clusters.products.lots.actions.print', [
@@ -232,21 +210,18 @@ final class LotResource extends Resource
                                 echo $pdf->output();
                             }, 'Lot-Barcode.pdf');
                         }),
-                    DeleteBulkAction::make()
-                        ->action(function (Collection $records): void {
+                    DeleteBulkAction::make()->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->delete());
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/products/resources/lot.table.bulk-actions.delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/products/resources/lot.table.bulk-actions.delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/products/resources/lot.table.bulk-actions.delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/products/resources/lot.table.bulk-actions.delete.notification.success.body')),
                         ),
@@ -254,67 +229,54 @@ final class LotResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.title'))
                             ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.name'))
+                                TextEntry::make('name')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.name'))
                                     ->icon('heroicon-o-rectangle-stack')
                                     ->size(TextSize::Large)
                                     ->weight(FontWeight::Bold),
 
-                                Grid::make(2)
-                                    ->schema([
-                                        TextEntry::make('product.name')
-                                            ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.product'))
+                                Grid::make(2)->schema([
+                                        TextEntry::make('product.name')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.product'))
                                             ->icon('heroicon-o-cube'),
 
-                                        TextEntry::make('reference')
-                                            ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.reference'))
+                                        TextEntry::make('reference')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.reference'))
                                             ->icon('heroicon-o-document-text')
                                             ->placeholder('—'),
                                     ]),
 
-                                TextEntry::make('description')
-                                    ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.description'))
+                                TextEntry::make('description')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.description'))
                                     ->html()
                                     ->placeholder('—'),
 
-                                Grid::make(2)
-                                    ->schema([
-                                        TextEntry::make('total_quantity')
-                                            ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.on-hand-qty'))
+                                Grid::make(2)->schema([
+                                        TextEntry::make('total_quantity')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.on-hand-qty'))
                                             ->icon('heroicon-o-calculator')
                                             ->badge(),
 
-                                        TextEntry::make('company.name')
-                                            ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.company'))
+                                        TextEntry::make('company.name')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.general.entries.company'))
                                             ->icon('heroicon-o-building-office'),
                                     ]),
                             ]),
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/products/resources/lot.infolist.sections.record-information.title'))
                             ->schema([
-                                TextEntry::make('created_at')
-                                    ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.record-information.entries.created-at'))
+                                TextEntry::make('created_at')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.record-information.entries.created-at'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar'),
 
-                                TextEntry::make('creator.name')
-                                    ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.record-information.entries.created-by'))
+                                TextEntry::make('creator.name')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.record-information.entries.created-by'))
                                     ->icon('heroicon-m-user'),
 
-                                TextEntry::make('updated_at')
-                                    ->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.record-information.entries.last-updated'))
+                                TextEntry::make('updated_at')->label(__('inventories::filament/clusters/products/resources/lot.infolist.sections.record-information.entries.last-updated'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar-days'),
                             ]),

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-final class EmailTemplate extends Model
+class EmailTemplate extends Model
 {
     use HasFactory, SoftDeletes;
 

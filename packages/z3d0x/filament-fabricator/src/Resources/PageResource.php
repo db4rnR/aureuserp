@@ -34,7 +34,7 @@ use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\ListPages;
 use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\ViewPage;
 use Z3d0X\FilamentFabricator\View\ResourceSchemaSlot;
 
-final class PageResource extends Resource
+class PageResource extends Resource
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 

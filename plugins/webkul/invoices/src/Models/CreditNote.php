@@ -6,7 +6,7 @@ namespace Webkul\Invoice\Models;
 
 use Webkul\Account\Models\Move as BaseMove;
 
-final class CreditNote extends BaseMove
+class CreditNote extends BaseMove
 {
     //
 }

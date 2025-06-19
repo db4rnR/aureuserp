@@ -12,7 +12,7 @@ use Webkul\Support\Models\Company;
 /**
  * @extends Factory<ProjectStage>
  */
-final class ProjectStageFactory extends Factory
+class ProjectStageFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

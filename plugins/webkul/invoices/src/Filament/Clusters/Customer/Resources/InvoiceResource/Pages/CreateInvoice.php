@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pa
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\CreateInvoice as BaseCreateInvoice;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource;
 
-final class CreateInvoice extends BaseCreateInvoice
+class CreateInvoice extends BaseCreateInvoice
 {
     protected static string $resource = InvoiceResource::class;
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Account\Models\Move;
 use Webkul\Account\Models\Partner as BasePartner;
 
-final class Partner extends BasePartner
+class Partner extends BasePartner
 {
     public function orders(): HasMany
     {

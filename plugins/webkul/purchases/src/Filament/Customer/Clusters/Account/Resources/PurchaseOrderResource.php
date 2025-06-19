@@ -9,7 +9,7 @@ use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\PurchaseOrderRe
 use Webkul\Purchase\Filament\Customer\Clusters\Account\Resources\PurchaseOrderResource\Pages\ViewPurchaseOrder;
 use Webkul\Purchase\Models\CustomerPurchaseOrder as PurchaseOrder;
 
-final class PurchaseOrderResource extends OrderResource
+class PurchaseOrderResource extends OrderResource
 {
     protected static ?string $model = PurchaseOrder::class;
 

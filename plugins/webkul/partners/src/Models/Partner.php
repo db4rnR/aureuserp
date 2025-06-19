@@ -23,7 +23,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\State;
 
-final class Partner extends Authenticatable implements FilamentUser
+class Partner extends Authenticatable implements FilamentUser
 {
     use HasChatter, HasFactory, HasLogActivity, Notifiable, SoftDeletes;
 
@@ -91,7 +91,7 @@ final class Partner extends Authenticatable implements FilamentUser
     public function getAvatarUrlAttribute(): string
     {
         if (! $this->avatar) {
-            return;
+            return '';
         }
 
         return Storage::url($this->avatar);

@@ -7,7 +7,7 @@ namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCat
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource;
 use Webkul\Product\Filament\Resources\CategoryResource\Pages\EditCategory;
 
-final class EditProductCategory extends EditCategory
+class EditProductCategory extends EditCategory
 {
     protected static string $resource = ProductCategoryResource::class;
 }

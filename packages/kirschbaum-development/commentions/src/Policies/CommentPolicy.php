@@ -7,7 +7,7 @@ namespace Kirschbaum\Commentions\Policies;
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\Contracts\Commenter;
 
-final class CommentPolicy
+class CommentPolicy
 {
     public function create(Commenter $user): bool
     {

@@ -8,7 +8,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Account\Filament\Resources\RefundResource\Pages\EditRefund as BaseEditRefund;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource;
 
-final class EditRefund extends BaseEditRefund
+class EditRefund extends BaseEditRefund
 {
     protected static string $resource = RefundResource::class;
 

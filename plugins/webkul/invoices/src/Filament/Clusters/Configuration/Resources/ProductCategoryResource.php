@@ -15,7 +15,7 @@ use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryReso
 use Webkul\Invoice\Models\Category;
 use Webkul\Product\Filament\Resources\CategoryResource as BaseProductCategoryResource;
 
-final class ProductCategoryResource extends BaseProductCategoryResource
+class ProductCategoryResource extends BaseProductCategoryResource
 {
     protected static ?string $model = Category::class;
 

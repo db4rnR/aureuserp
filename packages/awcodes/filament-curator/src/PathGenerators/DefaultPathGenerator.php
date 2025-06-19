@@ -6,7 +6,7 @@ namespace Awcodes\Curator\PathGenerators;
 
 use Awcodes\Curator\PathGenerators\Contracts\PathGenerator;
 
-final class DefaultPathGenerator implements PathGenerator
+class DefaultPathGenerator implements PathGenerator
 {
     public function getPath(?string $baseDir = null): string
     {

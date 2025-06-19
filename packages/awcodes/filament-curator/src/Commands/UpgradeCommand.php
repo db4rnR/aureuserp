@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-final class UpgradeCommand extends Command
+class UpgradeCommand extends Command
 {
     public $signature = 'curator:upgrade';
 

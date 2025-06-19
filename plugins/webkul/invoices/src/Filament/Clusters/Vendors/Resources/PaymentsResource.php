@@ -13,7 +13,7 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\Li
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\ViewPayments;
 use Webkul\Invoice\Models\Payment;
 
-final class PaymentsResource extends BasePaymentsResource
+class PaymentsResource extends BasePaymentsResource
 {
     protected static ?string $model = Payment::class;
 

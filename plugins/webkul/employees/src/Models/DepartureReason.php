@@ -12,7 +12,7 @@ use Webkul\Employee\Database\Factories\DepartureReasonFactory;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-final class DepartureReason extends Model implements Sortable
+class DepartureReason extends Model implements Sortable
 {
     use HasCustomFields, HasFactory, SortableTrait;
 

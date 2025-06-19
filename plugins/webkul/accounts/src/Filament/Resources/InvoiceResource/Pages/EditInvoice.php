@@ -14,7 +14,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Partner\Models\Partner;
 
-final class EditInvoice extends EditRecord
+class EditInvoice extends EditRecord
 {
     protected static string $resource = InvoiceResource::class;
 
@@ -25,8 +25,7 @@ final class EditInvoice extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/invoice/pages/edit-invoice.notification.title'))
             ->body(__('accounts::filament/resources/invoice/pages/edit-invoice.notification.body'));
     }
@@ -34,15 +33,13 @@ final class EditInvoice extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource($this->getResource()),
+            ChatterActions\ChatterAction::make()->setResource($this->getResource()),
             BaseActions\PayAction::make(),
             BaseActions\ConfirmAction::make(),
             BaseActions\CancelAction::make(),
             BaseActions\ResetToDraftAction::make(),
             BaseActions\SetAsCheckedAction::make(),
-            BaseActions\PreviewAction::make()
-                ->setTemplate('accounts::invoice/actions/preview.index'),
+            BaseActions\PreviewAction::make()->setTemplate('accounts::invoice/actions/preview.index'),
             BaseActions\PrintAndSendAction::make(),
             BaseActions\CreditNoteAction::make(),
             DeleteAction::make(),

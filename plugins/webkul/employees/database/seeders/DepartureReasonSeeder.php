@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-final class DepartureReasonSeeder extends Seeder
+class DepartureReasonSeeder extends Seeder
 {
     /**
      * Run the database seeds.

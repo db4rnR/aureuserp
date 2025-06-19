@@ -22,7 +22,7 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-final class TestCase extends Orchestra
+class TestCase extends Orchestra
 {
     use LazilyRefreshDatabase;
 

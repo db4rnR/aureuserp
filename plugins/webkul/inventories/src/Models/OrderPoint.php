@@ -13,7 +13,7 @@ use Webkul\Inventory\Enums\OrderPointTrigger;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class OrderPoint extends Model
+class OrderPoint extends Model
 {
     use HasFactory, SoftDeletes;
 

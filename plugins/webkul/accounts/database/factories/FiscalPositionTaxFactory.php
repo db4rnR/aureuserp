@@ -6,7 +6,7 @@ namespace Webkul\Account\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-final class FiscalPositionTaxFactory extends Factory
+class FiscalPositionTaxFactory extends Factory
 {
     public function definition(): array
     {

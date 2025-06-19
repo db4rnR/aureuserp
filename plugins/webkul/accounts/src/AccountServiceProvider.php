@@ -14,7 +14,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class AccountServiceProvider extends PackageServiceProvider
+class AccountServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'accounts';
 

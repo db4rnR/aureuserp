@@ -11,7 +11,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource;
 
-final class ListVendorPrices extends ListRecords
+class ListVendorPrices extends ListRecords
 {
     protected static string $resource = VendorPriceResource::class;
 
@@ -23,8 +23,7 @@ final class ListVendorPrices extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/list-vendor-prices.header-actions.create.label'))
+            CreateAction::make()->label(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/list-vendor-prices.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
@@ -36,8 +35,7 @@ final class ListVendorPrices extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/list-vendor-prices.header-actions.create.notification.title'))
                         ->body(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/list-vendor-prices.header-actions.create.notification.body')),
                 ),

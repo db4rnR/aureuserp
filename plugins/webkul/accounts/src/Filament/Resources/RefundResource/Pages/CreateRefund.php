@@ -10,7 +10,7 @@ use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\CreateInvoice as CreateBaseRefund;
 use Webkul\Account\Filament\Resources\RefundResource;
 
-final class CreateRefund extends CreateBaseRefund
+class CreateRefund extends CreateBaseRefund
 {
     protected static string $resource = RefundResource::class;
 
@@ -21,8 +21,7 @@ final class CreateRefund extends CreateBaseRefund
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/refund/pages/create-refund.notification.title'))
             ->body(__('accounts::filament/resources/refund/pages/create-refund.notification.body'));
     }

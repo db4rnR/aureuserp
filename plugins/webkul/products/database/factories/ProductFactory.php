@@ -14,7 +14,7 @@ use Webkul\Support\Models\Company;
 /**
  * @extends Factory<Product>
  */
-final class ProductFactory extends Factory
+class ProductFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

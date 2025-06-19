@@ -13,7 +13,7 @@ use Webkul\Inventory\Enums\LocationType;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource;
 use Webkul\Inventory\Models\Location;
 
-final class ListLocations extends ListRecords
+class ListLocations extends ListRecords
 {
     protected static string $resource = LocationResource::class;
 
@@ -48,8 +48,7 @@ final class ListLocations extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/configurations/resources/location/pages/list-locations.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/location/pages/list-locations.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
@@ -61,8 +60,7 @@ final class ListLocations extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/location/pages/list-locations.header-actions.create.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/location/pages/list-locations.header-actions.create.notification.body')),
                 ),

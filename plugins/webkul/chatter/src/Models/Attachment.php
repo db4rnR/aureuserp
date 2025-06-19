@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Attachment extends Model
+class Attachment extends Model
 {
     protected $table = 'chatter_attachments';
 

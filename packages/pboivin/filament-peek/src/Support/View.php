@@ -6,7 +6,7 @@ namespace Pboivin\FilamentPeek\Support;
 
 use Illuminate\Support\Facades\View as BladeView;
 
-final class View
+class View
 {
     public const PREVIEW_ACTION_SETUP_HOOK = '__is_filament_peek_preview_action_setup';
 

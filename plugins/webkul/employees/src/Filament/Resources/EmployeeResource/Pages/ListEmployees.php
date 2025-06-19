@@ -13,7 +13,7 @@ use Webkul\Employee\Filament\Resources\EmployeeResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListEmployees extends ListRecords
+class ListEmployees extends ListRecords
 {
     use HasTableViews;
 
@@ -62,8 +62,7 @@ final class ListEmployees extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle')
+            CreateAction::make()->icon('heroicon-o-plus-circle')
                 ->label(__('employees::filament/resources/employee/pages/list-employee.header-actions.create.label')),
         ];
     }

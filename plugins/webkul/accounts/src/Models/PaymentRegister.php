@@ -12,7 +12,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-final class PaymentRegister extends Model
+class PaymentRegister extends Model
 {
     use HasFactory;
 

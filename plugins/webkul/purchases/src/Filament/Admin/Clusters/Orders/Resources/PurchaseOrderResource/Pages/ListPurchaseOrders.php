@@ -11,7 +11,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrderResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 
-final class ListPurchaseOrders extends ListOrders
+class ListPurchaseOrders extends ListOrders
 {
     protected static string $resource = PurchaseOrderResource::class;
 

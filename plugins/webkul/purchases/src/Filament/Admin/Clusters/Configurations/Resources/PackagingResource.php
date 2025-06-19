@@ -10,7 +10,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Configurations;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\PackagingResource\Pages\ManagePackagings;
 use Webkul\Purchase\Settings\ProductSettings;
 
-final class PackagingResource extends BasePackagingResource
+class PackagingResource extends BasePackagingResource
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-gift';
 

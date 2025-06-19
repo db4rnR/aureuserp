@@ -12,7 +12,7 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\FiscalPositionResource;
 
-final class EditFiscalPosition extends EditRecord
+class EditFiscalPosition extends EditRecord
 {
     protected static string $resource = FiscalPositionResource::class;
 
@@ -28,8 +28,7 @@ final class EditFiscalPosition extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/fiscal-position/pages/edit-fiscal-position.notification.title'))
             ->body(__('accounts::filament/resources/fiscal-position/pages/edit-fiscal-position.notification.body'));
     }
@@ -38,10 +37,8 @@ final class EditFiscalPosition extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/fiscal-position/pages/edit-fiscal-position.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/fiscal-position/pages/edit-fiscal-position.header-actions.delete.notification.body'))
                 ),

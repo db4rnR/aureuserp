@@ -9,7 +9,7 @@ use Webkul\Invoice\Models\Move;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class MovePolicy
+class MovePolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

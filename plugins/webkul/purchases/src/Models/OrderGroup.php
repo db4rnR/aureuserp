@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Purchase\Database\Factories\OrderGroupFactory;
 use Webkul\Security\Models\User;
 
-final class OrderGroup extends Model
+class OrderGroup extends Model
 {
     use HasFactory;
 

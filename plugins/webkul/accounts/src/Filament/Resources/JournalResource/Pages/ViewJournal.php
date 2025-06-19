@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Account\Filament\Resources\JournalResource;
 
-final class ViewJournal extends ViewRecord
+class ViewJournal extends ViewRecord
 {
     protected static string $resource = JournalResource::class;
 
@@ -18,10 +18,8 @@ final class ViewJournal extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/journal/pages/view-journal.notification.title'))
                         ->body(__('accounts::filament/resources/journal/pages/view-journal.notification.body'))
                 ),

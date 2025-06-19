@@ -9,7 +9,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 
-final class RefuseReason extends Model implements Sortable
+class RefuseReason extends Model implements Sortable
 {
     use SortableTrait;
 

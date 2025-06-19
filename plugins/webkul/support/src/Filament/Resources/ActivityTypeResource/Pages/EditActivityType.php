@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Support\Filament\Resources\ActivityTypeResource;
 
-final class EditActivityType extends EditRecord
+class EditActivityType extends EditRecord
 {
     protected static string $resource = ActivityTypeResource::class;
 
@@ -23,8 +23,7 @@ final class EditActivityType extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('support::filament/resources/activity-type/pages/edit-activity-type.notification.title'))
             ->body(__('support::filament/resources/activity-type/pages/edit-activity-type.notification.body'));
     }
@@ -33,10 +32,8 @@ final class EditActivityType extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('support::filament/resources/activity-type/pages/edit-activity-type.header-actions.delete.notification.title'))
                         ->body(__('support::filament/resources/activity-type/pages/edit-activity-type.header-actions.delete.notification.body')),
                 ),

@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Purchase\Models\CustomerPurchaseOrder;
 use Webkul\Website\Models\Partner;
 
-final class CustomerPurchaseOrderPolicy
+class CustomerPurchaseOrderPolicy
 {
     use HandlesAuthorization;
 

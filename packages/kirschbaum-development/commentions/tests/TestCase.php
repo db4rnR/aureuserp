@@ -13,7 +13,7 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Tests\Models\User;
 
-final class TestCase extends Orchestra
+class TestCase extends Orchestra
 {
     protected function setUp(): void
     {

@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class AttributePolicy
+class AttributePolicy
 {
     use HandlesAuthorization;
 

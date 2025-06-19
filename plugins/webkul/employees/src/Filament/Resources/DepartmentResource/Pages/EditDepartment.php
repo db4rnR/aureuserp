@@ -11,7 +11,7 @@ use Filament\Resources\Pages\EditRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Employee\Filament\Resources\DepartmentResource;
 
-final class EditDepartment extends EditRecord
+class EditDepartment extends EditRecord
 {
     protected static string $resource = DepartmentResource::class;
 
@@ -22,8 +22,7 @@ final class EditDepartment extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('employees::filament/resources/department/pages/edit-department.notification.title'))
             ->body(__('employees::filament/resources/department/pages/edit-department.notification.body'));
     }
@@ -31,13 +30,10 @@ final class EditDepartment extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('employees::filament/resources/department/pages/edit-department.header-actions.delete.notification.title'))
                         ->body(__('employees::filament/resources/department/pages/edit-department.header-actions.delete.notification.body')),
                 ),

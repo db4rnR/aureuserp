@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-final class ApplicantCategorySeeder extends Seeder
+class ApplicantCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -12,7 +12,7 @@ use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Facades\SaleOrder;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 
-final class CreateQuotation extends CreateRecord
+class CreateQuotation extends CreateRecord
 {
     protected static string $resource = QuotationResource::class;
 
@@ -23,8 +23,7 @@ final class CreateQuotation extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('sales::filament/clusters/orders/resources/quotation/pages/create-quotation.notification.title'))
             ->body(__('sales::filament/clusters/orders/resources/quotation/pages/create-quotation.notification.body'));
     }

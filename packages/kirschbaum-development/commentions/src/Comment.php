@@ -36,7 +36,7 @@ use Spatie\Color\Rgb;
  * @property-read DateTime|Carbon $created_at
  * @property-read DateTime|Carbon $updated_at
  */
-final class Comment extends Model implements RenderableComment
+class Comment extends Model implements RenderableComment
 {
     use HasFactory;
 

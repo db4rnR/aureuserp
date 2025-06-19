@@ -9,7 +9,7 @@ use Webkul\Recruitment\Models\Applicant;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class ApplicantPolicy
+class ApplicantPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

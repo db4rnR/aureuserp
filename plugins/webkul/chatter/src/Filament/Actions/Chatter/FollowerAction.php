@@ -18,7 +18,7 @@ use Webkul\Chatter\Mail\FollowerMail;
 use Webkul\Partner\Models\Partner;
 use Webkul\Support\Services\EmailService;
 
-final class FollowerAction extends Action
+class FollowerAction extends Action
 {
     private string $mailView = 'chatter::mail.follower-mail';
 
@@ -39,19 +39,16 @@ final class FollowerAction extends Action
             ->slideOver(false)
             ->schema(fn (Schema $schema): Schema => $schema
                 ->components([
-                    Select::make('partners')
-                        ->label(__('chatter::filament/resources/actions/chatter/follower-action.setup.form.fields.recipients'))
+                    Select::make('partners')->label(__('chatter::filament/resources/actions/chatter/follower-action.setup.form.fields.recipients'))
                         ->preload()
                         ->searchable()
                         ->multiple()
                         ->live()
                         ->relationship('followable', 'name')
                         ->required(),
-                    Toggle::make('notify')
-                        ->live()
+                    Toggle::make('notify')->live()
                         ->label(__('chatter::filament/resources/actions/chatter/follower-action.setup.form.fields.notify-user')),
-                    RichEditor::make('note')
-                        ->disableGrammarly()
+                    RichEditor::make('note')->disableGrammarly()
                         ->toolbarButtons([
                             'attachFiles',
                             'blockquote',
@@ -91,8 +88,7 @@ final class FollowerAction extends Action
                             $this->notifyFollower($record, $partner, $data);
                         }
 
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('chatter::filament/resources/actions/chatter/follower-action.setup.actions.notification.success.title'))
                             ->body(__('chatter::filament/resources/actions/chatter/follower-action.setup.actions.notification.success.body', ['partner' => $partner->name]))
                             ->send();
@@ -103,8 +99,7 @@ final class FollowerAction extends Action
                         'trace' => $e->getTraceAsString(),
                     ]);
 
-                    Notification::make()
-                        ->danger()
+                    Notification::make()->danger()
                         ->title(__('chatter::filament/resources/actions/chatter/follower-action.setup.actions.notification.error.title'))
                         ->body(__('chatter::filament/resources/actions/chatter/follower-action.setup.actions.notification.error.body'))
                         ->send();

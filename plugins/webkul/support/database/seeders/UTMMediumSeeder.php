@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-final class UTMMediumSeeder extends Seeder
+class UTMMediumSeeder extends Seeder
 {
     public function run(): void
     {

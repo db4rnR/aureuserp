@@ -11,7 +11,7 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\PackagingResource\Page
 use Webkul\Sale\Models\Packaging;
 use Webkul\Sale\Settings\ProductSettings;
 
-final class PackagingResource extends BasePackagingResource
+class PackagingResource extends BasePackagingResource
 {
     protected static ?string $model = Packaging::class;
 

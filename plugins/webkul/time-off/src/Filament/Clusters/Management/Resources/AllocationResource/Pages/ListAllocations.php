@@ -13,7 +13,7 @@ use Webkul\TableViews\Filament\Concerns\HasTableViews;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource;
 
-final class ListAllocations extends ListRecords
+class ListAllocations extends ListRecords
 {
     use HasTableViews;
 
@@ -89,8 +89,7 @@ final class ListAllocations extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
+            CreateAction::make()->icon('heroicon-o-plus-circle'),
         ];
     }
 }

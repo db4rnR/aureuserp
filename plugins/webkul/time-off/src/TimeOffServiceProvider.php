@@ -9,7 +9,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class TimeOffServiceProvider extends PackageServiceProvider
+class TimeOffServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'time-off';
 

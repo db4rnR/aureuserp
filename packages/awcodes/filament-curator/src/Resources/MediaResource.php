@@ -39,7 +39,7 @@ use Illuminate\Support\Str;
 
 use function Awcodes\Curator\is_media_resizable;
 
-final class MediaResource extends Resource
+class MediaResource extends Resource
 {
     public static function getModel(): string
     {

@@ -19,7 +19,7 @@ use Illuminate\Support\Collection;
 use Webkul\Chatter\Mail\MessageMail;
 use Webkul\Support\Services\EmailService;
 
-final class MessageAction extends Action
+class MessageAction extends Action
 {
     private string $mailView = 'chatter::mail.message-mail';
 
@@ -36,8 +36,7 @@ final class MessageAction extends Action
             ->schema([
                 Group::make([
                     Actions::make([
-                        Action::make('add_subject')
-                            ->label(fn ($get) => $get('showSubject') ? __('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.hide-subject') : __('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.add-subject'))
+                        Action::make('add_subject')->label(fn ($get) => $get('showSubject') ? __('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.hide-subject') : __('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.add-subject'))
                             ->action(function ($set, $get): void {
                                 if ($get('showSubject')) {
                                     $set('showSubject', false);
@@ -54,18 +53,15 @@ final class MessageAction extends Action
                         ->columnSpan('full')
                         ->alignRight(),
                 ]),
-                TextInput::make('subject')
-                    ->placeholder(__('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.subject'))
+                TextInput::make('subject')->placeholder(__('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.subject'))
                     ->live()
                     ->visible(fn ($get) => $get('showSubject')),
-                RichEditor::make('body')
-                    ->hiddenLabel()
+                RichEditor::make('body')->hiddenLabel()
                     ->placeholder(__('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.write-message-here'))
                     ->fileAttachmentsDirectory('log-attachments')
                     ->disableGrammarly()
                     ->required(),
-                FileUpload::make('attachments')
-                    ->hiddenLabel()
+                FileUpload::make('attachments')->hiddenLabel()
                     ->multiple()
                     ->directory('messages-attachments')
                     ->disableGrammarly()
@@ -84,8 +80,7 @@ final class MessageAction extends Action
                     ->maxSize(10240)
                     ->helperText(__('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.attachments-helper-text'))
                     ->columnSpanFull(),
-                Hidden::make('type')
-                    ->default('comment'),
+                Hidden::make('type')->default('comment'),
             ])
             ->action(function (array $data, ?Model $record = null): void {
                 try {
@@ -102,15 +97,13 @@ final class MessageAction extends Action
 
                     $this->notifyFollower($record, $message);
 
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('chatter::filament/resources/actions/chatter/message-action.setup.actions.notification.success.title'))
                         ->body(__('chatter::filament/resources/actions/chatter/message-action.setup.actions.notification.success.body'))
                         ->send();
                 } catch (Exception $e) {
                     report($e);
-                    Notification::make()
-                        ->danger()
+                    Notification::make()->danger()
                         ->title(__('chatter::filament/resources/actions/chatter/message-action.setup.actions.notification.error.title'))
                         ->body(__('chatter::filament/resources/actions/chatter/message-action.setup.actions.notification.error.body'))
                         ->send();

@@ -13,7 +13,7 @@ use Illuminate\Database\QueryException;
 use Webkul\Account\Filament\Resources\TaxResource;
 use Webkul\Account\Models\Tax;
 
-final class EditTax extends EditRecord
+class EditTax extends EditRecord
 {
     protected static string $resource = TaxResource::class;
 
@@ -24,8 +24,7 @@ final class EditTax extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/tax/pages/edit-tax.notification.title'))
             ->body(__('accounts::filament/resources/tax/pages/edit-tax.notification.body'));
     }
@@ -39,21 +38,18 @@ final class EditTax extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->action(function (Tax $record): void {
+            DeleteAction::make()->action(function (Tax $record): void {
                     try {
                         $record->delete();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('accounts::filament/resources/tax/pages/edit-tax.header-actions.delete.notification.error.title'))
                             ->body(__('accounts::filament/resources/tax/pages/edit-tax.header-actions.delete.notification.error.body'))
                             ->send();
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/tax/pages/edit-tax.header-actions.delete.notification.success.title'))
                         ->body(__('accounts::filament/resources/tax/pages/edit-tax.header-actions.delete.notification.success.body'))
                 ),

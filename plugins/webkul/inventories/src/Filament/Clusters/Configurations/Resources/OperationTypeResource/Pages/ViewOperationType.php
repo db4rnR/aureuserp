@@ -8,7 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource;
 
-final class ViewOperationType extends ViewRecord
+class ViewOperationType extends ViewRecord
 {
     protected static string $resource = OperationTypeResource::class;
 

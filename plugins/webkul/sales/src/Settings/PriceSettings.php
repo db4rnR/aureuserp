@@ -6,7 +6,7 @@ namespace Webkul\Sale\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class PriceSettings extends Settings
+class PriceSettings extends Settings
 {
     public bool $enable_discount;
 

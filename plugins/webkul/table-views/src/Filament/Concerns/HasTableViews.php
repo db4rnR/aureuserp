@@ -165,8 +165,7 @@ trait HasTableViews
     {
         return $this->cachedFavoriteTableViews ??= (
             [
-                'default' => PresetView::make('default')
-                    ->label(__('table-views::filament/concerns/has-table-views.default'))
+                'default' => PresetView::make('default')->label(__('table-views::filament/concerns/has-table-views.default'))
                     ->icon('heroicon-m-queue-list')
                     ->favorite(),
             ] + $this->getFavoriteTableViews()
@@ -248,8 +247,7 @@ trait HasTableViews
 
     public function getTableViewsTriggerAction(): Action
     {
-        return Action::make('openTableViews')
-            ->label(__('table-views::filament/concerns/has-table-views.title'))
+        return Action::make('openTableViews')->label(__('table-views::filament/concerns/has-table-views.title'))
             ->iconButton()
             ->icon('heroicon-m-ellipsis-vertical')
             ->livewireClickHandlerEnabled(false)
@@ -258,8 +256,7 @@ trait HasTableViews
 
     public function createTableViewAction(): Action
     {
-        return CreateViewAction::make('createTableView')
-            ->mutateDataUsing(function (array $data): array {
+        return CreateViewAction::make('createTableView')->mutateDataUsing(function (array $data): array {
                 $data['user_id'] = auth()->id();
 
                 $data['filterable_type'] = static::class;
@@ -292,8 +289,7 @@ trait HasTableViews
 
     public function resetTableViewAction(): Action
     {
-        return Action::make('resetTableView')
-            ->label('Reset')
+        return Action::make('resetTableView')->label('Reset')
             ->label(__('table-views::filament/concerns/has-table-views.reset'))
             ->color('danger')
             ->link()
@@ -304,8 +300,7 @@ trait HasTableViews
 
     public function applyTableViewAction(): Action
     {
-        return Action::make('applyTableView')
-            ->label(__('table-views::filament/concerns/has-table-views.apply-view'))
+        return Action::make('applyTableView')->label(__('table-views::filament/concerns/has-table-views.apply-view'))
             ->icon('heroicon-s-arrow-small-right')
             ->action(function (array $arguments): void {
                 $this->resetTableViews();
@@ -318,8 +313,7 @@ trait HasTableViews
 
     public function addTableViewToFavoritesAction(): Action
     {
-        return Action::make('addTableViewToFavorites')
-            ->label(__('table-views::filament/concerns/has-table-views.add-to-favorites'))
+        return Action::make('addTableViewToFavorites')->label(__('table-views::filament/concerns/has-table-views.add-to-favorites'))
             ->icon('heroicon-o-star')
             ->action(function (array $arguments): void {
                 TableViewFavoriteModel::updateOrCreate(
@@ -340,8 +334,7 @@ trait HasTableViews
 
     public function removeTableViewFromFavoritesAction(): Action
     {
-        return Action::make('removeTableViewFromFavorites')
-            ->label(__('table-views::filament/concerns/has-table-views.remove-from-favorites'))
+        return Action::make('removeTableViewFromFavorites')->label(__('table-views::filament/concerns/has-table-views.remove-from-favorites'))
             ->icon('heroicon-o-minus-circle')
             ->action(function (array $arguments): void {
                 TableViewFavoriteModel::updateOrCreate(
@@ -362,8 +355,7 @@ trait HasTableViews
 
     public function editTableViewAction(): Action
     {
-        return EditViewAction::make('editTableView')
-            ->after(function (): void {
+        return EditViewAction::make('editTableView')->after(function (): void {
                 unset($this->cachedTableViews);
                 unset($this->cachedFavoriteTableViews);
 
@@ -374,8 +366,7 @@ trait HasTableViews
 
     public function deleteTableViewAction(): Action
     {
-        return Action::make('deleteTableView')
-            ->label(__('table-views::filament/concerns/has-table-views.delete-view'))
+        return Action::make('deleteTableView')->label(__('table-views::filament/concerns/has-table-views.delete-view'))
             ->icon('heroicon-m-trash')
             ->color('danger')
             ->requiresConfirmation()
@@ -393,8 +384,7 @@ trait HasTableViews
 
     public function replaceTableViewAction(): Action
     {
-        return Action::make('replaceTableView')
-            ->label(__('table-views::filament/concerns/has-table-views.replace-view'))
+        return Action::make('replaceTableView')->label(__('table-views::filament/concerns/has-table-views.replace-view'))
             ->icon('heroicon-m-arrows-right-left')
             ->color('danger')
             ->requiresConfirmation()
@@ -420,8 +410,7 @@ trait HasTableViews
     public function getTableViewActionGroup(string $key, string $type, mixed $tableView): ActionGroup
     {
         return ActionGroup::make([
-            $this->applyTableViewAction()
-                ->arguments([
+            $this->applyTableViewAction()->arguments([
                     'view_key' => $key,
                     'view_type' => $type,
                 ])
@@ -449,8 +438,7 @@ trait HasTableViews
                 ->visible(fn () => $tableView->isEditable()),
 
             ActionGroup::make([
-                $this->replaceTableViewAction()
-                    ->arguments([
+                $this->replaceTableViewAction()->arguments([
                         'view_key' => $key,
                         'view_type' => $type,
                     ])

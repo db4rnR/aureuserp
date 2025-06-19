@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 use function Laravel\Prompts\text;
 
-final class MakeBlockCommand extends Command
+class MakeBlockCommand extends Command
 {
     use CanManipulateFiles;
 

@@ -47,7 +47,7 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResou
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource\Pages\ViewQuotationTemplate;
 use Webkul\Sale\Models\OrderTemplate;
 
-final class QuotationTemplateResource extends Resource
+class QuotationTemplateResource extends Resource
 {
     protected static ?string $model = OrderTemplate::class;
 
@@ -72,16 +72,13 @@ final class QuotationTemplateResource extends Resource
         return __('sales::filament/clusters/configurations/resources/quotation-template.navigation.group');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Group::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                Tabs::make()
-                                    ->tabs([
+                Group::make()->schema([
+                        Group::make()->schema([
+                                Tabs::make()->tabs([
                                         Tab::make(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.title'))
                                             ->schema([
                                                 self::getProductRepeater(),
@@ -90,46 +87,36 @@ final class QuotationTemplateResource extends Resource
                                             ]),
                                         Tab::make(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.terms-and-conditions.title'))
                                             ->schema([
-                                                RichEditor::make('note')
-                                                    ->placeholder(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.terms-and-conditions.note-placeholder'))
+                                                RichEditor::make('note')->placeholder(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.terms-and-conditions.note-placeholder'))
                                                     ->hiddenLabel(),
                                             ]),
                                     ])
                                     ->persistTabInQueryString(),
                             ])
                             ->columnSpan(['lg' => 2]),
-                        Group::make()
-                            ->schema([
-                                Section::make()
-                                    ->schema([
+                        Group::make()->schema([
+                                Section::make()->schema([
                                         Fieldset::make(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.general.title'))
                                             ->schema([
-                                                TextInput::make('name')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.general.fields.name'))
+                                                TextInput::make('name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.general.fields.name'))
                                                     ->required(),
-                                                TextInput::make('number_of_days')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.general.fields.quotation-validity'))
+                                                TextInput::make('number_of_days')->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.general.fields.quotation-validity'))
                                                     ->default(0)
                                                     ->required(),
-                                                Select::make('journal_id')
-                                                    ->relationship('journal', 'name')
+                                                Select::make('journal_id')->relationship('journal', 'name')
                                                     ->searchable()
                                                     ->preload()
                                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.general.fields.sale-journal'))
                                                     ->required(),
                                             ])->columns(1),
                                     ]),
-                                Section::make()
-                                    ->schema([
+                                Section::make()->schema([
                                         Fieldset::make(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.signature-and-payment.title'))
                                             ->schema([
-                                                Toggle::make('require_signature')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.signature-and-payment.fields.online-signature')),
-                                                Toggle::make('require_payment')
-                                                    ->live()
+                                                Toggle::make('require_signature')->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.signature-and-payment.fields.online-signature')),
+                                                Toggle::make('require_payment')->live()
                                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.signature-and-payment.fields.online-payment')),
-                                                TextInput::make('prepayment_percentage')
-                                                    ->prefix('of')
+                                                TextInput::make('prepayment_percentage')->prefix('of')
                                                     ->suffix('%')
                                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.sections.signature-and-payment.fields.prepayment-percentage'))
                                                     ->visible(fn (Get $get): bool => $get('require_payment') === true),
@@ -147,118 +134,94 @@ final class QuotationTemplateResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('createdBy.name')
-                    ->placeholder('-')
+                TextColumn::make('createdBy.name')->placeholder('-')
                     ->sortable()
                     ->searchable()
                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.columns.created-by'))
                     ->label(__('Created By')),
-                TextColumn::make('company.name')
-                    ->placeholder('-')
+                TextColumn::make('company.name')->placeholder('-')
                     ->sortable()
                     ->searchable()
                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.columns.company')),
-                TextColumn::make('name')
-                    ->placeholder('-')
+                TextColumn::make('name')->placeholder('-')
                     ->sortable()
                     ->searchable()
                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.columns.name')),
-                TextColumn::make('number_of_days')
-                    ->sortable()
+                TextColumn::make('number_of_days')->sortable()
                     ->searchable()
                     ->placeholder('-')
                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.columns.number-of-days')),
-                TextColumn::make('journal.name')
-                    ->sortable()
+                TextColumn::make('journal.name')->sortable()
                     ->searchable()
                     ->placeholder('-')
                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.columns.journal')),
-                IconColumn::make('require_signature')
-                    ->placeholder('-')
+                IconColumn::make('require_signature')->placeholder('-')
                     ->boolean()
                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.columns.signature-required')),
-                IconColumn::make('require_payment')
-                    ->placeholder('-')
+                IconColumn::make('require_payment')->placeholder('-')
                     ->boolean()
                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.columns.payment-required')),
-                TextColumn::make('prepayment_percentage')
-                    ->placeholder('-')
+                TextColumn::make('prepayment_percentage')->placeholder('-')
                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.columns.prepayment-percentage')),
             ])
             ->filtersFormColumns(2)
             ->filters([
-                QueryBuilder::make()
-                    ->constraintPickerColumns(2)
+                QueryBuilder::make()->constraintPickerColumns(2)
                     ->constraints([
-                        RelationshipConstraint::make('createdBy.name')
-                            ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.created-by'))
+                        RelationshipConstraint::make('createdBy.name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.created-by'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.created-by'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('company.name')
-                            ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.company'))
+                        RelationshipConstraint::make('company.name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.company'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.company'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('name')
-                            ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.name'))
+                        RelationshipConstraint::make('name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.name'))
                             ->icon('heroicon-o-building-office-2')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.name'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        DateConstraint::make('created_at')
-                            ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.created-at')),
-                        DateConstraint::make('updated_at')
-                            ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.updated-at')),
+                        DateConstraint::make('created_at')->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.created-at')),
+                        DateConstraint::make('updated_at')->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.filters.updated-at')),
                     ]),
             ])
             ->groups([
-                Tables\Grouping\Group::make('company.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.groups.company'))
+                Tables\Grouping\Group::make('company.name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.groups.company'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('name')
-                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.groups.name'))
+                Tables\Grouping\Group::make('name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.groups.name'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('journal.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.groups.journal'))
+                Tables\Grouping\Group::make('journal.name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.table.groups.journal'))
                     ->collapsible(),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->title(__('sales::filament/clusters/configurations/resources/quotation-template.table.actions.delete.notification.title'))
+                DeleteAction::make()->successNotification(
+                        Notification::make()->title(__('sales::filament/clusters/configurations/resources/quotation-template.table.actions.delete.notification.title'))
                             ->body(__('sales::filament/clusters/configurations/resources/quotation-template.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->title(__('sales::filament/clusters/configurations/resources/quotation-template.table.actions.bulk-actions.notification.title'))
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->title(__('sales::filament/clusters/configurations/resources/quotation-template.table.actions.bulk-actions.notification.title'))
                                 ->body(__('sales::filament/clusters/configurations/resources/quotation-template.table.actions.bulk-actions.notification.body'))
                         ),
                 ]),
@@ -277,8 +240,7 @@ final class QuotationTemplateResource extends Resource
 
     public static function getProductRepeater(): Repeater
     {
-        return Repeater::make('products')
-            ->relationship('products')
+        return Repeater::make('products')->relationship('products')
             ->hiddenLabel()
             ->reorderable()
             ->collapsible()
@@ -288,8 +250,7 @@ final class QuotationTemplateResource extends Resource
                 fn (Action $action): Action => $action->requiresConfirmation(),
             )
             ->extraItemActions([
-                Action::make('view')
-                    ->icon('heroicon-m-eye')
+                Action::make('view')->icon('heroicon-m-eye')
                     ->action(function (
                         array $arguments,
                         $livewire
@@ -302,23 +263,18 @@ final class QuotationTemplateResource extends Resource
                     }),
             ])
             ->schema([
-                Group::make()
-                    ->schema([
-                        Grid::make(3)
-                            ->schema([
-                                Select::make('product_id')
-                                    ->relationship('product', 'name')
+                Group::make()->schema([
+                        Grid::make(3)->schema([
+                                Select::make('product_id')->relationship('product', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.fields.products'))
                                     ->label('Product')
                                     ->required(),
-                                TextInput::make('name')
-                                    ->live(onBlur: true)
+                                TextInput::make('name')->live(onBlur: true)
                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.fields.name'))
                                     ->label('Name'),
-                                TextInput::make('quantity')
-                                    ->required()
+                                TextInput::make('quantity')->required()
                                     ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.fields.quantity')),
                             ]),
                     ])->columns(2),
@@ -327,8 +283,7 @@ final class QuotationTemplateResource extends Resource
 
     public static function getSectionRepeater(): Repeater
     {
-        return Repeater::make('sections')
-            ->relationship('sections')
+        return Repeater::make('sections')->relationship('sections')
             ->hiddenLabel()
             ->reorderable()
             ->collapsible()
@@ -338,8 +293,7 @@ final class QuotationTemplateResource extends Resource
                 fn (Action $action): Action => $action->requiresConfirmation(),
             )
             ->extraItemActions([
-                Action::make('view')
-                    ->icon('heroicon-m-eye')
+                Action::make('view')->icon('heroicon-m-eye')
                     ->action(function (
                         array $arguments,
                         $livewire
@@ -352,17 +306,13 @@ final class QuotationTemplateResource extends Resource
                     }),
             ])
             ->schema([
-                Group::make()
-                    ->schema([
-                        TextInput::make('name')
-                            ->live(onBlur: true)
+                Group::make()->schema([
+                        TextInput::make('name')->live(onBlur: true)
                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.fields.name')),
-                        Hidden::make('quantity')
-                            ->required()
+                        Hidden::make('quantity')->required()
                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.fields.quantity'))
                             ->default(0),
-                        Hidden::make('display_type')
-                            ->required()
+                        Hidden::make('display_type')->required()
                             ->default(OrderDisplayType::SECTION->value),
                     ]),
             ]);
@@ -370,8 +320,7 @@ final class QuotationTemplateResource extends Resource
 
     public static function getNoteRepeater(): Repeater
     {
-        return Repeater::make('notes')
-            ->relationship('notes')
+        return Repeater::make('notes')->relationship('notes')
             ->hiddenLabel()
             ->reorderable()
             ->collapsible()
@@ -381,8 +330,7 @@ final class QuotationTemplateResource extends Resource
                 fn (Action $action): Action => $action->requiresConfirmation(),
             )
             ->extraItemActions([
-                Action::make('view')
-                    ->icon('heroicon-m-eye')
+                Action::make('view')->icon('heroicon-m-eye')
                     ->action(function (
                         array $arguments,
                         $livewire
@@ -395,120 +343,92 @@ final class QuotationTemplateResource extends Resource
                     }),
             ])
             ->schema([
-                Group::make()
-                    ->schema([
-                        TextInput::make('name')
-                            ->live(onBlur: true)
+                Group::make()->schema([
+                        TextInput::make('name')->live(onBlur: true)
                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.fields.name')),
-                        Hidden::make('quantity')
-                            ->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.fields.quantity'))
+                        Hidden::make('quantity')->label(__('sales::filament/clusters/configurations/resources/quotation-template.form.tabs.products.fields.quantity'))
                             ->required()
                             ->default(0),
-                        Hidden::make('display_type')
-                            ->required()
+                        Hidden::make('display_type')->required()
                             ->default(OrderDisplayType::NOTE->value),
                     ]),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Grid::make(['default' => 3])
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                Tabs::make('Tabs')
-                                    ->tabs([
+                Grid::make(['default' => 3])->schema([
+                        Group::make()->schema([
+                                Tabs::make('Tabs')->tabs([
                                         Tab::make(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.tabs.products.title'))
                                             ->schema([
-                                                RepeatableEntry::make('products')
-                                                    ->hiddenLabel()
+                                                RepeatableEntry::make('products')->hiddenLabel()
                                                     ->schema([
-                                                        TextEntry::make('product.name')
-                                                            ->placeholder('-')
+                                                        TextEntry::make('product.name')->placeholder('-')
                                                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.product'))
                                                             ->icon('heroicon-o-shopping-bag'),
-                                                        TextEntry::make('description')
-                                                            ->placeholder('-')
+                                                        TextEntry::make('description')->placeholder('-')
                                                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.description')),
-                                                        TextEntry::make('quantity')
-                                                            ->placeholder('-')
+                                                        TextEntry::make('quantity')->placeholder('-')
                                                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.quantity'))
                                                             ->numeric(),
-                                                        TextEntry::make('unit-price')
-                                                            ->placeholder('-')
+                                                        TextEntry::make('unit-price')->placeholder('-')
                                                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.unit-price'))
                                                             ->money('USD'),
                                                     ])
                                                     ->columns(4),
 
-                                                RepeatableEntry::make('sections')
-                                                    ->hiddenLabel()
+                                                RepeatableEntry::make('sections')->hiddenLabel()
                                                     ->hidden(fn ($record) => $record->sections->isEmpty())
                                                     ->schema([
-                                                        TextEntry::make('name')
-                                                            ->placeholder('-')
+                                                        TextEntry::make('name')->placeholder('-')
                                                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.section-name')),
-                                                        TextEntry::make('description')
-                                                            ->placeholder('-')
+                                                        TextEntry::make('description')->placeholder('-')
                                                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.description')),
                                                     ])
                                                     ->columns(2),
 
-                                                RepeatableEntry::make('notes')
-                                                    ->hiddenLabel()
+                                                RepeatableEntry::make('notes')->hiddenLabel()
                                                     ->hidden(fn ($record) => $record->notes->isEmpty())
                                                     ->schema([
-                                                        TextEntry::make('name')
-                                                            ->placeholder('-')
+                                                        TextEntry::make('name')->placeholder('-')
                                                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.note-title')),
-                                                        TextEntry::make('description')
-                                                            ->placeholder('-')
+                                                        TextEntry::make('description')->placeholder('-')
                                                             ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.description')),
                                                     ])
                                                     ->columns(2),
                                             ]),
                                         Tab::make(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.tabs.terms-and-conditions.title'))
                                             ->schema([
-                                                TextEntry::make('note')
-                                                    ->markdown()
+                                                TextEntry::make('note')->markdown()
                                                     ->hiddenLabel()
                                                     ->columnSpanFull(),
                                             ]),
                                     ])->persistTabInQueryString(),
                             ])->columnSpan(['lg' => 2]),
-                        Group::make()
-                            ->schema([
-                                Section::make()
-                                    ->schema([
+                        Group::make()->schema([
+                                Section::make()->schema([
                                         Fieldset::make(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.sections.general.title'))
                                             ->schema([
-                                                TextEntry::make('name')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.name'))
+                                                TextEntry::make('name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.name'))
                                                     ->icon('heroicon-o-document-text'),
-                                                TextEntry::make('number_of_days')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.quotation-validity'))
+                                                TextEntry::make('number_of_days')->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.quotation-validity'))
                                                     ->suffix(' days')
                                                     ->icon('heroicon-o-calendar'),
-                                                TextEntry::make('journal.name')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.sale-journal'))
+                                                TextEntry::make('journal.name')->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.sale-journal'))
                                                     ->icon('heroicon-o-book-open'),
                                             ]),
                                     ]),
-                                Section::make()
-                                    ->schema([
+                                Section::make()->schema([
                                         Fieldset::make(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.sections.signature_and_payment.title'))
                                             ->schema([
-                                                IconEntry::make('require_signature')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.online-signature'))
+                                                IconEntry::make('require_signature')->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.online-signature'))
                                                     ->boolean(),
-                                                IconEntry::make('require_payment')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.online-payment'))
+                                                IconEntry::make('require_payment')->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.online-payment'))
                                                     ->boolean(),
-                                                TextEntry::make('prepayment_percentage')
-                                                    ->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.prepayment-percentage'))
+                                                TextEntry::make('prepayment_percentage')->label(__('sales::filament/clusters/configurations/resources/quotation-template.infolist.entries.prepayment-percentage'))
                                                     ->suffix('%')
                                                     ->visible(fn ($record): bool => $record->require_payment === true),
                                             ]),

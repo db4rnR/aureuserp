@@ -8,7 +8,7 @@ use BackedEnum;
 use Filament\Clusters\Cluster;
 use Filament\Panel;
 
-final class MyTime extends Cluster
+class MyTime extends Cluster
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 

@@ -13,7 +13,7 @@ use Guava\FilamentIconPicker\Forms\IconPicker;
 use Webkul\TableViews\Models\TableView;
 use Webkul\TableViews\Models\TableViewFavorite;
 
-final class EditViewAction extends Action
+class EditViewAction extends Action
 {
     use CanCustomizeProcess;
 
@@ -40,21 +40,17 @@ final class EditViewAction extends Action
                 ];
             })
             ->schema([
-                TextInput::make('name')
-                    ->label(__('table-views::filament/actions/edit-view.form.name'))
+                TextInput::make('name')->label(__('table-views::filament/actions/edit-view.form.name'))
                     ->autofocus()
                     ->required(),
-                IconPicker::make('icon')
-                    ->label(__('table-views::filament/actions/edit-view.form.icon'))
+                IconPicker::make('icon')->label(__('table-views::filament/actions/edit-view.form.icon'))
                     ->sets(['heroicons'])
                     ->columns(4)
                     ->preload()
                     ->optionsLimit(50),
-                Toggle::make('is_favorite')
-                    ->label(__('table-views::filament/actions/edit-view.form.add-to-favorites'))
+                Toggle::make('is_favorite')->label(__('table-views::filament/actions/edit-view.form.add-to-favorites'))
                     ->helperText(__('table-views::filament/actions/edit-view.form.add-to-favorites-help')),
-                Toggle::make('is_public')
-                    ->label(__('table-views::filament/actions/edit-view.form.make-public'))
+                Toggle::make('is_public')->label(__('table-views::filament/actions/edit-view.form.make-public'))
                     ->helperText(__('table-views::filament/actions/edit-view.form.make-public-help')),
             ])->action(function (array $arguments): void {
                 TableView::find($arguments['view_model']['id'])->update($arguments['view_model']);

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Partner\Database\Factories\TitleFactory;
 use Webkul\Security\Models\User;
 
-final class Title extends Model
+class Title extends Model
 {
     use HasFactory;
 

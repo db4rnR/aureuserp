@@ -10,7 +10,7 @@ use Webkul\Blog\Filament\Customer\Resources\CategoryResource\Pages\ViewCategory;
 use Webkul\Blog\Filament\Customer\Resources\PostResource\Pages\ViewPost;
 use Webkul\Blog\Models\Category;
 
-final class CategoryResource extends Resource
+class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 

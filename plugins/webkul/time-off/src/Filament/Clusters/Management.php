@@ -8,7 +8,7 @@ use BackedEnum;
 use Filament\Clusters\Cluster;
 use Filament\Panel;
 
-final class Management extends Cluster
+class Management extends Cluster
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shield-check';
 

@@ -7,7 +7,7 @@ namespace FilamentTiptapEditor\Extensions\Nodes;
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-final class CheckedList extends Node
+class CheckedList extends Node
 {
     public static $name = 'checkedList';
 

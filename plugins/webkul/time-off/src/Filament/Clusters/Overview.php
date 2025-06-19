@@ -8,7 +8,7 @@ use BackedEnum;
 use Filament\Clusters\Cluster;
 use Filament\Panel;
 
-final class Overview extends Cluster
+class Overview extends Cluster
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-view-columns';
 

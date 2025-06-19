@@ -42,7 +42,7 @@ use Tiptap\Nodes\TableCell;
 use Tiptap\Nodes\TableHeader;
 use Tiptap\Nodes\TableRow;
 
-final class TiptapConverter
+class TiptapConverter
 {
     private Editor $editor;
 

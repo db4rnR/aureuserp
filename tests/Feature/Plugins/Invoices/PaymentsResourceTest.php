@@ -15,7 +15,7 @@ use Webkul\Support\Models\Currency;
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payments listing page loads successfully')]
-function payments_listing_page_loads_successfully(): void
+function invoices_payments_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -34,7 +34,7 @@ function payments_listing_page_loads_successfully(): void
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payment creation page loads successfully')]
-function payment_creation_page_loads_successfully(): void
+function invoices_payment_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -53,7 +53,7 @@ function payment_creation_page_loads_successfully(): void
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payment can be created successfully')]
-function payment_can_be_created_successfully(): void
+function invoices_payment_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -98,7 +98,7 @@ function payment_can_be_created_successfully(): void
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test payment can be viewed successfully')]
-function payment_can_be_viewed_successfully(): void
+function invoices_payment_can_be_viewed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

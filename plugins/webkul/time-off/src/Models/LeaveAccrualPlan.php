@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class LeaveAccrualPlan extends Model
+class LeaveAccrualPlan extends Model
 {
     use HasFactory;
 

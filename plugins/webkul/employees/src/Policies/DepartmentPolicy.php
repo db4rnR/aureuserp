@@ -7,7 +7,7 @@ namespace Webkul\Employee\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class DepartmentPolicy
+class DepartmentPolicy
 {
     use HandlesAuthorization;
 

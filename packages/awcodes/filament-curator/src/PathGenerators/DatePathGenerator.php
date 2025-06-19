@@ -7,7 +7,7 @@ namespace Awcodes\Curator\PathGenerators;
 use Awcodes\Curator\PathGenerators\Contracts\PathGenerator;
 use Carbon\Carbon;
 
-final class DatePathGenerator implements PathGenerator
+class DatePathGenerator implements PathGenerator
 {
     public function getPath(?string $baseDir = null): string
     {

@@ -10,7 +10,7 @@ use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Recruitment\Models\Stage;
 use Webkul\Security\Models\User;
 
-final class StageSeeder extends Seeder
+class StageSeeder extends Seeder
 {
     public function run(): void
     {

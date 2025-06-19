@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource;
 
-final class CreateAllocation extends CreateRecord
+class CreateAllocation extends CreateRecord
 {
     protected static string $resource = AllocationResource::class;
 
@@ -19,8 +19,7 @@ final class CreateAllocation extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/management/resources/allocation/pages/create-allocation.notification.title'))
             ->body(__('time-off::filament/clusters/management/resources/allocation/pages/create-allocation.notification.body'));
     }

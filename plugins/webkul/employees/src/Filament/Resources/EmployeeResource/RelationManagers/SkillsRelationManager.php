@@ -7,7 +7,7 @@ namespace Webkul\Employee\Filament\Resources\EmployeeResource\RelationManagers;
 use Filament\Resources\RelationManagers\RelationManager;
 use Webkul\Employee\Traits\Resources\Employee\EmployeeSkillRelation;
 
-final class SkillsRelationManager extends RelationManager
+class SkillsRelationManager extends RelationManager
 {
     use EmployeeSkillRelation;
 

@@ -7,7 +7,7 @@ namespace Webkul\Chatter\Filament\Widgets;
 use Filament\Widgets\Widget;
 use Illuminate\Support\Collection;
 
-final class ChatterWidget extends Widget
+class ChatterWidget extends Widget
 {
     public $record;
 

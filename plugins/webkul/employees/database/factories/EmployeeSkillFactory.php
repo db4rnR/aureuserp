@@ -10,7 +10,7 @@ use Webkul\Employee\Models\EmployeeSkill;
 use Webkul\Employee\Models\Skill;
 use Webkul\Employee\Models\SkillLevel;
 
-final class EmployeeSkillFactory extends Factory
+class EmployeeSkillFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

@@ -6,7 +6,7 @@ namespace Webkul\Project\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class TaskSettings extends Settings
+class TaskSettings extends Settings
 {
     public bool $enable_recurring_tasks;
 

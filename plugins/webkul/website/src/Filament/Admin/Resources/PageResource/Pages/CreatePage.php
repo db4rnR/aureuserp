@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Website\Filament\Admin\Resources\PageResource;
 
-final class CreatePage extends CreateRecord
+class CreatePage extends CreateRecord
 {
     protected static string $resource = PageResource::class;
 
@@ -20,8 +20,7 @@ final class CreatePage extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('website::filament/admin/resources/page/pages/create-record.notification.title'))
             ->body(__('website::filament/admin/resources/page/pages/create-record.notification.body'));
     }

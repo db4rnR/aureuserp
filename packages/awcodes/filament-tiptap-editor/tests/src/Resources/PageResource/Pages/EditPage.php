@@ -8,7 +8,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use FilamentTiptapEditor\Tests\Resources\PageResource;
 
-final class EditPage extends EditRecord
+class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
 

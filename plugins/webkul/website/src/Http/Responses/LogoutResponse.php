@@ -7,7 +7,7 @@ namespace Webkul\Website\Http\Responses;
 use Illuminate\Http\RedirectResponse;
 use Webkul\Website\Filament\Customer\Pages\Homepage;
 
-final class LogoutResponse implements \Filament\Auth\Http\Responses\Contracts\LogoutResponse
+class LogoutResponse implements \Filament\Auth\Http\Responses\Contracts\LogoutResponse
 {
     public function toResponse($request): RedirectResponse
     {

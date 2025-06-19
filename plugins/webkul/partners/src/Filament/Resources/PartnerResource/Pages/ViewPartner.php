@@ -12,7 +12,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 
-final class ViewPartner extends ViewRecord
+class ViewPartner extends ViewRecord
 {
     protected static string $resource = PartnerResource::class;
 
@@ -24,13 +24,10 @@ final class ViewPartner extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterAction::make()->setResource(self::$resource),
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('partners::filament/resources/partner/pages/view-partner.header-actions.delete.notification.title'))
                         ->body(__('partners::filament/resources/partner/pages/view-partner.header-actions.delete.notification.body')),
                 ),

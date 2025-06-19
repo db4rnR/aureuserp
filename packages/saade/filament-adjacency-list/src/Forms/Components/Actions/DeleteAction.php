@@ -8,7 +8,7 @@ use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-final class DeleteAction extends Action
+class DeleteAction extends Action
 {
     protected function setUp(): void
     {

@@ -13,7 +13,7 @@ use Guava\FilamentIconPicker\Forms\IconPicker;
 use Webkul\TableViews\Models\TableView;
 use Webkul\TableViews\Models\TableViewFavorite;
 
-final class CreateViewAction extends Action
+class CreateViewAction extends Action
 {
     use CanCustomizeProcess;
 
@@ -24,21 +24,17 @@ final class CreateViewAction extends Action
         $this
             ->model(TableView::class)
             ->schema([
-                TextInput::make('name')
-                    ->label(__('table-views::filament/actions/create-view.form.name'))
+                TextInput::make('name')->label(__('table-views::filament/actions/create-view.form.name'))
                     ->autofocus()
                     ->required(),
-                IconPicker::make('icon')
-                    ->label(__('table-views::filament/actions/create-view.form.icon'))
+                IconPicker::make('icon')->label(__('table-views::filament/actions/create-view.form.icon'))
                     ->sets(['heroicons'])
                     ->columns(4)
                     ->preload()
                     ->optionsLimit(50),
-                Toggle::make('is_favorite')
-                    ->label(__('table-views::filament/actions/create-view.form.add-to-favorites'))
+                Toggle::make('is_favorite')->label(__('table-views::filament/actions/create-view.form.add-to-favorites'))
                     ->helperText(__('table-views::filament/actions/create-view.form.add-to-favorites-help')),
-                Toggle::make('is_public')
-                    ->label(__('table-views::filament/actions/create-view.form.make-public'))
+                Toggle::make('is_public')->label(__('table-views::filament/actions/create-view.form.make-public'))
                     ->helperText(__('table-views::filament/actions/create-view.form.make-public-help')),
             ])->action(function (): void {
                 $model = $this->getModel();

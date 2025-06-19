@@ -14,7 +14,7 @@ use Filament\Schemas\Schema;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\HtmlString;
 
-final class LinkAction extends Action
+class LinkAction extends Action
 {
     protected function setUp(): void
     {

@@ -13,7 +13,7 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource;
 use Webkul\Inventory\Models\OperationType;
 
-final class CreateDelivery extends CreateRecord
+class CreateDelivery extends CreateRecord
 {
     protected static string $resource = DeliveryResource::class;
 
@@ -44,8 +44,7 @@ final class CreateDelivery extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/operations/resources/delivery/pages/create-delivery.notification.title'))
             ->body(__('inventories::filament/clusters/operations/resources/delivery/pages/create-delivery.notification.body'));
     }

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
-final class Plugin extends Model implements Sortable
+class Plugin extends Model implements Sortable
 {
     use SortableTrait;
 

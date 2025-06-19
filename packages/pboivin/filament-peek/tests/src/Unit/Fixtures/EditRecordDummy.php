@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Pboivin\FilamentPeek\Pages\Concerns\HasBuilderPreview;
 use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 
-final class EditRecordDummy extends EditRecord
+class EditRecordDummy extends EditRecord
 {
     use HasBuilderPreview;
     use HasPreviewModal;

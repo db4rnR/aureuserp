@@ -15,7 +15,7 @@ use Webkul\Sale\Database\Factories\TeamFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Team extends Model implements Sortable
+class Team extends Model implements Sortable
 {
     use HasChatter, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
 

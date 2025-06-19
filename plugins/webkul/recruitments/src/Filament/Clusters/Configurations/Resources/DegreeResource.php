@@ -23,7 +23,7 @@ use Webkul\Recruitment\Filament\Clusters\Configurations;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DegreeResource\Pages\ListDegrees;
 use Webkul\Recruitment\Models\Degree;
 
-final class DegreeResource extends Resource
+class DegreeResource extends Resource
 {
     protected static ?string $model = Degree::class;
 
@@ -46,12 +46,11 @@ final class DegreeResource extends Resource
         return __('recruitments::filament/clusters/configurations/resources/degree.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('name')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/degree.form.fields.name'))
+                TextInput::make('name')->label(__('recruitments::filament/clusters/configurations/resources/degree.form.fields.name'))
                     ->required()
                     ->maxLength(255)
                     ->placeholder(__('recruitments::filament/clusters/configurations/resources/degree.form.fields.name-placeholder')),
@@ -62,62 +61,49 @@ final class DegreeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.id'))
+                TextColumn::make('id')->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.id'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('name')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.name'))
+                TextColumn::make('name')->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('createdBy.name')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.created-by'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('recruitments::filament/clusters/configurations/resources/degree.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                QueryBuilder::make()
-                    ->constraintPickerColumns(2)
+                QueryBuilder::make()->constraintPickerColumns(2)
                     ->constraints([
-                        TextConstraint::make('name')
-                            ->label(__('recruitments::filament/clusters/configurations/resources/degree.table.filters.name'))
+                        TextConstraint::make('name')->label(__('recruitments::filament/clusters/configurations/resources/degree.table.filters.name'))
                             ->icon('heroicon-o-user'),
                     ]),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                EditAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('recruitments::filament/clusters/configurations/resources/degree.table.actions.edit.notification.title'))
                             ->body(__('recruitments::filament/clusters/configurations/resources/degree.table.actions.edit.notification.body'))
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('recruitments::filament/clusters/configurations/resources/degree.table.actions.delete.notification.title'))
                             ->body(__('recruitments::filament/clusters/configurations/resources/degree.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('recruitments::filament/clusters/configurations/resources/degree.table.bulk-actions.delete.notification.title'))
                                 ->body(__('recruitments::filament/clusters/configurations/resources/degree.table.bulk-actions.delete.notification.body'))
                         ),
@@ -126,12 +112,11 @@ final class DegreeResource extends Resource
             ->reorderable('sort', 'desc');
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                TextEntry::make('name')
-                    ->placeholder('—')
+                TextEntry::make('name')->placeholder('—')
                     ->icon('heroicon-o-briefcase')
                     ->label(__('recruitments::filament/clusters/configurations/resources/degree.infolist.name')),
             ]);

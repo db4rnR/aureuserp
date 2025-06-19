@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\SkillTypeResource;
 
-final class EditSkillType extends EditRecord
+class EditSkillType extends EditRecord
 {
     protected static string $resource = SkillTypeResource::class;
 
@@ -21,8 +21,7 @@ final class EditSkillType extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('employees::filament/clusters/configurations/resources/skill-type/pages/edit-skill-type.notification.title'))
             ->body(__('employees::filament/clusters/configurations/resources/skill-type/pages/edit-skill-type.notification.body'));
     }
@@ -31,10 +30,8 @@ final class EditSkillType extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('employees::filament/clusters/configurations/resources/skill-type/pages/edit-skill-type.header-actions.delete.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/skill-type/pages/edit-skill-type.header-actions.delete.notification.body')),
                 ),

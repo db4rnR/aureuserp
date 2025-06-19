@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Pboivin\FilamentPeek\Tests\Database\Factories\CategoryFactory;
 
-final class Category extends Model
+class Category extends Model
 {
     use HasFactory;
 

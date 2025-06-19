@@ -7,7 +7,7 @@ namespace Webkul\Website\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class PagePolicy
+class PagePolicy
 {
     use HandlesAuthorization;
 

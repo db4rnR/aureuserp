@@ -9,7 +9,7 @@ use Webkul\Contact\Filament\Clusters\Configurations;
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\BankResource\Pages\ManageBanks;
 use Webkul\Partner\Filament\Resources\BankResource as BaseBankResource;
 
-final class BankResource extends BaseBankResource
+class BankResource extends BaseBankResource
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-library';
 

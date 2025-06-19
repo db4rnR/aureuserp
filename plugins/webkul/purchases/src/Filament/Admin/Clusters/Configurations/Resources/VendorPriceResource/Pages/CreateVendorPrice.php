@@ -10,7 +10,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource;
 
-final class CreateVendorPrice extends CreateRecord
+class CreateVendorPrice extends CreateRecord
 {
     protected static string $resource = VendorPriceResource::class;
 
@@ -26,8 +26,7 @@ final class CreateVendorPrice extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/create-vendor-price.notification.title'))
             ->body(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/create-vendor-price.notification.body'));
     }

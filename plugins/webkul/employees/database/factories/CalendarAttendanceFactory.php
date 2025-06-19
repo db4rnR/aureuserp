@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\CalendarAttendance;
 use Webkul\Security\Models\User;
 
-final class CalendarAttendanceFactory extends Factory
+class CalendarAttendanceFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

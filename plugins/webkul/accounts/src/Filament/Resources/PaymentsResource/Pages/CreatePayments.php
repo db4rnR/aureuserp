@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Filament\Resources\PaymentsResource;
 
-final class CreatePayments extends CreateRecord
+class CreatePayments extends CreateRecord
 {
     protected static string $resource = PaymentsResource::class;
 
@@ -21,8 +21,7 @@ final class CreatePayments extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/payment/pages/create-payment.notification.title'))
             ->body(__('accounts::filament/resources/payment/pages/create-payment.notification.body'));
     }

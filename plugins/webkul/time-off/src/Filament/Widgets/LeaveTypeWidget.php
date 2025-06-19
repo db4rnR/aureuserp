@@ -8,7 +8,7 @@ use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\TimeOff\Models\Leave;
 
-final class LeaveTypeWidget extends ChartWidget
+class LeaveTypeWidget extends ChartWidget
 {
     protected static ?int $sort = 2;
 

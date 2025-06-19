@@ -8,7 +8,7 @@ use BackedEnum;
 use Filament\Clusters\Cluster;
 use Filament\Panel;
 
-final class Reportings extends Cluster
+class Reportings extends Cluster
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-chart-bar';
 

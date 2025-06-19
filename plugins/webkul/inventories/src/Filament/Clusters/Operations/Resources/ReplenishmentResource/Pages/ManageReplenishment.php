@@ -12,7 +12,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReplenishmentResourc
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ManageReplenishment extends ManageRecords
+class ManageReplenishment extends ManageRecords
 {
     use HasTableViews;
 

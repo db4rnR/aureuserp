@@ -13,7 +13,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class TaxPartition extends Model implements Sortable
+class TaxPartition extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

@@ -17,7 +17,7 @@ use Livewire\Component;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelBackup\Models\BackupDestinationStatus;
 
-final class BackupDestinationStatusListRecords extends Component implements HasForms, HasTable
+class BackupDestinationStatusListRecords extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;

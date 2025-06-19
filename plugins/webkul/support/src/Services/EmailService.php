@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Webkul\Support\Models\EmailLog;
 
-final class EmailService
+class EmailService
 {
     public function send(string $view, string $mailClass, array $payload, array $attachments = []): bool
     {

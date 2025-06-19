@@ -6,7 +6,7 @@ namespace Webkul\Inventory\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class OperationSettings extends Settings
+class OperationSettings extends Settings
 {
     public bool $enable_packages;
 

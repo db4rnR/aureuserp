@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermRe
 use Webkul\Account\Filament\Resources\PaymentTermResource\Pages\ManagePaymentDueTerm as BaseManagePaymentDueTerm;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource;
 
-final class ManagePaymentDueTerm extends BaseManagePaymentDueTerm
+class ManagePaymentDueTerm extends BaseManagePaymentDueTerm
 {
     protected static string $resource = PaymentTermResource::class;
 }

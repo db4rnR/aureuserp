@@ -10,7 +10,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Filament\Resources\CategoryResource;
 
-final class CreateCategory extends CreateRecord
+class CreateCategory extends CreateRecord
 {
     protected static string $resource = CategoryResource::class;
 
@@ -19,8 +19,7 @@ final class CreateCategory extends CreateRecord
         try {
             parent::create($another);
         } catch (Exception $e) {
-            Notification::make()
-                ->danger()
+            Notification::make()->danger()
                 ->title(__('products::filament/resources/category/pages/create-category.create.notification.error.title'))
                 ->body($e->getMessage())
                 ->send();
@@ -43,8 +42,7 @@ final class CreateCategory extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('products::filament/resources/category/pages/create-category.notification.title'))
             ->body(__('products::filament/resources/category/pages/create-category.notification.body'));
     }

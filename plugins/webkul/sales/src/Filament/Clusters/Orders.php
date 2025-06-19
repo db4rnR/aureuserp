@@ -7,7 +7,7 @@ namespace Webkul\Sale\Filament\Clusters;
 use BackedEnum;
 use Filament\Clusters\Cluster;
 
-final class Orders extends Cluster
+class Orders extends Cluster
 {
     protected static ?string $slug = 'sale/orders';
 

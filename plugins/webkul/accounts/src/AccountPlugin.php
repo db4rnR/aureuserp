@@ -9,7 +9,7 @@ use Filament\Panel;
 use ReflectionClass;
 use Webkul\Support\Package;
 
-final class AccountPlugin implements Plugin
+class AccountPlugin implements Plugin
 {
     public static function make(): static
     {

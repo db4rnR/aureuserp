@@ -8,7 +8,7 @@ use BezhanSalleh\FilamentShield\Resources\RoleResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-final class ListRoles extends ListRecords
+class ListRoles extends ListRecords
 {
     protected static string $resource = RoleResource::class;
 

@@ -7,7 +7,7 @@ namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryR
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\CreateProductCategory as BaseCreateProductCategory;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryResource;
 
-final class CreateProductCategory extends BaseCreateProductCategory
+class CreateProductCategory extends BaseCreateProductCategory
 {
     protected static string $resource = ProductCategoryResource::class;
 }

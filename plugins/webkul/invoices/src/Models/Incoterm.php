@@ -6,7 +6,7 @@ namespace Webkul\Invoice\Models;
 
 use Webkul\Account\Models\Incoterm as BaseIncoterm;
 
-final class Incoterm extends BaseIncoterm
+class Incoterm extends BaseIncoterm
 {
     //
 }

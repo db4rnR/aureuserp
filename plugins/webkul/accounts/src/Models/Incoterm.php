@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Security\Models\User;
 
-final class Incoterm extends Model
+class Incoterm extends Model
 {
     use HasFactory, SoftDeletes;
 

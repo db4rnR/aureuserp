@@ -18,7 +18,7 @@ use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\Inventory\Models\Operation;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ManageOperations extends ManageRelatedRecords
+class ManageOperations extends ManageRelatedRecords
 {
     use HasTableViews;
 
@@ -43,15 +43,11 @@ final class ManageOperations extends ManageRelatedRecords
         return OperationResource::table($table)
             ->recordActions([
                 ActionGroup::make([
-                    ViewAction::make()
-                        ->url(fn ($record): string => OperationResource::getUrl('view', ['record' => $record])),
-                    EditAction::make()
-                        ->url(fn ($record): string => OperationResource::getUrl('edit', ['record' => $record])),
-                    DeleteAction::make()
-                        ->hidden(fn (Operation $record): bool => $record->state === OperationState::DONE)
+                    ViewAction::make()->url(fn ($record): string => OperationResource::getUrl('view', ['record' => $record])),
+                    EditAction::make()->url(fn ($record): string => OperationResource::getUrl('edit', ['record' => $record])),
+                    DeleteAction::make()->hidden(fn (Operation $record): bool => $record->state === OperationState::DONE)
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/operations/resources/receipt.table.actions.delete.notification.title'))
                                 ->body(__('inventories::filament/clusters/operations/resources/receipt.table.actions.delete.notification.body')),
                         ),

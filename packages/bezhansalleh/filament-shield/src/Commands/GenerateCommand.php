@@ -19,7 +19,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use function Laravel\Prompts\Select;
 
 #[AsCommand(name: 'shield:generate')]
-final class GenerateCommand extends Command
+class GenerateCommand extends Command
 {
     use CanBeProhibitable;
     use CanGeneratePolicy;

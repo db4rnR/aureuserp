@@ -12,7 +12,7 @@ use Illuminate\Database\QueryException;
 use Webkul\Account\Filament\Resources\TaxGroupResource;
 use Webkul\Account\Models\TaxGroup;
 
-final class EditTaxGroup extends EditRecord
+class EditTaxGroup extends EditRecord
 {
     protected static string $resource = TaxGroupResource::class;
 
@@ -23,8 +23,7 @@ final class EditTaxGroup extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/tax-group/pages/edit-tax-group.notification.title'))
             ->body(__('accounts::filament/resources/tax-group/pages/edit-tax-group.notification.body'));
     }
@@ -33,21 +32,18 @@ final class EditTaxGroup extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->action(function (TaxGroup $record): void {
+            DeleteAction::make()->action(function (TaxGroup $record): void {
                     try {
                         $record->delete();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('accounts::filament/resources/tax-group/pages/edit-tax-group.header-actions.delete.notification.error.title'))
                             ->body(__('accounts::filament/resources/tax-group/pages/edit-tax-group.header-actions.delete.notification.error.body'))
                             ->send();
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/tax-group/pages/edit-tax-group.header-actions.delete.notification.success.title'))
                         ->body(__('accounts::filament/resources/tax-group/pages/edit-tax-group.header-actions.delete.notification.success.body'))
                 ),

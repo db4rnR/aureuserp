@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Saade\FilamentAdjacencyList\Forms\Components\Concerns\HasActions;
 use Saade\FilamentAdjacencyList\Forms\Components\Concerns\HasForm;
 
-final class AdjacencyList extends Field
+class AdjacencyList extends Field
 {
     use HasActions;
     use HasForm;

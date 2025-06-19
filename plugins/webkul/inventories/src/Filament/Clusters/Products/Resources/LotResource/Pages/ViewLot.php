@@ -13,15 +13,14 @@ use Illuminate\Database\QueryException;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource;
 use Webkul\Inventory\Models\Lot;
 
-final class ViewLot extends ViewRecord
+class ViewLot extends ViewRecord
 {
     protected static string $resource = LotResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('print')
-                ->label(__('inventories::filament/clusters/products/resources/lot/pages/view-lot.header-actions.print.label'))
+            Action::make('print')->label(__('inventories::filament/clusters/products/resources/lot/pages/view-lot.header-actions.print.label'))
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->action(function (Lot $record) {
@@ -35,15 +34,13 @@ final class ViewLot extends ViewRecord
                         echo $pdf->output();
                     }, 'Lot-'.str_replace('/', '_', $record->name).'.pdf');
                 }),
-            DeleteAction::make()
-                ->action(function (DeleteAction $action, Lot $record): void {
+            DeleteAction::make()->action(function (DeleteAction $action, Lot $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('inventories::filament/clusters/products/resources/lot/pages/view-lot.header-actions.delete.notification.error.title'))
                             ->body(__('inventories::filament/clusters/products/resources/lot/pages/view-lot.header-actions.delete.notification.error.body'))
                             ->send();
@@ -52,8 +49,7 @@ final class ViewLot extends ViewRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/products/resources/lot/pages/view-lot.header-actions.delete.notification.success.title'))
                         ->body(__('inventories::filament/clusters/products/resources/lot/pages/view-lot.header-actions.delete.notification.success.body')),
                 ),

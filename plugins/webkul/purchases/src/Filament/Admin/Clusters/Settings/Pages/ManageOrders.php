@@ -16,7 +16,7 @@ use UnitEnum;
 use Webkul\Purchase\Settings\OrderSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageOrders extends SettingsPage
+class ManageOrders extends SettingsPage
 {
     use HasPageShield;
 
@@ -49,28 +49,23 @@ final class ManageOrders extends SettingsPage
         return __('purchases::filament/admin/clusters/settings/pages/manage-orders.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Group::make()
-                    ->schema([
-                        Toggle::make('enable_order_approval')
-                            ->label(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-order-approval'))
+                Group::make()->schema([
+                        Toggle::make('enable_order_approval')->label(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-order-approval'))
                             ->helperText(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-order-approval-helper-text'))
                             ->live(),
-                        TextInput::make('order_validation_amount')
-                            ->label(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.min-amount'))
+                        TextInput::make('order_validation_amount')->label(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.min-amount'))
                             ->inlineLabel()
                             ->numeric()
                             ->default(0)
                             ->visible(fn (Get $get): bool => $get('enable_order_approval')),
                     ]),
-                Toggle::make('enable_lock_confirmed_orders')
-                    ->label(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-lock-confirmed-orders'))
+                Toggle::make('enable_lock_confirmed_orders')->label(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-lock-confirmed-orders'))
                     ->helperText(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-lock-confirmed-orders-helper-text')),
-                Toggle::make('enable_purchase_agreements')
-                    ->label(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-purchase-agreements'))
+                Toggle::make('enable_purchase_agreements')->label(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-purchase-agreements'))
                     ->helperText(__('purchases::filament/admin/clusters/settings/pages/manage-orders.form.enable-purchase-agreements-helper-text')),
             ]);
     }

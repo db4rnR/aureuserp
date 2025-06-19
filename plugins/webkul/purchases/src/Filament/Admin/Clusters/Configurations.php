@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters;
 use BackedEnum;
 use Filament\Clusters\Cluster;
 
-final class Configurations extends Cluster
+class Configurations extends Cluster
 {
     protected static ?string $slug = 'purchase/configurations';
 

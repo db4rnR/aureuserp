@@ -8,7 +8,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageContacts as BaseManageContacts;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource;
 
-final class ManageContacts extends BaseManageContacts
+class ManageContacts extends BaseManageContacts
 {
     protected static string $resource = CustomerResource::class;
 

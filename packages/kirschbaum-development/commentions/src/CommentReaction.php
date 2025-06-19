@@ -13,7 +13,7 @@ use Kirschbaum\Commentions\Contracts\Commenter;
  * @property-read Comment $comment
  * @property-read Commenter $reactor
  */
-final class CommentReaction extends Model
+class CommentReaction extends Model
 {
     protected $fillable = [
         'comment_id',

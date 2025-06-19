@@ -22,19 +22,17 @@ use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
 use Webkul\Product\Filament\Resources\ProductResource\Pages\EditProduct as BaseEditProduct;
 
-final class EditProduct extends BaseEditProduct
+class EditProduct extends BaseEditProduct
 {
     protected static string $resource = ProductResource::class;
 
     protected function getHeaderActions(): array
     {
         return array_merge([
-            Action::make('updateQuantity')
-                ->label(__('inventories::filament/clusters/products/resources/product/pages/edit-product.header-actions.update-quantity.label'))
+            Action::make('updateQuantity')->label(__('inventories::filament/clusters/products/resources/product/pages/edit-product.header-actions.update-quantity.label'))
                 ->modalHeading(__('inventories::filament/clusters/products/resources/product/pages/edit-product.header-actions.update-quantity.modal-heading'))
                 ->schema(fn (Product $record): array => [
-                    Select::make('product_id')
-                        ->label(__('inventories::filament/clusters/products/resources/product/pages/edit-product.header-actions.update-quantity.form.fields.product'))
+                    Select::make('product_id')->label(__('inventories::filament/clusters/products/resources/product/pages/edit-product.header-actions.update-quantity.form.fields.product'))
                         ->required()
                         ->options($record->variants->pluck('name', 'id'))
                         ->searchable()
@@ -45,8 +43,7 @@ final class EditProduct extends BaseEditProduct
                             $set('quantity', $product?->on_hand_quantity ?? 0);
                         })
                         ->visible((bool) $record->is_configurable),
-                    TextInput::make('quantity')
-                        ->label(__('inventories::filament/clusters/products/resources/product/pages/edit-product.header-actions.update-quantity.form.fields.on-hand-qty'))
+                    TextInput::make('quantity')->label(__('inventories::filament/clusters/products/resources/product/pages/edit-product.header-actions.update-quantity.form.fields.on-hand-qty'))
                         ->numeric()
                         ->maxValue(99999999999)
                         ->required()

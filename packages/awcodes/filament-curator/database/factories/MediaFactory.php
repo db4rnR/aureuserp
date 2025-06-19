@@ -10,7 +10,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 
-final class MediaFactory extends Factory
+class MediaFactory extends Factory
 {
     protected $model = Media::class;
 

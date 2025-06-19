@@ -9,7 +9,7 @@ use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Models\Move;
 
-final class SetAsCheckedAction extends Action
+class SetAsCheckedAction extends Action
 {
     protected function setUp(): void
     {

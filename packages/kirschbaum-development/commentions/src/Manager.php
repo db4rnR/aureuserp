@@ -7,7 +7,7 @@ namespace Kirschbaum\Commentions;
 use Filament\Models\Contracts\HasName;
 use Kirschbaum\Commentions\Contracts\Commenter;
 
-final class Manager
+class Manager
 {
     public static function getName(Commenter $mentionable)
     {

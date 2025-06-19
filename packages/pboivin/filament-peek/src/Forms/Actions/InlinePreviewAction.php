@@ -10,7 +10,7 @@ use Pboivin\FilamentPeek\Support\Page;
 use Pboivin\FilamentPeek\Support\Panel;
 use Pboivin\FilamentPeek\Support\View;
 
-final class InlinePreviewAction extends Action
+class InlinePreviewAction extends Action
 {
     use SetsInitialPreviewModalData;
 

@@ -13,7 +13,7 @@ use Illuminate\Database\QueryException;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\VendorPriceResource;
 use Webkul\Purchase\Models\ProductSupplier;
 
-final class EditVendorPrice extends EditRecord
+class EditVendorPrice extends EditRecord
 {
     protected static string $resource = VendorPriceResource::class;
 
@@ -24,8 +24,7 @@ final class EditVendorPrice extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/edit-vendor-price.notification.title'))
             ->body(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/edit-vendor-price.notification.body'));
     }
@@ -34,15 +33,13 @@ final class EditVendorPrice extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->action(function (DeleteAction $action, ProductSupplier $record): void {
+            DeleteAction::make()->action(function (DeleteAction $action, ProductSupplier $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/edit-vendor-price.header-actions.delete.notification.error.title'))
                             ->body(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/edit-vendor-price.header-actions.delete.notification.error.body'))
                             ->send();
@@ -51,8 +48,7 @@ final class EditVendorPrice extends EditRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/edit-vendor-price.header-actions.delete.notification.success.title'))
                         ->body(__('purchases::filament/admin/clusters/configurations/resources/vendor-price/pages/edit-vendor-price.header-actions.delete.notification.success.body')),
                 ),

@@ -8,7 +8,7 @@ use Webkul\Account\Filament\Resources\CreditNoteResource;
 use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ViewInvoice as ViewRecord;
 
-final class ViewCreditNote extends ViewRecord
+class ViewCreditNote extends ViewRecord
 {
     protected static string $resource = CreditNoteResource::class;
 
@@ -21,8 +21,7 @@ final class ViewCreditNote extends ViewRecord
             'customers.invoice.credit-note',
         ], true))->map(function ($action): BaseActions\PreviewAction|\Filament\Actions\Action|\Filament\Actions\ActionGroup {
             if ($action->getName() === 'customers.invoice.preview') {
-                return BaseActions\PreviewAction::make()
-                    ->modalHeading(__('accounts::filament/resources/credit-note/pages/view-credit-note.header-actions.preview.modal-heading'))
+                return BaseActions\PreviewAction::make()->modalHeading(__('accounts::filament/resources/credit-note/pages/view-credit-note.header-actions.preview.modal-heading'))
                     ->setTemplate('accounts::credit-note/actions/preview.index');
             }
 

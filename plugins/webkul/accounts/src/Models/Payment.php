@@ -16,7 +16,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-final class Payment extends Model
+class Payment extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 

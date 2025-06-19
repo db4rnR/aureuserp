@@ -27,7 +27,7 @@ use Webkul\Project\Filament\Clusters\Configurations\Resources\TaskStageResource\
 use Webkul\Project\Filament\Resources\ProjectResource\RelationManagers\TaskStagesRelationManager;
 use Webkul\Project\Models\TaskStage;
 
-final class TaskStageResource extends Resource
+class TaskStageResource extends Resource
 {
     protected static ?string $model = TaskStage::class;
 
@@ -42,16 +42,14 @@ final class TaskStageResource extends Resource
         return __('projects::filament/clusters/configurations/resources/task-stage.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('name')
-                    ->label(__('projects::filament/clusters/configurations/resources/task-stage.form.name'))
+                TextInput::make('name')->label(__('projects::filament/clusters/configurations/resources/task-stage.form.name'))
                     ->required()
                     ->maxLength(255),
-                Select::make('project_id')
-                    ->label(__('projects::filament/clusters/configurations/resources/task-stage.form.project'))
+                Select::make('project_id')->label(__('projects::filament/clusters/configurations/resources/task-stage.form.project'))
                     ->relationship('project', 'name')
                     ->hiddenOn(TaskStagesRelationManager::class)
                     ->required()
@@ -65,83 +63,64 @@ final class TaskStageResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('projects::filament/clusters/configurations/resources/task-stage.table.columns.name'))
+                TextColumn::make('name')->label(__('projects::filament/clusters/configurations/resources/task-stage.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('project.name')
-                    ->label(__('projects::filament/clusters/configurations/resources/task-stage.table.columns.project'))
+                TextColumn::make('project.name')->label(__('projects::filament/clusters/configurations/resources/task-stage.table.columns.project'))
                     ->hiddenOn(TaskStagesRelationManager::class)
                     ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('project_id')
-                    ->label(__('projects::filament/clusters/configurations/resources/task-stage.table.filters.project'))
+                SelectFilter::make('project_id')->label(__('projects::filament/clusters/configurations/resources/task-stage.table.filters.project'))
                     ->relationship('project', 'name')
                     ->hiddenOn(TaskStagesRelationManager::class)
                     ->searchable()
                     ->preload(),
             ])
             ->groups([
-                Group::make('project.name')
-                    ->label(__('projects::filament/clusters/configurations/resources/task-stage.table.groups.project')),
-                Group::make('created_at')
-                    ->label(__('projects::filament/clusters/configurations/resources/task-stage.table.groups.created-at'))
+                Group::make('project.name')->label(__('projects::filament/clusters/configurations/resources/task-stage.table.groups.project')),
+                Group::make('created_at')->label(__('projects::filament/clusters/configurations/resources/task-stage.table.groups.created-at'))
                     ->date(),
             ])
             ->reorderable('sort')
             ->defaultSort('sort', 'desc')
             ->recordActions([
-                EditAction::make()
-                    ->hidden(fn ($record) => $record->trashed())
+                EditAction::make()->hidden(fn ($record) => $record->trashed())
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('projects::filament/clusters/configurations/resources/task-stage.table.actions.edit.notification.title'))
                             ->body(__('projects::filament/clusters/configurations/resources/task-stage.table.actions.edit.notification.body')),
                     ),
-                RestoreAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                RestoreAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('projects::filament/clusters/configurations/resources/task-stage.table.actions.restore.notification.title'))
                             ->body(__('projects::filament/clusters/configurations/resources/task-stage.table.actions.restore.notification.body')),
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('projects::filament/clusters/configurations/resources/task-stage.table.actions.delete.notification.title'))
                             ->body(__('projects::filament/clusters/configurations/resources/task-stage.table.actions.delete.notification.body')),
                     ),
-                ForceDeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                ForceDeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('projects::filament/clusters/configurations/resources/task-stage.table.actions.force-delete.notification.title'))
                             ->body(__('projects::filament/clusters/configurations/resources/task-stage.table.actions.force-delete.notification.body')),
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/clusters/configurations/resources/task-stage.table.bulk-actions.restore.notification.title'))
                                 ->body(__('projects::filament/clusters/configurations/resources/task-stage.table.bulk-actions.restore.notification.body')),
                         ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/clusters/configurations/resources/task-stage.table.bulk-actions.delete.notification.title'))
                                 ->body(__('projects::filament/clusters/configurations/resources/task-stage.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ForceDeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/clusters/configurations/resources/task-stage.table.bulk-actions.force-delete.notification.title'))
                                 ->body(__('projects::filament/clusters/configurations/resources/task-stage.table.bulk-actions.force-delete.notification.body')),
                         ),

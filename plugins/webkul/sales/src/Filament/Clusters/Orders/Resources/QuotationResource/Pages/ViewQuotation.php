@@ -13,7 +13,7 @@ use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Actions as BaseActions;
 
-final class ViewQuotation extends ViewRecord
+class ViewQuotation extends ViewRecord
 {
     protected static string $resource = QuotationResource::class;
 
@@ -25,8 +25,7 @@ final class ViewQuotation extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource($this->getResource()),
+            ChatterActions\ChatterAction::make()->setResource($this->getResource()),
             BaseActions\BackToQuotationAction::make(),
             BaseActions\CancelQuotationAction::make(),
             BaseActions\ConfirmAction::make(),
@@ -34,11 +33,9 @@ final class ViewQuotation extends ViewRecord
             BaseActions\PreviewAction::make(),
             BaseActions\SendByEmailAction::make(),
             BaseActions\LockAndUnlockAction::make(),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === OrderState::SALE)
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === OrderState::SALE)
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('sales::filament/clusters/orders/resources/quotation/pages/view-quotation.header-actions.notification.delete.title'))
                         ->body(__('sales::filament/clusters/orders/resources/quotation/pages/view-quotation.header-actions.notification.delete.body')),
                 ),

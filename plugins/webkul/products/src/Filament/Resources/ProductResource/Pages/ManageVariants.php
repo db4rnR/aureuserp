@@ -14,7 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Arr;
 use Webkul\Product\Filament\Resources\ProductResource;
 
-final class ManageVariants extends ManageRelatedRecords
+class ManageVariants extends ManageRelatedRecords
 {
     protected static string $resource = ProductResource::class;
 
@@ -32,9 +32,9 @@ final class ManageVariants extends ManageRelatedRecords
         return __('products::filament/resources/product/pages/manage-variants.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return ProductResource::form($schema);
+        return ProductResource::form($form);
     }
 
     public function table(Table $table): Table
@@ -58,8 +58,7 @@ final class ManageVariants extends ManageRelatedRecords
         $table->columns(Arr::except($table->getColumns(), ['variants_count']));
 
         $table->columns([
-            TextColumn::make('combinations')
-                ->label(__('products::filament/resources/product/pages/manage-variants.table.columns.variant-values'))
+            TextColumn::make('combinations')->label(__('products::filament/resources/product/pages/manage-variants.table.columns.variant-values'))
                 ->state(fn ($record) => $record->combinations->map(function ($combination) {
                     $attributeName = $combination->productAttributeValue?->attribute?->name;
                     $optionName = $combination->productAttributeValue?->attributeOption?->name;
@@ -76,8 +75,8 @@ final class ManageVariants extends ManageRelatedRecords
         return $table;
     }
 
-    public function infolist(Schema $schema): Schema
+    public function infolist(Infolist $infolist): Infolist
     {
-        return ProductResource::infolist($schema);
+        return ProductResource::infolist($infolist);
     }
 }

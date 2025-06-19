@@ -25,7 +25,7 @@ use Illuminate\Support\Carbon;
  */
 interface Page extends HasPageUrls
 {
-    public static function query(): Builder;
+    public static function query();
 
     public function parent(): BelongsTo;
 

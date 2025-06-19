@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Pboivin\FilamentPeek\Tests\Database\Factories\PostFactory;
 
-final class Post extends Model
+class Post extends Model
 {
     use HasFactory;
 

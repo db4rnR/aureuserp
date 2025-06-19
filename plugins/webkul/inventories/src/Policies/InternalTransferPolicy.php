@@ -9,7 +9,7 @@ use Webkul\Inventory\Models\InternalTransfer;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class InternalTransferPolicy
+class InternalTransferPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

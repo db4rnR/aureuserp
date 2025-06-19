@@ -8,7 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Product\Filament\Resources\PriceListResource;
 
-final class ViewPriceList extends ViewRecord
+class ViewPriceList extends ViewRecord
 {
     protected static string $resource = PriceListResource::class;
 

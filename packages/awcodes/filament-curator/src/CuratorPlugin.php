@@ -13,7 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 
-final class CuratorPlugin implements Plugin
+class CuratorPlugin implements Plugin
 {
     use EvaluatesClosures;
 

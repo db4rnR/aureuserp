@@ -10,7 +10,7 @@ use Filament\Facades\Filament;
 use Filament\Panel;
 use Filament\Widgets\Widget;
 
-final class Dashboard extends Cluster
+class Dashboard extends Cluster
 {
     protected static ?string $slug = '/';
 

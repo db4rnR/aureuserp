@@ -7,7 +7,7 @@ namespace Webkul\Contact\Filament\Clusters\Configurations\Resources\IndustryReso
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\IndustryResource;
 use Webkul\Partner\Filament\Resources\IndustryResource\Pages\ManageIndustries as BaseManageIndustries;
 
-final class ManageIndustries extends BaseManageIndustries
+class ManageIndustries extends BaseManageIndustries
 {
     protected static string $resource = IndustryResource::class;
 }

@@ -7,7 +7,7 @@ namespace Webkul\TimeOff\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-final class UserLeaveType extends Model
+class UserLeaveType extends Model
 {
     protected $table = 'time_off_user_leave_types';
 

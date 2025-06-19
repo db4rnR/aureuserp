@@ -22,7 +22,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class FilamentLaravelPulseServiceProvider extends PackageServiceProvider
+class FilamentLaravelPulseServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-laravel-pulse';
 

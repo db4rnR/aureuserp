@@ -7,7 +7,7 @@ namespace Webkul\Inventory\Filament\Clusters\Operations\Actions\Print;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 
-final class PickingOperationAction extends Action
+class PickingOperationAction extends Action
 {
     protected function setUp(): void
     {

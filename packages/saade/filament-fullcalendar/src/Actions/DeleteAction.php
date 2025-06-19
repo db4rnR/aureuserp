@@ -7,7 +7,7 @@ namespace Saade\FilamentFullCalendar\Actions;
 use Filament\Actions\DeleteAction as BaseDeleteAction;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 
-final class DeleteAction extends BaseDeleteAction
+class DeleteAction extends BaseDeleteAction
 {
     protected function setUp(): void
     {

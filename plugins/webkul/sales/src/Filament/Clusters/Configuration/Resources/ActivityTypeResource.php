@@ -12,7 +12,7 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\P
 use Webkul\Sale\Models\ActivityType;
 use Webkul\Support\Filament\Resources\ActivityTypeResource as BaseActivityTypeResource;
 
-final class ActivityTypeResource extends BaseActivityTypeResource
+class ActivityTypeResource extends BaseActivityTypeResource
 {
     protected static ?string $model = ActivityType::class;
 

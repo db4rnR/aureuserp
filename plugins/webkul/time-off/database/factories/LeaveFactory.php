@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\Leave>
  */
-final class LeaveFactory extends Factory
+class LeaveFactory extends Factory
 {
     /**
      * Define the model's default state.

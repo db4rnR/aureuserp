@@ -41,7 +41,7 @@ use function Awcodes\Curator\is_media_resizable;
  * @property string $size_for_humans
  * @property string $pretty_name
  */
-final class Media extends Model
+class Media extends Model
 {
     use HasPackageFactory;
 

@@ -6,7 +6,7 @@ namespace Webkul\Account\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-final class AccountFactory extends Factory
+class AccountFactory extends Factory
 {
     public function definition(): array
     {

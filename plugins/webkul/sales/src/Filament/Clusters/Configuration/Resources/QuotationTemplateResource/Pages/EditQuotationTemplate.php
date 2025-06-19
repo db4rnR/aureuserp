@@ -11,7 +11,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource;
 
-final class EditQuotationTemplate extends EditRecord
+class EditQuotationTemplate extends EditRecord
 {
     protected static string $resource = QuotationTemplateResource::class;
 
@@ -27,8 +27,7 @@ final class EditQuotationTemplate extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('sales::filament/clusters/configurations/resources/quotation-template/pages/edit-quotation-template.notification.title'))
             ->body(__('sales::filament/clusters/configurations/resources/quotation-template/pages/edit-quotation-template.notification.body'));
     }
@@ -37,10 +36,8 @@ final class EditQuotationTemplate extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('sales::filament/clusters/configurations/resources/quotation-template/pages/edit-quotation-template.header-actions.notification.delete.title'))
                         ->body(__('sales::filament/clusters/configurations/resources/quotation-template/pages/edit-quotation-template.header-actions.notification.delete.body'))
                 ),

@@ -15,7 +15,7 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\ListBi
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages\ViewBill;
 use Webkul\Invoice\Models\Bill;
 
-final class BillResource extends BaseBillResource
+class BillResource extends BaseBillResource
 {
     protected static ?string $model = Bill::class;
 

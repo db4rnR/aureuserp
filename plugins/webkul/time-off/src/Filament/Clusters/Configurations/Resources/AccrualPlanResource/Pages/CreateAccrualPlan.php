@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanResource;
 
-final class CreateAccrualPlan extends CreateRecord
+class CreateAccrualPlan extends CreateRecord
 {
     protected static string $resource = AccrualPlanResource::class;
 
@@ -20,8 +20,7 @@ final class CreateAccrualPlan extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/configurations/resources/accrual-plan/pages/create-accrual-plan.notification.title'))
             ->body(__('time-off::filament/clusters/configurations/resources/accrual-plan/pages/create-accrual-plan.notification.body'));
     }

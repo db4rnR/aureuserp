@@ -9,7 +9,7 @@ use Livewire\Component;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Models\Payment;
 
-final class CancelAction extends Action
+class CancelAction extends Action
 {
     protected function setUp(): void
     {

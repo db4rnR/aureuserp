@@ -6,7 +6,7 @@ namespace Webkul\Recruitment\Models;
 
 use Webkul\Support\Models\UTMMedium as BaseUTMMedium;
 
-final class UTMMedium extends BaseUTMMedium
+class UTMMedium extends BaseUTMMedium
 {
     //
 }

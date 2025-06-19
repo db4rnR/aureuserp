@@ -11,7 +11,7 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Facades\Inventory;
 use Webkul\Inventory\Models\Operation;
 
-final class TodoAction extends Action
+class TodoAction extends Action
 {
     protected function setUp(): void
     {
@@ -21,8 +21,7 @@ final class TodoAction extends Action
             ->label(__('inventories::filament/clusters/operations/actions/todo.label'))
             ->action(function (Operation $record, Component $livewire): void {
                 if (! $record->moves->count()) {
-                    Notification::make()
-                        ->title(__('inventories::filament/clusters/operations/actions/todo.notification.warning.title'))
+                    Notification::make()->title(__('inventories::filament/clusters/operations/actions/todo.notification.warning.title'))
                         ->body(__('inventories::filament/clusters/operations/actions/todo.notification.warning.body'))
                         ->warning()
                         ->send();
@@ -34,8 +33,7 @@ final class TodoAction extends Action
 
                 $livewire->updateForm();
 
-                Notification::make()
-                    ->success()
+                Notification::make()->success()
                     ->title(__('inventories::filament/clusters/operations/actions/todo.notification.success.title'))
                     ->body(__('inventories::filament/clusters/operations/actions/todo.notification.success.body'))
                     ->success()

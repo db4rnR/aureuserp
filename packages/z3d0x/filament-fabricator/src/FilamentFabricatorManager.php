@@ -16,7 +16,7 @@ use Z3d0X\FilamentFabricator\Models\Page;
 use Z3d0X\FilamentFabricator\PageBlocks\PageBlock;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-final class FilamentFabricatorManager
+class FilamentFabricatorManager
 {
     public const ID = 'filament-fabricator';
 

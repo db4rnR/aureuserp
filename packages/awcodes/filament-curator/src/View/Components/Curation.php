@@ -10,7 +10,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-final class Curation extends Component
+class Curation extends Component
 {
     public ?array $curatedMedia = null;
 

@@ -24,7 +24,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 use Webkul\Support\Models\UOM;
 
-final class OrderLine extends Model implements Sortable
+class OrderLine extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

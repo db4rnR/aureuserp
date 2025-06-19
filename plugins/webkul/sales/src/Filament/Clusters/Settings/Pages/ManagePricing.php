@@ -13,7 +13,7 @@ use UnitEnum;
 use Webkul\Sale\Settings\PriceSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManagePricing extends SettingsPage
+class ManagePricing extends SettingsPage
 {
     use HasPageShield;
 
@@ -46,15 +46,13 @@ final class ManagePricing extends SettingsPage
         return __('sales::filament/clusters/settings/pages/manage-pricing.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Toggle::make('enable_discount')
-                    ->label(__('sales::filament/clusters/settings/pages/manage-pricing.form.fields.discount'))
+                Toggle::make('enable_discount')->label(__('sales::filament/clusters/settings/pages/manage-pricing.form.fields.discount'))
                     ->helperText(__('sales::filament/clusters/settings/pages/manage-pricing.form.fields.discount-help')),
-                Toggle::make('enable_margin')
-                    ->label(__('sales::filament/clusters/settings/pages/manage-pricing.form.fields.margins'))
+                Toggle::make('enable_margin')->label(__('sales::filament/clusters/settings/pages/manage-pricing.form.fields.margins'))
                     ->helperText(__('sales::filament/clusters/settings/pages/manage-pricing.form.fields.margins-help')),
             ]);
     }

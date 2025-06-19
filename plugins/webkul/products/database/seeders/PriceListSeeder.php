@@ -6,7 +6,7 @@ namespace Webkul\Product\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-final class PriceListSeeder extends Seeder
+class PriceListSeeder extends Seeder
 {
     /**
      * Run the database seeds.

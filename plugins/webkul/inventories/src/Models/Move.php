@@ -19,7 +19,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-final class Move extends Model
+class Move extends Model
 {
     use HasFactory;
 

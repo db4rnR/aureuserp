@@ -14,7 +14,7 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 use Webkul\Purchase\Models\Order;
 
-final class ViewOrder extends ViewRecord
+class ViewOrder extends ViewRecord
 {
     protected static string $resource = OrderResource::class;
 
@@ -36,18 +36,15 @@ final class ViewOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === OrderState::DONE)
+            ChatterAction::make()->setResource(self::$resource),
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === OrderState::DONE)
                 ->action(function (DeleteAction $action, Order $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('inventories::filament/clusters/orders/resources/order/pages/view-order.header-actions.delete.notification.error.title'))
                             ->body(__('inventories::filament/clusters/orders/resources/order/pages/view-order.header-actions.delete.notification.error.body'))
                             ->send();
@@ -56,8 +53,7 @@ final class ViewOrder extends ViewRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/orders/resources/order/pages/view-order.header-actions.delete.notification.success.title'))
                         ->body(__('inventories::filament/clusters/orders/resources/order/pages/view-order.header-actions.delete.notification.success.body')),
                 ),

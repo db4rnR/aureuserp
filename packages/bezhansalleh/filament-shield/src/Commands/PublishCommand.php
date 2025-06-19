@@ -16,7 +16,7 @@ use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\select;
 
 #[AsCommand(name: 'shield:publish', description: "Publish Shield's Resource.")]
-final class PublishCommand extends Command
+class PublishCommand extends Command
 {
     use CanBeProhibitable;
     use CanManipulateFiles;

@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Spatie\Permission\Models\Role as SpatieRole;
 
-final class Role extends SpatieRole
+class Role extends SpatieRole
 {
     //
 }

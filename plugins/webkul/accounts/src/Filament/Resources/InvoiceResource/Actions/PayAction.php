@@ -8,8 +8,8 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Form;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Enums\DisplayType;
 use Webkul\Account\Enums\MoveState;
@@ -20,7 +20,7 @@ use Webkul\Account\Models\MoveLine;
 use Webkul\Account\Models\Payment;
 use Webkul\Account\Models\PaymentRegister;
 
-final class PayAction extends Action
+class PayAction extends Action
 {
     protected function setUp(): void
     {
@@ -29,17 +29,14 @@ final class PayAction extends Action
         $this
             ->label(__('accounts::filament/resources/invoice/actions/pay-action.title'))
             ->color('success')
-            ->schema(fn (Schema $schema): Schema => $schema->components([
-                Group::make()
-                    ->schema([
-                        TextInput::make('amount')
-                            ->label(__('accounts::filament/resources/invoice/actions/pay-action.form.fields.amount'))
+            ->schema(fn (Form $form): Form => $form->schema([
+                Group::make()->schema([
+                        TextInput::make('amount')->label(__('accounts::filament/resources/invoice/actions/pay-action.form.fields.amount'))
                             ->prefix(fn ($record) => $record->currency->symbol ?? '')
                             ->formatStateUsing(fn ($record): string => number_format($record->lines->sum('price_total'), 2, '.', ''))
                             ->dehydrateStateUsing(fn ($state): float => (float) str_replace(',', '', $state))
                             ->required(),
-                        Select::make('payment_method_line_id')
-                            ->relationship(
+                        Select::make('payment_method_line_id')->relationship(
                                 name: 'paymentMethodLine',
                                 titleAttribute: 'name',
                                 modifyQueryUsing: fn ($query) => $query
@@ -50,13 +47,11 @@ final class PayAction extends Action
                             ->label('Payment Method')
                             ->searchable()
                             ->preload(),
-                        DatePicker::make('payment_date')
-                            ->native(false)
+                        DatePicker::make('payment_date')->native(false)
                             ->label(__('accounts::filament/resources/invoice/actions/pay-action.form.fields.payment-date'))
                             ->default(now())
                             ->required(),
-                        Select::make('partner_bank_id')
-                            ->relationship(
+                        Select::make('partner_bank_id')->relationship(
                                 'partnerBank',
                                 'account_number',
                             )
@@ -64,8 +59,7 @@ final class PayAction extends Action
                             ->default(fn ($record) => $record?->partner?->bankAccounts?->first()?->id)
                             ->searchable()
                             ->required(),
-                        TextInput::make('communication')
-                            ->label(__('accounts::filament/resources/invoice/actions/pay-action.form.fields.communication'))
+                        TextInput::make('communication')->label(__('accounts::filament/resources/invoice/actions/pay-action.form.fields.communication'))
                             ->default(fn ($record) => $record->name)
                             ->required(),
                     ])->columns(2),

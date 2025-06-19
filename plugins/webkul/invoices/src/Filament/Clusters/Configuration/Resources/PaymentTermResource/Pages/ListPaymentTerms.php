@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermRe
 use Webkul\Account\Filament\Resources\PaymentTermResource\Pages\ListPaymentTerms as BaseListPaymentTerms;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource;
 
-final class ListPaymentTerms extends BaseListPaymentTerms
+class ListPaymentTerms extends BaseListPaymentTerms
 {
     protected static string $resource = PaymentTermResource::class;
 }

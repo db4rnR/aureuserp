@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\CashRoundingResource;
 
-final class CreateCashRounding extends CreateRecord
+class CreateCashRounding extends CreateRecord
 {
     protected static string $resource = CashRoundingResource::class;
 
@@ -20,8 +20,7 @@ final class CreateCashRounding extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/cash-rounding/pages/create-cash-rounding.notification.title'))
             ->body(__('accounts::filament/resources/cash-rounding/pages/create-cash-rounding.notification.body'));
     }

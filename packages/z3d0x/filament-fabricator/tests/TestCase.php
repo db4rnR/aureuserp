@@ -14,7 +14,7 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Z3d0X\FilamentFabricator\FilamentFabricatorServiceProvider;
 
-final class TestCase extends Orchestra
+class TestCase extends Orchestra
 {
     protected function setUp(): void
     {

@@ -10,7 +10,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ScrapResource;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListScraps extends ListRecords
+class ListScraps extends ListRecords
 {
     use HasTableViews;
 
@@ -29,8 +29,7 @@ final class ListScraps extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/operations/resources/scrap/pages/list-scraps.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/operations/resources/scrap/pages/list-scraps.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Kirschbaum\Commentions\Contracts\Commenter;
 use Tests\Database\Factories\UserFactory;
 
-final class User extends Model implements AuthenticatableContract, Commenter
+class User extends Model implements AuthenticatableContract, Commenter
 {
     use Authenticatable;
     use Authorizable;

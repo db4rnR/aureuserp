@@ -8,7 +8,7 @@ use League\Glide\Responses\SymfonyResponseFactory;
 use League\Glide\Server;
 use League\Glide\ServerFactory;
 
-final class DefaultServerFactory implements Contracts\ServerFactory
+class DefaultServerFactory implements Contracts\ServerFactory
 {
     public function getFactory(): ServerFactory|Server
     {

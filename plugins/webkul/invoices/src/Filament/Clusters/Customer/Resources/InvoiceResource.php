@@ -14,7 +14,7 @@ use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\Li
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages\ViewInvoice;
 use Webkul\Invoice\Models\Invoice;
 
-final class InvoiceResource extends BaseInvoiceResource
+class InvoiceResource extends BaseInvoiceResource
 {
     protected static ?string $model = Invoice::class;
 

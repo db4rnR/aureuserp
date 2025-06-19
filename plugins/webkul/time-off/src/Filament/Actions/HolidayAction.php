@@ -11,7 +11,7 @@ use Illuminate\Support\HtmlString;
 use Webkul\Employee\Models\CalendarLeaves;
 use Webkul\TimeOff\Models\LeaveMandatoryDay;
 
-final class HolidayAction extends Action
+class HolidayAction extends Action
 {
     protected function setUp(): void
     {
@@ -23,8 +23,7 @@ final class HolidayAction extends Action
             ->modalWidth(Width::TwoExtraLarge)
             ->slideOver()
             ->schema([
-                Placeholder::make('public_holiday')
-                    ->label(__('time-off::filament/actions/holiday-action.form.placeholders.public-holiday'))
+                Placeholder::make('public_holiday')->label(__('time-off::filament/actions/holiday-action.form.placeholders.public-holiday'))
                     ->content(function (): HtmlString {
                         $publicHolidays = CalendarLeaves::with('company')->get();
 
@@ -59,8 +58,7 @@ final class HolidayAction extends Action
                         return new HtmlString($html);
                     }),
 
-                Placeholder::make('mandatory_holiday')
-                    ->label(__('time-off::filament/actions/holiday-action.form.placeholders.mandatory-holiday'))
+                Placeholder::make('mandatory_holiday')->label(__('time-off::filament/actions/holiday-action.form.placeholders.mandatory-holiday'))
                     ->content(function (): HtmlString {
                         $mandatoryHolidays = LeaveMandatoryDay::with('company', 'createdBy')->get();
 

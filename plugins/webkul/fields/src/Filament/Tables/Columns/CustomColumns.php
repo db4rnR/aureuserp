@@ -14,7 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Collection;
 use Webkul\Field\Models\Field;
 
-final class CustomColumns extends Component
+class CustomColumns extends Component
 {
     private array $include = [];
 
@@ -86,8 +86,7 @@ final class CustomColumns extends Component
             default => TextColumn::class,
         };
 
-        $column = $columnClass::make($field->code)
-            ->label($field->name);
+        $column = $columnClass::make($field->code)->label($field->name);
 
         if (! empty($field->table_settings)) {
             foreach ($field->table_settings as $setting) {

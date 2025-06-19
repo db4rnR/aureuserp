@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Account\Filament\Resources\TaxGroupResource;
 
-final class CreateTaxGroup extends CreateRecord
+class CreateTaxGroup extends CreateRecord
 {
     protected static string $resource = TaxGroupResource::class;
 
@@ -19,8 +19,7 @@ final class CreateTaxGroup extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/tax-group/pages/create-tax-group.notification.title'))
             ->body(__('accounts::filament/resources/tax-group/pages/create-tax-group.notification.body'));
     }

@@ -20,7 +20,7 @@ use ReflectionClass;
 
 use function Awcodes\Curator\is_media_resizable;
 
-final class Uploader extends FileUpload
+class Uploader extends FileUpload
 {
     use CanGeneratePaths;
     use CanNormalizePaths;

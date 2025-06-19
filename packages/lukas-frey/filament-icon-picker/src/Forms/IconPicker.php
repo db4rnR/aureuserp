@@ -20,7 +20,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 use function view;
 
-final class IconPicker extends Select
+class IconPicker extends Select
 {
     use CanBeCacheable;
 

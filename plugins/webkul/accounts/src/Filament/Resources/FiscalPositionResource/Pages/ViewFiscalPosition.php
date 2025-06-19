@@ -11,7 +11,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Account\Filament\Resources\FiscalPositionResource;
 
-final class ViewFiscalPosition extends ViewRecord
+class ViewFiscalPosition extends ViewRecord
 {
     protected static string $resource = FiscalPositionResource::class;
 
@@ -24,10 +24,8 @@ final class ViewFiscalPosition extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/fiscal-position/pages/view-fiscal-position.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/fiscal-position/pages/view-fiscal-position.header-actions.delete.notification.body'))
                 ),

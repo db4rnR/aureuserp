@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Webkul\Field\Models\Field;
 
-final class CustomFilters extends Component
+class CustomFilters extends Component
 {
     private array $include = [];
 
@@ -91,21 +91,17 @@ final class CustomFilters extends Component
     private function createFilter(Field $field): BaseFilter
     {
         $filter = match ($field->type) {
-            'checkbox' => Filter::make($field->code)
+            'checkbox' => Filter::make($field->code)->query(fn (Builder $query): Builder => $query->where($field->code, true)),
+
+            'toggle' => Filter::make($field->code)->toggle()
                 ->query(fn (Builder $query): Builder => $query->where($field->code, true)),
 
-            'toggle' => Filter::make($field->code)
-                ->toggle()
-                ->query(fn (Builder $query): Builder => $query->where($field->code, true)),
-
-            'radio' => SelectFilter::make($field->code)
-                ->options(fn () => collect($field->options)
+            'radio' => SelectFilter::make($field->code)->options(fn () => collect($field->options)
                     ->mapWithKeys(fn ($option) => [$option => $option])
                     ->toArray()),
 
             'select' => $field->is_multiselect
-                ? SelectFilter::make($field->code)
-                    ->options(fn () => collect($field->options)
+                ? SelectFilter::make($field->code)->options(fn () => collect($field->options)
                         ->mapWithKeys(fn ($option) => [$option => $option])
                         ->toArray())
                     ->query(function (Builder $query, $state) use ($field): Builder {
@@ -120,13 +116,11 @@ final class CustomFilters extends Component
                         });
                     })
                     ->multiple()
-                : SelectFilter::make($field->code)
-                    ->options(fn () => collect($field->options)
+                : SelectFilter::make($field->code)->options(fn () => collect($field->options)
                         ->mapWithKeys(fn ($option) => [$option => $option])
                         ->toArray()),
 
-            'checkbox_list' => SelectFilter::make($field->code)
-                ->options(fn () => collect($field->options)
+            'checkbox_list' => SelectFilter::make($field->code)->options(fn () => collect($field->options)
                     ->mapWithKeys(fn ($option) => [$option => $option])
                     ->toArray())
                 ->query(function (Builder $query, $state) use ($field): Builder {
@@ -162,18 +156,15 @@ final class CustomFilters extends Component
             'checkbox', 'toggle' => BooleanConstraint::make($field->code),
 
             'select' => $field->is_multiselect
-                ? SelectConstraint::make($field->code)
-                    ->options(fn () => collect($field->options)
+                ? SelectConstraint::make($field->code)->options(fn () => collect($field->options)
                         ->mapWithKeys(fn ($option) => [$option => $option])
                         ->toArray())
                     ->multiple()
-                : SelectConstraint::make($field->code)
-                    ->options(fn () => collect($field->options)
+                : SelectConstraint::make($field->code)->options(fn () => collect($field->options)
                         ->mapWithKeys(fn ($option) => [$option => $option])
                         ->toArray()),
 
-            'checkbox_list' => SelectConstraint::make($field->code)
-                ->options(fn () => collect($field->options)
+            'checkbox_list' => SelectConstraint::make($field->code)->options(fn () => collect($field->options)
                     ->mapWithKeys(fn ($option) => [$option => $option])
                     ->toArray())
                 ->multiple(),

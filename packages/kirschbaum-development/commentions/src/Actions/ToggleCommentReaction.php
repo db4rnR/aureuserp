@@ -10,7 +10,7 @@ use Kirschbaum\Commentions\Config;
 use Kirschbaum\Commentions\Contracts\Commenter;
 use Kirschbaum\Commentions\Events\CommentWasReactedEvent;
 
-final class ToggleCommentReaction
+class ToggleCommentReaction
 {
     public static function run(Comment $comment, string $reaction, ?Commenter $user = null): void
     {

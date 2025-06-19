@@ -10,7 +10,7 @@ use Webkul\Blog\Models\Category;
 /**
  * @extends Factory<Category>
  */
-final class CategoryFactory extends Factory
+class CategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

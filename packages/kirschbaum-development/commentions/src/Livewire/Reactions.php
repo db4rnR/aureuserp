@@ -12,7 +12,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-final class Reactions extends Component
+class Reactions extends Component
 {
     public RenderableComment $comment;
 

@@ -51,7 +51,7 @@ use Webkul\Inventory\Models\Warehouse;
 use Webkul\Inventory\Settings\WarehouseSettings;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 
-final class WarehouseResource extends Resource
+class WarehouseResource extends Resource
 {
     use HasCustomFields;
 
@@ -77,16 +77,14 @@ final class WarehouseResource extends Resource
         return __('inventories::filament/clusters/configurations/resources/warehouse.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.title'))
                             ->schema([
-                                TextInput::make('name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.name'))
+                                TextInput::make('name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.name'))
                                     ->required()
                                     ->maxLength(255)
                                     ->autofocus()
@@ -94,28 +92,24 @@ final class WarehouseResource extends Resource
                                     ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;'])
                                     ->unique(ignoreRecord: true),
 
-                                TextInput::make('code')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.code'))
+                                TextInput::make('code')->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.code'))
                                     ->required()
                                     ->maxLength(255)
                                     ->placeholder(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.code-placeholder'))
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.code-hint-tooltip'))
                                     ->unique(ignoreRecord: true),
 
-                                Group::make()
-                                    ->schema([
-                                        Select::make('company_id')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.company'))
+                                Group::make()->schema([
+                                        Select::make('company_id')->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.company'))
                                             ->relationship('company', 'name')
                                             ->required()
                                             ->disabled(fn () => Auth::user()->default_company_id)
                                             ->default(Auth::user()->default_company_id),
-                                        Select::make('partner_address_id')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.address'))
+                                        Select::make('partner_address_id')->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.general.fields.address'))
                                             ->relationship('partnerAddress', 'name')
                                             ->searchable()
                                             ->preload()
-                                            ->createOptionForm(fn (Schema $schema): Schema => PartnerResource::form($schema)),
+                                            ->createOptionForm(fn (Schema $form): Schema => PartnerResource::form($form)),
                                     ])
                                     ->columns(2),
                             ]),
@@ -126,20 +120,17 @@ final class WarehouseResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.title'))
                             ->schema([
                                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.shipment-management'))
                                     ->schema([
-                                        Radio::make('reception_steps')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.incoming-shipments'))
+                                        Radio::make('reception_steps')->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.incoming-shipments'))
                                             ->options(ReceptionStep::class)
                                             ->default(ReceptionStep::ONE_STEP)
                                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.incoming-shipments-hint-tooltip')),
 
-                                        Radio::make('delivery_steps')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.outgoing-shipments'))
+                                        Radio::make('delivery_steps')->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.outgoing-shipments'))
                                             ->options(DeliveryStep::class)
                                             ->default(DeliveryStep::ONE_STEP)
                                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.outgoing-shipments-hint-tooltip')),
@@ -149,8 +140,7 @@ final class WarehouseResource extends Resource
 
                                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.resupply-management'))
                                     ->schema([
-                                        CheckboxList::make('supplierWarehouses')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.resupply-from'))
+                                        CheckboxList::make('supplierWarehouses')->label(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.resupply-from'))
                                             ->relationship('supplierWarehouses', 'name'),
                                     ])
                                     ->visible(Warehouse::count() > 1),
@@ -166,160 +156,126 @@ final class WarehouseResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.name'))
+                TextColumn::make('name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.name'))
                     ->searchable(),
-                TextColumn::make('code')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.code'))
+                TextColumn::make('code')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.code'))
                     ->searchable(),
-                TextColumn::make('company.name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.company'))
+                TextColumn::make('company.name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.company'))
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('partnerAddress.name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.address'))
+                TextColumn::make('partnerAddress.name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.address'))
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('deleted_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.deleted-at'))
+                TextColumn::make('deleted_at')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.deleted-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('company_id')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.filters.company'))
+                SelectFilter::make('company_id')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.filters.company'))
                     ->relationship('company', 'name')
                     ->searchable()
                     ->preload(),
             ])
             ->groups([
-                Tables\Grouping\Group::make('company.name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.groups.company'))
+                Tables\Grouping\Group::make('company.name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.groups.company'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('created_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.groups.created-at'))
+                Tables\Grouping\Group::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.groups.created-at'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('updated_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.groups.updated-at'))
+                Tables\Grouping\Group::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/warehouse.table.groups.updated-at'))
                     ->date()
                     ->collapsible(),
             ])
             ->recordActions([
-                ViewAction::make()
-                    ->hidden(fn ($record) => $record->trashed()),
-                EditAction::make()
-                    ->hidden(fn ($record) => $record->trashed()),
-                RestoreAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                ViewAction::make()->hidden(fn ($record) => $record->trashed()),
+                EditAction::make()->hidden(fn ($record) => $record->trashed()),
+                RestoreAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/warehouse.table.actions.restore.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/warehouse.table.actions.restore.notification.body')),
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/warehouse.table.actions.delete.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/warehouse.table.actions.delete.notification.body')),
                     ),
-                ForceDeleteAction::make()
-                    ->action(function (Warehouse $record): void {
+                ForceDeleteAction::make()->action(function (Warehouse $record): void {
                         try {
                             $record->forceDelete();
                         } catch (QueryException) {
-                            Notification::make()
-                                ->danger()
+                            Notification::make()->danger()
                                 ->title(__('inventories::filament/clusters/configurations/resources/warehouse.table.actions.force-delete.notification.error.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/warehouse.table.actions.force-delete.notification.error.body'))
                                 ->send();
                         }
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/warehouse.table.actions.force-delete.notification.success.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/warehouse.table.actions.force-delete.notification.success.body')),
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/warehouse.table.bulk-actions.restore.notification.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/warehouse.table.bulk-actions.restore.notification.body')),
                         ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/warehouse.table.bulk-actions.delete.notification.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/warehouse.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->action(function (Collection $records): void {
+                    ForceDeleteBulkAction::make()->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->forceDelete());
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/configurations/resources/warehouse.table.bulk-actions.force-delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/configurations/resources/warehouse.table.bulk-actions.force-delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/warehouse.table.bulk-actions.force-delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/warehouse.table.bulk-actions.force-delete.notification.success.body')),
                         ),
                 ]),
             ])
             ->emptyStateActions([
-                CreateAction::make()
-                    ->icon('heroicon-o-plus-circle'),
+                CreateAction::make()->icon('heroicon-o-plus-circle'),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.title'))
                             ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.entries.name'))
+                                TextEntry::make('name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.entries.name'))
                                     ->icon('heroicon-o-building-storefront')
                                     ->size(TextSize::Large)
                                     ->weight(FontWeight::Bold),
 
-                                TextEntry::make('code')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.entries.code'))
+                                TextEntry::make('code')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.entries.code'))
                                     ->icon('heroicon-m-hashtag'),
 
-                                Group::make()
-                                    ->schema([
-                                        TextEntry::make('company.name')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.entries.company'))
+                                Group::make()->schema([
+                                        TextEntry::make('company.name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.entries.company'))
                                             ->icon('heroicon-o-building-office'),
-                                        TextEntry::make('partnerAddress.name')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.entries.address'))
+                                        TextEntry::make('partnerAddress.name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.general.entries.address'))
                                             ->icon('heroicon-o-map'),
                                     ])
                                     ->columns(2),
@@ -329,19 +285,16 @@ final class WarehouseResource extends Resource
                             ->schema([
                                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.settings.entries.shipment-management'))
                                     ->schema([
-                                        TextEntry::make('reception_steps')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.settings.entries.incoming-shipments'))
+                                        TextEntry::make('reception_steps')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.settings.entries.incoming-shipments'))
                                             ->icon('heroicon-o-truck'),
 
-                                        TextEntry::make('delivery_steps')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.settings.entries.outgoing-shipments'))
+                                        TextEntry::make('delivery_steps')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.settings.entries.outgoing-shipments'))
                                             ->icon('heroicon-o-paper-airplane'),
                                     ]),
 
                                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.settings.entries.resupply-management'))
                                     ->schema([
-                                        TextEntry::make('supplierWarehouses.name')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.settings.entries.resupply-from'))
+                                        TextEntry::make('supplierWarehouses.name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.settings.entries.resupply-from'))
                                             ->icon('heroicon-o-refresh')
                                             ->placeholder('—'),
                                     ]),
@@ -349,21 +302,17 @@ final class WarehouseResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.record-information.title'))
                             ->schema([
-                                TextEntry::make('created_at')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.record-information.entries.created-at'))
+                                TextEntry::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.record-information.entries.created-at'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar'),
 
-                                TextEntry::make('creator.name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.record-information.entries.created-by'))
+                                TextEntry::make('creator.name')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.record-information.entries.created-by'))
                                     ->icon('heroicon-m-user'),
 
-                                TextEntry::make('updated_at')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.record-information.entries.last-updated'))
+                                TextEntry::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/warehouse.infolist.sections.record-information.entries.last-updated'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar-days'),
                             ]),

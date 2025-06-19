@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
 use Webkul\Partner\Filament\Resources\PartnerResource\Pages\ListPartners as BaseListVendors;
 
-final class ListVendors extends BaseListVendors
+class ListVendors extends BaseListVendors
 {
     protected static string $resource = VendorResource::class;
 
@@ -21,8 +21,7 @@ final class ListVendors extends BaseListVendors
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('invoices::filament/clusters/vendors/resources/vendor/pages/list-vendor.header-actions.create.title'))
+            CreateAction::make()->label(__('invoices::filament/clusters/vendors/resources/vendor/pages/list-vendor.header-actions.create.title'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

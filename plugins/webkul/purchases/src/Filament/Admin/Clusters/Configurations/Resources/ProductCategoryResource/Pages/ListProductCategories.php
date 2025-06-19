@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\Produ
 use Webkul\Product\Filament\Resources\CategoryResource\Pages\ListCategories;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource;
 
-final class ListProductCategories extends ListCategories
+class ListProductCategories extends ListCategories
 {
     protected static string $resource = ProductCategoryResource::class;
 }

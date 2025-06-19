@@ -6,7 +6,7 @@ namespace Webkul\Invoice\Models;
 
 use Webkul\Account\Models\Partner as BasePartner;
 
-final class Partner extends BasePartner
+class Partner extends BasePartner
 {
     //
 }

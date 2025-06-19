@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Employee\Database\Factories\EmployeeSkillFactory;
 use Webkul\Security\Models\User;
 
-final class EmployeeSkill extends Model
+class EmployeeSkill extends Model
 {
     use HasFactory, SoftDeletes;
 

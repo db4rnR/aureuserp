@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Support\Models\Currency;
 
-final class PartialReconcile extends Model
+class PartialReconcile extends Model
 {
     use HasFactory;
 

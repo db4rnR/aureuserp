@@ -14,7 +14,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListInvoices extends ListRecords
+class ListInvoices extends ListRecords
 {
     use HasTableViews;
 
@@ -81,8 +81,7 @@ final class ListInvoices extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
+            CreateAction::make()->icon('heroicon-o-plus-circle'),
         ];
     }
 }

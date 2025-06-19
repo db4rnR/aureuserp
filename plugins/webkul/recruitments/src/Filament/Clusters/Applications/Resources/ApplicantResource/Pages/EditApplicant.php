@@ -14,7 +14,7 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Employee\Filament\Resources\EmployeeResource;
@@ -29,7 +29,7 @@ use Webkul\Recruitment\Models\RefuseReason;
 use Webkul\Security\Models\User;
 use Webkul\Support\Services\EmailService;
 
-final class EditApplicant extends EditRecord
+class EditApplicant extends EditRecord
 {
     protected static string $resource = ApplicantResource::class;
 
@@ -44,8 +44,7 @@ final class EditApplicant extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.notification.title'))
             ->body(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.notification.body'));
     }
@@ -53,8 +52,7 @@ final class EditApplicant extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('state')
-                ->hiddenLabel()
+            Action::make('state')->hiddenLabel()
                 ->icon(function ($record) {
                     if ($record->state === RecruitmentState::DONE->value) {
                         return RecruitmentState::DONE->getIcon();
@@ -79,8 +77,7 @@ final class EditApplicant extends EditRecord
                     }
                 })
                 ->schema([
-                    ToggleButtons::make('state')
-                        ->inline()
+                    ToggleButtons::make('state')->inline()
                         ->options(RecruitmentState::class),
                 ])
                 ->fillForm(fn ($record): array => [
@@ -100,14 +97,12 @@ final class EditApplicant extends EditRecord
                 ->action(function (Applicant $record, $data): void {
                     $record->update($data);
 
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.state.notification.title'))
                         ->body(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.state.notification.body'))
                         ->send();
                 }),
-            Action::make('gotoEmployee')
-                ->tooltip(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.goto-employee'))
+            Action::make('gotoEmployee')->tooltip(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.goto-employee'))
                 ->visible(fn ($record): bool => $record->application_status->value === ApplicationStatus::HIRED->value || $record->candidate->employee_id)
                 ->icon('heroicon-s-arrow-top-right-on-square')
                 ->iconButton()
@@ -116,55 +111,43 @@ final class EditApplicant extends EditRecord
 
                     return redirect(EmployeeResource::getUrl('view', ['record' => $employee]));
                 }),
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
-            Action::make('createEmployee')
-                ->label(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.create-employee'))
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
+            Action::make('createEmployee')->label(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.create-employee'))
                 ->hidden(fn ($record): bool => $record->application_status->value === ApplicationStatus::HIRED->value || $record->candidate->employee_id)
                 ->action(function (Applicant $record) {
                     $employee = $record->createEmployee();
 
                     return redirect(EmployeeResource::getUrl('edit', ['record' => $employee]));
                 }),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.delete.notification.title'))
                         ->body(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.delete.notification.body'))
                 ),
-            ForceDeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            ForceDeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.force-delete.notification.title'))
                         ->body(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.force-delete.notification.body'))
                 ),
-            RestoreAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->info()
+            RestoreAction::make()->successNotification(
+                    Notification::make()->info()
                         ->title(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.restore.notification.title'))
                         ->body(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.restore.notification.body'))
                 ),
-            Action::make('refuse')
-                ->modalIcon('heroicon-s-bug-ant')
+            Action::make('refuse')->modalIcon('heroicon-s-bug-ant')
                 ->hidden(fn ($record): bool => $record->refuse_reason_id || $record->application_status->value === ApplicationStatus::ARCHIVED->value)
                 ->modalHeading(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.refuse.title'))
-                ->schema(fn (Schema $schema, $record): Schema => $schema->components([
-                    ToggleButtons::make('refuse_reason_id')
-                        ->hiddenLabel()
+                ->schema(fn (Form $form, $record): Form => $form->schema([
+                    ToggleButtons::make('refuse_reason_id')->hiddenLabel()
                         ->inline()
                         ->live()
                         ->options(RefuseReason::all()->pluck('name', 'id')),
-                    Toggle::make('notify')
-                        ->inline()
+                    Toggle::make('notify')->inline()
                         ->live()
                         ->default(true)
                         ->visible(fn (Get $get): mixed => $get('refuse_reason_id'))
                         ->label('Notify'),
-                    TextInput::make('email')
-                        ->visible(fn (Get $get): bool => $get('notify') && $get('refuse_reason_id'))
+                    TextInput::make('email')->visible(fn (Get $get): bool => $get('notify') && $get('refuse_reason_id'))
                         ->default($record->candidate->email_from)
                         ->label('Email To'),
                 ]))
@@ -187,22 +170,19 @@ final class EditApplicant extends EditRecord
                         );
                     }
 
-                    Notification::make()
-                        ->info()
+                    Notification::make()->info()
                         ->title(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.refuse.notification.title'))
                         ->body(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.refuse.notification.body'))
                         ->send();
                 }),
-            Action::make('restore')
-                ->hidden(fn ($record): bool => ! $record->refuse_reason_id)
+            Action::make('restore')->hidden(fn ($record): bool => ! $record->refuse_reason_id)
                 ->modalHeading(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.reopen.title'))
                 ->requiresConfirmation()
                 ->color('gray')
                 ->action(function (Applicant $record): void {
                     $record->reopen();
 
-                    Notification::make()
-                        ->info()
+                    Notification::make()->info()
                         ->title(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.reopen.notification.title'))
                         ->body(__('recruitments::filament/clusters/applications/resources/applicant/pages/edit-applicant.header-actions.reopen.notification.body'))
                         ->send();

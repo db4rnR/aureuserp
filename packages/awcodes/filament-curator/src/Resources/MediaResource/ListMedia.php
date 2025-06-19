@@ -12,7 +12,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Str;
 
-final class ListMedia extends ListRecords
+class ListMedia extends ListRecords
 {
     public string $layoutView;
 

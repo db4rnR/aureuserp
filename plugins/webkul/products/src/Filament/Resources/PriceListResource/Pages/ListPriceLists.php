@@ -8,7 +8,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\Product\Filament\Resources\PriceListResource;
 
-final class ListPriceLists extends ListRecords
+class ListPriceLists extends ListRecords
 {
     protected static string $resource = PriceListResource::class;
 

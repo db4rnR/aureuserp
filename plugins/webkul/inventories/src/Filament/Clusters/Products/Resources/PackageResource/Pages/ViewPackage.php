@@ -14,7 +14,7 @@ use Illuminate\Database\QueryException;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\Inventory\Models\Package;
 
-final class ViewPackage extends ViewRecord
+class ViewPackage extends ViewRecord
 {
     protected static string $resource = PackageResource::class;
 
@@ -22,8 +22,7 @@ final class ViewPackage extends ViewRecord
     {
         return [
             ActionGroup::make([
-                Action::make('print-without-content')
-                    ->label(__('inventories::filament/clusters/products/resources/package/pages/view-package.header-actions.print.actions.without-content.label'))
+                Action::make('print-without-content')->label(__('inventories::filament/clusters/products/resources/package/pages/view-package.header-actions.print.actions.without-content.label'))
                     ->color('gray')
                     ->action(function (Package $record) {
                         $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-without-content', [
@@ -36,8 +35,7 @@ final class ViewPackage extends ViewRecord
                             echo $pdf->output();
                         }, 'Package-'.$record->name.'.pdf');
                     }),
-                Action::make('print-with-content')
-                    ->label(__('inventories::filament/clusters/products/resources/package/pages/view-package.header-actions.print.actions.with-content.label'))
+                Action::make('print-with-content')->label(__('inventories::filament/clusters/products/resources/package/pages/view-package.header-actions.print.actions.with-content.label'))
                     ->color('gray')
                     ->action(function (Package $record) {
                         $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
@@ -55,15 +53,13 @@ final class ViewPackage extends ViewRecord
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->button(),
-            DeleteAction::make()
-                ->action(function (DeleteAction $action, Package $record): void {
+            DeleteAction::make()->action(function (DeleteAction $action, Package $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('inventories::filament/clusters/products/resources/package/pages/view-package.header-actions.delete.notification.error.title'))
                             ->body(__('inventories::filament/clusters/products/resources/package/pages/view-package.header-actions.delete.notification.error.body'))
                             ->send();
@@ -72,8 +68,7 @@ final class ViewPackage extends ViewRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/products/resources/package/pages/view-package.header-actions.delete.notification.success.title'))
                         ->body(__('inventories::filament/clusters/products/resources/package/pages/view-package.header-actions.delete.notification.success.body')),
                 ),

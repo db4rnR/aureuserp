@@ -15,7 +15,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\View;
 use Livewire\Component;
 
-final class CuratorEditor extends Field
+class CuratorEditor extends Field
 {
     use CanBeOutlined;
     use HasColor;

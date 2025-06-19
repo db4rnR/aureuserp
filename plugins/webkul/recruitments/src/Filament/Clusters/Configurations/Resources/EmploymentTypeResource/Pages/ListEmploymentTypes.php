@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\Employme
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmploymentTypeResource\Pages\ListEmploymentTypes as BaseListEmploymentTypes;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\EmploymentTypeResource;
 
-final class ListEmploymentTypes extends BaseListEmploymentTypes
+class ListEmploymentTypes extends BaseListEmploymentTypes
 {
     protected static string $resource = EmploymentTypeResource::class;
 }

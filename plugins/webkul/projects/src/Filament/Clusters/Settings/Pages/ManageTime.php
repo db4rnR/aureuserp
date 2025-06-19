@@ -13,7 +13,7 @@ use UnitEnum;
 use Webkul\Project\Settings\TimeSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageTime extends SettingsPage
+class ManageTime extends SettingsPage
 {
     use HasPageShield;
 
@@ -42,12 +42,11 @@ final class ManageTime extends SettingsPage
         return __('projects::filament/clusters/settings/pages/manage-time.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Toggle::make('enable_timesheets')
-                    ->label(__('projects::filament/clusters/settings/pages/manage-time.form.enable-timesheets'))
+                Toggle::make('enable_timesheets')->label(__('projects::filament/clusters/settings/pages/manage-time.form.enable-timesheets'))
                     ->helperText(__('projects::filament/clusters/settings/pages/manage-time.form.enable-timesheets-helper-text'))
                     ->required(),
             ]);

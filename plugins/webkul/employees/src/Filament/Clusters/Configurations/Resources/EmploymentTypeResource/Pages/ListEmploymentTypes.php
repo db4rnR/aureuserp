@@ -10,7 +10,7 @@ use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmploymentTypeResource;
 
-final class ListEmploymentTypes extends ListRecords
+class ListEmploymentTypes extends ListRecords
 {
     protected static string $resource = EmploymentTypeResource::class;
 
@@ -27,8 +27,7 @@ final class ListEmploymentTypes extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('employees::filament/clusters/configurations/resources/employment-type/pages/list-employment-type.header-actions.create.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/employment-type/pages/list-employment-type.header-actions.create.notification.body'))
                 ),

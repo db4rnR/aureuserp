@@ -14,7 +14,7 @@ use Filament\Schemas\Schema;
 use Webkul\Security\Settings\UserSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageActivity extends SettingsPage
+class ManageActivity extends SettingsPage
 {
     use HasPageShield;
 
@@ -50,12 +50,10 @@ final class ManageActivity extends SettingsPage
     {
         return $schema
             ->components([
-                Placeholder::make('activity_description')
-                    ->label(__('security::filament/clusters/manage-activity.form.activity-description.label'))
+                Placeholder::make('activity_description')->label(__('security::filament/clusters/manage-activity.form.activity-description.label'))
                     ->content(__('security::filament/clusters/manage-activity.form.activity-description.content')),
                 Actions::make([
-                    Action::make('manageActivityTypes')
-                        ->label(__('security::filament/clusters/manage-activity.form.actions.manage-activity-types.label'))
+                    Action::make('manageActivityTypes')->label(__('security::filament/clusters/manage-activity.form.actions.manage-activity-types.label'))
                         ->icon('heroicon-o-arrow-top-right-on-square')
                         ->link()
                         ->url(route('filament.admin.resources.settings.activity-types.index')),

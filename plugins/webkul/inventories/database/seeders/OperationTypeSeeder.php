@@ -12,7 +12,7 @@ use Webkul\Inventory\Enums\OperationType;
 use Webkul\Inventory\Enums\ReservationMethod;
 use Webkul\Security\Models\User;
 
-final class OperationTypeSeeder extends Seeder
+class OperationTypeSeeder extends Seeder
 {
     /**
      * Seed the application's database with currencies.

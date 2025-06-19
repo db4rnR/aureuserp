@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Unique;
 use Webkul\Inventory\Settings\OperationSettings;
 
-final class CapacityByPackagesRelationManager extends RelationManager
+class CapacityByPackagesRelationManager extends RelationManager
 {
     protected static string $relationship = 'storageCategoryCapacitiesByPackageType';
 
@@ -33,12 +33,11 @@ final class CapacityByPackagesRelationManager extends RelationManager
         return __('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Select::make('package_type_id')
-                    ->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.form.package-type'))
+                Select::make('package_type_id')->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.form.package-type'))
                     ->relationship(
                         'packageType',
                         'name',
@@ -47,8 +46,7 @@ final class CapacityByPackagesRelationManager extends RelationManager
                     ->unique(modifyRuleUsing: fn (Unique $rule) => $rule->where('storage_category_id', $this->getOwnerRecord()->id))
                     ->searchable()
                     ->preload(),
-                TextInput::make('qty')
-                    ->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.form.qty'))
+                TextInput::make('qty')->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.form.qty'))
                     ->required()
                     ->numeric()
                     ->minValue(0)
@@ -62,14 +60,11 @@ final class CapacityByPackagesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('packageType.name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.columns.package-type')),
-                TextColumn::make('qty')
-                    ->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.columns.qty')),
+                TextColumn::make('packageType.name')->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.columns.package-type')),
+                TextColumn::make('qty')->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.columns.qty')),
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.header-actions.create.label'))
+                CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::id();
@@ -77,24 +72,19 @@ final class CapacityByPackagesRelationManager extends RelationManager
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.header-actions.create.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.header-actions.create.notification.body')),
                     ),
             ])
             ->recordActions([
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                EditAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.actions.edit.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.actions.edit.notification.body')),
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.actions.delete.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/storage-category/relation-managers/capacity-by-packages.table.actions.delete.notification.body')),
                     ),

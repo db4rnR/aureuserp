@@ -6,7 +6,7 @@ namespace Dotswan\FilamentLaravelPulse\Widgets;
 
 use Filament\Widgets\Widget;
 
-final class PulseExceptions extends Widget
+class PulseExceptions extends Widget
 {
     protected string $view = 'filament-laravel-pulse::widgets.pulse-exceptions';
 

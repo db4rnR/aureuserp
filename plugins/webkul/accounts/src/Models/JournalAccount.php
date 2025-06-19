@@ -6,7 +6,7 @@ namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class JournalAccount extends Model
+class JournalAccount extends Model
 {
     protected $table = 'accounts_journal_accounts';
 

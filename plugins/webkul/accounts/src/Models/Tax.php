@@ -15,7 +15,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 
-final class Tax extends Model implements Sortable
+class Tax extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

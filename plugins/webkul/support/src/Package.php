@@ -10,7 +10,7 @@ use Webkul\Support\Console\Commands\InstallCommand;
 use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Models\Plugin;
 
-final class Package extends BasePackage
+class Package extends BasePackage
 {
     public ?Plugin $plugin = null;
 

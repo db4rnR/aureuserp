@@ -6,7 +6,7 @@ namespace Webkul\Support\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-final class UtmCampaignFactory extends Factory
+class UtmCampaignFactory extends Factory
 {
     public function definition(): array
     {

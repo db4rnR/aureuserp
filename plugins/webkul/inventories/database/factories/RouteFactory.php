@@ -11,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<Route>
  */
-final class RouteFactory extends Factory
+class RouteFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

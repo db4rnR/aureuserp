@@ -10,7 +10,7 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Record extends Model
+class Record extends Model
 {
     /**
      * Table name.

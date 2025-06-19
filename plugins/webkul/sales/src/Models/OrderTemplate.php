@@ -13,7 +13,7 @@ use Webkul\Sale\Enums\OrderDisplayType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class OrderTemplate extends Model implements Sortable
+class OrderTemplate extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

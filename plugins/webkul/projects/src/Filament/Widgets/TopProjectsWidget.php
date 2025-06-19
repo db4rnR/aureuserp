@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Webkul\Project\Models\Timesheet;
 
-final class TopProjectsWidget extends BaseWidget
+class TopProjectsWidget extends BaseWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 
@@ -63,9 +63,9 @@ final class TopProjectsWidget extends BaseWidget
         return $query
             ->join('projects_projects', 'projects_projects.id', '=', 'analytic_records.project_id')
             ->selectRaw('
-                analytic_records.project_id, 
-                projects_projects.name as project_name, 
-                SUM(analytic_records.unit_amount) as total_hours, 
+                analytic_records.project_id,
+                projects_projects.name as project_name,
+                SUM(analytic_records.unit_amount) as total_hours,
                 COUNT(DISTINCT analytic_records.task_id) as total_tasks
             ')
             ->whereBetween('analytic_records.created_at', [$startDate, $endDate])
@@ -77,14 +77,11 @@ final class TopProjectsWidget extends BaseWidget
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('project_name')
-                ->label(__('projects::filament/widgets/top-projects.table-columns.project-name'))
+            TextColumn::make('project_name')->label(__('projects::filament/widgets/top-projects.table-columns.project-name'))
                 ->sortable(),
-            TextColumn::make('total_hours')
-                ->label(__('projects::filament/widgets/top-projects.table-columns.hours-spent'))
+            TextColumn::make('total_hours')->label(__('projects::filament/widgets/top-projects.table-columns.hours-spent'))
                 ->sortable(),
-            TextColumn::make('total_tasks')
-                ->label(__('projects::filament/widgets/top-projects.table-columns.tasks'))
+            TextColumn::make('total_tasks')->label(__('projects::filament/widgets/top-projects.table-columns.tasks'))
                 ->sortable(),
         ];
     }

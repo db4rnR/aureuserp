@@ -10,7 +10,7 @@ use Webkul\TimeOff\Filament\Clusters\MyTime;
 use Webkul\TimeOff\Filament\Widgets\CalendarWidget;
 use Webkul\TimeOff\Filament\Widgets\MyTimeOffWidget;
 
-final class Dashboard extends BaseDashboard
+class Dashboard extends BaseDashboard
 {
     protected static string $routePath = 'time-off';
 

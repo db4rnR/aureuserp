@@ -6,7 +6,7 @@ namespace Webkul\Recruitment\Models;
 
 use Webkul\Employee\Models\Department as BaseDepartment;
 
-final class Department extends BaseDepartment
+class Department extends BaseDepartment
 {
     //
 }

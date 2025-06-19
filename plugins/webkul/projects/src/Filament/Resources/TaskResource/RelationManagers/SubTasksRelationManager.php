@@ -23,13 +23,13 @@ use Webkul\Project\Filament\Resources\TaskResource;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Models\TaskStage;
 
-final class SubTasksRelationManager extends RelationManager
+class SubTasksRelationManager extends RelationManager
 {
     protected static string $relationship = 'subTasks';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return TaskResource::form($schema);
+        return TaskResource::form($form);
     }
 
     public function table(Table $table): Table
@@ -43,8 +43,7 @@ final class SubTasksRelationManager extends RelationManager
             ->filtersTriggerAction(null)
             ->groups([])
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('projects::filament/resources/task/relation-managers/sub-tasks.table.header-actions.create.label'))
+                CreateAction::make()->label(__('projects::filament/resources/task/relation-managers/sub-tasks.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->fillForm(fn (array $arguments): array => [
                         'stage_id' => TaskStage::first()?->id,
@@ -61,38 +60,29 @@ final class SubTasksRelationManager extends RelationManager
                     })
                     ->modalWidth('6xl')
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('projects::filament/resources/task/relation-managers/sub-tasks.table.header-actions.create.notification.title'))
                             ->body(__('projects::filament/resources/task/relation-managers/sub-tasks.table.header-actions.create.notification.body')),
                     ),
             ])
             ->recordActions([
                 ActionGroup::make([
-                    ViewAction::make()
-                        ->url(fn (Task $record): string => TaskResource::getUrl('view', ['record' => $record]))
+                    ViewAction::make()->url(fn (Task $record): string => TaskResource::getUrl('view', ['record' => $record]))
                         ->hidden(fn ($record) => $record->trashed()),
-                    EditAction::make()
-                        ->url(fn (Task $record): string => TaskResource::getUrl('edit', ['record' => $record]))
+                    EditAction::make()->url(fn (Task $record): string => TaskResource::getUrl('edit', ['record' => $record]))
                         ->hidden(fn ($record) => $record->trashed()),
-                    RestoreAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.restore.notification.title'))
                                 ->body(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.restore.notification.body')),
                         ),
-                    DeleteAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.delete.notification.title'))
                                 ->body(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.delete.notification.body')),
                         ),
-                    ForceDeleteAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ForceDeleteAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.force-delete.notification.title'))
                                 ->body(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.force-delete.notification.body')),
                         ),
@@ -100,8 +90,8 @@ final class SubTasksRelationManager extends RelationManager
             ]);
     }
 
-    public function infolist(Schema $schema): Schema
+    public function infolist(Infolist $infolist): Infolist
     {
-        return TaskResource::infolist($schema);
+        return TaskResource::infolist($infolist);
     }
 }

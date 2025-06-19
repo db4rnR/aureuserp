@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \FilamentTiptapEditor\TiptapConverter
  */
-final class TiptapConverter extends Facade
+class TiptapConverter extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

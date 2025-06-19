@@ -36,7 +36,7 @@ use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
  *
  * @see \Z3d0X\FilamentFabricator\FilamentFabricatorManager
  */
-final class FilamentFabricator extends Facade
+class FilamentFabricator extends Facade
 {
     protected static function getFacadeAccessor()
     {

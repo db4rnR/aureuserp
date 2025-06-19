@@ -7,7 +7,7 @@ namespace Webkul\Partner;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class PartnerServiceProvider extends PackageServiceProvider
+class PartnerServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'partners';
 

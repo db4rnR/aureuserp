@@ -8,7 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\ActivityPlanResource;
 
-final class ViewActivityPlan extends ViewRecord
+class ViewActivityPlan extends ViewRecord
 {
     protected static string $resource = ActivityPlanResource::class;
 

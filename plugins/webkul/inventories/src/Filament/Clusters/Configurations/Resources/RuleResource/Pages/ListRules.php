@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 use Webkul\Inventory\Models\Rule;
 
-final class ListRules extends ListRecords
+class ListRules extends ListRecords
 {
     protected static string $resource = RuleResource::class;
 
@@ -30,8 +30,7 @@ final class ListRules extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/configurations/resources/rule/pages/list-rules.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/rule/pages/list-rules.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
@@ -43,8 +42,7 @@ final class ListRules extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/rule/pages/list-rules.header-actions.create.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/rule/pages/list-rules.header-actions.create.notification.body')),
                 ),

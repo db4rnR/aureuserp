@@ -10,7 +10,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\TaxResource;
 
-final class CreateTax extends CreateRecord
+class CreateTax extends CreateRecord
 {
     protected static string $resource = TaxResource::class;
 
@@ -26,8 +26,7 @@ final class CreateTax extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/tax/pages/create-tax.notification.title'))
             ->body(__('accounts::filament/resources/tax/pages/create-tax.notification.body'));
     }

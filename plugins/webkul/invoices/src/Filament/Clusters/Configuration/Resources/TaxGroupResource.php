@@ -12,7 +12,7 @@ use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pa
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages\ViewTaxGroup;
 use Webkul\Invoice\Models\TaxGroup;
 
-final class TaxGroupResource extends BaseTaxGroupResource
+class TaxGroupResource extends BaseTaxGroupResource
 {
     protected static ?string $model = TaxGroup::class;
 

@@ -11,7 +11,7 @@ use ReflectionClass;
 use Webkul\Sale\Filament\Clusters\Settings\Pages\ManageProducts;
 use Webkul\Support\Package;
 
-final class SalePlugin implements Plugin
+class SalePlugin implements Plugin
 {
     public static function make(): static
     {
@@ -36,8 +36,7 @@ final class SalePlugin implements Plugin
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Sale\\Filament\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Sale\\Filament\\Widgets')
                     ->navigationItems([
-                        NavigationItem::make('settings')
-                            ->label('Settings')
+                        NavigationItem::make('settings')->label('Settings')
                             ->url(fn (): string => ManageProducts::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Sales')

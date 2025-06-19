@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlanResource;
 use Webkul\Support\Models\ActivityPlan;
 
-final class ListActivityPlans extends ListRecords
+class ListActivityPlans extends ListRecords
 {
     protected static string $resource = ActivityPlanResource::class;
 
@@ -32,8 +32,7 @@ final class ListActivityPlans extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle')
+            CreateAction::make()->icon('heroicon-o-plus-circle')
                 ->label(__('employees::filament/clusters/configurations/resources/activity-plan/pages/list-activity-plan.header-actions.create.label'))
                 ->mutateDataUsing(function ($data) {
                     $user = Auth::user();
@@ -47,8 +46,7 @@ final class ListActivityPlans extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('employees::filament/clusters/configurations/resources/activity-plan/pages/list-activity-plan.header-actions.create.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/activity-plan/pages/list-activity-plan.header-actions.create.notification.body')),
                 ),

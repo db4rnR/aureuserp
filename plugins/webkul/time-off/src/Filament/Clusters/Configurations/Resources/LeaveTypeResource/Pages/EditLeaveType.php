@@ -11,7 +11,7 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource;
 
-final class EditLeaveType extends EditRecord
+class EditLeaveType extends EditRecord
 {
     protected static string $resource = LeaveTypeResource::class;
 
@@ -22,8 +22,7 @@ final class EditLeaveType extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/configurations/resources/leave-type/pages/edit-leave-type.notification.title'))
             ->body(__('time-off::filament/clusters/configurations/resources/leave-type/pages/edit-leave-type.notification.body'));
     }
@@ -32,10 +31,8 @@ final class EditLeaveType extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/configurations/resources/leave-type/pages/edit-leave-type.header-actions.delete.notification.title'))
                         ->body(__('time-off::filament/clusters/configurations/resources/leave-type/pages/edit-leave-type.header-actions.delete.notification.body'))
                 ),

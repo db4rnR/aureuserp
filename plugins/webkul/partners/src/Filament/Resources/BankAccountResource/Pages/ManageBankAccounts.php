@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\BankAccountResource;
 use Webkul\Partner\Models\BankAccount;
 
-final class ManageBankAccounts extends ManageRecords
+class ManageBankAccounts extends ManageRecords
 {
     protected static string $resource = BankAccountResource::class;
 
@@ -30,8 +30,7 @@ final class ManageBankAccounts extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.header-actions.create.label'))
+            CreateAction::make()->label(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data): array {
                     $data['creator_id'] = Auth::id();
@@ -39,8 +38,7 @@ final class ManageBankAccounts extends ManageRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.header-actions.create.notification.title'))
                         ->body(__('partners::filament/resources/bank-account/pages/manage-bank-accounts.header-actions.create.notification.body')),
                 ),

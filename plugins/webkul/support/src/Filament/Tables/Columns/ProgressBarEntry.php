@@ -7,7 +7,7 @@ namespace Webkul\Support\Filament\Tables\Columns;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\Concerns\HasColor;
 
-final class ProgressBarEntry extends Column
+class ProgressBarEntry extends Column
 {
     use HasColor {
         getColor as getBaseColor;

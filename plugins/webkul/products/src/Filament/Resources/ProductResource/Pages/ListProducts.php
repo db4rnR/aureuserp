@@ -13,7 +13,7 @@ use Webkul\Product\Filament\Resources\ProductResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListProducts extends ListRecords
+class ListProducts extends ListRecords
 {
     use HasTableViews;
 
@@ -56,8 +56,7 @@ final class ListProducts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('products::filament/resources/product/pages/list-products.header-actions.create.label'))
+            CreateAction::make()->label(__('products::filament/resources/product/pages/list-products.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

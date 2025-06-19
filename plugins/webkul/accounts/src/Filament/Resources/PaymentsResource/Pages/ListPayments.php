@@ -12,7 +12,7 @@ use Webkul\Account\Filament\Resources\PaymentsResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListPayments extends ListRecords
+class ListPayments extends ListRecords
 {
     use HasTableViews;
 
@@ -61,8 +61,7 @@ final class ListPayments extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
+            CreateAction::make()->icon('heroicon-o-plus-circle'),
         ];
     }
 }

@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\StageResource;
 
-final class CreateStage extends CreateRecord
+class CreateStage extends CreateRecord
 {
     protected static string $resource = StageResource::class;
 
@@ -19,8 +19,7 @@ final class CreateStage extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('recruitments::filament/clusters/configurations/resources/stage/pages/create-stage.notification.title'))
             ->body(__('recruitments::filament/clusters/configurations/resources/stage/pages/create-stage.notification.body'));
     }

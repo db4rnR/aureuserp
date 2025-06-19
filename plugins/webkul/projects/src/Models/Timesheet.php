@@ -7,7 +7,7 @@ namespace Webkul\Project\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Analytic\Models\Record;
 
-final class Timesheet extends Record
+class Timesheet extends Record
 {
     public function project(): BelongsTo
     {

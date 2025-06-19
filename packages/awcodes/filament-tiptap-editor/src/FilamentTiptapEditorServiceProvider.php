@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Vite;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class FilamentTiptapEditorServiceProvider extends PackageServiceProvider
+class FilamentTiptapEditorServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

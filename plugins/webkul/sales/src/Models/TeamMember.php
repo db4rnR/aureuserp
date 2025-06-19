@@ -6,7 +6,7 @@ namespace Webkul\Sale\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class TeamMember extends Model
+class TeamMember extends Model
 {
     public $timestamps = false;
 

@@ -7,7 +7,7 @@ namespace FilamentTiptapEditor\Extensions\Extensions;
 use Tiptap\Core\Extension;
 use Tiptap\Utils\InlineStyle;
 
-final class Color extends Extension
+class Color extends Extension
 {
     public static $name = 'color';
 

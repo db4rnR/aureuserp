@@ -7,7 +7,7 @@ namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources\ActivityType
 use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\ListActivityTypes as BaseListActivityTypes;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\ActivityTypeResource;
 
-final class ListActivityTypes extends BaseListActivityTypes
+class ListActivityTypes extends BaseListActivityTypes
 {
     protected static string $resource = ActivityTypeResource::class;
 }

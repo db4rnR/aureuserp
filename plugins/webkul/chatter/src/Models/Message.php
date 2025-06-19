@@ -11,7 +11,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\ActivityType;
 use Webkul\Support\Models\Company;
 
-final class Message extends Model
+class Message extends Model
 {
     protected $table = 'chatter_messages';
 

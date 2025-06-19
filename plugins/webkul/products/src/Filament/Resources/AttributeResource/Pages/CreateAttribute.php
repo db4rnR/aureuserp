@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Filament\Resources\AttributeResource;
 
-final class CreateAttribute extends CreateRecord
+class CreateAttribute extends CreateRecord
 {
     protected static string $resource = AttributeResource::class;
 
@@ -20,8 +20,7 @@ final class CreateAttribute extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('products::filament/resources/attribute/pages/create-attribute.notification.title'))
             ->body(__('products::filament/resources/attribute/pages/create-attribute.notification.body'));
     }

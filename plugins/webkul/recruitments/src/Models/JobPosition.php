@@ -13,7 +13,7 @@ use Webkul\Partner\Models\Industry;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 
-final class JobPosition extends BaseJobPosition
+class JobPosition extends BaseJobPosition
 {
     /**
      * Create a new Eloquent model instance.

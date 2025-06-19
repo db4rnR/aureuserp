@@ -6,7 +6,7 @@ namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class ActivityTypeSuggestion extends Model
+class ActivityTypeSuggestion extends Model
 {
     public $timestamps = false;
 

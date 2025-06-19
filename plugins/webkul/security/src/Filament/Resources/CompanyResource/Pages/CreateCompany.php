@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Security\Filament\Resources\CompanyResource;
 
-final class CreateCompany extends CreateRecord
+class CreateCompany extends CreateRecord
 {
     protected static string $resource = CompanyResource::class;
 
@@ -20,8 +20,7 @@ final class CreateCompany extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('security::filament/resources/company/pages/create-company.notification.title'))
             ->body(__('security::filament/resources/company/pages/create-company.notification.body'));
     }

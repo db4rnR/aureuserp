@@ -6,7 +6,7 @@ namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class AccountAccountTag extends Model
+class AccountAccountTag extends Model
 {
     public $timestamps = false;
 

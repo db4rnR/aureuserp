@@ -15,7 +15,7 @@ use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class WorkLocation extends Model
+class WorkLocation extends Model
 {
     use HasCustomFields, HasFactory, SoftDeletes;
 

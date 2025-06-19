@@ -13,7 +13,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListOrders extends ListRecords
+class ListOrders extends ListRecords
 {
     use HasTableViews;
 
@@ -63,8 +63,7 @@ final class ListOrders extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('purchases::filament/admin/clusters/orders/resources/order/pages/list-orders.header-actions.create.label'))
+            CreateAction::make()->label(__('purchases::filament/admin/clusters/orders/resources/order/pages/list-orders.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

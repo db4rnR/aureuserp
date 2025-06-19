@@ -7,7 +7,7 @@ namespace Webkul\Contact\Filament\Clusters\Configurations\Resources\TagResource\
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\TagResource;
 use Webkul\Partner\Filament\Resources\TagResource\Pages\ManageTags as BaseManageTags;
 
-final class ManageTags extends BaseManageTags
+class ManageTags extends BaseManageTags
 {
     protected static string $resource = TagResource::class;
 }

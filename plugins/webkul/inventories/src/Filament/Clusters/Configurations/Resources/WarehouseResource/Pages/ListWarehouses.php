@@ -13,7 +13,7 @@ use Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResourc
 use Webkul\Inventory\Models\Warehouse;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-final class ListWarehouses extends ListRecords
+class ListWarehouses extends ListRecords
 {
     protected static string $resource = WarehouseResource::class;
 
@@ -31,8 +31,7 @@ final class ListWarehouses extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/configurations/resources/warehouse/pages/list-warehouses.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/warehouse/pages/list-warehouses.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations)
                 ->mutateDataUsing(function (array $data) {
@@ -45,8 +44,7 @@ final class ListWarehouses extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/warehouse/pages/list-warehouses.header-actions.create.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/warehouse/pages/list-warehouses.header-actions.create.notification.body')),
                 ),

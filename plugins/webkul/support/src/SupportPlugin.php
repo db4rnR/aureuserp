@@ -10,7 +10,7 @@ use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\HtmlString;
 use ReflectionClass;
 
-final class SupportPlugin implements Plugin
+class SupportPlugin implements Plugin
 {
     public static function make(): static
     {
@@ -45,7 +45,7 @@ final class SupportPlugin implements Plugin
                         const activeSidebarItem = document.querySelector('nav .fi-sidebar-item-active');
 
                         const sidebarWrapper = document.querySelector('nav.fi-sidebar-nav');
-    
+
                         sidebarWrapper.scrollTo(0, activeSidebarItem.offsetTop - 250);
                     }, 0);
                 });

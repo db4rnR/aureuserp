@@ -13,7 +13,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
-final class Comments extends Component
+class Comments extends Component
 {
     use HasMentions;
     use HasPolling;

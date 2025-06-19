@@ -6,7 +6,7 @@ namespace Webkul\Payment\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-final class DatabaseSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.

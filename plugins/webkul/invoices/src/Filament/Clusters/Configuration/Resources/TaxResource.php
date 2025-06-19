@@ -14,7 +14,7 @@ use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource\Pages\M
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource\Pages\ViewTax;
 use Webkul\Invoice\Models\Tax;
 
-final class TaxResource extends BaseTaxResource
+class TaxResource extends BaseTaxResource
 {
     protected static ?string $model = Tax::class;
 

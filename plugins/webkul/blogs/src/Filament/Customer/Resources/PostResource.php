@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Webkul\Blog\Filament\Customer\Resources\PostResource\Pages\ViewPost;
 use Webkul\Blog\Models\Post;
 
-final class PostResource extends Resource
+class PostResource extends Resource
 {
     public static string $parentResource = CategoryResource::class;
 

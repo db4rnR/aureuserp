@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource;
 
-final class CreateQuotationTemplate extends CreateRecord
+class CreateQuotationTemplate extends CreateRecord
 {
     protected static string $resource = QuotationTemplateResource::class;
 
@@ -19,8 +19,7 @@ final class CreateQuotationTemplate extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('sales::filament/clusters/configurations/resources/quotation-template/pages/create-quotation-template.notification.title'))
             ->body(__('sales::filament/clusters/configurations/resources/quotation-template/pages/create-quotation-template.notification.body'));
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-final class EmployeeJobPositionSeeder extends Seeder
+class EmployeeJobPositionSeeder extends Seeder
 {
     /**
      * Run the database seeds.

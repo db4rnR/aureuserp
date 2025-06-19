@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Webkul\Security\Database\Seeders\DatabaseSeeder as SecurityDatabaseSeeder;
 use Webkul\Support\Database\Seeders\DatabaseSeeder as SupportDatabaseSeeder;
 
-final class DatabaseSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.

@@ -7,7 +7,7 @@ namespace Saade\FilamentFullCalendar\Data;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 
-final class EventData implements Arrayable
+class EventData implements Arrayable
 {
     private int|string $id;
 

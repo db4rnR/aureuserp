@@ -11,7 +11,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\SkillTypeResource;
 use Webkul\Employee\Models\SkillType;
 
-final class ListSkillTypes extends ListRecords
+class ListSkillTypes extends ListRecords
 {
     protected static string $resource = SkillTypeResource::class;
 
@@ -29,16 +29,14 @@ final class ListSkillTypes extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle')
+            CreateAction::make()->icon('heroicon-o-plus-circle')
                 ->label(__('employees::filament/clusters/configurations/resources/skill-type/pages/list-skill-type.header-actions.create.label'))
                 ->createAnother(false)
                 ->after(fn ($record) => redirect(
                     self::$resource::getUrl('edit', ['record' => $record]),
                 ))
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('employees::filament/clusters/configurations/resources/skill-type/pages/list-skill-type.header-actions.create.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/skill-type/pages/list-skill-type.header-actions.create.notification.body')),
                 ),

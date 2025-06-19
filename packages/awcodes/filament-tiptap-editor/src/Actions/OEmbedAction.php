@@ -14,7 +14,7 @@ use Filament\Forms\Components\TimePicker;
 use Filament\Schemas\Components\Group;
 use FilamentTiptapEditor\TiptapEditor;
 
-final class OEmbedAction extends Action
+class OEmbedAction extends Action
 {
     protected function setUp(): void
     {

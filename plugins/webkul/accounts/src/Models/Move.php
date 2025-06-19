@@ -24,7 +24,7 @@ use Webkul\Support\Models\UtmCampaign;
 use Webkul\Support\Models\UTMMedium;
 use Webkul\Support\Models\UTMSource;
 
-final class Move extends Model implements Sortable
+class Move extends Model implements Sortable
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SortableTrait;
 

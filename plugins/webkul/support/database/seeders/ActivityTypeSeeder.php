@@ -13,7 +13,7 @@ use Webkul\Support\Enums\ActivityDelayFrom;
 use Webkul\Support\Enums\ActivityDelayUnit;
 use Webkul\Support\Enums\ActivityTypeAction;
 
-final class ActivityTypeSeeder extends Seeder
+class ActivityTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

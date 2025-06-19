@@ -12,7 +12,7 @@ use Webkul\Account\Filament\Resources\CreditNoteResource\Pages\ListCreditNotes;
 use Webkul\Account\Filament\Resources\CreditNoteResource\Pages\ViewCreditNote;
 use Webkul\Account\Models\Move as AccountMove;
 
-final class CreditNoteResource extends InvoiceResource
+class CreditNoteResource extends InvoiceResource
 {
     protected static ?string $model = AccountMove::class;
 

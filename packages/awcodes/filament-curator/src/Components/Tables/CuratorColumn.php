@@ -14,7 +14,7 @@ use Illuminate\Support\Arr;
 
 use function Awcodes\Curator\get_media_items;
 
-final class CuratorColumn extends ImageColumn
+class CuratorColumn extends ImageColumn
 {
     protected int|Closure|null $resolution = null;
 

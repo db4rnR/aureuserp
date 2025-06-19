@@ -10,7 +10,7 @@ use Kirschbaum\Commentions\Contracts\Commentable;
 use Kirschbaum\Commentions\HasComments;
 use Tests\Database\Factories\PostFactory;
 
-final class Post extends Model implements Commentable
+class Post extends Model implements Commentable
 {
     use HasComments;
     use HasFactory;

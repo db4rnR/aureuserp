@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\MoveLine>
  */
-final class MoveLineFactory extends Factory
+class MoveLineFactory extends Factory
 {
     /**
      * Define the model's default state.

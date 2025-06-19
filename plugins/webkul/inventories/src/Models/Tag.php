@@ -13,7 +13,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Inventory\Database\Factories\TagFactory;
 use Webkul\Security\Models\User;
 
-final class Tag extends Model implements Sortable
+class Tag extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

@@ -9,7 +9,7 @@ use Pboivin\FilamentPeek\Pages\Actions\PreviewAction;
 use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource;
 
-final class CreatePage extends CreateRecord
+class CreatePage extends CreateRecord
 {
     use HasPreviewModal;
 

@@ -19,7 +19,7 @@ use Throwable;
 use function Laravel\Prompts\confirm;
 
 #[AsCommand(name: 'shield:setup', description: 'Setup and install core requirements for Shield')]
-final class SetupCommand extends Command
+class SetupCommand extends Command
 {
     use CanBeProhibitable;
     use CanManipulateFiles;

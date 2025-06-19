@@ -10,7 +10,7 @@ use Filament\Resources\Pages\ManageRelatedRecords;
 use Webkul\Account\Filament\Resources\FiscalPositionResource;
 use Webkul\Account\Traits\FiscalPositionTax;
 
-final class ManageFiscalPositionTax extends ManageRelatedRecords
+class ManageFiscalPositionTax extends ManageRelatedRecords
 {
     use FiscalPositionTax;
 

@@ -8,7 +8,7 @@ use FilamentTiptapEditor\Tests\Database\Factories\PageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-final class Page extends Model
+class Page extends Model
 {
     use HasFactory;
 

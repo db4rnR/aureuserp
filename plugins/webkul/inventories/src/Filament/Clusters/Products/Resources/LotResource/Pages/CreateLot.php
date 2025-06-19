@@ -7,7 +7,7 @@ namespace Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource\Page
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource;
 
-final class CreateLot extends CreateRecord
+class CreateLot extends CreateRecord
 {
     protected static string $resource = LotResource::class;
 }

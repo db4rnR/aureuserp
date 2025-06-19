@@ -11,7 +11,7 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-final class DraftAction extends Action
+class DraftAction extends Action
 {
     protected function setUp(): void
     {
@@ -25,8 +25,7 @@ final class DraftAction extends Action
 
                 $livewire->updateForm();
 
-                Notification::make()
-                    ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/draft.action.notification.success.title'))
+                Notification::make()->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/draft.action.notification.success.title'))
                     ->body(__('purchases::filament/admin/clusters/orders/resources/order/actions/draft.action.notification.success.body'))
                     ->success()
                     ->send();

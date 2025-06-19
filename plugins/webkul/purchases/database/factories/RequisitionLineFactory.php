@@ -11,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<RequisitionLine>
  */
-final class RequisitionLineFactory extends Factory
+class RequisitionLineFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

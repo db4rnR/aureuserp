@@ -11,7 +11,7 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 
-final class CreateOrder extends CreateRecord
+class CreateOrder extends CreateRecord
 {
     protected static string $resource = OrderResource::class;
 
@@ -22,8 +22,7 @@ final class CreateOrder extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('purchases::filament/admin/clusters/orders/resources/order/pages/create-order.notification.title'))
             ->body(__('purchases::filament/admin/clusters/orders/resources/order/pages/create-order.notification.body'));
     }

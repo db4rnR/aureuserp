@@ -15,7 +15,7 @@ use Webkul\Support\Models\Company;
 /**
  * @extends Factory<Task>
  */
-final class TaskFactory extends Factory
+class TaskFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

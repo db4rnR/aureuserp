@@ -15,7 +15,7 @@ use Webkul\Sale\Filament\Clusters\ToInvoice;
 use Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToUpsellResource\Pages\ListOrderToUpsells;
 use Webkul\Sale\Models\Order;
 
-final class OrderToUpsellResource extends Resource
+class OrderToUpsellResource extends Resource
 {
     protected static ?string $model = Order::class;
 
@@ -35,14 +35,14 @@ final class OrderToUpsellResource extends Resource
         return __('sales::filament/clusters/to-invoice/resources/order-to-upsell.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return QuotationResource::form($schema);
+        return QuotationResource::form($form);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return QuotationResource::infolist($schema);
+        return QuotationResource::infolist($infolist);
     }
 
     public static function table(Table $table): Table

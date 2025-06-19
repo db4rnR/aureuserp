@@ -9,7 +9,7 @@ use Filament\Panel;
 use ReflectionClass;
 use Webkul\Security\Settings\UserSettings;
 
-final class SecurityPlugin implements Plugin
+class SecurityPlugin implements Plugin
 {
     public static function make(): static
     {

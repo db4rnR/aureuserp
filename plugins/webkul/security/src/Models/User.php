@@ -22,7 +22,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\Partner\Models\Partner;
 use Webkul\Support\Models\Company;
 
-final class User extends BaseUser implements Commentable, Commenter, FilamentUser
+class User extends BaseUser implements Commentable, Commenter, FilamentUser
 {
     use HasComments, HasRoles, SoftDeletes;
 

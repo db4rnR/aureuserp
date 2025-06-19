@@ -9,7 +9,7 @@ use Livewire\Component;
 use Webkul\Account\Enums\PaymentStatus;
 use Webkul\Account\Models\Payment;
 
-final class MarkAsSendAdnUnsentAction extends Action
+class MarkAsSendAdnUnsentAction extends Action
 {
     protected function setUp(): void
     {

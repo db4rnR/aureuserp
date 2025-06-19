@@ -7,7 +7,7 @@ namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductAtt
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductAttributeResource;
 use Webkul\Product\Filament\Resources\AttributeResource\Pages\CreateAttribute;
 
-final class CreateProductAttribute extends CreateAttribute
+class CreateProductAttribute extends CreateAttribute
 {
     protected static string $resource = ProductAttributeResource::class;
 }

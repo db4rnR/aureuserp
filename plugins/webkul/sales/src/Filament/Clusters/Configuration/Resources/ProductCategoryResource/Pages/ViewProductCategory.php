@@ -7,7 +7,7 @@ namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryR
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ViewProductCategory as BaseViewProductCategory;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryResource;
 
-final class ViewProductCategory extends BaseViewProductCategory
+class ViewProductCategory extends BaseViewProductCategory
 {
     protected static string $resource = ProductCategoryResource::class;
 }

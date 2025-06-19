@@ -6,7 +6,7 @@ namespace Webkul\Account\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-final class JournalFactory extends Factory
+class JournalFactory extends Factory
 {
     public function definition(): array
     {

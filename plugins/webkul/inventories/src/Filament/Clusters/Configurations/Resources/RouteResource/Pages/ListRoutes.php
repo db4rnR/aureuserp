@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource;
 use Webkul\Inventory\Models\Route;
 
-final class ListRoutes extends ListRecords
+class ListRoutes extends ListRecords
 {
     protected static string $resource = RouteResource::class;
 
@@ -30,8 +30,7 @@ final class ListRoutes extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/configurations/resources/route/pages/list-routes.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/route/pages/list-routes.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
@@ -43,8 +42,7 @@ final class ListRoutes extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/route/pages/list-routes.header-actions.create.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/route/pages/list-routes.header-actions.create.notification.body')),
                 ),

@@ -12,7 +12,7 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-final class CancelAction extends Action
+class CancelAction extends Action
 {
     protected function setUp(): void
     {
@@ -25,8 +25,7 @@ final class CancelAction extends Action
             ->action(function (Order $record, Component $livewire): void {
                 $record->lines->each(function ($move): void {
                     if ($move->qty_received > 0) {
-                        Notification::make()
-                            ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.warning.receipts.title'))
+                        Notification::make()->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.warning.receipts.title'))
                             ->body(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.warning.receipts.body'))
                             ->warning()
                             ->send();
@@ -37,8 +36,7 @@ final class CancelAction extends Action
 
                 $record->accountMoves->each(function ($move): void {
                     if ($move->state !== MoveState::CANCEL) {
-                        Notification::make()
-                            ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.warning.bills.title'))
+                        Notification::make()->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.warning.bills.title'))
                             ->body(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.warning.bills.body'))
                             ->warning()
                             ->send();
@@ -51,8 +49,7 @@ final class CancelAction extends Action
 
                 $livewire->updateForm();
 
-                Notification::make()
-                    ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.success.title'))
+                Notification::make()->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.success.title'))
                     ->body(__('purchases::filament/admin/clusters/orders/resources/order/actions/cancel.action.notification.success.body'))
                     ->success()
                     ->send();

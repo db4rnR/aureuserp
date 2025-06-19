@@ -15,7 +15,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource;
 use Webkul\Inventory\Models\Receipt;
 
-final class EditReceipt extends EditRecord
+class EditReceipt extends EditRecord
 {
     protected static string $resource = ReceiptResource::class;
 
@@ -31,8 +31,7 @@ final class EditReceipt extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/operations/resources/receipt/pages/edit-receipt.notification.title'))
             ->body(__('inventories::filament/clusters/operations/resources/receipt/pages/edit-receipt.notification.body'));
     }
@@ -40,8 +39,7 @@ final class EditReceipt extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterAction::make()->setResource(self::$resource),
             OperationActions\TodoAction::make(),
             OperationActions\ValidateAction::make(),
             OperationActions\CancelAction::make(),
@@ -56,16 +54,14 @@ final class EditReceipt extends EditRecord
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->button(),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
                 ->action(function (DeleteAction $action, Receipt $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/receipt/pages/edit-receipt.header-actions.delete.notification.error.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/receipt/pages/edit-receipt.header-actions.delete.notification.error.body'))
                             ->send();
@@ -74,8 +70,7 @@ final class EditReceipt extends EditRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/operations/resources/receipt/pages/edit-receipt.header-actions.delete.notification.success.title'))
                         ->body(__('inventories::filament/clusters/operations/resources/receipt/pages/edit-receipt.header-actions.delete.notification.success.body')),
                 ),

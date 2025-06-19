@@ -22,7 +22,7 @@ use Webkul\Security\Models\Scopes\UserPermissionScope;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Project extends Model implements Sortable
+class Project extends Model implements Sortable
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
 

@@ -12,7 +12,7 @@ use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Employee\Filament\Resources\EmployeeResource;
 use Webkul\Support\Models\ActivityPlan;
 
-final class EditEmployee extends EditRecord
+class EditEmployee extends EditRecord
 {
     protected static string $resource = EmployeeResource::class;
 
@@ -23,8 +23,7 @@ final class EditEmployee extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('employees::filament/resources/employee/pages/edit-employee.notification.title'))
             ->body(__('employees::filament/resources/employee/pages/edit-employee.notification.body'));
     }
@@ -32,13 +31,10 @@ final class EditEmployee extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource)
+            ChatterActions\ChatterAction::make()->setResource(self::$resource)
                 ->setActivityPlans($this->getActivityPlans()),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('employees::filament/resources/employee/pages/edit-employee.header-actions.delete.notification.title'))
                         ->body(__('employees::filament/resources/employee/pages/edit-employee.header-actions.delete.notification.body')),
                 ),

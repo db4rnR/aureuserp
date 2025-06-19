@@ -10,19 +10,17 @@ use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Auth;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\MandatoryDayResource;
 
-final class ListMandatoryDays extends ListRecords
+class ListMandatoryDays extends ListRecords
 {
     protected static string $resource = MandatoryDayResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('time-off::filament/clusters/configurations/resources/mandatory-days/pages/list-mandatory-days.header-actions.create.title'))
+            CreateAction::make()->label(__('time-off::filament/clusters/configurations/resources/mandatory-days/pages/list-mandatory-days.header-actions.create.title'))
                 ->icon('heroicon-o-plus-circle')
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/configurations/resources/mandatory-days/pages/list-mandatory-days.header-actions.create.notification.created.title'))
                         ->body(__('time-off::filament/clusters/configurations/resources/mandatory-days/pages/list-mandatory-days.header-actions.create.notification.created.body'))
                 )

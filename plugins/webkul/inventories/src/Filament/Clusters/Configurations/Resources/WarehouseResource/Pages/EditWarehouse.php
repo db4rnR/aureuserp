@@ -16,14 +16,13 @@ use Webkul\Inventory\Models\OperationType;
 use Webkul\Inventory\Models\Route;
 use Webkul\Inventory\Models\Rule;
 
-final class EditWarehouse extends EditRecord
+class EditWarehouse extends EditRecord
 {
     protected static string $resource = WarehouseResource::class;
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/warehouse/pages/edit-warehouse.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/warehouse/pages/edit-warehouse.notification.body'));
     }
@@ -31,10 +30,8 @@ final class EditWarehouse extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/warehouse/pages/edit-warehouse.header-actions.delete.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/warehouse/pages/edit-warehouse.header-actions.delete.notification.body')),
                 ),

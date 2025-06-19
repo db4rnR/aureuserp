@@ -9,7 +9,7 @@ use Filament\Panel;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Website\Models\Page as PageModel;
 
-final class Homepage extends Page
+class Homepage extends Page
 {
     protected static ?int $navigationSort = -2;
 

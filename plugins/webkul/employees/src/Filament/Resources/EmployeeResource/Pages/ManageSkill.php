@@ -9,7 +9,7 @@ use Filament\Resources\Pages\ManageRelatedRecords;
 use Webkul\Employee\Filament\Resources\EmployeeResource;
 use Webkul\Employee\Traits\Resources\Employee\EmployeeSkillRelation;
 
-final class ManageSkill extends ManageRelatedRecords
+class ManageSkill extends ManageRelatedRecords
 {
     use EmployeeSkillRelation;
 

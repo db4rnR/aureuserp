@@ -7,7 +7,7 @@ namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttribute
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\EditProductAttribute as BaseEditProductAttribute;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributeResource;
 
-final class EditProductAttribute extends BaseEditProductAttribute
+class EditProductAttribute extends BaseEditProductAttribute
 {
     protected static string $resource = ProductAttributeResource::class;
 }

@@ -15,15 +15,14 @@ use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DropshipResource;
 use Webkul\Inventory\Models\Dropship;
 
-final class ViewDropship extends ViewRecord
+class ViewDropship extends ViewRecord
 {
     protected static string $resource = DropshipResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterAction::make()->setResource(self::$resource),
             ActionGroup::make([
                 OperationActions\Print\PickingOperationAction::make(),
                 OperationActions\Print\DeliverySlipAction::make(),
@@ -34,16 +33,14 @@ final class ViewDropship extends ViewRecord
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->button(),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
                 ->action(function (DeleteAction $action, Dropship $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/dropship/pages/view-dropship.header-actions.delete.notification.error.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/dropship/pages/view-dropship.header-actions.delete.notification.error.body'))
                             ->send();
@@ -52,8 +49,7 @@ final class ViewDropship extends ViewRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/operations/resources/dropship/pages/view-dropship.header-actions.delete.notification.success.title'))
                         ->body(__('inventories::filament/clusters/operations/resources/dropship/pages/view-dropship.header-actions.delete.notification.success.body')),
                 ),

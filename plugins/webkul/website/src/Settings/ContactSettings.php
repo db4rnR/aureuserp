@@ -6,7 +6,7 @@ namespace Webkul\Website\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class ContactSettings extends Settings
+class ContactSettings extends Settings
 {
     public ?string $email = null;
 

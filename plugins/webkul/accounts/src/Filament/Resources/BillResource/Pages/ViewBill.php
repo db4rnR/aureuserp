@@ -12,25 +12,22 @@ use Webkul\Account\Filament\Resources\BillResource\Actions\CreditNoteAction;
 use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
-final class ViewBill extends ViewRecord
+class ViewBill extends ViewRecord
 {
     protected static string $resource = BillResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource($this->getResource()),
+            ChatterActions\ChatterAction::make()->setResource($this->getResource()),
             BaseActions\PayAction::make(),
             BaseActions\ConfirmAction::make(),
             BaseActions\CancelAction::make(),
             BaseActions\ResetToDraftAction::make(),
             BaseActions\SetAsCheckedAction::make(),
             CreditNoteAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/bill/pages/view-bill.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/bill/pages/view-bill.header-actions.delete.notification.body'))
                 ),

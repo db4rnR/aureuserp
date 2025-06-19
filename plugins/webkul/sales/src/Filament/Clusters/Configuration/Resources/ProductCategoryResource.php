@@ -14,7 +14,7 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryResourc
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ViewProductCategory;
 use Webkul\Sale\Models\Category;
 
-final class ProductCategoryResource extends BaseProductCategoryResource
+class ProductCategoryResource extends BaseProductCategoryResource
 {
     protected static ?string $model = Category::class;
 

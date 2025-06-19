@@ -10,7 +10,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\UOM;
 
-final class OrderOption extends Model implements Sortable
+class OrderOption extends Model implements Sortable
 {
     use SortableTrait;
 

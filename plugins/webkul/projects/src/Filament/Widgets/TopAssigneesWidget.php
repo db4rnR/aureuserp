@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Webkul\Project\Models\Timesheet;
 
-final class TopAssigneesWidget extends BaseWidget
+class TopAssigneesWidget extends BaseWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 
@@ -71,14 +71,11 @@ final class TopAssigneesWidget extends BaseWidget
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('user_name')
-                ->label(__('projects::filament/widgets/top-assignees.table-columns.user'))
+            TextColumn::make('user_name')->label(__('projects::filament/widgets/top-assignees.table-columns.user'))
                 ->sortable(),
-            TextColumn::make('total_hours')
-                ->label(__('projects::filament/widgets/top-assignees.table-columns.hours-spent'))
+            TextColumn::make('total_hours')->label(__('projects::filament/widgets/top-assignees.table-columns.hours-spent'))
                 ->sortable(),
-            TextColumn::make('total_tasks')
-                ->label(__('projects::filament/widgets/top-assignees.table-columns.tasks'))
+            TextColumn::make('total_tasks')->label(__('projects::filament/widgets/top-assignees.table-columns.tasks'))
                 ->sortable(),
         ];
     }

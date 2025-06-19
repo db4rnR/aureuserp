@@ -12,7 +12,7 @@ use Webkul\Project\Filament\Resources\ProjectResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListProjects extends ListRecords
+class ListProjects extends ListRecords
 {
     use HasTableViews;
 
@@ -48,8 +48,7 @@ final class ListProjects extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('projects::filament/resources/project/pages/list-projects.header-actions.create.label'))
+            CreateAction::make()->label(__('projects::filament/resources/project/pages/list-projects.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

@@ -11,7 +11,7 @@ use Webkul\Account\Enums\DocumentType;
 use Webkul\Account\Filament\Resources\TaxResource;
 use Webkul\Account\Traits\TaxPartition;
 
-final class ManageDistributionForRefund extends ManageRelatedRecords
+class ManageDistributionForRefund extends ManageRelatedRecords
 {
     use TaxPartition;
 

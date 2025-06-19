@@ -19,7 +19,7 @@ use Pboivin\FilamentPeek\FilamentPeekServiceProvider;
 use Pboivin\FilamentPeek\Tests\Models\User;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-final class TestCase extends Orchestra
+class TestCase extends Orchestra
 {
     protected function configurePackageProviders($app): void
     {

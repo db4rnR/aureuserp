@@ -10,7 +10,7 @@ use Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListEmployeeSkills extends ListRecords
+class ListEmployeeSkills extends ListRecords
 {
     use HasTableViews;
 

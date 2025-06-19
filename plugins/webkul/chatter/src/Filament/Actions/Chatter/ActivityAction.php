@@ -22,7 +22,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\ActivityPlan;
 use Webkul\Support\Models\ActivityType;
 
-final class ActivityAction extends Action
+class ActivityAction extends Action
 {
     private mixed $activityPlans;
 
@@ -34,29 +34,23 @@ final class ActivityAction extends Action
             ->color('gray')
             ->outlined()
             ->schema(fn ($form, $record) => $form->schema([
-                Group::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                Select::make('activity_plan_id')
-                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.activity-plan'))
+                Group::make()->schema([
+                        Group::make()->schema([
+                                Select::make('activity_plan_id')->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.activity-plan'))
                                     ->options($this->activityPlans)
                                     ->searchable()
                                     ->hidden($this->activityPlans->isEmpty())
                                     ->preload()
                                     ->live(),
-                                DatePicker::make('date_deadline')
-                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.plan-date'))
+                                DatePicker::make('date_deadline')->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.plan-date'))
                                     ->hidden(fn (Get $get): bool => ! $get('activity_plan_id'))
                                     ->live()
                                     ->native(false),
                             ])
                             ->columns(2),
 
-                        Group::make()
-                            ->schema([
-                                Placeholder::make('plan_summary')
-                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.plan-summary'))
+                        Group::make()->schema([
+                                Placeholder::make('plan_summary')->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.plan-summary'))
                                     ->content(function (Get $get): ?HtmlString {
                                         if (! $get('activity_plan_id')) {
                                             return null;
@@ -77,24 +71,20 @@ final class ActivityAction extends Action
 
                                         return new HtmlString($html);
                                     })->hidden(fn (Get $get): bool => ! $get('activity_plan_id')),
-                                Select::make('activity_type_id')
-                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.activity-type'))
+                                Select::make('activity_type_id')->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.activity-type'))
                                     ->options(ActivityType::pluck('name', 'id'))
                                     ->searchable()
                                     ->preload()
                                     ->live()
                                     ->required()
                                     ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
-                                DatePicker::make('date_deadline')
-                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.due-date'))
+                                DatePicker::make('date_deadline')->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.due-date'))
                                     ->native(false)
                                     ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))->category === 'meeting')
                                     ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
-                                TextInput::make('summary')
-                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.summary'))
+                                TextInput::make('summary')->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.summary'))
                                     ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
-                                Select::make('assigned_to')
-                                    ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.assigned-to'))
+                                Select::make('assigned_to')->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.assigned-to'))
                                     ->searchable()
                                     ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))->category === 'meeting')
                                     ->live()
@@ -102,14 +92,12 @@ final class ActivityAction extends Action
                                     ->options(User::all()->pluck('name', 'id')->toArray())
                                     ->required(),
                             ])->columns(2),
-                        RichEditor::make('body')
-                            ->hiddenLabel()
+                        RichEditor::make('body')->hiddenLabel()
                             ->hidden(fn (Get $get): bool => $get('activity_type_id') && ActivityType::find($get('activity_type_id'))->category === 'meeting')
                             ->visible(fn (Get $get): bool => ! $get('activity_plan_id'))
                             ->placeholder(__('chatter::filament/resources/actions/chatter/activity-action.setup.form.fields.log-note'))
                             ->visible(fn (Get $get): bool => ! $get('activity_plan_id')),
-                        Hidden::make('type')
-                            ->default('activity'),
+                        Hidden::make('type')->default('activity'),
                     ]),
             ]))
             ->action(function (array $data, ?Model $record = null): void {
@@ -157,14 +145,12 @@ final class ActivityAction extends Action
                         $record->addMessage($data, $user->id);
                     }
 
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('chatter::filament/resources/actions/chatter/activity-action.setup.actions.notification.success.title'))
                         ->body(__('chatter::filament/resources/actions/chatter/activity-action.setup.actions.notification.success.body'))
                         ->send();
                 } catch (Exception $e) {
-                    Notification::make()
-                        ->danger()
+                    Notification::make()->danger()
                         ->title(__('chatter::filament/resources/actions/chatter/activity-action.setup.actions.notification.error.title'))
                         ->body(__('chatter::filament/resources/actions/chatter/activity-action.setup.actions.notification.error.body'))
                         ->send();

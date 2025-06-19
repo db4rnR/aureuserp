@@ -21,7 +21,7 @@ use Webkul\Support\Models\Currency;
 #[Group('auth')]
 #[Group('billing')]
 #[Description('Test invoice listing page loads successfully')]
-function invoice_listing_page_loads_successfully(): void
+function invoices_invoice_listing_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -40,7 +40,7 @@ function invoice_listing_page_loads_successfully(): void
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test invoice creation page loads successfully')]
-function invoice_creation_page_loads_successfully(): void
+function invoices_invoice_creation_page_loads_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -64,7 +64,7 @@ function invoice_creation_page_loads_successfully(): void
 #[Group('billing')]
 #[Group('critical-path')]
 #[Description('Test invoice can be created successfully')]
-function invoice_can_be_created_successfully(): void
+function invoices_invoice_can_be_created_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -117,7 +117,7 @@ function invoice_can_be_created_successfully(): void
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test invoice can be viewed successfully')]
-function invoice_can_be_viewed_successfully(): void
+function invoices_invoice_can_be_viewed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -189,7 +189,7 @@ function invoice_can_be_edited_successfully(): void
 #[Group('billing')]
 #[Group('critical-path')]
 #[Description('Test invoice can be confirmed successfully')]
-function invoice_can_be_confirmed_successfully(): void
+function invoices_invoice_can_be_confirmed_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();
@@ -218,7 +218,7 @@ function invoice_can_be_confirmed_successfully(): void
 #[Group('feature')]
 #[Group('invoices')]
 #[Description('Test invoice can be cancelled successfully')]
-function invoice_can_be_cancelled_successfully(): void
+function invoices_invoice_can_be_cancelled_successfully(): void
 {
     // Create a user with appropriate permissions
     $user = User::factory()->create();

@@ -18,7 +18,7 @@ use Webkul\Inventory\Filament\Clusters\Operations;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReplenishmentResource\Pages\ManageReplenishment;
 use Webkul\Inventory\Models\OrderPoint;
 
-final class ReplenishmentResource extends Resource
+class ReplenishmentResource extends Resource
 {
     protected static ?string $model = OrderPoint::class;
 
@@ -43,9 +43,9 @@ final class ReplenishmentResource extends Resource
         return __('inventories::filament/clusters/operations/resources/replenishment.navigation.group');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
             ])
             ->columns(1);
@@ -65,8 +65,7 @@ final class ReplenishmentResource extends Resource
                 })->all()
             )
             ->filters([
-                QueryBuilder::make()
-                    ->constraints(collect([
+                QueryBuilder::make()->constraints(collect([
                     ])->filter()->values()->all()),
             ], layout: FiltersLayout::Modal)
             ->filtersTriggerAction(
@@ -75,14 +74,12 @@ final class ReplenishmentResource extends Resource
             )
             ->filtersFormColumns(2)
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('inventories::filament/clusters/operations/resources/replenishment.table.header-actions.create.label'))
+                CreateAction::make()->label(__('inventories::filament/clusters/operations/resources/replenishment.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(fn (array $data): array => $data)
                     ->before(function (array $data): void {})
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/operations/resources/replenishment.table.header-actions.create.notification.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/replenishment.table.header-actions.create.notification.body')),
                     ),

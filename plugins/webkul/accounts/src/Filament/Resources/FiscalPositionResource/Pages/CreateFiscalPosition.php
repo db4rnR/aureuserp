@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\FiscalPositionResource;
 
-final class CreateFiscalPosition extends CreateRecord
+class CreateFiscalPosition extends CreateRecord
 {
     protected static string $resource = FiscalPositionResource::class;
 
@@ -20,8 +20,7 @@ final class CreateFiscalPosition extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/fiscal-position/pages/create-fiscal-position.notification.title'))
             ->body(__('accounts::filament/resources/fiscal-position/pages/create-fiscal-position.notification.body'));
     }

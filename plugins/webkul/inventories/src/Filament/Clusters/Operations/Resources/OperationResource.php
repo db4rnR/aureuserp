@@ -64,7 +64,7 @@ use Webkul\Product\Enums\ProductType;
 use Webkul\Support\Models\UOM;
 use Webkul\TableViews\Filament\Components\PresetView;
 
-final class OperationResource extends Resource
+class OperationResource extends Resource
 {
     use HasCustomFields;
 
@@ -72,12 +72,11 @@ final class OperationResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                ProgressStepper::make('state')
-                    ->hiddenLabel()
+                ProgressStepper::make('state')->hiddenLabel()
                     ->inline()
                     ->options(OperationState::options())
                     ->options(function ($record): array {
@@ -93,32 +92,28 @@ final class OperationResource extends Resource
                     ->disabled(),
                 Section::make(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.title'))
                     ->schema([
-                        Select::make('partner_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.receive-from'))
+                        Select::make('partner_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.receive-from'))
                             ->relationship('partner', 'name')
                             ->searchable()
                             ->preload()
-                            ->createOptionForm(fn (Schema $schema): Schema => PartnerResource::form($schema))
+                            ->createOptionForm(fn (Schema $form): Schema => PartnerResource::form($form))
                             ->visible(fn (Get $get): bool => OperationType::withTrashed()->find($get('operation_type_id'))?->type === Enums\OperationType::INCOMING)
                             ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
-                        Select::make('partner_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.contact'))
+                        Select::make('partner_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.contact'))
                             ->relationship('partner', 'name')
                             ->searchable()
                             ->preload()
-                            ->createOptionForm(fn (Schema $schema): Schema => PartnerResource::form($schema))
+                            ->createOptionForm(fn (Schema $form): Schema => PartnerResource::form($form))
                             ->visible(fn (Get $get): bool => OperationType::withTrashed()->find($get('operation_type_id'))?->type === Enums\OperationType::INTERNAL)
                             ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
-                        Select::make('partner_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.delivery-address'))
+                        Select::make('partner_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.delivery-address'))
                             ->relationship('partner', 'name')
                             ->searchable()
                             ->preload()
-                            ->createOptionForm(fn (Schema $schema): Schema => PartnerResource::form($schema))
+                            ->createOptionForm(fn (Schema $form): Schema => PartnerResource::form($form))
                             ->visible(fn (Get $get): bool => OperationType::withTrashed()->find($get('operation_type_id'))?->type === Enums\OperationType::OUTGOING)
                             ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
-                        Select::make('operation_type_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.operation-type'))
+                        Select::make('operation_type_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.operation-type'))
                             ->relationship(
                                 name: 'operationType',
                                 titleAttribute: 'name',
@@ -143,8 +138,7 @@ final class OperationResource extends Resource
                                 $set('destination_location_id', $operationType?->destination_location_id);
                             })
                             ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
-                        Select::make('source_location_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.source-location'))
+                        Select::make('source_location_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.source-location'))
                             ->relationship(
                                 'sourceLocation',
                                 'full_name',
@@ -157,8 +151,7 @@ final class OperationResource extends Resource
                             ->required()
                             ->visible(fn (WarehouseSettings $settings, Get $get): bool => $settings->enable_locations && OperationType::withTrashed()->find($get('operation_type_id'))?->type !== Enums\OperationType::INCOMING)
                             ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
-                        Select::make('destination_location_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.destination-location'))
+                        Select::make('destination_location_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.destination-location'))
                             ->relationship(
                                 'destinationLocation',
                                 'full_name',
@@ -174,8 +167,7 @@ final class OperationResource extends Resource
                     ])
                     ->columns(2),
 
-                Tabs::make()
-                    ->schema([
+                Tabs::make()->schema([
                         Tab::make(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.title'))
                             ->schema([
                                 self::getMovesRepeater(),
@@ -183,28 +175,24 @@ final class OperationResource extends Resource
 
                         Tab::make(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.title'))
                             ->schema([
-                                Select::make('user_id')
-                                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.responsible'))
+                                Select::make('user_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.responsible'))
                                     ->relationship('user', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->default(Auth::id())
                                     ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
-                                Select::make('move_type')
-                                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.shipping-policy'))
+                                Select::make('move_type')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.shipping-policy'))
                                     ->options(MoveType::class)
                                     ->default(MoveType::DIRECT)
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.shipping-policy-hint-tooltip'))
                                     ->visible(fn (Get $get): bool => OperationType::withTrashed()->find($get('operation_type_id'))?->type !== Enums\OperationType::INCOMING)
                                     ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
-                                DateTimePicker::make('scheduled_at')
-                                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.scheduled-at'))
+                                DateTimePicker::make('scheduled_at')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.scheduled-at'))
                                     ->native(false)
                                     ->default(now()->format('Y-m-d H:i:s'))
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.scheduled-at-hint-tooltip'))
                                     ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
-                                TextInput::make('origin')
-                                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.source-document'))
+                                TextInput::make('origin')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.source-document'))
                                     ->maxLength(255)
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/operations/resources/operation.form.tabs.additional.fields.source-document-hint-tooltip'))
                                     ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED], true)),
@@ -213,8 +201,7 @@ final class OperationResource extends Resource
 
                         Tab::make(__('inventories::filament/clusters/operations/resources/operation.form.tabs.note.title'))
                             ->schema([
-                                RichEditor::make('description')
-                                    ->hiddenLabel(),
+                                RichEditor::make('description')->hiddenLabel(),
                             ]),
                     ]),
             ])
@@ -225,8 +212,7 @@ final class OperationResource extends Resource
     {
         return $table
             ->columns([
-                IconColumn::make('is_favorite')
-                    ->label('')
+                IconColumn::make('is_favorite')->label('')
                     ->icon(fn (Operation $record): string => $record->is_favorite ? 'heroicon-s-star' : 'heroicon-o-star')
                     ->color(fn (Operation $record): string => $record->is_favorite ? 'warning' : 'gray')
                     ->action(function (Operation $record): void {
@@ -234,129 +220,101 @@ final class OperationResource extends Resource
                             'is_favorite' => ! $record->is_favorite,
                         ]);
                     }),
-                TextColumn::make('name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.reference'))
+                TextColumn::make('name')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.reference'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('sourceLocation.full_name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.from'))
+                TextColumn::make('sourceLocation.full_name')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.from'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
-                TextColumn::make('destinationLocation.full_name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.to'))
+                TextColumn::make('destinationLocation.full_name')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.to'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
-                TextColumn::make('partner.name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.contact'))
+                TextColumn::make('partner.name')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.contact'))
                     ->placeholder('—')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('user.name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.responsible'))
+                TextColumn::make('user.name')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.responsible'))
                     ->placeholder('—')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('scheduled_at')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.scheduled-at'))
+                TextColumn::make('scheduled_at')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.scheduled-at'))
                     ->placeholder('—')
                     ->dateTime()
                     ->sortable(),
-                TextColumn::make('deadline')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.deadline'))
+                TextColumn::make('deadline')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.deadline'))
                     ->placeholder('—')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('closed_at')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.closed-at'))
+                TextColumn::make('closed_at')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.closed-at'))
                     ->placeholder('—')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('origin')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.source-document'))
+                TextColumn::make('origin')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.source-document'))
                     ->placeholder('—')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('operationType.name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.operation-type'))
+                TextColumn::make('operationType.name')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.operation-type'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('company.name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.company'))
+                TextColumn::make('company.name')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.company'))
                     ->placeholder('—')
                     ->sortable(),
-                TextColumn::make('state')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.state'))
+                TextColumn::make('state')->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.state'))
                     ->sortable()
                     ->badge(),
             ])
             ->groups([
-                Group::make('state')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.state')),
-                Group::make('origin')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.source-document')),
-                Group::make('operationType.name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.operation-type')),
-                Group::make('schedule_at')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.schedule-at'))
+                Group::make('state')->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.state')),
+                Group::make('origin')->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.source-document')),
+                Group::make('operationType.name')->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.operation-type')),
+                Group::make('schedule_at')->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.schedule-at'))
                     ->date(),
-                Group::make('created_at')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.created-at'))
+                Group::make('created_at')->label(__('inventories::filament/clusters/operations/resources/operation.table.groups.created-at'))
                     ->date(),
             ])
             ->filters([
-                QueryBuilder::make()
-                    ->constraints(collect(self::mergeCustomTableQueryBuilderConstraints([
-                        TextConstraint::make('name')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.name')),
-                        SelectConstraint::make('state')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.state'))
+                QueryBuilder::make()->constraints(collect(self::mergeCustomTableQueryBuilderConstraints([
+                        TextConstraint::make('name')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.name')),
+                        SelectConstraint::make('state')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.state'))
                             ->multiple()
                             ->options(OperationState::class)
                             ->icon('heroicon-o-bars-2'),
-                        RelationshipConstraint::make('partner')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.partner'))
+                        RelationshipConstraint::make('partner')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.partner'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             )
                             ->icon('heroicon-o-user'),
-                        RelationshipConstraint::make('user')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.responsible'))
+                        RelationshipConstraint::make('user')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.responsible'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             )
                             ->icon('heroicon-o-user'),
-                        RelationshipConstraint::make('owner')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.owner'))
+                        RelationshipConstraint::make('owner')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.owner'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             )
                             ->icon('heroicon-o-user'),
                         app(WarehouseSettings::class)->enable_locations
-                            ? RelationshipConstraint::make('sourceLocation')
-                                ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.source-location'))
+                            ? RelationshipConstraint::make('sourceLocation')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.source-location'))
                                 ->multiple()
                                 ->selectable(
-                                    IsRelatedToOperator::make()
-                                        ->titleAttribute('full_name')
+                                    IsRelatedToOperator::make()->titleAttribute('full_name')
                                         ->searchable()
                                         ->multiple()
                                         ->preload(),
@@ -364,46 +322,35 @@ final class OperationResource extends Resource
                                 ->icon('heroicon-o-map-pin')
                             : null,
                         app(WarehouseSettings::class)->enable_locations
-                            ? RelationshipConstraint::make('destinationLocation')
-                                ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.destination-location'))
+                            ? RelationshipConstraint::make('destinationLocation')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.destination-location'))
                                 ->multiple()
                                 ->selectable(
-                                    IsRelatedToOperator::make()
-                                        ->titleAttribute('full_name')
+                                    IsRelatedToOperator::make()->titleAttribute('full_name')
                                         ->searchable()
                                         ->multiple()
                                         ->preload(),
                                 )
                                 ->icon('heroicon-o-map-pin')
                             : null,
-                        DateConstraint::make('deadline')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.deadline'))
+                        DateConstraint::make('deadline')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.deadline'))
                             ->icon('heroicon-o-calendar'),
-                        DateConstraint::make('scheduled_at')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.scheduled-at')),
-                        DateConstraint::make('closed_at')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.closed-at')),
-                        DateConstraint::make('created_at')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.created-at')),
-                        DateConstraint::make('updated_at')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.updated-at')),
-                        RelationshipConstraint::make('company')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.company'))
+                        DateConstraint::make('scheduled_at')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.scheduled-at')),
+                        DateConstraint::make('closed_at')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.closed-at')),
+                        DateConstraint::make('created_at')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.created-at')),
+                        DateConstraint::make('updated_at')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.updated-at')),
+                        RelationshipConstraint::make('company')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.company'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             )
                             ->icon('heroicon-o-building-office'),
-                        RelationshipConstraint::make('creator')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.creator'))
+                        RelationshipConstraint::make('creator')->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.creator'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
@@ -425,101 +372,81 @@ final class OperationResource extends Resource
             );
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Section::make()
-                    ->schema([
-                        TextEntry::make('state')
-                            ->badge(),
+                Section::make()->schema([
+                        TextEntry::make('state')->badge(),
                     ])
                     ->compact(),
 
                 Section::make(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.title'))
                     ->schema([
-                        Grid::make(2)
-                            ->schema([
-                                TextEntry::make('partner.name')
-                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.contact'))
+                        Grid::make(2)->schema([
+                                TextEntry::make('partner.name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.contact'))
                                     ->icon('heroicon-o-user-group')
                                     ->placeholder('—'),
 
-                                TextEntry::make('operationType.name')
-                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.operation-type'))
+                                TextEntry::make('operationType.name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.operation-type'))
                                     ->icon('heroicon-o-clipboard-document-list'),
 
-                                TextEntry::make('sourceLocation.full_name')
-                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.source-location'))
+                                TextEntry::make('sourceLocation.full_name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.source-location'))
                                     ->icon('heroicon-o-arrow-up-tray')
                                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
 
-                                TextEntry::make('destinationLocation.full_name')
-                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.destination-location'))
+                                TextEntry::make('destinationLocation.full_name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.destination-location'))
                                     ->icon('heroicon-o-arrow-down-tray')
                                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
                             ]),
                     ]),
 
                 // Tabs Section
-                Tabs::make('Details')
-                    ->tabs([
+                Tabs::make('Details')->tabs([
                         // Operations Tab
                         Tab::make(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.title'))
                             ->schema([
-                                RepeatableEntry::make('moves')
-                                    ->schema([
-                                        Grid::make(5)
-                                            ->schema([
-                                                TextEntry::make('product.name')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.product'))
+                                RepeatableEntry::make('moves')->schema([
+                                        Grid::make(5)->schema([
+                                                TextEntry::make('product.name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.product'))
                                                     ->icon('heroicon-o-cube'),
 
-                                                TextEntry::make('finalLocation.full_name')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.final-location'))
+                                                TextEntry::make('finalLocation.full_name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.final-location'))
                                                     ->icon('heroicon-o-map-pin')
                                                     ->placeholder('—')
                                                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
 
-                                                TextEntry::make('description_picking')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.description'))
+                                                TextEntry::make('description_picking')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.description'))
                                                     ->icon('heroicon-o-document-text')
                                                     ->placeholder('—'),
 
-                                                TextEntry::make('scheduled_at')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.scheduled-at'))
+                                                TextEntry::make('scheduled_at')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.scheduled-at'))
                                                     ->dateTime()
                                                     ->icon('heroicon-o-calendar')
                                                     ->placeholder('—'),
 
-                                                TextEntry::make('deadline')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.deadline'))
+                                                TextEntry::make('deadline')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.deadline'))
                                                     ->dateTime()
                                                     ->icon('heroicon-o-clock')
                                                     ->placeholder('—'),
 
-                                                TextEntry::make('productPackaging.name')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.packaging'))
+                                                TextEntry::make('productPackaging.name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.packaging'))
                                                     ->icon('heroicon-o-gift')
                                                     ->visible(fn (ProductSettings $settings): bool => $settings->enable_packagings)
                                                     ->placeholder('—'),
 
-                                                TextEntry::make('product_qty')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.demand'))
+                                                TextEntry::make('product_qty')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.demand'))
                                                     ->icon('heroicon-o-calculator'),
 
-                                                TextEntry::make('quantity')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.quantity'))
+                                                TextEntry::make('quantity')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.quantity'))
                                                     ->icon('heroicon-o-scale')
                                                     ->placeholder('—'),
 
-                                                TextEntry::make('uom.name')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.unit'))
+                                                TextEntry::make('uom.name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.unit'))
                                                     ->icon('heroicon-o-beaker')
                                                     ->visible(fn (ProductSettings $settings): bool => $settings->enable_uom),
 
-                                                IconEntry::make('is_picked')
-                                                    ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.picked'))
+                                                IconEntry::make('is_picked')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.picked'))
                                                     ->icon(fn (bool $state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
                                                     ->color(fn (bool $state): string => $state ? 'success' : 'danger'),
                                             ]),
@@ -528,26 +455,21 @@ final class OperationResource extends Resource
 
                         Tab::make(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.title'))
                             ->schema([
-                                Grid::make(2)
-                                    ->schema([
-                                        TextEntry::make('user.name')
-                                            ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.entries.responsible'))
+                                Grid::make(2)->schema([
+                                        TextEntry::make('user.name')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.entries.responsible'))
                                             ->icon('heroicon-o-user')
                                             ->placeholder('—'),
 
-                                        TextEntry::make('move_type')
-                                            ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.entries.shipping-policy'))
+                                        TextEntry::make('move_type')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.entries.shipping-policy'))
                                             ->icon('heroicon-o-truck')
                                             ->placeholder('—'),
 
-                                        TextEntry::make('scheduled_at')
-                                            ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.entries.scheduled-at'))
+                                        TextEntry::make('scheduled_at')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.entries.scheduled-at'))
                                             ->dateTime()
                                             ->icon('heroicon-o-calendar')
                                             ->placeholder('—'),
 
-                                        TextEntry::make('origin')
-                                            ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.entries.source-document'))
+                                        TextEntry::make('origin')->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.additional.entries.source-document'))
                                             ->icon('heroicon-o-document-text')
                                             ->placeholder('—'),
                                     ]),
@@ -555,8 +477,7 @@ final class OperationResource extends Resource
 
                         Tab::make(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.note.title'))
                             ->schema([
-                                TextEntry::make('description')
-                                    ->markdown()
+                                TextEntry::make('description')->markdown()
                                     ->hiddenLabel()
                                     ->placeholder('—'),
                             ]),
@@ -580,12 +501,10 @@ final class OperationResource extends Resource
 
     public static function getMovesRepeater(): Repeater
     {
-        return Repeater::make('moves')
-            ->hiddenLabel()
+        return Repeater::make('moves')->hiddenLabel()
             ->relationship()
             ->schema([
-                Select::make('product_id')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.product'))
+                Select::make('product_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.product'))
                     ->relationship('product', 'name')
                     ->relationship(
                         'product',
@@ -602,8 +521,7 @@ final class OperationResource extends Resource
                         self::afterProductUpdated($set, $get);
                     })
                     ->disabled(fn (Move $move): bool => $move->id && $move->state !== MoveState::DRAFT),
-                Select::make('final_location_id')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.final-location'))
+                Select::make('final_location_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.final-location'))
                     ->relationship(
                         'finalLocation',
                         'full_name',
@@ -615,28 +533,23 @@ final class OperationResource extends Resource
                     ->preload()
                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                TextInput::make('description_picking')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.description'))
+                TextInput::make('description_picking')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.description'))
                     ->maxLength(255)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                DateTimePicker::make('scheduled_at')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.scheduled-at'))
+                DateTimePicker::make('scheduled_at')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.scheduled-at'))
                     ->default(now())
                     ->native(false)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                DateTimePicker::make('deadline')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.deadline'))
+                DateTimePicker::make('deadline')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.deadline'))
                     ->native(false)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                Select::make('product_packaging_id')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.packaging'))
+                Select::make('product_packaging_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.packaging'))
                     ->relationship('productPackaging', 'name')
                     ->searchable()
                     ->preload()
                     ->visible(fn (ProductSettings $settings): bool => $settings->enable_packagings)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                TextInput::make('product_uom_qty')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.demand'))
+                TextInput::make('product_uom_qty')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.demand'))
                     ->numeric()
                     ->minValue(0)
                     ->maxValue(99999999999)
@@ -647,8 +560,7 @@ final class OperationResource extends Resource
                         self::afterProductUOMQtyUpdated($set, $get);
                     })
                     ->disabled(fn (Move $move): bool => $move->id && $move->state !== MoveState::DRAFT),
-                TextInput::make('quantity')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.quantity'))
+                TextInput::make('quantity')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.quantity'))
                     ->numeric()
                     ->minValue(0)
                     ->maxValue(99999999999)
@@ -657,8 +569,7 @@ final class OperationResource extends Resource
                     ->visible(fn (Move $move): bool => $move->id && $move->state !== MoveState::DRAFT)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true))
                     ->suffixAction(fn ($record): Action => self::getMoveLinesAction($record)),
-                Select::make('uom_id')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.unit'))
+                Select::make('uom_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.unit'))
                     ->relationship(
                         'uom',
                         'name',
@@ -673,13 +584,11 @@ final class OperationResource extends Resource
                     })
                     ->visible(fn (ProductSettings $settings): bool => $settings->enable_uom)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                Toggle::make('is_picked')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.picked'))
+                Toggle::make('is_picked')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.picked'))
                     ->default(0)
                     ->inline(false)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                Hidden::make('product_qty')
-                    ->default(0),
+                Hidden::make('product_qty')->default(0),
             ])
             ->columns(4)
             ->mutateRelationshipDataBeforeCreateUsing(function (array $data, $record) {
@@ -745,18 +654,15 @@ final class OperationResource extends Resource
             $columns++;
         }
 
-        return Action::make('manageLines')
-            ->icon('heroicon-m-bars-4')
+        return Action::make('manageLines')->icon('heroicon-m-bars-4')
             ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.modal-heading'))
             ->modalSubmitActionLabel('Save')
             ->visible(app(WarehouseSettings::class)->enable_locations)
             ->schema([
-                Repeater::make('lines')
-                    ->hiddenLabel()
+                Repeater::make('lines')->hiddenLabel()
                     ->relationship('lines')
                     ->schema([
-                        Select::make('quantity_id')
-                            ->label(__(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.pick-from')))
+                        Select::make('quantity_id')->label(__(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.pick-from')))
                             ->options(function ($record) use ($move) {
                                 if (in_array($record?->state, [MoveState::DONE, MoveState::CANCELED], true)) {
                                     $nameParts = array_filter([
@@ -825,8 +731,7 @@ final class OperationResource extends Resource
                             })
                             ->visible($move->sourceLocation->type === LocationType::INTERNAL)
                             ->disabled(fn (): bool => in_array($move->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                        Select::make('lot_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.lot'))
+                        Select::make('lot_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.lot'))
                             ->relationship(
                                 name: 'lot',
                                 titleAttribute: 'name',
@@ -853,8 +758,7 @@ final class OperationResource extends Resource
                                 )
                                 && $move->sourceLocation->type === LocationType::SUPPLIER
                             ),
-                        Select::make('destination_location_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.location'))
+                        Select::make('destination_location_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.location'))
                             ->relationship(
                                 name: 'destinationLocation',
                                 titleAttribute: 'full_name',
@@ -878,8 +782,7 @@ final class OperationResource extends Resource
                             })
                             ->visible($move->destinationLocation->type === LocationType::INTERNAL)
                             ->disabled(fn (): bool => in_array($move->state, [MoveState::DONE, MoveState::CANCELED], true)),
-                        Select::make('result_package_id')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.package'))
+                        Select::make('result_package_id')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.package'))
                             ->relationship(
                                 name: 'resultPackage',
                                 titleAttribute: 'name',
@@ -902,8 +805,7 @@ final class OperationResource extends Resource
                             })
                             ->disabled(fn (): bool => in_array($move->state, [MoveState::DONE, MoveState::CANCELED], true))
                             ->visible(fn (OperationSettings $settings): bool => $settings->enable_packages),
-                        TextInput::make('qty')
-                            ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.quantity'))
+                        TextInput::make('qty')->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.quantity'))
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(99999999999)

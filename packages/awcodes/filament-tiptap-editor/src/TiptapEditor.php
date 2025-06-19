@@ -22,7 +22,7 @@ use JsonException;
 use Livewire\Component;
 use Throwable;
 
-final class TiptapEditor extends Field
+class TiptapEditor extends Field
 {
     use CanStoreOutput;
     use HasCustomActions;

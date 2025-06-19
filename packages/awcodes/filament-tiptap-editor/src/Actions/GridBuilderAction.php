@@ -12,7 +12,7 @@ use Filament\Forms\Components\ViewField;
 use Filament\Schemas\Components\Grid;
 use FilamentTiptapEditor\TiptapEditor;
 
-final class GridBuilderAction extends Action
+class GridBuilderAction extends Action
 {
     protected function setUp(): void
     {

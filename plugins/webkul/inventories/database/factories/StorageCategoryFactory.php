@@ -11,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<StorageCategory>
  */
-final class StorageCategoryFactory extends Factory
+class StorageCategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

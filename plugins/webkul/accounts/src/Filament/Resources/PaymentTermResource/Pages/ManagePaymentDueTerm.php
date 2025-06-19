@@ -10,7 +10,7 @@ use Filament\Resources\Pages\ManageRelatedRecords;
 use Webkul\Account\Filament\Resources\PaymentTermResource;
 use Webkul\Account\Traits\PaymentDueTerm;
 
-final class ManagePaymentDueTerm extends ManageRelatedRecords
+class ManagePaymentDueTerm extends ManageRelatedRecords
 {
     use PaymentDueTerm;
 

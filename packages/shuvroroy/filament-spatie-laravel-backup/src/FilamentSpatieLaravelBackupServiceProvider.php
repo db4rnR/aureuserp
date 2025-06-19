@@ -10,7 +10,7 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\Components\BackupDestinationStatusList
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class FilamentSpatieLaravelBackupServiceProvider extends PackageServiceProvider
+class FilamentSpatieLaravelBackupServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

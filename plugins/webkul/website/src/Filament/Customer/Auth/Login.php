@@ -26,7 +26,7 @@ use Illuminate\Validation\ValidationException;
 /**
  * @property Schema $form
  */
-final class Login extends Page
+class Login extends Page
 {
     use InteractsWithFormActions;
     use WithRateLimiting;
@@ -82,15 +82,14 @@ final class Login extends Page
         return app(LoginResponse::class);
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema;
+        return $form;
     }
 
     public function registerAction(): Action
     {
-        return Action::make('register')
-            ->link()
+        return Action::make('register')->link()
             ->label(__('filament-panels::pages/auth/login.actions.register.label'))
             ->url(filament()->getRegistrationUrl());
     }
@@ -122,8 +121,7 @@ final class Login extends Page
 
     private function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {
-        return Notification::make()
-            ->title(__('filament-panels::pages/auth/login.notifications.throttled.title', [
+        return Notification::make()->title(__('filament-panels::pages/auth/login.notifications.throttled.title', [
                 'seconds' => $exception->secondsUntilAvailable,
                 'minutes' => $exception->minutesUntilAvailable,
             ]))
@@ -161,8 +159,7 @@ final class Login extends Page
 
     private function getEmailFormComponent(): Component
     {
-        return TextInput::make('email')
-            ->label(__('filament-panels::pages/auth/login.form.email.label'))
+        return TextInput::make('email')->label(__('filament-panels::pages/auth/login.form.email.label'))
             ->email()
             ->required()
             ->autocomplete()
@@ -172,8 +169,7 @@ final class Login extends Page
 
     private function getPasswordFormComponent(): Component
     {
-        return TextInput::make('password')
-            ->label(__('filament-panels::pages/auth/login.form.password.label'))
+        return TextInput::make('password')->label(__('filament-panels::pages/auth/login.form.password.label'))
             ->hint(filament()->hasPasswordReset() ? new HtmlString(Blade::render('<x-filament::link :href="filament()->getRequestPasswordResetUrl()" tabindex="3"> {{ __(\'filament-panels::pages/auth/login.actions.request_password_reset.label\') }}</x-filament::link>')) : null)
             ->password()
             ->revealable(filament()->arePasswordsRevealable())
@@ -184,14 +180,12 @@ final class Login extends Page
 
     private function getRememberFormComponent(): Component
     {
-        return Checkbox::make('remember')
-            ->label(__('filament-panels::pages/auth/login.form.remember.label'));
+        return Checkbox::make('remember')->label(__('filament-panels::pages/auth/login.form.remember.label'));
     }
 
     private function getAuthenticateFormAction(): Action
     {
-        return Action::make('authenticate')
-            ->label(__('filament-panels::pages/auth/login.form.actions.authenticate.label'))
+        return Action::make('authenticate')->label(__('filament-panels::pages/auth/login.form.actions.authenticate.label'))
             ->submit('authenticate');
     }
 

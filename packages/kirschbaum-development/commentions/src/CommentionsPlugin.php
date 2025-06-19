@@ -7,7 +7,7 @@ namespace Kirschbaum\Commentions;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-final class CommentionsPlugin implements Plugin
+class CommentionsPlugin implements Plugin
 {
     public static function make(): static
     {

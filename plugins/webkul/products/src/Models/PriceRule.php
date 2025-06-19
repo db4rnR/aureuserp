@@ -16,7 +16,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-final class PriceRule extends Model implements Sortable
+class PriceRule extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

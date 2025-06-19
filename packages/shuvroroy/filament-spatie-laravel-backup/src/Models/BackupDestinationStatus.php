@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackup;
 use Sushi\Sushi;
 
-final class BackupDestinationStatus extends Model
+class BackupDestinationStatus extends Model
 {
     use Sushi;
 

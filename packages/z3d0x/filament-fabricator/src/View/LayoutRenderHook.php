@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Z3d0X\FilamentFabricator\View;
 
-final class LayoutRenderHook
+class LayoutRenderHook
 {
     public const HEAD_START = 'filament-fabricator::head.start';
 

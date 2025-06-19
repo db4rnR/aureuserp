@@ -23,7 +23,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Page
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource\Pages\ViewVendor;
 use Webkul\Purchase\Models\Partner;
 
-final class VendorResource extends BaseVendorResource
+class VendorResource extends BaseVendorResource
 {
     use HasCustomFields;
 
@@ -63,13 +63,11 @@ final class VendorResource extends BaseVendorResource
         return [
             RelationGroup::make('Contacts', [
                 ContactsRelationManager::class,
-            ])
-                ->icon('heroicon-o-users'),
+            ])->icon('heroicon-o-users'),
 
             RelationGroup::make('Addresses', [
                 AddressesRelationManager::class,
-            ])
-                ->icon('heroicon-o-map-pin'),
+            ])->icon('heroicon-o-map-pin'),
         ];
     }
 

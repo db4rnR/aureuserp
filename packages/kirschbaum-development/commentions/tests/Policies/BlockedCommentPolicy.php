@@ -8,7 +8,7 @@ use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\Contracts\Commenter;
 use Kirschbaum\Commentions\Policies\CommentPolicy;
 
-final class BlockedCommentPolicy extends CommentPolicy
+class BlockedCommentPolicy extends CommentPolicy
 {
     public function create(Commenter $user): bool
     {

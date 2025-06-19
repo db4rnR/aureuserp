@@ -6,7 +6,7 @@ namespace Webkul\Inventory\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class WarehouseSettings extends Settings
+class WarehouseSettings extends Settings
 {
     public bool $enable_locations;
 

@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Filament\Clusters\Applications\Resources\JobByPosit
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\JobPositionResource\Pages\ListJobPositions as JobPositionResource;
 use Webkul\Recruitment\Filament\Clusters\Applications\Resources\JobByPositionResource;
 
-final class ListJobByPositions extends JobPositionResource
+class ListJobByPositions extends JobPositionResource
 {
     protected static string $resource = JobByPositionResource::class;
 

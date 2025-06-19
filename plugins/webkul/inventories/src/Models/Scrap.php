@@ -19,7 +19,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-final class Scrap extends Model
+class Scrap extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 

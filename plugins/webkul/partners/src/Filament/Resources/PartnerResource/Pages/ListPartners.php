@@ -13,7 +13,7 @@ use Webkul\Partner\Filament\Resources\PartnerResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListPartners extends ListRecords
+class ListPartners extends ListRecords
 {
     use HasTableViews;
 
@@ -47,8 +47,7 @@ final class ListPartners extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('partners::filament/resources/partner/pages/list-partners.header-actions.create.label'))
+            CreateAction::make()->label(__('partners::filament/resources/partner/pages/list-partners.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

@@ -21,7 +21,7 @@ use Z3d0X\FilamentFabricator\Models\Contracts\Page;
 // and hiding/encapsulating implementation details.
 //
 // It relies on the extension points defined by Z3d0X\FilamentFabricator\Models\Contracts\HasPageUrls
-final class PageRoutesService
+class PageRoutesService
 {
     private const URI_TO_ID_MAPPING = 'filament-fabricator::PageRoutesService::uri-to-id';
 

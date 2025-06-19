@@ -6,7 +6,7 @@ namespace Webkul\Inventory\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class LogisticSettings extends Settings
+class LogisticSettings extends Settings
 {
     public bool $enable_dropshipping;
 

@@ -22,7 +22,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Saade\FilamentAdjacencyList\FilamentAdjacencyListServiceProvider;
 
-final class TestCase extends Orchestra
+class TestCase extends Orchestra
 {
     protected function setUp(): void
     {

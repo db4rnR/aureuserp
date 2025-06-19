@@ -6,4 +6,4 @@ namespace Pboivin\FilamentPeek\Exceptions;
 
 use Exception;
 
-final class PreviewModalException extends Exception {}
+class PreviewModalException extends Exception {}

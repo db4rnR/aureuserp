@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kirschbaum\Commentions\Actions;
 
-final class ParseComment
+class ParseComment
 {
     public function __invoke(string $body)
     {

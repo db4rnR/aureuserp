@@ -25,7 +25,7 @@ use Webkul\Project\Models\Task;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ManageTasks extends ManageRelatedRecords
+class ManageTasks extends ManageRelatedRecords
 {
     use HasTableViews;
 
@@ -45,30 +45,22 @@ final class ManageTasks extends ManageRelatedRecords
         return TaskResource::table($table)
             ->recordActions([
                 ActionGroup::make([
-                    ViewAction::make()
-                        ->url(fn (Task $record): string => TaskResource::getUrl('view', ['record' => $record]))
+                    ViewAction::make()->url(fn (Task $record): string => TaskResource::getUrl('view', ['record' => $record]))
                         ->hidden(fn ($record) => $record->trashed()),
-                    EditAction::make()
-                        ->url(fn (Task $record): string => TaskResource::getUrl('edit', ['record' => $record]))
+                    EditAction::make()->url(fn (Task $record): string => TaskResource::getUrl('edit', ['record' => $record]))
                         ->hidden(fn ($record) => $record->trashed()),
-                    RestoreAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/resources/project/pages/manage-tasks.table.actions.restore.notification.title'))
                                 ->body(__('projects::filament/resources/project/pages/manage-tasks.table.actions.restore.notification.body')),
                         ),
-                    DeleteAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/resources/project/pages/manage-tasks.table.actions.delete.notification.title'))
                                 ->body(__('projects::filament/resources/project/pages/manage-tasks.table.actions.delete.notification.body')),
                         ),
-                    ForceDeleteAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ForceDeleteAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('projects::filament/resources/project/pages/manage-tasks.table.actions.force-delete.notification.title'))
                                 ->body(__('projects::filament/resources/project/pages/manage-tasks.table.actions.force-delete.notification.body')),
                         ),
@@ -77,9 +69,9 @@ final class ManageTasks extends ManageRelatedRecords
             ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('parent_id'));
     }
 
-    public function infolist(Schema $schema): Schema
+    public function infolist(Infolist $infolist): Infolist
     {
-        return TaskResource::infolist($schema);
+        return TaskResource::infolist($infolist);
     }
 
     public function getPresetTableViews(): array
@@ -130,8 +122,7 @@ final class ManageTasks extends ManageRelatedRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('projects::filament/resources/project/pages/manage-tasks.header-actions.create.label'))
+            CreateAction::make()->label(__('projects::filament/resources/project/pages/manage-tasks.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->url(TaskResource::getUrl('create')),
         ];

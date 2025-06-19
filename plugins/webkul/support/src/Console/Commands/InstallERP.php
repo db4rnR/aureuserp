@@ -17,7 +17,7 @@ use Webkul\Support\Models\Company;
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\text;
 
-final class InstallERP extends Command
+class InstallERP extends Command
 {
     /**
      * The name and signature of the console command.

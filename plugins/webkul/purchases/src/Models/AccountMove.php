@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Webkul\Account\Models\Move;
 
-final class AccountMove extends Move
+class AccountMove extends Move
 {
     public function lines()
     {

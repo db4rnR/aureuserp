@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Inventory\Database\Factories\PackageDestinationFactory;
 use Webkul\Security\Models\User;
 
-final class PackageDestination extends Model
+class PackageDestination extends Model
 {
     use HasFactory;
 

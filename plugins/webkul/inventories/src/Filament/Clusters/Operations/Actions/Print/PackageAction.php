@@ -7,7 +7,7 @@ namespace Webkul\Inventory\Filament\Clusters\Operations\Actions\Print;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 
-final class PackageAction extends Action
+class PackageAction extends Action
 {
     protected function setUp(): void
     {

@@ -14,7 +14,7 @@ use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ActivityTypeRe
 use Webkul\Recruitment\Models\ActivityType;
 use Webkul\Support\Filament\Resources\ActivityTypeResource as BaseActivityTypeResource;
 
-final class ActivityTypeResource extends BaseActivityTypeResource
+class ActivityTypeResource extends BaseActivityTypeResource
 {
     protected static ?string $model = ActivityType::class;
 

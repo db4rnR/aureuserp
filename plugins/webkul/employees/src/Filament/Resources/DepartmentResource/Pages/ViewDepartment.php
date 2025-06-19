@@ -11,20 +11,17 @@ use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Employee\Filament\Resources\DepartmentResource;
 
-final class ViewDepartment extends ViewRecord
+class ViewDepartment extends ViewRecord
 {
     protected static string $resource = DepartmentResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('employees::filament/resources/department/pages/view-department.header-actions.delete.notification.title'))
                         ->body(__('employees::filament/resources/department/pages/view-department.header-actions.delete.notification.body')),
                 ),

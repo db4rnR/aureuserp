@@ -16,7 +16,7 @@ use Webkul\Invoice\Filament\Clusters\Customer\Resources\ProductResource\Pages\Vi
 use Webkul\Invoice\Models\Product;
 use Webkul\Product\Filament\Resources\ProductResource as BaseProductResource;
 
-final class ProductResource extends BaseProductResource
+class ProductResource extends BaseProductResource
 {
     protected static ?string $model = Product::class;
 

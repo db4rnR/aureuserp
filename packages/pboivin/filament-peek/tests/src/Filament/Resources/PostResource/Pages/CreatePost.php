@@ -7,7 +7,7 @@ namespace Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages;
 use Filament\Resources\Pages\CreateRecord;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource;
 
-final class CreatePost extends CreateRecord
+class CreatePost extends CreateRecord
 {
     use HasPostPreview;
 

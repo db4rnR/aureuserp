@@ -104,7 +104,7 @@ function product_model_attributes_and_properties(): void
 #[PluginTest('Products')]
 #[CoversClass(Product::class)]
 #[Description('Test Product model relationships with other models')]
-function product_model_relationships_with_other_models(): void
+function products_product_model_relationships_with_other_models(): void
 {
     // Create related models
     $user = User::factory()->create();

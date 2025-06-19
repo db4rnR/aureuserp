@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Webkul\Security\Filament\Resources\RoleResource;
 
-final class EditRole extends EditRecord
+class EditRole extends EditRecord
 {
     public Collection $permissions;
 
@@ -21,8 +21,7 @@ final class EditRole extends EditRecord
     protected function getActions(): array
     {
         return [
-            DeleteAction::make()
-                ->hidden(fn (Model $record): bool => $record->name === config('filament-shield.panel_user.name')),
+            DeleteAction::make()->hidden(fn (Model $record): bool => $record->name === config('filament-shield.panel_user.name')),
         ];
     }
 

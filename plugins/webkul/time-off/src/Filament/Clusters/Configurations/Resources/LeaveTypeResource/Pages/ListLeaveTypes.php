@@ -10,7 +10,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource;
 use Webkul\TimeOff\Models\LeaveType;
 
-final class ListLeaveTypes extends ListRecords
+class ListLeaveTypes extends ListRecords
 {
     protected static string $resource = LeaveTypeResource::class;
 
@@ -28,8 +28,7 @@ final class ListLeaveTypes extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('time-off::filament/clusters/configurations/resources/leave-type/pages/list-leave-type.header-actions.new-leave-type'))
+            CreateAction::make()->label(__('time-off::filament/clusters/configurations/resources/leave-type/pages/list-leave-type.header-actions.new-leave-type'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

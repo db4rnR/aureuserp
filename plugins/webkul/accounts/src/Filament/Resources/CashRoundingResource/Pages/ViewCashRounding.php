@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Account\Filament\Resources\CashRoundingResource;
 
-final class ViewCashRounding extends ViewRecord
+class ViewCashRounding extends ViewRecord
 {
     protected static string $resource = CashRoundingResource::class;
 
@@ -18,10 +18,8 @@ final class ViewCashRounding extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/cash-rounding/pages/view-cash-rounding.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/cash-rounding/pages/view-cash-rounding.header-actions.delete.notification.body'))
                 ),

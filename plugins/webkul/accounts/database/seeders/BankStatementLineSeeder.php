@@ -6,7 +6,7 @@ namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-final class BankStatementLineSeeder extends Seeder
+class BankStatementLineSeeder extends Seeder
 {
     /**
      * Run the database seeds.

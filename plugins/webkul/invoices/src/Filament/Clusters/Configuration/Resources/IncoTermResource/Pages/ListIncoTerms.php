@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\IncoTermResou
 use Webkul\Account\Filament\Resources\IncoTermResource\Pages\ListIncoTerms as BaseListIncoTerms;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\IncoTermResource;
 
-final class ListIncoTerms extends BaseListIncoTerms
+class ListIncoTerms extends BaseListIncoTerms
 {
     protected static string $resource = IncoTermResource::class;
 }

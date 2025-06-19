@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrder
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages\ManageBills as BaseManageBills;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrderResource;
 
-final class ManageBills extends BaseManageBills
+class ManageBills extends BaseManageBills
 {
     protected static string $resource = PurchaseOrderResource::class;
 }

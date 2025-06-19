@@ -23,7 +23,7 @@ use Webkul\Inventory\Models\Category;
 use Webkul\Inventory\Settings\WarehouseSettings;
 use Webkul\Product\Filament\Resources\CategoryResource;
 
-final class ProductCategoryResource extends CategoryResource
+class ProductCategoryResource extends CategoryResource
 {
     protected static ?string $model = Category::class;
 
@@ -49,11 +49,11 @@ final class ProductCategoryResource extends CategoryResource
         return __('inventories::filament/clusters/configurations/resources/product-category.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        $schema = CategoryResource::form($schema);
+        $form = CategoryResource::form($form);
 
-        $components = $schema->getComponents();
+        $components = $form->getComponents();
 
         $childComponents = $components[1]->getDefaultChildComponents();
 
@@ -61,8 +61,7 @@ final class ProductCategoryResource extends CategoryResource
             ->schema([
                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/product-category.form.sections.inventory.fieldsets.logistics.title'))
                     ->schema([
-                        Select::make('routes')
-                            ->label(__('inventories::filament/clusters/configurations/resources/product-category.form.sections.inventory.fieldsets.logistics.fields.routes'))
+                        Select::make('routes')->label(__('inventories::filament/clusters/configurations/resources/product-category.form.sections.inventory.fieldsets.logistics.fields.routes'))
                             ->relationship('routes', 'name')
                             ->searchable()
                             ->preload()
@@ -74,16 +73,16 @@ final class ProductCategoryResource extends CategoryResource
 
         $components[1]->childComponents($childComponents);
 
-        $schema->components($components);
+        $form->schema($components);
 
-        return $schema;
+        return $form;
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        $schema = CategoryResource::infolist($schema);
+        $infolist = CategoryResource::infolist($infolist);
 
-        $components = $schema->getComponents();
+        $components = $infolist->getComponents();
 
         $firstGroupChildComponents = $components[0]->getDefaultChildComponents();
 
@@ -91,11 +90,9 @@ final class ProductCategoryResource extends CategoryResource
             ->schema([
                 Section::make(__('inventories::filament/clusters/configurations/resources/product-category.infolist.sections.inventory.subsections.logistics.title'))
                     ->schema([
-                        RepeatableEntry::make('routes')
-                            ->label(__('inventories::filament/clusters/configurations/resources/product-category.infolist.sections.inventory.subsections.logistics.entries.routes'))
+                        RepeatableEntry::make('routes')->label(__('inventories::filament/clusters/configurations/resources/product-category.infolist.sections.inventory.subsections.logistics.entries.routes'))
                             ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/product-category.infolist.sections.inventory.subsections.logistics.entries.route_name'))
+                                TextEntry::make('name')->label(__('inventories::filament/clusters/configurations/resources/product-category.infolist.sections.inventory.subsections.logistics.entries.route_name'))
                                     ->icon('heroicon-o-truck'),
                             ])
                             ->columns(1),
@@ -107,9 +104,9 @@ final class ProductCategoryResource extends CategoryResource
 
         $components[0]->childComponents($firstGroupChildComponents);
 
-        $schema->components($components);
+        $infolist->schema($components);
 
-        return $schema;
+        return $infolist;
     }
 
     public static function getSubNavigationPosition(): SubNavigationPosition

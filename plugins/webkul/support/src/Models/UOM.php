@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Security\Models\User;
 use Webkul\Support\Database\Factories\UOMFactory;
 
-final class UOM extends Model
+class UOM extends Model
 {
     use HasFactory, SoftDeletes;
 

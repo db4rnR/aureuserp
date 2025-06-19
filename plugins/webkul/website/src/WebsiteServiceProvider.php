@@ -13,7 +13,7 @@ use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 use Webkul\Website\Http\Responses\LogoutResponse;
 
-final class WebsiteServiceProvider extends PackageServiceProvider
+class WebsiteServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'website';
 

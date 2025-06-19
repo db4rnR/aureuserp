@@ -9,7 +9,7 @@ use Filament\Panel;
 use ReflectionClass;
 use Webkul\Support\Package;
 
-final class BlogPlugin implements Plugin
+class BlogPlugin implements Plugin
 {
     public static function make(): static
     {

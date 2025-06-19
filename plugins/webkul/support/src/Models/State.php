@@ -7,7 +7,7 @@ namespace Webkul\Support\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-final class State extends Model
+class State extends Model
 {
     /**
      * The attributes that are mass assignable.

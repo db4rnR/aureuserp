@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use function Awcodes\Curator\get_media_items;
 
-final class CuratorPicker extends Field
+class CuratorPicker extends Field
 {
     use CanBeOutlined;
     use CanGeneratePaths;

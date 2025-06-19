@@ -12,7 +12,7 @@ use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
 
-final class FileAction extends Action
+class FileAction extends Action
 {
     protected function setUp(): void
     {
@@ -24,8 +24,7 @@ final class FileAction extends Action
             ->tooltip(__('chatter::filament/resources/actions/chatter/file-action.setup.tooltip'))
             ->badge(fn ($record) => $record->attachments()->count())
             ->schema([
-                FileUpload::make('files')
-                    ->hiddenLabel()
+                FileUpload::make('files')->hiddenLabel()
                     ->multiple()
                     ->directory('chats-attachments')
                     ->downloadable()
@@ -43,8 +42,7 @@ final class FileAction extends Action
                         if ($attachment) {
                             $attachment->delete();
 
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('chatter::filament/resources/actions/chatter/file-action.setup.form.fields.actions.delete.title'))
                                 ->body(__('chatter::filament/resources/actions/chatter/file-action.setup.form.fields.actions.delete.body'))
                                 ->send();
@@ -88,14 +86,12 @@ final class FileAction extends Action
                     if ($newFiles !== []) {
                         $record->addAttachments($newFiles);
 
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.success.title'))
                             ->body(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.success.body'))
                             ->send();
                     } else {
-                        Notification::make()
-                            ->info()
+                        Notification::make()->info()
                             ->title('No New Files')
                             ->body('All files have already been uploaded')
                             ->title(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.warning.title'))
@@ -103,8 +99,7 @@ final class FileAction extends Action
                             ->send();
                     }
                 } catch (Exception $e) {
-                    Notification::make()
-                        ->danger()
+                    Notification::make()->danger()
                         ->title(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.error.title'))
                         ->body(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.error.body'))
                         ->send();

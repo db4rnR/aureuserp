@@ -11,7 +11,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Employee\Database\Factories\CalendarAttendanceFactory;
 use Webkul\Security\Models\User;
 
-final class CalendarAttendance extends Model implements Sortable
+class CalendarAttendance extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

@@ -44,7 +44,7 @@ use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanResourc
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanResource\RelationManagers\MilestoneRelationManager;
 use Webkul\TimeOff\Models\LeaveAccrualPlan;
 
-final class AccrualPlanResource extends Resource
+class AccrualPlanResource extends Resource
 {
     protected static ?string $model = LeaveAccrualPlan::class;
 
@@ -73,55 +73,45 @@ final class AccrualPlanResource extends Resource
         return __('time-off::filament/clusters/configurations/resources/accrual-plan.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Section::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                TextInput::make('name')
-                                    ->label(__('Name'))
+                Section::make()->schema([
+                        Group::make()->schema([
+                                TextInput::make('name')->label(__('Name'))
                                     ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.form.fields.name'))
                                     ->required(),
-                                Toggle::make('is_based_on_worked_time')
-                                    ->inline(false)
+                                Toggle::make('is_based_on_worked_time')->inline(false)
                                     ->label(__('Is Based On Worked Time'))
                                     ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.form.fields.is-based-on-worked-time')),
-                                Radio::make('accrued_gain_time')
-                                    ->label(__('Accrued Gain Time'))
+                                Radio::make('accrued_gain_time')->label(__('Accrued Gain Time'))
                                     ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.form.fields.accrued-gain-time'))
                                     ->options(AccruedGainTime::class)
                                     ->default(AccruedGainTime::END->value)
                                     ->required(),
-                                Radio::make('carryover_date')
-                                    ->label(__('Carry-Over Time'))
+                                Radio::make('carryover_date')->label(__('Carry-Over Time'))
                                     ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.form.fields.carry-over-time'))
                                     ->options(CarryoverDate::class)
                                     ->default(CarryoverDate::OTHER->value)
                                     ->live()
                                     ->required(),
-                                Fieldset::make()
-                                    ->label('Carry-Over Date')
+                                Fieldset::make()->label('Carry-Over Date')
                                     ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.form.fields.carry-over-date'))
                                     ->live()
                                     ->visible(fn (Get $get): bool => $get('carryover_date') === CarryoverDate::OTHER->value)
                                     ->schema([
-                                        Select::make('carryover_day')
-                                            ->hiddenLabel()
+                                        Select::make('carryover_day')->hiddenLabel()
                                             ->options(CarryoverDay::class)
                                             ->maxWidth(Width::ExtraSmall)
                                             ->default(CarryoverDay::DAY_1->value)
                                             ->required(),
-                                        Select::make('carryover_month')
-                                            ->hiddenLabel()
+                                        Select::make('carryover_month')->hiddenLabel()
                                             ->options(CarryoverMonth::class)
                                             ->default(CarryoverMonth::JAN->value)
                                             ->required(),
                                     ])->columns(2),
-                                Toggle::make('is_active')
-                                    ->inline(false)
+                                Toggle::make('is_active')->inline(false)
                                     ->label(__('Status'))
                                     ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.form.fields.status')),
                             ]),
@@ -133,71 +123,57 @@ final class AccrualPlanResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->searchable()
+                TextColumn::make('name')->searchable()
                     ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.table.columns.name')),
-                TextColumn::make('leaveAccrualLevels')
-                    ->searchable()
+                TextColumn::make('leaveAccrualLevels')->searchable()
                     ->formatStateUsing(fn ($record) => $record->leaveAccrualLevels?->count())
                     ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.table.columns.levels')),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->title(__('time-off::filament/clusters/configurations/resources/accrual-plan.table.actions.delete.notification.title'))
+                DeleteAction::make()->successNotification(
+                        Notification::make()->title(__('time-off::filament/clusters/configurations/resources/accrual-plan.table.actions.delete.notification.title'))
                             ->body(__('time-off::filament/clusters/configurations/resources/accrual-plan.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->title(__('time-off::filament/clusters/configurations/resources/accrual-plan.table.bulk-actions.delete.notification.title'))
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->title(__('time-off::filament/clusters/configurations/resources/accrual-plan.table.bulk-actions.delete.notification.title'))
                                 ->body(__('time-off::filament/clusters/configurations/resources/accrual-plan.table.bulk-actions.delete.notification.body'))
                         ),
                 ]),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Grid::make(['default' => 2])
-                    ->schema([
-                        Group::make()
-                            ->schema([
+                Grid::make(['default' => 2])->schema([
+                        Group::make()->schema([
                                 Section::make(__('Basic Information'))
                                     ->schema([
-                                        TextEntry::make('name')
-                                            ->icon('heroicon-o-user')
+                                        TextEntry::make('name')->icon('heroicon-o-user')
                                             ->placeholder('—')
                                             ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.infolist.entries.name')),
-                                        IconEntry::make('is_based_on_worked_time')
-                                            ->boolean()
+                                        IconEntry::make('is_based_on_worked_time')->boolean()
                                             ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.infolist.entries.is-based-on-worked-time')),
-                                        TextEntry::make('accrued_gain_time')
-                                            ->icon('heroicon-o-clock')
+                                        TextEntry::make('accrued_gain_time')->icon('heroicon-o-clock')
                                             ->placeholder('—')
                                             ->formatStateUsing(fn ($state) => AccruedGainTime::options()[$state])
                                             ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.infolist.entries.accrued-gain-time')),
-                                        TextEntry::make('carryover_date')
-                                            ->icon('heroicon-o-calendar')
+                                        TextEntry::make('carryover_date')->icon('heroicon-o-calendar')
                                             ->placeholder('—')
                                             ->formatStateUsing(fn ($state) => CarryoverDate::options()[$state])
                                             ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.infolist.entries.carry-over-time')),
-                                        TextEntry::make('carryover_day')
-                                            ->icon('heroicon-o-calendar')
+                                        TextEntry::make('carryover_day')->icon('heroicon-o-calendar')
                                             ->placeholder('—')
                                             ->formatStateUsing(fn ($state) => CarryoverDay::options()[$state])
                                             ->label(__('Carryover Day'))
                                             ->label(__('time-off::filament/clusters/configurations/resources/accrual-plan.infolist.entries.carry-over-day')),
-                                        TextEntry::make('carryover_month')
-                                            ->icon('heroicon-o-calendar')
+                                        TextEntry::make('carryover_month')->icon('heroicon-o-calendar')
                                             ->placeholder('—')
                                             ->formatStateUsing(fn ($state) => CarryoverMonth::options()[$state])
                                             ->label(__('Carryover Month'))
@@ -223,8 +199,7 @@ final class AccrualPlanResource extends Resource
         return [
             RelationGroup::make('Manage Milestones', [
                 MilestoneRelationManager::class,
-            ])
-                ->icon('heroicon-o-clipboard-list'),
+            ])->icon('heroicon-o-clipboard-list'),
         ];
     }
 

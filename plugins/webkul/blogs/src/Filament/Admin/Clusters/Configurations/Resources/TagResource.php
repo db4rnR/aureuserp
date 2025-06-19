@@ -25,7 +25,7 @@ use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\TagResource\Pag
 use Webkul\Blog\Models\Tag;
 use Webkul\Website\Filament\Admin\Clusters\Configurations;
 
-final class TagResource extends Resource
+class TagResource extends Resource
 {
     protected static ?string $model = Tag::class;
 
@@ -45,17 +45,15 @@ final class TagResource extends Resource
         return __('blogs::filament/admin/clusters/configurations/resources/tag.navigation.group');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('name')
-                    ->label(__('blogs::filament/admin/clusters/configurations/resources/tag.form.name'))
+                TextInput::make('name')->label(__('blogs::filament/admin/clusters/configurations/resources/tag.form.name'))
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
-                ColorPicker::make('color')
-                    ->label(__('blogs::filament/admin/clusters/configurations/resources/tag.form.color'))
+                ColorPicker::make('color')->label(__('blogs::filament/admin/clusters/configurations/resources/tag.form.color'))
                     ->hexColor(),
             ]);
     }
@@ -64,64 +62,48 @@ final class TagResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('blogs::filament/admin/clusters/configurations/resources/tag.table.columns.name'))
+                TextColumn::make('name')->label(__('blogs::filament/admin/clusters/configurations/resources/tag.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                ColorColumn::make('color')
-                    ->label(__('blogs::filament/admin/clusters/configurations/resources/tag.table.columns.color')),
+                ColorColumn::make('color')->label(__('blogs::filament/admin/clusters/configurations/resources/tag.table.columns.color')),
             ])
             ->recordActions([
-                EditAction::make()
-                    ->hidden(fn ($record) => $record->trashed())
+                EditAction::make()->hidden(fn ($record) => $record->trashed())
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('blogs::filament/admin/clusters/configurations/resources/tag.table.actions.edit.notification.title'))
                             ->body(__('blogs::filament/admin/clusters/configurations/resources/tag.table.actions.edit.notification.body')),
                     ),
-                RestoreAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                RestoreAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('blogs::filament/admin/clusters/configurations/resources/tag.table.actions.restore.notification.title'))
                             ->body(__('blogs::filament/admin/clusters/configurations/resources/tag.table.actions.restore.notification.body')),
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('blogs::filament/admin/clusters/configurations/resources/tag.table.actions.delete.notification.title'))
                             ->body(__('blogs::filament/admin/clusters/configurations/resources/tag.table.actions.delete.notification.body')),
                     ),
-                ForceDeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                ForceDeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('blogs::filament/admin/clusters/configurations/resources/tag.table.actions.force-delete.notification.title'))
                             ->body(__('blogs::filament/admin/clusters/configurations/resources/tag.table.actions.force-delete.notification.body')),
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('blogs::filament/admin/clusters/configurations/resources/tag.table.bulk-actions.restore.notification.title'))
                                 ->body(__('blogs::filament/admin/clusters/configurations/resources/tag.table.bulk-actions.restore.notification.body')),
                         ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('blogs::filament/admin/clusters/configurations/resources/tag.table.bulk-actions.delete.notification.title'))
                                 ->body(__('blogs::filament/admin/clusters/configurations/resources/tag.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ForceDeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('blogs::filament/admin/clusters/configurations/resources/tag.table.bulk-actions.force-delete.notification.title'))
                                 ->body(__('blogs::filament/admin/clusters/configurations/resources/tag.table.bulk-actions.force-delete.notification.body')),
                         ),

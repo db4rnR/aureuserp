@@ -9,7 +9,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource;
 use Webkul\Product\Filament\Resources\ProductResource\Pages\ManageAttributes as BaseManageAttributes;
 
-final class ManageAttributes extends BaseManageAttributes
+class ManageAttributes extends BaseManageAttributes
 {
     protected static string $resource = ProductResource::class;
 

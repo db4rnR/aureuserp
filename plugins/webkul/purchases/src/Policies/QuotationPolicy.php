@@ -9,7 +9,7 @@ use Webkul\Purchase\Models\Quotation;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class QuotationPolicy
+class QuotationPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

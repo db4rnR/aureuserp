@@ -6,7 +6,7 @@ namespace Webkul\Payment\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-final class PaymentFactory extends Factory
+class PaymentFactory extends Factory
 {
     public function definition(): array
     {

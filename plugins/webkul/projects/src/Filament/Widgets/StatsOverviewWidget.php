@@ -13,7 +13,7 @@ use Flowframe\Trend\TrendValue;
 use Illuminate\Support\Carbon;
 use Webkul\Project\Models\Task;
 
-final class StatsOverviewWidget extends BaseWidget
+class StatsOverviewWidget extends BaseWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 

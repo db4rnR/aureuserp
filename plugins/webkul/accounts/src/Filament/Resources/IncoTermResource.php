@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\IncoTermResource\Pages\ListIncoTerms;
 use Webkul\Account\Models\Incoterm;
 
-final class IncoTermResource extends Resource
+class IncoTermResource extends Resource
 {
     protected static ?string $model = Incoterm::class;
 
@@ -33,19 +33,16 @@ final class IncoTermResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Hidden::make('creator_id')
-                    ->default(Auth::id())
+                Hidden::make('creator_id')->default(Auth::id())
                     ->required(),
-                TextInput::make('code')
-                    ->label(__('accounts::filament/resources/incoterm.form.fields.code'))
+                TextInput::make('code')->label(__('accounts::filament/resources/incoterm.form.fields.code'))
                     ->maxLength(3)
                     ->required(),
-                TextInput::make('name')
-                    ->label(__('accounts::filament/resources/incoterm.form.fields.name'))
+                TextInput::make('name')->label(__('accounts::filament/resources/incoterm.form.fields.name'))
                     ->required(),
             ]);
     }
@@ -54,73 +51,56 @@ final class IncoTermResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('code')
-                    ->label(__('accounts::filament/resources/incoterm.table.columns.code'))
+                TextColumn::make('code')->label(__('accounts::filament/resources/incoterm.table.columns.code'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('name')
-                    ->label(__('accounts::filament/resources/incoterm.table.columns.name'))
+                TextColumn::make('name')->label(__('accounts::filament/resources/incoterm.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('createdBy.name')
-                    ->label(__('accounts::filament/resources/incoterm.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('accounts::filament/resources/incoterm.table.columns.created-by'))
                     ->searchable()
                     ->sortable(),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                EditAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('accounts::filament/resources/incoterm.table.actions.edit.notification.title'))
                             ->body(__('accounts::filament/resources/incoterm.table.actions.edit.notification.body'))
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->title(__('accounts::filament/resources/incoterm.table.actions.delete.notification.title'))
+                DeleteAction::make()->successNotification(
+                        Notification::make()->title(__('accounts::filament/resources/incoterm.table.actions.delete.notification.title'))
                             ->body(__('accounts::filament/resources/incoterm.table.actions.delete.notification.body'))
                     ),
-                RestoreAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->title(__('accounts::filament/resources/incoterm.table.actions.restore.notification.title'))
+                RestoreAction::make()->successNotification(
+                        Notification::make()->title(__('accounts::filament/resources/incoterm.table.actions.restore.notification.title'))
                             ->body(__('accounts::filament/resources/incoterm.table.actions.restore.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->title(__('accounts::filament/resources/incoterm.table.bulk-actions.delete.notification.title'))
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->title(__('accounts::filament/resources/incoterm.table.bulk-actions.delete.notification.title'))
                                 ->body(__('accounts::filament/resources/incoterm.table.bulk-actions.delete.notification.body'))
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->title(__('accounts::filament/resources/incoterm.table.bulk-actions.force-delete.notification.title'))
+                    ForceDeleteBulkAction::make()->successNotification(
+                            Notification::make()->title(__('accounts::filament/resources/incoterm.table.bulk-actions.force-delete.notification.title'))
                                 ->body(__('accounts::filament/resources/incoterm.table.bulk-actions.force-delete.notification.body'))
                         ),
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->title(__('accounts::filament/resources/incoterm.table.bulk-actions.restore.notification.title'))
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->title(__('accounts::filament/resources/incoterm.table.bulk-actions.restore.notification.title'))
                                 ->body(__('accounts::filament/resources/incoterm.table.bulk-actions.restore.notification.body'))
                         ),
                 ]),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                TextEntry::make('code')
-                    ->placeholder(__('accounts::filament/resources/incoterm.infolist.entries.code')),
-                TextEntry::make('name')
-                    ->placeholder(__('accounts::filament/resources/incoterm.infolist.entries.name')),
+                TextEntry::make('code')->placeholder(__('accounts::filament/resources/incoterm.infolist.entries.code')),
+                TextEntry::make('name')->placeholder(__('accounts::filament/resources/incoterm.infolist.entries.name')),
             ]);
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 
-final class UOMCategorySeeder extends Seeder
+class UOMCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.

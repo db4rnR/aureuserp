@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource\P
 use Webkul\Account\Filament\Resources\TaxResource\Pages\CreateTax as BaseCreateTax;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource;
 
-final class CreateTax extends BaseCreateTax
+class CreateTax extends BaseCreateTax
 {
     protected static string $resource = TaxResource::class;
 }

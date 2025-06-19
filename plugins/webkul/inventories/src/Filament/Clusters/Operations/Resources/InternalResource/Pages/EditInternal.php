@@ -15,7 +15,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource;
 use Webkul\Inventory\Models\InternalTransfer;
 
-final class EditInternal extends EditRecord
+class EditInternal extends EditRecord
 {
     protected static string $resource = InternalResource::class;
 
@@ -31,8 +31,7 @@ final class EditInternal extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/operations/resources/internal/pages/edit-internal.notification.title'))
             ->body(__('inventories::filament/clusters/operations/resources/internal/pages/edit-internal.notification.body'));
     }
@@ -40,8 +39,7 @@ final class EditInternal extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterAction::make()->setResource(self::$resource),
             OperationActions\TodoAction::make(),
             OperationActions\CheckAvailabilityAction::make(),
             OperationActions\ValidateAction::make(),
@@ -57,16 +55,14 @@ final class EditInternal extends EditRecord
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->button(),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === OperationState::DONE)
                 ->action(function (DeleteAction $action, InternalTransfer $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/internal/pages/edit-internal.header-actions.delete.notification.error.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/internal/pages/edit-internal.header-actions.delete.notification.error.body'))
                             ->send();
@@ -75,8 +71,7 @@ final class EditInternal extends EditRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/operations/resources/internal/pages/edit-internal.header-actions.delete.notification.success.title'))
                         ->body(__('inventories::filament/clusters/operations/resources/internal/pages/edit-internal.header-actions.delete.notification.success.body')),
                 ),

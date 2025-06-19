@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class TaxPolicy
+class TaxPolicy
 {
     use HandlesAuthorization;
 

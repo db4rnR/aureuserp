@@ -8,7 +8,7 @@ use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource;
 use Webkul\Product\Filament\Resources\CategoryResource\Pages\ViewCategory;
 
-final class ViewProductCategory extends ViewCategory
+class ViewProductCategory extends ViewCategory
 {
     protected static string $resource = ProductCategoryResource::class;
 
@@ -16,8 +16,7 @@ final class ViewProductCategory extends ViewCategory
     {
         return [
 
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
             ...parent::getHeaderActions(),
         ];
     }

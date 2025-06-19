@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource;
 
-final class ViewLeaveType extends ViewRecord
+class ViewLeaveType extends ViewRecord
 {
     protected static string $resource = LeaveTypeResource::class;
 
@@ -18,10 +18,8 @@ final class ViewLeaveType extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/configurations/resources/leave-type/pages/view-leave-type.header-actions.delete.notification.title'))
                         ->body(__('time-off::filament/clusters/configurations/resources/leave-type/pages/view-leave-type.header-actions.delete.notification.body'))
                 ),

@@ -13,7 +13,7 @@ use Webkul\Account\Enums\CommunicationStandard;
 use Webkul\Account\Enums\CommunicationType;
 use Webkul\Account\Filament\Resources\JournalResource;
 
-final class EditJournal extends EditRecord
+class EditJournal extends EditRecord
 {
     protected static string $resource = JournalResource::class;
 
@@ -32,8 +32,7 @@ final class EditJournal extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/journal/pages/edit-journal.notification.title'))
             ->body(__('accounts::filament/resources/journal/pages/edit-journal.notification.body'));
     }

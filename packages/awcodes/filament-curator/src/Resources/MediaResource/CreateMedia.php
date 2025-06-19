@@ -7,7 +7,7 @@ namespace Awcodes\Curator\Resources\MediaResource;
 use Awcodes\Curator\CuratorPlugin;
 use Filament\Resources\Pages\CreateRecord;
 
-final class CreateMedia extends CreateRecord
+class CreateMedia extends CreateRecord
 {
     public static function getResource(): string
     {

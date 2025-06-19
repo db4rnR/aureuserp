@@ -7,7 +7,7 @@ namespace Awcodes\Curator\Glide;
 use Illuminate\Support\Str;
 use League\Glide\Urls\UrlBuilderFactory;
 
-final class GlideBuilder
+class GlideBuilder
 {
     final public function __construct(
         public ?string $bg = null,

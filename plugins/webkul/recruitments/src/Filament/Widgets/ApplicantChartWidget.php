@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Carbon;
 use Webkul\Recruitment\Models\Applicant;
 
-final class ApplicantChartWidget extends ChartWidget
+class ApplicantChartWidget extends ChartWidget
 {
     protected static ?int $sort = 2;
 

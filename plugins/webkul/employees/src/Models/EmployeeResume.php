@@ -6,7 +6,7 @@ namespace Webkul\Employee\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class EmployeeResume extends Model
+class EmployeeResume extends Model
 {
     protected $table = 'employees_employee_resumes';
 

@@ -7,7 +7,7 @@ namespace Webkul\Sale\Models;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Invoice\Models\Category as BaseCategory;
 
-final class Category extends BaseCategory
+class Category extends BaseCategory
 {
     public function products(): HasMany
     {

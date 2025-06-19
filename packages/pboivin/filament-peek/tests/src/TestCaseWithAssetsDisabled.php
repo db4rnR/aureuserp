@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pboivin\FilamentPeek\Tests;
 
-final class TestCaseWithAssetsDisabled extends TestCase
+class TestCaseWithAssetsDisabled extends TestCase
 {
     protected function configurePackageProviders($app): void
     {

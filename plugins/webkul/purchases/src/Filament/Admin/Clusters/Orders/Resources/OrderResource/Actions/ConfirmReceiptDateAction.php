@@ -10,7 +10,7 @@ use Livewire\Component;
 use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Models\Order;
 
-final class ConfirmReceiptDateAction extends Action
+class ConfirmReceiptDateAction extends Action
 {
     protected function setUp(): void
     {
@@ -27,8 +27,7 @@ final class ConfirmReceiptDateAction extends Action
 
                 $livewire->updateForm();
 
-                Notification::make()
-                    ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/confirm-receipt-date.action.notification.success.title'))
+                Notification::make()->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/confirm-receipt-date.action.notification.success.title'))
                     ->body(__('purchases::filament/admin/clusters/orders/resources/order/actions/confirm-receipt-date.action.notification.success.body'))
                     ->success()
                     ->send();

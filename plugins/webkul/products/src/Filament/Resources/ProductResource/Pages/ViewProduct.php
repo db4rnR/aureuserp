@@ -15,7 +15,7 @@ use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Product\Filament\Resources\ProductResource;
 
-final class ViewProduct extends ViewRecord
+class ViewProduct extends ViewRecord
 {
     protected static string $resource = ProductResource::class;
 
@@ -27,21 +27,17 @@ final class ViewProduct extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
-            Action::make('print')
-                ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.label'))
+            ChatterAction::make()->setResource(self::$resource),
+            Action::make('print')->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.label'))
                 ->color('gray')
                 ->icon('heroicon-o-printer')
                 ->schema([
-                    TextInput::make('quantity')
-                        ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.quantity'))
+                    TextInput::make('quantity')->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.quantity'))
                         ->required()
                         ->numeric()
                         ->minValue(1)
                         ->maxValue(100),
-                    Radio::make('format')
-                        ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format'))
+                    Radio::make('format')->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format'))
                         ->options([
                             'dymo' => __('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format-options.dymo'),
                             '2x7_price' => __('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format-options.2x7_price'),
@@ -70,10 +66,8 @@ final class ViewProduct extends ViewRecord
                         echo $pdf->output();
                     }, 'Product-'.$record->name.'.pdf');
                 }),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('products::filament/resources/product/pages/view-product.header-actions.delete.notification.title'))
                         ->body(__('products::filament/resources/product/pages/view-product.header-actions.delete.notification.body')),
                 ),

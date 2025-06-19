@@ -44,7 +44,7 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages\Lis
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages\ViewTeam;
 use Webkul\Sale\Models\Team;
 
-final class TeamResource extends Resource
+class TeamResource extends Resource
 {
     protected static ?string $model = Team::class;
 
@@ -64,16 +64,13 @@ final class TeamResource extends Resource
         return __('sales::filament/clusters/configurations/resources/team.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Section::make()
-                    ->schema([
-                        Grid::make()
-                            ->schema([
-                                TextInput::make('name')
-                                    ->required()
+                Section::make()->schema([
+                        Grid::make()->schema([
+                                TextInput::make('name')->required()
                                     ->label(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.name'))
                                     ->maxLength(255)
                                     ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;'])
@@ -81,36 +78,30 @@ final class TeamResource extends Resource
                             ])->columns(2),
                         Fieldset::make(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.fieldset.team-details.title'))
                             ->schema([
-                                Select::make('user_id')
-                                    ->relationship('user', 'name')
+                                Select::make('user_id')->relationship('user', 'name')
                                     ->preload()
                                     ->label(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.fieldset.team-details.fields.team-leader'))
                                     ->searchable(),
-                                Select::make('company_id')
-                                    ->relationship('company', 'name')
+                                Select::make('company_id')->relationship('company', 'name')
                                     ->preload()
                                     ->label(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.fieldset.team-details.fields.company'))
                                     ->searchable(),
-                                TextInput::make('invoiced_target')
-                                    ->numeric()
+                                TextInput::make('invoiced_target')->numeric()
                                     ->default(0)
                                     ->minValue(0)
                                     ->maxValue(99999999999)
                                     ->label(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.fieldset.team-details.fields.invoiced-target'))
                                     ->autocomplete(false)
                                     ->suffix(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.fieldset.team-details.fields.invoiced-target-suffix')),
-                                ColorPicker::make('color')
-                                    ->label(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.fieldset.team-details.fields.color'))
+                                ColorPicker::make('color')->label(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.fieldset.team-details.fields.color'))
                                     ->hexColor(),
-                                Select::make('sales_team_members')
-                                    ->relationship('members', 'name')
+                                Select::make('sales_team_members')->relationship('members', 'name')
                                     ->multiple()
                                     ->searchable()
                                     ->preload()
                                     ->label(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.fieldset.team-details.fields.members')),
                             ])->columns(2),
-                        Toggle::make('is_active')
-                            ->inline(false)
+                        Toggle::make('is_active')->inline(false)
                             ->label(__('sales::filament/clusters/configurations/resources/team.form.sections.fields.status')),
                     ]),
             ]);
@@ -120,146 +111,110 @@ final class TeamResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->dateTime()
+                TextColumn::make('id')->dateTime()
                     ->sortable()
                     ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.id'))
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('company.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.company'))
+                TextColumn::make('company.name')->label(__('sales::filament/clusters/configurations/resources/team.table.columns.company'))
                     ->sortable(),
-                TextColumn::make('user.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.team-leader'))
+                TextColumn::make('user.name')->label(__('sales::filament/clusters/configurations/resources/team.table.columns.team-leader'))
                     ->sortable(),
-                ColorColumn::make('color')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.color'))
+                ColorColumn::make('color')->label(__('sales::filament/clusters/configurations/resources/team.table.columns.color'))
                     ->searchable(),
-                TextColumn::make('createdBy.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('sales::filament/clusters/configurations/resources/team.table.columns.created-by'))
                     ->sortable(),
-                TextColumn::make('name')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.name'))
+                TextColumn::make('name')->label(__('sales::filament/clusters/configurations/resources/team.table.columns.name'))
                     ->searchable(),
-                IconColumn::make('is_active')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.status'))
+                IconColumn::make('is_active')->label(__('sales::filament/clusters/configurations/resources/team.table.columns.status'))
                     ->boolean(),
-                TextColumn::make('invoiced_target')
-                    ->numeric()
+                TextColumn::make('invoiced_target')->numeric()
                     ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.invoiced-target'))
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('created_at')->dateTime()
                     ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.created-at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')->dateTime()
                     ->sortable()
                     ->label(__('sales::filament/clusters/configurations/resources/team.table.columns.updated-at'))
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                QueryBuilder::make()
-                    ->constraintPickerColumns(2)
+                QueryBuilder::make()->constraintPickerColumns(2)
                     ->constraints([
-                        TextConstraint::make('name')
-                            ->label(__('sales::filament/clusters/configurations/resources/team.table.filters.name'))
+                        TextConstraint::make('name')->label(__('sales::filament/clusters/configurations/resources/team.table.filters.name'))
                             ->icon('heroicon-o-user'),
-                        RelationshipConstraint::make('user')
-                            ->label(__('sales::filament/clusters/configurations/resources/team.table.filters.team-leader'))
+                        RelationshipConstraint::make('user')->label(__('sales::filament/clusters/configurations/resources/team.table.filters.team-leader'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('sales::filament/clusters/configurations/resources/team.table.filters.team-leader'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('company')
-                            ->label(__('sales::filament/clusters/configurations/resources/team.table.filters.company'))
+                        RelationshipConstraint::make('company')->label(__('sales::filament/clusters/configurations/resources/team.table.filters.company'))
                             ->icon('heroicon-o-building-office-2')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('sales::filament/clusters/configurations/resources/team.table.filters.company'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        DateConstraint::make('creator_id')
-                            ->label(__('sales::filament/clusters/configurations/resources/team.table.filters.created-by')),
-                        DateConstraint::make('created_at')
-                            ->label(__('sales::filament/clusters/configurations/resources/team.table.filters.created-at')),
-                        DateConstraint::make('updated_at')
-                            ->label(__('sales::filament/clusters/configurations/resources/team.table.filters.updated-at')),
+                        DateConstraint::make('creator_id')->label(__('sales::filament/clusters/configurations/resources/team.table.filters.created-by')),
+                        DateConstraint::make('created_at')->label(__('sales::filament/clusters/configurations/resources/team.table.filters.created-at')),
+                        DateConstraint::make('updated_at')->label(__('sales::filament/clusters/configurations/resources/team.table.filters.updated-at')),
                     ]),
             ])
             ->groups([
-                Group::make('name')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.groups.name'))
+                Group::make('name')->label(__('sales::filament/clusters/configurations/resources/team.table.groups.name'))
                     ->collapsible(),
-                Group::make('company.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.groups.company'))
+                Group::make('company.name')->label(__('sales::filament/clusters/configurations/resources/team.table.groups.company'))
                     ->collapsible(),
-                Group::make('user.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.groups.team-leader'))
+                Group::make('user.name')->label(__('sales::filament/clusters/configurations/resources/team.table.groups.team-leader'))
                     ->collapsible(),
-                Group::make('created_at')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.groups.created-at'))
+                Group::make('created_at')->label(__('sales::filament/clusters/configurations/resources/team.table.groups.created-at'))
                     ->collapsible(),
-                Group::make('updated_at')
-                    ->label(__('sales::filament/clusters/configurations/resources/team.table.groups.updated-at'))
+                Group::make('updated_at')->label(__('sales::filament/clusters/configurations/resources/team.table.groups.updated-at'))
                     ->date()
                     ->collapsible(),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('sales::filament/clusters/configurations/resources/team.table.actions.delete.notification.title'))
                             ->body(__('sales::filament/clusters/configurations/resources/team.table.actions.delete.notification.title')),
                     ),
-                RestoreAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                RestoreAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('sales::filament/clusters/configurations/resources/team.table.actions.restore.notification.title'))
                             ->body(__('sales::filament/clusters/configurations/resources/team.table.actions.restore.notification.title')),
                     ),
-                ForceDeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                ForceDeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('sales::filament/clusters/configurations/resources/team.table.actions.force-delete.notification.title'))
                             ->body(__('sales::filament/clusters/configurations/resources/team.table.actions.force-delete.notification.title')),
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('sales::filament/clusters/configurations/resources/team.table.bulk-actions.restore.notification.title'))
                                 ->body(__('sales::filament/clusters/configurations/resources/team.table.bulk-actions.restore.notification.title')),
                         ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('sales::filament/clusters/configurations/resources/team.table.bulk-actions.delete.notification.title'))
                                 ->body(__('sales::filament/clusters/configurations/resources/team.table.bulk-actions.delete.notification.title')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ForceDeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('sales::filament/clusters/configurations/resources/team.table.bulk-actions.force-delete.notification.title'))
                                 ->body(__('sales::filament/clusters/configurations/resources/team.table.bulk-actions.force-delete.notification.title')),
                         ),
@@ -268,39 +223,30 @@ final class TeamResource extends Resource
             ->reorderable('sort', 'desc');
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                \Filament\Schemas\Components\Group::make()
-                    ->schema([
-                        Section::make()
-                            ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.name'))
+                \Filament\Schemas\Components\Group::make()->schema([
+                        Section::make()->schema([
+                                TextEntry::make('name')->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.name'))
                                     ->columnSpan(1),
                                 Fieldset::make(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.title'))
                                     ->schema([
-                                        TextEntry::make('user.name')
-                                            ->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.team-leader'))
+                                        TextEntry::make('user.name')->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.team-leader'))
                                             ->icon('heroicon-o-user'),
-                                        TextEntry::make('company.name')
-                                            ->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.company'))
+                                        TextEntry::make('company.name')->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.company'))
                                             ->icon('heroicon-o-building-office'),
-                                        TextEntry::make('invoiced_target')
-                                            ->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.invoiced-target'))
+                                        TextEntry::make('invoiced_target')->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.invoiced-target'))
                                             ->suffix(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.invoiced-target-suffix'))
                                             ->numeric(),
-                                        ColorEntry::make('color')
-                                            ->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.color')),
-                                        TextEntry::make('members.name')
-                                            ->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.members'))
+                                        ColorEntry::make('color')->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.color')),
+                                        TextEntry::make('members.name')->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.fieldset.team-details.entries.members'))
                                             ->listWithLineBreaks()
                                             ->bulleted(),
                                     ])
                                     ->columns(2),
-                                IconEntry::make('is_active')
-                                    ->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.status'))
+                                IconEntry::make('is_active')->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.status'))
                                     ->boolean(),
                             ]),
                     ])

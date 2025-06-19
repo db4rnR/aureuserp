@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Account\Filament\Resources\AccountResource;
 
-final class EditAccount extends EditRecord
+class EditAccount extends EditRecord
 {
     protected static string $resource = AccountResource::class;
 
@@ -23,10 +23,8 @@ final class EditAccount extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/account/pages/edit-account.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/account/pages/edit-account.header-actions.delete.notification.body'))
                 ),
@@ -35,8 +33,7 @@ final class EditAccount extends EditRecord
 
     private function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/account/pages/edit-account.notification.title'))
             ->body(__('accounts::filament/resources/account/pages/edit-account.notification.body'));
     }

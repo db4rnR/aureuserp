@@ -12,7 +12,7 @@ use Webkul\Account\Filament\Resources\PaymentsResource;
 use Webkul\Account\Filament\Resources\PaymentsResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
-final class EditPayments extends EditRecord
+class EditPayments extends EditRecord
 {
     protected static string $resource = PaymentsResource::class;
 
@@ -23,8 +23,7 @@ final class EditPayments extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/payment/pages/edit-payment.notification.title'))
             ->body(__('accounts::filament/resources/payment/pages/edit-payment.notification.body'));
     }
@@ -32,8 +31,7 @@ final class EditPayments extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
             ViewAction::make(),
             DeleteAction::make(),
             BaseActions\ConfirmAction::make(),

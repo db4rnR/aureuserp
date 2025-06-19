@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\Activity
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlanResource\Pages\ListActivityPlans as BaseListActivityPlans;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ActivityPlanResource;
 
-final class ListActivityPlans extends BaseListActivityPlans
+class ListActivityPlans extends BaseListActivityPlans
 {
     protected static string $resource = ActivityPlanResource::class;
 

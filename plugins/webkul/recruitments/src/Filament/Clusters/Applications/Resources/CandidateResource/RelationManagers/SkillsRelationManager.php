@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Filament\Clusters\Applications\Resources\CandidateR
 use Filament\Resources\RelationManagers\RelationManager;
 use Webkul\Recruitment\Traits\CandidateSkillRelation;
 
-final class SkillsRelationManager extends RelationManager
+class SkillsRelationManager extends RelationManager
 {
     use CandidateSkillRelation;
 

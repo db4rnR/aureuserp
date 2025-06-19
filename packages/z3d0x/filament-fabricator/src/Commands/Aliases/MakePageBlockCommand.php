@@ -10,7 +10,7 @@ use Z3d0X\FilamentFabricator\Commands;
  * @deprecated
  * @see Commands\MakePageBlockCommand
  */
-final class MakePageBlockCommand extends Commands\MakePageBlockCommand
+class MakePageBlockCommand extends Commands\MakePageBlockCommand
 {
     protected $hidden = true;
 

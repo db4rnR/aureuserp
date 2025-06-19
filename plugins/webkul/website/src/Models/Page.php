@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Security\Models\User;
 use Webkul\Website\Database\Factories\PageFactory;
 
-final class Page extends Model
+class Page extends Model
 {
     use HasFactory, SoftDeletes;
 

@@ -11,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<PriceRule>
  */
-final class PriceRuleFactory extends Factory
+class PriceRuleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

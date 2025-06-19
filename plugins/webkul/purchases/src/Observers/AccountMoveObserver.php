@@ -6,7 +6,7 @@ namespace Webkul\Purchase\Observers;
 
 use Webkul\Purchase\Models\AccountMove;
 
-final class AccountMoveObserver
+class AccountMoveObserver
 {
     /**
      * Handle the User "updated" event.

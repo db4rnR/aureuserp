@@ -29,7 +29,7 @@ use Webkul\Support\Models\UtmCampaign;
 use Webkul\Support\Models\UTMMedium;
 use Webkul\Support\Models\UTMSource;
 
-final class Order extends Model
+class Order extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes;
 

@@ -6,7 +6,7 @@ namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-final class MoveSeeder extends Seeder
+class MoveSeeder extends Seeder
 {
     /**
      * Run the database seeds.

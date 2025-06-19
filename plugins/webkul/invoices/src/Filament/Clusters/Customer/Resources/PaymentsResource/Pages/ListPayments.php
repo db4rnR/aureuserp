@@ -9,7 +9,7 @@ use Webkul\Account\Filament\Resources\PaymentsResource\Pages\ListPayments as Bas
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 
-final class ListPayments extends BaseListPayments
+class ListPayments extends BaseListPayments
 {
     protected static string $resource = PaymentsResource::class;
 

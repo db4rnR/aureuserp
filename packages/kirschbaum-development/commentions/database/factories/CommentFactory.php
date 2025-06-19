@@ -12,7 +12,7 @@ use Kirschbaum\Commentions\Contracts\Commenter;
 /**
  * @extends Factory<\App\Models\Comment>
  */
-final class CommentFactory extends Factory
+class CommentFactory extends Factory
 {
     protected $model = Comment::class;
 

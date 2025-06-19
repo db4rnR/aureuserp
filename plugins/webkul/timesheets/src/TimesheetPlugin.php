@@ -9,7 +9,7 @@ use Filament\Panel;
 use ReflectionClass;
 use Webkul\Support\Package;
 
-final class TimesheetPlugin implements Plugin
+class TimesheetPlugin implements Plugin
 {
     public static function make(): static
     {

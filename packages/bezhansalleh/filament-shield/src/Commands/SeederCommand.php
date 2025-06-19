@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'shield:seeder')]
-final class SeederCommand extends Command
+class SeederCommand extends Command
 {
     use CanManipulateFiles;
 

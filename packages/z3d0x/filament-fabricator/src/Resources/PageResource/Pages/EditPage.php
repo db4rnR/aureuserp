@@ -14,7 +14,7 @@ use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
 use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\Concerns\HasPreviewModal;
 
-final class EditPage extends EditRecord
+class EditPage extends EditRecord
 {
     use HasPreviewModal;
 

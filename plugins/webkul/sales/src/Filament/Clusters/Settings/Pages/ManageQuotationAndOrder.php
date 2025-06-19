@@ -14,7 +14,7 @@ use UnitEnum;
 use Webkul\Sale\Settings\QuotationAndOrderSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageQuotationAndOrder extends SettingsPage
+class ManageQuotationAndOrder extends SettingsPage
 {
     use HasPageShield;
 
@@ -47,20 +47,18 @@ final class ManageQuotationAndOrder extends SettingsPage
         return __('sales::filament/clusters/settings/pages/manage-quotation-and-order.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('default_quotation_validity')
-                    ->required()
+                TextInput::make('default_quotation_validity')->required()
                     ->minValue(0)
                     ->numeric()
                     ->suffix(__('sales::filament/clusters/settings/pages/manage-quotation-and-order.form.fields.validity-suffix'))
                     ->default(30)
                     ->label(__('sales::filament/clusters/settings/pages/manage-quotation-and-order.form.fields.validity'))
                     ->helperText(__('sales::filament/clusters/settings/pages/manage-quotation-and-order.form.fields.validity-help')),
-                Toggle::make('enable_lock_confirm_sales')
-                    ->label(__('sales::filament/clusters/settings/pages/manage-quotation-and-order.form.fields.lock-confirm-sales'))
+                Toggle::make('enable_lock_confirm_sales')->label(__('sales::filament/clusters/settings/pages/manage-quotation-and-order.form.fields.lock-confirm-sales'))
                     ->helperText(__('sales::filament/clusters/settings/pages/manage-quotation-and-order.form.fields.lock-confirm-sales-help')),
             ]);
     }

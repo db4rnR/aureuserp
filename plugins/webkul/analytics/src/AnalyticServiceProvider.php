@@ -7,7 +7,7 @@ namespace Webkul\Analytic;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class AnalyticServiceProvider extends PackageServiceProvider
+class AnalyticServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'analytics';
 

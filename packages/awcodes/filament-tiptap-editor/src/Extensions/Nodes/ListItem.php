@@ -7,7 +7,7 @@ namespace FilamentTiptapEditor\Extensions\Nodes;
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-final class ListItem extends Node
+class ListItem extends Node
 {
     public static $name = 'listItem';
 

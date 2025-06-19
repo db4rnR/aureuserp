@@ -14,7 +14,7 @@ use Webkul\Account\Enums\DueTermValue;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class PaymentTerm extends Model implements Sortable
+class PaymentTerm extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

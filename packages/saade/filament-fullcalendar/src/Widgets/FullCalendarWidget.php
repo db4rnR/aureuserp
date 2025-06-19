@@ -21,7 +21,7 @@ use Saade\FilamentFullCalendar\Widgets\Concerns\InteractsWithModalActions;
 use Saade\FilamentFullCalendar\Widgets\Concerns\InteractsWithRawJS;
 use Saade\FilamentFullCalendar\Widgets\Concerns\InteractsWithRecords;
 
-final class FullCalendarWidget extends Widget implements HasActions, HasForms
+class FullCalendarWidget extends Widget implements HasActions, HasForms
 {
     use CanBeConfigured;
     use InteractsWithActions;

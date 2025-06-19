@@ -9,7 +9,7 @@ use Filament\Pages\Dashboard as BaseDashboard;
 use Webkul\TimeOff\Filament\Clusters\Reporting;
 use Webkul\TimeOff\Filament\Widgets\LeaveTypeWidget;
 
-final class ByType extends BaseDashboard
+class ByType extends BaseDashboard
 {
     protected static string $routePath = 'reporting/by-type';
 

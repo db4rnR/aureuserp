@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FilamentTiptapEditor\Data;
 
-final class MentionItem
+class MentionItem
 {
     public int $id;
 

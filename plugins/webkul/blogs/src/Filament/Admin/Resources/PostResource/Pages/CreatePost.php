@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Blog\Filament\Admin\Resources\PostResource;
 
-final class CreatePost extends CreateRecord
+class CreatePost extends CreateRecord
 {
     protected static string $resource = PostResource::class;
 
@@ -20,8 +20,7 @@ final class CreatePost extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('blogs::filament/admin/resources/post/pages/create-post.notification.title'))
             ->body(__('blogs::filament/admin/resources/post/pages/create-post.notification.body'));
     }

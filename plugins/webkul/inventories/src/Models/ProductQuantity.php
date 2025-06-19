@@ -14,7 +14,7 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class ProductQuantity extends Model
+class ProductQuantity extends Model
 {
     use HasFactory;
 

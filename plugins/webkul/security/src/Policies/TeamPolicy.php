@@ -7,7 +7,7 @@ namespace Webkul\Security\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class TeamPolicy
+class TeamPolicy
 {
     use HandlesAuthorization;
 

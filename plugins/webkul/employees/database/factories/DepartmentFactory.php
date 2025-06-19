@@ -9,7 +9,7 @@ use Webkul\Employee\Models\Department;
 use Webkul\Employee\Models\Employee;
 use Webkul\Support\Models\Company;
 
-final class DepartmentFactory extends Factory
+class DepartmentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

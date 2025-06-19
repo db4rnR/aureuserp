@@ -16,7 +16,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Actions as OrderActions;
 use Webkul\Purchase\Models\Order;
 
-final class EditOrder extends EditRecord
+class EditOrder extends EditRecord
 {
     protected static string $resource = OrderResource::class;
 
@@ -32,8 +32,7 @@ final class EditOrder extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('purchases::filament/admin/clusters/orders/resources/order/pages/edit-order.notification.title'))
             ->body(__('purchases::filament/admin/clusters/orders/resources/order/pages/edit-order.notification.body'));
     }
@@ -56,8 +55,7 @@ final class EditOrder extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterAction::make()->setResource(self::$resource),
             OrderActions\SendEmailAction::make(),
             OrderActions\SendPOEmailAction::make(),
             OrderActions\PrintRFQAction::make(),
@@ -68,16 +66,14 @@ final class EditOrder extends EditRecord
             OrderActions\LockAction::make(),
             OrderActions\UnlockAction::make(),
             OrderActions\CancelAction::make(),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === OrderState::DONE)
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === OrderState::DONE)
                 ->action(function (DeleteAction $action, Order $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('purchases::filament/admin/clusters/orders/resources/order/pages/edit-order.header-actions.delete.notification.error.title'))
                             ->body(__('purchases::filament/admin/clusters/orders/resources/order/pages/edit-order.header-actions.delete.notification.error.body'))
                             ->send();
@@ -86,8 +82,7 @@ final class EditOrder extends EditRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('purchases::filament/admin/clusters/orders/resources/order/pages/edit-order.header-actions.delete.notification.success.title'))
                         ->body(__('purchases::filament/admin/clusters/orders/resources/order/pages/edit-order.header-actions.delete.notification.success.body')),
                 ),

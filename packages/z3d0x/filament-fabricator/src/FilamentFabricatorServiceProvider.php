@@ -24,7 +24,7 @@ use Z3d0X\FilamentFabricator\Observers\PageRoutesObserver;
 use Z3d0X\FilamentFabricator\PageBlocks\PageBlock;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-final class FilamentFabricatorServiceProvider extends PackageServiceProvider
+class FilamentFabricatorServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

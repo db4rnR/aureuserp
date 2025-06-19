@@ -19,7 +19,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UTMMedium;
 use Webkul\Support\Models\UTMSource;
 
-final class Applicant extends Model
+class Applicant extends Model
 {
     use HasApplicationStatus, HasChatter, HasLogActivity, SoftDeletes;
 

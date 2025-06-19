@@ -6,7 +6,7 @@ namespace Webkul\Website\Filament\Customer\Clusters;
 
 use Filament\Clusters\Cluster;
 
-final class Account extends Cluster
+class Account extends Cluster
 {
     protected static ?int $navigationSort = 1000;
 

@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 
-final class CreateRule extends CreateRecord
+class CreateRule extends CreateRecord
 {
     protected static string $resource = RuleResource::class;
 
@@ -20,8 +20,7 @@ final class CreateRule extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/rule/pages/create-rule.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/rule/pages/create-rule.notification.body'));
     }

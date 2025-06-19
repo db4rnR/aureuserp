@@ -11,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<Packaging>
  */
-final class PackagingFactory extends Factory
+class PackagingFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

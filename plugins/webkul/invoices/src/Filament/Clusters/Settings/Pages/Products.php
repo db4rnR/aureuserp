@@ -13,7 +13,7 @@ use UnitEnum;
 use Webkul\Invoice\Settings\ProductSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class Products extends SettingsPage
+class Products extends SettingsPage
 {
     use HasPageShield;
 
@@ -44,12 +44,11 @@ final class Products extends SettingsPage
         return __('Manage Products');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Toggle::make('enable_uom')
-                    ->label(__('Unit of Measure'))
+                Toggle::make('enable_uom')->label(__('Unit of Measure'))
                     ->helperText(__('Sell and purchase products in different units of measure')),
             ]);
     }

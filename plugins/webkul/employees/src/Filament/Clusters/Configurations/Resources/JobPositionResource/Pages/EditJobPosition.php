@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\JobPositionResource;
 
-final class EditJobPosition extends EditRecord
+class EditJobPosition extends EditRecord
 {
     protected static string $resource = JobPositionResource::class;
 
@@ -21,8 +21,7 @@ final class EditJobPosition extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('employees::filament/clusters/configurations/resources/job-position/pages/edit-job-position.notification.title'))
             ->body(__('employees::filament/clusters/configurations/resources/job-position/pages/edit-job-position.notification.body'));
     }
@@ -31,10 +30,8 @@ final class EditJobPosition extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('employees::filament/clusters/configurations/resources/job-position/pages/edit-job-position.header-actions.delete.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/job-position/pages/edit-job-position.header-actions.delete.notification.body'))
                 ),

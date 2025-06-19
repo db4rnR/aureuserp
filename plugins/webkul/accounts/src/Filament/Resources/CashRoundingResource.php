@@ -29,7 +29,7 @@ use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\ListCashRoundin
 use Webkul\Account\Filament\Resources\CashRoundingResource\Pages\ViewCashRounding;
 use Webkul\Account\Models\CashRounding;
 
-final class CashRoundingResource extends Resource
+class CashRoundingResource extends Resource
 {
     protected static ?string $model = CashRounding::class;
 
@@ -37,31 +37,25 @@ final class CashRoundingResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Section::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                TextInput::make('name')
-                                    ->required()
+                Section::make()->schema([
+                        Group::make()->schema([
+                                TextInput::make('name')->required()
                                     ->label(__('accounts::filament/resources/cash-rounding.form.fields.name'))
                                     ->autofocus(),
-                                TextInput::make('rounding')
-                                    ->label(__('accounts::filament/resources/cash-rounding.form.fields.rounding-precision'))
+                                TextInput::make('rounding')->label(__('accounts::filament/resources/cash-rounding.form.fields.rounding-precision'))
                                     ->required()
                                     ->numeric()
                                     ->default(0.01)
                                     ->minValue(0)
                                     ->maxValue(99999999999),
-                                Select::make('strategy')
-                                    ->options(RoundingStrategy::class)
+                                Select::make('strategy')->options(RoundingStrategy::class)
                                     ->default(RoundingStrategy::BIGGEST_TAX->value)
                                     ->label(__('accounts::filament/resources/cash-rounding.form.fields.rounding-strategy')),
-                                Select::make('rounding_method')
-                                    ->options(RoundingMethod::class)
+                                Select::make('rounding_method')->options(RoundingMethod::class)
                                     ->default(RoundingMethod::HALF_UP->value)
                                     ->label(__('accounts::filament/resources/cash-rounding.form.fields.rounding-method'))
                                     ->required()
@@ -75,56 +69,44 @@ final class CashRoundingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('accounts::filament/resources/cash-rounding.table.columns.name'))
+                TextColumn::make('name')->label(__('accounts::filament/resources/cash-rounding.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('strategy')
-                    ->label(__('accounts::filament/resources/cash-rounding.table.columns.rounding-strategy'))
+                TextColumn::make('strategy')->label(__('accounts::filament/resources/cash-rounding.table.columns.rounding-strategy'))
                     ->formatStateUsing(fn ($state) => RoundingStrategy::options()[$state] ?? $state)
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('rounding_method')
-                    ->label(__('accounts::filament/resources/cash-rounding.table.columns.rounding-method'))
+                TextColumn::make('rounding_method')->label(__('accounts::filament/resources/cash-rounding.table.columns.rounding-method'))
                     ->formatStateUsing(fn ($state) => RoundingMethod::options()[$state] ?? $state)
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('createdBy.name')
-                    ->label(__('accounts::filament/resources/cash-rounding.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('accounts::filament/resources/cash-rounding.table.columns.created-by'))
                     ->searchable()
                     ->sortable(),
             ])
             ->groups([
-                Tables\Grouping\Group::make('name')
-                    ->label(__('accounts::filament/resources/cash-rounding.table.groups.name'))
+                Tables\Grouping\Group::make('name')->label(__('accounts::filament/resources/cash-rounding.table.groups.name'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('rounding_strategy')
-                    ->label(__('accounts::filament/resources/cash-rounding.table.groups.rounding-strategy'))
+                Tables\Grouping\Group::make('rounding_strategy')->label(__('accounts::filament/resources/cash-rounding.table.groups.rounding-strategy'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('rounding_method')
-                    ->label(__('accounts::filament/resources/cash-rounding.table.groups.rounding-method'))
+                Tables\Grouping\Group::make('rounding_method')->label(__('accounts::filament/resources/cash-rounding.table.groups.rounding-method'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('createdBy.name')
-                    ->label(__('accounts::filament/resources/cash-rounding.table.groups.created-by'))
+                Tables\Grouping\Group::make('createdBy.name')->label(__('accounts::filament/resources/cash-rounding.table.groups.created-by'))
                     ->collapsible(),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('accounts::filament/resources/cash-rounding.table.actions.delete.notification.title'))
                             ->body(__('accounts::filament/resources/cash-rounding.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('accounts::filament/resources/cash-rounding.table.actions.delete.notification.title'))
                                 ->body(__('accounts::filament/resources/cash-rounding.table.actions.delete.notification.body'))
                         ),
@@ -132,31 +114,25 @@ final class CashRoundingResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Section::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('accounts::filament/resources/cash-rounding.infolist.entries.name'))
+                Section::make()->schema([
+                        Group::make()->schema([
+                                TextEntry::make('name')->label(__('accounts::filament/resources/cash-rounding.infolist.entries.name'))
                                     ->icon('heroicon-o-document-text'),
-                                TextEntry::make('rounding')
-                                    ->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-precision'))
+                                TextEntry::make('rounding')->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-precision'))
                                     ->icon('heroicon-o-calculator')
                                     ->numeric(
                                         decimalPlaces: 2,
                                         decimalSeparator: '.',
                                         thousandsSeparator: ','
                                     ),
-                                TextEntry::make('strategy')
-                                    ->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-strategy'))
+                                TextEntry::make('strategy')->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-strategy'))
                                     ->icon('heroicon-o-cog')
                                     ->formatStateUsing(fn (string $state): string => RoundingStrategy::options()[$state]),
-                                TextEntry::make('rounding_method')
-                                    ->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-method'))
+                                TextEntry::make('rounding_method')->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-method'))
                                     ->icon('heroicon-o-adjustments-horizontal')
                                     ->formatStateUsing(fn (string $state): string => RoundingMethod::options()[$state]),
                             ])->columns(2),

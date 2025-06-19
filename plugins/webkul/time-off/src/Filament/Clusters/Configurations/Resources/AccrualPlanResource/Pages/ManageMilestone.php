@@ -9,7 +9,7 @@ use Filament\Resources\Pages\ManageRelatedRecords;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanResource;
 use Webkul\TimeOff\Traits\LeaveAccrualPlan;
 
-final class ManageMilestone extends ManageRelatedRecords
+class ManageMilestone extends ManageRelatedRecords
 {
     use LeaveAccrualPlan;
 

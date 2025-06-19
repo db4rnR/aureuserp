@@ -9,7 +9,7 @@ use Webkul\Inventory\Models\Dropship;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class DropshipPolicy
+class DropshipPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

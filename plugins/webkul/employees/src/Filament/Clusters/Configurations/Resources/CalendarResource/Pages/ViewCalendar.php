@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\CalendarResource;
 
-final class ViewCalendar extends ViewRecord
+class ViewCalendar extends ViewRecord
 {
     protected static string $resource = CalendarResource::class;
 
@@ -18,10 +18,8 @@ final class ViewCalendar extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('employees::filament/clusters/configurations/resources/activity-plan/pages/view-activity-plan.header-actions.delete.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/activity-plan/pages/view-activity-plan.header-actions.delete.notification.body')),
                 ),

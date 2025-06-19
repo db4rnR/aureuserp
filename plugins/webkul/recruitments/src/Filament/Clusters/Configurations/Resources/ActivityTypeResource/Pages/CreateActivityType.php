@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\Activity
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ActivityTypeResource;
 use Webkul\Support\Filament\Resources\ActivityTypeResource\Pages\CreateActivityType as BaseCreateActivityType;
 
-final class CreateActivityType extends BaseCreateActivityType
+class CreateActivityType extends BaseCreateActivityType
 {
     protected static string $resource = ActivityTypeResource::class;
 

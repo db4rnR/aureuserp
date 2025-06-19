@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Webkul\Partner\Models\Partner;
 
-final class Follower extends Model
+class Follower extends Model
 {
     protected $table = 'chatter_followers';
 

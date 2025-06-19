@@ -23,7 +23,7 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\Models\BackupDestination;
 use Spatie\Backup\BackupDestination\Backup;
 use Spatie\Backup\BackupDestination\BackupDestination as SpatieBackupDestination;
 
-final class BackupDestinationListRecords extends Component implements HasForms, HasTable
+class BackupDestinationListRecords extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;

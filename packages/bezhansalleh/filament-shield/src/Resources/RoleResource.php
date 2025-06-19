@@ -31,7 +31,7 @@ use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
 
-final class RoleResource extends Resource implements HasShieldPermissions
+class RoleResource extends Resource implements HasShieldPermissions
 {
     use HasShieldFormComponents;
 

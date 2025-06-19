@@ -9,7 +9,7 @@ use Webkul\Project\Models\Timesheet;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class TimesheetPolicy
+class TimesheetPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

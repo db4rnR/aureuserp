@@ -14,7 +14,7 @@ use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 use Spatie\Health\Commands\RunHealthChecksCommand;
 use Spatie\Health\ResultStores\ResultStore;
 
-final class HealthCheckResults extends Page
+class HealthCheckResults extends Page
 {
     /**
      * @var array<string, string>

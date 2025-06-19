@@ -7,7 +7,7 @@ namespace FilamentTiptapEditor\Extensions\Extensions;
 use Tiptap\Core\Extension;
 use Tiptap\Utils\InlineStyle;
 
-final class TextAlign extends Extension
+class TextAlign extends Extension
 {
     public static $name = 'textAlign';
 

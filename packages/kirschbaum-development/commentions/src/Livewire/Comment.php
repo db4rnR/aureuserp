@@ -14,7 +14,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
-final class Comment extends Component
+class Comment extends Component
 {
     use HasMentions;
 

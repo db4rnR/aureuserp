@@ -10,7 +10,7 @@ use ReflectionClass;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Webkul\Support\Package;
 
-final class TimeOffPlugin implements Plugin
+class TimeOffPlugin implements Plugin
 {
     public static function make(): static
     {
@@ -36,8 +36,7 @@ final class TimeOffPlugin implements Plugin
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\TimeOff\\Filament\\Widgets');
             })
             ->plugin(
-                FilamentFullCalendarPlugin::make()
-                    ->selectable()
+                FilamentFullCalendarPlugin::make()->selectable()
                     ->editable(true)
                     ->plugins(['multiMonth'])
             );

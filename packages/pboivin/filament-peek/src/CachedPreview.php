@@ -6,7 +6,7 @@ namespace Pboivin\FilamentPeek;
 
 use Illuminate\Support\Facades\Cache;
 
-final class CachedPreview
+class CachedPreview
 {
     public static ?string $cacheStore = null;
 

@@ -9,7 +9,7 @@ use Webkul\Sale\Models\Order;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class OrderPolicy
+class OrderPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

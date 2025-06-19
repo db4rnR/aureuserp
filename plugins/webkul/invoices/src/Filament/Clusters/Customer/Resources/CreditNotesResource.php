@@ -14,7 +14,7 @@ use Webkul\Invoice\Filament\Clusters\Customer\Resources\CreditNotesResource\Page
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\CreditNotesResource\Pages\ViewCreditNote;
 use Webkul\Invoice\Models\CreditNote;
 
-final class CreditNotesResource extends BaseCreditNoteResource
+class CreditNotesResource extends BaseCreditNoteResource
 {
     protected static ?string $model = CreditNote::class;
 

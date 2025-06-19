@@ -13,7 +13,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class LeaveAllocation extends Model
+class LeaveAllocation extends Model
 {
     use HasChatter, HasFactory, HasLogActivity;
 

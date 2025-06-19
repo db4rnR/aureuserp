@@ -10,7 +10,7 @@ use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\InvoiceResource;
 
-final class CreateInvoice extends CreateRecord
+class CreateInvoice extends CreateRecord
 {
     protected static string $resource = InvoiceResource::class;
 
@@ -21,8 +21,7 @@ final class CreateInvoice extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/invoice/pages/create-invoice.notification.title'))
             ->body(__('accounts::filament/resources/invoice/pages/create-invoice.notification.body'));
     }

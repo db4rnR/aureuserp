@@ -7,7 +7,7 @@ namespace Webkul\Contact\Filament\Resources\PartnerResource\Pages;
 use Webkul\Contact\Filament\Resources\PartnerResource;
 use Webkul\Partner\Filament\Resources\PartnerResource\Pages\ManageContacts as BaseManageContacts;
 
-final class ManageContacts extends BaseManageContacts
+class ManageContacts extends BaseManageContacts
 {
     protected static string $resource = PartnerResource::class;
 }

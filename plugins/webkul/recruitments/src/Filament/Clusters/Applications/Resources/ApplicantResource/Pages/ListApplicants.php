@@ -19,7 +19,7 @@ use Webkul\Recruitment\Filament\Widgets\JobPositionStatsWidget;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListApplicants extends ListRecords
+class ListApplicants extends ListRecords
 {
     use HasTableViews;
 
@@ -111,16 +111,13 @@ final class ListApplicants extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle')
+            CreateAction::make()->icon('heroicon-o-plus-circle')
                 ->label(__('recruitments::filament/clusters/applications/resources/applicant/pages/list-applicant.header-actions.create-applicant.label'))
                 ->modalHeading(__('recruitments::filament/clusters/applications/resources/applicant/pages/list-applicant.header-actions.create-applicant.modal-title'))
                 ->modalIcon('heroicon-s-user')
                 ->schema([
-                    Group::make()
-                        ->schema([
-                            Select::make('candidate_id')
-                                ->relationship('candidate', 'name')
+                    Group::make()->schema([
+                            Select::make('candidate_id')->relationship('candidate', 'name')
                                 ->required()
                                 ->searchable()
                                 ->preload()
@@ -141,8 +138,7 @@ final class ListApplicants extends ListRecords
                     self::$resource::getUrl('edit', ['record' => $record]),
                 ))
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('recruitments::filament/clusters/applications/resources/applicant/pages/list-applicant.notification.title'))
                         ->body(__('recruitments::filament/clusters/applications/resources/applicant/pages/list-applicant.notification.body')),
                 ),

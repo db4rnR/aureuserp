@@ -15,7 +15,7 @@ use Filament\Resources\Pages\EditRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Product\Filament\Resources\ProductResource;
 
-final class EditProduct extends EditRecord
+class EditProduct extends EditRecord
 {
     protected static string $resource = ProductResource::class;
 
@@ -31,8 +31,7 @@ final class EditProduct extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('products::filament/resources/product/pages/edit-product.notification.title'))
             ->body(__('products::filament/resources/product/pages/edit-product.notification.body'));
     }
@@ -40,21 +39,17 @@ final class EditProduct extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
-            Action::make('print')
-                ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.label'))
+            ChatterAction::make()->setResource(self::$resource),
+            Action::make('print')->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.label'))
                 ->color('gray')
                 ->icon('heroicon-o-printer')
                 ->schema([
-                    TextInput::make('quantity')
-                        ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.quantity'))
+                    TextInput::make('quantity')->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.quantity'))
                         ->required()
                         ->numeric()
                         ->minValue(1)
                         ->maxValue(100),
-                    Radio::make('format')
-                        ->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format'))
+                    Radio::make('format')->label(__('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format'))
                         ->options([
                             'dymo' => __('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format-options.dymo'),
                             '2x7_price' => __('products::filament/resources/product/pages/edit-product.header-actions.print.form.fields.format-options.2x7_price'),
@@ -83,10 +78,8 @@ final class EditProduct extends EditRecord
                         echo $pdf->output();
                     }, 'Product-'.$record->name.'.pdf');
                 }),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('products::filament/resources/product/pages/edit-product.header-actions.delete.notification.title'))
                         ->body(__('products::filament/resources/product/pages/edit-product.header-actions.delete.notification.body')),
                 ),

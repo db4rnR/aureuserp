@@ -7,7 +7,7 @@ namespace Webkul\Project\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class MilestonePolicy
+class MilestonePolicy
 {
     use HandlesAuthorization;
 

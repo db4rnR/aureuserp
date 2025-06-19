@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 use function Laravel\Prompts\text;
 
-final class MakePageBlockCommand extends Command
+class MakePageBlockCommand extends Command
 {
     use CanManipulateFiles;
 

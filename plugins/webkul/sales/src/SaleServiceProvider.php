@@ -13,7 +13,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class SaleServiceProvider extends PackageServiceProvider
+class SaleServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'sales';
 

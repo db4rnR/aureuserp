@@ -9,7 +9,7 @@ use Filament\Panel as FilamentPanel;
 use Pboivin\FilamentPeek\Exceptions\PreviewModalException;
 use Pboivin\FilamentPeek\FilamentPeekPlugin;
 
-final class Panel
+class Panel
 {
     public static function pluginIsLoaded(): bool
     {

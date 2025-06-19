@@ -29,7 +29,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class CuratorPanel extends Component implements HasActions, HasForms
+class CuratorPanel extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;

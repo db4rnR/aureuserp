@@ -11,7 +11,7 @@ use Webkul\Inventory\Database\Factories\PackageLevelFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class PackageLevel extends Model
+class PackageLevel extends Model
 {
     use HasFactory;
 

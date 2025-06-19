@@ -8,7 +8,7 @@ use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-final class ReorderAction extends Action
+class ReorderAction extends Action
 {
     protected function setUp(): void
     {

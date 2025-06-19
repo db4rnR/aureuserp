@@ -7,7 +7,7 @@ namespace Tests\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tests\Models\User;
 
-final class UserFactory extends Factory
+class UserFactory extends Factory
 {
     protected $model = User::class;
 

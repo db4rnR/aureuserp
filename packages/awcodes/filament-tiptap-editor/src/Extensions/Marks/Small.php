@@ -7,7 +7,7 @@ namespace FilamentTiptapEditor\Extensions\Marks;
 use Tiptap\Core\Mark;
 use Tiptap\Utils\HTML;
 
-final class Small extends Mark
+class Small extends Mark
 {
     public static $name = 'small';
 

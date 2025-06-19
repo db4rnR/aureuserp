@@ -14,7 +14,7 @@ use Filament\Schemas\Components\Group;
 use FilamentTiptapEditor\TiptapBlock;
 use Illuminate\Support\Str;
 
-final class VideoBlock extends TiptapBlock
+class VideoBlock extends TiptapBlock
 {
     public string $preview = 'filament-tiptap-editor::components.blocks.previews.video';
 

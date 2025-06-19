@@ -6,7 +6,7 @@ namespace Webkul\Recruitment\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class CandidateApplicantCategory extends Model
+class CandidateApplicantCategory extends Model
 {
     public $timestamps = false;
 

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\text;
 
-final class SuperAdminCommand extends Command
+class SuperAdminCommand extends Command
 {
     public $signature = 'shield:super-admin
         {--user= : ID of user to be made super admin.}

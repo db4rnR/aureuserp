@@ -14,7 +14,7 @@ use Webkul\Purchase\Enums\RequisitionState;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource;
 use Webkul\Purchase\Models\Requisition;
 
-final class EditPurchaseAgreement extends EditRecord
+class EditPurchaseAgreement extends EditRecord
 {
     protected static string $resource = PurchaseAgreementResource::class;
 
@@ -25,8 +25,7 @@ final class EditPurchaseAgreement extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.notification.title'))
             ->body(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.notification.body'));
     }
@@ -34,10 +33,8 @@ final class EditPurchaseAgreement extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
-            Action::make('confirm')
-                ->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.confirm.label'))
+            ChatterAction::make()->setResource(self::$resource),
+            Action::make('confirm')->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.confirm.label'))
                 ->color('primary')
                 ->action(function (): void {
                     $this->getRecord()->update([
@@ -47,8 +44,7 @@ final class EditPurchaseAgreement extends EditRecord
                     $this->fillForm();
                 })
                 ->visible(fn (): bool => $this->getRecord()->state === RequisitionState::DRAFT),
-            Action::make('close')
-                ->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.close.label'))
+            Action::make('close')->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.close.label'))
                 ->color('primary')
                 ->action(function (): void {
                     $this->getRecord()->update([
@@ -58,8 +54,7 @@ final class EditPurchaseAgreement extends EditRecord
                     $this->fillForm();
                 })
                 ->visible(fn (): bool => $this->getRecord()->state === RequisitionState::CONFIRMED),
-            Action::make('cancelRecord')
-                ->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.cancel.label'))
+            Action::make('cancelRecord')->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.cancel.label'))
                 ->color('gray')
                 ->action(function (): void {
                     $this->getRecord()->update([
@@ -72,8 +67,7 @@ final class EditPurchaseAgreement extends EditRecord
                     RequisitionState::CLOSED,
                     RequisitionState::CANCELED,
                 ], true)),
-            Action::make('print')
-                ->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.print.label'))
+            Action::make('print')->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.print.label'))
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->action(function (Requisition $record) {
@@ -87,11 +81,9 @@ final class EditPurchaseAgreement extends EditRecord
                         echo $pdf->output();
                     }, 'Purchase Agreement-'.str_replace('/', '_', $record->name).'.pdf');
                 }),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === RequisitionState::CLOSED)
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === RequisitionState::CLOSED)
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.delete.notification.title'))
                         ->body(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/edit-purchase-agreement.header-actions.delete.notification.body')),
                 ),

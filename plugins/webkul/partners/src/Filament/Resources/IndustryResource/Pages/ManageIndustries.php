@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\IndustryResource;
 use Webkul\Partner\Models\Industry;
 
-final class ManageIndustries extends ManageRecords
+class ManageIndustries extends ManageRecords
 {
     protected static string $resource = IndustryResource::class;
 
@@ -30,8 +30,7 @@ final class ManageIndustries extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('partners::filament/resources/industry/pages/manage-industries.header-actions.create.label'))
+            CreateAction::make()->label(__('partners::filament/resources/industry/pages/manage-industries.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data): array {
                     $data['creator_id'] = Auth::id();
@@ -39,8 +38,7 @@ final class ManageIndustries extends ManageRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('partners::filament/resources/industry/pages/manage-industries.header-actions.create.notification.title'))
                         ->body(__('partners::filament/resources/industry/pages/manage-industries.header-actions.create.notification.body')),
                 ),

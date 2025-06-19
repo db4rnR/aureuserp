@@ -6,7 +6,7 @@ namespace Webkul\Chatter\Filament\Actions\Chatter\ActivityActions;
 
 use Filament\Actions\Action;
 
-final class MarkAsDoneAction extends Action
+class MarkAsDoneAction extends Action
 {
     protected function setUp(): void
     {

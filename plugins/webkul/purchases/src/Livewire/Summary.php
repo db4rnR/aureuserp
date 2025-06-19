@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Livewire;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
-final class Summary extends Component
+class Summary extends Component
 {
     #[Reactive]
     public $products = [];

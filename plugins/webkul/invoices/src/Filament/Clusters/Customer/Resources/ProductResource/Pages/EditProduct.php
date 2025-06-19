@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\ProductResource\Pa
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\ProductResource;
 use Webkul\Product\Filament\Resources\ProductResource\Pages\EditProduct as BaseEditProduct;
 
-final class EditProduct extends BaseEditProduct
+class EditProduct extends BaseEditProduct
 {
     protected static string $resource = ProductResource::class;
 }

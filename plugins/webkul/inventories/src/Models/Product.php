@@ -13,7 +13,7 @@ use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Product\Models\Product as BaseProduct;
 use Webkul\Security\Models\User;
 
-final class Product extends BaseProduct
+class Product extends BaseProduct
 {
     use HasCustomFields;
 

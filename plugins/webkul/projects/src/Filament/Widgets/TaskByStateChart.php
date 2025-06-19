@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 use Webkul\Project\Enums\TaskState;
 use Webkul\Project\Models\Task;
 
-final class TaskByStateChart extends ChartWidget
+class TaskByStateChart extends ChartWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 

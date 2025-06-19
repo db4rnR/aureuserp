@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Filament\Resources\ProductResource;
 
-final class CreateProduct extends CreateRecord
+class CreateProduct extends CreateRecord
 {
     protected static string $resource = ProductResource::class;
 
@@ -20,8 +20,7 @@ final class CreateProduct extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('products::filament/resources/product/pages/create-product.notification.title'))
             ->body(__('products::filament/resources/product/pages/create-product.notification.body'));
     }

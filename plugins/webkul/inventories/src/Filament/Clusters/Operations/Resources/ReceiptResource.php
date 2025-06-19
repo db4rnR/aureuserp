@@ -30,7 +30,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Page
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource\Pages\ViewReceipt;
 use Webkul\Inventory\Models\Receipt;
 
-final class ReceiptResource extends Resource
+class ReceiptResource extends Resource
 {
     protected static ?string $model = Receipt::class;
 
@@ -59,9 +59,9 @@ final class ReceiptResource extends Resource
         return __('inventories::filament/clusters/operations/resources/receipt.navigation.group');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return OperationResource::form($schema);
+        return OperationResource::form($form);
     }
 
     public static function table(Table $table): Table
@@ -71,43 +71,37 @@ final class ReceiptResource extends Resource
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
-                    DeleteAction::make()
-                        ->hidden(fn (Receipt $record): bool => $record->state === OperationState::DONE)
+                    DeleteAction::make()->hidden(fn (Receipt $record): bool => $record->state === OperationState::DONE)
                         ->action(function (Receipt $record): void {
                             try {
                                 $record->delete();
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/operations/resources/receipt.table.actions.delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/operations/resources/receipt.table.actions.delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/operations/resources/receipt.table.actions.delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/operations/resources/receipt.table.actions.delete.notification.success.body')),
                         ),
                 ]),
             ])
             ->toolbarActions([
-                DeleteBulkAction::make()
-                    ->action(function (Collection $records): void {
+                DeleteBulkAction::make()->action(function (Collection $records): void {
                         try {
                             $records->each(fn (Model $record) => $record->delete());
                         } catch (QueryException) {
-                            Notification::make()
-                                ->danger()
+                            Notification::make()->danger()
                                 ->title(__('inventories::filament/clusters/operations/resources/receipt.table.bulk-actions.delete.notification.error.title'))
                                 ->body(__('inventories::filament/clusters/operations/resources/receipt.table.bulk-actions.delete.notification.error.body'))
                                 ->send();
                         }
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/operations/resources/receipt.table.bulk-actions.delete.notification.success.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/receipt.table.bulk-actions.delete.notification.success.body')),
                     ),
@@ -117,9 +111,9 @@ final class ReceiptResource extends Resource
             }));
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return OperationResource::infolist($schema);
+        return OperationResource::infolist($infolist);
     }
 
     public static function getRecordSubNavigation(Page $page): array

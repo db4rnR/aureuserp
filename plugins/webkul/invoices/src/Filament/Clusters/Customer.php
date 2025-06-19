@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters;
 use BackedEnum;
 use Filament\Clusters\Cluster;
 
-final class Customer extends Cluster
+class Customer extends Cluster
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 

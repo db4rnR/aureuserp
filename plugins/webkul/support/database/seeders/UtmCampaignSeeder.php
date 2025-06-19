@@ -10,7 +10,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UtmStage;
 
-final class UtmCampaignSeeder extends Seeder
+class UtmCampaignSeeder extends Seeder
 {
     /**
      * Run the database seeds.

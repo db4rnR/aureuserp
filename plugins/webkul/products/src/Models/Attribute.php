@@ -15,7 +15,7 @@ use Webkul\Product\Database\Factories\AttributeFactory;
 use Webkul\Product\Enums\AttributeType;
 use Webkul\Security\Models\User;
 
-final class Attribute extends Model implements Sortable
+class Attribute extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

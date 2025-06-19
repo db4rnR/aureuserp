@@ -7,7 +7,7 @@ namespace Webkul\Account\Filament\Resources\BillResource\Actions;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Enums\DisplayType;
@@ -20,7 +20,7 @@ use Webkul\Account\Models\MoveLine;
 use Webkul\Account\Models\MoveReversal;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource;
 
-final class CreditNoteAction extends Action
+class CreditNoteAction extends Action
 {
     protected function setUp(): void
     {
@@ -34,12 +34,10 @@ final class CreditNoteAction extends Action
             ->modalHeading(__('Credit Note'));
 
         $this->schema(
-            fn (Schema $schema): Schema => $schema->components([
-                Textarea::make('reason')
-                    ->label(__('Reason displayed on Credit Note'))
+            fn (Form $form): Form => $form->schema([
+                Textarea::make('reason')->label(__('Reason displayed on Credit Note'))
                     ->required(),
-                DatePicker::make('date')
-                    ->label(__('Reason displayed on Credit Note'))
+                DatePicker::make('date')->label(__('Reason displayed on Credit Note'))
                     ->default(now())
                     ->native(false)
                     ->required(),

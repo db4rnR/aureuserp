@@ -7,7 +7,7 @@ namespace Webkul\Employee\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\SkillType;
 
-final class SkillTypeFactory extends Factory
+class SkillTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

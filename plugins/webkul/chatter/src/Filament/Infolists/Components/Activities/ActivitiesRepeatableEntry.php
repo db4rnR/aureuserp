@@ -6,7 +6,7 @@ namespace Webkul\Chatter\Filament\Infolists\Components\Activities;
 
 use Filament\Infolists\Components\RepeatableEntry;
 
-final class ActivitiesRepeatableEntry extends RepeatableEntry
+class ActivitiesRepeatableEntry extends RepeatableEntry
 {
     protected string $view = 'chatter::filament.infolists.components.activities.repeatable-entry';
 

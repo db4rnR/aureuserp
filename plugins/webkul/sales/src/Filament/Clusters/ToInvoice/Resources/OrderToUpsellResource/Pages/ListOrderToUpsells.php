@@ -11,7 +11,7 @@ use Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToUpsellResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListOrderToUpsells extends ListRecords
+class ListOrderToUpsells extends ListRecords
 {
     use HasTableViews;
 

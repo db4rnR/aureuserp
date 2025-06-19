@@ -7,7 +7,7 @@ namespace Webkul\TimeOff\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class LeaveAccrualPlanPolicy
+class LeaveAccrualPlanPolicy
 {
     use HandlesAuthorization;
 

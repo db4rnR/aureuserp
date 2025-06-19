@@ -10,7 +10,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
-final class CreateRole extends CreateRecord
+class CreateRole extends CreateRecord
 {
     public Collection $permissions;
 

@@ -9,7 +9,7 @@ use Webkul\Inventory\Models\Receipt;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class ReceiptPolicy
+class ReceiptPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

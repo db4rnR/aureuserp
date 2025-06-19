@@ -10,7 +10,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\Account\Filament\Resources\PaymentTermResource;
 use Webkul\Account\Models\PaymentTerm;
 
-final class ListPaymentTerms extends ListRecords
+class ListPaymentTerms extends ListRecords
 {
     protected static string $resource = PaymentTermResource::class;
 
@@ -28,8 +28,7 @@ final class ListPaymentTerms extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
+            CreateAction::make()->icon('heroicon-o-plus-circle'),
         ];
     }
 }

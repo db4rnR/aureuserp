@@ -13,7 +13,7 @@ use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListQuotations extends ListRecords
+class ListQuotations extends ListRecords
 {
     use HasTableViews;
 
@@ -45,8 +45,7 @@ final class ListQuotations extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
+            CreateAction::make()->icon('heroicon-o-plus-circle'),
         ];
     }
 }

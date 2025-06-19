@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\Packa
 use Webkul\Product\Filament\Resources\PackagingResource\Pages\ManagePackagings as BaseManagePackagings;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\PackagingResource;
 
-final class ManagePackagings extends BaseManagePackagings
+class ManagePackagings extends BaseManagePackagings
 {
     protected static string $resource = PackagingResource::class;
 }

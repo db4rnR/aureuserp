@@ -9,7 +9,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class EmployeePolicy
+class EmployeePolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

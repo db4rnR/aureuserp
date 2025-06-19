@@ -14,7 +14,7 @@ use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\EditPost;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages\ListPosts;
 use Pboivin\FilamentPeek\Tests\Models\Post;
 
-final class PostResource extends Resource
+class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 

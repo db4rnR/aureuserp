@@ -11,7 +11,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplateResource;
 
-final class ViewQuotationTemplate extends ViewRecord
+class ViewQuotationTemplate extends ViewRecord
 {
     protected static string $resource = QuotationTemplateResource::class;
 
@@ -24,10 +24,8 @@ final class ViewQuotationTemplate extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('sales::filament/clusters/configurations/resources/quotation-template/pages/view-quotation-template.header-actions.notification.delete.title'))
                         ->body(__('sales::filament/clusters/configurations/resources/quotation-template/pages/view-quotation-template.header-actions.notification.delete.body'))
                 ),

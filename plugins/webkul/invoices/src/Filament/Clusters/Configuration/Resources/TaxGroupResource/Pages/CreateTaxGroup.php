@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResou
 use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\CreateTaxGroup as BaseCreateTaxGroup;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource;
 
-final class CreateTaxGroup extends BaseCreateTaxGroup
+class CreateTaxGroup extends BaseCreateTaxGroup
 {
     protected static string $resource = TaxGroupResource::class;
 }

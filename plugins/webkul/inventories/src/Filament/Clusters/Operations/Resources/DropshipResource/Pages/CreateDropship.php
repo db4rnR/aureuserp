@@ -13,7 +13,7 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DropshipResource;
 use Webkul\Inventory\Models\OperationType;
 
-final class CreateDropship extends CreateRecord
+class CreateDropship extends CreateRecord
 {
     protected static string $resource = DropshipResource::class;
 
@@ -44,8 +44,7 @@ final class CreateDropship extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/operations/resources/dropship/pages/create-dropship.notification.title'))
             ->body(__('inventories::filament/clusters/operations/resources/dropship/pages/create-dropship.notification.body'));
     }

@@ -10,7 +10,7 @@ use Webkul\Sale\Models\OrderTemplate;
 /**
  * @extends Factory<OrderTemplate>
  */
-final class OrderTemplateFactory extends Factory
+class OrderTemplateFactory extends Factory
 {
     /**
      * Define the model's default state.

@@ -17,7 +17,7 @@ use Webkul\Product\Models\Product;
 use Webkul\Product\Models\ProductAttribute;
 use Webkul\Product\Models\ProductCombination;
 
-final class GenerateVariantsAction extends Action
+class GenerateVariantsAction extends Action
 {
     use CanCustomizeProcess;
 
@@ -59,14 +59,12 @@ final class GenerateVariantsAction extends Action
                 $this->handleMultipleAttributeVariants($attributes);
             }
 
-            Notification::make()
-                ->success()
+            Notification::make()->success()
                 ->title(__('products::filament/resources/product/actions/generate-variants.notification.success.title'))
                 ->body(__('products::filament/resources/product/actions/generate-variants.notification.success.body'))
                 ->send();
         } catch (Exception) {
-            Notification::make()
-                ->danger()
+            Notification::make()->danger()
                 ->title(__('products::filament/resources/product/actions/generate-variants.notification.error.title'))
                 ->body(__('products::filament/resources/product/actions/generate-variants.notification.error.body'))
                 ->send();

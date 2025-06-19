@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyAllocationResource;
 
-final class EditMyAllocation extends EditRecord
+class EditMyAllocation extends EditRecord
 {
     protected static string $resource = MyAllocationResource::class;
 
@@ -23,8 +23,7 @@ final class EditMyAllocation extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/my-time/resources/my-allocation/pages/edit-allocation.notification.title'))
             ->body(__('time-off::filament/clusters/my-time/resources/my-allocation/pages/edit-allocation.notification.body'));
     }
@@ -32,13 +31,10 @@ final class EditMyAllocation extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/my-time/resources/my-allocation/pages/edit-allocation.header-actions.delete.notification.title'))
                         ->body(__('time-off::filament/clusters/my-time/resources/my-allocation/pages/edit-allocation.header-actions.delete.notification.body'))
                 ),

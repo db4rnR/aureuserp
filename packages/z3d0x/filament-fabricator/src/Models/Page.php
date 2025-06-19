@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Z3d0X\FilamentFabricator\Models\Concerns\HandlesPageUrls;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as Contract;
 
-final class Page extends Model implements Contract
+class Page extends Model implements Contract
 {
     use HandlesPageUrls;
 

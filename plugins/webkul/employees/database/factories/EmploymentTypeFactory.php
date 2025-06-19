@@ -9,7 +9,7 @@ use Webkul\Employee\Models\EmploymentType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Country;
 
-final class EmploymentTypeFactory extends Factory
+class EmploymentTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

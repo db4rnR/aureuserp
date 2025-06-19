@@ -20,7 +20,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-final class Product extends Model implements Sortable
+class Product extends Model implements Sortable
 {
     use HasChatter, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
 

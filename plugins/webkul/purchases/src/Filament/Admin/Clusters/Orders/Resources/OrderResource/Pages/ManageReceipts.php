@@ -14,7 +14,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 use Webkul\Support\Package;
 
-final class ManageReceipts extends ManageRelatedRecords
+class ManageReceipts extends ManageRelatedRecords
 {
     protected static string $resource = OrderResource::class;
 
@@ -50,12 +50,10 @@ final class ManageReceipts extends ManageRelatedRecords
     {
         return OperationResource::table($table)
             ->recordActions([
-                ViewAction::make()
-                    ->url(fn ($record): string => OperationResource::getUrl('view', ['record' => $record]))
+                ViewAction::make()->url(fn ($record): string => OperationResource::getUrl('view', ['record' => $record]))
                     ->openUrlInNewTab(false),
 
-                EditAction::make()
-                    ->url(fn ($record): string => OperationResource::getUrl('edit', ['record' => $record]))
+                EditAction::make()->url(fn ($record): string => OperationResource::getUrl('edit', ['record' => $record]))
                     ->openUrlInNewTab(false),
             ])
             ->toolbarActions([]);

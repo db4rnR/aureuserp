@@ -15,11 +15,11 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Component;
+use Filament\Forms\Components\Component;
 use Illuminate\Support\Collection;
 use Webkul\Field\Models\Field;
 
-final class CustomFields extends Component
+class CustomFields extends Component
 {
     private array $include = [];
 
@@ -95,8 +95,7 @@ final class CustomFields extends Component
             default => TextInput::class,
         };
 
-        $component = $componentClass::make($field->code)
-            ->label($field->name);
+        $component = $componentClass::make($field->code)->label($field->name);
 
         if (! empty($field->form_settings['validations'])) {
             foreach ($field->form_settings['validations'] as $validation) {

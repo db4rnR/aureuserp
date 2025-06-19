@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-final class StageJob extends Model
+class StageJob extends Model
 {
     use HasFactory;
 

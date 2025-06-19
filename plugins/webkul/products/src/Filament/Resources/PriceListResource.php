@@ -18,7 +18,7 @@ use Webkul\Product\Filament\Resources\PriceListResource\Pages\ListPriceLists;
 use Webkul\Product\Filament\Resources\PriceListResource\Pages\ViewPriceList;
 use Webkul\Product\Models\PriceList;
 
-final class PriceListResource extends Resource
+class PriceListResource extends Resource
 {
     protected static ?string $model = PriceList::class;
 
@@ -31,9 +31,9 @@ final class PriceListResource extends Resource
         return 'Price Lists';
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 //
             ]);

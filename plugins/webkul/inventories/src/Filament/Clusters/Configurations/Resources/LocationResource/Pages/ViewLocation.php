@@ -12,15 +12,14 @@ use Filament\Resources\Pages\ViewRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource;
 use Webkul\Inventory\Models\Location;
 
-final class ViewLocation extends ViewRecord
+class ViewLocation extends ViewRecord
 {
     protected static string $resource = LocationResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('print')
-                ->label(__('inventories::filament/clusters/configurations/resources/location/pages/view-location.header-actions.print.label'))
+            Action::make('print')->label(__('inventories::filament/clusters/configurations/resources/location/pages/view-location.header-actions.print.label'))
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->action(function (Location $record) {
@@ -34,10 +33,8 @@ final class ViewLocation extends ViewRecord
                         echo $pdf->output();
                     }, 'Location-'.$record->name.'.pdf');
                 }),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/location/pages/view-location.header-actions.delete.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/location/pages/view-location.header-actions.delete.notification.body')),
                 ),

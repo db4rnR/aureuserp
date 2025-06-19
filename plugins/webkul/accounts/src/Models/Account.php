@@ -10,7 +10,7 @@ use Webkul\Account\Enums\AccountType;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Currency;
 
-final class Account extends Model
+class Account extends Model
 {
     use HasFactory;
 

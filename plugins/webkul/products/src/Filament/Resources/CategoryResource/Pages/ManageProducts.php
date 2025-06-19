@@ -16,7 +16,7 @@ use Webkul\Product\Filament\Resources\CategoryResource;
 use Webkul\Product\Filament\Resources\ProductResource;
 use Webkul\Support\Models\UOM;
 
-final class ManageProducts extends ManageRelatedRecords
+class ManageProducts extends ManageRelatedRecords
 {
     protected static string $resource = CategoryResource::class;
 
@@ -29,17 +29,16 @@ final class ManageProducts extends ManageRelatedRecords
         return __('products::filament/resources/category/pages/manage-products.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return ProductResource::form($schema);
+        return ProductResource::form($form);
     }
 
     public function table(Table $table): Table
     {
         return ProductResource::table($table)
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('products::filament/resources/category/pages/manage-products.table.header-actions.create.label'))
+                CreateAction::make()->label(__('products::filament/resources/category/pages/manage-products.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->fillForm(function (array $arguments): array {
                         $uom_id = UOM::first()->id;
@@ -57,8 +56,7 @@ final class ManageProducts extends ManageRelatedRecords
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('products::filament/resources/category/pages/manage-products.table.header-actions.create.notification.title'))
                             ->body(__('products::filament/resources/category/pages/manage-products.table.header-actions.create.notification.body')),
                     ),

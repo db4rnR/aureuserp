@@ -14,7 +14,7 @@ use Webkul\Inventory\Facades\Inventory;
 use Webkul\Inventory\Models\Operation;
 use Webkul\Inventory\Models\ProductQuantity;
 
-final class ValidateAction extends Action
+class ValidateAction extends Action
 {
     protected function setUp(): void
     {
@@ -62,8 +62,7 @@ final class ValidateAction extends Action
             $this->modalHeading(__('inventories::filament/clusters/operations/actions/validate.modal-heading'))
                 ->modalDescription(__('inventories::filament/clusters/operations/actions/validate.modal-description'))
                 ->extraModalFooterActions([
-                    Action::make('no-backorder')
-                        ->label(__('inventories::filament/clusters/operations/actions/validate.extra-modal-footer-actions.no-backorder.label'))
+                    Action::make('no-backorder')->label(__('inventories::filament/clusters/operations/actions/validate.extra-modal-footer-actions.no-backorder.label'))
                         ->color('danger')
                         ->action(function (Operation $record, Component $livewire): void {
                             if ($this->hasMoveErrors($record)) {
@@ -177,8 +176,7 @@ final class ValidateAction extends Action
      */
     private function sendNotification(string $titleKey, string $bodyKey, string $type = 'info'): void
     {
-        Notification::make()
-            ->title(__($titleKey))
+        Notification::make()->title(__($titleKey))
             ->body(__($bodyKey))
             ->{$type}()
             ->send();

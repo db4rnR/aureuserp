@@ -15,7 +15,7 @@ use Webkul\Security\Livewire\AcceptInvitation;
 use Webkul\Security\Policies\RolePolicy;
 use Webkul\Support\Console\Commands\InstallERP;
 
-final class SupportServiceProvider extends PackageServiceProvider
+class SupportServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'support';
 

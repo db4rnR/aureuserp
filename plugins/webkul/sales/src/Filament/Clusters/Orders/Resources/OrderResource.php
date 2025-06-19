@@ -20,7 +20,7 @@ use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ManageInv
 use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource\Pages\ViewOrder;
 use Webkul\Sale\Models\Order;
 
-final class OrderResource extends Resource
+class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
@@ -42,9 +42,9 @@ final class OrderResource extends Resource
         return __('sales::filament/clusters/orders/resources/order.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return QuotationResource::form($schema);
+        return QuotationResource::form($form);
     }
 
     public static function table(Table $table): Table
@@ -55,9 +55,9 @@ final class OrderResource extends Resource
             });
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return QuotationResource::infolist($schema);
+        return QuotationResource::infolist($infolist);
     }
 
     public static function getRecordSubNavigation(Page $page): array

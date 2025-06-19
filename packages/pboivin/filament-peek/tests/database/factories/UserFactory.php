@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Pboivin\FilamentPeek\Tests\Models\User;
 
-final class UserFactory extends Factory
+class UserFactory extends Factory
 {
     protected $model = User::class;
 

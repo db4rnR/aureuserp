@@ -7,7 +7,7 @@ namespace Webkul\Account\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Product\Models\Product;
 
-final class ProductTaxes extends Model
+class ProductTaxes extends Model
 {
     public $timestamps = false;
 

@@ -50,7 +50,7 @@ use Webkul\Inventory\Models\Route;
 use Webkul\Inventory\Settings\ProductSettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-final class RouteResource extends Resource
+class RouteResource extends Resource
 {
     protected static ?string $model = Route::class;
 
@@ -83,21 +83,19 @@ final class RouteResource extends Resource
         return __('inventories::filament/clusters/configurations/resources/route.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Section::make(__('inventories::filament/clusters/configurations/resources/route.form.sections.general.title'))
                     ->schema([
-                        TextInput::make('name')
-                            ->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.general.fields.route'))
+                        TextInput::make('name')->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.general.fields.route'))
                             ->required()
                             ->maxLength(255)
                             ->autofocus()
                             ->placeholder(__('inventories::filament/clusters/configurations/resources/route.form.sections.general.fields.route-placeholder'))
                             ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;']),
-                        Select::make('company_id')
-                            ->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.general.fields.company'))
+                        Select::make('company_id')->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.general.fields.company'))
                             ->relationship(name: 'company', titleAttribute: 'name')
                             ->searchable()
                             ->preload()
@@ -107,31 +105,24 @@ final class RouteResource extends Resource
                 Section::make(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.title'))
                     ->description(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.description'))
                     ->schema([
-                        Group::make()
-                            ->schema([
-                                Toggle::make('product_category_selectable')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.product-categories'))
+                        Group::make()->schema([
+                                Toggle::make('product_category_selectable')->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.product-categories'))
                                     ->inline(false)
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.product-categories-hint-tooltip')),
-                                Toggle::make('product_selectable')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.products'))
+                                Toggle::make('product_selectable')->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.products'))
                                     ->inline(false)
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.products-hint-tooltip')),
-                                Toggle::make('packaging_selectable')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.packaging'))
+                                Toggle::make('packaging_selectable')->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.packaging'))
                                     ->inline(false)
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.packaging-hint-tooltip'))
                                     ->visible(fn (ProductSettings $settings): bool => $settings->enable_packagings),
                             ]),
-                        Group::make()
-                            ->schema([
-                                Toggle::make('warehouse_selectable')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.warehouses'))
+                        Group::make()->schema([
+                                Toggle::make('warehouse_selectable')->label(__('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.warehouses'))
                                     ->inline(false)
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/route.form.sections.applicable-on.fields.warehouses-hint-tooltip'))
                                     ->live(),
-                                Select::make('warehouses')
-                                    ->hiddenLabel()
+                                Select::make('warehouses')->hiddenLabel()
                                     ->relationship('warehouses', 'name')
                                     ->searchable()
                                     ->preload()
@@ -148,31 +139,25 @@ final class RouteResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.route'))
+                TextColumn::make('name')->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.route'))
                     ->searchable(),
-                TextColumn::make('company.name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.company'))
+                TextColumn::make('company.name')->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.company'))
                     ->searchable(),
-                TextColumn::make('deleted_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.deleted-at'))
+                TextColumn::make('deleted_at')->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.deleted-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/route.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('company_id')
-                    ->label(__('inventories::filament/clusters/configurations/resources/route.table.filters.company'))
+                SelectFilter::make('company_id')->label(__('inventories::filament/clusters/configurations/resources/route.table.filters.company'))
                     ->relationship('company', 'name')
                     ->searchable()
                     ->preload(),
@@ -180,137 +165,109 @@ final class RouteResource extends Resource
             ->reorderable('sort')
             ->defaultSort('sort', 'desc')
             ->recordActions([
-                ViewAction::make()
-                    ->hidden(fn ($record) => $record->trashed()),
-                EditAction::make()
-                    ->hidden(fn ($record) => $record->trashed())
+                ViewAction::make()->hidden(fn ($record) => $record->trashed()),
+                EditAction::make()->hidden(fn ($record) => $record->trashed())
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/route.table.actions.edit.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/route.table.actions.edit.notification.body')),
                     ),
-                RestoreAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                RestoreAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/route.table.actions.restore.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/route.table.actions.restore.notification.body')),
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/route.table.actions.delete.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/route.table.actions.delete.notification.body')),
                     ),
-                ForceDeleteAction::make()
-                    ->action(function (Route $record): void {
+                ForceDeleteAction::make()->action(function (Route $record): void {
                         try {
                             $record->forceDelete();
                         } catch (QueryException) {
-                            Notification::make()
-                                ->danger()
+                            Notification::make()->danger()
                                 ->title(__('inventories::filament/clusters/configurations/resources/route.table.actions.force-delete.notification.error.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/route.table.actions.force-delete.notification.error.body'))
                                 ->send();
                         }
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/route.table.actions.force-delete.notification.success.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/route.table.actions.force-delete.notification.success.body')),
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/route.table.bulk-actions.restore.notification.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/route.table.bulk-actions.restore.notification.body')),
                         ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/route.table.bulk-actions.delete.notification.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/route.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->action(function (Collection $records): void {
+                    ForceDeleteBulkAction::make()->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->forceDelete());
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/configurations/resources/route.table.bulk-actions.force-delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/configurations/resources/route.table.bulk-actions.force-delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/route.table.bulk-actions.force-delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/route.table.bulk-actions.force-delete.notification.success.body')),
                         ),
                 ]),
             ])
             ->emptyStateActions([
-                CreateAction::make()
-                    ->icon('heroicon-o-plus-circle'),
+                CreateAction::make()->icon('heroicon-o-plus-circle'),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.general.title'))
                             ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.general.entries.route'))
+                                TextEntry::make('name')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.general.entries.route'))
                                     ->icon('heroicon-o-arrow-path')
                                     ->size(TextSize::Large)
                                     ->weight(FontWeight::Bold),
-                                TextEntry::make('company.name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.general.entries.company'))
+                                TextEntry::make('company.name')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.general.entries.company'))
                                     ->icon('heroicon-o-building-office'),
                             ]),
 
                         Section::make(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.title'))
                             ->description(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.description'))
                             ->schema([
-                                Grid::make()
-                                    ->schema([
-                                        IconEntry::make('product_category_selectable')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.product-categories'))
+                                Grid::make()->schema([
+                                        IconEntry::make('product_category_selectable')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.product-categories'))
                                             ->boolean()
                                             ->icon(fn (bool $state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle'),
-                                        IconEntry::make('product_selectable')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.products'))
+                                        IconEntry::make('product_selectable')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.products'))
                                             ->boolean()
                                             ->icon(fn (bool $state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle'),
-                                        IconEntry::make('packaging_selectable')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.packaging'))
+                                        IconEntry::make('packaging_selectable')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.packaging'))
                                             ->boolean()
                                             ->icon(fn (bool $state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle'),
                                     ])
                                     ->columns(3),
 
-                                Grid::make()
-                                    ->schema([
-                                        IconEntry::make('warehouse_selectable')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.warehouses'))
+                                Grid::make()->schema([
+                                        IconEntry::make('warehouse_selectable')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.warehouses'))
                                             ->boolean()
                                             ->icon(fn (bool $state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle'),
-                                        TextEntry::make('warehouses.name')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.warehouses'))
+                                        TextEntry::make('warehouses.name')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.applicable-on.entries.warehouses'))
                                             ->listWithLineBreaks()
                                             ->visible(fn ($record) => $record->warehouse_selectable)
                                             ->icon('heroicon-o-building-office'),
@@ -321,21 +278,17 @@ final class RouteResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.record-information.title'))
                             ->schema([
-                                TextEntry::make('created_at')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.record-information.entries.created-at'))
+                                TextEntry::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.record-information.entries.created-at'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar'),
 
-                                TextEntry::make('creator.name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.record-information.entries.created-by'))
+                                TextEntry::make('creator.name')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.record-information.entries.created-by'))
                                     ->icon('heroicon-m-user'),
 
-                                TextEntry::make('updated_at')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.record-information.entries.last-updated'))
+                                TextEntry::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/route.infolist.sections.record-information.entries.last-updated'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar-days'),
                             ]),

@@ -7,7 +7,7 @@ namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanR
 use Filament\Resources\RelationManagers\RelationManager;
 use Webkul\TimeOff\Traits\LeaveAccrualPlan;
 
-final class MilestoneRelationManager extends RelationManager
+class MilestoneRelationManager extends RelationManager
 {
     use LeaveAccrualPlan;
 

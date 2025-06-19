@@ -14,7 +14,7 @@ use Webkul\Invoice\Enums\InvoicePolicy;
 use Webkul\Sale\Settings\InvoiceSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageInvoice extends SettingsPage
+class ManageInvoice extends SettingsPage
 {
     use HasPageShield;
 
@@ -47,12 +47,11 @@ final class ManageInvoice extends SettingsPage
         return __('sales::filament/clusters/settings/pages/manage-invoice.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Radio::make('invoice_policy')
-                    ->options(InvoicePolicy::class)
+                Radio::make('invoice_policy')->options(InvoicePolicy::class)
                     ->default('delivery')
                     ->label(__('sales::filament/clusters/settings/pages/manage-invoice.form.invoice-policy.label'))
                     ->helperText(__('sales::filament/clusters/settings/pages/manage-invoice.form.invoice-policy.label-help')),

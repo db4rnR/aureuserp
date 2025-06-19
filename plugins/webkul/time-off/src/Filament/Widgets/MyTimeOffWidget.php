@@ -13,7 +13,7 @@ use Webkul\TimeOff\Models\Leave;
 use Webkul\TimeOff\Models\LeaveAllocation;
 use Webkul\TimeOff\Models\LeaveType;
 
-final class MyTimeOffWidget extends BaseWidget
+class MyTimeOffWidget extends BaseWidget
 {
     protected function getStats(): array
     {

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * SQLite to DBML Converter - PHP Version
  * Fixed version that handles older SQLite databases
  */
-final class SqliteToDbmlConverter
+class SqliteToDbmlConverter
 {
     private bool $verbose = false;
 

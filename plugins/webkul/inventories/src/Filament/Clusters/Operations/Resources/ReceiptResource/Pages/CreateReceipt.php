@@ -13,7 +13,7 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource;
 use Webkul\Inventory\Models\OperationType;
 
-final class CreateReceipt extends CreateRecord
+class CreateReceipt extends CreateRecord
 {
     protected static string $resource = ReceiptResource::class;
 
@@ -44,8 +44,7 @@ final class CreateReceipt extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/operations/resources/receipt/pages/create-receipt.notification.title'))
             ->body(__('inventories::filament/clusters/operations/resources/receipt/pages/create-receipt.notification.body'));
     }

@@ -10,7 +10,7 @@ use Filament\Panel;
 use Pboivin\FilamentPeek\FilamentPeekPlugin;
 use Z3d0X\FilamentFabricator\Enums\BlockPickerStyle;
 
-final class FilamentFabricatorPlugin implements Plugin
+class FilamentFabricatorPlugin implements Plugin
 {
     public const ID = 'filament-fabricator';
 

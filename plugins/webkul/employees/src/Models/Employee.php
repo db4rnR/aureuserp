@@ -21,7 +21,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\State;
 
-final class Employee extends Model
+class Employee extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes;
 

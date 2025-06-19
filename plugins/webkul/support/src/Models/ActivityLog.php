@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
-final class ActivityLog extends Model
+class ActivityLog extends Model
 {
     protected $table = 'activity_logs';
 

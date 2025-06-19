@@ -11,7 +11,7 @@ use Webkul\Purchase\Enums\OrderState;
 use Webkul\Purchase\Facades\PurchaseOrder;
 use Webkul\Purchase\Models\Order;
 
-final class CreateBillAction extends Action
+class CreateBillAction extends Action
 {
     protected function setUp(): void
     {
@@ -28,8 +28,7 @@ final class CreateBillAction extends Action
             })
             ->action(function (Order $record, Component $livewire): void {
                 if ($record->qty_to_invoice === 0) {
-                    Notification::make()
-                        ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/create-bill.action.notification.warning.title'))
+                    Notification::make()->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/create-bill.action.notification.warning.title'))
                         ->body(__('purchases::filament/admin/clusters/orders/resources/order/actions/create-bill.action.notification.warning.body'))
                         ->warning()
                         ->send();
@@ -41,8 +40,7 @@ final class CreateBillAction extends Action
 
                 $livewire->updateForm();
 
-                Notification::make()
-                    ->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/create-bill.action.notification.success.title'))
+                Notification::make()->title(__('purchases::filament/admin/clusters/orders/resources/order/actions/create-bill.action.notification.success.title'))
                     ->body(__('purchases::filament/admin/clusters/orders/resources/order/actions/create-bill.action.notification.success.body'))
                     ->success()
                     ->send();

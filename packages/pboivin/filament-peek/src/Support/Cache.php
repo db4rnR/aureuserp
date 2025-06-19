@@ -7,7 +7,7 @@ namespace Pboivin\FilamentPeek\Support;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
-final class Cache
+class Cache
 {
     public function createPreviewToken(): string
     {

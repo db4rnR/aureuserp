@@ -11,7 +11,7 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Facades\Inventory;
 use Webkul\Inventory\Models\Operation;
 
-final class CheckAvailabilityAction extends Action
+class CheckAvailabilityAction extends Action
 {
     protected function setUp(): void
     {

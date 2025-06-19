@@ -15,7 +15,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\State;
 
-final class EmployeeFactory extends Factory
+class EmployeeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

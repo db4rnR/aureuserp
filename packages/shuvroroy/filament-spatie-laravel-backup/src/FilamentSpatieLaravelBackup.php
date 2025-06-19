@@ -12,7 +12,7 @@ use Spatie\Backup\Helpers\Format;
 use Spatie\Backup\Tasks\Monitor\BackupDestinationStatus;
 use Spatie\Backup\Tasks\Monitor\BackupDestinationStatusFactory;
 
-final class FilamentSpatieLaravelBackup
+class FilamentSpatieLaravelBackup
 {
     public static function getDisks(): array
     {

@@ -28,7 +28,7 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\OrderTemplateProductRe
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\OrderTemplateProductResource\Pages\ViewOrderTemplateProduct;
 use Webkul\Sale\Models\OrderTemplateProduct;
 
-final class OrderTemplateProductResource extends Resource
+class OrderTemplateProductResource extends Resource
 {
     protected static ?string $model = OrderTemplateProduct::class;
 
@@ -53,39 +53,30 @@ final class OrderTemplateProductResource extends Resource
         return __('sales::filament/clusters/configurations/resources/order-template.navigation.group');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Section::make()
-                    ->schema([
-                        Select::make('orderTemplate.name')
-                            ->searchable()
+                Section::make()->schema([
+                        Select::make('orderTemplate.name')->searchable()
                             ->preload()
                             ->required()
                             ->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.order-template')),
-                        Select::make('company.name')
-                            ->searchable()
+                        Select::make('company.name')->searchable()
                             ->preload()
                             ->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.company')),
-                        Select::make('product.name')
-                            ->searchable()
+                        Select::make('product.name')->searchable()
                             ->preload()
                             ->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.product')),
-                        Select::make('uom.name')
-                            ->searchable()
+                        Select::make('uom.name')->searchable()
                             ->preload()
                             ->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.product-uom')),
-                        Hidden::make('creator_id')
-                            ->default(Auth::user()->id),
-                        TextInput::make('display_type')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.display-type'))
+                        Hidden::make('creator_id')->default(Auth::user()->id),
+                        TextInput::make('display_type')->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.display-type'))
                             ->maxLength(255),
-                        TextInput::make('name')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.name'))
+                        TextInput::make('name')->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.name'))
                             ->maxLength(255),
-                        TextInput::make('quantity')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.quantity'))
+                        TextInput::make('quantity')->label(__('sales::filament/clusters/configurations/resources/order-template.form.fields.quantity'))
                             ->required()
                             ->numeric(),
                     ])->columns(2),
@@ -96,41 +87,30 @@ final class OrderTemplateProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('sort')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.sort'))
+                TextColumn::make('sort')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.sort'))
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('orderTemplate.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.order-template'))
+                TextColumn::make('orderTemplate.name')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.order-template'))
                     ->sortable(),
-                TextColumn::make('company.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.company'))
+                TextColumn::make('company.name')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.company'))
                     ->sortable(),
-                TextColumn::make('product.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.product'))
+                TextColumn::make('product.name')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.product'))
                     ->sortable(),
-                TextColumn::make('uom.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.product-uom'))
+                TextColumn::make('uom.name')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.product-uom'))
                     ->sortable(),
-                TextColumn::make('createdBy.name')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.created-by'))
                     ->sortable(),
-                TextColumn::make('display_type')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.display-type'))
+                TextColumn::make('display_type')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.display-type'))
                     ->searchable(),
-                TextColumn::make('name')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.name'))
+                TextColumn::make('name')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.name'))
                     ->searchable(),
-                TextColumn::make('quantity')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.quantity'))
+                TextColumn::make('quantity')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.quantity'))
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('sales::filament/clusters/configurations/resources/order-template.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -138,20 +118,16 @@ final class OrderTemplateProductResource extends Resource
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('sales::filament/clusters/configurations/resources/order-template.table.actions.delete.notification.title'))
                             ->body(__('sales::filament/clusters/configurations/resources/order-template.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('sales::filament/clusters/configurations/resources/order-template.table.bulk-actions.delete.notification.title'))
                                 ->body(__('sales::filament/clusters/configurations/resources/order-template.table.bulk-actions.delete.notification.body'))
                         ),
@@ -169,29 +145,20 @@ final class OrderTemplateProductResource extends Resource
         ];
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Section::make()
-                    ->schema([
-                        TextEntry::make('sort')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.sort'))
+                Section::make()->schema([
+                        TextEntry::make('sort')->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.sort'))
                             ->numeric(),
-                        TextEntry::make('orderTemplate.name')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.order-template')),
-                        TextEntry::make('company.name')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.company')),
-                        TextEntry::make('product.name')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.product')),
-                        TextEntry::make('uom.name')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.product-uom')),
-                        TextEntry::make('display_type')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.display-type')),
-                        TextEntry::make('name')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.name')),
-                        TextEntry::make('quantity')
-                            ->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.quantity'))
+                        TextEntry::make('orderTemplate.name')->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.order-template')),
+                        TextEntry::make('company.name')->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.company')),
+                        TextEntry::make('product.name')->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.product')),
+                        TextEntry::make('uom.name')->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.product-uom')),
+                        TextEntry::make('display_type')->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.display-type')),
+                        TextEntry::make('name')->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.name')),
+                        TextEntry::make('quantity')->label(__('sales::filament/clusters/configurations/resources/order-template.infolist.entries.quantity'))
                             ->numeric(),
                     ])->columns(2),
             ]);

@@ -15,7 +15,7 @@ use Webkul\Project\Filament\Widgets\StatsOverviewWidget;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListTasks extends ListRecords
+class ListTasks extends ListRecords
 {
     use HasTableViews;
 
@@ -94,8 +94,7 @@ final class ListTasks extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('projects::filament/resources/task/pages/list-tasks.header-actions.create.label'))
+            CreateAction::make()->label(__('projects::filament/resources/task/pages/list-tasks.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

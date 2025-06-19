@@ -9,7 +9,7 @@ use Awcodes\Curator\Models\Media;
 use Filament\Actions\Action;
 use Illuminate\Support\Facades\App;
 
-final class MultiUploadAction extends Action
+class MultiUploadAction extends Action
 {
     protected function setUp(): void
     {

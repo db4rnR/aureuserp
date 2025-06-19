@@ -10,7 +10,7 @@ use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use ShuvroRoy\FilamentSpatieLaravelBackup\Pages\Backups;
 
-final class FilamentSpatieLaravelBackupPlugin implements Plugin
+class FilamentSpatieLaravelBackupPlugin implements Plugin
 {
     use EvaluatesClosures;
 

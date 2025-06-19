@@ -11,20 +11,17 @@ use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Project\Filament\Resources\ProjectResource;
 use Webkul\Support\Models\ActivityPlan;
 
-final class ViewProject extends ViewRecord
+class ViewProject extends ViewRecord
 {
     protected static string $resource = ProjectResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource)
+            ChatterAction::make()->setResource(self::$resource)
                 ->setActivityPlans($this->getActivityPlans()),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('projects::filament/resources/project/pages/view-project.header-actions.delete.notification.title'))
                         ->body(__('projects::filament/resources/project/pages/view-project.header-actions.delete.notification.body')),
                 ),

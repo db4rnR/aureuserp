@@ -12,7 +12,7 @@ use Webkul\Inventory\Enums\RuleAction;
 use Webkul\Inventory\Enums\RuleAuto;
 use Webkul\Security\Models\User;
 
-final class RuleSeeder extends Seeder
+class RuleSeeder extends Seeder
 {
     /**
      * Seed the application's database with currencies.

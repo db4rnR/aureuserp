@@ -13,7 +13,7 @@ use Illuminate\Database\QueryException;
 use Webkul\Product\Filament\Resources\CategoryResource;
 use Webkul\Product\Models\Category;
 
-final class EditCategory extends EditRecord
+class EditCategory extends EditRecord
 {
     protected static string $resource = CategoryResource::class;
 
@@ -22,8 +22,7 @@ final class EditCategory extends EditRecord
         try {
             parent::save($shouldRedirect, $shouldSendSavedNotification);
         } catch (Exception $e) {
-            Notification::make()
-                ->danger()
+            Notification::make()->danger()
                 ->title(__('products::filament/resources/category/pages/edit-category.save.notification.error.title'))
                 ->body($e->getMessage())
                 ->send();
@@ -34,15 +33,13 @@ final class EditCategory extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->action(function (DeleteAction $action, Category $record): void {
+            DeleteAction::make()->action(function (DeleteAction $action, Category $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('products::filament/resources/category/pages/edit-category.header-actions.delete.notification.error.title'))
                             ->body(__('products::filament/resources/category/pages/edit-category.header-actions.delete.notification.error.body'))
                             ->send();
@@ -51,8 +48,7 @@ final class EditCategory extends EditRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('products::filament/resources/category/pages/edit-category.header-actions.delete.notification.success.title'))
                         ->body(__('products::filament/resources/category/pages/edit-category.header-actions.delete.notification.success.body')),
                 ),
@@ -61,8 +57,7 @@ final class EditCategory extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('products::filament/resources/category/pages/edit-category.notification.title'))
             ->body(__('products::filament/resources/category/pages/edit-category.notification.body'));
     }

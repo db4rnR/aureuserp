@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 /**
  * Helper functions for tests.
  */
-final class TestHelpers
+class TestHelpers
 {
     /**
      * Generate a random string.

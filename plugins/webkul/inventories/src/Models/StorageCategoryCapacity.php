@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Inventory\Database\Factories\StorageCategoryCapacityFactory;
 use Webkul\Security\Models\User;
 
-final class StorageCategoryCapacity extends Model
+class StorageCategoryCapacity extends Model
 {
     /**
      * Table name.

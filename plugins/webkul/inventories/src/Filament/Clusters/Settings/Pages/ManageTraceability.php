@@ -20,7 +20,7 @@ use Webkul\Inventory\Models\Product;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageTraceability extends SettingsPage
+class ManageTraceability extends SettingsPage
 {
     use HasPageShield;
 
@@ -53,12 +53,11 @@ final class ManageTraceability extends SettingsPage
         return __('inventories::filament/clusters/settings/pages/manage-traceability.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Toggle::make('enable_lots_serial_numbers')
-                    ->label(__('inventories::filament/clusters/settings/pages/manage-traceability.form.enable-lots-serial-numbers'))
+                Toggle::make('enable_lots_serial_numbers')->label(__('inventories::filament/clusters/settings/pages/manage-traceability.form.enable-lots-serial-numbers'))
                     ->helperText(function (): HtmlString {
                         $routeBaseName = LotResource::getRouteBaseName();
 
@@ -71,8 +70,7 @@ final class ManageTraceability extends SettingsPage
                         return new HtmlString(__('inventories::filament/clusters/settings/pages/manage-traceability.form.enable-lots-serial-numbers-helper-text').'</br><a href="'.$url.'" class="fi-link group/link relative inline-flex items-center justify-center outline-none fi-size-md fi-link-size-md gap-1.5 fi-color-custom fi-color-primary fi-ac-action fi-ac-link-action"><svg style="--c-400:var(--primary-400);--c-600:var(--primary-600)" class="fi-link-icon h-5 w-5 text-custom-600 dark:text-custom-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path></svg><span class="font-semibold text-sm text-custom-600 dark:text-custom-400 group-hover/link:underline group-focus-visible/link:underline" style="--c-400:var(--primary-400);--c-600:var(--primary-600)">'.__('inventories::filament/clusters/settings/pages/manage-traceability.form.configure-lots').'</span></a>');
                     })
                     ->live(),
-                Toggle::make('display_on_delivery_slips')
-                    ->label(__('inventories::filament/clusters/settings/pages/manage-traceability.form.display-on-delivery-slips'))
+                Toggle::make('display_on_delivery_slips')->label(__('inventories::filament/clusters/settings/pages/manage-traceability.form.display-on-delivery-slips'))
                     ->helperText(__('inventories::filament/clusters/settings/pages/manage-traceability.form.display-on-delivery-slips-helper-text'))
                     ->visible(fn (Get $get): mixed => $get('enable_lots_serial_numbers'))
                     ->live(),
@@ -82,8 +80,7 @@ final class ManageTraceability extends SettingsPage
     private function beforeSave(): void
     {
         if (Product::whereIn('tracking', [ProductTracking::SERIAL, ProductTracking::LOT])->exists()) {
-            Notification::make()
-                ->warning()
+            Notification::make()->warning()
                 ->title(__('inventories::filament/clusters/settings/pages/manage-traceability.before-save.notification.warning.title'))
                 ->body(__('inventories::filament/clusters/settings/pages/manage-traceability.before-save.notification.warning.body'))
                 ->send();

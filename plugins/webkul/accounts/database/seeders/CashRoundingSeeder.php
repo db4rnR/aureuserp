@@ -6,7 +6,7 @@ namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-final class CashRoundingSeeder extends Seeder
+class CashRoundingSeeder extends Seeder
 {
     /**
      * Run the database seeds.

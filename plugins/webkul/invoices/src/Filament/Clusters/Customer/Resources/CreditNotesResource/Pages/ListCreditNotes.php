@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\CreditNotesResourc
 use Webkul\Account\Filament\Resources\CreditNoteResource\Pages\ListCreditNotes as BaseListInvoices;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\CreditNotesResource;
 
-final class ListCreditNotes extends BaseListInvoices
+class ListCreditNotes extends BaseListInvoices
 {
     protected static string $resource = CreditNotesResource::class;
 }

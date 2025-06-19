@@ -10,7 +10,7 @@ use Webkul\Website\Models\Page;
 /**
  * @extends Factory<Page>
  */
-final class PageFactory extends Factory
+class PageFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

@@ -6,7 +6,7 @@ namespace Webkul\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class EmailLog extends Model
+class EmailLog extends Model
 {
     protected $fillable = [
         'recipient_email',

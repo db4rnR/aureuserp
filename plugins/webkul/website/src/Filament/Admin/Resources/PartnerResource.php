@@ -19,7 +19,7 @@ use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ManageContacts
 use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ViewPartner;
 use Webkul\Website\Models\Partner;
 
-final class PartnerResource extends BasePartnerResource
+class PartnerResource extends BasePartnerResource
 {
     protected static ?string $model = Partner::class;
 
@@ -56,13 +56,11 @@ final class PartnerResource extends BasePartnerResource
         return [
             RelationGroup::make('Contacts', [
                 ContactsRelationManager::class,
-            ])
-                ->icon('heroicon-o-users'),
+            ])->icon('heroicon-o-users'),
 
             RelationGroup::make('Addresses', [
                 AddressesRelationManager::class,
-            ])
-                ->icon('heroicon-o-map-pin'),
+            ])->icon('heroicon-o-map-pin'),
         ];
     }
 

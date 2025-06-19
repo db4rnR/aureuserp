@@ -8,7 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Security\Filament\Resources\RoleResource;
 
-final class ViewRole extends ViewRecord
+class ViewRole extends ViewRecord
 {
     protected static string $resource = RoleResource::class;
 

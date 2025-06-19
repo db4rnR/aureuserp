@@ -8,7 +8,7 @@ use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource;
 use Webkul\Inventory\Settings\ProductSettings;
 use Webkul\Product\Filament\Resources\ProductResource\Pages\ManageAttributes as BaseManageAttributes;
 
-final class ManageAttributes extends BaseManageAttributes
+class ManageAttributes extends BaseManageAttributes
 {
     protected static string $resource = ProductResource::class;
 

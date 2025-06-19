@@ -17,7 +17,7 @@ use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource;
 use Webkul\Inventory\Models\ProductQuantity;
 use Webkul\Inventory\Models\Scrap;
 
-final class EditScrap extends EditRecord
+class EditScrap extends EditRecord
 {
     protected static string $resource = ScrapResource::class;
 
@@ -28,8 +28,7 @@ final class EditScrap extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.notification.title'))
             ->body(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.notification.body'));
     }
@@ -37,10 +36,8 @@ final class EditScrap extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
-            Action::make('validate')
-                ->label(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.validate.label'))
+            ChatterAction::make()->setResource(self::$resource),
+            Action::make('validate')->label(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.validate.label'))
                 ->color('gray')
                 ->action(function (Scrap $record): void {
                     $locationQuantity = ProductQuantity::where('location_id', $record->source_location_id)
@@ -50,8 +47,7 @@ final class EditScrap extends EditRecord
                         ->first();
 
                     if (! $locationQuantity || $locationQuantity->quantity < $record->qty) {
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.validate.notification.warning.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.validate.notification.warning.body'))
                             ->warning()
@@ -99,16 +95,14 @@ final class EditScrap extends EditRecord
                     ]);
                 })
                 ->hidden(fn (): bool => $this->getRecord()->state === ScrapState::DONE),
-            DeleteAction::make()
-                ->hidden(fn (): bool => $this->getRecord()->state === ScrapState::DONE)
+            DeleteAction::make()->hidden(fn (): bool => $this->getRecord()->state === ScrapState::DONE)
                 ->action(function (DeleteAction $action, Scrap $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.delete.notification.error.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.delete.notification.error.body'))
                             ->send();
@@ -117,8 +111,7 @@ final class EditScrap extends EditRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.delete.notification.success.title'))
                         ->body(__('inventories::filament/clusters/operations/resources/scrap/pages/edit-scrap.header-actions.delete.notification.success.body')),
                 ),

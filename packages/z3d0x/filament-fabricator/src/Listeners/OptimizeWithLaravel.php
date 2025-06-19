@@ -9,7 +9,7 @@ use Illuminate\Console\Events\CommandFinished;
 use Illuminate\Support\Facades\Artisan;
 use Z3d0X\FilamentFabricator\Commands\ClearRoutesCacheCommand;
 
-final class OptimizeWithLaravel
+class OptimizeWithLaravel
 {
     public const COMMANDS = [
         'cache:clear',

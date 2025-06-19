@@ -11,7 +11,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListReceipts extends ListRecords
+class ListReceipts extends ListRecords
 {
     use HasTableViews;
 
@@ -30,8 +30,7 @@ final class ListReceipts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/operations/resources/receipt/pages/list-receipts.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/operations/resources/receipt/pages/list-receipts.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Recruitment\Models\Applicant;
 
-final class JobPositionStatsWidget extends BaseWidget
+class JobPositionStatsWidget extends BaseWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 

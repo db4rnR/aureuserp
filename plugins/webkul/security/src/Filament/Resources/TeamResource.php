@@ -19,7 +19,7 @@ use Filament\Tables\Table;
 use Webkul\Security\Filament\Resources\TeamResource\Pages\ManageTeams;
 use Webkul\Security\Models\Team;
 
-final class TeamResource extends Resource
+class TeamResource extends Resource
 {
     protected static ?string $model = Team::class;
 
@@ -41,8 +41,7 @@ final class TeamResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->label(__('security::filament/resources/team.form.fields.name'))
+                TextInput::make('name')->label(__('security::filament/resources/team.form.fields.name'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -52,35 +51,28 @@ final class TeamResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('security::filament/resources/team.table.columns.name'))
+                TextColumn::make('name')->label(__('security::filament/resources/team.table.columns.name'))
                     ->searchable()
                     ->limit(50)
                     ->sortable(),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                EditAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('security::filament/resources/team.table.actions.edit.notification.title'))
                             ->body(__('security::filament/resources/team.table.actions.edit.notification.body'))
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('security::filament/resources/team.table.actions.delete.notification.title'))
                             ->body(__('security::filament/resources/team.table.actions.delete.notification.body'))
                     ),
             ])
             ->emptyStateActions([
-                CreateAction::make()
-                    ->icon('heroicon-o-plus-circle')
+                CreateAction::make()->icon('heroicon-o-plus-circle')
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('security::filament/resources/team.table.empty-state-actions.create.notification.title'))
                             ->body(__('security::filament/resources/team.table.empty-state-actions.create.notification.body'))
                     ),
@@ -90,9 +82,8 @@ final class TeamResource extends Resource
     public static function infolist(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextEntry::make('name')
-                    ->icon('heroicon-o-user')
+            ->schema([
+                TextEntry::make('name')->icon('heroicon-o-user')
                     ->placeholder('—')
                     ->label(__('security::filament/resources/team.infolist.entries.name')),
             ]);

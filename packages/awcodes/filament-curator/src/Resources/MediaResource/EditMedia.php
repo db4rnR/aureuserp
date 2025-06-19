@@ -10,7 +10,7 @@ use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-final class EditMedia extends EditRecord
+class EditMedia extends EditRecord
 {
     public static function getResource(): string
     {

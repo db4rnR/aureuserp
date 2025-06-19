@@ -11,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<Scrap>
  */
-final class ScrapFactory extends Factory
+class ScrapFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

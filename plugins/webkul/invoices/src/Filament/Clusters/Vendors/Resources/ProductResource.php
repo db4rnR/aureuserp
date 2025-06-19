@@ -28,7 +28,7 @@ use Webkul\Invoice\Models\Product;
 use Webkul\Product\Filament\Resources\ProductResource as BaseProductResource;
 use Webkul\Support\Models\UOM;
 
-final class ProductResource extends BaseProductResource
+class ProductResource extends BaseProductResource
 {
     use HasCustomFields;
 
@@ -49,17 +49,16 @@ final class ProductResource extends BaseProductResource
         return __('invoices::filament/clusters/vendors/resources/product.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        $schema = BaseProductResource::form($schema);
+        $form = BaseProductResource::form($form);
 
-        $components = $schema->getComponents();
+        $components = $form->getComponents();
 
         $priceComponent = $components[1]->getDefaultChildComponents()[1]->getDefaultChildComponents();
 
         $newPriceComponents = [
-            Select::make('accounts_product_taxes')
-                ->relationship(
+            Select::make('accounts_product_taxes')->relationship(
                     'productTaxes',
                     'name',
                     fn ($query) => $query->where('type_tax_use', TypeTaxUse::SALE->value),
@@ -69,8 +68,7 @@ final class ProductResource extends BaseProductResource
                 ->searchable()
                 ->preload(),
 
-            Placeholder::make('total_tax_inclusion')
-                ->hiddenLabel()
+            Placeholder::make('total_tax_inclusion')->hiddenLabel()
                 ->content(function (Get $get): string {
                     $price = (float) ($get('price'));
                     $selectedTaxIds = $get('accounts_product_taxes');
@@ -127,8 +125,7 @@ final class ProductResource extends BaseProductResource
                     return empty($parts) ? ' ' : '(= '.implode(', ', $parts).')';
                 }),
 
-            Select::make('accounts_product_supplier_taxes')
-                ->relationship(
+            Select::make('accounts_product_supplier_taxes')->relationship(
                     'supplierTaxes',
                     'name',
                     fn ($query) => $query->where('type_tax_use', TypeTaxUse::PURCHASE->value),
@@ -146,16 +143,13 @@ final class ProductResource extends BaseProductResource
         $childComponents = $components[0]->getDefaultChildComponents();
 
         $policyComponent = [
-            Section::make()
-                ->visible(fn (Get $get): mixed => $get('sales_ok'))
+            Section::make()->visible(fn (Get $get): mixed => $get('sales_ok'))
                 ->schema([
-                    Select::make('invoice_policy')
-                        ->label(__('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.title'))
+                    Select::make('invoice_policy')->label(__('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.title'))
                         ->options(InvoicePolicy::class)
                         ->live()
                         ->default(InvoicePolicy::ORDER->value),
-                    Placeholder::make('invoice_policy_help')
-                        ->hiddenLabel()
+                    Placeholder::make('invoice_policy_help')->hiddenLabel()
                         ->content(fn (Get $get) => match ($get('invoice_policy')) {
                             InvoicePolicy::ORDER->value => __('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.ordered-policy'),
                             InvoicePolicy::DELIVERY->value => __('invoices::filament/clusters/vendors/resources/product.form.sections.invoice-policy.delivered-policy'),
@@ -168,17 +162,14 @@ final class ProductResource extends BaseProductResource
 
         $components[0]->schema($childComponents);
 
-        $schema->components([
+        $form->schema([
             ...$components,
-            Hidden::make('uom_id')
-                ->default(UOM::first()->id),
-            Hidden::make('uom_po_id')
-                ->default(UOM::first()->id),
-            Hidden::make('sale_line_warn')
-                ->default('no-message'),
+            Hidden::make('uom_id')->default(UOM::first()->id),
+            Hidden::make('uom_po_id')->default(UOM::first()->id),
+            Hidden::make('sale_line_warn')->default('no-message'),
         ]);
 
-        return $schema;
+        return $form;
     }
 
     public static function getRecordSubNavigation(Page $page): array

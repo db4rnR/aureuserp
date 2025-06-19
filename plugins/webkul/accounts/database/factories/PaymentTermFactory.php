@@ -9,7 +9,7 @@ use Webkul\Account\Models\PaymentTerm;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class PaymentTermFactory extends Factory
+class PaymentTermFactory extends Factory
 {
     protected $model = PaymentTerm::class;
 

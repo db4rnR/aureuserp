@@ -6,7 +6,7 @@ namespace Webkul\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class TaxTaxes extends Model
+class TaxTaxes extends Model
 {
     public $timestamps = false;
 

@@ -20,7 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Webkul\Partner\Models\Industry;
 
-final class IndustryResource extends Resource
+class IndustryResource extends Resource
 {
     protected static ?string $model = Industry::class;
 
@@ -31,17 +31,15 @@ final class IndustryResource extends Resource
         return __('partners::filament/resources/industry.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('name')
-                    ->label(__('partners::filament/resources/industry.form.name'))
+                TextInput::make('name')->label(__('partners::filament/resources/industry.form.name'))
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
-                TextInput::make('description')
-                    ->label(__('partners::filament/resources/industry.form.full-name'))
+                TextInput::make('description')->label(__('partners::filament/resources/industry.form.full-name'))
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
@@ -52,66 +50,50 @@ final class IndustryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('partners::filament/resources/industry.table.columns.name'))
+                TextColumn::make('name')->label(__('partners::filament/resources/industry.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('description')
-                    ->label(__('partners::filament/resources/industry.table.columns.full-name'))
+                TextColumn::make('description')->label(__('partners::filament/resources/industry.table.columns.full-name'))
                     ->searchable()
                     ->sortable(),
             ])
             ->recordActions([
-                EditAction::make()
-                    ->hidden(fn ($record) => $record->trashed())
+                EditAction::make()->hidden(fn ($record) => $record->trashed())
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('partners::filament/resources/industry.table.actions.edit.notification.title'))
                             ->body(__('partners::filament/resources/industry.table.actions.edit.notification.body')),
                     ),
-                RestoreAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                RestoreAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('partners::filament/resources/industry.table.actions.restore.notification.title'))
                             ->body(__('partners::filament/resources/industry.table.actions.restore.notification.body')),
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('partners::filament/resources/industry.table.actions.delete.notification.title'))
                             ->body(__('partners::filament/resources/industry.table.actions.delete.notification.body')),
                     ),
-                ForceDeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                ForceDeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('partners::filament/resources/industry.table.actions.force-delete.notification.title'))
                             ->body(__('partners::filament/resources/industry.table.actions.force-delete.notification.body')),
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('partners::filament/resources/industry.table.bulk-actions.restore.notification.title'))
                                 ->body(__('partners::filament/resources/industry.table.bulk-actions.restore.notification.body')),
                         ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('partners::filament/resources/industry.table.bulk-actions.delete.notification.title'))
                                 ->body(__('partners::filament/resources/industry.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ForceDeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('partners::filament/resources/industry.table.bulk-actions.force-delete.notification.title'))
                                 ->body(__('partners::filament/resources/industry.table.bulk-actions.force-delete.notification.body')),
                         ),

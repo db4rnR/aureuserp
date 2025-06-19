@@ -25,11 +25,15 @@ use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\Grid as InfolistGrid;
+use Filament\Infolists\Components\Group as InfolistGroup;
+use Filament\Infolists\Components\Section as InfolistSection;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
@@ -55,7 +59,7 @@ use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\Currency;
 
-final class CompanyResource extends Resource
+class CompanyResource extends Resource
 {
     use HasCustomFields;
 
@@ -92,32 +96,25 @@ final class CompanyResource extends Resource
     {
         return $schema
             ->components([
-                Group::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
+                Group::make()->schema([
+                        Group::make()->schema([
                                 Section::make(__('security::filament/resources/company.form.sections.company-information.title'))
                                     ->schema([
-                                        TextInput::make('name')
-                                            ->label(__('security::filament/resources/company.form.sections.company-information.fields.name'))
+                                        TextInput::make('name')->label(__('security::filament/resources/company.form.sections.company-information.fields.name'))
                                             ->required()
                                             ->maxLength(255)
                                             ->live(onBlur: true),
-                                        TextInput::make('registration_number')
-                                            ->label(__('security::filament/resources/company.form.sections.company-information.fields.registration-number'))
+                                        TextInput::make('registration_number')->label(__('security::filament/resources/company.form.sections.company-information.fields.registration-number'))
                                             ->maxLength(255),
-                                        TextInput::make('company_id')
-                                            ->label(__('security::filament/resources/company.form.sections.company-information.fields.company-id'))
+                                        TextInput::make('company_id')->label(__('security::filament/resources/company.form.sections.company-information.fields.company-id'))
                                             ->unique(ignoreRecord: true)
                                             ->maxLength(255)
                                             ->hintIcon('heroicon-o-question-mark-circle', tooltip: 'The Company ID is a unique identifier for your company.'),
-                                        TextInput::make('tax_id')
-                                            ->label(__('security::filament/resources/company.form.sections.company-information.fields.tax-id'))
+                                        TextInput::make('tax_id')->label(__('security::filament/resources/company.form.sections.company-information.fields.tax-id'))
                                             ->unique(ignoreRecord: true)
                                             ->maxLength(255)
                                             ->hintIcon('heroicon-o-question-mark-circle', tooltip: __('security::filament/resources/company.form.sections.company-information.fields.tax-id-tooltip')),
-                                        TextInput::make('website')
-                                            ->url()
+                                        TextInput::make('website')->url()
                                             ->prefixIcon('heroicon-o-globe-alt')
                                             ->maxLength(255)
                                             ->label(__('security::filament/resources/company.form.sections.company-information.fields.website'))
@@ -126,28 +123,21 @@ final class CompanyResource extends Resource
                                     ->columns(2),
                                 Section::make(__('security::filament/resources/company.form.sections.address-information.title'))
                                     ->schema([
-                                        Group::make()
-                                            ->schema([
-                                                TextInput::make('street1')
-                                                    ->label(__('security::filament/resources/company.form.sections.address-information.fields.street1'))
+                                        Group::make()->schema([
+                                                TextInput::make('street1')->label(__('security::filament/resources/company.form.sections.address-information.fields.street1'))
                                                     ->maxLength(255),
-                                                TextInput::make('street2')
-                                                    ->label(__('security::filament/resources/company.form.sections.address-information.fields.street2')),
-                                                TextInput::make('city')
-                                                    ->maxLength(255),
-                                                TextInput::make('zip')
-                                                    ->live()
+                                                TextInput::make('street2')->label(__('security::filament/resources/company.form.sections.address-information.fields.street2')),
+                                                TextInput::make('city')->maxLength(255),
+                                                TextInput::make('zip')->live()
                                                     ->label(__('security::filament/resources/company.form.sections.address-information.fields.zipcode'))
                                                     ->maxLength(255),
-                                                Select::make('country_id')
-                                                    ->label(__('security::filament/resources/company.form.sections.address-information.fields.country'))
+                                                Select::make('country_id')->label(__('security::filament/resources/company.form.sections.address-information.fields.country'))
                                                     ->relationship(name: 'country', titleAttribute: 'name')
                                                     ->afterStateUpdated(fn (Set $set): mixed => $set('state_id', null))
                                                     ->searchable()
                                                     ->preload()
                                                     ->live(),
-                                                Select::make('state_id')
-                                                    ->label(__('security::filament/resources/company.form.sections.address-information.fields.state'))
+                                                Select::make('state_id')->label(__('security::filament/resources/company.form.sections.address-information.fields.state'))
                                                     ->relationship(
                                                         name: 'state',
                                                         titleAttribute: 'name',
@@ -155,17 +145,14 @@ final class CompanyResource extends Resource
                                                     )
                                                     ->searchable()
                                                     ->preload()
-                                                    ->createOptionForm(fn (Schema $schema, Get $get, Set $set): Schema => $schema
+                                                    ->createOptionForm(fn (Schema $form, Get $get, Set $set): Schema => $form
                                                         ->components([
-                                                            TextInput::make('name')
-                                                                ->label(__('security::filament/resources/company.form.sections.address-information.fields.state-name'))
+                                                            TextInput::make('name')->label(__('security::filament/resources/company.form.sections.address-information.fields.state-name'))
                                                                 ->required(),
-                                                            TextInput::make('code')
-                                                                ->label(__('security::filament/resources/company.form.sections.address-information.fields.state-code'))
+                                                            TextInput::make('code')->label(__('security::filament/resources/company.form.sections.address-information.fields.state-code'))
                                                                 ->required()
                                                                 ->unique('states'),
-                                                            Select::make('country_id')
-                                                                ->label(__('security::filament/resources/company.form.sections.address-information.fields.country'))
+                                                            Select::make('country_id')->label(__('security::filament/resources/company.form.sections.address-information.fields.country'))
                                                                 ->relationship('country', 'name')
                                                                 ->searchable()
                                                                 ->preload()
@@ -180,8 +167,7 @@ final class CompanyResource extends Resource
                                     ]),
                                 Section::make(__('security::filament/resources/company.form.sections.additional-information.title'))
                                     ->schema([
-                                        Select::make('currency_id')
-                                            ->relationship('currency', 'full_name')
+                                        Select::make('currency_id')->relationship('currency', 'full_name')
                                             ->label(__('security::filament/resources/company.form.sections.additional-information.fields.default-currency'))
                                             ->searchable()
                                             ->required()
@@ -189,37 +175,29 @@ final class CompanyResource extends Resource
                                             ->preload()
                                             ->default(Currency::first()?->id)
                                             ->createOptionForm([
-                                                Section::make()
-                                                    ->schema([
-                                                        TextInput::make('name')
-                                                            ->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-name'))
+                                                Section::make()->schema([
+                                                        TextInput::make('name')->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-name'))
                                                             ->required()
                                                             ->maxLength(255)
                                                             ->unique('currencies', 'name', ignoreRecord: true),
-                                                        TextInput::make('full_name')
-                                                            ->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-full-name'))
+                                                        TextInput::make('full_name')->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-full-name'))
                                                             ->required()
                                                             ->maxLength(255)
                                                             ->unique('currencies', 'full_name', ignoreRecord: true),
-                                                        TextInput::make('symbol')
-                                                            ->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-symbol'))
+                                                        TextInput::make('symbol')->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-symbol'))
                                                             ->maxLength(255)
                                                             ->required(),
-                                                        TextInput::make('iso_numeric')
-                                                            ->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-iso-numeric'))
+                                                        TextInput::make('iso_numeric')->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-iso-numeric'))
                                                             ->numeric()
                                                             ->required(),
-                                                        TextInput::make('decimal_places')
-                                                            ->numeric()
+                                                        TextInput::make('decimal_places')->numeric()
                                                             ->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-decimal-places'))
                                                             ->required()
-                                                            ->rules('min:0', 'max:10'),
-                                                        TextInput::make('rounding')
-                                                            ->numeric()
+                                                            ->rules(['min:0', 'max:10']),
+                                                        TextInput::make('rounding')->numeric()
                                                             ->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-rounding'))
                                                             ->required(),
-                                                        Toggle::make('active')
-                                                            ->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-status'))
+                                                        Toggle::make('active')->label(__('security::filament/resources/company.form.sections.additional-information.fields.currency-status'))
                                                             ->default(true),
                                                     ])->columns(2),
                                             ])
@@ -229,45 +207,35 @@ final class CompanyResource extends Resource
                                                     ->modalSubmitActionLabel(__('security::filament/resources/company.form.sections.additional-information.fields.currency-create'))
                                                     ->modalWidth('xl')
                                             ),
-                                        DatePicker::make('founded_date')
-                                            ->native(false)
+                                        DatePicker::make('founded_date')->native(false)
                                             ->label(__('security::filament/resources/company.form.sections.additional-information.fields.company-foundation-date')),
-                                        Toggle::make('is_active')
-                                            ->label(__('security::filament/resources/company.form.sections.additional-information.fields.status'))
+                                        Toggle::make('is_active')->label(__('security::filament/resources/company.form.sections.additional-information.fields.status'))
                                             ->default(true),
                                         ...self::getCustomFormFields(),
                                     ])->columns(2),
                             ])
                             ->columnSpan(['lg' => 2]),
-                        Group::make()
-                            ->schema([
+                        Group::make()->schema([
                                 Section::make(__('security::filament/resources/company.form.sections.branding.title'))
                                     ->schema([
-                                        Group::make()
-                                            ->relationship('partner', 'avatar')
-                                            ->schema([
-                                                FileUpload::make('avatar')
-                                                    ->label(__('security::filament/resources/company.form.sections.branding.fields.company-logo'))
+                                        Group::make()->schema([
+                                                FileUpload::make('avatar')->label(__('security::filament/resources/company.form.sections.branding.fields.company-logo'))
                                                     ->image()
                                                     ->directory('company-logos')
                                                     ->visibility('private'),
                                             ]),
-                                        ColorPicker::make('color')
-                                            ->label(__('security::filament/resources/company.form.sections.branding.fields.color'))
+                                        ColorPicker::make('color')->label(__('security::filament/resources/company.form.sections.branding.fields.color'))
                                             ->hexColor(),
                                     ]),
                                 Section::make(__('security::filament/resources/company.form.sections.contact-information.title'))
                                     ->schema([
-                                        TextInput::make('phone')
-                                            ->label(__('security::filament/resources/company.form.sections.contact-information.fields.phone'))
+                                        TextInput::make('phone')->label(__('security::filament/resources/company.form.sections.contact-information.fields.phone'))
                                             ->maxLength(255)
                                             ->tel(),
-                                        TextInput::make('mobile')
-                                            ->label(__('security::filament/resources/company.form.sections.contact-information.fields.mobile'))
+                                        TextInput::make('mobile')->label(__('security::filament/resources/company.form.sections.contact-information.fields.mobile'))
                                             ->maxLength(255)
                                             ->tel(),
-                                        TextInput::make('email')
-                                            ->label(__('security::filament/resources/company.form.sections.contact-information.fields.email'))
+                                        TextInput::make('email')->label(__('security::filament/resources/company.form.sections.contact-information.fields.email'))
                                             ->maxLength(255)
                                             ->email(),
                                     ]),
@@ -276,97 +244,76 @@ final class CompanyResource extends Resource
                     ])
                     ->columns(3),
             ])
-            ->columns('full');
+            ->columns(12);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                ImageColumn::make('partner.avatar')
-                    ->circular()
+                ImageColumn::make('partner.avatar')->circular()
                     ->size(50)
                     ->label(__('security::filament/resources/company.table.columns.logo')),
-                TextColumn::make('name')
-                    ->label(__('security::filament/resources/company.table.columns.company-name'))
+                TextColumn::make('name')->label(__('security::filament/resources/company.table.columns.company-name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('branches.name')
-                    ->label(__('security::filament/resources/company.table.columns.branches'))
+                TextColumn::make('branches.name')->label(__('security::filament/resources/company.table.columns.branches'))
                     ->placeholder('-')
                     ->badge()
                     ->searchable(),
-                TextColumn::make('email')
-                    ->label(__('security::filament/resources/company.table.columns.email'))
+                TextColumn::make('email')->label(__('security::filament/resources/company.table.columns.email'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('city')
-                    ->label(__('security::filament/resources/company.table.columns.city'))
+                TextColumn::make('city')->label(__('security::filament/resources/company.table.columns.city'))
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('country.name')
-                    ->label(__('security::filament/resources/company.table.columns.country'))
+                TextColumn::make('country.name')->label(__('security::filament/resources/company.table.columns.country'))
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('currency.full_name')
-                    ->label(__('security::filament/resources/company.table.columns.currency'))
+                TextColumn::make('currency.full_name')->label(__('security::filament/resources/company.table.columns.currency'))
                     ->sortable()
                     ->searchable(),
-                IconColumn::make('is_active')
-                    ->sortable()
+                IconColumn::make('is_active')->sortable()
                     ->label(__('security::filament/resources/company.table.columns.status'))
                     ->boolean(),
-                TextColumn::make('created_at')
-                    ->label(__('security::filament/resources/company.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('security::filament/resources/company.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('security::filament/resources/company.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('security::filament/resources/company.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->columnToggleFormColumns(2)
             ->groups([
-                Tables\Grouping\Group::make('name')
-                    ->label(__('security::filament/resources/company.table.groups.company-name'))
+                Tables\Grouping\Group::make('name')->label(__('security::filament/resources/company.table.groups.company-name'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('city')
-                    ->label(__('security::filament/resources/company.table.groups.city'))
+                Tables\Grouping\Group::make('city')->label(__('security::filament/resources/company.table.groups.city'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('country.name')
-                    ->label(__('security::filament/resources/company.table.groups.country'))
+                Tables\Grouping\Group::make('country.name')->label(__('security::filament/resources/company.table.groups.country'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('state.name')
-                    ->label(__('security::filament/resources/company.table.groups.state'))
+                Tables\Grouping\Group::make('state.name')->label(__('security::filament/resources/company.table.groups.state'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('email')
-                    ->label(__('security::filament/resources/company.table.groups.email'))
+                Tables\Grouping\Group::make('email')->label(__('security::filament/resources/company.table.groups.email'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('phone')
-                    ->label(__('security::filament/resources/company.table.groups.phone'))
+                Tables\Grouping\Group::make('phone')->label(__('security::filament/resources/company.table.groups.phone'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('currency_id')
-                    ->label(__('security::filament/resources/company.table.groups.currency'))
+                Tables\Grouping\Group::make('currency_id')->label(__('security::filament/resources/company.table.groups.currency'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('created_at')
-                    ->label(__('security::filament/resources/company.table.groups.created-at'))
+                Tables\Grouping\Group::make('created_at')->label(__('security::filament/resources/company.table.groups.created-at'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('updated_at')
-                    ->label(__('security::filament/resources/company.table.groups.updated-at'))
+                Tables\Grouping\Group::make('updated_at')->label(__('security::filament/resources/company.table.groups.updated-at'))
                     ->date()
                     ->collapsible(),
             ])
             ->filters([
                 TrashedFilter::make(),
-                SelectFilter::make('is_active')
-                    ->label(__('security::filament/resources/company.table.filters.status'))
+                SelectFilter::make('is_active')->label(__('security::filament/resources/company.table.filters.status'))
                     ->options(CompanyStatus::options()),
-                SelectFilter::make('country')
-                    ->label(__('security::filament/resources/company.table.filters.country'))
+                SelectFilter::make('country')->label(__('security::filament/resources/company.table.filters.country'))
                     ->multiple()
                     ->options(fn () => Country::pluck('name', 'name')),
             ])
@@ -374,24 +321,18 @@ final class CompanyResource extends Resource
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make(),
-                    EditAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    EditAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title((__('security::filament/resources/company.table.actions.edit.notification.title')))
                                 ->body(__('security::filament/resources/company.table.actions.edit.notification.body')),
                         ),
-                    DeleteAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title((__('security::filament/resources/company.table.actions.delete.notification.title')))
                                 ->body(__('security::filament/resources/company.table.actions.delete.notification.body')),
                         ),
-                    RestoreAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title((__('security::filament/resources/company.table.actions.restore.notification.title')))
                                 ->body(__('security::filament/resources/company.table.actions.restore.notification.body')),
                         ),
@@ -399,24 +340,18 @@ final class CompanyResource extends Resource
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title((__('security::filament/resources/company.table.bulk-actions.delete.notification.title')))
                                 ->body(__('security::filament/resources/company.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ForceDeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title((__('security::filament/resources/company.table.bulk-actions.force-delete.notification.title')))
                                 ->body(__('security::filament/resources/company.table.bulk-actions.force-delete.notification.body')),
                         ),
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title((__('security::filament/resources/company.table.bulk-actions.restore.notification.title')))
                                 ->body(__('security::filament/resources/company.table.bulk-actions.restore.notification.body')),
                         ),
@@ -432,105 +367,84 @@ final class CompanyResource extends Resource
     public static function infolist(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                Grid::make(['default' => 3])
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                Section::make(__('security::filament/resources/company.infolist.sections.company-information.title'))
+            ->schema([
+                InfolistGrid::make(['default' => 3])->schema([
+                        InfolistGroup::make()->schema([
+                                InfolistSection::make(__('security::filament/resources/company.infolist.sections.company-information.title'))
                                     ->schema([
-                                        TextEntry::make('name')
-                                            ->icon('heroicon-o-building-office')
+                                        TextEntry::make('name')->icon('heroicon-o-building-office')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.company-information.entries.name')),
-                                        TextEntry::make('registration_number')
-                                            ->icon('heroicon-o-document-text')
+                                        TextEntry::make('registration_number')->icon('heroicon-o-document-text')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.company-information.entries.registration-number')),
-                                        TextEntry::make('company_id')
-                                            ->icon('heroicon-o-identification')
+                                        TextEntry::make('company_id')->icon('heroicon-o-identification')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.company-information.entries.company-id')),
-                                        TextEntry::make('tax_id')
-                                            ->icon('heroicon-o-currency-dollar')
+                                        TextEntry::make('tax_id')->icon('heroicon-o-currency-dollar')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.company-information.entries.tax-id')),
-                                        TextEntry::make('website')
-                                            ->icon('heroicon-o-globe-alt')
+                                        TextEntry::make('website')->icon('heroicon-o-globe-alt')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.company-information.entries.website')),
                                     ])
                                     ->columns(2),
 
-                                Section::make(__('security::filament/resources/company.infolist.sections.address-information.title'))
+                                InfolistSection::make(__('security::filament/resources/company.infolist.sections.address-information.title'))
                                     ->schema([
-                                        TextEntry::make('street1')
-                                            ->icon('heroicon-o-map-pin')
+                                        TextEntry::make('street1')->icon('heroicon-o-map-pin')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.address-information.entries.street1')),
-                                        TextEntry::make('street2')
-                                            ->placeholder('—')
+                                        TextEntry::make('street2')->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.address-information.entries.street2')),
-                                        TextEntry::make('city')
-                                            ->label(__('security::filament/resources/company.infolist.sections.address-information.entries.city'))
+                                        TextEntry::make('city')->label(__('security::filament/resources/company.infolist.sections.address-information.entries.city'))
                                             ->icon('heroicon-o-building-library')
                                             ->placeholder('—'),
-                                        TextEntry::make('zip')
-                                            ->placeholder('—')
+                                        TextEntry::make('zip')->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.address-information.entries.zipcode')),
-                                        TextEntry::make('country.name')
-                                            ->icon('heroicon-o-globe-alt')
+                                        TextEntry::make('country.name')->icon('heroicon-o-globe-alt')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.address-information.entries.country')),
-                                        TextEntry::make('state.name')
-                                            ->placeholder('—')
+                                        TextEntry::make('state.name')->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.address-information.entries.state')),
                                     ])
                                     ->columns(2),
 
-                                Section::make(__('security::filament/resources/company.infolist.sections.additional-information.title'))
+                                InfolistSection::make(__('security::filament/resources/company.infolist.sections.additional-information.title'))
                                     ->schema([
-                                        TextEntry::make('currency.full_name')
-                                            ->icon('heroicon-o-currency-dollar')
+                                        TextEntry::make('currency.full_name')->icon('heroicon-o-currency-dollar')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/company.infolist.sections.additional-information.entries.default-currency')),
-                                        TextEntry::make('founded_date')
-                                            ->icon('heroicon-o-calendar')
+                                        TextEntry::make('founded_date')->icon('heroicon-o-calendar')
                                             ->placeholder('—')
                                             ->date()
                                             ->label(__('security::filament/resources/company.infolist.sections.additional-information.entries.company-foundation-date')),
-                                        IconEntry::make('is_active')
-                                            ->label(__('security::filament/resources/company.infolist.sections.additional-information.entries.status'))
+                                        IconEntry::make('is_active')->label(__('security::filament/resources/company.infolist.sections.additional-information.entries.status'))
                                             ->boolean(),
                                     ])
                                     ->columns(2),
                             ])
                             ->columnSpan(2),
 
-                        Group::make([
-                            Section::make(__('security::filament/resources/company.infolist.sections.branding.title'))
+                        InfolistGroup::make([
+                            InfolistSection::make(__('security::filament/resources/company.infolist.sections.branding.title'))
                                 ->schema([
-                                    ImageEntry::make('partner.avatar')
-                                        ->label(__('security::filament/resources/company.infolist.sections.branding.entries.company-logo'))
+                                    ImageEntry::make('partner.avatar')->label(__('security::filament/resources/company.infolist.sections.branding.entries.company-logo'))
                                         ->circular()
                                         ->placeholder('—'),
-                                    ColorEntry::make('color')
-                                        ->placeholder('—')
+                                    ColorEntry::make('color')->placeholder('—')
                                         ->label(__('security::filament/resources/company.infolist.sections.branding.entries.color')),
                                 ]),
 
-                            Section::make(__('security::filament/resources/company.infolist.sections.contact-information.title'))
+                            InfolistSection::make(__('security::filament/resources/company.infolist.sections.contact-information.title'))
                                 ->schema([
-                                    TextEntry::make('phone')
-                                        ->icon('heroicon-o-phone')
+                                    TextEntry::make('phone')->icon('heroicon-o-phone')
                                         ->placeholder('—')
                                         ->label(__('security::filament/resources/company.infolist.sections.contact-information.entries.phone')),
-                                    TextEntry::make('mobile')
-                                        ->icon('heroicon-o-device-phone-mobile')
+                                    TextEntry::make('mobile')->icon('heroicon-o-device-phone-mobile')
                                         ->placeholder('—')
                                         ->label(__('security::filament/resources/company.infolist.sections.contact-information.entries.mobile')),
-                                    TextEntry::make('email')
-                                        ->icon('heroicon-o-envelope')
+                                    TextEntry::make('email')->icon('heroicon-o-envelope')
                                         ->placeholder('—')
                                         ->label(__('security::filament/resources/company.infolist.sections.contact-information.entries.email'))
                                         ->copyable()

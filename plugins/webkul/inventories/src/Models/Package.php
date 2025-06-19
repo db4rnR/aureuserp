@@ -14,7 +14,7 @@ use Webkul\Inventory\Enums\PackageUse;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Package extends Model
+class Package extends Model
 {
     use HasFactory;
 

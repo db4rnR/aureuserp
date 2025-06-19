@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\PartialReconcile>
  */
-final class PartialReconcileFactory extends Factory
+class PartialReconcileFactory extends Factory
 {
     /**
      * Define the model's default state.

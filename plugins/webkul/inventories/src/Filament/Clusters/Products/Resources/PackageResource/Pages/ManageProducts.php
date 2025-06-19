@@ -10,7 +10,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 
-final class ManageProducts extends ManageRelatedRecords
+class ManageProducts extends ManageRelatedRecords
 {
     protected static string $resource = PackageResource::class;
 
@@ -27,14 +27,10 @@ final class ManageProducts extends ManageRelatedRecords
     {
         return $table
             ->columns([
-                TextColumn::make('product.name')
-                    ->label(__('inventories::filament/clusters/products/resources/package/pages/manage-products.table.columns.product')),
-                TextColumn::make('lot.name')
-                    ->label(__('inventories::filament/clusters/products/resources/package/pages/manage-products.table.columns.lot')),
-                TextColumn::make('quantity')
-                    ->label(__('inventories::filament/clusters/products/resources/package/pages/manage-products.table.columns.quantity')),
-                TextColumn::make('product.uom.name')
-                    ->label(__('inventories::filament/clusters/products/resources/package/pages/manage-products.table.columns.unit-of-measure')),
+                TextColumn::make('product.name')->label(__('inventories::filament/clusters/products/resources/package/pages/manage-products.table.columns.product')),
+                TextColumn::make('lot.name')->label(__('inventories::filament/clusters/products/resources/package/pages/manage-products.table.columns.lot')),
+                TextColumn::make('quantity')->label(__('inventories::filament/clusters/products/resources/package/pages/manage-products.table.columns.quantity')),
+                TextColumn::make('product.uom.name')->label(__('inventories::filament/clusters/products/resources/package/pages/manage-products.table.columns.unit-of-measure')),
             ])
             ->paginated(false);
     }

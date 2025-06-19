@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Pboivin\FilamentPeek\Tests\Models\Post;
 
-final class PostFactory extends Factory
+class PostFactory extends Factory
 {
     protected $model = Post::class;
 

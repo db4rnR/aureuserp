@@ -9,7 +9,7 @@ use Webkul\Inventory\Models\Delivery;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class DeliveryPolicy
+class DeliveryPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

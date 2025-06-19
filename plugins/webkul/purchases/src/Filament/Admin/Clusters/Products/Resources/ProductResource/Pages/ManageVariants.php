@@ -8,7 +8,7 @@ use Webkul\Product\Filament\Resources\ProductResource\Pages\ManageVariants as Ba
 use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource;
 use Webkul\Purchase\Settings\ProductSettings;
 
-final class ManageVariants extends BaseManageVariants
+class ManageVariants extends BaseManageVariants
 {
     protected static string $resource = ProductResource::class;
 

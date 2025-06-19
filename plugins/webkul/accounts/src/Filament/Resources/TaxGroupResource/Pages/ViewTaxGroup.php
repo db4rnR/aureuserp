@@ -12,7 +12,7 @@ use Illuminate\Database\QueryException;
 use Webkul\Account\Filament\Resources\TaxGroupResource;
 use Webkul\Account\Models\TaxGroup;
 
-final class ViewTaxGroup extends ViewRecord
+class ViewTaxGroup extends ViewRecord
 {
     protected static string $resource = TaxGroupResource::class;
 
@@ -20,21 +20,18 @@ final class ViewTaxGroup extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->action(function (TaxGroup $record): void {
+            DeleteAction::make()->action(function (TaxGroup $record): void {
                     try {
                         $record->delete();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('accounts::filament/resources/tax-group/pages/view-tax-group.header-actions.delete.notification.error.title'))
                             ->body(__('accounts::filament/resources/tax-group/pages/view-tax-group.header-actions.delete.notification.error.body'))
                             ->send();
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/tax-group/pages/view-tax-group.header-actions.delete.notification.success.title'))
                         ->body(__('accounts::filament/resources/tax-group/pages/view-tax-group.header-actions.delete.notification.success.body'))
                 ),

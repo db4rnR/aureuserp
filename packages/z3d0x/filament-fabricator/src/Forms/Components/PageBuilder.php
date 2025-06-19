@@ -9,7 +9,7 @@ use Z3d0X\FilamentFabricator\Enums\BlockPickerStyle;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\FilamentFabricatorPlugin;
 
-final class PageBuilder extends Builder
+class PageBuilder extends Builder
 {
     protected string $view = 'filament-fabricator::components.forms.components.page-builder';
 

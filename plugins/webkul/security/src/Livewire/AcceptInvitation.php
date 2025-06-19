@@ -17,7 +17,7 @@ use Webkul\Security\Models\Invitation;
 use Webkul\Security\Models\User;
 use Webkul\Security\Settings\UserSettings;
 
-final class AcceptInvitation extends SimplePage
+class AcceptInvitation extends SimplePage
 {
     use InteractsWithFormActions;
     use InteractsWithForms;
@@ -39,27 +39,23 @@ final class AcceptInvitation extends SimplePage
         ]);
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('name')
-                    ->label(__('filament-panels::pages/auth/register.form.name.label'))
+                TextInput::make('name')->label(__('filament-panels::pages/auth/register.form.name.label'))
                     ->required()
                     ->maxLength(255)
                     ->autofocus(),
-                TextInput::make('email')
-                    ->label(__('filament-panels::pages/auth/register.form.email.label'))
+                TextInput::make('email')->label(__('filament-panels::pages/auth/register.form.email.label'))
                     ->disabled(),
-                TextInput::make('password')
-                    ->label(__('filament-panels::pages/auth/register.form.password.label'))
+                TextInput::make('password')->label(__('filament-panels::pages/auth/register.form.password.label'))
                     ->password()
                     ->required()
                     ->rule(Password::default())
                     ->same('passwordConfirmation')
                     ->validationAttribute(__('filament-panels::pages/auth/register.form.password.validation_attribute')),
-                TextInput::make('passwordConfirmation')
-                    ->label(__('filament-panels::pages/auth/register.form.password_confirmation.label'))
+                TextInput::make('passwordConfirmation')->label(__('filament-panels::pages/auth/register.form.password_confirmation.label'))
                     ->password()
                     ->required()
                     ->dehydrated(false),
@@ -97,8 +93,7 @@ final class AcceptInvitation extends SimplePage
 
     public function getRegisterFormAction(): Action
     {
-        return Action::make('register')
-            ->label(__('filament-panels::pages/auth/register.form.actions.register.label'))
+        return Action::make('register')->label(__('filament-panels::pages/auth/register.form.actions.register.label'))
             ->submit('register');
     }
 

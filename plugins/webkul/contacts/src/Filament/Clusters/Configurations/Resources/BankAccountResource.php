@@ -9,7 +9,7 @@ use Webkul\Contact\Filament\Clusters\Configurations;
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\BankAccountResource\Pages\ManageBankAccounts;
 use Webkul\Partner\Filament\Resources\BankAccountResource as BaseBankAccountResource;
 
-final class BankAccountResource extends BaseBankAccountResource
+class BankAccountResource extends BaseBankAccountResource
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 

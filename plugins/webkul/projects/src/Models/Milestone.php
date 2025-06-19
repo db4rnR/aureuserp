@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Project\Database\Factories\MilestoneFactory;
 use Webkul\Security\Models\User;
 
-final class Milestone extends Model
+class Milestone extends Model
 {
     use HasFactory;
 

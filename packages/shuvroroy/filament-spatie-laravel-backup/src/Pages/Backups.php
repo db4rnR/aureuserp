@@ -13,7 +13,7 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\Enums\Option;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelBackup\Jobs\CreateBackupJob;
 
-final class Backups extends Page
+class Backups extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog';
 

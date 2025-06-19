@@ -14,7 +14,7 @@ use Illuminate\Database\QueryException;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 use Webkul\Inventory\Models\Package;
 
-final class EditPackage extends EditRecord
+class EditPackage extends EditRecord
 {
     protected static string $resource = PackageResource::class;
 
@@ -25,8 +25,7 @@ final class EditPackage extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/products/resources/package/pages/edit-package.notification.title'))
             ->body(__('inventories::filament/clusters/products/resources/package/pages/edit-package.notification.body'));
     }
@@ -35,8 +34,7 @@ final class EditPackage extends EditRecord
     {
         return [
             ActionGroup::make([
-                Action::make('print-without-content')
-                    ->label(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.print.actions.without-content.label'))
+                Action::make('print-without-content')->label(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.print.actions.without-content.label'))
                     ->color('gray')
                     ->action(function (Package $record) {
                         $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-without-content', [
@@ -49,8 +47,7 @@ final class EditPackage extends EditRecord
                             echo $pdf->output();
                         }, 'Package-'.$record->name.'.pdf');
                     }),
-                Action::make('print-with-content')
-                    ->label(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.print.actions.with-content.label'))
+                Action::make('print-with-content')->label(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.print.actions.with-content.label'))
                     ->color('gray')
                     ->action(function (Package $record) {
                         $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
@@ -68,15 +65,13 @@ final class EditPackage extends EditRecord
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->button(),
-            DeleteAction::make()
-                ->action(function (DeleteAction $action, Package $record): void {
+            DeleteAction::make()->action(function (DeleteAction $action, Package $record): void {
                     try {
                         $record->delete();
 
                         $action->success();
                     } catch (QueryException) {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.delete.notification.error.title'))
                             ->body(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.delete.notification.error.body'))
                             ->send();
@@ -85,8 +80,7 @@ final class EditPackage extends EditRecord
                     }
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.delete.notification.success.title'))
                         ->body(__('inventories::filament/clusters/products/resources/package/pages/edit-package.header-actions.delete.notification.success.body')),
                 ),

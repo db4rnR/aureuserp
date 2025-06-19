@@ -12,7 +12,7 @@ use Filament\Support\Facades\FilamentAsset;
 use Livewire\Livewire;
 use Pboivin\FilamentPeek\Livewire\BuilderEditor;
 
-final class FilamentPeekPlugin implements Plugin
+class FilamentPeekPlugin implements Plugin
 {
     public const PACKAGE = 'pboivin/filament-peek';
 

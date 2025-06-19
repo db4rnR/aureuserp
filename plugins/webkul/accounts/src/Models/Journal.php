@@ -16,7 +16,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-final class Journal extends Model implements Sortable
+class Journal extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

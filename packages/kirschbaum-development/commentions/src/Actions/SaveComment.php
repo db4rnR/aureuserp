@@ -11,7 +11,7 @@ use Kirschbaum\Commentions\Config;
 use Kirschbaum\Commentions\Contracts\Commenter;
 use Kirschbaum\Commentions\Events\UserWasMentionedEvent;
 
-final class SaveComment
+class SaveComment
 {
     /**
      * @throws AuthorizationException

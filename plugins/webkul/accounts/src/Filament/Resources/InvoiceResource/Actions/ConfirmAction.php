@@ -12,7 +12,7 @@ use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Models\Move;
 
-final class ConfirmAction extends Action
+class ConfirmAction extends Action
 {
     protected function setUp(): void
     {
@@ -42,8 +42,7 @@ final class ConfirmAction extends Action
     private function validateMove(Move $record): bool
     {
         if (! $record->partner_id) {
-            Notification::make()
-                ->warning()
+            Notification::make()->warning()
                 ->title(__('accounts::filament/resources/invoice/actions/confirm-action.customer.notification.customer-validation.title'))
                 ->body(__('accounts::filament/resources/invoice/actions/confirm-action.customer.notification.customer-validation.body'))
                 ->send();
@@ -52,8 +51,7 @@ final class ConfirmAction extends Action
         }
 
         if ($record->lines->isEmpty()) {
-            Notification::make()
-                ->warning()
+            Notification::make()->warning()
                 ->title(__('Move Line validation'))
                 ->body(__('Please add at least one line to the invoice.'))
 

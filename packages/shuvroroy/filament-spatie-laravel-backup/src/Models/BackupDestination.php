@@ -12,7 +12,7 @@ use Sushi\Sushi;
  * @property string $path
  * @property string $disk
  */
-final class BackupDestination extends Model
+class BackupDestination extends Model
 {
     use Sushi;
 

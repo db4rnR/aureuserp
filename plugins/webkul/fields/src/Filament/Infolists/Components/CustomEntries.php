@@ -8,13 +8,13 @@ use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\Entry;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Components\Component;
+use Filament\Infolists\Components\Component;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\TextSize;
 use Illuminate\Support\Collection;
 use Webkul\Field\Models\Field;
 
-final class CustomEntries extends Component
+class CustomEntries extends Component
 {
     private array $include = [];
 
@@ -85,8 +85,7 @@ final class CustomEntries extends Component
             default => TextEntry::class,
         };
 
-        $entry = $entryClass::make($field->code)
-            ->label($field->name);
+        $entry = $entryClass::make($field->code)->label($field->name);
 
         if (! empty($field->infolist_settings)) {
             foreach ($field->infolist_settings as $setting) {

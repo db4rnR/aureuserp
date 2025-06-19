@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Account\Filament\Resources\AccountResource;
 
-final class ViewAccount extends ViewRecord
+class ViewAccount extends ViewRecord
 {
     protected static string $resource = AccountResource::class;
 
@@ -18,10 +18,8 @@ final class ViewAccount extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/account/pages/view-account.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/account/pages/view-account.header-actions.delete.notification.body'))
                 ),

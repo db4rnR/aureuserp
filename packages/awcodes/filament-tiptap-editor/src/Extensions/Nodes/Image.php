@@ -6,7 +6,7 @@ namespace FilamentTiptapEditor\Extensions\Nodes;
 
 use Tiptap\Nodes\Image as BaseImage;
 
-final class Image extends BaseImage
+class Image extends BaseImage
 {
     public function addAttributes(): array
     {

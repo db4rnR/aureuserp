@@ -8,7 +8,7 @@ use BackedEnum;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Webkul\TimeOff\Filament\Widgets\OverviewCalendarWidget;
 
-final class Overview extends BaseDashboard
+class Overview extends BaseDashboard
 {
     protected static string $routePath = 'time-off';
 

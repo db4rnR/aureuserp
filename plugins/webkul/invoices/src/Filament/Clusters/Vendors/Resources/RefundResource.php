@@ -14,7 +14,7 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages\List
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages\ViewRefund;
 use Webkul\Invoice\Models\Refund;
 
-final class RefundResource extends BaseRefundResource
+class RefundResource extends BaseRefundResource
 {
     protected static ?string $model = Refund::class;
 

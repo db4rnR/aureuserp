@@ -10,7 +10,7 @@ use Webkul\Account\Enums\EarlyPayDiscount;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class PaymentTermSeeder extends Seeder
+class PaymentTermSeeder extends Seeder
 {
     public function run(): void
     {

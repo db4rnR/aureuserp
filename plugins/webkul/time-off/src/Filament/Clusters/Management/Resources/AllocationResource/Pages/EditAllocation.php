@@ -12,7 +12,7 @@ use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\AllocationResource;
 
-final class EditAllocation extends EditRecord
+class EditAllocation extends EditRecord
 {
     protected static string $resource = AllocationResource::class;
 
@@ -23,8 +23,7 @@ final class EditAllocation extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.notification.title'))
             ->body(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.notification.body'));
     }
@@ -32,10 +31,8 @@ final class EditAllocation extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
-            Action::make('approved')
-                ->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.approved.title'))
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
+            Action::make('approved')->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.approved.title'))
                 ->color('gray')
                 ->hidden(fn ($record): bool => $record->state !== State::CONFIRM->value)
                 ->action(function ($record): void {
@@ -43,14 +40,12 @@ final class EditAllocation extends EditRecord
 
                     $this->refreshFormData(['state']);
 
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.approved.notification.title'))
                         ->body(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.approved.notification.body'))
                         ->send();
                 }),
-            Action::make('refuse')
-                ->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.refuse.title'))
+            Action::make('refuse')->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.refuse.title'))
                 ->color('gray')
                 ->hidden(fn ($record): bool => $record->state === State::REFUSE->value)
                 ->action(function ($record): void {
@@ -58,14 +53,12 @@ final class EditAllocation extends EditRecord
 
                     $this->refreshFormData(['state']);
 
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.refuse.notification.title'))
                         ->body(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.refuse.notification.body'))
                         ->send();
                 }),
-            Action::make('mark_as_ready_to_confirm')
-                ->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.mark-as-ready-to-confirm.title'))
+            Action::make('mark_as_ready_to_confirm')->label(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.mark-as-ready-to-confirm.title'))
                 ->color('gray')
                 ->visible(fn ($record): bool => $record->state === State::REFUSE->value)
                 ->action(function ($record): void {
@@ -73,16 +66,13 @@ final class EditAllocation extends EditRecord
 
                     $this->refreshFormData(['state']);
 
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.mark-as-ready-to-confirm.notification.title'))
                         ->body(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.mark-as-ready-to-confirm.notification.body'))
                         ->send();
                 }),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.delete.notification.title'))
                         ->body(__('time-off::filament/clusters/management/resources/allocation/pages/edit-allocation.header-actions.delete.notification.body'))
                 ),

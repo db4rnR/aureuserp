@@ -12,7 +12,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 
-final class FiscalPosition extends Model implements Sortable
+class FiscalPosition extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

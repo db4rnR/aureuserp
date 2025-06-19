@@ -26,21 +26,19 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 
-final class SkillsRelationManager extends RelationManager
+class SkillsRelationManager extends RelationManager
 {
     protected static string $relationship = 'skills';
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('name')
-                    ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.form.name'))
+                TextInput::make('name')->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.form.name'))
                     ->required(),
-                Hidden::make('creator_id')
-                    ->default(Auth::user()->id),
+                Hidden::make('creator_id')->default(Auth::user()->id),
             ])->columns('full');
     }
 
@@ -48,57 +46,45 @@ final class SkillsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.columns.name'))
+                TextColumn::make('name')->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->groups([
-                Group::make('created_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.groups.created-at'))
+                Group::make('created_at')->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.groups.created-at'))
                     ->date()
                     ->collapsible(),
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->icon('heroicon-o-plus-circle')
+                CreateAction::make()->icon('heroicon-o-plus-circle')
                     ->modal('form'),
             ])
             ->filters([
-                TrashedFilter::make()
-                    ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.filters.deleted-records')),
+                TrashedFilter::make()->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.filters.deleted-records')),
             ])
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make(),
-                    EditAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    EditAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.actions.edit.notification.title'))
                                 ->body(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.actions.edit.notification.body')),
                         ),
-                    DeleteAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.actions.delete.notification.title'))
                                 ->body(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.actions.delete.notification.body')),
                         ),
-                    RestoreAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.actions.restore.notification.title'))
                                 ->body(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.actions.restore.notification.body')),
                         ),
@@ -106,24 +92,18 @@ final class SkillsRelationManager extends RelationManager
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.bulk-actions.delete.notification.title'))
                                 ->body(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ForceDeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.bulk-actions.force-delete.notification.title'))
                                 ->body(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.bulk-actions.force-delete.notification.body')),
                         ),
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.bulk-actions.restore.notification.title'))
                                 ->body(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.table.bulk-actions.restore.notification.body')),
                         ),
@@ -131,12 +111,11 @@ final class SkillsRelationManager extends RelationManager
             ]);
     }
 
-    public function infolist(Schema $schema): Schema
+    public function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                TextEntry::make('name')
-                    ->placeholder('—')
+                TextEntry::make('name')->placeholder('—')
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type/relation-managers/skills.infolist.entries.name')),
             ]);
     }

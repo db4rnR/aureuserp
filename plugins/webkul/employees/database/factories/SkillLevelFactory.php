@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\SkillLevel;
 use Webkul\Employee\Models\SkillType;
 
-final class SkillLevelFactory extends Factory
+class SkillLevelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

@@ -23,7 +23,7 @@ use InvalidArgumentException;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
-final class FilamentShield
+class FilamentShield
 {
     use EvaluatesClosures;
 

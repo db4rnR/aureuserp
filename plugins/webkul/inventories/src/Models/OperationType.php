@@ -19,7 +19,7 @@ use Webkul\Inventory\Enums\ReservationMethod;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class OperationType extends Model implements Sortable
+class OperationType extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

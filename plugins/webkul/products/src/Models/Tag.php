@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Product\Database\Factories\TagFactory;
 use Webkul\Security\Models\User;
 
-final class Tag extends Model
+class Tag extends Model
 {
     use HasFactory, SoftDeletes;
 

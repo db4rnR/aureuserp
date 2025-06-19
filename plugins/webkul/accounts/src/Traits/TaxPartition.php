@@ -23,41 +23,34 @@ use Webkul\Account\Enums\RepartitionType;
 
 trait TaxPartition
 {
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('factor_percent')
-                    ->suffix('%')
+                TextInput::make('factor_percent')->suffix('%')
                     ->numeric()
                     ->minValue(0)
                     ->maxValue(100)
                     ->label(__('accounts::traits/tax-partition.form.factor-percent'))
                     ->live()
                     ->afterStateUpdated(fn (Set $set, $state): mixed => $set('factor', (float) $state / 100)),
-                TextInput::make('factor')
-                    ->readOnly()
+                TextInput::make('factor')->readOnly()
                     ->label(__('accounts::traits/tax-partition.form.factor-ratio')),
-                Select::make('repartition_type')
-                    ->options(RepartitionType::options())
+                Select::make('repartition_type')->options(RepartitionType::options())
                     ->required()
                     ->label(__('accounts::traits/tax-partition.form.repartition-type')),
-                Select::make('document_type')
-                    ->options(DocumentType::options())
+                Select::make('document_type')->options(DocumentType::options())
                     ->required()
                     ->label(__('accounts::traits/tax-partition.form.document-type')),
-                Select::make('account_id')
-                    ->relationship('account', 'name')
+                Select::make('account_id')->relationship('account', 'name')
                     ->searchable()
                     ->preload()
                     ->label(__('accounts::traits/tax-partition.form.account')),
-                Select::make('tax_id')
-                    ->relationship('tax', 'name')
+                Select::make('tax_id')->relationship('tax', 'name')
                     ->searchable()
                     ->preload()
                     ->label(__('accounts::traits/tax-partition.form.tax')),
-                Toggle::make('use_in_tax_closing')
-                    ->label(__('accounts::traits/tax-partition.form.tax-closing-entry')),
+                Toggle::make('use_in_tax_closing')->label(__('accounts::traits/tax-partition.form.tax-closing-entry')),
             ]);
     }
 
@@ -65,42 +58,30 @@ trait TaxPartition
     {
         return $table
             ->columns([
-                TextColumn::make('factor_percent')
-                    ->label(__('accounts::traits/tax-partition.table.columns.factor-percent')),
-                TextColumn::make('account.name')
-                    ->label(__('accounts::traits/tax-partition.table.columns.account')),
-                TextColumn::make('tax.name')
-                    ->label(__('accounts::traits/tax-partition.table.columns.tax')),
-                TextColumn::make('company.name')
-                    ->label(__('accounts::traits/tax-partition.table.columns.company')),
-                TextColumn::make('repartition_type')
-                    ->formatStateUsing(fn ($state) => RepartitionType::options()[$state])
+                TextColumn::make('factor_percent')->label(__('accounts::traits/tax-partition.table.columns.factor-percent')),
+                TextColumn::make('account.name')->label(__('accounts::traits/tax-partition.table.columns.account')),
+                TextColumn::make('tax.name')->label(__('accounts::traits/tax-partition.table.columns.tax')),
+                TextColumn::make('company.name')->label(__('accounts::traits/tax-partition.table.columns.company')),
+                TextColumn::make('repartition_type')->formatStateUsing(fn ($state) => RepartitionType::options()[$state])
                     ->label(__('accounts::traits/tax-partition.table.columns.repartition-type')),
-                TextColumn::make('document_type')
-                    ->formatStateUsing(fn ($state) => DocumentType::options()[$state])
+                TextColumn::make('document_type')->formatStateUsing(fn ($state) => DocumentType::options()[$state])
                     ->label(__('accounts::traits/tax-partition.table.columns.document-type')),
-                IconColumn::make('use_in_tax_closing')
-                    ->boolean()
+                IconColumn::make('use_in_tax_closing')->boolean()
                     ->label(__('accounts::traits/tax-partition.table.columns.tax-closing-entry')),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->title(__('accounts::traits/tax-partition.table.actions.edit.notification.title'))
+                EditAction::make()->successNotification(
+                        Notification::make()->title(__('accounts::traits/tax-partition.table.actions.edit.notification.title'))
                             ->body(__('accounts::traits/tax-partition.table.actions.edit.notification.body'))
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->title(__('accounts::traits/tax-partition.table.actions.delete.notification.title'))
+                DeleteAction::make()->successNotification(
+                        Notification::make()->title(__('accounts::traits/tax-partition.table.actions.delete.notification.title'))
                             ->body(__('accounts::traits/tax-partition.table.actions.delete.notification.body'))
                     ),
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->icon('heroicon-o-plus-circle')
+                CreateAction::make()->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(function (array $data) {
                         $user = Auth::user();
 

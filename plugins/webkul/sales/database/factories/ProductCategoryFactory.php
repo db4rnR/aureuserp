@@ -6,7 +6,7 @@ namespace Webkul\Sale\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-final class ProductCategoryFactory extends Factory
+class ProductCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.

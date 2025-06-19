@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\CalendarResource;
 
-final class CreateCalendar extends CreateRecord
+class CreateCalendar extends CreateRecord
 {
     protected static string $resource = CalendarResource::class;
 
@@ -19,8 +19,7 @@ final class CreateCalendar extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('employees::filament/clusters/configurations/resources/calendar/pages/create-calendar.notification.title'))
             ->body(__('employees::filament/clusters/configurations/resources/calendar/pages/create-calendar.notification.body'));
     }

@@ -12,7 +12,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-final class RequisitionLine extends Model
+class RequisitionLine extends Model
 {
     use HasFactory;
 

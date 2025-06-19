@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Awcodes\Curator\Curations;
 
-final class ThumbnailPreset extends CurationPreset
+class ThumbnailPreset extends CurationPreset
 {
     public function getKey(): string
     {

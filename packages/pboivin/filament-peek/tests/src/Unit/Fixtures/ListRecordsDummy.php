@@ -7,7 +7,7 @@ namespace Pboivin\FilamentPeek\Tests\Unit\Fixtures;
 use Filament\Resources\Pages\ListRecords;
 use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 
-final class ListRecordsDummy extends ListRecords
+class ListRecordsDummy extends ListRecords
 {
     use HasPreviewModal;
 

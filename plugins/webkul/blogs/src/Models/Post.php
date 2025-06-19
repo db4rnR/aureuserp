@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Webkul\Blog\Database\Factories\PostFactory;
 use Webkul\Security\Models\User;
 
-final class Post extends Model
+class Post extends Model
 {
     use HasFactory, SoftDeletes;
 

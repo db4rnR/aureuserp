@@ -10,7 +10,7 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthServiceProvider;
 
-final class TestCase extends Orchestra
+class TestCase extends Orchestra
 {
     use LazilyRefreshDatabase;
 

@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Product\Filament\Resources\AttributeResource;
 
-final class ViewAttribute extends ViewRecord
+class ViewAttribute extends ViewRecord
 {
     protected static string $resource = AttributeResource::class;
 
@@ -18,10 +18,8 @@ final class ViewAttribute extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('products::filament/resources/attribute/pages/view-attribute.header-actions.delete.notification.title'))
                         ->body(__('products::filament/resources/attribute/pages/view-attribute.header-actions.delete.notification.body')),
                 ),

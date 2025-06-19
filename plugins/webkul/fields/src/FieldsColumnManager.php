@@ -8,7 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Webkul\Field\Models\Field;
 
-final class FieldsColumnManager
+class FieldsColumnManager
 {
     /**
      * Create a new column for the field

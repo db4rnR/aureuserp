@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-final class ActivityPlan extends Model
+class ActivityPlan extends Model
 {
     use HasCustomFields, HasFactory, SoftDeletes;
 

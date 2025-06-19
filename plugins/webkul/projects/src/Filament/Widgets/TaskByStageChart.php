@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Models\TaskStage;
 
-final class TaskByStageChart extends ChartWidget
+class TaskByStageChart extends ChartWidget
 {
     use HasWidgetShield, InteractsWithPageFilters;
 

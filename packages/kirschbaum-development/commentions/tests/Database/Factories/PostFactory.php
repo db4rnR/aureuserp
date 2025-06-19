@@ -7,7 +7,7 @@ namespace Tests\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tests\Models\Post;
 
-final class PostFactory extends Factory
+class PostFactory extends Factory
 {
     protected $model = Post::class;
 

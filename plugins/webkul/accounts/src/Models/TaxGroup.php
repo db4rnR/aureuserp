@@ -12,7 +12,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 
-final class TaxGroup extends Model implements Sortable
+class TaxGroup extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

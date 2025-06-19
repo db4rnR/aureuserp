@@ -19,7 +19,7 @@ use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-final class ManageMoves extends ManageRelatedRecords
+class ManageMoves extends ManageRelatedRecords
 {
     protected static string $resource = OperationResource::class;
 
@@ -36,49 +36,38 @@ final class ManageMoves extends ManageRelatedRecords
     {
         return $table
             ->columns([
-                TextColumn::make('scheduled_at')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.date'))
+                TextColumn::make('scheduled_at')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.date'))
                     ->sortable()
                     ->dateTime(),
-                TextColumn::make('reference')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.reference'))
+                TextColumn::make('reference')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.reference'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('lot.name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.lot'))
+                TextColumn::make('lot.name')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.lot'))
                     ->sortable()
                     ->placeholder('—')
                     ->visible(fn (TraceabilitySettings $settings): bool => $settings->enable_lots_serial_numbers && $this->getOwnerRecord()->tracking !== ProductTracking::QTY),
-                TextColumn::make('package.name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.package'))
+                TextColumn::make('package.name')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.package'))
                     ->sortable()
                     ->placeholder('—')
                     ->visible(fn (OperationSettings $settings): bool => $settings->enable_packages),
-                TextColumn::make('sourceLocation.full_name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.source-location'))
+                TextColumn::make('sourceLocation.full_name')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.source-location'))
                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
-                TextColumn::make('destinationLocation.full_name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.destination-location'))
+                TextColumn::make('destinationLocation.full_name')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.destination-location'))
                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
-                TextColumn::make('uom_qty')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.quantity'))
+                TextColumn::make('uom_qty')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.quantity'))
                     ->sortable()
                     ->color(fn ($record): string => $record->destinationLocation->type === LocationType::INTERNAL ? 'success' : 'danger'),
-                TextColumn::make('state')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.state'))
+                TextColumn::make('state')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.state'))
                     ->sortable()
                     ->badge()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('creator.name')
-                    ->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.done-by'))
+                TextColumn::make('creator.name')->label(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.columns.done-by'))
                     ->sortable(),
             ])
             ->recordActions([
-                DeleteAction::make()
-                    ->hidden(fn (MoveLine $record): bool => $record->state === MoveState::DONE)
+                DeleteAction::make()->hidden(fn (MoveLine $record): bool => $record->state === MoveState::DONE)
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.actions.delete.notification.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/operation/pages/manage-moves.table.actions.delete.notification.body')),
                     ),

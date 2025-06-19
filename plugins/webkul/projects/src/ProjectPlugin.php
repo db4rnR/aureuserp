@@ -11,7 +11,7 @@ use ReflectionClass;
 use Webkul\Project\Filament\Clusters\Settings\Pages\ManageTasks;
 use Webkul\Support\Package;
 
-final class ProjectPlugin implements Plugin
+class ProjectPlugin implements Plugin
 {
     public static function make(): static
     {
@@ -37,8 +37,7 @@ final class ProjectPlugin implements Plugin
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Project\\Filament\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Project\\Filament\\Widgets')
                     ->navigationItems([
-                        NavigationItem::make('Settings')
-                            ->url(fn (): string => ManageTasks::getUrl())
+                        NavigationItem::make('Settings')->url(fn (): string => ManageTasks::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Project')
                             ->sort(3),

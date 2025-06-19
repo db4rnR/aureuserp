@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource\P
 use Webkul\Account\Filament\Resources\PaymentsResource\Pages\EditPayments as BaseEditPayments;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource;
 
-final class EditPayments extends BaseEditPayments
+class EditPayments extends BaseEditPayments
 {
     protected static string $resource = PaymentsResource::class;
 }

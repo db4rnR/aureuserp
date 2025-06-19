@@ -8,7 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 
-final class ViewRule extends ViewRecord
+class ViewRule extends ViewRecord
 {
     protected static string $resource = RuleResource::class;
 

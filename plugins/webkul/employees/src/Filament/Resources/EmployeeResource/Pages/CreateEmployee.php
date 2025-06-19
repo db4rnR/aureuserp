@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Employee\Filament\Resources\EmployeeResource;
 
-final class CreateEmployee extends CreateRecord
+class CreateEmployee extends CreateRecord
 {
     protected static string $resource = EmployeeResource::class;
 
@@ -20,8 +20,7 @@ final class CreateEmployee extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('employees::filament/resources/employee/pages/create-employee.notification.title'))
             ->body(__('employees::filament/resources/employee/pages/create-employee.notification.body'));
     }

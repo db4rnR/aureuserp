@@ -7,7 +7,7 @@ namespace Webkul\Field\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 
-final class FieldPolicy
+class FieldPolicy
 {
     use HandlesAuthorization;
 

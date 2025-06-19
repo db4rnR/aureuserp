@@ -6,7 +6,7 @@ namespace Webkul\Sale\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class AdvancedPaymentInvoiceOrderSale extends Model
+class AdvancedPaymentInvoiceOrderSale extends Model
 {
     public $timestamps = false;
 

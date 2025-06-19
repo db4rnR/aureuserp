@@ -13,7 +13,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ListInvoices as Base
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListBills extends BaseListBills
+class ListBills extends BaseListBills
 {
     use HasTableViews;
 
@@ -34,8 +34,7 @@ final class ListBills extends BaseListBills
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
+            CreateAction::make()->icon('heroicon-o-plus-circle'),
         ];
     }
 }

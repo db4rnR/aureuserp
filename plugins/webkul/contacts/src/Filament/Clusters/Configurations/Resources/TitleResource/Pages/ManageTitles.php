@@ -7,7 +7,7 @@ namespace Webkul\Contact\Filament\Clusters\Configurations\Resources\TitleResourc
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\TitleResource;
 use Webkul\Partner\Filament\Resources\TitleResource\Pages\ManageTitles as BaseManageTitles;
 
-final class ManageTitles extends BaseManageTitles
+class ManageTitles extends BaseManageTitles
 {
     protected static string $resource = TitleResource::class;
 }

@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Partner\Filament\Resources\PartnerResource\Pages\EditPartner as BaseEditCustomer;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource;
 
-final class EditCustomer extends BaseEditCustomer
+class EditCustomer extends BaseEditCustomer
 {
     protected static string $resource = CustomerResource::class;
 

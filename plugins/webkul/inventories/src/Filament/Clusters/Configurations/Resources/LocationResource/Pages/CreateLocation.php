@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource;
 use Webkul\Inventory\Models\Location;
 
-final class CreateLocation extends CreateRecord
+class CreateLocation extends CreateRecord
 {
     protected static string $resource = LocationResource::class;
 
@@ -21,8 +21,7 @@ final class CreateLocation extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/location/pages/create-location.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/location/pages/create-location.notification.body'));
     }

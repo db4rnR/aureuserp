@@ -9,7 +9,7 @@ use Webkul\Recruitment\Filament\Clusters\Configurations;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\EmploymentTypeResource\Pages\ListEmploymentTypes;
 use Webkul\Recruitment\Models\EmploymentType;
 
-final class EmploymentTypeResource extends BaseEmploymentTypeResource
+class EmploymentTypeResource extends BaseEmploymentTypeResource
 {
     protected static ?string $model = EmploymentType::class;
 

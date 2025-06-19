@@ -6,7 +6,7 @@ namespace Webkul\Invoice\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class ProductSettings extends Settings
+class ProductSettings extends Settings
 {
     public bool $enable_uom;
 

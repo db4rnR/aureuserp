@@ -27,7 +27,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-final class Order extends Model
+class Order extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity;
 

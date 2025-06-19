@@ -6,7 +6,7 @@ namespace Saade\FilamentAdjacencyList\Forms\Components\Concerns;
 
 use Closure;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 
 trait HasForm
 {
@@ -21,7 +21,7 @@ trait HasForm
         return $this;
     }
 
-    public function getForm(Schema $schema): ?Schema
+    public function getForm(Form $form): ?Form
     {
         if (! $this->hasModal()) {
             return null;
@@ -30,7 +30,7 @@ trait HasForm
         $modifiedForm = $this->evaluate($this->form);
 
         if ($modifiedForm === null) {
-            return $schema->components([
+            return $form->schema([
                 TextInput::make($this->getLabelKey())
                     ->label(__('filament-adjacency-list::adjacency-list.items.label')),
             ]);
@@ -41,7 +41,7 @@ trait HasForm
         }
 
         if (is_array($modifiedForm)) {
-            $modifiedForm = $schema->components($modifiedForm);
+            $modifiedForm = $form->schema($modifiedForm);
         }
 
         if ($this->isDisabled()) {

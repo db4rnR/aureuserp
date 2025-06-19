@@ -11,7 +11,7 @@ use Webkul\Employee\Filament\Clusters\Configurations\Resources\JobPositionResour
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListJobPositions extends ListRecords
+class ListJobPositions extends ListRecords
 {
     use HasTableViews;
 
@@ -38,8 +38,7 @@ final class ListJobPositions extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('employees::filament/clusters/configurations/resources/job-position/pages/list-job-position.header-actions.create.label'))
+            CreateAction::make()->label(__('employees::filament/clusters/configurations/resources/job-position/pages/list-job-position.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(fn ($data) => $data),
         ];

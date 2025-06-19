@@ -8,7 +8,7 @@ use BezhanSalleh\FilamentShield\Resources\RoleResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
-final class ViewRole extends ViewRecord
+class ViewRole extends ViewRecord
 {
     protected static string $resource = RoleResource::class;
 

@@ -11,7 +11,7 @@ use Webkul\Account\Models\PaymentDueTerm;
 use Webkul\Account\Models\PaymentTerm;
 use Webkul\Security\Models\User;
 
-final class PaymentDueTermFactory extends Factory
+class PaymentDueTermFactory extends Factory
 {
     protected $model = PaymentDueTerm::class;
 

@@ -11,7 +11,7 @@ use Z3d0X\FilamentFabricator\Layouts\Layout;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page;
 use Z3d0X\FilamentFabricator\Services\PageRoutesService;
 
-final class PageController
+class PageController
 {
     public function __invoke(?Page $filamentFabricatorPage = null): string
     {

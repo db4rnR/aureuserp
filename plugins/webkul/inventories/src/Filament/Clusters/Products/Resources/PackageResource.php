@@ -46,7 +46,7 @@ use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Relati
 use Webkul\Inventory\Models\Package;
 use Webkul\Inventory\Settings\OperationSettings;
 
-final class PackageResource extends Resource
+class PackageResource extends Resource
 {
     protected static ?string $model = Package::class;
 
@@ -74,34 +74,29 @@ final class PackageResource extends Resource
         return __('inventories::filament/clusters/products/resources/package.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Section::make(__('inventories::filament/clusters/products/resources/package.form.sections.general.title'))
                     ->schema([
-                        TextInput::make('name')
-                            ->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.name'))
+                        TextInput::make('name')->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.name'))
                             ->required()
                             ->maxLength(255)
                             ->autofocus()
                             ->placeholder(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.name-placeholder'))
                             ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;']),
-                        Group::make()
-                            ->schema([
-                                Select::make('package_type_id')
-                                    ->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.package-type'))
+                        Group::make()->schema([
+                                Select::make('package_type_id')->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.package-type'))
                                     ->relationship('packageType', 'name')
                                     ->searchable()
                                     ->preload()
-                                    ->createOptionForm(fn (Schema $schema): Schema => PackageTypeResource::form($schema)),
-                                DatePicker::make('pack_date')
-                                    ->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.pack-date'))
+                                    ->createOptionForm(fn (Schema $form): Schema => PackageTypeResource::form($form)),
+                                DatePicker::make('pack_date')->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.pack-date'))
                                     ->native(false)
                                     ->suffixIcon('heroicon-o-calendar')
                                     ->default(today()),
-                                Select::make('location_id')
-                                    ->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.location'))
+                                Select::make('location_id')->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.location'))
                                     ->relationship('location', 'full_name')
                                     ->searchable()
                                     ->preload(),
@@ -115,50 +110,39 @@ final class PackageResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.columns.name'))
+                TextColumn::make('name')->label(__('inventories::filament/clusters/products/resources/package.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('packageType.name')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.columns.package-type'))
+                TextColumn::make('packageType.name')->label(__('inventories::filament/clusters/products/resources/package.table.columns.package-type'))
                     ->placeholder('—')
                     ->sortable(),
-                TextColumn::make('location.full_name')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.columns.location'))
+                TextColumn::make('location.full_name')->label(__('inventories::filament/clusters/products/resources/package.table.columns.location'))
                     ->placeholder('—')
                     ->sortable(),
-                TextColumn::make('company.name')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.columns.company'))
+                TextColumn::make('company.name')->label(__('inventories::filament/clusters/products/resources/package.table.columns.company'))
                     ->sortable(),
             ])
             ->groups([
-                Tables\Grouping\Group::make('packageType.name')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.groups.package-type')),
-                Tables\Grouping\Group::make('location.full_name')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.groups.location')),
-                Tables\Grouping\Group::make('created_at')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.groups.created-at'))
+                Tables\Grouping\Group::make('packageType.name')->label(__('inventories::filament/clusters/products/resources/package.table.groups.package-type')),
+                Tables\Grouping\Group::make('location.full_name')->label(__('inventories::filament/clusters/products/resources/package.table.groups.location')),
+                Tables\Grouping\Group::make('created_at')->label(__('inventories::filament/clusters/products/resources/package.table.groups.created-at'))
                     ->date(),
             ])
             ->filters([
-                SelectFilter::make('package_type_id')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.filters.package-type'))
+                SelectFilter::make('package_type_id')->label(__('inventories::filament/clusters/products/resources/package.table.filters.package-type'))
                     ->relationship('packageType', 'name')
                     ->searchable()
                     ->preload(),
-                SelectFilter::make('location_id')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.filters.location'))
+                SelectFilter::make('location_id')->label(__('inventories::filament/clusters/products/resources/package.table.filters.location'))
                     ->relationship('location', 'full_name')
                     ->searchable()
                     ->multiple()
                     ->preload(),
-                SelectFilter::make('creator_id')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.filters.creator'))
+                SelectFilter::make('creator_id')->label(__('inventories::filament/clusters/products/resources/package.table.filters.creator'))
                     ->relationship('creator', 'name')
                     ->searchable()
                     ->preload(),
-                SelectFilter::make('company_id')
-                    ->label(__('inventories::filament/clusters/products/resources/package.table.filters.company'))
+                SelectFilter::make('company_id')->label(__('inventories::filament/clusters/products/resources/package.table.filters.company'))
                     ->relationship('company', 'name')
                     ->searchable()
                     ->preload(),
@@ -167,21 +151,18 @@ final class PackageResource extends Resource
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
-                    DeleteAction::make()
-                        ->action(function (Package $record): void {
+                    DeleteAction::make()->action(function (Package $record): void {
                             try {
                                 $record->delete();
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/products/resources/package.table.actions.delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/products/resources/package.table.actions.delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/products/resources/package.table.actions.delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/products/resources/package.table.actions.delete.notification.success.body')),
                         ),
@@ -189,8 +170,7 @@ final class PackageResource extends Resource
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    BulkAction::make('print-without-content')
-                        ->label(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.print-without-content.label'))
+                    BulkAction::make('print-without-content')->label(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.print-without-content.label'))
                         ->icon('heroicon-o-printer')
                         ->action(function ($records) {
                             $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-without-content', [
@@ -203,8 +183,7 @@ final class PackageResource extends Resource
                                 echo $pdf->output();
                             }, 'Package-Barcode.pdf');
                         }),
-                    BulkAction::make('print-with-content')
-                        ->label(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.print-with-content.label'))
+                    BulkAction::make('print-with-content')->label(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.print-with-content.label'))
                         ->icon('heroicon-o-printer')
                         ->action(function ($records) {
                             $pdf = Pdf::loadView('inventories::filament.clusters.products.packages.actions.print-with-content', [
@@ -217,21 +196,18 @@ final class PackageResource extends Resource
                                 echo $pdf->output();
                             }, 'Package-Barcode.pdf');
                         }),
-                    DeleteBulkAction::make()
-                        ->action(function (Collection $records): void {
+                    DeleteBulkAction::make()->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->delete());
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/products/resources/package.table.bulk-actions.delete.notification.success.body')),
                         ),
@@ -239,63 +215,51 @@ final class PackageResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.title'))
                             ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.name'))
+                                TextEntry::make('name')->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.name'))
                                     ->icon('heroicon-o-cube')
                                     ->size(TextSize::Large)
                                     ->weight(FontWeight::Bold),
 
-                                Grid::make(2)
-                                    ->schema([
-                                        TextEntry::make('packageType.name')
-                                            ->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.package-type'))
+                                Grid::make(2)->schema([
+                                        TextEntry::make('packageType.name')->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.package-type'))
                                             ->icon('heroicon-o-rectangle-stack')
                                             ->placeholder('—'),
 
-                                        TextEntry::make('pack_date')
-                                            ->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.pack-date'))
+                                        TextEntry::make('pack_date')->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.pack-date'))
                                             ->icon('heroicon-o-calendar')
                                             ->date(),
                                     ]),
 
-                                Grid::make(2)
-                                    ->schema([
-                                        TextEntry::make('location.full_name')
-                                            ->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.location'))
+                                Grid::make(2)->schema([
+                                        TextEntry::make('location.full_name')->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.location'))
                                             ->icon('heroicon-o-map-pin')
                                             ->placeholder('—'),
 
-                                        TextEntry::make('company.name')
-                                            ->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.company'))
+                                        TextEntry::make('company.name')->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.general.entries.company'))
                                             ->icon('heroicon-o-building-office'),
                                     ]),
                             ]),
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/products/resources/package.infolist.sections.record-information.title'))
                             ->schema([
-                                TextEntry::make('created_at')
-                                    ->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.record-information.entries.created-at'))
+                                TextEntry::make('created_at')->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.record-information.entries.created-at'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar'),
 
-                                TextEntry::make('creator.name')
-                                    ->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.record-information.entries.created-by'))
+                                TextEntry::make('creator.name')->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.record-information.entries.created-by'))
                                     ->icon('heroicon-m-user'),
 
-                                TextEntry::make('updated_at')
-                                    ->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.record-information.entries.last-updated'))
+                                TextEntry::make('updated_at')->label(__('inventories::filament/clusters/products/resources/package.infolist.sections.record-information.entries.last-updated'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar-days'),
                             ]),

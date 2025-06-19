@@ -94,7 +94,7 @@ it('can create null record', function (): void {
         ->json_content->toBeNull();
 });
 
-final class TestComponentWithForm extends LivewireFixture
+class TestComponentWithForm extends LivewireFixture
 {
     public function form(Schema $schema): Schema
     {

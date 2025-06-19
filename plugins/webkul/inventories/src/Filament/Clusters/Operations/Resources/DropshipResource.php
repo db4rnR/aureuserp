@@ -31,7 +31,7 @@ use Webkul\Inventory\Filament\Clusters\Operations\Resources\DropshipResource\Pag
 use Webkul\Inventory\Models\Dropship;
 use Webkul\Inventory\Settings\LogisticSettings;
 
-final class DropshipResource extends Resource
+class DropshipResource extends Resource
 {
     protected static ?string $model = Dropship::class;
 
@@ -69,9 +69,9 @@ final class DropshipResource extends Resource
         return __('inventories::filament/clusters/operations/resources/dropship.navigation.group');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return OperationResource::form($schema);
+        return OperationResource::form($form);
     }
 
     public static function table(Table $table): Table
@@ -81,43 +81,37 @@ final class DropshipResource extends Resource
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
-                    DeleteAction::make()
-                        ->hidden(fn (Dropship $record): bool => $record->state === OperationState::DONE)
+                    DeleteAction::make()->hidden(fn (Dropship $record): bool => $record->state === OperationState::DONE)
                         ->action(function (Dropship $record): void {
                             try {
                                 $record->delete();
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/operations/resources/dropship.table.actions.delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/operations/resources/dropship.table.actions.delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/operations/resources/dropship.table.actions.delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/operations/resources/dropship.table.actions.delete.notification.success.body')),
                         ),
                 ]),
             ])
             ->toolbarActions([
-                DeleteBulkAction::make()
-                    ->action(function (Collection $records): void {
+                DeleteBulkAction::make()->action(function (Collection $records): void {
                         try {
                             $records->each(fn (Model $record) => $record->delete());
                         } catch (QueryException) {
-                            Notification::make()
-                                ->danger()
+                            Notification::make()->danger()
                                 ->title(__('inventories::filament/clusters/operations/resources/dropship.table.bulk-actions.delete.notification.error.title'))
                                 ->body(__('inventories::filament/clusters/operations/resources/dropship.table.bulk-actions.delete.notification.error.body'))
                                 ->send();
                         }
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/operations/resources/dropship.table.bulk-actions.delete.notification.success.title'))
                             ->body(__('inventories::filament/clusters/operations/resources/dropship.table.bulk-actions.delete.notification.success.body')),
                     ),
@@ -127,9 +121,9 @@ final class DropshipResource extends Resource
             }));
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return OperationResource::infolist($schema);
+        return OperationResource::infolist($infolist);
     }
 
     public static function getRecordSubNavigation(Page $page): array

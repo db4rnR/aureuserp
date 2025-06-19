@@ -13,7 +13,7 @@ use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages\ViewPaymentTerm;
 use Webkul\Invoice\Models\PaymentTerm;
 
-final class PaymentTermResource extends BasePaymentTermResource
+class PaymentTermResource extends BasePaymentTermResource
 {
     protected static ?string $model = PaymentTerm::class;
 

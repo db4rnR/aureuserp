@@ -9,7 +9,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Enums\Size;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-final class EditAction extends Action
+class EditAction extends Action
 {
     protected function setUp(): void
     {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Pboivin\FilamentPeek\Tests\Models\Category;
 
-final class CategoryFactory extends Factory
+class CategoryFactory extends Factory
 {
     protected $model = Category::class;
 

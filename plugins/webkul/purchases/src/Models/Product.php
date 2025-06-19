@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Models;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Invoice\Models\Product as BaseProduct;
 
-final class Product extends BaseProduct
+class Product extends BaseProduct
 {
     /**
      * Create a new Eloquent model instance.

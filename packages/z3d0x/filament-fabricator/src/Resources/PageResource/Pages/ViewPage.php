@@ -11,7 +11,7 @@ use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
 
-final class ViewPage extends ViewRecord
+class ViewPage extends ViewRecord
 {
     protected static string $resource = PageResource::class;
 

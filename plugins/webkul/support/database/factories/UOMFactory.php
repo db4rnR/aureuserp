@@ -7,7 +7,7 @@ namespace Webkul\Support\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Support\Models\UOM;
 
-final class UOMFactory extends Factory
+class UOMFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

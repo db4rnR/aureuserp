@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource;
 
-final class CreateTeam extends CreateRecord
+class CreateTeam extends CreateRecord
 {
     protected static string $resource = TeamResource::class;
 
@@ -20,8 +20,7 @@ final class CreateTeam extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('sales::filament/clusters/configurations/resources/team/pages/create-team.notification.title'))
             ->body(__('sales::filament/clusters/configurations/resources/team/pages/create-team.notification.body'));
     }

@@ -10,7 +10,7 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Facades\Inventory;
 use Webkul\Inventory\Models\Operation;
 
-final class CancelAction extends Action
+class CancelAction extends Action
 {
     protected function setUp(): void
     {

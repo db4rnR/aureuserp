@@ -28,7 +28,7 @@ use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Actions\HolidayAction;
 use Webkul\TimeOff\Models\Leave;
 
-final class CalendarWidget extends FullCalendarWidget
+class CalendarWidget extends FullCalendarWidget
 {
     public Model|string|null $model = Leave::class;
 
@@ -42,14 +42,12 @@ final class CalendarWidget extends FullCalendarWidget
     public function getFormSchema(): array
     {
         return [
-            Select::make('holiday_status_id')
-                ->label(__('time-off::filament/widgets/calendar-widget.form.fields.time-off-type'))
+            Select::make('holiday_status_id')->label(__('time-off::filament/widgets/calendar-widget.form.fields.time-off-type'))
                 ->relationship('holidayStatus', 'name')
                 ->searchable()
                 ->preload()
                 ->required(),
-            Fieldset::make()
-                ->label(function (Get $get): string {
+            Fieldset::make()->label(function (Get $get): string {
                     if ($get('request_unit_half')) {
                         return 'Date';
                     }
@@ -59,30 +57,25 @@ final class CalendarWidget extends FullCalendarWidget
                 })
                 ->live()
                 ->schema([
-                    DatePicker::make('request_date_from')
-                        ->native(false)
+                    DatePicker::make('request_date_from')->native(false)
                         ->label(__('time-off::filament/widgets/calendar-widget.form.fields.request-date-from'))
                         ->default(now())
                         ->required(),
-                    DatePicker::make('request_date_to')
-                        ->native(false)
+                    DatePicker::make('request_date_to')->native(false)
                         ->label(__('time-off::filament/widgets/calendar-widget.form.fields.request-date-to'))
                         ->default(now())
                         ->hidden(fn (Get $get): mixed => $get('request_unit_half'))
                         ->required(),
-                    Select::make('request_date_from_period')
-                        ->label(__('time-off::filament/widgets/calendar-widget.form.fields.period'))
+                    Select::make('request_date_from_period')->label(__('time-off::filament/widgets/calendar-widget.form.fields.period'))
                         ->options(RequestDateFromPeriod::class)
                         ->default(RequestDateFromPeriod::MORNING->value)
                         ->native(false)
                         ->visible(fn (Get $get): mixed => $get('request_unit_half'))
                         ->required(),
                 ]),
-            Toggle::make('request_unit_half')
-                ->live()
+            Toggle::make('request_unit_half')->live()
                 ->label(__('time-off::filament/widgets/calendar-widget.form.fields.half-day')),
-            Placeholder::make('requested_days')
-                ->label(__('time-off::filament/widgets/calendar-widget.form.fields.requested-days'))
+            Placeholder::make('requested_days')->label(__('time-off::filament/widgets/calendar-widget.form.fields.requested-days'))
                 ->live()
                 ->inlineLabel()
                 ->reactive()
@@ -96,35 +89,28 @@ final class CalendarWidget extends FullCalendarWidget
 
                     return $startDate->diffInDays($endDate) + 1 .' day(s)';
                 }),
-            Textarea::make('private_name')
-                ->label(__('time-off::filament/widgets/calendar-widget.form.fields.description')),
+            Textarea::make('private_name')->label(__('time-off::filament/widgets/calendar-widget.form.fields.description')),
         ];
     }
 
     public function infolist(): array
     {
         return [
-            TextEntry::make('holidayStatus.name')
-                ->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.time-off-type'))
+            TextEntry::make('holidayStatus.name')->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.time-off-type'))
                 ->icon('heroicon-o-clock'),
-            TextEntry::make('request_date_from')
-                ->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.request-date-from'))
+            TextEntry::make('request_date_from')->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.request-date-from'))
                 ->date()
                 ->icon('heroicon-o-calendar-days'),
-            TextEntry::make('request_date_to')
-                ->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.request-date-to'))
+            TextEntry::make('request_date_to')->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.request-date-to'))
                 ->date()
                 ->icon('heroicon-o-calendar-days'),
-            TextEntry::make('number_of_days')
-                ->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.duration'))
+            TextEntry::make('number_of_days')->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.duration'))
                 ->formatStateUsing(fn ($state): string => $state.' day(s)')
                 ->icon('heroicon-o-clock'),
-            TextEntry::make('private_name')
-                ->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.description'))
+            TextEntry::make('private_name')->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.description'))
                 ->icon('heroicon-o-document-text')
                 ->placeholder(__('time-off::filament/widgets/calendar-widget.infolist.entries.description-placeholder')),
-            TextEntry::make('state')
-                ->placeholder(__('time-off::filament/widgets/calendar-widget.infolist.entries.status'))
+            TextEntry::make('state')->placeholder(__('time-off::filament/widgets/calendar-widget.infolist.entries.status'))
                 ->badge()
                 ->formatStateUsing(fn ($state) => State::options()[$state])
                 ->icon('heroicon-o-check-circle'),
@@ -173,8 +159,7 @@ final class CalendarWidget extends FullCalendarWidget
     protected function modalActions(): array
     {
         return [
-            EditAction::make()
-                ->label(__('time-off::filament/widgets/calendar-widget.modal-actions.edit.title'))
+            EditAction::make()->label(__('time-off::filament/widgets/calendar-widget.modal-actions.edit.title'))
                 ->action(function ($data, $record): void {
                     $user = Auth::user();
                     $employee = $user->employee;
@@ -233,15 +218,13 @@ final class CalendarWidget extends FullCalendarWidget
                         $schema->fill($newData);
                     }
                 ),
-            DeleteAction::make()
-                ->label(__('time-off::filament/widgets/calendar-widget.modal-actions.delete.title')),
+            DeleteAction::make()->label(__('time-off::filament/widgets/calendar-widget.modal-actions.delete.title')),
         ];
     }
 
     protected function viewAction(): Action
     {
-        return ViewAction::make()
-            ->modalIcon('heroicon-o-lifebuoy')
+        return ViewAction::make()->modalIcon('heroicon-o-lifebuoy')
             ->label(__('time-off::filament/widgets/calendar-widget.view-action.title'))
             ->modalDescription(__('time-off::filament/widgets/calendar-widget.view-action.description'))
             ->schema($this->infolist());
@@ -251,8 +234,7 @@ final class CalendarWidget extends FullCalendarWidget
     {
         return [
             HolidayAction::make(),
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle')
+            CreateAction::make()->icon('heroicon-o-plus-circle')
                 ->modalIcon('heroicon-o-lifebuoy')
                 ->label(__('time-off::filament/widgets/calendar-widget.header-actions.create.title'))
                 ->modalDescription(__('time-off::filament/widgets/calendar-widget.header-actions.create.description'))
@@ -263,8 +245,7 @@ final class CalendarWidget extends FullCalendarWidget
                     if ($employee) {
                         $data['employee_id'] = $employee->id;
                     } else {
-                        Notification::make()
-                            ->danger()
+                        Notification::make()->danger()
                             ->title(__('time-off::filament/widgets/calendar-widget.header-actions.create.employee-not-found.notification.title'))
                             ->body(__('time-off::filament/widgets/calendar-widget.header-actions.create.employee-not-found.notification.body'))
                             ->send();

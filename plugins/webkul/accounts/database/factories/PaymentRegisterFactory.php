@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<\App\Models\PaymentRegister>
  */
-final class PaymentRegisterFactory extends Factory
+class PaymentRegisterFactory extends Factory
 {
     /**
      * Define the model's default state.

@@ -6,7 +6,7 @@ namespace FilamentTiptapEditor\Extensions\Extensions;
 
 use Tiptap\Core\Extension;
 
-final class StyleExtension extends Extension
+class StyleExtension extends Extension
 {
     public static $name = 'styleExtension';
 

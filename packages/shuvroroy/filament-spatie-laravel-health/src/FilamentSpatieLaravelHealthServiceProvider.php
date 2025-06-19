@@ -9,7 +9,7 @@ use Filament\Support\Facades\FilamentAsset;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class FilamentSpatieLaravelHealthServiceProvider extends PackageServiceProvider
+class FilamentSpatieLaravelHealthServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

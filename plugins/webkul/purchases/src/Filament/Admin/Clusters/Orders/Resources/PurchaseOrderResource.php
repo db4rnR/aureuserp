@@ -19,7 +19,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrderResour
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrderResource\Pages\ViewPurchaseOrder;
 use Webkul\Purchase\Models\PurchaseOrder;
 
-final class PurchaseOrderResource extends OrderResource
+class PurchaseOrderResource extends OrderResource
 {
     protected static ?string $model = PurchaseOrder::class;
 

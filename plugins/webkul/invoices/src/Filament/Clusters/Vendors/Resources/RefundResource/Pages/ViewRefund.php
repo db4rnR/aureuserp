@@ -8,7 +8,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Account\Filament\Resources\RefundResource\Pages\ViewRefund as BaseViewRefund;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource;
 
-final class ViewRefund extends BaseViewRefund
+class ViewRefund extends BaseViewRefund
 {
     protected static string $resource = RefundResource::class;
 

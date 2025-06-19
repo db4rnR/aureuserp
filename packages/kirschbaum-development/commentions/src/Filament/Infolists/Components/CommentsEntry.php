@@ -8,7 +8,7 @@ use Filament\Infolists\Components\Entry;
 use Kirschbaum\Commentions\Filament\Concerns\HasMentionables;
 use Kirschbaum\Commentions\Filament\Concerns\HasPolling;
 
-final class CommentsEntry extends Entry
+class CommentsEntry extends Entry
 {
     use HasMentionables;
     use HasPolling;

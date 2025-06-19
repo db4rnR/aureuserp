@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ListVendors as BaseListPartners;
 
-final class ListPartners extends BaseListPartners
+class ListPartners extends BaseListPartners
 {
     protected static string $resource = PartnerResource::class;
 
@@ -21,8 +21,7 @@ final class ListPartners extends BaseListPartners
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('New Customer'))
+            CreateAction::make()->label(__('New Customer'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

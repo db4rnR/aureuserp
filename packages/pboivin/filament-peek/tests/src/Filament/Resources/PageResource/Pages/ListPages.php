@@ -8,7 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource;
 
-final class ListPages extends ListRecords
+class ListPages extends ListRecords
 {
     use HasPreviewModal;
 

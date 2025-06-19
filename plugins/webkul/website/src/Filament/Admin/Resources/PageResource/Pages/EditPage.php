@@ -11,7 +11,7 @@ use Filament\Resources\Pages\EditRecord;
 use Webkul\Website\Filament\Admin\Resources\PageResource;
 use Webkul\Website\Models\Page;
 
-final class EditPage extends EditRecord
+class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
 
@@ -22,8 +22,7 @@ final class EditPage extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('website::filament/admin/resources/page/pages/edit-record.notification.title'))
             ->body(__('website::filament/admin/resources/page/pages/edit-record.notification.body'));
     }
@@ -31,8 +30,7 @@ final class EditPage extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('publish')
-                ->label(__('website::filament/admin/resources/page/pages/edit-record.header-actions.publish.label'))
+            Action::make('publish')->label(__('website::filament/admin/resources/page/pages/edit-record.header-actions.publish.label'))
                 ->icon('heroicon-o-check-circle')
                 ->action(function (Page $record): void {
                     $record->update([
@@ -40,30 +38,25 @@ final class EditPage extends EditRecord
                         'is_published' => true,
                     ]);
 
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('website::filament/admin/resources/page/pages/edit-record.header-actions.publish.notification.title'))
                         ->body(__('website::filament/admin/resources/page/pages/edit-record.header-actions.publish.notification.body'))
                         ->send();
                 })
                 ->visible(fn (Page $record): bool => ! $record->is_published),
-            Action::make('draft')
-                ->label(__('website::filament/admin/resources/page/pages/edit-record.header-actions.draft.label'))
+            Action::make('draft')->label(__('website::filament/admin/resources/page/pages/edit-record.header-actions.draft.label'))
                 ->icon('heroicon-o-archive-box')
                 ->action(function (Page $record): void {
                     $record->update(['is_published' => false]);
 
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('website::filament/admin/resources/page/pages/edit-record.header-actions.draft.notification.title'))
                         ->body(__('website::filament/admin/resources/page/pages/edit-record.header-actions.draft.notification.body'))
                         ->send();
                 })
                 ->visible(fn (Page $record) => $record->is_published),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('website::filament/admin/resources/page/pages/edit-record.header-actions.delete.notification.title'))
                         ->body(__('website::filament/admin/resources/page/pages/edit-record.header-actions.delete.notification.body')),
                 ),

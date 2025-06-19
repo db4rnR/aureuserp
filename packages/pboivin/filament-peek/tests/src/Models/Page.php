@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Pboivin\FilamentPeek\Tests\Database\Factories\PageFactory;
 
-final class Page extends Model
+class Page extends Model
 {
     use HasFactory;
 

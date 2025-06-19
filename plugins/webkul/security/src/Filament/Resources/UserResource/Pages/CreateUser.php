@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Security\Filament\Resources\UserResource;
 
-final class CreateUser extends CreateRecord
+class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
 
@@ -19,8 +19,7 @@ final class CreateUser extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('security::filament/resources/user/pages/create-user.notification.title'))
             ->body(__('security::filament/resources/user/pages/create-user.notification.body'));
     }

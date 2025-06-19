@@ -18,7 +18,7 @@ use PHPStan\Rules\RuleErrorBuilder;
  * - The expected outcome
  * - Any special setup or conditions
  */
-final class TestFunctionDocBlockRule implements Rule
+class TestFunctionDocBlockRule implements Rule
 {
     public function getNodeType(): string
     {

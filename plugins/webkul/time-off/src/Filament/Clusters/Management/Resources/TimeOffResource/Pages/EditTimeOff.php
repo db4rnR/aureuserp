@@ -15,7 +15,7 @@ use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
 
-final class EditTimeOff extends EditRecord
+class EditTimeOff extends EditRecord
 {
     protected static string $resource = TimeOffResource::class;
 
@@ -26,8 +26,7 @@ final class EditTimeOff extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/management/resources/time-off/pages/edit-time-off.notification.title'))
             ->body(__('time-off::filament/clusters/management/resources/time-off/pages/edit-time-off.notification.body'));
     }
@@ -35,13 +34,10 @@ final class EditTimeOff extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/management/resources/time-off/pages/edit-time-off.header-actions.delete.notification.title'))
                         ->body(__('time-off::filament/clusters/management/resources/time-off/pages/edit-time-off.header-actions.delete.notification.body'))
                 ),

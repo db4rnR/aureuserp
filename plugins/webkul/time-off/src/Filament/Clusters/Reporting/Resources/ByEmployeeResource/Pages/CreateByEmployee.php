@@ -7,7 +7,7 @@ namespace Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResourc
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource;
 
-final class CreateByEmployee extends CreateRecord
+class CreateByEmployee extends CreateRecord
 {
     protected static string $resource = ByEmployeeResource::class;
 

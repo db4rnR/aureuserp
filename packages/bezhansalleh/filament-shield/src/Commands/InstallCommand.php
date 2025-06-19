@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Process;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'shield:install')]
-final class InstallCommand extends Command implements PromptsForMissingInput
+class InstallCommand extends Command implements PromptsForMissingInput
 {
     use CanBeProhibitable;
     use CanMakePanelTenantable;

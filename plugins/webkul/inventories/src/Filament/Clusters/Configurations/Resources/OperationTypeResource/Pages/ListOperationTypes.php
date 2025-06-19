@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\OperationTypeResource;
 use Webkul\Inventory\Models\OperationType;
 
-final class ListOperationTypes extends ListRecords
+class ListOperationTypes extends ListRecords
 {
     protected static string $resource = OperationTypeResource::class;
 
@@ -30,8 +30,7 @@ final class ListOperationTypes extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('inventories::filament/clusters/configurations/resources/operation-type/pages/list-operation-types.header-actions.create.label'))
+            CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/operation-type/pages/list-operation-types.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data) {
                     $user = Auth::user();
@@ -43,8 +42,7 @@ final class ListOperationTypes extends ListRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/operation-type/pages/list-operation-types.header-actions.create.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/operation-type/pages/list-operation-types.header-actions.create.notification.body')),
                 ),

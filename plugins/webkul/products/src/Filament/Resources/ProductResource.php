@@ -57,39 +57,33 @@ use Webkul\Product\Models\Category;
 use Webkul\Product\Models\Product;
 use Webkul\Support\Models\UOM;
 
-final class ProductResource extends Resource
+class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Group::make()
-                    ->schema([
-                        Section::make()
-                            ->schema([
-                                TextInput::make('name')
-                                    ->label(__('products::filament/resources/product.form.sections.general.fields.name'))
+                Group::make()->schema([
+                        Section::make()->schema([
+                                TextInput::make('name')->label(__('products::filament/resources/product.form.sections.general.fields.name'))
                                     ->required()
                                     ->maxLength(255)
                                     ->autofocus()
                                     ->placeholder(__('products::filament/resources/product.form.sections.general.fields.name-placeholder'))
                                     ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;']),
 
-                                RichEditor::make('description')
-                                    ->label(__('products::filament/resources/product.form.sections.general.fields.description')),
-                                Select::make('tags')
-                                    ->label(__('products::filament/resources/product.form.sections.general.fields.tags'))
+                                RichEditor::make('description')->label(__('products::filament/resources/product.form.sections.general.fields.description')),
+                                Select::make('tags')->label(__('products::filament/resources/product.form.sections.general.fields.tags'))
                                     ->relationship(name: 'tags', titleAttribute: 'name')
                                     ->multiple()
                                     ->searchable()
                                     ->preload()
                                     ->createOptionForm([
-                                        TextInput::make('name')
-                                            ->label(__('products::filament/resources/product.form.sections.general.fields.name'))
+                                        TextInput::make('name')->label(__('products::filament/resources/product.form.sections.general.fields.name'))
                                             ->required()
                                             ->maxLength(255)
                                             ->unique('products_tags'),
@@ -98,8 +92,7 @@ final class ProductResource extends Resource
 
                         Section::make(__('products::filament/resources/product.form.sections.images.title'))
                             ->schema([
-                                FileUpload::make('images')
-                                    ->multiple()
+                                FileUpload::make('images')->multiple()
                                     ->storeFileNamesIn('products'),
                             ]),
 
@@ -107,13 +100,11 @@ final class ProductResource extends Resource
                             ->schema([
                                 Fieldset::make(__('products::filament/resources/product.form.sections.inventory.fieldsets.logistics.title'))
                                     ->schema([
-                                        TextInput::make('weight')
-                                            ->label(__('products::filament/resources/product.form.sections.inventory.fieldsets.logistics.fields.weight'))
+                                        TextInput::make('weight')->label(__('products::filament/resources/product.form.sections.inventory.fieldsets.logistics.fields.weight'))
                                             ->numeric()
                                             ->minValue(0)
                                             ->maxValue(99999999999),
-                                        TextInput::make('volume')
-                                            ->label(__('products::filament/resources/product.form.sections.inventory.fieldsets.logistics.fields.volume'))
+                                        TextInput::make('volume')->label(__('products::filament/resources/product.form.sections.inventory.fieldsets.logistics.fields.volume'))
                                             ->numeric()
                                             ->minValue(0)
                                             ->maxValue(99999999999),
@@ -123,31 +114,25 @@ final class ProductResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('products::filament/resources/product.form.sections.settings.title'))
                             ->schema([
-                                Radio::make('type')
-                                    ->label(__('products::filament/resources/product.form.sections.settings.fields.type'))
+                                Radio::make('type')->label(__('products::filament/resources/product.form.sections.settings.fields.type'))
                                     ->options(ProductType::class)
                                     ->default(ProductType::GOODS->value)
                                     ->live(),
-                                TextInput::make('reference')
-                                    ->label(__('products::filament/resources/product.form.sections.settings.fields.reference'))
+                                TextInput::make('reference')->label(__('products::filament/resources/product.form.sections.settings.fields.reference'))
                                     ->maxLength(255),
-                                TextInput::make('barcode')
-                                    ->label(__('products::filament/resources/product.form.sections.settings.fields.barcode'))
+                                TextInput::make('barcode')->label(__('products::filament/resources/product.form.sections.settings.fields.barcode'))
                                     ->maxLength(255),
-                                Select::make('category_id')
-                                    ->label(__('products::filament/resources/product.form.sections.settings.fields.category'))
+                                Select::make('category_id')->label(__('products::filament/resources/product.form.sections.settings.fields.category'))
                                     ->required()
                                     ->relationship('category', 'full_name')
                                     ->searchable()
                                     ->preload()
                                     ->default(Category::first()?->id)
-                                    ->createOptionForm(fn (Schema $schema): Schema => CategoryResource::form($schema)),
-                                Select::make('company_id')
-                                    ->label(__('products::filament/resources/product.form.sections.settings.fields.company'))
+                                    ->createOptionForm(fn (Schema $form): Schema => CategoryResource::form($form)),
+                                Select::make('company_id')->label(__('products::filament/resources/product.form.sections.settings.fields.company'))
                                     ->relationship('company', 'name')
                                     ->searchable()
                                     ->preload()
@@ -156,21 +141,17 @@ final class ProductResource extends Resource
 
                         Section::make(__('products::filament/resources/product.form.sections.pricing.title'))
                             ->schema([
-                                TextInput::make('price')
-                                    ->label(__('products::filament/resources/product.form.sections.pricing.fields.price'))
+                                TextInput::make('price')->label(__('products::filament/resources/product.form.sections.pricing.fields.price'))
                                     ->numeric()
                                     ->required()
                                     ->default(0.00)
                                     ->minValue(0),
-                                TextInput::make('cost')
-                                    ->label(__('products::filament/resources/product.form.sections.pricing.fields.cost'))
+                                TextInput::make('cost')->label(__('products::filament/resources/product.form.sections.pricing.fields.cost'))
                                     ->numeric()
                                     ->default(0.00)
                                     ->minValue(0),
-                                Hidden::make('uom_id')
-                                    ->default(UOM::first()->id),
-                                Hidden::make('uom_po_id')
-                                    ->default(UOM::first()->id),
+                                Hidden::make('uom_id')->default(UOM::first()->id),
+                                Hidden::make('uom_po_id')->default(UOM::first()->id),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),
@@ -182,8 +163,7 @@ final class ProductResource extends Resource
     {
         return $table
             ->columns([
-                IconColumn::make('is_favorite')
-                    ->label('')
+                IconColumn::make('is_favorite')->label('')
                     ->icon(fn (Product $record): string => $record->is_favorite ? 'heroicon-s-star' : 'heroicon-o-star')
                     ->color(fn (Product $record): string => $record->is_favorite ? 'warning' : 'gray')
                     ->action(function (Product $record): void {
@@ -191,164 +171,126 @@ final class ProductResource extends Resource
                             'is_favorite' => ! $record->is_favorite,
                         ]);
                     }),
-                ImageColumn::make('images')
-                    ->label(__('products::filament/resources/product.table.columns.images'))
+                ImageColumn::make('images')->label(__('products::filament/resources/product.table.columns.images'))
                     ->placeholder('—')
                     ->circular()
                     ->stacked()
                     ->limit(3)
                     ->limitedRemainingText(isSeparate: true),
-                TextColumn::make('name')
-                    ->label(__('products::filament/resources/product.table.columns.name'))
+                TextColumn::make('name')->label(__('products::filament/resources/product.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('variants_count')
-                    ->label(__('products::filament/resources/product.table.columns.variants'))
+                TextColumn::make('variants_count')->label(__('products::filament/resources/product.table.columns.variants'))
                     ->placeholder('—')
                     ->counts('variants')
                     ->sortable(),
-                TextColumn::make('reference')
-                    ->label(__('products::filament/resources/product.table.columns.reference'))
+                TextColumn::make('reference')->label(__('products::filament/resources/product.table.columns.reference'))
                     ->placeholder('—')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('tags.name')
-                    ->label(__('products::filament/resources/product.table.columns.tags'))
+                TextColumn::make('tags.name')->label(__('products::filament/resources/product.table.columns.tags'))
                     ->placeholder('—')
                     ->badge()
                     ->toggleable(),
-                TextColumn::make('responsible.name')
-                    ->label(__('products::filament/resources/product.table.columns.responsible'))
+                TextColumn::make('responsible.name')->label(__('products::filament/resources/product.table.columns.responsible'))
                     ->placeholder('—')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('barcode')
-                    ->label(__('products::filament/resources/product.table.columns.barcode'))
+                TextColumn::make('barcode')->label(__('products::filament/resources/product.table.columns.barcode'))
                     ->placeholder('—')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('company.name')
-                    ->label(__('products::filament/resources/product.table.columns.company'))
+                TextColumn::make('company.name')->label(__('products::filament/resources/product.table.columns.company'))
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('price')
-                    ->label(__('products::filament/resources/product.table.columns.price'))
+                TextColumn::make('price')->label(__('products::filament/resources/product.table.columns.price'))
                     ->sortable(),
-                TextColumn::make('cost')
-                    ->label(__('products::filament/resources/product.table.columns.cost'))
+                TextColumn::make('cost')->label(__('products::filament/resources/product.table.columns.cost'))
                     ->sortable(),
-                TextColumn::make('category.name')
-                    ->label(__('products::filament/resources/product.table.columns.category'))
+                TextColumn::make('category.name')->label(__('products::filament/resources/product.table.columns.category'))
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('type')
-                    ->label(__('products::filament/resources/product.table.columns.type'))
+                TextColumn::make('type')->label(__('products::filament/resources/product.table.columns.type'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->label(__('products::filament/resources/product.table.columns.deleted-at'))
+                TextColumn::make('deleted_at')->label(__('products::filament/resources/product.table.columns.deleted-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->label(__('products::filament/resources/product.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('products::filament/resources/product.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('products::filament/resources/product.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('products::filament/resources/product.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->groups([
-                Tables\Grouping\Group::make('type')
-                    ->label(__('products::filament/resources/product.table.groups.type')),
-                Tables\Grouping\Group::make('category.name')
-                    ->label(__('products::filament/resources/product.table.groups.category')),
-                Tables\Grouping\Group::make('created_at')
-                    ->label(__('products::filament/resources/product.table.groups.created-at'))
+                Tables\Grouping\Group::make('type')->label(__('products::filament/resources/product.table.groups.type')),
+                Tables\Grouping\Group::make('category.name')->label(__('products::filament/resources/product.table.groups.category')),
+                Tables\Grouping\Group::make('created_at')->label(__('products::filament/resources/product.table.groups.created-at'))
                     ->date(),
             ])
             ->reorderable('sort')
             ->defaultSort('sort', 'desc')
             ->filters([
-                QueryBuilder::make()
-                    ->constraints(collect([
-                        TextConstraint::make('name')
-                            ->label(__('products::filament/resources/product.table.filters.name')),
-                        TextConstraint::make('reference')
-                            ->label(__('products::filament/resources/product.table.filters.reference'))
+                QueryBuilder::make()->constraints(collect([
+                        TextConstraint::make('name')->label(__('products::filament/resources/product.table.filters.name')),
+                        TextConstraint::make('reference')->label(__('products::filament/resources/product.table.filters.reference'))
                             ->icon('heroicon-o-link'),
-                        TextConstraint::make('barcode')
-                            ->label(__('products::filament/resources/product.table.filters.barcode'))
+                        TextConstraint::make('barcode')->label(__('products::filament/resources/product.table.filters.barcode'))
                             ->icon('heroicon-o-bars-4'),
-                        BooleanConstraint::make('is_favorite')
-                            ->label(__('products::filament/resources/product.table.filters.is-favorite'))
+                        BooleanConstraint::make('is_favorite')->label(__('products::filament/resources/product.table.filters.is-favorite'))
                             ->icon('heroicon-o-star'),
-                        NumberConstraint::make('price')
-                            ->label(__('products::filament/resources/product.table.filters.price'))
+                        NumberConstraint::make('price')->label(__('products::filament/resources/product.table.filters.price'))
                             ->icon('heroicon-o-banknotes'),
-                        NumberConstraint::make('cost')
-                            ->label(__('products::filament/resources/product.table.filters.cost'))
+                        NumberConstraint::make('cost')->label(__('products::filament/resources/product.table.filters.cost'))
                             ->icon('heroicon-o-banknotes'),
-                        NumberConstraint::make('weight')
-                            ->label(__('products::filament/resources/product.table.filters.weight'))
+                        NumberConstraint::make('weight')->label(__('products::filament/resources/product.table.filters.weight'))
                             ->icon('heroicon-o-scale'),
-                        NumberConstraint::make('volume')
-                            ->label(__('products::filament/resources/product.table.filters.volume'))
+                        NumberConstraint::make('volume')->label(__('products::filament/resources/product.table.filters.volume'))
                             ->icon('heroicon-o-beaker'),
-                        SelectConstraint::make('type')
-                            ->label(__('products::filament/resources/product.table.filters.type'))
+                        SelectConstraint::make('type')->label(__('products::filament/resources/product.table.filters.type'))
                             ->multiple()
                             ->options(ProductType::class)
                             ->icon('heroicon-o-queue-list'),
-                        RelationshipConstraint::make('tags')
-                            ->label(__('products::filament/resources/product.table.filters.tags'))
+                        RelationshipConstraint::make('tags')->label(__('products::filament/resources/product.table.filters.tags'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             )
                             ->icon('heroicon-o-tag'),
-                        DateConstraint::make('created_at')
-                            ->label(__('products::filament/resources/product.table.filters.created-at')),
-                        DateConstraint::make('updated_at')
-                            ->label(__('products::filament/resources/product.table.filters.updated-at')),
-                        RelationshipConstraint::make('responsible')
-                            ->label(__('products::filament/resources/product.table.filters.responsible'))
+                        DateConstraint::make('created_at')->label(__('products::filament/resources/product.table.filters.created-at')),
+                        DateConstraint::make('updated_at')->label(__('products::filament/resources/product.table.filters.updated-at')),
+                        RelationshipConstraint::make('responsible')->label(__('products::filament/resources/product.table.filters.responsible'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             )
                             ->icon('heroicon-o-user'),
-                        RelationshipConstraint::make('company')
-                            ->label(__('products::filament/resources/product.table.filters.company'))
+                        RelationshipConstraint::make('company')->label(__('products::filament/resources/product.table.filters.company'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             )
                             ->icon('heroicon-o-building-office'),
-                        RelationshipConstraint::make('creator')
-                            ->label(__('products::filament/resources/product.table.filters.creator'))
+                        RelationshipConstraint::make('creator')->label(__('products::filament/resources/product.table.filters.creator'))
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
@@ -363,39 +305,30 @@ final class ProductResource extends Resource
             ->filtersFormColumns(2)
             ->recordActions([
                 ActionGroup::make([
-                    ViewAction::make()
-                        ->hidden(fn ($record) => $record->trashed()),
-                    EditAction::make()
-                        ->hidden(fn ($record) => $record->trashed()),
-                    RestoreAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    ViewAction::make()->hidden(fn ($record) => $record->trashed()),
+                    EditAction::make()->hidden(fn ($record) => $record->trashed()),
+                    RestoreAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('products::filament/resources/product.table.actions.restore.notification.title'))
                                 ->body(__('products::filament/resources/product.table.actions.restore.notification.body')),
                         ),
-                    DeleteAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('products::filament/resources/product.table.actions.delete.notification.title'))
                                 ->body(__('products::filament/resources/product.table.actions.delete.notification.body')),
                         ),
-                    ForceDeleteAction::make()
-                        ->action(function (Product $record): void {
+                    ForceDeleteAction::make()->action(function (Product $record): void {
                             try {
                                 $record->forceDelete();
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('products::filament/resources/product.table.actions.force-delete.notification.error.title'))
                                     ->body(__('products::filament/resources/product.table.actions.force-delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('products::filament/resources/product.table.actions.force-delete.notification.success.title'))
                                 ->body(__('products::filament/resources/product.table.actions.force-delete.notification.success.body')),
                         ),
@@ -403,18 +336,15 @@ final class ProductResource extends Resource
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    BulkAction::make('print')
-                        ->label(__('products::filament/resources/product.table.bulk-actions.print.label'))
+                    BulkAction::make('print')->label(__('products::filament/resources/product.table.bulk-actions.print.label'))
                         ->icon('heroicon-o-printer')
                         ->form([
-                            TextInput::make('quantity')
-                                ->label(__('products::filament/resources/product.table.bulk-actions.print.form.fields.quantity'))
+                            TextInput::make('quantity')->label(__('products::filament/resources/product.table.bulk-actions.print.form.fields.quantity'))
                                 ->required()
                                 ->numeric()
                                 ->minValue(1)
                                 ->maxValue(100),
-                            Radio::make('format')
-                                ->label(__('products::filament/resources/product.table.bulk-actions.print.form.fields.format'))
+                            Radio::make('format')->label(__('products::filament/resources/product.table.bulk-actions.print.form.fields.format'))
                                 ->options([
                                     'dymo' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.dymo'),
                                     '2x7_price' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.2x7_price'),
@@ -443,35 +373,28 @@ final class ProductResource extends Resource
                                 echo $pdf->output();
                             }, 'Product-Barcode.pdf');
                         }),
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('products::filament/resources/product.table.bulk-actions.restore.notification.title'))
                                 ->body(__('products::filament/resources/product.table.bulk-actions.restore.notification.body')),
                         ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('products::filament/resources/product.table.bulk-actions.delete.notification.title'))
                                 ->body(__('products::filament/resources/product.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->action(function (Collection $records): void {
+                    ForceDeleteBulkAction::make()->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->forceDelete());
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('products::filament/resources/product.table.bulk-actions.force-delete.notification.error.title'))
                                     ->body(__('products::filament/resources/product.table.bulk-actions.force-delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('products::filament/resources/product.table.bulk-actions.force-delete.notification.success.title'))
                                 ->body(__('products::filament/resources/product.table.bulk-actions.force-delete.notification.success.body')),
                         ),
@@ -479,24 +402,19 @@ final class ProductResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Group::make()
-                    ->schema([
-                        Section::make()
-                            ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('products::filament/resources/product.infolist.sections.general.entries.name')),
+                Group::make()->schema([
+                        Section::make()->schema([
+                                TextEntry::make('name')->label(__('products::filament/resources/product.infolist.sections.general.entries.name')),
 
-                                TextEntry::make('description')
-                                    ->label(__('products::filament/resources/product.infolist.sections.general.entries.description'))
+                                TextEntry::make('description')->label(__('products::filament/resources/product.infolist.sections.general.entries.description'))
                                     ->html()
                                     ->placeholder('—'),
 
-                                TextEntry::make('tags.name')
-                                    ->label(__('products::filament/resources/product.infolist.sections.general.entries.tags'))
+                                TextEntry::make('tags.name')->label(__('products::filament/resources/product.infolist.sections.general.entries.tags'))
                                     ->badge()
                                     ->separator(', ')
                                     ->weight(FontWeight::Bold),
@@ -504,8 +422,7 @@ final class ProductResource extends Resource
 
                         Section::make(__('products::filament/resources/product.infolist.sections.images.title'))
                             ->schema([
-                                ImageEntry::make('images')
-                                    ->hiddenLabel()
+                                ImageEntry::make('images')->hiddenLabel()
                                     ->circular(),
                             ])
                             ->visible(fn ($record): bool => ! empty($record->images)),
@@ -514,15 +431,12 @@ final class ProductResource extends Resource
                             ->schema([
                                 Section::make(__('products::filament/resources/product.infolist.sections.inventory.fieldsets.logistics.title'))
                                     ->schema([
-                                        Grid::make(2)
-                                            ->schema([
-                                                TextEntry::make('weight')
-                                                    ->label(__('products::filament/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.weight'))
+                                        Grid::make(2)->schema([
+                                                TextEntry::make('weight')->label(__('products::filament/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.weight'))
                                                     ->placeholder('—')
                                                     ->icon('heroicon-o-scale'),
 
-                                                TextEntry::make('volume')
-                                                    ->label(__('products::filament/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.volume'))
+                                                TextEntry::make('volume')->label(__('products::filament/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.volume'))
                                                     ->placeholder('—')
                                                     ->icon('heroicon-o-beaker'),
                                             ]),
@@ -532,62 +446,51 @@ final class ProductResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('products::filament/resources/product.infolist.sections.record-information.title'))
                             ->schema([
-                                TextEntry::make('created_at')
-                                    ->label(__('products::filament/resources/product.infolist.sections.record-information.entries.created-at'))
+                                TextEntry::make('created_at')->label(__('products::filament/resources/product.infolist.sections.record-information.entries.created-at'))
                                     ->dateTime()
                                     ->icon('heroicon-o-calendar'),
 
-                                TextEntry::make('creator.name')
-                                    ->label(__('products::filament/resources/product.infolist.sections.record-information.entries.created-by'))
+                                TextEntry::make('creator.name')->label(__('products::filament/resources/product.infolist.sections.record-information.entries.created-by'))
                                     ->icon('heroicon-o-user'),
 
-                                TextEntry::make('updated_at')
-                                    ->label(__('products::filament/resources/product.infolist.sections.record-information.entries.updated-at'))
+                                TextEntry::make('updated_at')->label(__('products::filament/resources/product.infolist.sections.record-information.entries.updated-at'))
                                     ->dateTime()
                                     ->icon('heroicon-o-calendar'),
                             ]),
 
                         Section::make(__('products::filament/resources/product.infolist.sections.settings.title'))
                             ->schema([
-                                TextEntry::make('type')
-                                    ->label(__('products::filament/resources/product.infolist.sections.settings.entries.type'))
+                                TextEntry::make('type')->label(__('products::filament/resources/product.infolist.sections.settings.entries.type'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-queue-list'),
 
-                                TextEntry::make('reference')
-                                    ->label(__('products::filament/resources/product.infolist.sections.settings.entries.reference'))
+                                TextEntry::make('reference')->label(__('products::filament/resources/product.infolist.sections.settings.entries.reference'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-identification'),
 
-                                TextEntry::make('barcode')
-                                    ->label(__('products::filament/resources/product.infolist.sections.settings.entries.barcode'))
+                                TextEntry::make('barcode')->label(__('products::filament/resources/product.infolist.sections.settings.entries.barcode'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-bars-4'),
 
-                                TextEntry::make('category.full_name')
-                                    ->label(__('products::filament/resources/product.infolist.sections.settings.entries.category'))
+                                TextEntry::make('category.full_name')->label(__('products::filament/resources/product.infolist.sections.settings.entries.category'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-folder'),
 
-                                TextEntry::make('company.name')
-                                    ->label(__('products::filament/resources/product.infolist.sections.settings.entries.company'))
+                                TextEntry::make('company.name')->label(__('products::filament/resources/product.infolist.sections.settings.entries.company'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-building-office'),
                             ]),
 
                         Section::make(__('products::filament/resources/product.infolist.sections.pricing.title'))
                             ->schema([
-                                TextEntry::make('price')
-                                    ->label(__('products::filament/resources/product.infolist.sections.pricing.entries.price'))
+                                TextEntry::make('price')->label(__('products::filament/resources/product.infolist.sections.pricing.entries.price'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-banknotes'),
 
-                                TextEntry::make('cost')
-                                    ->label(__('products::filament/resources/product.infolist.sections.pricing.entries.cost'))
+                                TextEntry::make('cost')->label(__('products::filament/resources/product.infolist.sections.pricing.entries.cost'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-banknotes'),
                             ]),

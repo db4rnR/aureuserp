@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Recruitment\Filament\Clusters\Applications\Resources\CandidateResource;
 
-final class CreateCandidate extends CreateRecord
+class CreateCandidate extends CreateRecord
 {
     protected static string $resource = CandidateResource::class;
 
@@ -20,8 +20,7 @@ final class CreateCandidate extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('recruitments::filament/clusters/applications/resources/candidate/pages/create-candidate.notification.title'))
             ->body(__('recruitments::filament/clusters/applications/resources/candidate/pages/create-candidate.notification.body'));
     }

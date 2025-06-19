@@ -7,7 +7,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Webkul\Support\Models\Currency;
 
-final class CurrencySeeder extends Seeder
+class CurrencySeeder extends Seeder
 {
     /**
      * Seed the application's database with currencies.

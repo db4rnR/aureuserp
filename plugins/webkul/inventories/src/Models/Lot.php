@@ -14,7 +14,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\UOM;
 
-final class Lot extends Model
+class Lot extends Model
 {
     use HasFactory;
 

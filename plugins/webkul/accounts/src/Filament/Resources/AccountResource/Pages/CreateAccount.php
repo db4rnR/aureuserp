@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Account\Filament\Resources\AccountResource;
 
-final class CreateAccount extends CreateRecord
+class CreateAccount extends CreateRecord
 {
     protected static string $resource = AccountResource::class;
 
@@ -19,8 +19,7 @@ final class CreateAccount extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/account/pages/create-account.notification.title'))
             ->body(__('accounts::filament/resources/account/pages/create-account.notification.body'));
     }

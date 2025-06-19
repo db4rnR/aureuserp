@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Country;
 
-final class Tag extends Model
+class Tag extends Model
 {
     use HasFactory;
 

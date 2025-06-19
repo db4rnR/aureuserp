@@ -32,7 +32,7 @@ use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResou
 use Webkul\Inventory\Models\PackageType;
 use Webkul\Inventory\Settings\OperationSettings;
 
-final class PackageTypeResource extends Resource
+class PackageTypeResource extends Resource
 {
     protected static ?string $model = PackageType::class;
 
@@ -65,14 +65,13 @@ final class PackageTypeResource extends Resource
         return app(OperationSettings::class)->enable_packages;
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Section::make(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.title'))
                     ->schema([
-                        TextInput::make('name')
-                            ->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.name'))
+                        TextInput::make('name')->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.name'))
                             ->required()
                             ->maxLength(255)
                             ->autofocus()
@@ -80,22 +79,19 @@ final class PackageTypeResource extends Resource
 
                         Fieldset::make(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.fieldsets.size.title'))
                             ->schema([
-                                TextInput::make('length')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.fieldsets.size.fields.length'))
+                                TextInput::make('length')->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.fieldsets.size.fields.length'))
                                     ->required()
                                     ->numeric()
                                     ->default(0.0000)
                                     ->minValue(0)
                                     ->maxValue(99999999999),
-                                TextInput::make('width')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.fieldsets.size.fields.width'))
+                                TextInput::make('width')->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.fieldsets.size.fields.width'))
                                     ->required()
                                     ->numeric()
                                     ->default(0.0000)
                                     ->minValue(0)
                                     ->maxValue(99999999999),
-                                TextInput::make('height')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.fieldsets.size.fields.height'))
+                                TextInput::make('height')->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.fieldsets.size.fields.height'))
                                     ->required()
                                     ->numeric()
                                     ->default(0.0000)
@@ -103,25 +99,21 @@ final class PackageTypeResource extends Resource
                                     ->maxValue(99999999999),
                             ])
                             ->columns(3),
-                        TextInput::make('base_weight')
-                            ->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.weight'))
+                        TextInput::make('base_weight')->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.weight'))
                             ->required()
                             ->numeric()
                             ->default(0.0000)
                             ->minValue(0)
                             ->maxValue(99999999999),
-                        TextInput::make('max_weight')
-                            ->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.max-weight'))
+                        TextInput::make('max_weight')->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.max-weight'))
                             ->required()
                             ->numeric()
                             ->default(0.0000)
                             ->minValue(0)
                             ->maxValue(99999999999),
-                        TextInput::make('barcode')
-                            ->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.barcode'))
+                        TextInput::make('barcode')->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.barcode'))
                             ->maxLength(255),
-                        Select::make('company_id')
-                            ->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.company'))
+                        Select::make('company_id')->label(__('inventories::filament/clusters/configurations/resources/package-type.form.sections.general.fields.company'))
                             ->relationship('company', 'name')
                             ->searchable()
                             ->preload(),
@@ -133,30 +125,23 @@ final class PackageTypeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.name'))
+                TextColumn::make('name')->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.name'))
                     ->searchable(),
-                TextColumn::make('height')
-                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.height'))
+                TextColumn::make('height')->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.height'))
                     ->sortable(),
-                TextColumn::make('width')
-                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.width'))
+                TextColumn::make('width')->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.width'))
                     ->sortable(),
-                TextColumn::make('length')
-                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.length'))
+                TextColumn::make('length')->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.length'))
                     ->sortable(),
-                TextColumn::make('barcode')
-                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.barcode'))
+                TextColumn::make('barcode')->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.barcode'))
                     ->placeholder('—')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/package-type.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -164,39 +149,32 @@ final class PackageTypeResource extends Resource
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/package-type.table.actions.delete.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/package-type.table.actions.delete.notification.body')),
                     ),
             ])
             ->toolbarActions([
-                DeleteBulkAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteBulkAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/package-type.table.bulk-actions.delete.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/package-type.table.bulk-actions.delete.notification.body')),
                     ),
             ])
             ->emptyStateActions([
-                CreateAction::make()
-                    ->icon('heroicon-o-plus-circle'),
+                CreateAction::make()->icon('heroicon-o-plus-circle'),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.title'))
                             ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.name'))
+                                TextEntry::make('name')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.name'))
                                     ->icon('heroicon-o-tag')
                                     ->weight(FontWeight::Bold)
                                     ->size(TextSize::Large),
@@ -204,22 +182,18 @@ final class PackageTypeResource extends Resource
                                 Group::make([
                                     Section::make(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.fieldsets.size.title'))
                                         ->schema([
-                                            Grid::make(3)
-                                                ->schema([
-                                                    TextEntry::make('length')
-                                                        ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.fieldsets.size.entries.length'))
+                                            Grid::make(3)->schema([
+                                                    TextEntry::make('length')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.fieldsets.size.entries.length'))
                                                         ->icon('heroicon-o-arrows-right-left')
                                                         ->numeric()
                                                         ->suffix(' cm'),
 
-                                                    TextEntry::make('width')
-                                                        ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.fieldsets.size.entries.width'))
+                                                    TextEntry::make('width')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.fieldsets.size.entries.width'))
                                                         ->icon('heroicon-o-arrows-up-down')
                                                         ->numeric()
                                                         ->suffix(' cm'),
 
-                                                    TextEntry::make('height')
-                                                        ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.fieldsets.size.entries.height'))
+                                                    TextEntry::make('height')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.fieldsets.size.entries.height'))
                                                         ->icon('heroicon-o-arrows-up-down')
                                                         ->numeric()
                                                         ->suffix(' cm'),
@@ -228,48 +202,39 @@ final class PackageTypeResource extends Resource
                                         ->icon('heroicon-o-cube'),
                                 ]),
 
-                                Grid::make(2)
-                                    ->schema([
-                                        TextEntry::make('base_weight')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.weight'))
+                                Grid::make(2)->schema([
+                                        TextEntry::make('base_weight')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.weight'))
                                             ->icon('heroicon-o-scale')
                                             ->numeric()
                                             ->suffix(' kg'),
 
-                                        TextEntry::make('max_weight')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.max-weight'))
+                                        TextEntry::make('max_weight')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.max-weight'))
                                             ->icon('heroicon-o-scale')
                                             ->numeric()
                                             ->suffix(' kg'),
                                     ]),
 
-                                TextEntry::make('barcode')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.barcode'))
+                                TextEntry::make('barcode')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.barcode'))
                                     ->icon('heroicon-o-bars-4')
                                     ->placeholder('—'),
 
-                                TextEntry::make('company.name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.company'))
+                                TextEntry::make('company.name')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.general.entries.company'))
                                     ->icon('heroicon-o-building-office'),
                             ]),
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.record-information.title'))
                             ->schema([
-                                TextEntry::make('created_at')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.record-information.entries.created-at'))
+                                TextEntry::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.record-information.entries.created-at'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar'),
 
-                                TextEntry::make('creator.name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.record-information.entries.created-by'))
+                                TextEntry::make('creator.name')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.record-information.entries.created-by'))
                                     ->icon('heroicon-m-user'),
 
-                                TextEntry::make('updated_at')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.record-information.entries.last-updated'))
+                                TextEntry::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/package-type.infolist.sections.record-information.entries.last-updated'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar-days'),
                             ]),

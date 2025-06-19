@@ -9,14 +9,13 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource;
 
-final class EditRoute extends EditRecord
+class EditRoute extends EditRecord
 {
     protected static string $resource = RouteResource::class;
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/route/pages/edit-route.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/route/pages/edit-route.notification.body'));
     }
@@ -24,10 +23,8 @@ final class EditRoute extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/route/pages/edit-route.header-actions.delete.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/route/pages/edit-route.header-actions.delete.notification.body')),
                 ),

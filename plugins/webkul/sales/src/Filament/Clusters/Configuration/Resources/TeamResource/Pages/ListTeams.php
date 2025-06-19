@@ -10,7 +10,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource;
 use Webkul\Sale\Models\Team;
 
-final class ListTeams extends ListRecords
+class ListTeams extends ListRecords
 {
     protected static string $resource = TeamResource::class;
 
@@ -28,8 +28,7 @@ final class ListTeams extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->icon('heroicon-o-plus-circle'),
+            CreateAction::make()->icon('heroicon-o-plus-circle'),
         ];
     }
 }

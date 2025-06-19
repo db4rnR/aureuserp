@@ -9,7 +9,7 @@ use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 use Webkul\TimeOff\Models\Leave;
 
-final class LeavePolicy
+class LeavePolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

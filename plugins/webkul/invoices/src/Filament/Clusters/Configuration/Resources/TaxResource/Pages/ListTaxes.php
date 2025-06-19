@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource\P
 use Webkul\Account\Filament\Resources\TaxResource\Pages\ListTaxes as BaseListTaxes;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource;
 
-final class ListTaxes extends BaseListTaxes
+class ListTaxes extends BaseListTaxes
 {
     protected static string $resource = TaxResource::class;
 }

@@ -8,7 +8,7 @@ use BackedEnum;
 use Filament\Clusters\Cluster;
 use Filament\Panel;
 
-final class Applications extends Cluster
+class Applications extends Cluster
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RouteResource;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 
-final class ManageRules extends ManageRelatedRecords
+class ManageRules extends ManageRelatedRecords
 {
     protected static string $resource = RouteResource::class;
 
@@ -28,25 +28,21 @@ final class ManageRules extends ManageRelatedRecords
         return __('inventories::filament/clusters/configurations/resources/route/pages/manage-rules.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return RuleResource::form($schema);
+        return RuleResource::form($form);
     }
 
     public function table(Table $table): Table
     {
         return RuleResource::table($table)
             ->columns([
-                TextColumn::make('action')
-                    ->searchable(),
-                TextColumn::make('sourceLocation.full_name')
-                    ->searchable(),
-                TextColumn::make('destinationLocation.full_name')
-                    ->searchable(),
+                TextColumn::make('action')->searchable(),
+                TextColumn::make('sourceLocation.full_name')->searchable(),
+                TextColumn::make('destinationLocation.full_name')->searchable(),
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('inventories::filament/clusters/configurations/resources/route/pages/manage-rules.table.header-actions.create.label'))
+                CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/route/pages/manage-rules.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->fillForm(fn (array $arguments): array => [
                         'route_id' => $this->getOwnerRecord()->id,
@@ -59,8 +55,7 @@ final class ManageRules extends ManageRelatedRecords
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/route/pages/manage-rules.table.header-actions.create.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/route/pages/manage-rules.table.header-actions.create.notification.body')),
                     ),

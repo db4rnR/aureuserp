@@ -7,7 +7,7 @@ namespace Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource\Pages;
 use Filament\Resources\Pages\EditRecord;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource;
 
-final class EditPost extends EditRecord
+class EditPost extends EditRecord
 {
     use HasPostPreview;
 

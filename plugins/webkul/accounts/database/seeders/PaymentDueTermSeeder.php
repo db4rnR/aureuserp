@@ -10,7 +10,7 @@ use Webkul\Account\Enums\DelayType;
 use Webkul\Account\Enums\DueTermValue;
 use Webkul\Security\Models\User;
 
-final class PaymentDueTermSeeder extends Seeder
+class PaymentDueTermSeeder extends Seeder
 {
     public function run(): void
     {

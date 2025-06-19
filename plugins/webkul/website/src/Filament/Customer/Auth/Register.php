@@ -31,7 +31,7 @@ use Illuminate\Validation\Rules\Password;
 /**
  * @property Schema $form
  */
-final class Register extends Page
+class Register extends Page
 {
     use CanUseDatabaseTransactions;
     use InteractsWithFormActions;
@@ -103,15 +103,14 @@ final class Register extends Page
         return app(RegistrationResponse::class);
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema;
+        return $form;
     }
 
     public function loginAction(): Action
     {
-        return Action::make('login')
-            ->link()
+        return Action::make('login')->link()
             ->label(__('filament-panels::pages/auth/register.actions.login.label'))
             ->url(filament()->getLoginUrl());
     }
@@ -128,8 +127,7 @@ final class Register extends Page
 
     public function getRegisterFormAction(): Action
     {
-        return Action::make('register')
-            ->label(__('filament-panels::pages/auth/register.form.actions.register.label'))
+        return Action::make('register')->label(__('filament-panels::pages/auth/register.form.actions.register.label'))
             ->submit('register');
     }
 
@@ -150,8 +148,7 @@ final class Register extends Page
 
     private function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {
-        return Notification::make()
-            ->title(__('filament-panels::pages/auth/register.notifications.throttled.title', [
+        return Notification::make()->title(__('filament-panels::pages/auth/register.notifications.throttled.title', [
                 'seconds' => $exception->secondsUntilAvailable,
                 'minutes' => $exception->minutesUntilAvailable,
             ]))
@@ -213,8 +210,7 @@ final class Register extends Page
 
     private function getNameFormComponent(): Component
     {
-        return TextInput::make('name')
-            ->label(__('filament-panels::pages/auth/register.form.name.label'))
+        return TextInput::make('name')->label(__('filament-panels::pages/auth/register.form.name.label'))
             ->required()
             ->maxLength(255)
             ->autofocus();
@@ -222,8 +218,7 @@ final class Register extends Page
 
     private function getEmailFormComponent(): Component
     {
-        return TextInput::make('email')
-            ->label(__('filament-panels::pages/auth/register.form.email.label'))
+        return TextInput::make('email')->label(__('filament-panels::pages/auth/register.form.email.label'))
             ->email()
             ->required()
             ->maxLength(255)
@@ -232,8 +227,7 @@ final class Register extends Page
 
     private function getPasswordFormComponent(): Component
     {
-        return TextInput::make('password')
-            ->label(__('filament-panels::pages/auth/register.form.password.label'))
+        return TextInput::make('password')->label(__('filament-panels::pages/auth/register.form.password.label'))
             ->password()
             ->revealable(filament()->arePasswordsRevealable())
             ->required()
@@ -245,8 +239,7 @@ final class Register extends Page
 
     private function getPasswordConfirmationFormComponent(): Component
     {
-        return TextInput::make('passwordConfirmation')
-            ->label(__('filament-panels::pages/auth/register.form.password_confirmation.label'))
+        return TextInput::make('passwordConfirmation')->label(__('filament-panels::pages/auth/register.form.password_confirmation.label'))
             ->password()
             ->revealable(filament()->arePasswordsRevealable())
             ->required()

@@ -11,7 +11,7 @@ use ReflectionClass;
 use Webkul\Invoice\Filament\Clusters\Settings\Pages\Products;
 use Webkul\Support\Package;
 
-final class InvoicePlugin implements Plugin
+class InvoicePlugin implements Plugin
 {
     public static function make(): static
     {
@@ -36,8 +36,7 @@ final class InvoicePlugin implements Plugin
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Invoice\\Filament\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Invoice\\Filament\\Widgets')
                     ->navigationItems([
-                        NavigationItem::make('settings')
-                            ->label('Settings')
+                        NavigationItem::make('settings')->label('Settings')
                             ->url(fn (): string => Products::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Invoices')

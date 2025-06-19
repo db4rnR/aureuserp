@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Livewire\Component;
 use Webkul\Purchase\Models\OrderLine;
 
-final class ListProducts extends Component implements HasForms, HasTable
+class ListProducts extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
@@ -32,23 +32,17 @@ final class ListProducts extends Component implements HasForms, HasTable
                 OrderLine::query()->where('order_id', $this->record->id)
             )
             ->columns([
-                TextColumn::make('name')
-                    ->label('Product'),
-                TextColumn::make('product_qty')
-                    ->label('Quantity')
+                TextColumn::make('name')->label('Product'),
+                TextColumn::make('product_qty')->label('Quantity')
                     ->formatStateUsing(fn (string $state): string => $state.' Units'),
-                TextColumn::make('price_unit')
-                    ->label('Unit Price')
+                TextColumn::make('price_unit')->label('Unit Price')
                     ->money(fn (OrderLine $record) => $record->currency->code),
-                TextColumn::make('taxes.name')
-                    ->label('Taxes')
+                TextColumn::make('taxes.name')->label('Taxes')
                     ->badge()
                     ->placeholder('—'),
-                TextColumn::make('discount')
-                    ->label('Discount %')
+                TextColumn::make('discount')->label('Discount %')
                     ->suffix('%'),
-                TextColumn::make('price_subtotal')
-                    ->label('Amount')
+                TextColumn::make('price_subtotal')->label('Amount')
                     ->money(fn (OrderLine $record) => $record->currency->code),
             ])
             ->paginated(false);

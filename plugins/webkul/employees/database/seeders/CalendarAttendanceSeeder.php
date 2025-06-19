@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Employee\Models\Calendar;
 use Webkul\Security\Models\User;
 
-final class CalendarAttendanceSeeder extends Seeder
+class CalendarAttendanceSeeder extends Seeder
 {
     /**
      * Run the database seeds.

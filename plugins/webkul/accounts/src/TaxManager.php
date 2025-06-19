@@ -6,7 +6,7 @@ namespace Webkul\Account;
 
 use Webkul\Account\Models\Tax;
 
-final class TaxManager
+class TaxManager
 {
     /**
      * Calculate taxes.

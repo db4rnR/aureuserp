@@ -7,7 +7,7 @@ namespace Webkul\Security;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class SecurityServiceProvider extends PackageServiceProvider
+class SecurityServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'security';
 

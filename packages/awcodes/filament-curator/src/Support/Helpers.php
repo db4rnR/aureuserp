@@ -7,7 +7,7 @@ namespace Awcodes\Curator\Support;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
-final class Helpers
+class Helpers
 {
     public static function getUrl(?string $disk, ?string $path): string
     {

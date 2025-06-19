@@ -7,7 +7,7 @@ namespace Pboivin\FilamentPeek;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class FilamentPeekServiceProvider extends PackageServiceProvider
+class FilamentPeekServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

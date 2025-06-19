@@ -15,7 +15,7 @@ use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Page
 use Webkul\TimeOff\Filament\Clusters\Reporting\Resources\ByEmployeeResource\Pages\ListByEmployees;
 use Webkul\TimeOff\Models\Leave;
 
-final class ByEmployeeResource extends Resource
+class ByEmployeeResource extends Resource
 {
     protected static ?string $model = Leave::class;
 
@@ -33,9 +33,9 @@ final class ByEmployeeResource extends Resource
         return __('time-off::filament/clusters/reporting/resources/by-employee.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return TimeOffResource::form($schema);
+        return TimeOffResource::form($form);
     }
 
     public static function table(Table $table): Table

@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\StageResource;
 
-final class EditStage extends EditRecord
+class EditStage extends EditRecord
 {
     protected static string $resource = StageResource::class;
 
@@ -21,8 +21,7 @@ final class EditStage extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('recruitments::filament/clusters/configurations/resources/stage/pages/edit-stage.notification.title'))
             ->body(__('recruitments::filament/clusters/configurations/resources/stage/pages/edit-stage.notification.body'));
     }
@@ -31,10 +30,8 @@ final class EditStage extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('recruitments::filament/clusters/configurations/resources/stage/pages/edit-stage.header-actions.delete.notification.title'))
                         ->body(__('recruitments::filament/clusters/configurations/resources/stage/pages/edit-stage.header-actions.delete.notification.body'))
                 ),

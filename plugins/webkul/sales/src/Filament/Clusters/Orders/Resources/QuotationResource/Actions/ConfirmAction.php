@@ -12,7 +12,7 @@ use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Facades\SaleOrder;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\OrderResource;
 
-final class ConfirmAction extends Action
+class ConfirmAction extends Action
 {
     protected function setUp(): void
     {
@@ -26,8 +26,7 @@ final class ConfirmAction extends Action
                 try {
                     $record = SaleOrder::confirmSaleOrder($record);
                 } catch (Exception $e) {
-                    Notification::make()
-                        ->danger()
+                    Notification::make()->danger()
                         ->title(__('sales::filament/clusters/orders/resources/quotation/actions/confirm.notification.error.title'))
                         ->body($e->getMessage())
                         ->send();
@@ -39,8 +38,7 @@ final class ConfirmAction extends Action
 
                 $livewire->redirect(OrderResource::getUrl('edit', ['record' => $record]), navigate: FilamentView::hasSpaMode());
 
-                Notification::make()
-                    ->success()
+                Notification::make()->success()
                     ->title(__('sales::filament/clusters/orders/resources/quotation/actions/confirm.notification.confirmed.title'))
                     ->body(__('sales::filament/clusters/orders/resources/quotation/actions/confirm.notification.confirmed.body'))
                     ->send();

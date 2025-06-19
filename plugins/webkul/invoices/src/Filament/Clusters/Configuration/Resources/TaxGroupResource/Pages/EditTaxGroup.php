@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResou
 use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\EditTaxGroup as BaseEditTaxGroup;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource;
 
-final class EditTaxGroup extends BaseEditTaxGroup
+class EditTaxGroup extends BaseEditTaxGroup
 {
     protected static string $resource = TaxGroupResource::class;
 }

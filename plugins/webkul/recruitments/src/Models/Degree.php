@@ -9,7 +9,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 
-final class Degree extends Model implements Sortable
+class Degree extends Model implements Sortable
 {
     use SortableTrait;
 

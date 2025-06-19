@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Webkul\Blog\Database\Factories\CategoryFactory;
 use Webkul\Security\Models\User;
 
-final class Category extends Model
+class Category extends Model
 {
     use HasFactory, SoftDeletes;
 

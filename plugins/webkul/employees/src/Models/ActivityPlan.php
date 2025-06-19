@@ -7,7 +7,7 @@ namespace Webkul\Employee\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Support\Models\ActivityPlan as BaseActivityPlan;
 
-final class ActivityPlan extends BaseActivityPlan
+class ActivityPlan extends BaseActivityPlan
 {
     public function department(): BelongsTo
     {

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \Hugomyb\FilamentMediaAction\FilamentMediaAction
  */
-final class FilamentMediaAction extends Facade
+class FilamentMediaAction extends Facade
 {
     protected static function getFacadeAccessor()
     {

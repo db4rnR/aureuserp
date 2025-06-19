@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class FiscalPositionTax extends Model
+class FiscalPositionTax extends Model
 {
     use HasFactory;
 

@@ -17,7 +17,7 @@ use Pboivin\FilamentPeek\Support\Cache;
 /**
  * @property \Filament\Schemas\Schema $form
  */
-final class BuilderEditor extends Component implements HasForms
+class BuilderEditor extends Component implements HasForms
 {
     use InteractsWithForms;
 

@@ -15,7 +15,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementRe
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListPurchaseAgreements extends ListRecords
+class ListPurchaseAgreements extends ListRecords
 {
     use HasTableViews;
 
@@ -64,8 +64,7 @@ final class ListPurchaseAgreements extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.header-actions.create.label'))
+            CreateAction::make()->label(__('purchases::filament/admin/clusters/orders/resources/purchase-agreement/pages/list-purchase-agreements.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

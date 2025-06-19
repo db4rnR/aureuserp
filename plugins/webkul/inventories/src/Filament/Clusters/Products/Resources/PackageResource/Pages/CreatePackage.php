@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
 
-final class CreatePackage extends CreateRecord
+class CreatePackage extends CreateRecord
 {
     protected static string $resource = PackageResource::class;
 
@@ -20,8 +20,7 @@ final class CreatePackage extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/products/resources/package/pages/create-package.notification.title'))
             ->body(__('inventories::filament/clusters/products/resources/package/pages/create-package.notification.body'));
     }

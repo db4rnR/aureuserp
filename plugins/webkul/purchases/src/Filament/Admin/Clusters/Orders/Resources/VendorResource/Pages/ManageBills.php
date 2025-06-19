@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource;
 
-final class ManageBills extends ManageRelatedRecords
+class ManageBills extends ManageRelatedRecords
 {
     protected static string $resource = VendorResource::class;
 
@@ -30,12 +30,10 @@ final class ManageBills extends ManageRelatedRecords
         return BillResource::table($table)
             ->modifyQueryUsing(fn ($query) => $query->where('partner_id', $this->record->getKey()))
             ->recordActions([
-                ViewAction::make()
-                    ->url(fn ($record): string => BillResource::getUrl('view', ['record' => $record]))
+                ViewAction::make()->url(fn ($record): string => BillResource::getUrl('view', ['record' => $record]))
                     ->openUrlInNewTab(false),
 
-                EditAction::make()
-                    ->url(fn ($record): string => BillResource::getUrl('edit', ['record' => $record]))
+                EditAction::make()->url(fn ($record): string => BillResource::getUrl('edit', ['record' => $record]))
                     ->openUrlInNewTab(false),
             ]);
     }

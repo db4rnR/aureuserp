@@ -6,7 +6,7 @@ namespace Webkul\Account\Models;
 
 use Webkul\Partner\Models\Partner as BasePartner;
 
-final class Partner extends BasePartner
+class Partner extends BasePartner
 {
     public function __construct(array $attributes = [])
     {

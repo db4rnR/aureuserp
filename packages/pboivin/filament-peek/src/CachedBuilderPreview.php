@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pboivin\FilamentPeek;
 
-final class CachedBuilderPreview extends CachedPreview
+class CachedBuilderPreview extends CachedPreview
 {
     public static function make(
         string $pageClass,

@@ -10,7 +10,7 @@ use Webkul\Field\Policies\FieldPolicy;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class FieldServiceProvider extends PackageServiceProvider
+class FieldServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'fields';
 

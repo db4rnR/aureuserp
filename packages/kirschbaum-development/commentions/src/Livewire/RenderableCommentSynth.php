@@ -7,7 +7,7 @@ namespace Kirschbaum\Commentions\Livewire;
 use Kirschbaum\Commentions\Contracts\RenderableComment;
 use Livewire\Mechanisms\HandleComponents\Synthesizers\Synth;
 
-final class RenderableCommentSynth extends Synth
+class RenderableCommentSynth extends Synth
 {
     public static $key = 'renderable-comment';
 

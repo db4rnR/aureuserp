@@ -7,7 +7,7 @@ namespace Webkul\Account\Filament\Resources\PaymentTermResource\RelationManagers
 use Filament\Resources\RelationManagers\RelationManager;
 use Webkul\Account\Traits\PaymentDueTerm;
 
-final class PaymentDueTermRelationManager extends RelationManager
+class PaymentDueTermRelationManager extends RelationManager
 {
     use PaymentDueTerm;
 

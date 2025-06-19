@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\Activity
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlanResource\Pages\EditActivityPlan as BaseEditActivityPlan;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ActivityPlanResource;
 
-final class EditActivityPlan extends BaseEditActivityPlan
+class EditActivityPlan extends BaseEditActivityPlan
 {
     protected static string $resource = ActivityPlanResource::class;
 }

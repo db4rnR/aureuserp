@@ -10,7 +10,7 @@ use Z3d0X\FilamentFabricator\Commands;
  * @deprecated
  * @see Commands\MakeLayoutCommand
  */
-final class MakeLayoutCommand extends Commands\MakeLayoutCommand
+class MakeLayoutCommand extends Commands\MakeLayoutCommand
 {
     protected $hidden = true;
 

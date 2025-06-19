@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Partner\Filament\Resources\PartnerResource\Pages\ListPartners as BaseListCustomers;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource;
 
-final class ListCustomers extends BaseListCustomers
+class ListCustomers extends BaseListCustomers
 {
     protected static string $resource = CustomerResource::class;
 
@@ -21,8 +21,7 @@ final class ListCustomers extends BaseListCustomers
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('sales::filament/clusters/orders/resources/customer/pages/list-customers.header-actions.create.label'))
+            CreateAction::make()->label(__('sales::filament/clusters/orders/resources/customer/pages/list-customers.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

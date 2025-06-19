@@ -11,7 +11,7 @@ use Webkul\Employee\Filament\Resources\DepartmentResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListDepartments extends ListRecords
+class ListDepartments extends ListRecords
 {
     use HasTableViews;
 
@@ -20,8 +20,7 @@ final class ListDepartments extends ListRecords
     public function getPresetTableViews(): array
     {
         return [
-            'archived' => PresetView::make('Archived')
-                ->icon('heroicon-s-archive-box')
+            'archived' => PresetView::make('Archived')->icon('heroicon-s-archive-box')
                 ->favorite()
                 ->label(__('employees::filament/resources/department/pages/list-department.tabs.archived-departments'))
                 ->modifyQueryUsing(fn (Builder $query) => $query->onlyTrashed()),
@@ -31,8 +30,7 @@ final class ListDepartments extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('employees::filament/resources/department/pages/list-department.header-actions.create.label'))
+            CreateAction::make()->label(__('employees::filament/resources/department/pages/list-department.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

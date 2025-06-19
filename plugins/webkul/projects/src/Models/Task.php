@@ -23,7 +23,7 @@ use Webkul\Security\Models\Scopes\UserPermissionScope;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Task extends Model implements Commentable, Sortable
+class Task extends Model implements Commentable, Sortable
 {
     use HasChatter, HasComments, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
 

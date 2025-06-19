@@ -11,14 +11,14 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Partner\Models\Partner;
 use Webkul\Sale\Enums\OrderState;
 use Webkul\Sale\Facades\SaleOrder;
 use Webkul\Sale\Models\Order;
 
-final class SendByEmailAction extends Action
+class SendByEmailAction extends Action
 {
     protected function setUp(): void
     {
@@ -44,21 +44,17 @@ final class SendByEmailAction extends Action
             })
             ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.title'))
             ->schema(
-                fn (Schema $schema): Schema => $schema->components([
-                    Select::make('partners')
-                        ->options(Partner::all()->pluck('name', 'id'))
+                fn (Form $form): Form => $form->schema([
+                    Select::make('partners')->options(Partner::all()->pluck('name', 'id'))
                         ->multiple()
                         ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.partners'))
                         ->searchable()
                         ->preload(),
-                    TextInput::make('subject')
-                        ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.subject'))
+                    TextInput::make('subject')->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.subject'))
                         ->hiddenLabel(),
-                    RichEditor::make('description')
-                        ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.description'))
+                    RichEditor::make('description')->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.description'))
                         ->hiddenLabel(),
-                    FileUpload::make('file')
-                        ->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.attachment'))
+                    FileUpload::make('file')->label(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.form.fields.attachment'))
                         ->downloadable()
                         ->openable()
                         ->disk('public')
@@ -73,8 +69,7 @@ final class SendByEmailAction extends Action
 
                 $this->refreshFormData(['state']);
 
-                Notification::make()
-                    ->success()
+                Notification::make()->success()
                     ->title(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.title'))
                     ->body(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.body'))
                     ->send();

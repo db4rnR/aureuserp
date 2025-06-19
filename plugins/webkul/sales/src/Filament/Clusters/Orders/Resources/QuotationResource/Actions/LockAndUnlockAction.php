@@ -9,7 +9,7 @@ use Webkul\Sale\Facades\SaleOrder;
 use Webkul\Sale\Models\Order;
 use Webkul\Sale\Settings\QuotationAndOrderSettings;
 
-final class LockAndUnlockAction extends Action
+class LockAndUnlockAction extends Action
 {
     protected function setUp(): void
     {

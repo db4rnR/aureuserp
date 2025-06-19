@@ -7,7 +7,7 @@ namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResour
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\InternalResource;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource\Pages\ManageMoves as OperationManageMoves;
 
-final class ManageMoves extends OperationManageMoves
+class ManageMoves extends OperationManageMoves
 {
     protected static string $resource = InternalResource::class;
 }

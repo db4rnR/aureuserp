@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Inventory\Database\Factories\ProductQuantityRelocationFactory;
 use Webkul\Security\Models\User;
 
-final class ProductQuantityRelocation extends Model
+class ProductQuantityRelocation extends Model
 {
     use HasFactory;
 

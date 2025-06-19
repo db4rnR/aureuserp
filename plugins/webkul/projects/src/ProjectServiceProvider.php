@@ -9,7 +9,7 @@ use Webkul\Support\Console\Commands\UninstallCommand;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class ProjectServiceProvider extends PackageServiceProvider
+class ProjectServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'projects';
 

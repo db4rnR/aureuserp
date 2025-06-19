@@ -15,7 +15,7 @@ use Webkul\Project\Filament\Clusters\Configurations\Resources\MilestoneResource;
 use Webkul\Project\Filament\Resources\ProjectResource;
 use Webkul\Project\Settings\TaskSettings;
 
-final class ManageMilestones extends ManageRelatedRecords
+class ManageMilestones extends ManageRelatedRecords
 {
     protected static string $resource = ProjectResource::class;
 
@@ -46,17 +46,16 @@ final class ManageMilestones extends ManageRelatedRecords
         return __('projects::filament/resources/project/pages/manage-milestones.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return MilestoneResource::form($schema);
+        return MilestoneResource::form($form);
     }
 
     public function table(Table $table): Table
     {
         return MilestoneResource::table($table)
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('projects::filament/resources/project/pages/manage-milestones.table.header-actions.create.label'))
+                CreateAction::make()->label(__('projects::filament/resources/project/pages/manage-milestones.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::id();
@@ -64,8 +63,7 @@ final class ManageMilestones extends ManageRelatedRecords
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('projects::filament/resources/project/pages/manage-milestones.table.header-actions.create.notification.title'))
                             ->body(__('projects::filament/resources/project/pages/manage-milestones.table.header-actions.create.notification.body')),
                     ),

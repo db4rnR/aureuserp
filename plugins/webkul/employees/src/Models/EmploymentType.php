@@ -13,7 +13,7 @@ use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Country;
 
-final class EmploymentType extends Model implements Sortable
+class EmploymentType extends Model implements Sortable
 {
     use HasCustomFields, HasFactory, SortableTrait;
 

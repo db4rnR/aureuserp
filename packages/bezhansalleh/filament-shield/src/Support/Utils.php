@@ -13,7 +13,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Spatie\Permission\PermissionRegistrar;
 
-final class Utils
+class Utils
 {
     public static function getFilamentAuthGuard(): string
     {

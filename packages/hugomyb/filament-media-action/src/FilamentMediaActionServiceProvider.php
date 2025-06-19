@@ -12,7 +12,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class FilamentMediaActionServiceProvider extends PackageServiceProvider
+class FilamentMediaActionServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-media-action';
 

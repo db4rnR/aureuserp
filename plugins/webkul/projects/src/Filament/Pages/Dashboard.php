@@ -23,7 +23,7 @@ use Webkul\Project\Models\Tag;
 use Webkul\Security\Models\User;
 use Webkul\Support\Filament\Clusters\Dashboard as DashboardCluster;
 
-final class Dashboard extends BaseDashboard
+class Dashboard extends BaseDashboard
 {
     use BaseDashboard\Concerns\HasFiltersForm;
 
@@ -42,43 +42,36 @@ final class Dashboard extends BaseDashboard
     {
         return $schema
             ->components([
-                Section::make()
-                    ->schema([
-                        Select::make('selectedProjects')
-                            ->label(__('projects::filament/pages/dashboard.filters-form.project'))
+                Section::make()->schema([
+                        Select::make('selectedProjects')->label(__('projects::filament/pages/dashboard.filters-form.project'))
                             ->multiple()
                             ->searchable()
                             ->preload()
                             ->options(fn () => Project::pluck('name', 'id'))
                             ->reactive(),
-                        Select::make('selectedAssignees')
-                            ->label(__('projects::filament/pages/dashboard.filters-form.assignees'))
+                        Select::make('selectedAssignees')->label(__('projects::filament/pages/dashboard.filters-form.assignees'))
                             ->multiple()
                             ->searchable()
                             ->preload()
                             ->options(fn () => User::pluck('name', 'id'))
                             ->reactive(),
-                        Select::make('selectedTags')
-                            ->label(__('projects::filament/pages/dashboard.filters-form.tags'))
+                        Select::make('selectedTags')->label(__('projects::filament/pages/dashboard.filters-form.tags'))
                             ->multiple()
                             ->searchable()
                             ->preload()
                             ->options(fn () => Tag::pluck('name', 'id'))
                             ->reactive(),
-                        Select::make('selectedPartners')
-                            ->label(__('projects::filament/pages/dashboard.filters-form.customer'))
+                        Select::make('selectedPartners')->label(__('projects::filament/pages/dashboard.filters-form.customer'))
                             ->multiple()
                             ->searchable()
                             ->preload()
                             ->options(fn () => Partner::pluck('name', 'id'))
                             ->reactive(),
-                        DatePicker::make('startDate')
-                            ->label(__('projects::filament/pages/dashboard.filters-form.start-date'))
+                        DatePicker::make('startDate')->label(__('projects::filament/pages/dashboard.filters-form.start-date'))
                             ->maxDate(fn (Get $get) => $get('endDate') ?: now())
                             ->default(now()->subMonth()->format('Y-m-d'))
                             ->native(false),
-                        DatePicker::make('endDate')
-                            ->label(__('projects::filament/pages/dashboard.filters-form.end-date'))
+                        DatePicker::make('endDate')->label(__('projects::filament/pages/dashboard.filters-form.end-date'))
                             ->minDate(fn (Get $get) => $get('startDate') ?: now())
                             ->maxDate(now())
                             ->default(now())

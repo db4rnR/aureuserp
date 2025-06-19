@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Account\Models\MoveLine;
 
-final class AccountMoveLine extends MoveLine
+class AccountMoveLine extends MoveLine
 {
     /**
      * Create a new Eloquent model instance.

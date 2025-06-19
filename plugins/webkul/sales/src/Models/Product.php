@@ -6,7 +6,7 @@ namespace Webkul\Sale\Models;
 
 use Webkul\Invoice\Models\Product as BaseProduct;
 
-final class Product extends BaseProduct
+class Product extends BaseProduct
 {
     //
 }

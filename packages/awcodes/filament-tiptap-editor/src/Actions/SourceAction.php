@@ -8,7 +8,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
 use FilamentTiptapEditor\TiptapEditor;
 
-final class SourceAction extends Action
+class SourceAction extends Action
 {
     protected function setUp(): void
     {

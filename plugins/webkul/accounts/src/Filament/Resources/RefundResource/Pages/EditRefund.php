@@ -13,7 +13,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Account\Filament\Resources\RefundResource;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
-final class EditRefund extends EditRecord
+class EditRefund extends EditRecord
 {
     protected static string $resource = RefundResource::class;
 
@@ -24,8 +24,7 @@ final class EditRefund extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/refund/pages/edit-refund.notification.title'))
             ->body(__('accounts::filament/resources/refund/pages/edit-refund.notification.body'));
     }
@@ -33,8 +32,7 @@ final class EditRefund extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource($this->getResource()),
+            ChatterActions\ChatterAction::make()->setResource($this->getResource()),
             BaseActions\PayAction::make(),
             BaseActions\CancelAction::make(),
             BaseActions\ConfirmAction::make(),

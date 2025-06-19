@@ -31,7 +31,7 @@ use Webkul\Account\Enums\Applicability;
 use Webkul\Account\Filament\Resources\AccountTagResource\Pages\ListAccountTags;
 use Webkul\Account\Models\Tag;
 
-final class AccountTagResource extends Resource
+class AccountTagResource extends Resource
 {
     protected static ?string $model = Tag::class;
 
@@ -39,33 +39,26 @@ final class AccountTagResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Section::make()
-                    ->schema([
-                        ColorPicker::make('color')
-                            ->label(__('accounts::filament/resources/account-tag.form.fields.color'))
+                Section::make()->schema([
+                        ColorPicker::make('color')->label(__('accounts::filament/resources/account-tag.form.fields.color'))
                             ->hexColor(),
-                        Select::make('country_id')
-                            ->searchable()
+                        Select::make('country_id')->searchable()
                             ->preload()
                             ->label(__('accounts::filament/resources/account-tag.form.fields.country'))
                             ->relationship('country', 'name'),
-                        Select::make('applicability')
-                            ->options(Applicability::options())
+                        Select::make('applicability')->options(Applicability::options())
                             ->default(Applicability::ACCOUNT->value)
                             ->label(__('accounts::filament/resources/account-tag.form.fields.applicability'))
                             ->required(),
-                        TextInput::make('name')
-                            ->required()
+                        TextInput::make('name')->required()
                             ->label(__('accounts::filament/resources/account-tag.form.fields.name'))
                             ->maxLength(255),
-                        Group::make()
-                            ->schema([
-                                Toggle::make('tax_negate')
-                                    ->inline(false)
+                        Group::make()->schema([
+                                Toggle::make('tax_negate')->inline(false)
                                     ->label(__('accounts::filament/resources/account-tag.form.fields.tax-negate'))
                                     ->required(),
                             ]),
@@ -77,101 +70,77 @@ final class AccountTagResource extends Resource
     {
         return $table
             ->columns([
-                ColorColumn::make('color')
-                    ->label(__('accounts::filament/resources/account-tag.table.columns.color'))
+                ColorColumn::make('color')->label(__('accounts::filament/resources/account-tag.table.columns.color'))
                     ->searchable(),
-                TextColumn::make('country.name')
-                    ->numeric()
+                TextColumn::make('country.name')->numeric()
                     ->maxValue(99999999999)
                     ->label(__('accounts::filament/resources/account-tag.table.columns.country'))
                     ->sortable(),
-                TextColumn::make('createdBy.name')
-                    ->label(__('accounts::filament/resources/account-tag.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('accounts::filament/resources/account-tag.table.columns.created-by'))
                     ->sortable(),
-                TextColumn::make('applicability')
-                    ->label(__('accounts::filament/resources/account-tag.table.columns.applicability'))
+                TextColumn::make('applicability')->label(__('accounts::filament/resources/account-tag.table.columns.applicability'))
                     ->searchable(),
-                TextColumn::make('name')
-                    ->label(__('accounts::filament/resources/account-tag.table.columns.name'))
+                TextColumn::make('name')->label(__('accounts::filament/resources/account-tag.table.columns.name'))
                     ->searchable(),
-                IconColumn::make('tax_negate')
-                    ->label(__('accounts::filament/resources/account-tag.table.columns.tax-negate'))
+                IconColumn::make('tax_negate')->label(__('accounts::filament/resources/account-tag.table.columns.tax-negate'))
                     ->boolean(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('created_at')->dateTime()
                     ->label(__('accounts::filament/resources/account-tag.table.columns.created-at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')->dateTime()
                     ->label(__('accounts::filament/resources/account-tag.table.columns.updated-at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->groups([
-                Tables\Grouping\Group::make('country.name')
-                    ->label(__('accounts::filament/resources/account-tag.table.groups.country'))
+                Tables\Grouping\Group::make('country.name')->label(__('accounts::filament/resources/account-tag.table.groups.country'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('createdBy.name')
-                    ->label(__('accounts::filament/resources/account-tag.table.groups.created-by'))
+                Tables\Grouping\Group::make('createdBy.name')->label(__('accounts::filament/resources/account-tag.table.groups.created-by'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('applicability')
-                    ->label(__('accounts::filament/resources/account-tag.table.groups.applicability'))
+                Tables\Grouping\Group::make('applicability')->label(__('accounts::filament/resources/account-tag.table.groups.applicability'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('name')
-                    ->label(__('accounts::filament/resources/account-tag.table.groups.name'))
+                Tables\Grouping\Group::make('name')->label(__('accounts::filament/resources/account-tag.table.groups.name'))
                     ->collapsible(),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->title('accounts::filament/clusters/configurations/resources/account-tag.table.actions.edit.notification.title')
+                EditAction::make()->successNotification(
+                        Notification::make()->title('accounts::filament/clusters/configurations/resources/account-tag.table.actions.edit.notification.title')
                             ->body('accounts::filament/clusters/configurations/resources/account-tag.table.actions.edit.notification.body')
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->title('accounts::filament/clusters/configurations/resources/account-tag.table.actions.delete.notification.title')
+                DeleteAction::make()->successNotification(
+                        Notification::make()->title('accounts::filament/clusters/configurations/resources/account-tag.table.actions.delete.notification.title')
                             ->body('accounts::filament/clusters/configurations/resources/account-tag.table.actions.delete.notification.body')
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->title('accounts::filament/clusters/configurations/resources/account-tag.table.bulk-actions.delete.notification.title')
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->title('accounts::filament/clusters/configurations/resources/account-tag.table.bulk-actions.delete.notification.title')
                                 ->body('accounts::filament/clusters/configurations/resources/account-tag.table.bulk-actions.delete.notification.body')
                         ),
                 ]),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Grid::make(['default' => 2])
-                    ->schema([
-                        TextEntry::make('name')
-                            ->label(__('accounts::filament/resources/account-tag.infolist.entries.name'))
+                Grid::make(['default' => 2])->schema([
+                        TextEntry::make('name')->label(__('accounts::filament/resources/account-tag.infolist.entries.name'))
                             ->icon('heroicon-o-briefcase')
                             ->placeholder('—'),
-                        TextEntry::make('color')
-                            ->label(__('accounts::filament/resources/account-tag.infolist.entries.color'))
+                        TextEntry::make('color')->label(__('accounts::filament/resources/account-tag.infolist.entries.color'))
                             ->formatStateUsing(fn ($state): string => "<span style='display:inline-block;width:15px;height:15px;background-color:{$state};border-radius:50%;'></span> ".$state)
                             ->html()
                             ->placeholder('—'),
-                        TextEntry::make('applicability')
-                            ->label(__('accounts::filament/resources/account-tag.infolist.entries.applicability'))
+                        TextEntry::make('applicability')->label(__('accounts::filament/resources/account-tag.infolist.entries.applicability'))
                             ->placeholder('—'),
-                        TextEntry::make('country.name')
-                            ->label(__('accounts::filament/resources/account-tag.infolist.entries.country'))
+                        TextEntry::make('country.name')->label(__('accounts::filament/resources/account-tag.infolist.entries.country'))
                             ->placeholder('—'),
-                        IconEntry::make('tax_negate')
-                            ->label(__('accounts::filament/resources/account-tag.infolist.entries.tax-negate'))
+                        IconEntry::make('tax_negate')->label(__('accounts::filament/resources/account-tag.infolist.entries.tax-negate'))
                             ->boolean(),
                     ]),
             ]);

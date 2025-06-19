@@ -10,7 +10,7 @@ use Webkul\Employee\Database\Factories\EmployeeCategoryFactory;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-final class EmployeeCategory extends Model
+class EmployeeCategory extends Model
 {
     use HasCustomFields, HasFactory;
 

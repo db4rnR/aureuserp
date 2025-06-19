@@ -9,19 +9,19 @@ use Filament\Tables\Table;
 use Webkul\Account\Filament\Resources\BankAccountResource\Pages\ListBankAccounts;
 use Webkul\Partner\Filament\Resources\BankAccountResource as BaseBankAccountResource;
 
-final class BankAccountResource extends BaseBankAccountResource
+class BankAccountResource extends BaseBankAccountResource
 {
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        $schema = BaseBankAccountResource::form($schema);
+        $form = BaseBankAccountResource::form($form);
 
-        $components = collect($schema->getComponents())->forget(1)->all();
+        $components = collect($form->getComponents())->forget(1)->all();
 
-        $schema->components($components);
+        $form->schema($components);
 
-        return $schema;
+        return $form;
     }
 
     public static function table(Table $table): Table

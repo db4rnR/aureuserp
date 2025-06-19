@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\TaskStageResource;
 use Webkul\Project\Models\TaskStage;
 
-final class ManageTaskStages extends ManageRecords
+class ManageTaskStages extends ManageRecords
 {
     protected static string $resource = TaskStageResource::class;
 
@@ -30,8 +30,7 @@ final class ManageTaskStages extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('projects::filament/clusters/configurations/resources/task-stage/pages/manage-task-stages.header-actions.create.label'))
+            CreateAction::make()->label(__('projects::filament/clusters/configurations/resources/task-stage/pages/manage-task-stages.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data): array {
                     $data['creator_id'] = Auth::id();
@@ -39,8 +38,7 @@ final class ManageTaskStages extends ManageRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title('Task stage created')
                         ->body('The task stage has been created successfully.')
                         ->title(__('projects::filament/clusters/configurations/resources/task-stage/pages/manage-task-stages.header-actions.create.notification.title'))

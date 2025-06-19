@@ -10,7 +10,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\Support\Filament\Resources\ActivityTypeResource;
 use Webkul\Support\Models\ActivityType;
 
-final class ListActivityTypes extends ListRecords
+class ListActivityTypes extends ListRecords
 {
     protected static string $resource = ActivityTypeResource::class;
 
@@ -30,8 +30,7 @@ final class ListActivityTypes extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('support::filament/resources/activity-type/pages/list-activity-type.header-actions.create.label'))
+            CreateAction::make()->label(__('support::filament/resources/activity-type/pages/list-activity-type.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

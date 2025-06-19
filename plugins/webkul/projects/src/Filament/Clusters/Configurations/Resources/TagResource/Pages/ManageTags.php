@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\TagResource;
 use Webkul\Project\Models\Tag;
 
-final class ManageTags extends ManageRecords
+class ManageTags extends ManageRecords
 {
     protected static string $resource = TagResource::class;
 
@@ -30,8 +30,7 @@ final class ManageTags extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label('New Tag')
+            CreateAction::make()->label('New Tag')
                 ->label(__('projects::filament/clusters/configurations/resources/tag/pages/manage-tags.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data): array {
@@ -44,8 +43,7 @@ final class ManageTags extends ManageRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('projects::filament/clusters/configurations/resources/tag/pages/manage-tags.header-actions.create.notification.title'))
                         ->body(__('projects::filament/clusters/configurations/resources/tag/pages/manage-tags.header-actions.create.notification.body')),
                 ),

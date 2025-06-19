@@ -12,7 +12,7 @@ use Webkul\Partner\Database\Factories\BankAccountFactory;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Bank;
 
-final class BankAccount extends Model
+class BankAccount extends Model
 {
     use HasFactory, SoftDeletes;
 

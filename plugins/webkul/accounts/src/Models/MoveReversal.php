@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class MoveReversal extends Model
+class MoveReversal extends Model
 {
     protected $table = 'accounts_accounts_move_reversals';
 

@@ -8,7 +8,7 @@ use Filament\Forms\Components\Concerns\CanAllowHtml;
 use Filament\Infolists\Components\Entry;
 use Filament\Support\Concerns\HasExtraAttributes;
 
-final class TitleTextEntry extends Entry
+class TitleTextEntry extends Entry
 {
     use CanAllowHtml;
     use HasExtraAttributes;

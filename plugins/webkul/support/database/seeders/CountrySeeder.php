@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-final class CountrySeeder extends Seeder
+class CountrySeeder extends Seeder
 {
     /**
      * Run the database seeds.

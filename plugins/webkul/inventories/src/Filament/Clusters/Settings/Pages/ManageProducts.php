@@ -16,7 +16,7 @@ use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackagingResourc
 use Webkul\Inventory\Settings\ProductSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageProducts extends SettingsPage
+class ManageProducts extends SettingsPage
 {
     use HasPageShield;
 
@@ -49,18 +49,15 @@ final class ManageProducts extends SettingsPage
         return __('inventories::filament/clusters/settings/pages/manage-products.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Toggle::make('enable_variants')
-                    ->label(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-variants'))
+                Toggle::make('enable_variants')->label(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-variants'))
                     ->helperText(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-variants-helper-text')),
-                Toggle::make('enable_uom')
-                    ->label(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-uom'))
+                Toggle::make('enable_uom')->label(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-uom'))
                     ->helperText(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-uom-helper-text')),
-                Toggle::make('enable_packagings')
-                    ->label(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-packagings'))
+                Toggle::make('enable_packagings')->label(__('inventories::filament/clusters/settings/pages/manage-products.form.enable-packagings'))
                     ->helperText(function (): HtmlString {
                         $routeBaseName = PackagingResource::getRouteBaseName();
 

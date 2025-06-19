@@ -7,7 +7,7 @@ namespace Pboivin\FilamentPeek\Support;
 use Livewire\Component;
 use Pboivin\FilamentPeek\Exceptions\PreviewModalException;
 
-final class Page
+class Page
 {
     public static function supportsPreviewModal(Component $page): bool
     {

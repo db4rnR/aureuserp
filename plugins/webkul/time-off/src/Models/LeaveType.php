@@ -13,7 +13,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\TimeOff\Enums\LeaveValidationType;
 
-final class LeaveType extends Model implements Sortable
+class LeaveType extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

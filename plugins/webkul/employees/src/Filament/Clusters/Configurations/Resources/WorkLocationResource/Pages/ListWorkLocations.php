@@ -10,7 +10,7 @@ use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\WorkLocationResource;
 
-final class ListWorkLocations extends ListRecords
+class ListWorkLocations extends ListRecords
 {
     protected static string $resource = WorkLocationResource::class;
 
@@ -31,12 +31,10 @@ final class ListWorkLocations extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('employees::filament/clusters/configurations/resources/work-location/pages/list-work-location.header-actions.create.label'))
+            CreateAction::make()->label(__('employees::filament/clusters/configurations/resources/work-location/pages/list-work-location.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('employees::filament/clusters/configurations/resources/work-location/pages/list-work-location.header-actions.create.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/work-location/pages/list-work-location.header-actions.create.notification.body')),
                 ),

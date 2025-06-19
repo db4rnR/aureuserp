@@ -14,7 +14,7 @@ use UnitEnum;
 use Webkul\Sale\Settings\ProductSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageProducts extends SettingsPage
+class ManageProducts extends SettingsPage
 {
     use HasPageShield;
 
@@ -47,18 +47,15 @@ final class ManageProducts extends SettingsPage
         return __('sales::filament/clusters/settings/pages/manage-products.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Toggle::make('enable_variants')
-                    ->label(__('sales::filament/clusters/settings/pages/manage-products.form.fields.variants'))
+                Toggle::make('enable_variants')->label(__('sales::filament/clusters/settings/pages/manage-products.form.fields.variants'))
                     ->helperText(__('sales::filament/clusters/settings/pages/manage-products.form.fields.variants-help')),
-                Toggle::make('enable_uom')
-                    ->label(__('sales::filament/clusters/settings/pages/manage-products.form.fields.uom'))
+                Toggle::make('enable_uom')->label(__('sales::filament/clusters/settings/pages/manage-products.form.fields.uom'))
                     ->helperText(__('sales::filament/clusters/settings/pages/manage-products.form.fields.uom-help')),
-                Toggle::make('enable_packagings')
-                    ->label(__('sales::filament/clusters/settings/pages/manage-products.form.fields.packagings'))
+                Toggle::make('enable_packagings')->label(__('sales::filament/clusters/settings/pages/manage-products.form.fields.packagings'))
                     ->helperText(__('sales::filament/clusters/settings/pages/manage-products.form.fields.packagings-help')),
                 // Forms\Components\Toggle::make('enable_deliver_content_by_email')
                 //     ->label(__('sales::filament/clusters/settings/pages/manage-products.form.fields.deliver-content-by-email'))

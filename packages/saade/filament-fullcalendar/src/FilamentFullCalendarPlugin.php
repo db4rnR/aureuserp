@@ -7,7 +7,7 @@ namespace Saade\FilamentFullCalendar;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-final class FilamentFullCalendarPlugin implements Plugin
+class FilamentFullCalendarPlugin implements Plugin
 {
     private array $plugins = ['dayGrid', 'timeGrid', 'interaction', 'list', 'moment', 'momentTimezone'];
 

@@ -9,7 +9,7 @@ use Faker\Generator;
 use FilamentTiptapEditor\Facades\TiptapConverter;
 use Illuminate\Support\Str;
 
-final class TiptapFaker
+class TiptapFaker
 {
     private Generator $faker;
 

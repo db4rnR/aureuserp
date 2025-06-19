@@ -7,7 +7,7 @@ namespace Kirschbaum\Commentions\Actions;
 use Closure;
 use League\HTMLToMarkdown\HtmlConverter;
 
-final class HtmlToMarkdown
+class HtmlToMarkdown
 {
     public function __invoke(string $html, ?Closure $mentionedCallback = null): string
     {

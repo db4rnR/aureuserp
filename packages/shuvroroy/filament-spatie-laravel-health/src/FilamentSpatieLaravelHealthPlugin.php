@@ -10,7 +10,7 @@ use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use ShuvroRoy\FilamentSpatieLaravelHealth\Pages\HealthCheckResults;
 
-final class FilamentSpatieLaravelHealthPlugin implements Plugin
+class FilamentSpatieLaravelHealthPlugin implements Plugin
 {
     use EvaluatesClosures;
 

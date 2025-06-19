@@ -10,7 +10,7 @@ use Webkul\Inventory\Enums\DeliveryStep;
 use Webkul\Inventory\Enums\ReceptionStep;
 use Webkul\Security\Models\User;
 
-final class WarehouseSeeder extends Seeder
+class WarehouseSeeder extends Seeder
 {
     /**
      * Seed the application's database with currencies.

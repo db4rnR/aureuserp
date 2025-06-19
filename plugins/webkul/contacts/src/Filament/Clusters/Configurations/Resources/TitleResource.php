@@ -9,7 +9,7 @@ use Webkul\Contact\Filament\Clusters\Configurations;
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\TitleResource\Pages\ManageTitles;
 use Webkul\Partner\Filament\Resources\TitleResource as BaseTitleResource;
 
-final class TitleResource extends BaseTitleResource
+class TitleResource extends BaseTitleResource
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
 

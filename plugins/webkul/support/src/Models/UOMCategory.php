@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Security\Models\User;
 use Webkul\Support\Database\Factories\UOMCategoryFactory;
 
-final class UOMCategory extends Model
+class UOMCategory extends Model
 {
     use HasFactory;
 

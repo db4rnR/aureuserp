@@ -60,7 +60,7 @@ use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-final class OperationTypeResource extends Resource
+class OperationTypeResource extends Resource
 {
     protected static ?string $model = OperationType::class;
 
@@ -84,14 +84,12 @@ final class OperationTypeResource extends Resource
         return __('inventories::filament/clusters/configurations/resources/operation-type.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Section::make()
-                    ->schema([
-                        TextInput::make('name')
-                            ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.sections.general.fields.operator-type'))
+                Section::make()->schema([
+                        TextInput::make('name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.sections.general.fields.operator-type'))
                             ->required()
                             ->maxLength(255)
                             ->autofocus()
@@ -99,17 +97,13 @@ final class OperationTypeResource extends Resource
                             ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;']),
                     ]),
 
-                Tabs::make()
-                    ->tabs([
+                Tabs::make()->tabs([
                         Tab::make(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.title'))
                             ->icon('heroicon-o-cog')
                             ->schema([
-                                Group::make()
-                                    ->schema([
-                                        Group::make()
-                                            ->schema([
-                                                Select::make('type')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.operator-type'))
+                                Group::make()->schema([
+                                        Group::make()->schema([
+                                                Select::make('type')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.operator-type'))
                                                     ->required()
                                                     ->options(Enums\OperationType::class)
                                                     ->default(Enums\OperationType::INCOMING->value)
@@ -152,16 +146,13 @@ final class OperationTypeResource extends Resource
                                                         $set('source_location_id', $sourceLocationId);
                                                         $set('destination_location_id', $destinationLocationId);
                                                     }),
-                                                TextInput::make('sequence_code')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.sequence-prefix'))
+                                                TextInput::make('sequence_code')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.sequence-prefix'))
                                                     ->required()
                                                     ->maxLength(255),
-                                                Toggle::make('print_label')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.generate-shipping-labels'))
+                                                Toggle::make('print_label')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.generate-shipping-labels'))
                                                     ->inline(false)
                                                     ->visible(fn (Get $get): bool => in_array($get('type'), [Enums\OperationType::OUTGOING->value, Enums\OperationType::INTERNAL->value], true)),
-                                                Select::make('warehouse_id')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.warehouse'))
+                                                Select::make('warehouse_id')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.warehouse'))
                                                     ->relationship(
                                                         'warehouse',
                                                         'name',
@@ -173,39 +164,32 @@ final class OperationTypeResource extends Resource
                                                     ->preload()
                                                     ->live()
                                                     ->default(fn (Get $get) => Warehouse::first()?->id),
-                                                Radio::make('reservation_method')
-                                                    ->required()
+                                                Radio::make('reservation_method')->required()
                                                     ->options(ReservationMethod::class)
                                                     ->default(ReservationMethod::AT_CONFIRM->value)
                                                     ->visible(fn (Get $get): bool => $get('type') !== Enums\OperationType::INCOMING->value),
-                                                Toggle::make('auto_show_reception_report')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.show-reception-report'))
+                                                Toggle::make('auto_show_reception_report')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.show-reception-report'))
                                                     ->inline(false)
                                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.show-reception-report-hint-tooltip'))
                                                     ->visible(fn (OperationSettings $settings, Get $get): bool => $settings->enable_reception_report && in_array($get('type'), [Enums\OperationType::INCOMING->value, Enums\OperationType::INTERNAL->value], true)),
                                             ]),
 
-                                        Group::make()
-                                            ->schema([
-                                                Select::make('company_id')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.company'))
+                                        Group::make()->schema([
+                                                Select::make('company_id')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.company'))
                                                     ->relationship('company', 'name')
                                                     ->searchable()
                                                     ->preload()
                                                     ->default(Auth::user()->default_company_id),
-                                                Select::make('return_operation_type_id')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.return-type'))
+                                                Select::make('return_operation_type_id')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.return-type'))
                                                     ->relationship('returnOperationType', 'name')
                                                     ->searchable()
                                                     ->preload()
                                                     ->visible(fn (Get $get): bool => $get('type') !== Enums\OperationType::DROPSHIP->value),
-                                                Select::make('create_backorder')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.create-backorder'))
+                                                Select::make('create_backorder')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.create-backorder'))
                                                     ->required()
                                                     ->options(CreateBackorder::class)
                                                     ->default(CreateBackorder::ASK->value),
-                                                Select::make('move_type')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.move-type'))
+                                                Select::make('move_type')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.move-type'))
                                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fields.move-type-hint-tooltip'))
                                                     ->options(MoveType::class)
                                                     ->visible(fn (Get $get): bool => $get('type') === Enums\OperationType::INTERNAL->value),
@@ -214,20 +198,17 @@ final class OperationTypeResource extends Resource
                                     ->columns(2),
                                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.lots.title'))
                                     ->schema([
-                                        Toggle::make('use_create_lots')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.lots.fields.create-new'))
+                                        Toggle::make('use_create_lots')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.lots.fields.create-new'))
                                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.lots.fields.create-new-hint-tooltip'))
                                             ->inline(false),
-                                        Toggle::make('use_existing_lots')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.lots.fields.use-existing'))
+                                        Toggle::make('use_existing_lots')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.lots.fields.use-existing'))
                                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.lots.fields.use-existing-hint-tooltip'))
                                             ->inline(false),
                                     ])
                                     ->visible(fn (TraceabilitySettings $settings, Get $get): bool => $settings->enable_lots_serial_numbers && $get('type') !== Enums\OperationType::DROPSHIP->value),
                                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.locations.title'))
                                     ->schema([
-                                        Select::make('source_location_id')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.locations.fields.source-location'))
+                                        Select::make('source_location_id')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.locations.fields.source-location'))
                                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.locations.fields.source-location-hint-tooltip'))
                                             ->relationship(
                                                 'sourceLocation',
@@ -257,8 +238,7 @@ final class OperationTypeResource extends Resource
                                                 };
                                             })
                                             ->live(),
-                                        Select::make('destination_location_id')
-                                            ->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.locations.fields.destination-location'))
+                                        Select::make('destination_location_id')->label(__('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.locations.fields.destination-location'))
                                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/operation-type.form.tabs.general.fieldsets.locations.fields.destination-location-hint-tooltip'))
                                             ->relationship(
                                                 'destinationLocation',
@@ -306,222 +286,174 @@ final class OperationTypeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.name'))
+                TextColumn::make('name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.name'))
                     ->searchable(),
-                TextColumn::make('company.name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.company'))
+                TextColumn::make('company.name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.company'))
                     ->searchable(),
-                TextColumn::make('warehouse.name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.warehouse'))
+                TextColumn::make('warehouse.name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.warehouse'))
                     ->searchable(),
-                TextColumn::make('created_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->groups([
-                Tables\Grouping\Group::make('warehouse.name')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.groups.warehouse'))
+                Tables\Grouping\Group::make('warehouse.name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.groups.warehouse'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('type')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.groups.type'))
+                Tables\Grouping\Group::make('type')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.groups.type'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('created_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.groups.created-at'))
+                Tables\Grouping\Group::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.groups.created-at'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('updated_at')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.groups.updated-at'))
+                Tables\Grouping\Group::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.groups.updated-at'))
                     ->date()
                     ->collapsible(),
             ])
             ->filters([
-                SelectFilter::make('type')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.filters.type'))
+                SelectFilter::make('type')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.filters.type'))
                     ->options(Enums\OperationType::class)
                     ->searchable()
                     ->multiple()
                     ->preload(),
-                SelectFilter::make('warehouse_id')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.filters.warehouse'))
+                SelectFilter::make('warehouse_id')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.filters.warehouse'))
                     ->relationship('warehouse', 'name')
                     ->searchable()
                     ->preload(),
-                SelectFilter::make('company_id')
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.filters.company'))
+                SelectFilter::make('company_id')->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.filters.company'))
                     ->relationship('company', 'name')
                     ->searchable()
                     ->preload(),
             ])
             ->recordActions([
-                ViewAction::make()
-                    ->hidden(fn ($record) => $record->trashed()),
-                EditAction::make()
-                    ->hidden(fn ($record) => $record->trashed()),
-                RestoreAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                ViewAction::make()->hidden(fn ($record) => $record->trashed()),
+                EditAction::make()->hidden(fn ($record) => $record->trashed()),
+                RestoreAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.restore.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.restore.notification.body')),
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.delete.notification.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.delete.notification.body')),
                     ),
-                ForceDeleteAction::make()
-                    ->action(function (OperationType $record): void {
+                ForceDeleteAction::make()->action(function (OperationType $record): void {
                         try {
                             $record->forceDelete();
                         } catch (QueryException) {
-                            Notification::make()
-                                ->danger()
+                            Notification::make()->danger()
                                 ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.force-delete.notification.error.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.force-delete.notification.error.body'))
                                 ->send();
                         }
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.force-delete.notification.success.title'))
                             ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.actions.force-delete.notification.success.body')),
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    RestoreBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.restore.notification.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.restore.notification.body')),
                         ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.delete.notification.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.delete.notification.body')),
                         ),
-                    ForceDeleteBulkAction::make()
-                        ->action(function (Collection $records): void {
+                    ForceDeleteBulkAction::make()->action(function (Collection $records): void {
                             try {
                                 $records->each(fn (Model $record) => $record->forceDelete());
                             } catch (QueryException) {
-                                Notification::make()
-                                    ->danger()
+                                Notification::make()->danger()
                                     ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.force-delete.notification.error.title'))
                                     ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.force-delete.notification.error.body'))
                                     ->send();
                             }
                         })
                         ->successNotification(
-                            Notification::make()
-                                ->success()
+                            Notification::make()->success()
                                 ->title(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.force-delete.notification.success.title'))
                                 ->body(__('inventories::filament/clusters/configurations/resources/operation-type.table.bulk-actions.force-delete.notification.success.body')),
                         ),
                 ]),
             ])
             ->emptyStateActions([
-                CreateAction::make()
-                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.empty-actions.create.label'))
+                CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/operation-type.table.empty-actions.create.label'))
                     ->icon('heroicon-o-plus-circle'),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.general.title'))
                             ->schema([
-                                TextEntry::make('name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.general.entries.name'))
+                                TextEntry::make('name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.general.entries.name'))
                                     ->icon('heroicon-o-queue-list')
                                     ->size(TextSize::Large)
                                     ->weight(FontWeight::Bold)
                                     ->columnSpan(2),
                             ]),
 
-                        Tabs::make()
-                            ->tabs([
+                        Tabs::make()->tabs([
                                 Tab::make(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.title'))
                                     ->icon('heroicon-o-cog')
                                     ->schema([
-                                        Group::make()
-                                            ->schema([
-                                                TextEntry::make('type')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.type'))
+                                        Group::make()->schema([
+                                                TextEntry::make('type')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.type'))
                                                     ->icon('heroicon-o-cog'),
-                                                TextEntry::make('sequence_code')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.sequence_code'))
+                                                TextEntry::make('sequence_code')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.sequence_code'))
                                                     ->icon('heroicon-o-tag'),
-                                                IconEntry::make('print_label')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.print_label'))
+                                                IconEntry::make('print_label')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.print_label'))
                                                     ->boolean()
                                                     ->icon('heroicon-o-printer'),
-                                                TextEntry::make('warehouse.name')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.warehouse'))
+                                                TextEntry::make('warehouse.name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.warehouse'))
                                                     ->icon('heroicon-o-building-office'),
-                                                TextEntry::make('reservation_method')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.reservation_method'))
+                                                TextEntry::make('reservation_method')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.reservation_method'))
                                                     ->icon('heroicon-o-clock'),
-                                                IconEntry::make('auto_show_reception_report')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.auto_show_reception_report'))
+                                                IconEntry::make('auto_show_reception_report')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.auto_show_reception_report'))
                                                     ->boolean()
                                                     ->icon('heroicon-o-document-text'),
                                             ])
                                             ->columns(2),
 
-                                        Group::make()
-                                            ->schema([
-                                                TextEntry::make('company.name')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.company'))
+                                        Group::make()->schema([
+                                                TextEntry::make('company.name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.company'))
                                                     ->icon('heroicon-o-building-office'),
-                                                TextEntry::make('returnOperationType.name')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.return_operation_type'))
+                                                TextEntry::make('returnOperationType.name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.return_operation_type'))
                                                     ->icon('heroicon-o-arrow-uturn-left'),
-                                                TextEntry::make('create_backorder')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.create_backorder'))
+                                                TextEntry::make('create_backorder')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.create_backorder'))
                                                     ->icon('heroicon-o-archive-box'),
-                                                TextEntry::make('move_type')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.move_type'))
+                                                TextEntry::make('move_type')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.entries.move_type'))
                                                     ->icon('heroicon-o-arrows-right-left'),
                                             ])
                                             ->columns(2),
 
                                         Fieldset::make(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.lots.title'))
                                             ->schema([
-                                                IconEntry::make('use_create_lots')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.lots.entries.use_create_lots'))
+                                                IconEntry::make('use_create_lots')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.lots.entries.use_create_lots'))
                                                     ->boolean()
                                                     ->icon('heroicon-o-plus-circle'),
-                                                IconEntry::make('use_existing_lots')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.lots.entries.use_existing_lots'))
+                                                IconEntry::make('use_existing_lots')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.lots.entries.use_existing_lots'))
                                                     ->boolean()
                                                     ->icon('heroicon-o-archive-box'),
                                             ]),
 
                                         Fieldset::make(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.locations.title'))
                                             ->schema([
-                                                TextEntry::make('sourceLocation.full_name')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.locations.entries.source_location'))
+                                                TextEntry::make('sourceLocation.full_name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.locations.entries.source_location'))
                                                     ->icon('heroicon-o-map-pin'),
-                                                TextEntry::make('destinationLocation.full_name')
-                                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.locations.entries.destination_location'))
+                                                TextEntry::make('destinationLocation.full_name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.tabs.general.fieldsets.locations.entries.destination_location'))
                                                     ->icon('heroicon-o-map-pin'),
                                             ]),
                                     ]),
@@ -530,21 +462,17 @@ final class OperationTypeResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
-                    ->schema([
+                Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.record-information.title'))
                             ->schema([
-                                TextEntry::make('created_at')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.record-information.entries.created-at'))
+                                TextEntry::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.record-information.entries.created-at'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar'),
 
-                                TextEntry::make('creator.name')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.record-information.entries.created-by'))
+                                TextEntry::make('creator.name')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.record-information.entries.created-by'))
                                     ->icon('heroicon-m-user'),
 
-                                TextEntry::make('updated_at')
-                                    ->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.record-information.entries.last-updated'))
+                                TextEntry::make('updated_at')->label(__('inventories::filament/clusters/configurations/resources/operation-type.infolist.sections.record-information.entries.last-updated'))
                                     ->dateTime()
                                     ->icon('heroicon-m-calendar-days'),
                             ]),

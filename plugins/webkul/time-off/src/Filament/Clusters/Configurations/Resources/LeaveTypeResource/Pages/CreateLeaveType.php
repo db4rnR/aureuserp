@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource;
 
-final class CreateLeaveType extends CreateRecord
+class CreateLeaveType extends CreateRecord
 {
     protected static string $resource = LeaveTypeResource::class;
 
@@ -20,8 +20,7 @@ final class CreateLeaveType extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/configurations/resources/leave-type/pages/create-leave-type.notification.title'))
             ->body(__('time-off::filament/clusters/configurations/resources/leave-type/pages/create-leave-type.notification.body'));
     }

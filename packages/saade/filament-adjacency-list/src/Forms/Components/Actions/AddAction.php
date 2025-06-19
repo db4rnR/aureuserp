@@ -10,7 +10,7 @@ use Filament\Support\Enums\Size;
 use Illuminate\Support\Str;
 use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
-final class AddAction extends Action
+class AddAction extends Action
 {
     protected function setUp(): void
     {

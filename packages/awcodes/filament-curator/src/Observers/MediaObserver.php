@@ -8,7 +8,7 @@ use Awcodes\Curator\Models\Media;
 use Illuminate\Support\Facades\Storage;
 use stdClass;
 
-final class MediaObserver
+class MediaObserver
 {
     /**
      * Handle the Media "creating" event.

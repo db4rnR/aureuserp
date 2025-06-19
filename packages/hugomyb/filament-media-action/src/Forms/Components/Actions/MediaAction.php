@@ -7,7 +7,7 @@ namespace Hugomyb\FilamentMediaAction\Forms\Components\Actions;
 use Filament\Actions\Action;
 use Hugomyb\FilamentMediaAction\Concerns\HasMedia;
 
-final class MediaAction extends Action
+class MediaAction extends Action
 {
     use HasMedia;
 }

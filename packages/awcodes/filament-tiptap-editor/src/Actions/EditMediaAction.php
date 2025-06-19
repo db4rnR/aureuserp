@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
-final class EditMediaAction extends Action
+class EditMediaAction extends Action
 {
     protected function setUp(): void
     {

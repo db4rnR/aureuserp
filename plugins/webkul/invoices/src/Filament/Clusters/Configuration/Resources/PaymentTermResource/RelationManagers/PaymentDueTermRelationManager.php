@@ -6,7 +6,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermRe
 
 use Webkul\Account\Filament\Resources\PaymentTermResource\RelationManagers\PaymentDueTermRelationManager as BasePaymentDueTermRelationManager;
 
-final class PaymentDueTermRelationManager extends BasePaymentDueTermRelationManager
+class PaymentDueTermRelationManager extends BasePaymentDueTermRelationManager
 {
     //
 }

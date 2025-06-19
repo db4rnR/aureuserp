@@ -13,7 +13,7 @@ use Webkul\Blog\Filament\Customer\Resources\CategoryResource;
 use Webkul\Blog\Models\Category;
 use Webkul\Blog\Models\Post;
 
-final class ListCategories extends ListRecords
+class ListCategories extends ListRecords
 {
     protected static string $resource = CategoryResource::class;
 

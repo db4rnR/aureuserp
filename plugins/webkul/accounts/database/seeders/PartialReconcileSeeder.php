@@ -6,7 +6,7 @@ namespace Webkul\Account\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-final class PartialReconcileSeeder extends Seeder
+class PartialReconcileSeeder extends Seeder
 {
     /**
      * Run the database seeds.

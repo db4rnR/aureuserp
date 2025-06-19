@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 
-final class CreatePartner extends CreateRecord
+class CreatePartner extends CreateRecord
 {
     protected static string $resource = PartnerResource::class;
 
@@ -25,8 +25,7 @@ final class CreatePartner extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('partners::filament/resources/partner/pages/create-partner.notification.title'))
             ->body(__('partners::filament/resources/partner/pages/create-partner.notification.body'));
     }

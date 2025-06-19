@@ -14,7 +14,7 @@ use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 
-final class FilamentShieldPlugin implements Plugin
+class FilamentShieldPlugin implements Plugin
 {
     use CanBeCentralApp;
     use CanCustomizeColumns;

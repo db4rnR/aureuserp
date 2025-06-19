@@ -13,7 +13,7 @@ use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Currency;
 
-final class ProductSupplier extends Model implements Sortable
+class ProductSupplier extends Model implements Sortable
 {
     use SortableTrait;
 

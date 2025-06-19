@@ -8,7 +8,7 @@ use Filament\Resources\Resource;
 use Webkul\Website\Filament\Customer\Resources\PageResource\Pages\ViewPage;
 use Webkul\Website\Models\Page;
 
-final class PageResource extends Resource
+class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 

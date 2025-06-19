@@ -15,7 +15,7 @@ use Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\StorageCategoryResource;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-final class ManageLocations extends ManageRelatedRecords
+class ManageLocations extends ManageRelatedRecords
 {
     protected static string $resource = StorageCategoryResource::class;
 
@@ -42,17 +42,16 @@ final class ManageLocations extends ManageRelatedRecords
         return __('inventories::filament/clusters/configurations/resources/storage-category/pages/manage-locations.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return LocationResource::form($schema);
+        return LocationResource::form($form);
     }
 
     public function table(Table $table): Table
     {
         return LocationResource::table($table)
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('inventories::filament/clusters/configurations/resources/storage-category/pages/manage-locations.table.header-actions.create.label'))
+                CreateAction::make()->label(__('inventories::filament/clusters/configurations/resources/storage-category/pages/manage-locations.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->modalWidth('6xl')
                     ->mutateDataUsing(function (array $data): array {
@@ -61,8 +60,7 @@ final class ManageLocations extends ManageRelatedRecords
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/configurations/resources/storage-category/pages/manage-locations.table.header-actions.create.notification.title'))
                             ->body(__('projects::filament/resources/project/pages/manage-milestones.table.header-actions.create.notification.body')),
                     ),

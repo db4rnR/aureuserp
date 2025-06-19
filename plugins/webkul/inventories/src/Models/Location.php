@@ -15,7 +15,7 @@ use Webkul\Product\Enums\ProductRemoval;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Location extends Model
+class Location extends Model
 {
     use HasFactory, SoftDeletes;
 

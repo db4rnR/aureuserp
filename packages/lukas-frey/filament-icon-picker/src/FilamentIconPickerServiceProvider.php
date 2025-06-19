@@ -9,7 +9,7 @@ use Filament\Support\Facades\FilamentAsset;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class FilamentIconPickerServiceProvider extends PackageServiceProvider
+class FilamentIconPickerServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

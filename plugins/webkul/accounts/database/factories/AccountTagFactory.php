@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Account\Enums\Applicability;
 use Webkul\Security\Models\User;
 
-final class AccountTagFactory extends Factory
+class AccountTagFactory extends Factory
 {
     public function definition(): array
     {

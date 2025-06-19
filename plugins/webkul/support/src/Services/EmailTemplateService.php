@@ -11,7 +11,7 @@ use Webkul\Support\Mail\DynamicEmail;
 use Webkul\Support\Models\EmailLog;
 use Webkul\Support\Models\EmailTemplate;
 
-final class EmailTemplateService
+class EmailTemplateService
 {
     public function getTemplate(string $templateCode)
     {
@@ -43,7 +43,7 @@ final class EmailTemplateService
 
     public function send(string $templateCode, string $recipientEmail, string $recipientName, array $variables = [], string $locale = 'en', array $attachments = []): bool
     {
-        $emailData = $this->composeEmail($templateCode, $variables, $locale);
+        $emailData = $this->composeEmail($templateCode, $variables);
 
         $template = $this->getTemplate($templateCode);
 

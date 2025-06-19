@@ -10,14 +10,13 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 
-final class EditRule extends EditRecord
+class EditRule extends EditRecord
 {
     protected static string $resource = RuleResource::class;
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/rule/pages/edit-rule.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/rule/pages/edit-rule.notification.body'));
     }
@@ -26,10 +25,8 @@ final class EditRule extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/rule/pages/edit-rule.header-actions.delete.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/rule/pages/edit-rule.header-actions.delete.notification.body')),
                 ),

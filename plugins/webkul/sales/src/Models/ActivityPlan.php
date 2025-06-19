@@ -6,7 +6,7 @@ namespace Webkul\Sale\Models;
 
 use Webkul\Support\Models\ActivityPlan as BaseActivityPlan;
 
-final class ActivityPlan extends BaseActivityPlan
+class ActivityPlan extends BaseActivityPlan
 {
     //
 }

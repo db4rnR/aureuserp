@@ -7,7 +7,7 @@ namespace Webkul\Employee\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Employee\Models\DepartureReason;
 
-final class DepartureReasonFactory extends Factory
+class DepartureReasonFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

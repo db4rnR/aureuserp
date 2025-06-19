@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Filament\Resources\PaymentTermResource;
 
-final class CreatePaymentTerm extends CreateRecord
+class CreatePaymentTerm extends CreateRecord
 {
     protected static string $resource = PaymentTermResource::class;
 
@@ -20,8 +20,7 @@ final class CreatePaymentTerm extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/payment-term/pages/create-payment-term.notification.title'))
             ->body(__('accounts::filament/resources/payment-term/pages/create-payment-term.notification.body'));
     }

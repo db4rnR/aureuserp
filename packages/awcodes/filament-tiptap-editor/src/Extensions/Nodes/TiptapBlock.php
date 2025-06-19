@@ -8,7 +8,7 @@ use FilamentTiptapEditor\TiptapEditor;
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
-final class TiptapBlock extends Node
+class TiptapBlock extends Node
 {
     public static $name = 'tiptapBlock';
 

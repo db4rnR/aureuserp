@@ -6,7 +6,7 @@ namespace Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Actio
 
 use Filament\Actions\Action;
 
-final class PreviewAction extends Action
+class PreviewAction extends Action
 {
     protected function setUp(): void
     {

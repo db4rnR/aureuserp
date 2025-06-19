@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Inventory\Enums\LocationType;
 use Webkul\Security\Models\User;
 
-final class LocationSeeder extends Seeder
+class LocationSeeder extends Seeder
 {
     /**
      * Run the database seeds.

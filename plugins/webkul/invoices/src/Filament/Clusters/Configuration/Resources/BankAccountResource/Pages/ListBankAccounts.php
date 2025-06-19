@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountRe
 use Webkul\Account\Filament\Resources\BankAccountResource\Pages\ListBankAccounts as BaseManageBankAccounts;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource;
 
-final class ListBankAccounts extends BaseManageBankAccounts
+class ListBankAccounts extends BaseManageBankAccounts
 {
     protected static string $resource = BankAccountResource::class;
 }

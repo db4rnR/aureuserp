@@ -20,7 +20,7 @@ use PHPUnit\Framework\Attributes\Group;
  * - #[CoversClass] - To indicate which class is being tested
  * - #[PluginTest] - To indicate which plugin is being tested
  */
-final class TestClassAttributesRule implements Rule
+class TestClassAttributesRule implements Rule
 {
     public function getNodeType(): string
     {

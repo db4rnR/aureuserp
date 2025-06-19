@@ -11,7 +11,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Account\Filament\Resources\PaymentTermResource;
 
-final class ViewPaymentTerm extends ViewRecord
+class ViewPaymentTerm extends ViewRecord
 {
     protected static string $resource = PaymentTermResource::class;
 
@@ -24,10 +24,8 @@ final class ViewPaymentTerm extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/payment-term/pages/view-payment-term.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/payment-term/pages/view-payment-term.header-actions.delete.notification.body'))
                 ),

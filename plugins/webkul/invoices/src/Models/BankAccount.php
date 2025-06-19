@@ -6,7 +6,7 @@ namespace Webkul\Invoice\Models;
 
 use Webkul\Partner\Models\BankAccount as BaseBankAccount;
 
-final class BankAccount extends BaseBankAccount
+class BankAccount extends BaseBankAccount
 {
     //
 }

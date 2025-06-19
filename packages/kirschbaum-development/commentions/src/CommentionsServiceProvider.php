@@ -17,7 +17,7 @@ use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class CommentionsServiceProvider extends PackageServiceProvider
+class CommentionsServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'commentions';
 

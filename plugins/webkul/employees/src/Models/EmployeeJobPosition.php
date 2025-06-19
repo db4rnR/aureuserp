@@ -15,7 +15,7 @@ use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class EmployeeJobPosition extends Model implements Sortable
+class EmployeeJobPosition extends Model implements Sortable
 {
     use HasCustomFields, HasFactory, SoftDeletes, SortableTrait;
 

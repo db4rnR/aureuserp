@@ -6,7 +6,7 @@ namespace FilamentTiptapEditor\Extensions\Marks;
 
 use Tiptap\Marks\Link as BaseLink;
 
-final class Link extends BaseLink
+class Link extends BaseLink
 {
     public function addOptions(): array
     {

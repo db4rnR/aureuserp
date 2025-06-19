@@ -38,7 +38,7 @@ use Webkul\Account\Filament\Resources\PaymentsResource\Pages\ViewPayments;
 use Webkul\Account\Models\Payment;
 use Webkul\Field\Filament\Forms\Components\ProgressStepper;
 
-final class PaymentsResource extends Resource
+class PaymentsResource extends Resource
 {
     protected static ?string $model = Payment::class;
 
@@ -46,14 +46,12 @@ final class PaymentsResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Grid::make()
-                    ->schema([
-                        ProgressStepper::make('state')
-                            ->hiddenLabel()
+                Grid::make()->schema([
+                        ProgressStepper::make('state')->hiddenLabel()
                             ->inline()
                             ->options(PaymentStatus::class)
                             ->default(PaymentStatus::DRAFT->value)
@@ -62,17 +60,13 @@ final class PaymentsResource extends Resource
                             ->live()
                             ->reactive(),
                     ])->columns(2),
-                Section::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                ToggleButtons::make('payment_type')
-                                    ->label(__('accounts::filament/resources/payment.form.sections.fields.payment-type'))
+                Section::make()->schema([
+                        Group::make()->schema([
+                                ToggleButtons::make('payment_type')->label(__('accounts::filament/resources/payment.form.sections.fields.payment-type'))
                                     ->options(PaymentType::class)
                                     ->default(PaymentType::SEND->value)
                                     ->inline(true),
-                                Select::make('partner_bank_id')
-                                    ->label(__('accounts::filament/resources/payment.form.sections.fields.customer-bank-account'))
+                                Select::make('partner_bank_id')->label(__('accounts::filament/resources/payment.form.sections.fields.customer-bank-account'))
                                     ->relationship(
                                         'partnerBank',
                                         'account_number',
@@ -83,36 +77,31 @@ final class PaymentsResource extends Resource
                                     ->searchable()
                                     ->preload()
                                     ->required(),
-                                Select::make('partner_id')
-                                    ->label(__('accounts::filament/resources/payment.form.sections.fields.customer'))
+                                Select::make('partner_id')->label(__('accounts::filament/resources/payment.form.sections.fields.customer'))
                                     ->relationship(
                                         'partner',
                                         'name',
                                     )
                                     ->searchable()
                                     ->preload(),
-                                Select::make('payment_method_line_id')
-                                    ->label(__('accounts::filament/resources/payment.form.sections.fields.payment-method'))
+                                Select::make('payment_method_line_id')->label(__('accounts::filament/resources/payment.form.sections.fields.payment-method'))
                                     ->relationship(
                                         'paymentMethodLine',
                                         'name',
                                     )
                                     ->searchable()
                                     ->preload(),
-                                TextInput::make('amount')
-                                    ->label(__('accounts::filament/resources/payment.form.sections.fields.amount'))
+                                TextInput::make('amount')->label(__('accounts::filament/resources/payment.form.sections.fields.amount'))
                                     ->default(0)
                                     ->numeric()
                                     ->minValue(0)
                                     ->maxValue(99999999999)
                                     ->required(),
-                                DatePicker::make('date')
-                                    ->label(__('accounts::filament/resources/payment.form.sections.fields.date'))
+                                DatePicker::make('date')->label(__('accounts::filament/resources/payment.form.sections.fields.date'))
                                     ->native(false)
                                     ->default(now())
                                     ->required(),
-                                TextInput::make('memo')
-                                    ->label(__('accounts::filament/resources/payment.form.sections.fields.memo'))
+                                TextInput::make('memo')->label(__('accounts::filament/resources/payment.form.sections.fields.memo'))
                                     ->maxLength(255),
                             ])->columns(2),
                     ]),
@@ -124,204 +113,162 @@ final class PaymentsResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.name'))
+                TextColumn::make('name')->label(__('accounts::filament/resources/payment.table.columns.name'))
                     ->searchable()
                     ->placeholder('-')
                     ->sortable(),
-                TextColumn::make('company.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.company'))
+                TextColumn::make('company.name')->label(__('accounts::filament/resources/payment.table.columns.company'))
                     ->placeholder('-')
                     ->sortable(),
-                TextColumn::make('partnerBank.account_holder_name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.bank-account-holder'))
+                TextColumn::make('partnerBank.account_holder_name')->label(__('accounts::filament/resources/payment.table.columns.bank-account-holder'))
                     ->searchable()
                     ->placeholder('-')
                     ->sortable(),
-                TextColumn::make('pairedInternalTransferPayment.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.paired-internal-transfer-payment'))
+                TextColumn::make('pairedInternalTransferPayment.name')->label(__('accounts::filament/resources/payment.table.columns.paired-internal-transfer-payment'))
                     ->placeholder('-')
                     ->sortable(),
-                TextColumn::make('paymentMethodLine.name')
-                    ->placeholder('-')
+                TextColumn::make('paymentMethodLine.name')->placeholder('-')
                     ->label(__('accounts::filament/resources/payment.table.columns.payment-method-line'))
                     ->sortable(),
-                TextColumn::make('paymentMethod.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.payment-method'))
+                TextColumn::make('paymentMethod.name')->label(__('accounts::filament/resources/payment.table.columns.payment-method'))
                     ->placeholder('-')
                     ->sortable(),
-                TextColumn::make('currency.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.currency'))
+                TextColumn::make('currency.name')->label(__('accounts::filament/resources/payment.table.columns.currency'))
                     ->placeholder('-')
                     ->sortable(),
-                TextColumn::make('partner.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.partner'))
+                TextColumn::make('partner.name')->label(__('accounts::filament/resources/payment.table.columns.partner'))
                     ->sortable()
                     ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('outstandingAccount.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.outstanding-amount'))
+                TextColumn::make('outstandingAccount.name')->label(__('accounts::filament/resources/payment.table.columns.outstanding-amount'))
                     ->sortable()
                     ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('destinationAccount.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.destination-account'))
+                TextColumn::make('destinationAccount.name')->label(__('accounts::filament/resources/payment.table.columns.destination-account'))
                     ->sortable()
                     ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('createdBy.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('accounts::filament/resources/payment.table.columns.created-by'))
                     ->sortable()
                     ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('paymentTransaction.name')
-                    ->label(__('accounts::filament/resources/payment.table.columns.payment-transaction'))
+                TextColumn::make('paymentTransaction.name')->label(__('accounts::filament/resources/payment.table.columns.payment-transaction'))
                     ->sortable()
                     ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->groups([
-                Tables\Grouping\Group::make('name')
-                    ->label(__('accounts::filament/resources/payment.table.groups.name'))
+                Tables\Grouping\Group::make('name')->label(__('accounts::filament/resources/payment.table.groups.name'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('company.name')
-                    ->label(__('accounts::filament/resources/payment.table.groups.company'))
+                Tables\Grouping\Group::make('company.name')->label(__('accounts::filament/resources/payment.table.groups.company'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('paymentMethodLine.name')
-                    ->label(__('accounts::filament/resources/payment.table.groups.payment-method-line'))
+                Tables\Grouping\Group::make('paymentMethodLine.name')->label(__('accounts::filament/resources/payment.table.groups.payment-method-line'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('partner.name')
-                    ->label(__('accounts::filament/resources/payment.table.groups.partner'))
+                Tables\Grouping\Group::make('partner.name')->label(__('accounts::filament/resources/payment.table.groups.partner'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('paymentMethod.name')
-                    ->label(__('accounts::filament/resources/payment.table.groups.payment-method'))
+                Tables\Grouping\Group::make('paymentMethod.name')->label(__('accounts::filament/resources/payment.table.groups.payment-method'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('partnerBank.account_holder_name')
-                    ->label(__('accounts::filament/resources/payment.table.groups.partner-bank-account'))
+                Tables\Grouping\Group::make('partnerBank.account_holder_name')->label(__('accounts::filament/resources/payment.table.groups.partner-bank-account'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('pairedInternalTransferPayment.name')
-                    ->label(__('accounts::filament/resources/payment.table.groups.paired-internal-transfer-payment'))
+                Tables\Grouping\Group::make('pairedInternalTransferPayment.name')->label(__('accounts::filament/resources/payment.table.groups.paired-internal-transfer-payment'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('created_at')
-                    ->label(__('accounts::filament/resources/payment.table.groups.created-at'))
+                Tables\Grouping\Group::make('created_at')->label(__('accounts::filament/resources/payment.table.groups.created-at'))
                     ->collapsible(),
-                Tables\Grouping\Group::make('updated_at')
-                    ->label(__('accounts::filament/resources/payment.table.groups.updated-at'))
+                Tables\Grouping\Group::make('updated_at')->label(__('accounts::filament/resources/payment.table.groups.updated-at'))
                     ->date()
                     ->collapsible(),
             ])
             ->filtersFormColumns(2)
             ->filters([
-                QueryBuilder::make()
-                    ->constraintPickerColumns(2)
+                QueryBuilder::make()->constraintPickerColumns(2)
                     ->constraints([
-                        RelationshipConstraint::make('company.name')
-                            ->label(__('accounts::filament/resources/payment.table.filters.company'))
+                        RelationshipConstraint::make('company.name')->label(__('accounts::filament/resources/payment.table.filters.company'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('accounts::filament/resources/payment.table.filters.company'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('partnerBank.account_holder_name')
-                            ->label(__('accounts::filament/resources/payment.table.filters.customer-bank-account'))
+                        RelationshipConstraint::make('partnerBank.account_holder_name')->label(__('accounts::filament/resources/payment.table.filters.customer-bank-account'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('accounts::filament/resources/payment.table.filters.customer-bank-account'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('pairedInternalTransferPayment.name')
-                            ->label(__('accounts::filament/resources/payment.table.filters.paired-internal-transfer-payment'))
+                        RelationshipConstraint::make('pairedInternalTransferPayment.name')->label(__('accounts::filament/resources/payment.table.filters.paired-internal-transfer-payment'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('accounts::filament/resources/payment.table.filters.paired-internal-transfer-payment'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('paymentMethodLine.name')
-                            ->label(__('accounts::filament/resources/payment.table.filters.payment-method-line'))
+                        RelationshipConstraint::make('paymentMethodLine.name')->label(__('accounts::filament/resources/payment.table.filters.payment-method-line'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('accounts::filament/resources/payment.table.filters.payment-method-line'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('paymentMethod.name')
-                            ->label(__('accounts::filament/resources/payment.table.filters.payment-method'))
+                        RelationshipConstraint::make('paymentMethod.name')->label(__('accounts::filament/resources/payment.table.filters.payment-method'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('accounts::filament/resources/payment.table.filters.payment-method'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('currency.name')
-                            ->label(__('accounts::filament/resources/payment.table.filters.currency'))
+                        RelationshipConstraint::make('currency.name')->label(__('accounts::filament/resources/payment.table.filters.currency'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('accounts::filament/resources/payment.table.filters.currency'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('partner.name')
-                            ->label(__('accounts::filament/resources/payment.table.filters.partner'))
+                        RelationshipConstraint::make('partner.name')->label(__('accounts::filament/resources/payment.table.filters.partner'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->label(__('accounts::filament/resources/payment.table.filters.partner'))
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        DateConstraint::make('created_at')
-                            ->label(__('accounts::filament/resources/payment.table.filters.created-at')),
-                        DateConstraint::make('updated_at')
-                            ->label(__('accounts::filament/resources/payment.table.filters.updated-at')),
+                        DateConstraint::make('created_at')->label(__('accounts::filament/resources/payment.table.filters.created-at')),
+                        DateConstraint::make('updated_at')->label(__('accounts::filament/resources/payment.table.filters.updated-at')),
                     ]),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('accounts::filament/resources/payment.table.actions.delete.notification.title'))
                             ->body(__('accounts::filament/resources/payment.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('accounts::filament/resources/payment.table.bulk-actions.delete.notification.title'))
                                 ->body(__('accounts::filament/resources/payment.table.bulk-actions.delete.notification.body'))
                         ),
@@ -329,16 +276,13 @@ final class PaymentsResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                Section::make()
-                    ->schema([
-                        Group::make()
-                            ->schema([
-                                TextEntry::make('state')
-                                    ->badge()
+                Section::make()->schema([
+                        Group::make()->schema([
+                                TextEntry::make('state')->badge()
                                     ->color(fn (string $state): string => match ($state) {
                                         PaymentStatus::DRAFT->value => 'gray',
                                         PaymentStatus::IN_PROCESS->value => 'warning',
@@ -348,35 +292,28 @@ final class PaymentsResource extends Resource
                                     })
                                     ->label(__('accounts::filament/resources/payment.infolist.sections.payment-information.entries.state'))
                                     ->formatStateUsing(fn (string $state): string => PaymentStatus::options()[$state]),
-                                TextEntry::make('payment_type')
-                                    ->label(__('accounts::filament/resources/payment.infolist.sections.payment-information.entries.payment-type'))
+                                TextEntry::make('payment_type')->label(__('accounts::filament/resources/payment.infolist.sections.payment-information.entries.payment-type'))
                                     ->badge()
                                     ->icon(fn (string $state): string => PaymentType::from($state)->getIcon())
                                     ->color(fn (string $state): string => PaymentType::from($state)->getColor())
                                     ->formatStateUsing(fn (string $state): string => PaymentType::from($state)->getLabel()),
-                                TextEntry::make('partnerBank.account_number')
-                                    ->label(__('accounts::filament/resources/payment.infolist.sections.payment-information.entries.customer-bank-account'))
+                                TextEntry::make('partnerBank.account_number')->label(__('accounts::filament/resources/payment.infolist.sections.payment-information.entries.customer-bank-account'))
                                     ->icon('heroicon-o-building-library')
                                     ->placeholder('—'),
-                                TextEntry::make('partner.name')
-                                    ->label(__('accounts::filament/resources/payment.infolist.sections.payment-information.entries.customer'))
+                                TextEntry::make('partner.name')->label(__('accounts::filament/resources/payment.infolist.sections.payment-information.entries.customer'))
                                     ->icon('heroicon-o-user')
                                     ->placeholder('—'),
-                                TextEntry::make('paymentMethodLine.name')
-                                    ->label(__('accounts::filament/resources/payment.infolist.sections.payment-method.entries.payment-method'))
+                                TextEntry::make('paymentMethodLine.name')->label(__('accounts::filament/resources/payment.infolist.sections.payment-method.entries.payment-method'))
                                     ->icon('heroicon-o-credit-card')
                                     ->placeholder('—'),
-                                TextEntry::make('amount')
-                                    ->icon('heroicon-o-currency-dollar')
+                                TextEntry::make('amount')->icon('heroicon-o-currency-dollar')
                                     ->label(__('accounts::filament/resources/payment.infolist.sections.payment-details.entries.amount'))
                                     ->placeholder('—'),
-                                TextEntry::make('date')
-                                    ->icon('heroicon-o-calendar')
+                                TextEntry::make('date')->icon('heroicon-o-calendar')
                                     ->label(__('accounts::filament/resources/payment.infolist.sections.payment-details.entries.date'))
                                     ->placeholder('—')
                                     ->date(),
-                                TextEntry::make('memo')
-                                    ->label(__('accounts::filament/resources/payment.infolist.sections.payment-details.entries.memo'))
+                                TextEntry::make('memo')->label(__('accounts::filament/resources/payment.infolist.sections.payment-details.entries.memo'))
                                     ->icon('heroicon-o-document-text')
                                     ->placeholder('—'),
                             ])->columns(2),

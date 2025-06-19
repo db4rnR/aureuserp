@@ -7,7 +7,7 @@ namespace Webkul\Recruitment\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-final class JobPositionInterviewer extends Model
+class JobPositionInterviewer extends Model
 {
     public $timestamps = false;
 

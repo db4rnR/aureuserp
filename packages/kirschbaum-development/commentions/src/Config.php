@@ -8,7 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use Kirschbaum\Commentions\Contracts\Commenter;
 
-final class Config
+class Config
 {
     private static ?string $guard = null;
 

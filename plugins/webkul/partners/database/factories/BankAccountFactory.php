@@ -13,7 +13,7 @@ use Webkul\Support\Models\Bank;
 /**
  * @extends Factory<BankAccount>
  */
-final class BankAccountFactory extends Factory
+class BankAccountFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

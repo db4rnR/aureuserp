@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Kirschbaum\Commentions\Contracts\Commentable;
 use Kirschbaum\Commentions\HasComments;
 
-final class Team extends Model implements Commentable
+class Team extends Model implements Commentable
 {
     use HasComments, SoftDeletes;
 

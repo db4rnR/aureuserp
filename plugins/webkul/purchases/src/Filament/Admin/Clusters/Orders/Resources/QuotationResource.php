@@ -16,7 +16,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\QuotationResource\P
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\QuotationResource\Pages\ViewQuotation;
 use Webkul\Purchase\Models\Quotation;
 
-final class QuotationResource extends OrderResource
+class QuotationResource extends OrderResource
 {
     protected static ?string $model = Quotation::class;
 

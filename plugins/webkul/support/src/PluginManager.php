@@ -9,7 +9,7 @@ use Filament\Panel;
 
 use function Illuminate\Filesystem\join_paths;
 
-final class PluginManager implements Plugin
+class PluginManager implements Plugin
 {
     public static function make(): static
     {

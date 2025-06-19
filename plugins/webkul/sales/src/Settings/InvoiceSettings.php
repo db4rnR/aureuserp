@@ -6,7 +6,7 @@ namespace Webkul\Sale\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-final class InvoiceSettings extends Settings
+class InvoiceSettings extends Settings
 {
     public string $invoice_policy;
 

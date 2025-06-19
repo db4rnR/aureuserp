@@ -10,7 +10,7 @@ use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 use Webkul\Website\Filament\Admin\Resources\PageResource;
 
-final class ListPages extends ListRecords
+class ListPages extends ListRecords
 {
     use HasTableViews;
 
@@ -29,8 +29,7 @@ final class ListPages extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('website::filament/admin/resources/page/pages/list-records.header-actions.create.label'))
+            CreateAction::make()->label(__('website::filament/admin/resources/page/pages/list-records.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

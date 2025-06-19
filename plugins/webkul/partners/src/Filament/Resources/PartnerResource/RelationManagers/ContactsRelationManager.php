@@ -12,13 +12,13 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 
-final class ContactsRelationManager extends RelationManager
+class ContactsRelationManager extends RelationManager
 {
     protected static string $relationship = 'contacts';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return PartnerResource::form($schema);
+        return PartnerResource::form($form);
     }
 
     public function table(Table $table): Table
@@ -27,8 +27,7 @@ final class ContactsRelationManager extends RelationManager
             ->filters([])
             ->groups([])
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('partners::filament/resources/partner/relation-managers/contacts.table.header-actions.create.label'))
+                CreateAction::make()->label(__('partners::filament/resources/partner/relation-managers/contacts.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::id();
@@ -36,8 +35,7 @@ final class ContactsRelationManager extends RelationManager
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('partners::filament/resources/partner/relation-managers/contacts.table.header-actions.create.notification.title'))
                             ->body(__('partners::filament/resources/partner/relation-managers/contacts.table.header-actions.create.notification.body')),
                     ),

@@ -11,7 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
-final class ChatterAction extends Action
+class ChatterAction extends Action
 {
     private mixed $activityPlans;
 

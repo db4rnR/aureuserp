@@ -31,7 +31,7 @@ use Webkul\Employee\Filament\Clusters\Configurations;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmploymentTypeResource\Pages\ListEmploymentTypes;
 use Webkul\Employee\Models\EmploymentType;
 
-final class EmploymentTypeResource extends Resource
+class EmploymentTypeResource extends Resource
 {
     protected static ?string $model = EmploymentType::class;
 
@@ -54,21 +54,17 @@ final class EmploymentTypeResource extends Resource
         return __('employees::filament/clusters/configurations/resources/employment-type.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Hidden::make('creator_id')
-                    ->default(Auth::user()->id),
-                TextInput::make('name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.form.fields.name'))
+                Hidden::make('creator_id')->default(Auth::user()->id),
+                TextInput::make('name')->label(__('employees::filament/clusters/configurations/resources/employment-type.form.fields.name'))
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true),
-                TextInput::make('code')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.form.fields.name')),
-                Select::make('country_id')
-                    ->searchable()
+                TextInput::make('code')->label(__('employees::filament/clusters/configurations/resources/employment-type.form.fields.name')),
+                Select::make('country_id')->searchable()
                     ->preload()
                     ->label(__('employees::filament/clusters/configurations/resources/employment-type.form.fields.country'))
                     ->relationship('country', 'name'),
@@ -80,132 +76,103 @@ final class EmploymentTypeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.id'))
+                TextColumn::make('id')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.id'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('name')
-                    ->sortable()
+                TextColumn::make('name')->sortable()
                     ->searchable()
                     ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.name')),
-                TextColumn::make('code')
-                    ->sortable()
+                TextColumn::make('code')->sortable()
                     ->searchable()
                     ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.code')),
-                TextColumn::make('country.name')
-                    ->sortable()
+                TextColumn::make('country.name')->sortable()
                     ->searchable()
                     ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.country')),
-                TextColumn::make('createdBy.name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.created-by'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                QueryBuilder::make()
-                    ->constraintPickerColumns(2)
+                QueryBuilder::make()->constraintPickerColumns(2)
                     ->constraints([
-                        TextConstraint::make('name')
-                            ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.name'))
+                        TextConstraint::make('name')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.name'))
                             ->icon('heroicon-o-user'),
-                        RelationshipConstraint::make('country')
-                            ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.country'))
+                        RelationshipConstraint::make('country')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.country'))
                             ->icon('heroicon-o-map')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        RelationshipConstraint::make('createdBy')
-                            ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.created-by'))
+                        RelationshipConstraint::make('createdBy')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.created-by'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        DateConstraint::make('created_at')
-                            ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.created-at')),
-                        DateConstraint::make('updated_at')
-                            ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.updated-at')),
+                        DateConstraint::make('created_at')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.created-at')),
+                        DateConstraint::make('updated_at')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.filters.updated-at')),
                     ]),
             ])
             ->groups([
-                Group::make('name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.name'))
+                Group::make('name')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.name'))
                     ->collapsible(),
-                Group::make('code')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.code'))
+                Group::make('code')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.code'))
                     ->collapsible(),
-                Group::make('country.name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.country'))
+                Group::make('country.name')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.country'))
                     ->collapsible(),
-                Group::make('createdBy.name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.created-by'))
+                Group::make('createdBy.name')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.created-by'))
                     ->collapsible(),
-                Group::make('created_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.created-at'))
+                Group::make('created_at')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.created-at'))
                     ->collapsible(),
-                Group::make('updated_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.updated-at'))
+                Group::make('updated_at')->label(__('employees::filament/clusters/configurations/resources/employment-type.table.groups.updated-at'))
                     ->date()
                     ->collapsible(),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->mutateDataUsing(function (array $data): array {
+                EditAction::make()->mutateDataUsing(function (array $data): array {
                         $data['code'] ??= $data['name'];
 
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('employees::filament/clusters/configurations/resources/employment-type.table.actions.edit.notification.title'))
                             ->body(__('employees::filament/clusters/configurations/resources/employment-type.table.actions.edit.notification.body'))
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('employees::filament/clusters/configurations/resources/employment-type.table.actions.delete.notification.title'))
                             ->body(__('employees::filament/clusters/configurations/resources/employment-type.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/clusters/configurations/resources/employment-type.table.bulk-actions.delete.notification.title'))
                                 ->body(__('employees::filament/clusters/configurations/resources/employment-type.table.bulk-actions.delete.notification.body'))
                         ),
                 ]),
             ])
             ->emptyStateActions([
-                CreateAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                CreateAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('employees::filament/clusters/configurations/resources/employment-type.table.empty-state-actions.create.notification.title'))
                             ->body(__('employees::filament/clusters/configurations/resources/employment-type.table.empty-state-actions.create.notification.body'))
                     )
@@ -215,20 +182,17 @@ final class EmploymentTypeResource extends Resource
             ->defaultSort('sort', 'desc');
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                TextEntry::make('name')
-                    ->icon('heroicon-o-user')
+                TextEntry::make('name')->icon('heroicon-o-user')
                     ->placeholder('—')
                     ->label(__('employees::filament/clusters/configurations/resources/employment-type.infolist.entries.name')),
-                TextEntry::make('code')
-                    ->placeholder('—')
+                TextEntry::make('code')->placeholder('—')
                     ->icon('heroicon-o-user')
                     ->label(__('employees::filament/clusters/configurations/resources/employment-type.infolist.entries.code')),
-                TextEntry::make('country.name')
-                    ->placeholder('—')
+                TextEntry::make('country.name')->placeholder('—')
                     ->icon('heroicon-o-map')
                     ->label(__('employees::filament/clusters/configurations/resources/employment-type.infolist.entries.country')),
             ]);

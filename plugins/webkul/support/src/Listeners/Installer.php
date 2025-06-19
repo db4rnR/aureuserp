@@ -8,7 +8,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Webkul\Security\Models\User;
 
-final class Installer
+class Installer
 {
     /**
      * Api endpoint

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\ProjectStageResource;
 use Webkul\Project\Models\ProjectStage;
 
-final class ManageProjectStages extends ManageRecords
+class ManageProjectStages extends ManageRecords
 {
     protected static string $resource = ProjectStageResource::class;
 
@@ -30,8 +30,7 @@ final class ManageProjectStages extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('projects::filament/clusters/configurations/resources/project-stage/pages/manage-project-stages.header-actions.create.label'))
+            CreateAction::make()->label(__('projects::filament/clusters/configurations/resources/project-stage/pages/manage-project-stages.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle')
                 ->mutateDataUsing(function (array $data): array {
                     $data['creator_id'] = Auth::id();
@@ -39,8 +38,7 @@ final class ManageProjectStages extends ManageRecords
                     return $data;
                 })
                 ->successNotification(
-                    Notification::make()
-                        ->success()
+                    Notification::make()->success()
                         ->title(__('projects::filament/clusters/configurations/resources/project-stage/pages/manage-project-stages.header-actions.create.notification.title'))
                         ->body(__('projects::filament/clusters/configurations/resources/project-stage/pages/manage-project-stages.header-actions.create.notification.body')),
                 ),

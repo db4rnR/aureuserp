@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Webkul\Support\Package;
 
-final class UninstallCommand extends Command
+class UninstallCommand extends Command
 {
     public ?Closure $startWith = null;
 

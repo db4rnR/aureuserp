@@ -9,7 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Product\Filament\Resources\PriceListResource;
 
-final class EditPriceList extends EditRecord
+class EditPriceList extends EditRecord
 {
     protected static string $resource = PriceListResource::class;
 

@@ -9,7 +9,7 @@ use Webkul\Chatter\Livewire\ChatterPanel;
 use Webkul\Support\Package;
 use Webkul\Support\PackageServiceProvider;
 
-final class ChatterServiceProvider extends PackageServiceProvider
+class ChatterServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'chatter';
 

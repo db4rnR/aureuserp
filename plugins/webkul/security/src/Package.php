@@ -6,7 +6,7 @@ namespace Webkul\Security;
 
 use Spatie\LaravelPackageTools\Package as BasePackage;
 
-final class Package extends BasePackage
+class Package extends BasePackage
 {
     public bool $runsSettings = false;
 

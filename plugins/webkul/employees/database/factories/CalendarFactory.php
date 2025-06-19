@@ -9,7 +9,7 @@ use Webkul\Employee\Models\Calendar;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class CalendarFactory extends Factory
+class CalendarFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

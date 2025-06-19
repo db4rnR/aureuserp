@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Resources\TaskResource;
 
-final class CreateTask extends CreateRecord
+class CreateTask extends CreateRecord
 {
     protected static string $resource = TaskResource::class;
 
@@ -20,8 +20,7 @@ final class CreateTask extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('projects::filament/resources/task/pages/create-task.notification.title'))
             ->body(__('projects::filament/resources/task/pages/create-task.notification.body'));
     }

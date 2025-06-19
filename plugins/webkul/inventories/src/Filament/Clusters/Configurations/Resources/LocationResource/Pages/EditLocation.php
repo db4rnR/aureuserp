@@ -12,14 +12,13 @@ use Filament\Resources\Pages\EditRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\LocationResource;
 use Webkul\Inventory\Models\Location;
 
-final class EditLocation extends EditRecord
+class EditLocation extends EditRecord
 {
     protected static string $resource = LocationResource::class;
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/location/pages/edit-location.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/location/pages/edit-location.notification.body'));
     }
@@ -27,8 +26,7 @@ final class EditLocation extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('print')
-                ->label(__('inventories::filament/clusters/configurations/resources/location/pages/edit-location.header-actions.print.label'))
+            Action::make('print')->label(__('inventories::filament/clusters/configurations/resources/location/pages/edit-location.header-actions.print.label'))
                 ->icon('heroicon-o-printer')
                 ->color('gray')
                 ->action(function (Location $record) {
@@ -42,10 +40,8 @@ final class EditLocation extends EditRecord
                         echo $pdf->output();
                     }, 'Location-'.$record->name.'.pdf');
                 }),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('inventories::filament/clusters/configurations/resources/location/pages/edit-location.header-actions.delete.notification.title'))
                         ->body(__('inventories::filament/clusters/configurations/resources/location/pages/edit-location.header-actions.delete.notification.body')),
                 ),

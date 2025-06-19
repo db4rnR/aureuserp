@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Employee\Database\Factories\EmployeeEmployeeCategoryFactory;
 
-final class EmployeeEmployeeCategory extends Model
+class EmployeeEmployeeCategory extends Model
 {
     use HasFactory;
 

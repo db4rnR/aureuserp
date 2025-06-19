@@ -7,7 +7,7 @@ namespace Webkul\Account\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-final class AccountPaymentRegisterMoveLine extends Model
+class AccountPaymentRegisterMoveLine extends Model
 {
     use HasFactory;
 

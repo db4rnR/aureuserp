@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\URL;
 use Webkul\Security\Models\Invitation;
 
-final class UserInvitationMail extends Mailable
+class UserInvitationMail extends Mailable
 {
     use Queueable, SerializesModels;
 

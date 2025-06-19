@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Pboivin\FilamentPeek\Tests\Models\Page;
 
-final class PageFactory extends Factory
+class PageFactory extends Factory
 {
     protected $model = Page::class;
 

@@ -25,7 +25,7 @@ use Webkul\Inventory\Models\Route;
 use Webkul\Inventory\Models\Rule;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-final class CreateWarehouse extends CreateRecord
+class CreateWarehouse extends CreateRecord
 {
     protected static string $resource = WarehouseResource::class;
 
@@ -38,8 +38,7 @@ final class CreateWarehouse extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/warehouse/pages/create-warehouse.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/warehouse/pages/create-warehouse.notification.body'));
     }

@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrder
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages\ViewOrder;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseOrderResource;
 
-final class ViewPurchaseOrder extends ViewOrder
+class ViewPurchaseOrder extends ViewOrder
 {
     protected static string $resource = PurchaseOrderResource::class;
 }

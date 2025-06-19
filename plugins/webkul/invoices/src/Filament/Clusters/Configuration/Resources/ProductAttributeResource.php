@@ -12,7 +12,7 @@ use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductAttributeRes
 use Webkul\Invoice\Models\Attribute;
 use Webkul\Product\Filament\Resources\AttributeResource;
 
-final class ProductAttributeResource extends AttributeResource
+class ProductAttributeResource extends AttributeResource
 {
     protected static ?string $model = Attribute::class;
 

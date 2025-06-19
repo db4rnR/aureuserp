@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlanResource;
 
-final class EditActivityPlan extends EditRecord
+class EditActivityPlan extends EditRecord
 {
     protected static string $resource = ActivityPlanResource::class;
 
@@ -21,8 +21,7 @@ final class EditActivityPlan extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('employees::filament/clusters/configurations/resources/activity-plan/pages/edit-activity-plan.notification.title'))
             ->body(__('employees::filament/clusters/configurations/resources/activity-plan/pages/edit-activity-plan.notification.body'));
     }
@@ -31,10 +30,8 @@ final class EditActivityPlan extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('employees::filament/clusters/configurations/resources/activity-plan/pages/edit-activity-plan.header-actions.delete.notification.title'))
                         ->body(__('employees::filament/clusters/configurations/resources/activity-plan/pages/edit-activity-plan.header-actions.delete.notification.body')),
                 ),

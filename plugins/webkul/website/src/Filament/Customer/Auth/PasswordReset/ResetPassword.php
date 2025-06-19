@@ -30,7 +30,7 @@ use Livewire\Attributes\Locked;
 /**
  * @property Schema $form
  */
-final class ResetPassword extends Page
+class ResetPassword extends Page
 {
     use InteractsWithFormActions;
     use WithRateLimiting;
@@ -91,25 +91,23 @@ final class ResetPassword extends Page
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            Notification::make()
-                ->title(__($status))
+            Notification::make()->title(__($status))
                 ->success()
                 ->send();
 
             return app(PasswordResetResponse::class);
         }
 
-        Notification::make()
-            ->title(__($status))
+        Notification::make()->title(__($status))
             ->danger()
             ->send();
 
         return null;
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
@@ -129,8 +127,7 @@ final class ResetPassword extends Page
 
     public function getResetPasswordFormAction(): Action
     {
-        return Action::make('resetPassword')
-            ->label(__('filament-panels::pages/auth/password-reset/reset-password.form.actions.reset.label'))
+        return Action::make('resetPassword')->label(__('filament-panels::pages/auth/password-reset/reset-password.form.actions.reset.label'))
             ->submit('resetPassword');
     }
 
@@ -151,8 +148,7 @@ final class ResetPassword extends Page
 
     private function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {
-        return Notification::make()
-            ->title(__('filament-panels::pages/auth/password-reset/reset-password.notifications.throttled.title', [
+        return Notification::make()->title(__('filament-panels::pages/auth/password-reset/reset-password.notifications.throttled.title', [
                 'seconds' => $exception->secondsUntilAvailable,
                 'minutes' => $exception->minutesUntilAvailable,
             ]))
@@ -165,16 +161,14 @@ final class ResetPassword extends Page
 
     private function getEmailFormComponent(): Component
     {
-        return TextInput::make('email')
-            ->label(__('filament-panels::pages/auth/password-reset/reset-password.form.email.label'))
+        return TextInput::make('email')->label(__('filament-panels::pages/auth/password-reset/reset-password.form.email.label'))
             ->disabled()
             ->autofocus();
     }
 
     private function getPasswordFormComponent(): Component
     {
-        return TextInput::make('password')
-            ->label(__('filament-panels::pages/auth/password-reset/reset-password.form.password.label'))
+        return TextInput::make('password')->label(__('filament-panels::pages/auth/password-reset/reset-password.form.password.label'))
             ->password()
             ->revealable(filament()->arePasswordsRevealable())
             ->required()
@@ -185,8 +179,7 @@ final class ResetPassword extends Page
 
     private function getPasswordConfirmationFormComponent(): Component
     {
-        return TextInput::make('passwordConfirmation')
-            ->label(__('filament-panels::pages/auth/password-reset/reset-password.form.password_confirmation.label'))
+        return TextInput::make('passwordConfirmation')->label(__('filament-panels::pages/auth/password-reset/reset-password.form.password_confirmation.label'))
             ->password()
             ->revealable(filament()->arePasswordsRevealable())
             ->required()

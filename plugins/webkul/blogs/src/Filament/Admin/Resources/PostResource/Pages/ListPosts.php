@@ -12,7 +12,7 @@ use Webkul\Blog\Filament\Admin\Resources\PostResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListPosts extends ListRecords
+class ListPosts extends ListRecords
 {
     use HasTableViews;
 
@@ -36,8 +36,7 @@ final class ListPosts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->label(__('blogs::filament/admin/resources/post/pages/list-posts.header-actions.create.label'))
+            CreateAction::make()->label(__('blogs::filament/admin/resources/post/pages/list-posts.header-actions.create.label'))
                 ->icon('heroicon-o-plus-circle'),
         ];
     }

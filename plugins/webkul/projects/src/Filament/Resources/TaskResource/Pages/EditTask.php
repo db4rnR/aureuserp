@@ -11,7 +11,7 @@ use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Project\Filament\Resources\TaskResource;
 use Webkul\Support\Models\ActivityPlan;
 
-final class EditTask extends EditRecord
+class EditTask extends EditRecord
 {
     protected static string $resource = TaskResource::class;
 
@@ -22,8 +22,7 @@ final class EditTask extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('projects::filament/resources/task/pages/edit-task.notification.title'))
             ->body(__('projects::filament/resources/task/pages/edit-task.notification.body'));
     }
@@ -31,13 +30,10 @@ final class EditTask extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource)
+            ChatterAction::make()->setResource(self::$resource)
                 ->setActivityPlans($this->getActivityPlans()),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('projects::filament/resources/task/pages/edit-task.header-actions.delete.notification.title'))
                         ->body(__('projects::filament/resources/task/pages/edit-task.header-actions.delete.notification.body')),
                 ),

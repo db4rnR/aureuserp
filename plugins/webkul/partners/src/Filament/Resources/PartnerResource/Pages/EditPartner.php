@@ -12,7 +12,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 
-final class EditPartner extends EditRecord
+class EditPartner extends EditRecord
 {
     protected static string $resource = PartnerResource::class;
 
@@ -28,8 +28,7 @@ final class EditPartner extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('partners::filament/resources/partner/pages/edit-partner.notification.title'))
             ->body(__('partners::filament/resources/partner/pages/edit-partner.notification.body'));
     }
@@ -37,13 +36,10 @@ final class EditPartner extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterAction::make()->setResource(self::$resource),
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('partners::filament/resources/partner/pages/edit-partner.header-actions.delete.notification.title'))
                         ->body(__('partners::filament/resources/partner/pages/edit-partner.header-actions.delete.notification.body')),
                 ),

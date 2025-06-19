@@ -9,14 +9,14 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Models\Move;
 use Webkul\Account\Models\Partner;
 use Webkul\Support\Traits\PDFHandler;
 
-final class PrintAndSendAction extends Action
+class PrintAndSendAction extends Action
 {
     use PDFHandler;
 
@@ -48,21 +48,17 @@ final class PrintAndSendAction extends Action
         });
 
         $this->schema(
-            fn (Schema $schema): Schema => $schema->components([
-                Select::make('partners')
-                    ->options(Partner::all()->pluck('name', 'id'))
+            fn (Form $form): Form => $form->schema([
+                Select::make('partners')->options(Partner::all()->pluck('name', 'id'))
                     ->multiple()
                     ->label(__('accounts::filament/resources/invoice/actions/print-and-send.modal.form.partners'))
                     ->searchable()
                     ->preload(),
-                TextInput::make('subject')
-                    ->label(__('accounts::filament/resources/invoice/actions/print-and-send.modal.form.subject'))
+                TextInput::make('subject')->label(__('accounts::filament/resources/invoice/actions/print-and-send.modal.form.subject'))
                     ->hiddenLabel(),
-                RichEditor::make('description')
-                    ->label(__('accounts::filament/resources/invoice/actions/print-and-send.modal.form.description'))
+                RichEditor::make('description')->label(__('accounts::filament/resources/invoice/actions/print-and-send.modal.form.description'))
                     ->hiddenLabel(),
-                FileUpload::make('files')
-                    ->label(__('accounts::filament/resources/invoice/actions/print-and-send.modal.form.files'))
+                FileUpload::make('files')->label(__('accounts::filament/resources/invoice/actions/print-and-send.modal.form.files'))
                     ->downloadable()
                     ->openable()
                     ->multiple()

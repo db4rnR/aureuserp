@@ -8,7 +8,7 @@ use BezhanSalleh\FilamentShield\Support\Utils;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\PermissionRegistrar;
 
-final class ShieldSeeder extends Seeder
+class ShieldSeeder extends Seeder
 {
     public static function makeDirectPermissions(string $directPermissions): void
     {

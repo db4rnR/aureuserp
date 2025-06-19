@@ -10,7 +10,7 @@ use Webkul\Employee\Models\SkillLevel;
 use Webkul\Employee\Models\SkillType;
 use Webkul\Security\Models\User;
 
-final class CandidateSkill extends Model
+class CandidateSkill extends Model
 {
     protected $table = 'recruitments_candidate_skills';
 

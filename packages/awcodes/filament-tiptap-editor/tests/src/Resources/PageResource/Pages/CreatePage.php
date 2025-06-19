@@ -7,7 +7,7 @@ namespace FilamentTiptapEditor\Tests\Resources\PageResource\Pages;
 use Filament\Resources\Pages\CreateRecord;
 use FilamentTiptapEditor\Tests\Resources\PageResource;
 
-final class CreatePage extends CreateRecord
+class CreatePage extends CreateRecord
 {
     protected static string $resource = PageResource::class;
 }

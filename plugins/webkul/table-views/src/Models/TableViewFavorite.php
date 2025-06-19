@@ -7,7 +7,7 @@ namespace Webkul\TableViews\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Security\Models\User;
 
-final class TableViewFavorite extends Model
+class TableViewFavorite extends Model
 {
     /**
      * Fillable.

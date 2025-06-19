@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Livewire\Component;
 
-final class CuratorCuration extends Component
+class CuratorCuration extends Component
 {
     public Media $media;
 

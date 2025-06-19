@@ -39,7 +39,7 @@ use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Product\Enums\ProductType;
 use Webkul\Product\Filament\Resources\ProductResource as BaseProductResource;
 
-final class ProductResource extends BaseProductResource
+class ProductResource extends BaseProductResource
 {
     use HasCustomFields;
 
@@ -62,11 +62,11 @@ final class ProductResource extends BaseProductResource
         return __('inventories::filament/clusters/products/resources/product.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        $schema = BaseProductResource::form($schema);
+        $form = BaseProductResource::form($form);
 
-        $components = $schema->getComponents();
+        $components = $form->getComponents();
 
         $firstGroupChildComponents = $components[0]->getDefaultChildComponents();
 
@@ -74,8 +74,7 @@ final class ProductResource extends BaseProductResource
             ->schema([
                 Fieldset::make(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.tracking.title'))
                     ->schema([
-                        Toggle::make('is_storable')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.tracking.fields.track-inventory'))
+                        Toggle::make('is_storable')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.tracking.fields.track-inventory'))
                             ->default(true)
                             ->live()
                             ->afterStateUpdated(function (Set $set, Get $get): void {
@@ -85,8 +84,7 @@ final class ProductResource extends BaseProductResource
                                     $set('use_expiration_date', false);
                                 }
                             }),
-                        Select::make('tracking')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.tracking.fields.track-by'))
+                        Select::make('tracking')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.tracking.fields.track-by'))
                             ->selectablePlaceholder(false)
                             ->options(ProductTracking::class)
                             ->default(ProductTracking::QTY->value)
@@ -101,8 +99,7 @@ final class ProductResource extends BaseProductResource
                     ->columns(1),
                 Fieldset::make(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.operation.title'))
                     ->schema([
-                        CheckboxList::make('routes')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.operation.fields.routes'))
+                        CheckboxList::make('routes')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.operation.fields.routes'))
                             ->relationship(
                                 'routes',
                                 'name',
@@ -113,24 +110,20 @@ final class ProductResource extends BaseProductResource
 
                 Fieldset::make(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.title'))
                     ->schema([
-                        Select::make('responsible_id')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.responsible'))
+                        Select::make('responsible_id')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.responsible'))
                             ->relationship('responsible', 'name')
                             ->searchable()
                             ->preload()
                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.responsible-hint-tooltip')),
-                        TextInput::make('weight')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.weight'))
+                        TextInput::make('weight')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.weight'))
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(99999999999),
-                        TextInput::make('volume')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.volume'))
+                        TextInput::make('volume')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.volume'))
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(99999999999),
-                        TextInput::make('sale_delay')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.sale-delay'))
+                        TextInput::make('sale_delay')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.logistics.fields.sale-delay'))
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(99999999999)
@@ -139,26 +132,22 @@ final class ProductResource extends BaseProductResource
 
                 Fieldset::make(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.title'))
                     ->schema([
-                        TextInput::make('expiration_time')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.expiration-date'))
+                        TextInput::make('expiration_time')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.expiration-date'))
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(99999999999)
                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.expiration-date-hint-tooltip')),
-                        TextInput::make('use_time')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.best-before-date'))
+                        TextInput::make('use_time')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.best-before-date'))
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(99999999999)
                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.best-before-date-hint-tooltip')),
-                        TextInput::make('removal_time')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.removal-date'))
+                        TextInput::make('removal_time')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.removal-date'))
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(99999999999)
                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.removal-date-hint-tooltip')),
-                        TextInput::make('alert_time')
-                            ->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.alert-date'))
+                        TextInput::make('alert_time')->label(__('inventories::filament/clusters/products/resources/product.form.sections.inventory.fieldsets.traceability.fields.alert-date'))
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(99999999999)
@@ -174,9 +163,9 @@ final class ProductResource extends BaseProductResource
 
         $components[0]->childComponents($firstGroupChildComponents);
 
-        $schema->components($components);
+        $form->schema($components);
 
-        return $schema;
+        return $form;
     }
 
     public static function table(Table $table): Table
@@ -184,34 +173,29 @@ final class ProductResource extends BaseProductResource
         return BaseProductResource::table($table);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        $schema = BaseProductResource::infolist($schema);
+        $infolist = BaseProductResource::infolist($infolist);
 
-        $components = $schema->getComponents();
+        $components = $infolist->getComponents();
 
         $firstGroupChildComponents = $components[0]->getDefaultChildComponents();
 
         $firstGroupChildComponents[2] = Section::make(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.title'))
             ->schema([
-                Grid::make(3)
-                    ->schema([
-                        IconEntry::make('is_storable')
-                            ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.tracking.entries.track-inventory'))
+                Grid::make(3)->schema([
+                        IconEntry::make('is_storable')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.tracking.entries.track-inventory'))
                             ->boolean(),
 
-                        TextEntry::make('tracking')
-                            ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.tracking.entries.track-by')),
+                        TextEntry::make('tracking')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.tracking.entries.track-by')),
 
-                        IconEntry::make('use_expiration_date')
-                            ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.tracking.entries.expiration-date'))
+                        IconEntry::make('use_expiration_date')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.tracking.entries.expiration-date'))
                             ->boolean(),
                     ]),
 
                 Section::make(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.operation.title'))
                     ->schema([
-                        TextEntry::make('routes.name')
-                            ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.operation.entries.routes'))
+                        TextEntry::make('routes.name')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.operation.entries.routes'))
                             ->icon('heroicon-o-arrow-path')
                             ->listWithLineBreaks()
                             ->placeholder('—'),
@@ -219,50 +203,40 @@ final class ProductResource extends BaseProductResource
 
                 Section::make(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.title'))
                     ->schema([
-                        Grid::make(2)
-                            ->schema([
-                                TextEntry::make('responsible.name')
-                                    ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.responsible'))
+                        Grid::make(2)->schema([
+                                TextEntry::make('responsible.name')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.responsible'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-user'),
 
-                                TextEntry::make('weight')
-                                    ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.weight'))
+                                TextEntry::make('weight')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.weight'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-scale'),
 
-                                TextEntry::make('volume')
-                                    ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.volume'))
+                                TextEntry::make('volume')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.volume'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-beaker'),
 
-                                TextEntry::make('sale_delay')
-                                    ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.sale-delay'))
+                                TextEntry::make('sale_delay')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.logistics.entries.sale-delay'))
                                     ->placeholder('—'),
                             ]),
                     ]),
 
                 Section::make(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.title'))
                     ->schema([
-                        Grid::make(2)
-                            ->schema([
-                                TextEntry::make('expiration_time')
-                                    ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.entries.expiration-date'))
+                        Grid::make(2)->schema([
+                                TextEntry::make('expiration_time')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.entries.expiration-date'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-clock'),
 
-                                TextEntry::make('use_time')
-                                    ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.entries.best-before-date'))
+                                TextEntry::make('use_time')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.entries.best-before-date'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-clock'),
 
-                                TextEntry::make('removal_time')
-                                    ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.entries.removal-date'))
+                                TextEntry::make('removal_time')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.entries.removal-date'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-clock'),
 
-                                TextEntry::make('alert_time')
-                                    ->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.entries.alert-date'))
+                                TextEntry::make('alert_time')->label(__('inventories::filament/clusters/products/resources/product.infolist.sections.inventory.fieldsets.traceability.entries.alert-date'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-clock'),
                             ]),
@@ -273,9 +247,9 @@ final class ProductResource extends BaseProductResource
 
         $components[0]->childComponents($firstGroupChildComponents);
 
-        $schema->components($components);
+        $infolist->schema($components);
 
-        return $schema;
+        return $infolist;
     }
 
     public static function getRecordSubNavigation(Page $page): array

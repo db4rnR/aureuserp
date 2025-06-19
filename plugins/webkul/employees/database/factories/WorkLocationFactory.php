@@ -9,7 +9,7 @@ use Webkul\Employee\Models\WorkLocation;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class WorkLocationFactory extends Factory
+class WorkLocationFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

@@ -10,7 +10,7 @@ use Webkul\Chatter\Traits\HasLogActivity;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Product\Models\Product as BaseProduct;
 
-final class Product extends BaseProduct
+class Product extends BaseProduct
 {
     use HasChatter, HasCustomFields, HasLogActivity;
 

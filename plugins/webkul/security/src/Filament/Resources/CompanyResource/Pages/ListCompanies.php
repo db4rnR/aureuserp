@@ -9,7 +9,7 @@ use Filament\Resources\Pages\ListRecords;
 use Webkul\Security\Filament\Resources\CompanyResource;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListCompanies extends ListRecords
+class ListCompanies extends ListRecords
 {
     use HasTableViews;
 

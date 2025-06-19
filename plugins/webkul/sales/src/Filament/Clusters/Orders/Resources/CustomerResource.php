@@ -19,7 +19,7 @@ use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource\Pages\Manage
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource\Pages\ViewCustomer;
 use Webkul\Sale\Models\Partner;
 
-final class CustomerResource extends BaseCustomerResource
+class CustomerResource extends BaseCustomerResource
 {
     protected static ?string $model = Partner::class;
 

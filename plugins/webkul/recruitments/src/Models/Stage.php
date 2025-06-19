@@ -11,7 +11,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Security\Models\User;
 
-final class Stage extends Model implements Sortable
+class Stage extends Model implements Sortable
 {
     use HasFactory;
     use SortableTrait;

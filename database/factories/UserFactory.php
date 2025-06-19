@@ -12,7 +12,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<\App\Models\User>
  */
-final class UserFactory extends Factory
+class UserFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

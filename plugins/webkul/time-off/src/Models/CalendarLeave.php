@@ -6,7 +6,7 @@ namespace Webkul\TimeOff\Models;
 
 use Webkul\Employee\Models\CalendarLeaves as BaseCalendarLeave;
 
-final class CalendarLeave extends BaseCalendarLeave
+class CalendarLeave extends BaseCalendarLeave
 {
     //
 }

@@ -7,7 +7,7 @@ namespace Webkul\Support\Filament\Clusters;
 use BackedEnum;
 use Filament\Clusters\Cluster;
 
-final class Settings extends Cluster
+class Settings extends Cluster
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-wrench';
 

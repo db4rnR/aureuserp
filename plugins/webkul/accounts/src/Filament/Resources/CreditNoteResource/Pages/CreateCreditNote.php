@@ -10,7 +10,7 @@ use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\CreditNoteResource;
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\CreateInvoice as CreateRecord;
 
-final class CreateCreditNote extends CreateRecord
+class CreateCreditNote extends CreateRecord
 {
     protected static string $resource = CreditNoteResource::class;
 
@@ -21,8 +21,7 @@ final class CreateCreditNote extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/credit-note/pages/create-credit-note.notification.title'))
             ->body(__('accounts::filament/resources/credit-note/pages/create-credit-note.notification.body'));
     }

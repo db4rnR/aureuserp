@@ -20,7 +20,7 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource as BasePar
 use Webkul\Invoice\Models\Partner;
 use Webkul\Partner\Filament\Resources\PartnerResource as BaseVendorResource;
 
-final class PartnerResource extends BasePartnerResource
+class PartnerResource extends BasePartnerResource
 {
     protected static ?string $model = Partner::class;
 

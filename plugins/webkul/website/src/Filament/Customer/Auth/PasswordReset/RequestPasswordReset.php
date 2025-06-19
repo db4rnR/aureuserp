@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Password;
 /**
  * @property Schema $form
  */
-final class RequestPasswordReset extends Page
+class RequestPasswordReset extends Page
 {
     use InteractsWithFormActions;
     use WithRateLimiting;
@@ -78,31 +78,28 @@ final class RequestPasswordReset extends Page
         );
 
         if ($status !== Password::RESET_LINK_SENT) {
-            Notification::make()
-                ->title(__($status))
+            Notification::make()->title(__($status))
                 ->danger()
                 ->send();
 
             return;
         }
 
-        Notification::make()
-            ->title(__($status))
+        Notification::make()->title(__($status))
             ->success()
             ->send();
 
         $this->form->fill();
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema;
+        return $form;
     }
 
     public function loginAction(): Action
     {
-        return Action::make('login')
-            ->link()
+        return Action::make('login')->link()
             ->label(__('filament-panels::pages/auth/password-reset/request-password-reset.actions.login.label'))
             ->icon(match (__('filament-panels::layout.direction')) {
                 'rtl' => FilamentIcon::resolve('panels::pages.password-reset.request-password-reset.actions.login.rtl') ?? 'heroicon-m-arrow-right',
@@ -138,8 +135,7 @@ final class RequestPasswordReset extends Page
 
     private function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {
-        return Notification::make()
-            ->title(__('filament-panels::pages/auth/password-reset/request-password-reset.notifications.throttled.title', [
+        return Notification::make()->title(__('filament-panels::pages/auth/password-reset/request-password-reset.notifications.throttled.title', [
                 'seconds' => $exception->secondsUntilAvailable,
                 'minutes' => $exception->minutesUntilAvailable,
             ]))
@@ -168,8 +164,7 @@ final class RequestPasswordReset extends Page
 
     private function getEmailFormComponent(): Component
     {
-        return TextInput::make('email')
-            ->label(__('filament-panels::pages/auth/password-reset/request-password-reset.form.email.label'))
+        return TextInput::make('email')->label(__('filament-panels::pages/auth/password-reset/request-password-reset.form.email.label'))
             ->email()
             ->required()
             ->autocomplete()
@@ -178,8 +173,7 @@ final class RequestPasswordReset extends Page
 
     private function getRequestFormAction(): Action
     {
-        return Action::make('request')
-            ->label(__('filament-panels::pages/auth/password-reset/request-password-reset.form.actions.request.label'))
+        return Action::make('request')->label(__('filament-panels::pages/auth/password-reset/request-password-reset.form.actions.request.label'))
             ->submit('request');
     }
 }

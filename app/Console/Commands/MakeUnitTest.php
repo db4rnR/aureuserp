@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-final class MakeUnitTest extends Command
+class MakeUnitTest extends Command
 {
     /**
      * The name and signature of the console command.

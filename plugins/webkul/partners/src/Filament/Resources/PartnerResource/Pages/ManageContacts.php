@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 
-final class ManageContacts extends ManageRelatedRecords
+class ManageContacts extends ManageRelatedRecords
 {
     protected static string $resource = PartnerResource::class;
 
@@ -26,17 +26,16 @@ final class ManageContacts extends ManageRelatedRecords
         return __('partners::filament/resources/partner/pages/manage-contacts.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return PartnerResource::form($schema);
+        return PartnerResource::form($form);
     }
 
     public function table(Table $table): Table
     {
         return PartnerResource::table($table)
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('partners::filament/resources/partner/pages/manage-contacts.table.header-actions.create.label'))
+                CreateAction::make()->label(__('partners::filament/resources/partner/pages/manage-contacts.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::id();
@@ -44,8 +43,7 @@ final class ManageContacts extends ManageRelatedRecords
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('partners::filament/resources/partner/pages/manage-contacts.table.header-actions.create.notification.title'))
                             ->body(__('partners::filament/resources/partner/pages/manage-contacts.table.header-actions.create.notification.body')),
                     ),

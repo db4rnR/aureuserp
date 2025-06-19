@@ -10,7 +10,7 @@ use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Models\Move;
 use Webkul\Support\Traits\PDFHandler;
 
-final class PreviewAction extends Action
+class PreviewAction extends Action
 {
     use PDFHandler;
 

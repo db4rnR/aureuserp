@@ -12,14 +12,13 @@ use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
 
-final class CreateTimeOff extends CreateRecord
+class CreateTimeOff extends CreateRecord
 {
     protected static string $resource = TimeOffResource::class;
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/management/resources/time-off/pages/create-time-off.notification.title'))
             ->body(__('time-off::filament/clusters/management/resources/time-off/pages/create-time-off.notification.body'));
     }

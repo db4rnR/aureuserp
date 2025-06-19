@@ -8,7 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource;
 
-final class ViewPackageType extends ViewRecord
+class ViewPackageType extends ViewRecord
 {
     protected static string $resource = PackageTypeResource::class;
 

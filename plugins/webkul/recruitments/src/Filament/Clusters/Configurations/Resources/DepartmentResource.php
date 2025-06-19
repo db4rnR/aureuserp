@@ -14,7 +14,7 @@ use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentReso
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages\ViewDepartment;
 use Webkul\Recruitment\Models\Department;
 
-final class DepartmentResource extends BaseDepartmentResource
+class DepartmentResource extends BaseDepartmentResource
 {
     protected static ?string $model = Department::class;
 

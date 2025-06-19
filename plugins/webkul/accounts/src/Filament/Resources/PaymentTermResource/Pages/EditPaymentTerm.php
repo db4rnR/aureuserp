@@ -11,7 +11,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Account\Filament\Resources\PaymentTermResource;
 
-final class EditPaymentTerm extends EditRecord
+class EditPaymentTerm extends EditRecord
 {
     protected static string $resource = PaymentTermResource::class;
 
@@ -29,10 +29,8 @@ final class EditPaymentTerm extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('accounts::filament/resources/payment-term/pages/edit-payment-term.header-actions.delete.notification.title'))
                         ->body(__('accounts::filament/resources/payment-term/pages/edit-payment-term.header-actions.delete.notification.body'))
                 ),
@@ -41,8 +39,7 @@ final class EditPaymentTerm extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('accounts::filament/resources/payment-term/pages/edit-payment-term.notification.title'))
             ->body(__('accounts::filament/resources/payment-term/pages/edit-payment-term.notification.body'));
     }

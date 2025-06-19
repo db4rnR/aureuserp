@@ -8,7 +8,7 @@ use Filament\Contracts\Plugin;
 use Filament\Panel;
 use ReflectionClass;
 
-final class ChatterPlugin implements Plugin
+class ChatterPlugin implements Plugin
 {
     public static function make(): static
     {

@@ -11,7 +11,7 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\AccrualPlanResource;
 
-final class EditAccrualPlan extends EditRecord
+class EditAccrualPlan extends EditRecord
 {
     protected static string $resource = AccrualPlanResource::class;
 
@@ -22,8 +22,7 @@ final class EditAccrualPlan extends EditRecord
 
     protected function getSavedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/configurations/resources/accrual-plan/pages/edit-accrual-plan.notification.title'))
             ->body(__('time-off::filament/clusters/configurations/resources/accrual-plan/pages/edit-accrual-plan.notification.body'));
     }
@@ -32,10 +31,8 @@ final class EditAccrualPlan extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/configurations/resources/accrual-plan/pages/edit-accrual-plan.header-actions.delete.notification.title'))
                         ->body(__('time-off::filament/clusters/configurations/resources/accrual-plan/pages/edit-accrual-plan.header-actions.delete.notification.body'))
                 ),

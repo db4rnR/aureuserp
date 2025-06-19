@@ -12,7 +12,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-final class FilamentAdjacencyListServiceProvider extends PackageServiceProvider
+class FilamentAdjacencyListServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-adjacency-list';
 

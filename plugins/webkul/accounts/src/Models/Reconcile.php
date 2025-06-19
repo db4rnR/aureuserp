@@ -11,7 +11,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Reconcile extends Model implements Sortable
+class Reconcile extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
 

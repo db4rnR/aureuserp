@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\StorageCategoryResource;
 
-final class CreateStorageCategory extends CreateRecord
+class CreateStorageCategory extends CreateRecord
 {
     protected static string $resource = StorageCategoryResource::class;
 
@@ -20,8 +20,7 @@ final class CreateStorageCategory extends CreateRecord
 
     protected function getCreatedNotification(): Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('inventories::filament/clusters/configurations/resources/storage-category/pages/create-storage-category.notification.title'))
             ->body(__('inventories::filament/clusters/configurations/resources/storage-category/pages/create-storage-category.notification.body'));
     }

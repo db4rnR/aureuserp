@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Resources\TaskResource;
 use Webkul\Project\Settings\TimeSettings;
 
-final class ManageTimesheets extends ManageRelatedRecords
+class ManageTimesheets extends ManageRelatedRecords
 {
     protected static string $resource = TaskResource::class;
 
@@ -57,26 +57,21 @@ final class ManageTimesheets extends ManageRelatedRecords
         return $parameters['record']->project->allow_timesheets;
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Hidden::make('type')
-                    ->default('projects'),
-                DatePicker::make('date')
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.form.date'))
+                Hidden::make('type')->default('projects'),
+                DatePicker::make('date')->label(__('projects::filament/resources/task/pages/manage-timesheets.form.date'))
                     ->required()
                     ->native(false),
-                Select::make('user_id')
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.form.employee'))
+                Select::make('user_id')->label(__('projects::filament/resources/task/pages/manage-timesheets.form.employee'))
                     ->required()
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload(),
-                TextInput::make('name')
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.form.description')),
-                TextInput::make('unit_amount')
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.form.time-spent'))
+                TextInput::make('name')->label(__('projects::filament/resources/task/pages/manage-timesheets.form.description')),
+                TextInput::make('unit_amount')->label(__('projects::filament/resources/task/pages/manage-timesheets.form.time-spent'))
                     ->numeric()
                     ->required()
                     ->minValue(0)
@@ -91,15 +86,11 @@ final class ManageTimesheets extends ManageRelatedRecords
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('date')
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.date'))
+                TextColumn::make('date')->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.date'))
                     ->date('Y-m-d'),
-                TextColumn::make('user.name')
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.employee')),
-                TextColumn::make('name')
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.description')),
-                TextColumn::make('unit_amount')
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent'))
+                TextColumn::make('user.name')->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.employee')),
+                TextColumn::make('name')->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.description')),
+                TextColumn::make('unit_amount')->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent'))
                     ->formatStateUsing(function ($state): string {
                         $hours = floor($state);
                         $minutes = ($hours - $hours) * 60;
@@ -107,16 +98,14 @@ final class ManageTimesheets extends ManageRelatedRecords
                         return $hours.':'.$minutes;
                     })
                     ->summarize([
-                        Sum::make()
-                            ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent'))
+                        Sum::make()->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent'))
                             ->formatStateUsing(function ($state): string {
                                 $hours = floor($state);
                                 $minutes = ($state - $hours) * 60;
 
                                 return $hours.':'.$minutes;
                             }),
-                        Sum::make()
-                            ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent-on-subtasks'))
+                        Sum::make()->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.time-spent-on-subtasks'))
                             ->formatStateUsing(function ($state): string {
                                 $subtaskHours = $this->getOwnerRecord()->subtask_effective_hours;
                                 $hours = floor($subtaskHours);
@@ -124,8 +113,7 @@ final class ManageTimesheets extends ManageRelatedRecords
 
                                 return $hours.':'.$minutes;
                             }),
-                        Sum::make()
-                            ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.total-time-spent'))
+                        Sum::make()->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.total-time-spent'))
                             ->formatStateUsing(function ($state): string {
                                 $subtaskHours = $this->getOwnerRecord()->total_hours_spent;
                                 $hours = floor($subtaskHours);
@@ -133,8 +121,7 @@ final class ManageTimesheets extends ManageRelatedRecords
 
                                 return $hours.':'.$minutes;
                             }),
-                        Sum::make()
-                            ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.remaining-time'))
+                        Sum::make()->label(__('projects::filament/resources/task/pages/manage-timesheets.table.columns.remaining-time'))
                             ->formatStateUsing(function (): string {
                                 $remainingHours = $this->getOwnerRecord()->remaining_hours;
 
@@ -147,8 +134,7 @@ final class ManageTimesheets extends ManageRelatedRecords
                     ]),
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->label(__('projects::filament/resources/task/pages/manage-timesheets.table.header-actions.create.label'))
+                CreateAction::make()->label(__('projects::filament/resources/task/pages/manage-timesheets.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->mutateDataUsing(function (array $data): array {
                         $data['creator_id'] = Auth::id();
@@ -162,24 +148,19 @@ final class ManageTimesheets extends ManageRelatedRecords
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('projects::filament/resources/task/pages/manage-timesheets.table.header-actions.create.notification.title'))
                             ->body(__('projects::filament/resources/task/pages/manage-timesheets.table.header-actions.create.notification.body')),
                     ),
             ])
             ->recordActions([
-                EditAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                EditAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('projects::filament/resources/task/pages/manage-timesheets.table.actions.edit.notification.title'))
                             ->body(__('projects::filament/resources/task/pages/manage-timesheets.table.actions.edit.notification.body')),
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('projects::filament/resources/task/pages/manage-timesheets.table.actions.delete.notification.title'))
                             ->body(__('projects::filament/resources/task/pages/manage-timesheets.table.actions.delete.notification.body')),
                     ),

@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace Webkul\Inventory\Models;
 
-final class Receipt extends Operation {}
+class Receipt extends Operation {}

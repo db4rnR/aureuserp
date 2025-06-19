@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\QuotationResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource;
 
-final class ManagePurchases extends ManageRelatedRecords
+class ManagePurchases extends ManageRelatedRecords
 {
     protected static string $resource = VendorResource::class;
 
@@ -30,12 +30,10 @@ final class ManagePurchases extends ManageRelatedRecords
         return QuotationResource::table($table)
             ->modifyQueryUsing(fn ($query) => $query->where('partner_id', $this->record->getKey()))
             ->recordActions([
-                ViewAction::make()
-                    ->url(fn ($record): string => QuotationResource::getUrl('view', ['record' => $record]))
+                ViewAction::make()->url(fn ($record): string => QuotationResource::getUrl('view', ['record' => $record]))
                     ->openUrlInNewTab(false),
 
-                EditAction::make()
-                    ->url(fn ($record): string => QuotationResource::getUrl('edit', ['record' => $record]))
+                EditAction::make()->url(fn ($record): string => QuotationResource::getUrl('edit', ['record' => $record]))
                     ->openUrlInNewTab(false),
             ]);
     }

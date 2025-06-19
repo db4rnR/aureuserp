@@ -9,7 +9,7 @@ use Webkul\Purchase\Models\Requisition;
 use Webkul\Security\Models\User;
 use Webkul\Security\Traits\HasScopedPermissions;
 
-final class RequisitionPolicy
+class RequisitionPolicy
 {
     use HandlesAuthorization, HasScopedPermissions;
 

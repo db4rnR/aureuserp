@@ -11,7 +11,7 @@ use Webkul\Security\Models\User;
 /**
  * @extends Factory<OrderLine>
  */
-final class OrderLineFactory extends Factory
+class OrderLineFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Currency;
 
-final class AccountSeeder extends Seeder
+class AccountSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -15,7 +15,7 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Candidate extends Model
+class Candidate extends Model
 {
     use HasChatter, HasLogActivity, SoftDeletes;
 

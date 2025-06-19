@@ -20,7 +20,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource\P
 use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource\Pages\ViewProduct;
 use Webkul\Purchase\Models\Product;
 
-final class ProductResource extends BaseProductResource
+class ProductResource extends BaseProductResource
 {
     use HasCustomFields;
 
@@ -43,26 +43,26 @@ final class ProductResource extends BaseProductResource
         return __('purchases::filament/admin/clusters/products/resources/product.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        $schema = BaseProductResource::form($schema);
+        $form = BaseProductResource::form($form);
 
-        $components = $schema->getComponents();
+        $components = $form->getComponents();
 
-        $schema->components($components);
+        $form->schema($components);
 
-        return $schema;
+        return $form;
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        $schema = BaseProductResource::infolist($schema);
+        $infolist = BaseProductResource::infolist($infolist);
 
-        $components = $schema->getComponents();
+        $components = $infolist->getComponents();
 
-        $schema->components($components);
+        $infolist->schema($components);
 
-        return $schema;
+        return $infolist;
     }
 
     public static function getRecordSubNavigation(Page $page): array

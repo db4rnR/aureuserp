@@ -12,7 +12,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Security\Models\User;
 
-final class ProductAttribute extends Model implements Sortable
+class ProductAttribute extends Model implements Sortable
 {
     use SortableTrait;
 

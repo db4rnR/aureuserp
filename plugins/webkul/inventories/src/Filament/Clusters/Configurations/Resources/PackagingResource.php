@@ -22,7 +22,7 @@ use Webkul\Inventory\Settings\WarehouseSettings;
 use Webkul\Product\Enums\ProductType;
 use Webkul\Product\Filament\Resources\PackagingResource as BasePackagingResource;
 
-final class PackagingResource extends BasePackagingResource
+class PackagingResource extends BasePackagingResource
 {
     protected static ?string $model = Packaging::class;
 
@@ -57,14 +57,13 @@ final class PackagingResource extends BasePackagingResource
         return __('inventories::filament/clusters/configurations/resources/packaging.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        $schema = BasePackagingResource::form($schema);
+        $form = BasePackagingResource::form($form);
 
-        $components = $schema->getComponents();
+        $components = $form->getComponents();
 
-        $components[2] = Select::make('product_id')
-            ->label(__('products::filament/resources/packaging.form.product'))
+        $components[2] = Select::make('product_id')->label(__('products::filament/resources/packaging.form.product'))
             ->relationship(
                 'product',
                 'name',
@@ -74,24 +73,22 @@ final class PackagingResource extends BasePackagingResource
             ->searchable()
             ->preload();
 
-        $components[] = Select::make('package_type_id')
-            ->label(__('inventories::filament/clusters/configurations/resources/packaging.form.package-type'))
+        $components[] = Select::make('package_type_id')->label(__('inventories::filament/clusters/configurations/resources/packaging.form.package-type'))
             ->relationship('packageType', 'name')
             ->searchable()
             ->preload()
             ->visible(fn (OperationSettings $settings): bool => $settings->enable_packages);
 
-        $components[] = Select::make('routes')
-            ->label(__('inventories::filament/clusters/configurations/resources/packaging.form.routes'))
+        $components[] = Select::make('routes')->label(__('inventories::filament/clusters/configurations/resources/packaging.form.routes'))
             ->relationship('routes', 'name')
             ->searchable()
             ->preload()
             ->multiple()
             ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_multi_steps_routes);
 
-        $schema->components($components);
+        $form->schema($components);
 
-        return $schema;
+        return $form;
     }
 
     public static function table(Table $table): Table
@@ -102,14 +99,12 @@ final class PackagingResource extends BasePackagingResource
 
         $filters = $table->getFilters();
 
-        $columns[] = TextColumn::make('packageType.name')
-            ->label(__('inventories::filament/clusters/configurations/resources/packaging.table.columns.package-type'))
+        $columns[] = TextColumn::make('packageType.name')->label(__('inventories::filament/clusters/configurations/resources/packaging.table.columns.package-type'))
             ->numeric()
             ->sortable()
             ->visible(fn (OperationSettings $settings): bool => $settings->enable_packages);
 
-        $filters[] = SelectFilter::make('packageType')
-            ->label(__('inventories::filament/clusters/configurations/resources/packaging.table.filters.package-type'))
+        $filters[] = SelectFilter::make('packageType')->label(__('inventories::filament/clusters/configurations/resources/packaging.table.filters.package-type'))
             ->relationship('packageType', 'name')
             ->searchable()
             ->preload()
@@ -122,16 +117,15 @@ final class PackagingResource extends BasePackagingResource
         return $table;
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        $schema = BasePackagingResource::infolist($schema);
+        $infolist = BasePackagingResource::infolist($infolist);
 
-        $components = $schema->getComponents();
+        $components = $infolist->getComponents();
 
         $firstSectionChildComponents = $components[0]->getDefaultChildComponents();
 
-        $firstSectionChildComponents[] = TextEntry::make('packageType.name')
-            ->label(__('inventories::filament/clusters/configurations/resources/packaging.infolist.sections.general.entries.package_type'))
+        $firstSectionChildComponents[] = TextEntry::make('packageType.name')->label(__('inventories::filament/clusters/configurations/resources/packaging.infolist.sections.general.entries.package_type'))
             ->icon('heroicon-o-archive-box')
             ->placeholder('—')
             ->visible(fn (OperationSettings $settings): bool => $settings->enable_packages);
@@ -141,11 +135,9 @@ final class PackagingResource extends BasePackagingResource
         array_splice($components, 1, 0, [
             Section::make(__('inventories::filament/clusters/configurations/resources/packaging.infolist.sections.routing.title'))
                 ->schema([
-                    RepeatableEntry::make('routes')
-                        ->label(__('inventories::filament/clusters/configurations/resources/packaging.infolist.sections.routing.entries.routes'))
+                    RepeatableEntry::make('routes')->label(__('inventories::filament/clusters/configurations/resources/packaging.infolist.sections.routing.entries.routes'))
                         ->schema([
-                            TextEntry::make('name')
-                                ->label(__('inventories::filament/clusters/configurations/resources/packaging.infolist.sections.routing.entries.route_name'))
+                            TextEntry::make('name')->label(__('inventories::filament/clusters/configurations/resources/packaging.infolist.sections.routing.entries.route_name'))
                                 ->icon('heroicon-o-truck'),
                         ])
                         ->placeholder('—')
@@ -155,9 +147,9 @@ final class PackagingResource extends BasePackagingResource
                 ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_multi_steps_routes),
         ]);
 
-        $schema->components($components);
+        $infolist->schema($components);
 
-        return $schema;
+        return $infolist;
     }
 
     public static function getPages(): array

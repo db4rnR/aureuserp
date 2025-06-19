@@ -33,7 +33,7 @@ use Webkul\Employee\Filament\Clusters\Configurations;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategoryResource\Pages\ListEmployeeCategories;
 use Webkul\Employee\Models\EmployeeCategory;
 
-final class EmployeeCategoryResource extends Resource
+class EmployeeCategoryResource extends Resource
 {
     protected static ?string $model = EmployeeCategory::class;
 
@@ -56,20 +56,17 @@ final class EmployeeCategoryResource extends Resource
         return __('employees::filament/clusters/configurations/resources/employee-category.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                TextInput::make('name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.form.fields.name'))
+                TextInput::make('name')->label(__('employees::filament/clusters/configurations/resources/employee-category.form.fields.name'))
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->placeholder('Enter the name of the tag'),
-                ColorPicker::make('color')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.form.fields.color'))
+                ColorPicker::make('color')->label(__('employees::filament/clusters/configurations/resources/employee-category.form.fields.color'))
                     ->hexColor(),
-                Hidden::make('creator_id')
-                    ->default(Auth::user()->id),
+                Hidden::make('creator_id')->default(Auth::user()->id),
             ]);
     }
 
@@ -77,133 +74,106 @@ final class EmployeeCategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.id'))
+                TextColumn::make('id')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.id'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.name'))
+                TextColumn::make('name')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.name'))
                     ->searchable()
                     ->sortable(),
-                ColorColumn::make('color')
-                    ->searchable()
+                ColorColumn::make('color')->searchable()
                     ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.color'))
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->sortable(),
-                TextColumn::make('createdBy.name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.created-by'))
+                TextColumn::make('createdBy.name')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.created-by'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.created-at'))
+                TextColumn::make('created_at')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.updated-at'))
+                TextColumn::make('updated_at')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.columns.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                QueryBuilder::make()
-                    ->constraintPickerColumns(2)
+                QueryBuilder::make()->constraintPickerColumns(2)
                     ->constraints([
-                        TextConstraint::make('name')
-                            ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.filters.name'))
+                        TextConstraint::make('name')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.filters.name'))
                             ->icon('heroicon-o-user'),
-                        RelationshipConstraint::make('createdBy')
-                            ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.filters.created-by'))
+                        RelationshipConstraint::make('createdBy')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.filters.created-by'))
                             ->icon('heroicon-o-user')
                             ->multiple()
                             ->selectable(
-                                IsRelatedToOperator::make()
-                                    ->titleAttribute('name')
+                                IsRelatedToOperator::make()->titleAttribute('name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload(),
                             ),
-                        DateConstraint::make('created_at')
-                            ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.filters.created-by')),
-                        DateConstraint::make('updated_at')
-                            ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.filters.updated-by')),
+                        DateConstraint::make('created_at')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.filters.created-by')),
+                        DateConstraint::make('updated_at')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.filters.updated-by')),
                     ]),
             ])
             ->groups([
-                Group::make('name')
-                    ->label('Job Position')
+                Group::make('name')->label('Job Position')
                     ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.job-position'))
                     ->collapsible(),
-                Group::make('color')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.color'))
+                Group::make('color')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.color'))
                     ->collapsible(),
-                Group::make('createdBy.name')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.created-by'))
+                Group::make('createdBy.name')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.created-by'))
                     ->collapsible(),
-                Group::make('created_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.created-at'))
+                Group::make('created_at')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.created-at'))
                     ->collapsible(),
-                Group::make('updated_at')
-                    ->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.updated-at'))
+                Group::make('updated_at')->label(__('employees::filament/clusters/configurations/resources/employee-category.table.groups.updated-at'))
                     ->date()
                     ->collapsible(),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make()
-                    ->mutateDataUsing(function (array $data): array {
+                EditAction::make()->mutateDataUsing(function (array $data): array {
                         $data['color'] ??= fake()->hexColor();
 
                         return $data;
                     })
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('employees::filament/clusters/configurations/resources/employee-category.table.actions.edit.notification.title'))
                             ->body(__('employees::filament/clusters/configurations/resources/employee-category.table.actions.edit.notification.body'))
                     ),
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('employees::filament/clusters/configurations/resources/employee-category.table.actions.delete.notification.title'))
                             ->body(__('employees::filament/clusters/configurations/resources/employee-category.table.actions.delete.notification.body'))
                     ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
+                    DeleteBulkAction::make()->successNotification(
+                            Notification::make()->success()
                                 ->title(__('employees::filament/clusters/configurations/resources/employee-category.table.bulk-actions.delete.notification.title'))
                                 ->body(__('employees::filament/clusters/configurations/resources/employee-category.table.bulk-actions.delete.notification.body'))
                         ),
                 ]),
             ])
             ->emptyStateActions([
-                CreateAction::make()
-                    ->icon('heroicon-o-plus-circle')
+                CreateAction::make()->icon('heroicon-o-plus-circle')
                     ->successNotification(
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('employees::filament/clusters/configurations/resources/employee-category.table.empty-state-action.create.notification.title'))
                             ->body(__('employees::filament/clusters/configurations/resources/employee-category.table.empty-state-action.create.notification.body'))
                     ),
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
-                TextEntry::make('name')
-                    ->placeholder('—')
+                TextEntry::make('name')->placeholder('—')
                     ->icon('heroicon-o-tag')
                     ->label(__('employees::filament/clusters/configurations/resources/employee-category.infolist.name')),
-                ColorEntry::make('color')
-                    ->placeholder('—')
+                ColorEntry::make('color')->placeholder('—')
                     ->label(__('employees::filament/clusters/configurations/resources/employee-category.infolist.color')),
             ]);
     }

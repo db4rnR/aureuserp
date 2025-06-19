@@ -19,7 +19,7 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Rule extends Model implements Sortable
+class Rule extends Model implements Sortable
 {
     use HasFactory, SoftDeletes, SortableTrait;
 

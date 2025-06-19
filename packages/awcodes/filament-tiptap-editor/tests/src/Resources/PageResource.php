@@ -21,7 +21,7 @@ use FilamentTiptapEditor\Tests\Resources\PageResource\Pages\EditPage;
 use FilamentTiptapEditor\Tests\Resources\PageResource\Pages\ListPages;
 use FilamentTiptapEditor\TiptapEditor;
 
-final class PageResource extends Resource
+class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 

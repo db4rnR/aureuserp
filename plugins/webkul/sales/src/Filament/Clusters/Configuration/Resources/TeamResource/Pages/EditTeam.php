@@ -11,7 +11,7 @@ use Filament\Resources\Pages\EditRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource;
 
-final class EditTeam extends EditRecord
+class EditTeam extends EditRecord
 {
     protected static string $resource = TeamResource::class;
 
@@ -22,8 +22,7 @@ final class EditTeam extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('sales::filament/clusters/configurations/resources/team/pages/edit-team.notification.title'))
             ->body(__('sales::filament/clusters/configurations/resources/team/pages/edit-team.notification.body'));
     }
@@ -31,13 +30,10 @@ final class EditTeam extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('sales::filament/clusters/configurations/resources/team/pages/edit-team.header-actions.delete.notification.title'))
                         ->body(__('sales::filament/clusters/configurations/resources/team/pages/edit-team.header-actions.delete.notification.body'))
                 ),

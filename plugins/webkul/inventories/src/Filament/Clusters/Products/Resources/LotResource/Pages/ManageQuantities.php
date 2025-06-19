@@ -22,7 +22,7 @@ use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
 
-final class ManageQuantities extends ManageRelatedRecords
+class ManageQuantities extends ManageRelatedRecords
 {
     protected static string $resource = LotResource::class;
 
@@ -59,21 +59,16 @@ final class ManageQuantities extends ManageRelatedRecords
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('product.name')
-                    ->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.product'))
+                TextColumn::make('product.name')->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.product'))
                     ->searchable(),
-                TextColumn::make('location.full_name')
-                    ->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.location'))
+                TextColumn::make('location.full_name')->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.location'))
                     ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
-                TextColumn::make('storageCategory.name')
-                    ->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.storage-category'))
+                TextColumn::make('storageCategory.name')->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.storage-category'))
                     ->placeholder('—'),
-                TextColumn::make('package.name')
-                    ->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.package'))
+                TextColumn::make('package.name')->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.package'))
                     ->placeholder('—')
                     ->visible(fn (OperationSettings $settings): bool => $settings->enable_packages),
-                TextInputColumn::make('quantity')
-                    ->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.on-hand'))
+                TextInputColumn::make('quantity')->label(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.columns.on-hand'))
                     ->searchable()
                     ->sortable()
                     ->rules([
@@ -127,8 +122,7 @@ final class ManageQuantities extends ManageRelatedRecords
                             ]
                         );
 
-                        Notification::make()
-                            ->success()
+                        Notification::make()->success()
                             ->title(__('projects::filament/resources/task.table.actions.delete.notification.title'))
                             ->body(__('projects::filament/resources/task.table.actions.delete.notification.body'))
                             ->success()
@@ -136,10 +130,8 @@ final class ManageQuantities extends ManageRelatedRecords
                     }),
             ])
             ->recordActions([
-                DeleteAction::make()
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
+                DeleteAction::make()->successNotification(
+                        Notification::make()->success()
                             ->title(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.actions.delete.notification.title'))
                             ->body(__('inventories::filament/clusters/products/resources/lot/pages/manage-quantities.table.actions.delete.notification.body')),
                     ),

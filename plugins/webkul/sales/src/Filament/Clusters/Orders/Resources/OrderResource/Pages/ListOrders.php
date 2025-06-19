@@ -12,7 +12,7 @@ use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Pages\ListQ
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListOrders extends BaseListOrders
+class ListOrders extends BaseListOrders
 {
     use HasTableViews;
 

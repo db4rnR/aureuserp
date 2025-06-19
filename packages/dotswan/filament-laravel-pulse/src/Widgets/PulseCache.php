@@ -6,7 +6,7 @@ namespace Dotswan\FilamentLaravelPulse\Widgets;
 
 use Filament\Widgets\Widget;
 
-final class PulseCache extends Widget
+class PulseCache extends Widget
 {
     protected string $view = 'filament-laravel-pulse::widgets.pulse-cache';
 

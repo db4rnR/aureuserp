@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Partner\Filament\Resources\PartnerResource\Pages\CreatePartner as BaseCreateCustomer;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource;
 
-final class CreateCustomer extends BaseCreateCustomer
+class CreateCustomer extends BaseCreateCustomer
 {
     protected static string $resource = CustomerResource::class;
 

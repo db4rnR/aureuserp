@@ -22,7 +22,7 @@ use Webkul\Sale\Models\Order as SaleOrder;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 
-final class Operation extends Model
+class Operation extends Model
 {
     use HasChatter, HasCustomFields, HasFactory, HasLogActivity;
 

@@ -22,7 +22,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Webkul\Support\PluginManager;
 
-final class AdminPanelProvider extends PanelProvider
+class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {

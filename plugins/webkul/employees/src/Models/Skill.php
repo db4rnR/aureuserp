@@ -15,7 +15,7 @@ use Webkul\Employee\Database\Factories\SkillFactory;
 use Webkul\Field\Traits\HasCustomFields;
 use Webkul\Security\Models\User;
 
-final class Skill extends Model implements Sortable
+class Skill extends Model implements Sortable
 {
     use HasCustomFields, HasFactory, SoftDeletes, SortableTrait;
 

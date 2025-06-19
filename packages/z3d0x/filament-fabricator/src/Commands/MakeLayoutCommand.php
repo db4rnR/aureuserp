@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 use function Laravel\Prompts\text;
 
-final class MakeLayoutCommand extends Command
+class MakeLayoutCommand extends Command
 {
     use CanManipulateFiles;
 

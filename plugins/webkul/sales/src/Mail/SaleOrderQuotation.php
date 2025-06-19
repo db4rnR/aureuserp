@@ -12,7 +12,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-final class SaleOrderQuotation extends Mailable
+class SaleOrderQuotation extends Mailable
 {
     use Queueable, SerializesModels;
 

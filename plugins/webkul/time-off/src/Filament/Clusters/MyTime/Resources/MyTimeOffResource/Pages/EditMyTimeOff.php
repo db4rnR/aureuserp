@@ -14,7 +14,7 @@ use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyTimeOffResource;
 
-final class EditMyTimeOff extends EditRecord
+class EditMyTimeOff extends EditRecord
 {
     protected static string $resource = MyTimeOffResource::class;
 
@@ -25,8 +25,7 @@ final class EditMyTimeOff extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
-        return Notification::make()
-            ->success()
+        return Notification::make()->success()
             ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.title'))
             ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.body'));
     }
@@ -34,13 +33,10 @@ final class EditMyTimeOff extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ChatterActions\ChatterAction::make()
-                ->setResource(self::$resource),
+            ChatterActions\ChatterAction::make()->setResource(self::$resource),
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.header-actions.delete.notification.title'))
                         ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.header-actions.delete.notification.body'))
                 ),

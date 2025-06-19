@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
 use Webkul\Partner\Filament\Resources\PartnerResource\Pages\EditPartner as BaseEditVendor;
 
-final class EditVendor extends BaseEditVendor
+class EditVendor extends BaseEditVendor
 {
     protected static string $resource = VendorResource::class;
 

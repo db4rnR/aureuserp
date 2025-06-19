@@ -12,7 +12,7 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListRefunds extends BaseListInvoices
+class ListRefunds extends BaseListInvoices
 {
     use HasTableViews;
 

@@ -9,7 +9,7 @@ use Webkul\Invoice\Filament\Clusters\Configuration;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\IncoTermResource\Pages\ListIncoTerms;
 use Webkul\Invoice\Models\Incoterm;
 
-final class IncoTermResource extends BaseIncoTermResource
+class IncoTermResource extends BaseIncoTermResource
 {
     protected static ?string $model = Incoterm::class;
 

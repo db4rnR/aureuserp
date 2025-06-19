@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Kirschbaum\Commentions\Comment;
 use Kirschbaum\Commentions\Contracts\Commenter;
 
-final class UserWasMentionedEvent
+class UserWasMentionedEvent
 {
     use Dispatchable;
     use InteractsWithSockets;

@@ -21,7 +21,7 @@ use Pboivin\FilamentPeek\FilamentPeekPlugin;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PageResource;
 use Pboivin\FilamentPeek\Tests\Filament\Resources\PostResource;
 
-final class TestPanelProvider extends PanelProvider
+class TestPanelProvider extends PanelProvider
 {
     public static $should_load_plugin_assets = true;
 

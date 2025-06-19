@@ -6,7 +6,7 @@ namespace Webkul\Website\Models;
 
 use Webkul\Partner\Models\Partner as BasePartner;
 
-final class Partner extends BasePartner
+class Partner extends BasePartner
 {
     /**
      * The attributes that should be hidden for serialization.

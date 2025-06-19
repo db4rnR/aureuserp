@@ -9,7 +9,7 @@ use Webkul\Chatter\Traits\HasChatter;
 use Webkul\Product\Models\Category as BaseCategory;
 use Webkul\Security\Models\User;
 
-final class Category extends BaseCategory
+class Category extends BaseCategory
 {
     use HasChatter;
 

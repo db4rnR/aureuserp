@@ -12,7 +12,7 @@ use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ListInvoices as List
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
-final class ListCreditNotes extends ListRecords
+class ListCreditNotes extends ListRecords
 {
     use HasTableViews;
 

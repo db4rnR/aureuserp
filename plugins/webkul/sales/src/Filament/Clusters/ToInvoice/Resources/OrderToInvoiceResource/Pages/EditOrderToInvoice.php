@@ -7,7 +7,7 @@ namespace Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToInvoiceResour
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Pages\EditQuotation as BaseEditQuotation;
 use Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToInvoiceResource;
 
-final class EditOrderToInvoice extends BaseEditQuotation
+class EditOrderToInvoice extends BaseEditQuotation
 {
     protected static string $resource = OrderToInvoiceResource::class;
 }

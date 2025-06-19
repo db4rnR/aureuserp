@@ -6,7 +6,7 @@ namespace Pboivin\FilamentPeek\Tests;
 
 use Illuminate\Support\Facades\Config;
 
-final class TestCaseWithPreviewUrl extends TestCase
+class TestCaseWithPreviewUrl extends TestCase
 {
     protected function configurePackageProviders($app): void
     {

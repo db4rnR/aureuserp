@@ -18,7 +18,7 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
 use Webkul\Support\Database\Factories\CompanyFactory;
 
-final class Company extends Model implements Sortable
+class Company extends Model implements Sortable
 {
     use HasChatter, HasCustomFields, HasFactory, SoftDeletes, SortableTrait;
 

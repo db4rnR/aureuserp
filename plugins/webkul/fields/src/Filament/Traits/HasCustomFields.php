@@ -38,40 +38,35 @@ trait HasCustomFields
 
     protected static function getCustomFormFields(array $include = [], array $exclude = []): array
     {
-        return CustomFields::make(static::class)
-            ->include($include)
+        return CustomFields::make(static::class)->include($include)
             ->exclude($exclude)
             ->getSchema();
     }
 
     protected static function getCustomTableColumns(array $include = [], array $exclude = []): array
     {
-        return CustomColumns::make(static::class)
-            ->include($include)
+        return CustomColumns::make(static::class)->include($include)
             ->exclude($exclude)
             ->getColumns();
     }
 
     protected static function getCustomTableFilters(array $include = [], array $exclude = []): array
     {
-        return CustomFilters::make(static::class)
-            ->include($include)
+        return CustomFilters::make(static::class)->include($include)
             ->exclude($exclude)
             ->getFilters();
     }
 
     protected static function getTableQueryBuilderConstraints(array $include = [], array $exclude = []): array
     {
-        return CustomFilters::make(static::class)
-            ->include($include)
+        return CustomFilters::make(static::class)->include($include)
             ->exclude($exclude)
             ->getQueryBuilderConstraints();
     }
 
     protected static function getCustomInfolistEntries(array $include = [], array $exclude = []): array
     {
-        return CustomEntries::make(static::class)
-            ->include($include)
+        return CustomEntries::make(static::class)->include($include)
             ->exclude($exclude)
             ->getSchema();
     }

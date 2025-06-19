@@ -6,7 +6,7 @@ namespace Webkul\Purchase\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-final class PurchaseOrder extends Facade
+class PurchaseOrder extends Facade
 {
     /**
      * Get the registered name of the component.

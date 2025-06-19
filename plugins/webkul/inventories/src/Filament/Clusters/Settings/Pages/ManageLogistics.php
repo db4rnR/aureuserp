@@ -15,7 +15,7 @@ use Webkul\Inventory\Models\OperationType;
 use Webkul\Inventory\Settings\LogisticSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
-final class ManageLogistics extends SettingsPage
+class ManageLogistics extends SettingsPage
 {
     use HasPageShield;
 
@@ -48,12 +48,11 @@ final class ManageLogistics extends SettingsPage
         return __('inventories::filament/clusters/settings/pages/manage-logistics.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
-                Toggle::make('enable_dropshipping')
-                    ->label(__('inventories::filament/clusters/settings/pages/manage-logistics.form.enable-dropshipping'))
+                Toggle::make('enable_dropshipping')->label(__('inventories::filament/clusters/settings/pages/manage-logistics.form.enable-dropshipping'))
                     ->helperText(__('inventories::filament/clusters/settings/pages/manage-logistics.form.enable-dropshipping-helper-text')),
             ]);
     }

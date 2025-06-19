@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-final class MediaAction extends Action
+class MediaAction extends Action
 {
     protected function setUp(): void
     {

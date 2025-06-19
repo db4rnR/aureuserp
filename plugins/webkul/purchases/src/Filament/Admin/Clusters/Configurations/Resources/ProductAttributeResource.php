@@ -14,7 +14,7 @@ use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttr
 use Webkul\Purchase\Models\Attribute;
 use Webkul\Purchase\Settings\ProductSettings;
 
-final class ProductAttributeResource extends AttributeResource
+class ProductAttributeResource extends AttributeResource
 {
     protected static ?string $model = Attribute::class;
 

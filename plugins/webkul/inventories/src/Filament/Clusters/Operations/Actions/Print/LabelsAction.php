@@ -16,7 +16,7 @@ use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Components\Wizard\Step;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 
-final class LabelsAction extends Action
+class LabelsAction extends Action
 {
     protected function setUp(): void
     {
@@ -28,8 +28,7 @@ final class LabelsAction extends Action
                 Wizard::make([
                     Step::make(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.type'))
                         ->schema([
-                            Radio::make('type')
-                                ->label('Type')
+                            Radio::make('type')->label('Type')
                                 ->options([
                                     'product' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.type-options.product'),
                                     'lot' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.type-options.lot'),
@@ -57,25 +56,21 @@ final class LabelsAction extends Action
                         }),
                     Step::make(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.layout'))
                         ->schema([
-                            Group::make()
-                                ->schema([
-                                    Select::make('quantity_type')
-                                        ->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type'))
+                            Group::make()->schema([
+                                    Select::make('quantity_type')->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type'))
                                         ->options([
                                             'operation' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.operation'),
                                             'custom' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.custom'),
                                         ])
                                         ->default('operation')
                                         ->live(),
-                                    TextInput::make('quantity')
-                                        ->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity'))
+                                    TextInput::make('quantity')->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity'))
                                         ->required()
                                         ->numeric()
                                         ->minValue(1)
                                         ->maxValue(100)
                                         ->visible(fn (Get $get): bool => $get('quantity_type') === 'custom'),
-                                    Radio::make('format')
-                                        ->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.format'))
+                                    Radio::make('format')->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.format'))
                                         ->options([
                                             'dymo' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.dymo'),
                                             '2x7_price' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.2x7_price'),
@@ -87,10 +82,8 @@ final class LabelsAction extends Action
                                         ->required(),
                                 ])
                                 ->visible(fn (Get $get): bool => $get('type') === 'product'),
-                            Group::make()
-                                ->schema([
-                                    Radio::make('quantity_type')
-                                        ->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type'))
+                            Group::make()->schema([
+                                    Radio::make('quantity_type')->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type'))
                                         ->options([
                                             'per_lot' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.per-slot'),
                                             'per_unit' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.quantity-type-options.per-unit'),
@@ -98,8 +91,7 @@ final class LabelsAction extends Action
                                         ->default('per_lot')
                                         ->required()
                                         ->live(),
-                                    Radio::make('format')
-                                        ->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.format'))
+                                    Radio::make('format')->label(__('inventories::filament/clusters/operations/actions/print/labels.form.fields.format'))
                                         ->options([
                                             '4x12' => __('inventories::filament/clusters/operations/actions/print/labels.form.fields.format-options.4x12'),
                                         ])

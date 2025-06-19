@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Security\Filament\Resources\CompanyResource;
 
-final class ViewCompany extends ViewRecord
+class ViewCompany extends ViewRecord
 {
     protected static string $resource = CompanyResource::class;
 
@@ -18,10 +18,8 @@ final class ViewCompany extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->success()
+            DeleteAction::make()->successNotification(
+                    Notification::make()->success()
                         ->title(__('security::filament/resources/company/pages/view-company.header-actions.delete.notification.title'))
                         ->body(__('security::filament/resources/company/pages/view-company.header-actions.delete.notification.body'))
                 ),
