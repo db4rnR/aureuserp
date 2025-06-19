@@ -17,9 +17,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
@@ -44,9 +44,9 @@ class BankResource extends Resource
         return __('partners::filament/resources/bank.navigation.title');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Section::make(__('partners::filament/resources/bank.form.sections.general.title'))
                     ->schema([
@@ -67,7 +67,7 @@ class BankResource extends Resource
                     ->schema([
                         Select::make('country_id')->label(__('partners::filament/resources/bank.form.sections.address.fields.country'))
                             ->relationship(name: 'country', titleAttribute: 'name')
-                            ->afterStateUpdated(fn (Set $set): mixed => $set('state_id', null))
+                            ->afterStateUpdated(fn ($set): mixed => $set('state_id', null))
                             ->searchable()
                             ->preload()
                             ->live(),
@@ -75,7 +75,7 @@ class BankResource extends Resource
                             ->relationship(
                                 name: 'state',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
+                                modifyQueryUsing: fn ($get, Builder $query) => $query->where('country_id', $get('country_id')),
                             )
                             ->searchable()
                             ->preload(),

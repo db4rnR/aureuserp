@@ -13,15 +13,15 @@ class BankAccountResource extends BaseBankAccountResource
 {
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        $form = BaseBankAccountResource::form($form);
+        $schema = BaseBankAccountResource::form($schema);
 
-        $components = collect($form->getComponents())->forget(1)->all();
+        $components = collect($schema->getComponents())->forget(1)->all();
 
-        $form->schema($components);
+        $schema->components($components);
 
-        return $form;
+        return $schema;
     }
 
     public static function table(Table $table): Table

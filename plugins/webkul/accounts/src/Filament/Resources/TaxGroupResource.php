@@ -37,9 +37,9 @@ class TaxGroupResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Section::make()->schema([
                         Select::make('company_id')->relationship('company', 'name')
@@ -134,9 +134,9 @@ class TaxGroupResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 Section::make()->schema([
                         TextEntry::make('company.name')->icon('heroicon-o-building-office-2')

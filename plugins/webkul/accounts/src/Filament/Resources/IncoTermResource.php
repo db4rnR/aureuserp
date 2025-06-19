@@ -33,9 +33,9 @@ class IncoTermResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Hidden::make('creator_id')->default(Auth::id())
                     ->required(),
@@ -95,9 +95,9 @@ class IncoTermResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 TextEntry::make('code')->placeholder(__('accounts::filament/resources/incoterm.infolist.entries.code')),
                 TextEntry::make('name')->placeholder(__('accounts::filament/resources/incoterm.infolist.entries.name')),

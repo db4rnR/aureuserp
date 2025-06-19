@@ -52,9 +52,9 @@ class TaxResource extends Resource
 
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Start;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Section::make()->schema([
                         Group::make()->schema([
@@ -211,12 +211,12 @@ class TaxResource extends Resource
                         ),
                 ]),
             ])
-            ->reorderable('sort', 'desc');
+            ->reorderable('sort');
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 Grid::make(['default' => 3])->schema([
                         Group::make()->schema([

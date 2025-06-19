@@ -39,9 +39,9 @@ class AccountResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-circle';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Section::make()->schema([
                         TextInput::make('code')->required()
@@ -130,9 +130,9 @@ class AccountResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 Section::make()->schema([
                         TextEntry::make('code')->label(__('accounts::filament/resources/account.infolist.sections.entries.code'))

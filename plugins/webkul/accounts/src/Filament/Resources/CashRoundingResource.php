@@ -37,9 +37,9 @@ class CashRoundingResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Section::make()->schema([
                         Group::make()->schema([
@@ -114,9 +114,9 @@ class CashRoundingResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 Section::make()->schema([
                         Group::make()->schema([

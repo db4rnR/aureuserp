@@ -70,9 +70,9 @@ class BillResource extends Resource
         ];
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 ProgressStepper::make('state')->hiddenLabel()
                     ->inline()
@@ -218,8 +218,7 @@ class BillResource extends Resource
                             ]),
                     ])
                     ->persistTabInQueryString(),
-            ])
-            ->columns('full');
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -227,9 +226,9 @@ class BillResource extends Resource
         return InvoiceResource::table($table);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 Section::make()->schema([
                         TextEntry::make('payment_state')->badge(),

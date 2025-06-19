@@ -48,9 +48,9 @@ class JournalResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Group::make()->schema([
                         Group::make()->schema([
@@ -154,8 +154,7 @@ class JournalResource extends Resource
                             ->columnSpan(['lg' => 1]),
                     ])
                     ->columns(3),
-            ])
-            ->columns('full');
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -197,9 +196,9 @@ class JournalResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 Grid::make(['default' => 3])->schema([
                         Group::make()->schema([

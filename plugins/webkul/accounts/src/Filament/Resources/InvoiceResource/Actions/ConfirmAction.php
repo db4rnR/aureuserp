@@ -52,9 +52,6 @@ class ConfirmAction extends Action
 
         if ($record->lines->isEmpty()) {
             Notification::make()->warning()
-                ->title(__('Move Line validation'))
-                ->body(__('Please add at least one line to the invoice.'))
-
                 ->title(__('accounts::filament/resources/invoice/actions/confirm-action.customer.notification.move-line-validation.title'))
                 ->body(__('accounts::filament/resources/invoice/actions/confirm-action.customer.notification.move-line-validation.body'))
                 ->send();

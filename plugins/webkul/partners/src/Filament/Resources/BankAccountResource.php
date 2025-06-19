@@ -46,9 +46,9 @@ class BankAccountResource extends Resource
         return __('partners::filament/resources/bank-account.navigation.title');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 TextInput::make('account_number')->label(__('partners::filament/resources/bank-account.form.account-number'))
                     ->required()

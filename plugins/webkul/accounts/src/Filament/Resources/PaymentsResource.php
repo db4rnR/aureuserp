@@ -46,9 +46,9 @@ class PaymentsResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Grid::make()->schema([
                         ProgressStepper::make('state')->hiddenLabel()
@@ -105,8 +105,7 @@ class PaymentsResource extends Resource
                                     ->maxLength(255),
                             ])->columns(2),
                     ]),
-            ])
-            ->columns('full');
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -276,9 +275,9 @@ class PaymentsResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 Section::make()->schema([
                         Group::make()->schema([

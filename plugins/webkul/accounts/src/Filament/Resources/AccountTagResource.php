@@ -39,9 +39,9 @@ class AccountTagResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Section::make()->schema([
                         ColorPicker::make('color')->label(__('accounts::filament/resources/account-tag.form.fields.color'))
@@ -124,9 +124,9 @@ class AccountTagResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->components([
                 Grid::make(['default' => 2])->schema([
                         TextEntry::make('name')->label(__('accounts::filament/resources/account-tag.infolist.entries.name'))

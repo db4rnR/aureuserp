@@ -11,9 +11,8 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -33,7 +32,7 @@ trait TaxPartition
                     ->maxValue(100)
                     ->label(__('accounts::traits/tax-partition.form.factor-percent'))
                     ->live()
-                    ->afterStateUpdated(fn (Set $set, $state): mixed => $set('factor', (float) $state / 100)),
+                    ->afterStateUpdated(fn ($set, $state): mixed => $set('factor', (float) $state / 100)),
                 TextInput::make('factor')->readOnly()
                     ->label(__('accounts::traits/tax-partition.form.factor-ratio')),
                 Select::make('repartition_type')->options(RepartitionType::options())
