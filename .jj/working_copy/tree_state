@@ -2821,7 +2821,9 @@ G.ai/tasks/.archive/tasks-prd-architectural-foundation-implementation.md
 9.ai/tasks/filament-v4-refactor/base-class-dependencies.md
 ±àÑ«ø2„CE
 7.ai/tasks/filament-v4-refactor/baseline-test-results.md
-¼‚¾ªø2¯K
+¼‚¾ªø2¯>
+0.ai/tasks/filament-v4-refactor/commit-message.md
+×š¦Æø2ã4K
 =.ai/tasks/filament-v4-refactor/current-functionality-state.md
 ‘çİªø2†MO
 A.ai/tasks/filament-v4-refactor/dependency-compatibility-report.md
@@ -2853,9 +2855,8 @@ B.ai/tasks/filament-v4-refactor/rollback-and-recovery-procedures.md
 B.ai/tasks/filament-v4-refactor/runtime-compatibility-monitoring.md
 “öŸ«ø2äHN
 @.ai/tasks/filament-v4-refactor/step-by-step-migration-process.md
-ø›Ã¬ø2‘TN
-@.ai/tasks/filament-v4-refactor/tasks-prd-filament-v4-refactor.md
-ÈâƒÀø2›wI
+ø›Ã¬ø2‘TO
+@.ai/tasks/filament-v4-refactor/tasks-prd-filament-v4-refactor.mdÛõÅø2€I
 ;.ai/tasks/filament-v4-refactor/testing-environment-setup.md
 ¹ÃÜ§ø2­*
 .ai/tasks/generate-tasks.mdc
@@ -6496,15 +6497,15 @@ Uplugins/webkul/accounts/src/Filament/Resources/AccountResource/Pages/ListAccoun
 Tplugins/webkul/accounts/src/Filament/Resources/AccountResource/Pages/ViewAccount.php
 †áµ±ø2¢P
 Bplugins/webkul/accounts/src/Filament/Resources/AccountResource.php
-şàµ±ø2ŒUi
+éì»Ãø2ŒUi
 [plugins/webkul/accounts/src/Filament/Resources/AccountTagResource/Pages/ListAccountTags.php
 ÿàµ±ø2üS
 Eplugins/webkul/accounts/src/Filament/Resources/AccountTagResource.php
-üàµ±ø2¸?k
+ê¾Ãø2¸?k
 ]plugins/webkul/accounts/src/Filament/Resources/BankAccountResource/Pages/ListBankAccounts.php
 äïÔ©ø2‘T
 Fplugins/webkul/accounts/src/Filament/Resources/BankAccountResource.php
-‘©±ø2Ãf
+Ÿ¹ÆÅø2×f
 Xplugins/webkul/accounts/src/Filament/Resources/BillResource/Actions/CreditNoteAction.php
 ÂîÛ±ø2Ô^
 Pplugins/webkul/accounts/src/Filament/Resources/BillResource/Pages/CreateBill.php
@@ -6515,7 +6516,7 @@ Oplugins/webkul/accounts/src/Filament/Resources/BillResource/Pages/ListBills.php
 ‚áµ±ø2ì	\
 Nplugins/webkul/accounts/src/Filament/Resources/BillResource/Pages/ViewBill.php
 ƒáµ±ø2†N
-?plugins/webkul/accounts/src/Filament/Resources/BillResource.phpûàµ±ø2ƒ¢n
+?plugins/webkul/accounts/src/Filament/Resources/BillResource.phpìİÃø2å¡n
 `plugins/webkul/accounts/src/Filament/Resources/CashRoundingResource/Pages/CreateCashRounding.php
 ƒáµ±ø2§l
 ^plugins/webkul/accounts/src/Filament/Resources/CashRoundingResource/Pages/EditCashRounding.php
@@ -6525,7 +6526,7 @@ Nplugins/webkul/accounts/src/Filament/Resources/BillResource/Pages/ViewBill.php
 ^plugins/webkul/accounts/src/Filament/Resources/CashRoundingResource/Pages/ViewCashRounding.php
 ƒáµ±ø2ÎU
 Gplugins/webkul/accounts/src/Filament/Resources/CashRoundingResource.php
-ıàµ±ø2˜>j
+ÛåÂÃø2˜>j
 \plugins/webkul/accounts/src/Filament/Resources/CreditNoteResource/Pages/CreateCreditNote.php
 ‰áµ±ø2ÿ	h
 Zplugins/webkul/accounts/src/Filament/Resources/CreditNoteResource/Pages/EditCreditNote.php
@@ -6550,15 +6551,15 @@ bplugins/webkul/accounts/src/Filament/Resources/FiscalPositionResource/Pages/Vie
 {plugins/webkul/accounts/src/Filament/Resources/FiscalPositionResource/RelationManagers/FiscalPositionTaxRelationManager.php
 ½÷Ô©ø2ÀW
 Iplugins/webkul/accounts/src/Filament/Resources/FiscalPositionResource.php
-ˆáµ±ø2´Re
+ªÅÃø2´Re
 Wplugins/webkul/accounts/src/Filament/Resources/IncoTermResource/Pages/ListIncoTerms.php
 †áµ±ø2“Q
 Cplugins/webkul/accounts/src/Filament/Resources/IncoTermResource.php
-‹áµ±ø2Ö(e
+¼ÃÇÃø2Ö(e
 Wplugins/webkul/accounts/src/Filament/Resources/InvoiceResource/Actions/CancelAction.php
 ÅôÔ©ø2íf
 Xplugins/webkul/accounts/src/Filament/Resources/InvoiceResource/Actions/ConfirmAction.php
-ôàµ±ø2¿i
+èÒŞÅø2¿i
 [plugins/webkul/accounts/src/Filament/Resources/InvoiceResource/Actions/CreditNoteAction.php
 Šûİ±ø2àb
 Tplugins/webkul/accounts/src/Filament/Resources/InvoiceResource/Actions/PayAction.php
@@ -6580,7 +6581,7 @@ Uplugins/webkul/accounts/src/Filament/Resources/InvoiceResource/Pages/ListInvoic
 ÷àµ±ø2¸"b
 Tplugins/webkul/accounts/src/Filament/Resources/InvoiceResource/Pages/ViewInvoice.php
 ÷àµ±ø2øQ
-Bplugins/webkul/accounts/src/Filament/Resources/InvoiceResource.phpˆáµ±ø2Á“d
+Bplugins/webkul/accounts/src/Filament/Resources/InvoiceResource.php—‚éÃø2£“d
 Vplugins/webkul/accounts/src/Filament/Resources/JournalResource/Pages/CreateJournal.php
 ûàµ±ø2ú	b
 Tplugins/webkul/accounts/src/Filament/Resources/JournalResource/Pages/EditJournal.php
@@ -6589,7 +6590,7 @@ Uplugins/webkul/accounts/src/Filament/Resources/JournalResource/Pages/ListJourna
 üàµ±ø2ñb
 Tplugins/webkul/accounts/src/Filament/Resources/JournalResource/Pages/ViewJournal.php
 üàµ±ø2öQ
-Bplugins/webkul/accounts/src/Filament/Resources/JournalResource.phpùàµ±ø2æ´l
+Bplugins/webkul/accounts/src/Filament/Resources/JournalResource.php¦ßÖÃø2È´l
 ^plugins/webkul/accounts/src/Filament/Resources/PaymentTermResource/Pages/CreatePaymentTerm.php
 Šáµ±ø2ñj
 \plugins/webkul/accounts/src/Filament/Resources/PaymentTermResource/Pages/EditPaymentTerm.php
@@ -6603,7 +6604,7 @@ aplugins/webkul/accounts/src/Filament/Resources/PaymentTermResource/Pages/Manage
 uplugins/webkul/accounts/src/Filament/Resources/PaymentTermResource/RelationManagers/PaymentDueTermRelationManager.php
 üòÔ©ø2œT
 Fplugins/webkul/accounts/src/Filament/Resources/PaymentTermResource.php
-şàµ±ø2úef
+Ø¦ÒÃø2úef
 Xplugins/webkul/accounts/src/Filament/Resources/PaymentsResource/Actions/CancelAction.php
 ¹øÔ©ø2ªg
 Yplugins/webkul/accounts/src/Filament/Resources/PaymentsResource/Actions/ConfirmAction.php
@@ -6623,7 +6624,7 @@ Vplugins/webkul/accounts/src/Filament/Resources/PaymentsResource/Pages/ListPayme
 Vplugins/webkul/accounts/src/Filament/Resources/PaymentsResource/Pages/ViewPayments.php
 áµ±ø2ö
 R
-Cplugins/webkul/accounts/src/Filament/Resources/PaymentsResource.phpÿàµ±ø2çŸb
+Cplugins/webkul/accounts/src/Filament/Resources/PaymentsResource.php¨ÊÃø2ÉŸb
 Tplugins/webkul/accounts/src/Filament/Resources/RefundResource/Pages/CreateRefund.php
 ùàµ±ø2â	`
 Rplugins/webkul/accounts/src/Filament/Resources/RefundResource/Pages/EditRefund.php
@@ -6643,7 +6644,7 @@ Wplugins/webkul/accounts/src/Filament/Resources/TaxGroupResource/Pages/ListTaxGr
 Vplugins/webkul/accounts/src/Filament/Resources/TaxGroupResource/Pages/ViewTaxGroup.php
 óàµ±ø2ëQ
 Cplugins/webkul/accounts/src/Filament/Resources/TaxGroupResource.php
-ÿàµ±ø2±D\
+áìÌÃø2±D\
 Nplugins/webkul/accounts/src/Filament/Resources/TaxResource/Pages/CreateTax.php
 …áµ±ø2á	Z
 Lplugins/webkul/accounts/src/Filament/Resources/TaxResource/Pages/EditTax.php
@@ -6660,7 +6661,7 @@ uplugins/webkul/accounts/src/Filament/Resources/TaxResource/RelationManagers/Dis
 ¡øÔ©ø2Å‚
 tplugins/webkul/accounts/src/Filament/Resources/TaxResource/RelationManagers/DistributionForRefundRelationManager.php
 ‚éÔ©ø2ÂM
->plugins/webkul/accounts/src/Filament/Resources/TaxResource.phpıàµ±ø2ÍE
+>plugins/webkul/accounts/src/Filament/Resources/TaxResource.phpøÆÏÃø2ÅE
 7plugins/webkul/accounts/src/Livewire/InvoiceSummary.php
 ½çÔ©ø2½O
 Aplugins/webkul/accounts/src/Mail/Invoice/Actions/InvoiceEmail.php
@@ -6735,11 +6736,11 @@ Eplugins/webkul/accounts/src/Models/AccountPaymentRegisterMoveLine.php
 *plugins/webkul/accounts/src/TaxManager.php
 áôÔ©ø2”F
 8plugins/webkul/accounts/src/Traits/FiscalPositionTax.php
-çàµ±ø2ãC
+¤óçÂø2²C
 5plugins/webkul/accounts/src/Traits/PaymentDueTerm.php
-çàµ±ø2†!A
+ûäæÂø2‚!A
 3plugins/webkul/accounts/src/Traits/TaxPartition.php
-çàµ±ø2ì%4
+× íÂø2µ%4
 &plugins/webkul/analytics/composer.json
 ğ“„¥ô2Ön
 `plugins/webkul/analytics/database/migrations/2024_12_18_131844_create_analytic_records_table.php
@@ -8784,11 +8785,11 @@ Bplugins/webkul/partners/src/Filament/Resources/AddressResource.php
 _plugins/webkul/partners/src/Filament/Resources/BankAccountResource/Pages/ManageBankAccounts.php
 «áµ±ø2àT
 Fplugins/webkul/partners/src/Filament/Resources/BankAccountResource.php
-ªáµ±ø2íG_
+¶ÄÅø2õG_
 Qplugins/webkul/partners/src/Filament/Resources/BankResource/Pages/ManageBanks.php
 ªáµ±ø2ßM
 ?plugins/webkul/partners/src/Filament/Resources/BankResource.php
-¬áµ±ø2ºEh
+·ºÁÅø2ŠEh
 Zplugins/webkul/partners/src/Filament/Resources/IndustryResource/Pages/ManageIndustries.php
 ©áµ±ø2©Q
 Cplugins/webkul/partners/src/Filament/Resources/IndustryResource.php
@@ -11677,4 +11678,5 @@ $storage/framework/testing/.gitignore	ğ“„¥ô2/
 !tools/sqlite_to_dbml_converter.py¦ïç÷2×%
 vite.config.js
 ğ“„¥ô2‡
- *-3ï°ôšÓİ`²ZcÌHu¨30
+ *ø
+Tº’·#ªUx§1Æ¾e‚à0

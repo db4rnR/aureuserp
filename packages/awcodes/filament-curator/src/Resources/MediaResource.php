@@ -22,13 +22,13 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Filament\Forms\Form;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Layout\View;
 use Filament\Tables\Columns\TextColumn;
@@ -103,10 +103,10 @@ class MediaResource extends Resource
         return CuratorPlugin::get()->shouldRegisterNavigation();
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 Group::make()
                     ->schema([
                         Section::make(trans('curator::forms.sections.file'))
