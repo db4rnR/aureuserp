@@ -25,11 +25,14 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section as FormSection;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
+use Filament\Infolists\Components\Grid as InfolistGrid;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -53,11 +56,11 @@ class PaymentTermResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
-                Section::make()->schema([
+        return $form
+            ->schema([
+                FormSection::make()->schema([
                         Grid::make()->schema([
                                 TextInput::make('name')->required()
                                     ->label(__('accounts::filament/resources/payment-term.form.sections.fields.payment-term'))
@@ -172,10 +175,10 @@ class PaymentTermResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 Section::make()->schema([
                         Grid::make(['default' => 3])->schema([
                                 TextEntry::make('name')->label(__('accounts::filament/resources/payment-term.infolist.sections.entries.payment-term'))

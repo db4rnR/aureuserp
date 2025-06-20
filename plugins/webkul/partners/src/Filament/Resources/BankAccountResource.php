@@ -16,9 +16,9 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -46,10 +46,10 @@ class BankAccountResource extends Resource
         return __('partners::filament/resources/bank-account.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 TextInput::make('account_number')->label(__('partners::filament/resources/bank-account.form.account-number'))
                     ->required()
                     ->unique(ignoreRecord: true)
@@ -67,7 +67,7 @@ class BankAccountResource extends Resource
                     ->required()
                     ->searchable()
                     ->preload()
-                    ->createOptionForm(fn (Schema $form): Schema => BankResource::form($form)),
+                    ->createOptionForm(fn (Form $form): Form => BankResource::form($form)),
                 Select::make('partner_id')->label(__('partners::filament/resources/bank-account.form.account-holder'))
                     ->relationship('partner', 'name')
                     ->required()

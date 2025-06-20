@@ -15,8 +15,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Section as FormSection;
+use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
@@ -37,11 +39,11 @@ class TaxGroupResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
-                Section::make()->schema([
+        return $form
+            ->schema([
+                FormSection::make()->schema([
                         Select::make('company_id')->relationship('company', 'name')
                             ->searchable()
                             ->label(__('accounts::filament/resources/tax-group.form.sections.fields.company'))
@@ -134,10 +136,10 @@ class TaxGroupResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 Section::make()->schema([
                         TextEntry::make('company.name')->icon('heroicon-o-building-office-2')
                             ->placeholder('-')

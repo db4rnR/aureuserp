@@ -15,9 +15,12 @@ use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section as FormSection;
+use Filament\Forms\Form;
+use Filament\Infolists\Components\Group as InfolistGroup;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -37,11 +40,11 @@ class CashRoundingResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
-                Section::make()->schema([
+        return $form
+            ->schema([
+                FormSection::make()->schema([
                         Group::make()->schema([
                                 TextInput::make('name')->required()
                                     ->label(__('accounts::filament/resources/cash-rounding.form.fields.name'))
@@ -114,12 +117,12 @@ class CashRoundingResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 Section::make()->schema([
-                        Group::make()->schema([
+                        InfolistGroup::make()->schema([
                                 TextEntry::make('name')->label(__('accounts::filament/resources/cash-rounding.infolist.entries.name'))
                                     ->icon('heroicon-o-document-text'),
                                 TextEntry::make('rounding')->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-precision'))

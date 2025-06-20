@@ -20,11 +20,14 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section as FormSection;
+use Filament\Forms\Form;
+use Filament\Infolists\Components\Grid as InfolistGrid;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -52,11 +55,11 @@ class TaxResource extends Resource
 
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Start;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
-                Section::make()->schema([
+        return $form
+            ->schema([
+                FormSection::make()->schema([
                         Group::make()->schema([
                                 TextInput::make('name')->label(__('accounts::filament/resources/tax.form.sections.fields.name'))
                                     ->required(),
@@ -82,7 +85,7 @@ class TaxResource extends Resource
                                 TextInput::make('invoice_label')->label(__('accounts::filament/resources/tax.form.sections.field-set.advanced-options.fields.invoice-label')),
                                 Select::make('tax_group_id')->relationship('taxGroup', 'name')
                                     ->required()
-                                    ->createOptionForm(fn (Schema $form): Schema => TaxGroupResource::form($form))
+                                    ->createOptionForm(fn (Form $form): Form => TaxGroupResource::form($form))
                                     ->label(__('accounts::filament/resources/tax.form.sections.field-set.advanced-options.fields.tax-group')),
                                 Select::make('country_id')->relationship('country', 'name')
                                     ->label(__('accounts::filament/resources/tax.form.sections.field-set.advanced-options.fields.country')),
@@ -214,10 +217,10 @@ class TaxResource extends Resource
             ->reorderable('sort');
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 Grid::make(['default' => 3])->schema([
                         Group::make()->schema([
                                 Section::make()->schema([

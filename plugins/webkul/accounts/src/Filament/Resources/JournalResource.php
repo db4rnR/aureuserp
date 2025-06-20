@@ -20,14 +20,17 @@ use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section as FormSection;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
+use Filament\Infolists\Components\Grid as InfolistGrid;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -48,10 +51,10 @@ class JournalResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 Group::make()->schema([
                         Group::make()->schema([
                                 Tabs::make()->tabs([
@@ -134,7 +137,7 @@ class JournalResource extends Resource
                             ])
                             ->columnSpan(['lg' => 2]),
                         Group::make()->schema([
-                                Section::make(__('accounts::filament/resources/journal.form.general.title'))
+                                FormSection::make(__('accounts::filament/resources/journal.form.general.title'))
                                     ->schema([
                                         Group::make()->schema([
                                                 TextInput::make('name')->label(__('accounts::filament/resources/journal.form.general.fields.name'))
@@ -196,10 +199,10 @@ class JournalResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 Grid::make(['default' => 3])->schema([
                         Group::make()->schema([
                                 Tabs::make('Journal Information')->tabs([

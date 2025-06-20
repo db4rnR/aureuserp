@@ -18,7 +18,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
+use Filament\Infolists\Infolist;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -33,10 +34,10 @@ class IncoTermResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 Hidden::make('creator_id')->default(Auth::id())
                     ->required(),
                 TextInput::make('code')->label(__('accounts::filament/resources/incoterm.form.fields.code'))
@@ -95,10 +96,10 @@ class IncoTermResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 TextEntry::make('code')->placeholder(__('accounts::filament/resources/incoterm.infolist.entries.code')),
                 TextEntry::make('name')->placeholder(__('accounts::filament/resources/incoterm.infolist.entries.name')),
             ]);

@@ -24,17 +24,19 @@ use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Actions;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Livewire;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Livewire;
+use Filament\Forms\Components\Section as FormSection;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\Size;
 use Filament\Support\Enums\TextSize;
@@ -83,10 +85,10 @@ class InvoiceResource extends Resource
         ];
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 ProgressStepper::make('state')->hiddenLabel()
                     ->inline()
                     ->options(function ($record): array {
@@ -110,7 +112,7 @@ class InvoiceResource extends Resource
                     ->disabled()
                     ->live()
                     ->reactive(),
-                Section::make(__('accounts::filament/resources/invoice.form.section.general.title'))
+                FormSection::make(__('accounts::filament/resources/invoice.form.section.general.title'))
                     ->icon('heroicon-o-document-text')
                     ->schema([
                         Actions::make([
@@ -183,7 +185,7 @@ class InvoiceResource extends Resource
                                             ->searchable()
                                             ->preload()
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.invoice.fields.recipient-bank'))
-                                            ->createOptionForm(fn ($form): Schema => BankAccountResource::form($form))
+                                            ->createOptionForm(fn (Form $form): Form => BankAccountResource::form($form))
                                             ->disabled(fn ($record): bool => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL], true)),
                                         TextInput::make('payment_reference')->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.invoice.fields.payment-reference')),
                                         DatePicker::make('delivery_date')->native(false)
@@ -407,10 +409,10 @@ class InvoiceResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 Section::make()->schema([
                         TextEntry::make('payment_state')->badge(),
                     ])

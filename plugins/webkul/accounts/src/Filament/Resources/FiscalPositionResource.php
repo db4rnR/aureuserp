@@ -20,10 +20,13 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section as FormSection;
+use Filament\Forms\Form;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Group as InfolistGroup;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -43,11 +46,11 @@ class FiscalPositionResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
-                Section::make()->schema([
+        return $form
+            ->schema([
+                FormSection::make()->schema([
                         Group::make()->schema([
                                 TextInput::make('name')->label(__('accounts::filament/resources/fiscal-position.form.fields.name'))
                                     ->required()
@@ -130,12 +133,12 @@ class FiscalPositionResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 Section::make()->schema([
-                        Group::make()->schema([
+                        InfolistGroup::make()->schema([
                                 Grid::make()->schema([
                                         TextEntry::make('name')->label(__('accounts::filament/resources/fiscal-position.infolist.entries.name'))
                                             ->placeholder('-')

@@ -17,10 +17,13 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section as FormSection;
+use Filament\Forms\Form;
+use Filament\Infolists\Components\Grid as InfolistGrid;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\QueryBuilder;
@@ -46,10 +49,10 @@ class PaymentsResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 Grid::make()->schema([
                         ProgressStepper::make('state')->hiddenLabel()
                             ->inline()
@@ -60,7 +63,7 @@ class PaymentsResource extends Resource
                             ->live()
                             ->reactive(),
                     ])->columns(2),
-                Section::make()->schema([
+                FormSection::make()->schema([
                         Group::make()->schema([
                                 ToggleButtons::make('payment_type')->label(__('accounts::filament/resources/payment.form.sections.fields.payment-type'))
                                     ->options(PaymentType::class)
@@ -275,10 +278,10 @@ class PaymentsResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $schema
-            ->components([
+        return $infolist
+            ->schema([
                 Section::make()->schema([
                         Group::make()->schema([
                                 TextEntry::make('state')->badge()
