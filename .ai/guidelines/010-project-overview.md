@@ -2,7 +2,7 @@
 
 ## 1.1. Introduction
 
-AureusERP is a comprehensive, open-source Enterprise Resource Planning (ERP) solution built on Laravel 12.x and FilamentPHP 3.x. It's designed for Small and Medium Enterprises (SMEs) and large-scale enterprises, offering a modular plugin architecture for managing various business operations.
+This is a comprehensive, open-source application built on Laravel 12.x and FilamentPHP 3.x. It's designed for Small and Medium Enterprises (SMEs) and large-scale enterprises, offering a modular plugin architecture for managing various business operations.
 
 ## 1.2. Core Technologies
 
@@ -73,7 +73,7 @@ plugins/webkul/{module}/
 
 ## 1.4. FilamentPHP Integration
 
-AureusERP uses FilamentPHP extensively for admin interfaces:
+The project uses FilamentPHP extensively for admin interfaces:
 
 - Resources follow FilamentPHP conventions
 - FilamentShield for permission management

@@ -7,7 +7,7 @@ namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResour
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource;
 use Webkul\Inventory\Models\Rule;

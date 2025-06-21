@@ -26,13 +26,14 @@ use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Schema;
+use Filament\Infolists\Components\Group;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs;
+use Filament\Infolists\Components\Tabs\Tab;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Filament\Forms\Form;
+use Filament\Infolists\Infolist;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
@@ -52,9 +53,9 @@ class BranchesRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Tabs::make()->tabs([
                         Tab::make(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.general-information.title'))
@@ -109,7 +110,7 @@ class BranchesRelationManager extends RelationManager
                                                     )
                                                     ->searchable()
                                                     ->preload()
-                                                    ->createOptionForm(fn (Schema $form, Get $get, Set $set): Schema => $form
+                                                    ->createOptionForm(fn (Form $form, Get $get, Set $set): Form => $form
                                                         ->components([
                                                             TextInput::make('name')->label(__('security::filament/resources/company/relation-managers/manage-branch.form.tabs.address-information.sections.address-information.fields.state-name'))
                                                                 ->required(),
@@ -321,9 +322,9 @@ class BranchesRelationManager extends RelationManager
             ->reorderable('sequence');
     }
 
-    public function infolist(Schema $schema): Schema
+    public function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->components([
                 Tabs::make('Branch Information')->tabs([
                         Tab::make(__('security::filament/resources/company/relation-managers/manage-branch.infolist.tabs.general-information.title'))

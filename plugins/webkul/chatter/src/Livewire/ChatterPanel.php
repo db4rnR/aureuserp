@@ -22,7 +22,7 @@ use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;

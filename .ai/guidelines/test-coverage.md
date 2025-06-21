@@ -1,6 +1,6 @@
 # Test Coverage Guidelines
 
-This document outlines the test coverage requirements, tools, and processes for the AureusERP project.
+This document outlines the test coverage requirements, tools, and processes for the project.
 
 ## Coverage Requirements
 

@@ -1,6 +1,6 @@
 # Test Helpers and Utilities
 
-This document provides documentation for the test helpers and utilities available in the AureusERP testing framework. These helpers and utilities make it easier to write tests by providing common functionality and reducing boilerplate code.
+This document provides documentation for the test helpers and utilities available in the testing framework. These helpers and utilities make it easier to write tests by providing common functionality and reducing boilerplate code.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ This document provides documentation for the test helpers and utilities availabl
 
 ## Introduction
 
-AureusERP provides a set of helpers and utilities to make testing easier and more consistent. These include:
+The project provides a set of helpers and utilities to make testing easier and more consistent. These include:
 
 - **Base TestCase Class**: Provides common functionality for all tests
 - **Testing Traits**: Provide specific functionality for different types of tests
@@ -25,7 +25,7 @@ AureusERP provides a set of helpers and utilities to make testing easier and mor
 
 ## Base TestCase Class
 
-The `TestCase` class (`tests/TestCase.php`) is the base class for all tests in AureusERP. It extends Laravel's `TestCase` class and provides additional functionality.
+The `TestCase` class (`tests/TestCase.php`) is the base class for all tests in the project. It extends Laravel's `TestCase` class and provides additional functionality.
 
 ### Key Methods
 
@@ -250,7 +250,7 @@ protected function assertObjectHasMethod(object $object, string $method): void
 
 ## Testing Traits
 
-AureusERP provides several traits that can be used to add specific functionality to your tests.
+The project provides several traits that can be used to add specific functionality to your tests.
 
 ### API Testing Trait
 
@@ -615,7 +615,7 @@ public static function cleanupTestFiles(): void
 
 ## Factory Helpers
 
-AureusERP provides factory helpers to make it easier to create test data. These are defined in the `database/factories` directory.
+The project provides factory helpers to make it easier to create test data. These are defined in the `database/factories` directory.
 
 ### Using Factories
 
@@ -689,7 +689,7 @@ class UserFactory extends Factory
 
 ## Assertion Helpers
 
-AureusERP provides assertion helpers to make it easier to assert conditions in tests. These are defined in the `TestCase` class and in testing traits.
+The project provides assertion helpers to make it easier to assert conditions in tests. These are defined in the `TestCase` class and in testing traits.
 
 ### Using Assertion Helpers
 

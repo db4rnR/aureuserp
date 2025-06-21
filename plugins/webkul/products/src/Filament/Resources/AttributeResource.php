@@ -22,9 +22,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Schema;
+use Filament\Infolists\Components\Section;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\TextSize;
 use Filament\Tables\Columns\TextColumn;
@@ -184,7 +184,7 @@ class AttributeResource extends Resource
     {
         return $infolist
             ->components([
-                \Filament\Schemas\Components\Group::make()->schema([
+                \Filament\Infolists\Components\Group::make()->schema([
                         Section::make(__('products::filament/resources/attribute.infolist.sections.general.title'))
                             ->schema([
                                 TextEntry::make('name')->label(__('products::filament/resources/attribute.infolist.sections.general.entries.name'))
@@ -197,7 +197,7 @@ class AttributeResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                \Filament\Schemas\Components\Group::make()->schema([
+                \Filament\Infolists\Components\Group::make()->schema([
                         Section::make(__('products::filament/resources/attribute.infolist.sections.record-information.title'))
                             ->schema([
                                 TextEntry::make('creator.name')->label(__('products::filament/resources/attribute.infolist.sections.record-information.entries.creator'))

@@ -1,6 +1,6 @@
 # Test Data Requirements and Assumptions
 
-This document outlines the requirements and assumptions for test data in the AureusERP testing framework. Proper test data is crucial for effective testing, and understanding the assumptions made about test data helps ensure tests are reliable and maintainable.
+This document outlines the requirements and assumptions for test data in the testing framework. Proper test data is crucial for effective testing, and understanding the assumptions made about test data helps ensure tests are reliable and maintainable.
 
 ## General Test Data Principles
 
@@ -12,7 +12,7 @@ This document outlines the requirements and assumptions for test data in the Aur
 
 ## Test Data Sources
 
-AureusERP tests can use several sources for test data:
+Tests can use several sources for test data:
 
 ### 1. Factories
 
@@ -250,4 +250,4 @@ Common test data issues and how to resolve them:
 3. **Missing Relationships**: If tests are failing due to missing relationships, ensure the factory definitions create related models as needed.
 4. **Inconsistent Results**: If tests are producing inconsistent results, ensure they use fixed seeds for random data.
 
-By following these guidelines, you can ensure that your tests have the data they need to effectively test the functionality of the AureusERP system.
+By following these guidelines, you can ensure that your tests have the data they need to effectively test the functionality of the system.

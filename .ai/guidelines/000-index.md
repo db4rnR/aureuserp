@@ -1,24 +1,22 @@
-# AureusERP AI Assistant Guidelines
-# AureusERP AI Assistant Guidelines
+# AI Assistant Guidelines
 
 ## Core Communication Principle
 
 **All documents and responses should be clear, actionable, and suitable for a junior developer to understand and implement.**
 
-This principle guides all documentation, code, and communication within the AureusERP project.
+This principle guides all documentation, code, and communication within the project.
 
 ## Guidelines Index
 
-1. [Project Overview](010-project-overview.md) - Core information about AureusERP
+1. [Project Overview](010-project-overview.md) - Core information about the project
 2. [Documentation Standards](020-documentation-standards.md) - Guidelines for documentation
 3. [Development Standards](030-development-standards.md) - Code style and architecture patterns
 4. [Workflow Guidelines](040-workflow-guidelines.md) - Git workflow and terminal management
-5. [Plugin Architecture](050-plugin-architecture.md) - Working with plugins
-6. [Testing Standards](060-testing-standards.md) - Testing requirements and practices
+5. [Testing Standards](060-testing-standards.md) - Testing requirements and practices
 
 ## Using These Guidelines
 
-These guidelines serve as a comprehensive reference for working with the AureusERP codebase. They are designed to be approachable for developers of all experience levels, with special attention to clarity for junior developers.
+These guidelines serve as a comprehensive reference for working with the project codebase. They are designed to be approachable for developers of all experience levels, with special attention to clarity for junior developers.
 
 When working on the project:
 
@@ -26,8 +24,7 @@ When working on the project:
 2. Follow the Documentation Standards when creating or updating documentation
 3. Adhere to Development Standards when writing or modifying code
 4. Use the Workflow Guidelines for consistent Git and development workflows
-5. Refer to Plugin Architecture when working with or creating plugins
-6. Follow Testing Standards to ensure code quality and reliability
+5. Follow Testing Standards to ensure code quality and reliability
 
 ## Maintenance
 
@@ -41,7 +38,7 @@ These guidelines should be updated whenever there are significant changes to:
 When updating these guidelines, ensure that all affected documents are updated consistently and that the main index reflects the current structure.
 ## Overview
 
-This document serves as the main index for the AureusERP AI Assistant guidelines. These guidelines are designed to ensure consistent, high-quality interactions when working with the AureusERP codebase.
+This document serves as the main index for the AI Assistant guidelines. These guidelines are designed to ensure consistent, high-quality interactions when working with the codebase.
 
 ## AI Assistant Identity and Approach
 
@@ -78,7 +75,7 @@ When _creating/editing_ files:
 ## Table of Contents
 
 1. [Project Overview](010-project-overview.md)
-   - Core information about AureusERP, its architecture, and structure
+   - Core information about the project, its architecture, and structure
 
 2. [Documentation Standards](020-documentation-standards.md)
    - Guidelines for creating and maintaining documentation
@@ -94,11 +91,7 @@ When _creating/editing_ files:
    - Terminal management
    - Development workflow
 
-5. [Plugin Architecture](050-plugin-architecture.md)
-   - Working with plugins
-   - Creating and managing plugins
-
-6. [Testing Standards](060-testing-standards.md)
+5. [Testing Standards](060-testing-standards.md)
    - Test organization and types
    - Naming conventions and best practices
    - Performance optimization and tools
@@ -108,10 +101,11 @@ When _creating/editing_ files:
 
 These guidelines serve two main purposes:
 
-1. To provide comprehensive information about the AureusERP project structure, architecture, and development standards
+1. To provide comprehensive information about the project structure, architecture, and development standards
 2. To establish consistent formatting, behavior, and workflow standards for the AI Assistant when working with the codebase
 
-By following these guidelines, you'll ensure that your contributions to AureusERP maintain the project's high standards for code quality, performance, and user experience.
+By following these guidelines, you'll ensure that your contributions to the project maintain the project's high 
+standards for code quality, performance, and user experience.
 
 ## Maintenance
 

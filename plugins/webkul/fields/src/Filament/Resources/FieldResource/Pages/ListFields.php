@@ -6,7 +6,7 @@ namespace Webkul\Field\Filament\Resources\FieldResource\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\Tabs\Tab;
 use Webkul\Field\Filament\Resources\FieldResource;
 use Webkul\Field\Models\Field;
 

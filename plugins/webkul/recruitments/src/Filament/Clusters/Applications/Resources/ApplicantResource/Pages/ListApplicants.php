@@ -8,8 +8,8 @@ use Filament\Actions\CreateAction;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Form;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Recruitment\Enums\RecruitmentState;
@@ -122,7 +122,7 @@ class ListApplicants extends ListRecords
                                 ->searchable()
                                 ->preload()
                                 ->label('Candidate')
-                                ->createOptionForm(fn (Schema $schema): Schema => CandidateResource::form($schema)),
+                                ->createOptionForm(fn (Form $form): Form => CandidateResource::form($form)),
                         ])->columns(2),
                 ])
                 ->mutateDataUsing(function (array $data): array {

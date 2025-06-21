@@ -7,7 +7,7 @@ namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\TagResour
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\TagResource;
 use Webkul\Blog\Models\Tag;

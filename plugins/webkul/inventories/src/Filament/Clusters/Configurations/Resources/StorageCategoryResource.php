@@ -18,8 +18,8 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
+use Filament\Infolists\Components\Section;
+use Filament\Forms\Form;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
@@ -156,7 +156,7 @@ class StorageCategoryResource extends Resource
     {
         return $infolist
             ->components([
-                \Filament\Schemas\Components\Group::make()->schema([
+                \Filament\Infolists\Components\Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/storage-category.infolist.sections.general.title'))
                             ->schema([
                                 TextEntry::make('name')->label(__('inventories::filament/clusters/configurations/resources/storage-category.infolist.sections.general.entries.name'))
@@ -173,7 +173,7 @@ class StorageCategoryResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                \Filament\Schemas\Components\Group::make()->schema([
+                \Filament\Infolists\Components\Group::make()->schema([
                         Section::make(__('inventories::filament/clusters/configurations/resources/storage-category.infolist.sections.record-information.title'))
                             ->schema([
                                 TextEntry::make('created_at')->label(__('inventories::filament/clusters/configurations/resources/storage-category.infolist.sections.record-information.entries.created-at'))

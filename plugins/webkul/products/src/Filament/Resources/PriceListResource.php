@@ -10,7 +10,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Webkul\Product\Filament\Resources\PriceListResource\Pages\CreatePriceList;
 use Webkul\Product\Filament\Resources\PriceListResource\Pages\EditPriceList;

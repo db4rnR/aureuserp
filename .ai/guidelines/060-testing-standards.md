@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the testing standards for the AureusERP project and serves as an index to more detailed testing-related guidelines. Following these standards ensures consistency, maintainability, and effectiveness of our test suite.
+This document outlines the testing standards for the project and serves as an index to more detailed testing-related guidelines. Following these standards ensures consistency, maintainability, and effectiveness of our test suite.
 
 ## Table of Contents
 

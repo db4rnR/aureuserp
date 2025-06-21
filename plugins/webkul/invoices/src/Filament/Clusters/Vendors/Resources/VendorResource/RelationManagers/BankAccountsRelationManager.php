@@ -6,7 +6,7 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Rela
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Webkul\Partner\Filament\Resources\BankAccountResource;
 

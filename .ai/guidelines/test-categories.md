@@ -1,10 +1,10 @@
 # Test Categories Guidelines
 
-This document defines the comprehensive test categorization scheme for AureusERP, including how to use categories and what categories are available.
+This document defines the comprehensive test categorization scheme for the project, including how to use categories and what categories are available.
 
 ## Using Test Categories
 
-Test categories in AureusERP are implemented using PHP attributes with the `#[Group]` attribute. Multiple categories can be applied to a single test.
+Test categories in the project are implemented using PHP attributes with the `#[Group]` attribute. Multiple categories can be applied to a single test.
 
 ### Basic Usage
 

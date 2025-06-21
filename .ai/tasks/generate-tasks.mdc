@@ -1,89 +1,174 @@
 ---
-description:
+description: Comprehensive guide for generating hierarchical task lists from PRDs
 globs:
 alwaysApply: false
 ---
-# Rule: Generating a Task List from a PRD
+# Rule: Generating Hierarchical Task Lists from PRDs
 
 ## Goal
 
-To guide an AI assistant in creating a detailed, step-by-step task list in Markdown format based on an existing Product Requirements Document (PRD). The task list should guide a developer through implementation.
+To guide an AI assistant in creating detailed, multi-level task lists in Markdown format based on Product Requirements Documents (PRDs). The task list should provide comprehensive implementation guidance through a three-phase hierarchical breakdown: Tasks → Sub-tasks → Sub-sub-tasks.
 
 ## Output
 
 - **Format:** Markdown (`.md`)
-- **Location:** `/.ai//tasks/[feature-name]/`
-- **Filename:** `tasks-[prd-file-name].md` (e.g., `tasks-prd-user-profile-editing.md`)
+- **Location:** `/.ai/tasks/[feature-name]/`
+- **Filename:** `tasks-[feature-name].md` (e.g., `tasks-user-authentication.md`)
 
-## Process
+## Three-Phase Process
 
-1.  **Receive PRD Reference:** The user points the AI to a specific PRD file
-2.  **Analyze PRD:** The AI reads and analyzes the functional requirements, user stories, and other sections of the specified PRD.
-3.  **Phase 1: Generate Parent Tasks:** Based on the PRD analysis, create the file and generate the main, high-level tasks required to implement the feature. Use your judgement on how many high-level tasks to use. It's likely to be about 5. Present these tasks to the user in the specified format (without sub-tasks yet). Inform the user: "I have generated the high-level tasks based on the PRD. Ready to generate the sub-tasks? Respond with 'Go' to proceed."
-4.  **Wait for Confirmation:** Pause and wait for the user to respond with "Go".
-5.  **Phase 2: Generate Sub-Tasks:** Once the user confirms, break down each parent task into smaller, actionable sub-tasks necessary to complete the parent task. Ensure sub-tasks logically follow from the parent task and cover the implementation details implied by the PRD.
-6.  **Identify Relevant Files:** Based on the tasks and PRD, identify potential files that will need to be created or modified. List these under the `Relevant Files` section, including corresponding test files if applicable.
-7.  **Generate Final Output:** Combine the parent tasks, sub-tasks, relevant files, and notes into the final Markdown structure.
-8.  **Save Task List:** Save the generated document in the `/tasks/[feature-name]/` directory with the filename `tasks-
-[prd-file-name].md`, where `[prd-file-name]` matches the base name of the input PRD file (e.g., if the input was `prd-user-profile-editing.md`, the output is `tasks-prd-user-profile-editing.md`).
+### Phase 1: Generate Parent Tasks (High-Level)
+1. **Receive PRD Reference:** The user points the AI to a specific PRD file
+2. **Analyze PRD:** Read and analyze functional requirements, user stories, and technical specifications
+3. **Generate Parent Tasks:** Create 4-7 high-level tasks that represent major implementation areas
+4. **Present to User:** Show parent tasks in the specified format (without sub-tasks yet)
+5. **Wait for Confirmation:** Inform user: "I have generated the high-level tasks based on the PRD. Ready to generate the sub-tasks? Respond with 'Go' to proceed."
+
+### Phase 2: Generate Sub-Tasks (Detailed Implementation)
+1. **User Confirmation:** Wait for user to respond with "Go"
+2. **Break Down Parent Tasks:** Decompose each parent task into 3-8 actionable sub-tasks
+3. **Ensure Logical Flow:** Sub-tasks should follow implementation order and cover all PRD requirements
+4. **Present Sub-Tasks:** Show complete task hierarchy with parent tasks and sub-tasks
+5. **Wait for Sub-Sub-Task Confirmation:** Ask: "Ready to generate sub-sub-tasks for complex items? Respond with 'Go' to proceed, or 'Skip' to finalize."
+
+### Phase 3: Creating Sub-Sub-Tasks (Granular Steps)
+1. **Identify Complex Sub-Tasks:** Determine which sub-tasks require further breakdown
+2. **Apply Sub-Sub-Task Criteria:** Use guidelines below to decide on granularity
+3. **Generate Third-Level Tasks:** Create 2-5 sub-sub-tasks for complex sub-tasks
+4. **Maintain Traceability:** Ensure clear relationships across all three levels
+5. **Finalize Structure:** Complete the hierarchical task list with all levels
+
+## Sub-Sub-Task Guidelines
+
+### When to Create Sub-Sub-Tasks
+Create sub-sub-tasks when a sub-task meets any of these criteria:
+- **Complexity:** Requires multiple distinct technical steps or technologies
+- **Duration:** Estimated to take more than 4-6 hours to complete
+- **Dependencies:** Has internal dependencies that need specific ordering
+- **Expertise:** Involves multiple skill areas (database, API, UI, testing)
+- **Risk:** Contains potential failure points that need isolation
+- **Validation:** Requires intermediate testing or validation steps
+
+### Sub-Sub-Task Granularity Criteria
+Each sub-sub-task should be:
+- **Atomic:** Accomplishable in 1-3 hours by a junior developer
+- **Testable:** Has clear success criteria and validation methods
+- **Independent:** Can be completed without waiting for other sub-sub-tasks
+- **Specific:** Uses concrete technical terms and actionable verbs
+- **Traceable:** Clearly contributes to its parent sub-task objective
+
+### Traceability Best Practices
+- **Consistent Numbering:** Use format `X.Y.Z` (e.g., `1.2.3` for third sub-sub-task of second sub-task of first task)
+- **Clear Relationships:** Each level should logically contribute to its parent
+- **Cross-References:** Include references to related tasks when dependencies exist
+- **Progress Tracking:** Enable marking completion at any level independently
+
+### Sub-Sub-Task Structure and Naming
+- **Action-Oriented:** Start with specific verbs (Create, Implement, Configure, Validate)
+- **Technology-Specific:** Include relevant frameworks, tools, or patterns
+- **Outcome-Focused:** Clearly state what will be accomplished
+- **Context-Aware:** Reference specific files, classes, or components when applicable
+
+## Task List Management Integration
+
+### Completion Protocol
+- **Sub-Sub-Task Completion:** Mark individual sub-sub-tasks as `[✅]` when finished
+- **Sub-Task Completion:** Mark sub-task as `[✅]` only when ALL its sub-sub-tasks are complete
+- **Parent Task Completion:** Mark parent task as `[✅]` only when ALL its sub-tasks are complete
+- **Progress Tracking:** Update task list file after each completion
+
+### Implementation Workflow
+- **One Task at a Time:** Complete sub-sub-tasks sequentially within each sub-task
+- **User Approval:** Request permission before starting each new sub-task
+- **File Updates:** Maintain current task list with completion status
+- **Relevant Files:** Update file list as new files are created or modified
 
 ## Output Format
 
-The generated task list _must_ follow this structure, with examples for both TypeScript and PHP projects:
+The generated task list must follow this hierarchical structure:
 
 ```markdown
+# [Feature Name] Implementation Tasks
+
+## Project Overview
+Brief description of the feature and its implementation approach based on the PRD.
+
 ## Relevant Files
 
 ### For TypeScript Projects:
-- `path/to/potential/file1.ts` - Brief description of why this file is relevant (e.g., Contains the main component for this feature).
-- `path/to/file1.test.ts` - Unit tests for `file1.ts`.
-- `path/to/another/file.tsx` - Brief description (e.g., API route handler for data submission).
-- `path/to/another/file.test.tsx` - Unit tests for `another/file.tsx`.
-- `lib/utils/helpers.ts` - Brief description (e.g., Utility functions needed for calculations).
-- `lib/utils/helpers.test.ts` - Unit tests for `helpers.ts`.
+- `path/to/component.tsx` - Main component implementation
+- `path/to/component.test.tsx` - Component unit tests
+- `lib/api/service.ts` - API service layer
+- `lib/api/service.test.ts` - Service unit tests
 
 ### For PHP/Laravel Projects:
-- `app/Models/User.php` - Brief description of why this file is relevant (e.g., Contains the model definition for this feature).
-- `tests/Unit/Models/UserTest.php` - Unit tests for `User.php`.
-- `app/Http/Controllers/UserController.php` - Brief description (e.g., Controller for handling user requests).
-- `tests/Feature/Http/Controllers/UserControllerTest.php` - Feature tests for `UserController.php`.
-- `app/Services/UserService.php` - Brief description (e.g., Service class containing business logic).
-- `tests/Unit/Services/UserServiceTest.php` - Unit tests for `UserService.php`.
+- `app/Models/Entity.php` - Model implementation
+- `tests/Unit/Models/EntityTest.php` - Model unit tests
+- `app/Http/Controllers/EntityController.php` - Controller implementation
+- `tests/Feature/Http/Controllers/EntityControllerTest.php` - Controller feature tests
 
 ### Notes
-
 #### For TypeScript Projects:
-- Unit tests should typically be placed alongside the code files they are testing (e.g., `MyComponent.tsx` and `MyComponent.test.tsx` in the same directory).
-- Use `npx jest [optional/path/to/test/file]` to run tests. Running without a path executes all tests found by the Jest configuration.
+- Use `npm test` or `yarn test` to run the test suite
+- Use `npm run test:coverage` for coverage reports
 
 #### For PHP/Laravel Projects:
-- Unit tests should be placed in the `tests/Unit` directory, mirroring the structure of the `app` directory.
-- Feature tests should be placed in the `tests/Feature` directory.
-- Use `php artisan test` or `./vendor/bin/pest` to run tests. Add `--filter=TestClassName` to run specific tests.
-- For Pest tests, use `./vendor/bin/pest --coverage` to generate coverage reports.
+- Use `php artisan test` or `./vendor/bin/pest` to run tests
+- Use `./vendor/bin/pest --coverage` for coverage reports
 
 ## Tasks
 
 - [ ] 1.0 Parent Task Title
-  - [ ] 1.1 [Sub-task description 1.1]
-  - [ ] 1.2 [Sub-task description 1.2]
-- [ ] 2.0 Parent Task Title
-  - [ ] 2.1 [Sub-task description 2.1]
-- [ ] 3.0 Parent Task Title (may not require sub-tasks if purely structural or configuration)
+  - [ ] 1.1 Sub-task Description
+    - [ ] 1.1.1 Sub-sub-task specific implementation step
+    - [ ] 1.1.2 Sub-sub-task validation or testing step
+    - [ ] 1.1.3 Sub-sub-task configuration or setup step
+  - [ ] 1.2 Another Sub-task Description
+    - [ ] 1.2.1 Sub-sub-task for complex implementation
+    - [ ] 1.2.2 Sub-sub-task for error handling
+- [ ] 2.0 Second Parent Task Title
+  - [ ] 2.1 Sub-task (may not need sub-sub-tasks if simple)
+  - [ ] 2.2 Complex Sub-task Description
+    - [ ] 2.2.1 Database schema implementation
+    - [ ] 2.2.2 Model relationship configuration
+    - [ ] 2.2.3 Migration creation and testing
 ```
-
-## Interaction Model
-
-The process explicitly requires a pause after generating parent tasks to get user confirmation ("Go") before proceeding to generate the detailed sub-tasks. This ensures the high-level plan aligns with user expectations before diving into details.
 
 ## Target Audience
 
-Assume the primary reader of the task list is a **junior developer** who will implement the feature. Therefore:
+Assume the primary reader is a **junior developer** (6 months - 2 years experience) who will implement the feature:
 
-* Break down complex tasks into very specific, manageable steps
-* Include references to relevant documentation or learning resources where appropriate
-* Provide code examples or pseudocode for technically challenging parts
-* Explain the 'why' behind tasks, not just the 'what'
-* Avoid assuming prior knowledge of complex architectural patterns
-* Define any technical terms or acronyms that aren't universally understood
-* Include helpful tips or gotchas that might trip up someone new to the codebase
+### Junior Developer Considerations
+- **Break Down Complexity:** Decompose complex tasks into very specific, manageable steps
+- **Provide Context:** Explain the 'why' behind tasks, not just the 'what'
+- **Include Learning Resources:** Reference documentation or tutorials for challenging concepts
+- **Define Technical Terms:** Explain acronyms and technical patterns that aren't universally known
+- **Anticipate Pitfalls:** Include helpful tips or common gotchas
+- **Validate Understanding:** Provide clear success criteria for each task level
+- **Encourage Testing:** Emphasize testing at each level of implementation
+
+### Documentation Standards
+- **Clarity:** Use simple, direct language without unnecessary jargon
+- **Completeness:** Cover all aspects needed for successful implementation
+- **Accuracy:** Ensure technical details are correct and up-to-date
+- **Consistency:** Maintain uniform terminology and formatting throughout
+- **Practicality:** Focus on actionable steps rather than theoretical concepts
+- **Validation:** Include verification steps to confirm correct implementation
+
+## Quality Assurance
+
+### Before Finalizing
+- **PRD Alignment:** Verify all PRD requirements are covered in the task hierarchy
+- **Logical Flow:** Ensure tasks follow a sensible implementation order
+- **Dependency Management:** Identify and document task dependencies
+- **Scope Validation:** Confirm task granularity matches complexity
+- **Completeness Check:** Verify no critical implementation steps are missing
+
+### Post-Generation Review
+- **Traceability Audit:** Confirm clear relationships between all task levels
+- **Feasibility Assessment:** Validate that tasks are achievable by target audience
+- **Resource Identification:** Ensure all necessary files and components are listed
+- **Testing Coverage:** Verify testing tasks are included at appropriate levels
+- **Documentation Completeness:** Confirm all sections are properly filled out
+
+This comprehensive approach ensures that complex features are broken down into manageable, trackable, and implementable tasks suitable for junior developers while maintaining clear traceability and progress tracking throughout the development process.

@@ -6,7 +6,7 @@ namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeRes
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\Tabs\Tab;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\LeaveTypeResource;
 use Webkul\TimeOff\Models\LeaveType;
 

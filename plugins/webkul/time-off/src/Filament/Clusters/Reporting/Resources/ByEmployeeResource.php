@@ -6,7 +6,7 @@ namespace Webkul\TimeOff\Filament\Clusters\Reporting\Resources;
 
 use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
 use Webkul\TimeOff\Filament\Clusters\Reporting;

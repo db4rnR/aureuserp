@@ -21,10 +21,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
@@ -62,10 +63,10 @@ class FieldResource extends Resource
         return __('fields::filament/resources/field.navigation.group');
     }
 
-    public static function form(\Filament\Schemas\Schema $form): \Filament\Schemas\Schema
+    public static function form(Form $form): Form
     {
         return $form
-            ->components([
+            ->schema([
                 Group::make()->schema([
                         Section::make()->schema([
                                 TextInput::make('name')->label(__('fields::filament/resources/field.form.sections.general.fields.name'))

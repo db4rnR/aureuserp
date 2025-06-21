@@ -1,4 +1,4 @@
-# AureusERP Testing Standards
+# Testing Standards
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@
 
 ## Introduction
 
-This document outlines the testing standards for the AureusERP project. Following these standards ensures consistency, maintainability, and effectiveness of our test suite. These guidelines apply to all types of tests: unit, feature, and integration tests.
+This document outlines the testing standards for the project. Following these standards ensures consistency, maintainability, and effectiveness of our test suite. These guidelines apply to all types of tests: unit, feature, and integration tests.
 
 ## Test Organization
 

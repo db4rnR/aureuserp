@@ -9,8 +9,8 @@ use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Placeholder;
 use Filament\Pages\SettingsPage;
-use Filament\Schemas\Components\Actions;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Form;
 use Webkul\Security\Settings\UserSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 
@@ -46,10 +46,10 @@ class ManageActivity extends SettingsPage
         return __('security::filament/clusters/manage-activity.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 Placeholder::make('activity_description')->label(__('security::filament/clusters/manage-activity.form.activity-description.label'))
                     ->content(__('security::filament/clusters/manage-activity.form.activity-description.content')),
                 Actions::make([

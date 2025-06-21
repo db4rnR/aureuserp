@@ -7,7 +7,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Products\Resources;
 use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Product\Filament\Resources\ProductResource as BaseProductResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Products;

@@ -3,7 +3,7 @@
 /**
  * Feature Test Template for Resource Tests
  *
- * This template demonstrates how to structure feature tests for resources in the AureusERP project.
+ * This template demonstrates how to structure feature tests for resources in the project.
  * Replace placeholders with actual values for your specific test case.
  */
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Webkul\TableViews\Filament\Components;
 
 use Closure;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\Tabs\Tab;
 use Webkul\TableViews\Models\TableViewFavorite;
 
 class PresetView extends Tab

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document defines the standards for using PHP attributes in tests for the AureusERP project. PHP attributes (introduced in PHP 8.0) provide a powerful way to add metadata to classes, methods, properties, and parameters, which can be used for test categorization, grouping, and other metadata.
+This document defines the standards for using PHP attributes in tests for the project. PHP attributes (introduced in PHP 8.0) provide a powerful way to add metadata to classes, methods, properties, and parameters, which can be used for test categorization, grouping, and other metadata.
 
 ## Standard Attribute Types
 
@@ -140,7 +140,7 @@ class IsolatedTest extends TestCase
 }
 ```
 
-### Custom AureusERP Attributes
+### Custom Project Attributes
 
 #### `#[PluginTest]`
 

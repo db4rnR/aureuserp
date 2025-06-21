@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers;
 
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Webkul\Partner\Filament\Resources\AddressResource;
 

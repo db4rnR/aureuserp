@@ -23,10 +23,10 @@ use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Section;
+use Filament\Forms\Form;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -227,7 +227,7 @@ class TeamResource extends Resource
     {
         return $infolist
             ->components([
-                \Filament\Schemas\Components\Group::make()->schema([
+                \Filament\Infolists\Components\Group::make()->schema([
                         Section::make()->schema([
                                 TextEntry::make('name')->label(__('sales::filament/clusters/configurations/resources/team.infolist.sections.entries.name'))
                                     ->columnSpan(1),

@@ -1,6 +1,6 @@
 # Test Examples
 
-This document provides examples for each test type and category in the AureusERP testing framework. These examples can be used as templates when writing new tests.
+This document provides examples for each test type and category in the testing framework. These examples can be used as templates when writing new tests.
 
 ## Unit Tests
 
@@ -889,4 +889,4 @@ function product_api_authorization()
 }
 ```
 
-These examples cover a wide range of test types and categories, providing templates that can be used when writing new tests for the AureusERP system.
+These examples cover a wide range of test types and categories, providing templates that can be used when writing new tests for the system.

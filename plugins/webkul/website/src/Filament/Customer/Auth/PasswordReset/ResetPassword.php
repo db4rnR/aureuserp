@@ -14,8 +14,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\Page;
-use Filament\Schemas\Components\Component;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Component;
+use Filament\Forms\Form;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
@@ -28,7 +28,7 @@ use Illuminate\Validation\Rules\Password as PasswordRule;
 use Livewire\Attributes\Locked;
 
 /**
- * @property Schema $form
+ * @property Form $form
  */
 class ResetPassword extends Page
 {

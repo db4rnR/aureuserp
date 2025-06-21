@@ -9,7 +9,7 @@ use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Pages\SettingsPage;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Spatie\Permission\Models\Role;
 use Webkul\Security\Settings\UserSettings;
 use Webkul\Support\Filament\Clusters\Settings;
@@ -47,10 +47,10 @@ class ManageUsers extends SettingsPage
         return __('security::filament/clusters/manage-users.title');
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 Toggle::make('enable_user_invitation')->label(__('security::filament/clusters/manage-users.form.enable-user-invitation.label'))
                     ->helperText(__('security::filament/clusters/manage-users.form.enable-user-invitation.helper-text'))
                     ->required(),

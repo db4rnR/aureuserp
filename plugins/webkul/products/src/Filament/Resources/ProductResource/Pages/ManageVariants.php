@@ -7,7 +7,7 @@ namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
 use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;

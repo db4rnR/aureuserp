@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Tests\Attributes\PluginTest;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Description;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
 use Webkul\Product\Enums\ProductType;
 use Webkul\Product\Models\Category;
 use Webkul\Product\Models\PriceRuleItem;
@@ -26,14 +21,7 @@ use Webkul\Support\Models\UOM;
  * This test verifies that the Product model's attributes are correctly set
  * and that its relationships with other models are properly defined.
  */
-#[Test]
-#[Group('unit')]
-#[Group('products')]
-#[PluginTest('Products')]
-#[CoversClass(Product::class)]
-#[Description('Test Product model attributes and properties')]
-function product_model_attributes_and_properties(): void
-{
+it('can test product model attributes and properties', function (): void {
     // Create a test product
     $product = Product::factory()->create([
         'type' => ProductType::GOODS,
@@ -89,7 +77,7 @@ function product_model_attributes_and_properties(): void
     expect($product->combinations())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
     expect($product->priceRuleItems())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
     expect($product->supplierInformation())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
-}
+})->group('unit', 'products');
 
 /**
  * Test Product model relationships with other models
@@ -98,14 +86,7 @@ function product_model_attributes_and_properties(): void
  * are correctly established and accessible, including parent-child relationships,
  * many-to-many relationships, and one-to-many relationships.
  */
-#[Test]
-#[Group('unit')]
-#[Group('products')]
-#[PluginTest('Products')]
-#[CoversClass(Product::class)]
-#[Description('Test Product model relationships with other models')]
-function products_product_model_relationships_with_other_models(): void
-{
+it('can test product model relationships with other models', function (): void {
     // Create related models
     $user = User::factory()->create();
     $company = Company::factory()->create();
@@ -161,7 +142,7 @@ function products_product_model_relationships_with_other_models(): void
     expect($product->priceRuleItems->first()->id)->toBe($priceRuleItem->id);
     expect($product->supplierInformation->count())->toBe(1);
     expect($product->supplierInformation->first()->id)->toBe($supplierInfo->id);
-}
+})->group('unit', 'products');
 
 /**
  * Test Product model traits and interfaces
@@ -170,22 +151,15 @@ function products_product_model_relationships_with_other_models(): void
  * the correct interfaces, including HasChatter, HasLogActivity, SoftDeletes, and Sortable.
  * It also tests the configuration of these traits.
  */
-#[Test]
-#[Group('unit')]
-#[Group('products')]
-#[PluginTest('Products')]
-#[CoversClass(Product::class)]
-#[Description('Test Product model traits and interfaces')]
-function product_model_traits_and_interfaces(): void
-{
+it('can test product model traits and interfaces', function (): void {
     // Create a test product
     $product = Product::factory()->create();
 
     // Test that the model uses the expected traits and implements interfaces
-    expect($product)->toBeInstanceOf(Webkul\Chatter\Traits\HasChatter::class);
-    expect($product)->toBeInstanceOf(Webkul\Chatter\Traits\HasLogActivity::class);
-    expect($product)->toBeInstanceOf(Illuminate\Database\Eloquent\SoftDeletes::class);
-    expect($product)->toBeInstanceOf(Spatie\EloquentSortable\Sortable::class);
+    expect(class_uses($product))->toContain('Webkul\Chatter\Traits\HasChatter');
+    expect(class_uses($product))->toContain('Webkul\Chatter\Traits\HasLogActivity');
+    expect(class_uses($product))->toContain('Illuminate\Database\Eloquent\SoftDeletes');
+    expect($product)->toBeInstanceOf('Spatie\EloquentSortable\Sortable');
 
     // Test log attributes
     $logAttributes = new ReflectionClass($product)->getProperty('logAttributes')->getValue($product);
@@ -206,7 +180,7 @@ function product_model_traits_and_interfaces(): void
     expect($sortable['order_column_name'])->toBe('sort');
     expect($sortable)->toHaveKey('sort_when_creating');
     expect($sortable['sort_when_creating'])->toBeTrue();
-}
+})->group('unit', 'products');
 
 /**
  * Test Product model casts
@@ -214,14 +188,7 @@ function product_model_traits_and_interfaces(): void
  * This test verifies that the Product model's attribute casts are correctly defined,
  * ensuring that attributes are cast to the appropriate types (enum, boolean, array).
  */
-#[Test]
-#[Group('unit')]
-#[Group('products')]
-#[PluginTest('Products')]
-#[CoversClass(Product::class)]
-#[Description('Test Product model casts')]
-function product_model_casts(): void
-{
+it('can test product model casts', function (): void {
     // Create a test product
     $product = Product::factory()->create([
         'type' => ProductType::GOODS,
@@ -239,4 +206,4 @@ function product_model_casts(): void
     expect($product->is_favorite)->toBeBool();
     expect($product->is_configurable)->toBeBool();
     expect($product->images)->toBeArray();
-}
+})->group('unit', 'products');

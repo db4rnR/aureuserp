@@ -20,7 +20,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
@@ -44,10 +44,9 @@ class BankResource extends Resource
         return __('partners::filament/resources/bank.navigation.title');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form->schema([
                 Section::make(__('partners::filament/resources/bank.form.sections.general.title'))
                     ->schema([
                         TextInput::make('name')->label(__('partners::filament/resources/bank.form.sections.general.fields.name'))

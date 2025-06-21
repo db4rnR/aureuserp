@@ -3,7 +3,7 @@
 /**
  * Unit Test Template for Model Tests
  *
- * This template demonstrates how to structure unit tests for models in the AureusERP project.
+ * This template demonstrates how to structure unit tests for models in the project.
  * Replace placeholders with actual values for your specific test case.
  */
 

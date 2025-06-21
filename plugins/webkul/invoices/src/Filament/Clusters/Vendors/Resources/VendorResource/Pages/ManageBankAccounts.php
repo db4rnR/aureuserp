@@ -7,7 +7,7 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Page
 use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
 use Webkul\Partner\Filament\Resources\BankAccountResource;

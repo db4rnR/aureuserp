@@ -13,7 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Webkul\Security\Filament\Resources\TeamResource\Pages\ManageTeams;
@@ -37,10 +37,9 @@ class TeamResource extends Resource
         return __('security::filament/resources/team.navigation.group');
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form->schema([
                 TextInput::make('name')->label(__('security::filament/resources/team.form.fields.name'))
                     ->required()
                     ->maxLength(255),
@@ -79,7 +78,7 @@ class TeamResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
         return $schema
             ->schema([

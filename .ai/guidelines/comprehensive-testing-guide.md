@@ -1,6 +1,6 @@
-# Comprehensive Testing Guide for AureusERP
+# Comprehensive Testing Guide
 
-This guide provides a complete overview of testing practices, standards, and tools for the AureusERP project. It serves as the main entry point for all testing-related documentation.
+This guide provides a complete overview of testing practices, standards, and tools for the project. It serves as the main entry point for all testing-related documentation.
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@ This guide provides a complete overview of testing practices, standards, and too
 
 ## Introduction
 
-Testing is a critical part of the AureusERP development process. It ensures that the application functions correctly, meets requirements, and maintains quality over time. This guide outlines the testing practices, standards, and tools used in the AureusERP project.
+Testing is a critical part of the development process. It ensures that the application functions correctly, meets requirements, and maintains quality over time. This guide outlines the testing practices, standards, and tools used in the project.
 
 ### Purpose of Testing
 
@@ -30,7 +30,7 @@ Testing is a critical part of the AureusERP development process. It ensures that
 
 ### Testing Tools
 
-AureusERP uses the following testing tools:
+The project uses the following testing tools:
 
 - **Pest PHP**: A testing framework built on top of PHPUnit with a focus on simplicity
 - **Laravel Testing Utilities**: Laravel's built-in testing utilities
@@ -52,7 +52,7 @@ Our testing philosophy is guided by the following principles:
 
 ## Test Types
 
-AureusERP uses three main types of tests:
+The project uses three main types of tests:
 
 ### Unit Tests
 
@@ -155,7 +155,7 @@ For more examples, see the [Test Examples](#test-examples) section.
 
 ## Test Categories
 
-Tests in AureusERP are categorized using PHP attributes with the `#[Group]` attribute. These categories help organize tests and make it easier to run specific groups of tests.
+Tests in the project are categorized using PHP attributes with the `#[Group]` attribute. These categories help organize tests and make it easier to run specific groups of tests.
 
 For a complete list of test categories and how to use them, see the [Test Categories Guidelines](test-categories.md).
 
@@ -195,7 +195,7 @@ composer test:api
 
 ## Test Data
 
-Proper test data is crucial for effective testing. AureusERP uses several sources for test data:
+Proper test data is crucial for effective testing. The project uses several sources for test data:
 
 - **Factories**: Model factories are the preferred way to create test data
 - **Seeders**: Database seeders can be used to populate the database with a standard set of data
@@ -206,15 +206,15 @@ For more information on test data requirements and assumptions, see the [Test Da
 
 ## Plugin-Specific Testing
 
-Each plugin in AureusERP has unique functionality and requirements that need to be considered when writing tests. The [Plugin-Specific Testing Guidelines](plugin-testing-guidelines.md) document provides guidelines for testing specific plugins.
+Each plugin has unique functionality and requirements that need to be considered when writing tests. The [Plugin-Specific Testing Guidelines](plugin-testing-guidelines.md) document provides guidelines for testing specific plugins.
 
 ## Test Examples
 
-The [Test Examples](test-examples.md) document provides examples for each test type and category in the AureusERP testing framework. These examples can be used as templates when writing new tests.
+The [Test Examples](test-examples.md) document provides examples for each test type and category in the testing framework. These examples can be used as templates when writing new tests.
 
 ## Test Coverage
 
-AureusERP aims to maintain a minimum of 70% code coverage across the codebase. Test coverage is measured using Pest's coverage reporting tools and is integrated into the CI/CD pipeline.
+The project aims to maintain a minimum of 70% code coverage across the codebase. Test coverage is measured using Pest's coverage reporting tools and is integrated into the CI/CD pipeline.
 
 For more information on test coverage requirements and tools, see the [Test Coverage Guidelines](test-coverage.md) document.
 
@@ -232,7 +232,7 @@ composer test:coverage-html
 
 ### Coverage Dashboard
 
-AureusERP provides a custom dashboard script that displays coverage metrics for the entire project and individual plugins:
+The project provides a custom dashboard script that displays coverage metrics for the entire project and individual plugins:
 
 ```bash
 php scripts/coverage-dashboard.php
@@ -240,7 +240,7 @@ php scripts/coverage-dashboard.php
 
 ## Test Performance
 
-Test performance is important to ensure that tests can be run quickly and frequently. AureusERP uses several techniques to optimize test performance:
+Test performance is important to ensure that tests can be run quickly and frequently. The project uses several techniques to optimize test performance:
 
 ### Parallel Testing
 

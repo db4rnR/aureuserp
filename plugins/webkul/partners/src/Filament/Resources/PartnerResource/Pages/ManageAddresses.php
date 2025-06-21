@@ -6,7 +6,7 @@ namespace Webkul\Partner\Filament\Resources\PartnerResource\Pages;
 
 use BackedEnum;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Webkul\Partner\Filament\Resources\AddressResource;
 use Webkul\Partner\Filament\Resources\PartnerResource;

@@ -9,7 +9,7 @@ use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
 use Filament\Forms\Components\Toggle;
 use Filament\Pages\SettingsPage;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use UnitEnum;
 use Webkul\Sale\Settings\ProductSettings;
 use Webkul\Support\Filament\Clusters\Settings;

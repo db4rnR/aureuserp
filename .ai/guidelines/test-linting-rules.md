@@ -1,10 +1,10 @@
 # Test Linting Rules
 
-This document describes the linting rules used to enforce test style standards in the AureusERP project.
+This document describes the linting rules used to enforce test style standards in the project.
 
 ## Overview
 
-The AureusERP project uses custom PHPStan rules to enforce test style standards. These rules check that test functions have the required PHP attributes and PHPDoc blocks.
+The project uses custom PHPStan rules to enforce test style standards. These rules check that test functions have the required PHP attributes and PHPDoc blocks.
 
 ## Rules
 

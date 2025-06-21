@@ -3,7 +3,7 @@
 /**
  * Integration Test Template for Service Tests
  *
- * This template demonstrates how to structure integration tests for services in the AureusERP project.
+ * This template demonstrates how to structure integration tests for services in the project.
  * Replace placeholders with actual values for your specific test case.
  */
 

@@ -8,9 +8,9 @@ use BackedEnum;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
 use Filament\View\LegacyComponents\Widget;
 use Webkul\Partner\Models\Partner;
 use Webkul\Project\Filament\Widgets\StatsOverviewWidget;
@@ -38,9 +38,9 @@ class Dashboard extends BaseDashboard
         return __('projects::filament/pages/dashboard.navigation.title');
     }
 
-    public function filtersForm(Schema $schema): Schema
+    public function filtersForm(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Section::make()->schema([
                         Select::make('selectedProjects')->label(__('projects::filament/pages/dashboard.filters-form.project'))

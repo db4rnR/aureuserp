@@ -15,15 +15,15 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\Page;
-use Filament\Schemas\Components\Component;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Component;
+use Filament\Forms\Form;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Password;
 
 /**
- * @property Schema $form
+ * @property Form $form
  */
 class RequestPasswordReset extends Page
 {

@@ -9,8 +9,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Schema;
+use Filament\Forms\Get;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
@@ -37,8 +36,7 @@ class FollowerAction extends Action
             ->badge(fn (Model $record): int => $record->followers->count())
             ->modalWidth(Width::TwoExtraLarge)
             ->slideOver(false)
-            ->schema(fn (Schema $schema): Schema => $schema
-                ->components([
+            ->schema([
                     Select::make('partners')->label(__('chatter::filament/resources/actions/chatter/follower-action.setup.form.fields.recipients'))
                         ->preload()
                         ->searchable()
@@ -64,11 +62,10 @@ class FollowerAction extends Action
                             'underline',
                             'undo',
                         ])
-                        ->visible(fn (Get $get): mixed => $get('notify'))
+                        ->visible(fn ($get): mixed => $get('notify'))
                         ->hiddenLabel()
                         ->placeholder(__('chatter::filament/resources/actions/chatter/follower-action.setup.form.fields.add-a-note')),
                 ])
-                ->columns(1))
             ->modalContentFooter(fn (Model $record) => view('chatter::filament.actions.follower-action', [
                 'record' => $record,
             ]))

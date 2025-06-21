@@ -8,9 +8,9 @@ use BackedEnum;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
 use Filament\View\LegacyComponents\Widget;
 use Webkul\Employee\Models\Department;
 use Webkul\Employee\Models\EmployeeJobPosition;
@@ -35,9 +35,9 @@ class Recruitments extends BaseDashboard
         return __('recruitments::filament/pages/recruitment.navigation.title');
     }
 
-    public function filtersForm(Schema $schema): Schema
+    public function filtersForm(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Section::make()->schema([
                         Select::make('selectedJobs')->label(__('recruitments::filament/pages/recruitment.filters-form.job-position'))

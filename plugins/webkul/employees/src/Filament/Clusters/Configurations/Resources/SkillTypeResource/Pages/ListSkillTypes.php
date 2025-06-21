@@ -7,7 +7,7 @@ namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\SkillTypeRe
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\Tabs\Tab;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\SkillTypeResource;
 use Webkul\Employee\Models\SkillType;
 

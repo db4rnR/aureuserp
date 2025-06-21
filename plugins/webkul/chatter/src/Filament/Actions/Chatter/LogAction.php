@@ -11,10 +11,9 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Actions;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Get;
 use Illuminate\Database\Eloquent\Model;
 
 class LogAction extends Action
@@ -26,9 +25,6 @@ class LogAction extends Action
         $this
             ->color('gray')
             ->outlined()
-            ->mountUsing(function (Schema $schema): void {
-                $schema->fill();
-            })
             ->schema(
                 fn ($form) => $form->schema([
                     Group::make([
@@ -45,7 +41,7 @@ class LogAction extends Action
                                 })
                                 ->link()
                                 ->size('sm')
-                                ->icon(fn (Get $get): string => $get('showSubject') ? 'heroicon-s-minus' : 'heroicon-s-plus'),
+                                ->icon(fn ($get): string => $get('showSubject') ? 'heroicon-s-minus' : 'heroicon-s-plus'),
                         ])
                             ->columnSpan('full')
                             ->alignRight(),
